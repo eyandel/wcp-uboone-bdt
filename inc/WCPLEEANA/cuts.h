@@ -642,26 +642,27 @@ int LEEana::get_xs_signal_no(int cut_file, std::map<TString, int>& map_cut_xs_bi
       }       
     }
     else if (cut_file == 4){
+      bool pre_cut = eval.truth_nuPdg==14 && eval.truth_isCC==1 && eval.truth_vtxInside==1 && muonMomentum[3]>0 && Pmuon > 0 && Pmuon <= 2500;
       if (cut_name == "numuCC.inside.Enu.le.540.gt.200"){ // recommended range: 200 - 540
-	if (eval.truth_nuPdg==14 && eval.truth_isCC==1 && eval.truth_vtxInside==1 && eval.truth_nuEnergy<=540 && eval.truth_nuEnergy>200) return number;
+	if (pre_cut && eval.truth_nuEnergy<=540 && eval.truth_nuEnergy>200) return number;
       }else if (cut_name == "numuCC.inside.Enu.le.705.gt.540"){
-	if (eval.truth_nuPdg==14 && eval.truth_isCC==1 && eval.truth_vtxInside==1 && eval.truth_nuEnergy<=705 && eval.truth_nuEnergy>540) return number;
+	if (pre_cut && eval.truth_nuEnergy<=705 && eval.truth_nuEnergy>540) return number;
       }else if (cut_name == "numuCC.inside.Enu.le.805.gt.705"){
-	if (eval.truth_nuPdg==14 && eval.truth_isCC==1 && eval.truth_vtxInside==1 && eval.truth_nuEnergy<=805 && eval.truth_nuEnergy>705) return number;
+	if (pre_cut && eval.truth_nuEnergy<=805 && eval.truth_nuEnergy>705) return number;
       }else if (cut_name == "numuCC.inside.Enu.le.920.gt.805"){
-	if (eval.truth_nuPdg==14 && eval.truth_isCC==1 && eval.truth_vtxInside==1 && eval.truth_nuEnergy<=920 && eval.truth_nuEnergy>805) return number;
+	if (pre_cut && eval.truth_nuEnergy<=920 && eval.truth_nuEnergy>805) return number;
       }else if (cut_name == "numuCC.inside.Enu.le.1050.gt.920"){
-	if (eval.truth_nuPdg==14 && eval.truth_isCC==1 && eval.truth_vtxInside==1 && eval.truth_nuEnergy<=1050 && eval.truth_nuEnergy>920) return number;
+	if (pre_cut && eval.truth_nuEnergy<=1050 && eval.truth_nuEnergy>920) return number;
       }else if (cut_name == "numuCC.inside.Enu.le.1200.gt.1050"){
-	if (eval.truth_nuPdg==14 && eval.truth_isCC==1 && eval.truth_vtxInside==1 && eval.truth_nuEnergy<=1200 && eval.truth_nuEnergy>1050) return number;
+	if (pre_cut && eval.truth_nuEnergy<=1200 && eval.truth_nuEnergy>1050) return number;
       }else if (cut_name == "numuCC.inside.Enu.le.1375.gt.1200"){
-	if (eval.truth_nuPdg==14 && eval.truth_isCC==1 && eval.truth_vtxInside==1 && eval.truth_nuEnergy<=1375 && eval.truth_nuEnergy>1200) return number;
+	if (pre_cut && eval.truth_nuEnergy<=1375 && eval.truth_nuEnergy>1200) return number;
       }else if (cut_name == "numuCC.inside.Enu.le.1570.gt.1375"){
-	if (eval.truth_nuPdg==14 && eval.truth_isCC==1 && eval.truth_vtxInside==1 && eval.truth_nuEnergy<=1570 && eval.truth_nuEnergy>1375) return number;
+	if (pre_cut && eval.truth_nuEnergy<=1570 && eval.truth_nuEnergy>1375) return number;
       }else if (cut_name == "numuCC.inside.Enu.le.2050.gt.1570"){
-	if (eval.truth_nuPdg==14 && eval.truth_isCC==1 && eval.truth_vtxInside==1 && eval.truth_nuEnergy<=2050 && eval.truth_nuEnergy>1570) return number;
+	if (pre_cut && eval.truth_nuEnergy<=2050 && eval.truth_nuEnergy>1570) return number;
       }else if (cut_name == "numuCC.inside.Enu.le.4000.gt.2050"){ // recommended range: 2050 - 4000
-	if (eval.truth_nuPdg==14 && eval.truth_isCC==1 && eval.truth_vtxInside==1 && eval.truth_nuEnergy>2050 && eval.truth_nuEnergy<=4000) return number;
+	if (pre_cut && eval.truth_nuEnergy>2050 && eval.truth_nuEnergy<=4000) return number;
       }else{
 	std::cout << "get_xs_signal_no: no cut found!" << std::endl;
       }
@@ -774,7 +775,7 @@ int LEEana::get_xs_signal_no(int cut_file, std::map<TString, int>& map_cut_xs_bi
       }else if (cut_name == "numuCC.inside.Ehadron.le.2500.gt.1120"){ // 1120 - 2500 MeV
         if (eval.truth_nuPdg==14 && eval.truth_isCC==1 && eval.truth_vtxInside==1 && Ehadron>1120 && Ehadron<= 2500) return number;
       }else{
-  std::cout << "get_xs_signal_no: no cut found!" << std::endl;
+        std::cout << "get_xs_signal_no: no cut found!" << std::endl;
       }
     }
     else if (cut_file == 11){
@@ -1159,7 +1160,7 @@ int LEEana::get_xs_signal_no(int cut_file, std::map<TString, int>& map_cut_xs_bi
       }
     }
 
-    else if (cut_file == 17){ // 3D binning over Enu, costheta, Pmuon
+    else if (cut_file == 17){ // Enu, costheta, Pmuon
 
       int Enu_bin      = get_Enu_bin(eval.truth_nuEnergy);
       int costheta_bin = get_costheta_bin(costh);
@@ -1392,13 +1393,11 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
 
   // Xs related cuts ...
 
-  if(eval.match_completeness_energy>0.1*eval.truth_energyInside && eval.truth_nuPdg==14 && eval.truth_isCC==1 && eval.truth_vtxInside==1 ) map_cuts_flag["XsnumuCCinFV"] = true;
-  else map_cuts_flag["XsnumuCCinFV"] = false;
+  map_cuts_flag["XsnumuCCinFV"] = eval.match_completeness_energy>0.1*eval.truth_energyInside && eval.truth_nuPdg==14 && eval.truth_isCC==1 && eval.truth_vtxInside==1;
   
-  if(eval.match_completeness_energy>0.1*eval.truth_energyInside && eval.truth_nuPdg==14 && eval.truth_isCC==1 && eval.truth_vtxInside==1 && eval.truth_nuEnergy<=4000 && eval.truth_nuEnergy > 200) map_cuts_flag["Xs_Enu_numuCCinFV"] = true;
-  else map_cuts_flag["Xs_Enu_numuCCinFV"] = false;
+  map_cuts_flag["Xs_Enu_numuCCinFV"] = eval.match_completeness_energy>0.1*eval.truth_energyInside && eval.truth_nuPdg==14 && eval.truth_isCC==1 && eval.truth_vtxInside==1 && truth_muonMomentum[3]>0 && eval.truth_nuEnergy<=4000 && eval.truth_nuEnergy > 200 && Pmuon > 0 && Pmuon <= 2500;
 
-  map_cuts_flag["Xs_Enu_mu_numuCCinFV"]  = eval.match_completeness_energy>0.1*eval.truth_energyInside && eval.truth_nuPdg==14 && eval.truth_isCC==1 && eval.truth_vtxInside==1 && truth_muonMomentum[3]>0 && eval.truth_nuEnergy<=4000 && eval.truth_nuEnergy > 200 && Pmuon > 0 && Pmuon <= 2500;
+  map_cuts_flag["Xs_Enu_mu_numuCCinFV"] = eval.match_completeness_energy>0.1*eval.truth_energyInside && eval.truth_nuPdg==14 && eval.truth_isCC==1 && eval.truth_vtxInside==1 && truth_muonMomentum[3]>0 && eval.truth_nuEnergy<=4000 && eval.truth_nuEnergy > 200 && Pmuon > 0 && Pmuon <= 2500;
 
   map_cuts_flag["Xs_Enu_Pmu_numuCCinFV"] = eval.match_completeness_energy>0.1*eval.truth_energyInside && eval.truth_nuPdg==14 && eval.truth_isCC==1 && eval.truth_vtxInside==1 && truth_muonMomentum[3]>0 && eval.truth_nuEnergy<=4000 && eval.truth_nuEnergy > 200 && Pmuon > 0 && Pmuon <= 2500;
 
@@ -1527,7 +1526,7 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
   int costheta_bin = get_costheta_bin(TMath::Cos(muonMomentum.Theta()));
   int Pmu_bin      = get_Pmuon_bin(reco_pmuon);
   int Enu_bin      = get_Enu_bin(reco_Enu);
-  
+
   if (ch_name == "LEE_FC_nueoverlay"  || ch_name == "nueCC_FC_nueoverlay"){
     if (flag_nueCC && flag_FC && flag_truth_inside) return true;
     else return false;
@@ -2621,7 +2620,6 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
 	    || ch_name == "numuCC1_PC_bnb" || ch_name == "BG_numuCC1_PC_ext" || ch_name == "BG_numuCC1_PC_dirt"
 	    || ch_name == "numuCC2_PC_bnb" || ch_name == "BG_numuCC2_PC_ext" || ch_name == "BG_numuCC2_PC_dirt"
 	    ){
-    //if (flag_FC) return true; // quick hack test ...
     if (flag_numuCC && (!flag_FC)) return true;
     else return false;
   }else if (ch_name == "numuCC_signal_FC_overlay" || ch_name == "numuCC_signal_PC_overlay" || ch_name == "numuCC_background_FC_overlay" || ch_name == "numuCC_background_PC_overlay"
