@@ -575,6 +575,12 @@ void LEEana::CovMatrix::fill_det_histograms(std::map<TString, TH1D*> map_filenam
     T_PFeval_cv->SetBranchStatus("mcflux_gen2vtx",1);
     T_PFeval_cv->SetBranchStatus("mcflux_ndecay",1);
   }
+  if (T_PFeval_cv->GetBranch("truth_pdg")){
+     T_PFeval_cv->SetBranchStatus("truth_Ntrack",1);
+     T_PFeval_cv->SetBranchStatus("truth_pdg",1);
+     T_PFeval_cv->SetBranchStatus("truth_mother",1);
+     T_PFeval_cv->SetBranchStatus("truth_startMomentum",1);
+  }
 
   
    // fill histogram ...
@@ -702,7 +708,12 @@ void LEEana::CovMatrix::fill_det_histograms(std::map<TString, TH1D*> map_filenam
   if (pfeval_det.flag_recoprotonMomentum){
     T_PFeval_det->SetBranchStatus("reco_protonMomentum",1);
   }
-
+  if (T_PFeval_det->GetBranch("truth_pdg")){
+      T_PFeval_det->SetBranchStatus("truth_Ntrack",1);
+      T_PFeval_det->SetBranchStatus("truth_pdg",1);
+      T_PFeval_det->SetBranchStatus("truth_mother",1);
+      T_PFeval_det->SetBranchStatus("truth_startMomentum",1);
+  }
   
   std::vector<std::tuple<int, int, double, double, std::set<std::tuple<int, double, bool, double, bool> > > > vec_events;
 
@@ -766,7 +777,10 @@ void LEEana::CovMatrix::fill_det_histograms(std::map<TString, TH1D*> map_filenam
       
     }
     std::get<2>(vec_events.at(i)) *= osc_weight;
-    
+    double reweight = get_weight("add_weight", eval_cv, pfeval_cv, kine_cv, tagger_cv, get_rw_info());//automatically 1 if reweighting is not applied
+    std::get<2>(vec_events.at(i)) *= reweight;    
+
+
     
     //std::cout << std::get<0>(vec_events.at(i)) << " " << std::get<1>(vec_events.at(i)) << " " << std::get<2>(vec_events.at(i)) << " " << std::get<3>(vec_events.at(i))  << " " << std::get<4>(vec_events.at(i) ).size() << std::endl;
   }

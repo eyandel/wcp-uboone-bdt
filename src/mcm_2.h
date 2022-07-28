@@ -1,3 +1,5 @@
+#include "TRandom.h"
+#include "TRandom3.h"
 
 void LEEana::CovMatrix::gen_xf_cov_matrix(int run, std::map<int, TH1F*>& map_covch_hist, std::map<TString, TH1F*>& map_histoname_hist, TVectorD* vec_mean,  TMatrixD* cov_xf_mat){
   // prepare the maps ... name --> no,  covch, lee
@@ -731,6 +733,12 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
     T_PFeval->SetBranchStatus("mcflux_gen2vtx",1);
     T_PFeval->SetBranchStatus("mcflux_ndecay",1);
   }
+  if (T_PFeval->GetBranch("truth_startMomentum")){
+    T_PFeval->SetBranchStatus("truth_Ntrack",1);
+    T_PFeval->SetBranchStatus("truth_pdg",1); 
+    T_PFeval->SetBranchStatus("truth_mother",1); 
+    T_PFeval->SetBranchStatus("truth_startMomentum",1); 
+  }
 
   WeightInfo weight;
   TTree *T_weight = (TTree*)file->Get("wcpselection/T_weight");
@@ -771,7 +779,11 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
   weight.reinteractions_proton_Geant4 = new std::vector<float>; 
   
   TString option;
-  if (T_weight->GetBranch("expskin_FluxUnisim")){
+  if (rw_type == 1){
+    option = "reweight";
+  }else if (rw_type == 2){
+    option = "reweight_cor";
+  }else if (T_weight->GetBranch("expskin_FluxUnisim")){
     option = "expskin_FluxUnisim";
   }else if (T_weight->GetBranch("horncurrent_FluxUnisim")){
     option = "horncurrent_FluxUnisim";
@@ -861,7 +873,12 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
     }
     // apply oscillation ...
     std::get<0>(event_info) *= osc_weight;
-    
+    //apply reweight
+    double reweight = get_weight("add_weight", eval, pfeval, kine, tagger, get_rw_info());//automatically 1 if reweighting is not applied
+    std::get<0>(event_info) *= reweight; 
+    if(!(flag_reweight)) reweight = get_weight("add_weight", eval, pfeval, kine, tagger, get_rw_info(true));//allows reweighting uncertainty to be applied     
+
+ 
     if (std::get<4>(event_info).size()>0){
       if (option == "expskin_FluxUnisim"){
 	std::get<2>(event_info).resize(weight.expskin_FluxUnisim->size());
@@ -1034,7 +1051,37 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
 	  for (size_t j=0; j!= weight.reinteractions_proton_Geant4->size(); j++){
 	    std::get<2>(event_info).at(j) = weight.reinteractions_proton_Geant4->at(j) - 1.0;
 	  }
-	}
+        }
+	
+      }else if (option == "reweight"){
+        std::get<2>(event_info).resize(1000);
+        std::get<3>(event_info).push_back(1000);
+        for (size_t j=0;j!=1000;j++){
+          if(flag_reweight){
+            if (weight.weight_cv>0 && reweight!=1){
+              gRandom->SetSeed(j*reweight*77777);
+              double rand = gRandom->Gaus(reweight,abs(1-reweight));
+              std::get<2>(event_info).at(j) = (rand-reweight)/reweight;
+            }else std::get<2>(event_info).at(j) = 0;
+          }else{
+            gRandom->SetSeed(j*reweight*77777);
+            double rand = gRandom->Gaus(1,abs(1-reweight));
+            std::get<2>(event_info).at(j) = rand-1;
+          }
+        }
+      }else if (option == "reweight_cor"){
+        std::get<2>(event_info).resize(1);
+        std::get<3>(event_info).push_back(1);
+        if(flag_reweight){
+          if (weight.weight_cv>0 && reweight!=1){
+            std::get<2>(event_info).at(0) = (1-reweight)/reweight;
+          }else{
+            std::get<2>(event_info).at(0) = 0;
+          }
+        }else{
+           std::get<2>(event_info).at(0) = reweight-1;
+        }
+
       }else if (option == "UBGenieFluxSmallUni"){
 	int acc_no = 0;
 	std::get<2>(event_info).resize(weight.All_UBGenie->size());
@@ -1250,6 +1297,10 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
     sup_lengths.push_back(1000);
   }else if (option == "reinteractions_proton_Geant4"){
     sup_lengths.push_back(1000);
+  }else if (option == "reweight"){
+    sup_lengths.push_back(1000);
+  }else if (option == "reweight_cor"){
+    sup_lengths.push_back(1);
   }else if (option == "UBGenieFluxSmallUni"){
     sup_lengths.push_back(600); // all_ubgenie
     sup_lengths.push_back(1);   // AxFFCCQEshape_UBGenie-

@@ -43,7 +43,7 @@ int main( int argc, char** argv )
     }
   }
   
-  CovMatrix cov("./configurations/cov_input.txt", "./configurations/det_input.txt", "./configurations/det_file_ch.txt");
+  CovMatrix cov("./configurations/cov_input.txt", "./configurations/det_input.txt", "./configurations/det_file_ch.txt", "./configurations/rw_cv_input.txt");
   cov.add_disabled_ch_name("BG_nueCC_FC_overlay");
   cov.add_disabled_ch_name("BG_nueCC_PC_overlay");
   // cov.add_disabled_ch_name("nueCC_FC_nueoverlay");
@@ -58,6 +58,8 @@ int main( int argc, char** argv )
   cov.add_disabled_ch_name("BG_nueCC_extra_FC_overlay");
   cov.add_disabled_ch_name("BG_nueCC_extra_PC_overlay");
   if (flag_osc) cov.add_osc_config();
+
+  cov.print_rw(cov.get_rw_info());
 
   // Get the file based on runno ...
   std::map<TString, std::tuple<int, int, TString, float, int, double, int> > map_inputfile_info = cov.get_map_inputfile_info();

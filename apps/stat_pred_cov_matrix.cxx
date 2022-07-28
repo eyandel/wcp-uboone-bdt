@@ -41,7 +41,9 @@ int main( int argc, char** argv )
   
   CovMatrix cov;
   if (flag_osc) cov.add_osc_config();
-  
+
+  cov.print_rw(cov.get_rw_info()); 
+ 
   // Get the file based on runno ...
   std::map<TString, std::tuple<int, int, TString, float, int, double, int> > map_inputfile_info = cov.get_map_inputfile_info();
   // Construct the histogram ...

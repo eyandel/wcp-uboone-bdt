@@ -79,6 +79,8 @@ public:
   bool flag_syst_detector;
   bool flag_syst_additional;
   bool flag_syst_mc_stat;
+  bool flag_syst_reweight;
+  bool flag_syst_reweight_cor;
 
   bool flag_lookelsewhere;
   
@@ -110,6 +112,8 @@ public:
   TMatrixD matrix_input_cov_flux_Xs;  
   TMatrixD matrix_input_cov_detector;
   TMatrixD matrix_input_cov_additional;
+  TMatrixD matrix_input_cov_reweight;
+  TMatrixD matrix_input_cov_reweight_cor;
 
   TMatrixD matrix_input_cov_flux;
   TMatrixD matrix_input_cov_Xs;
@@ -132,6 +136,8 @@ public:
   map<int, TMatrixD>matrix_absolute_detector_sub_cov_newworld;
   TMatrixD matrix_absolute_mc_stat_cov_newworld;
   TMatrixD matrix_absolute_additional_cov_newworld;
+  TMatrixD matrix_absolute_reweight_cov_newworld;
+  TMatrixD matrix_absolute_reweight_cor_cov_newworld;
   
   map<int, TMatrixD>matrix_sub_flux_geant4_Xs_oldworld;
   map<int, TMatrixD>matrix_sub_flux_geant4_Xs_newworld;

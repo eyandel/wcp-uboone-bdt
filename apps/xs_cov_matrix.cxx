@@ -35,12 +35,12 @@ int main( int argc, char** argv )
       break;
     }
   }
-  if (run !=17) {
+  if (run !=17 && run!=0) {
     std::cout  << "Force run = 17, check configurations ..." << std::endl;
     run = 17;
   }
 
-  CovMatrix cov("./configurations/cov_input.txt", "./configurations/xf_input.txt", "./configurations/xf_file_ch.txt");
+  CovMatrix cov("./configurations/cov_input.txt", "./configurations/xf_input.txt", "./configurations/xf_file_ch.txt", "./configurations/rw_cv_input.txt");
   // cov.add_disabled_ch_name("BG_nueCC_FC_overlay");
   // cov.add_disabled_ch_name("BG_nueCC_PC_overlay");
   // cov.add_disabled_ch_name("BG_nueCC_FC_dirt");
@@ -48,7 +48,15 @@ int main( int argc, char** argv )
 
   cov.add_xs_config();
   
-  
+
+  if(run==0) {
+    cov.add_rw_config(run);
+    std::cout<<"Including reweighting uncertainty in xs systematics"<<std::endl;
+    run=17;
+  }
+
+  cov.print_rw(cov.get_rw_info());
+
   // Get the file based on runno ...
   std::map<TString, std::tuple<int, int, TString, float, int, double, int> > map_inputfile_info = cov.get_map_inputfile_info();
   // Construct the histogram ...

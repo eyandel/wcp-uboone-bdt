@@ -71,7 +71,7 @@ namespace config_Lee
                                // which is equal to the channels after collapse
 
   int syst_cov_flux_Xs_begin = 1;// files in flux_Xs_directory above
-  int syst_cov_flux_Xs_end   = 17;
+  int syst_cov_flux_Xs_end   = 19;//cov_18.root is uncorrelated reweighting and cov_19.root is correlated
  
   int syst_cov_mc_stat_begin = 0;// files in mc_directory above
   int syst_cov_mc_stat_end   = 99;
@@ -94,6 +94,9 @@ namespace config_Lee
   bool flag_syst_detector   = 1;
   bool flag_syst_additional = 1;
   bool flag_syst_mc_stat    = 1;
+  bool flag_syst_reweight        = 0;
+  bool flag_syst_reweight_cor    = 0;
+
 
   double Lee_strength_for_outputfile_covariance_matrix = 0;
   

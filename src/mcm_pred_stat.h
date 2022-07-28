@@ -809,6 +809,12 @@ void LEEana::CovMatrix::get_pred_events_info(TString input_filename, std::map<TS
       T_PFeval->SetBranchStatus("mcflux_ndecay",1);
     }
   }
+  if (T_PFeval->GetBranch("truth_pdg")){
+     T_PFeval->SetBranchStatus("truth_Ntrack",1); 
+     T_PFeval->SetBranchStatus("truth_pdg",1); 
+     T_PFeval->SetBranchStatus("truth_mother",1); 
+     T_PFeval->SetBranchStatus("truth_startMomentum",1); 
+  }
 
   std::vector<std::tuple<int, int, double, double, std::set<std::tuple<int, double, bool> > > > vec_events;
 
@@ -857,10 +863,11 @@ void LEEana::CovMatrix::get_pred_events_info(TString input_filename, std::map<TS
 	flag_updated = true;
       }
     }
-    if (!flag_data)
+    if (!flag_data){
       std::get<2>(vec_events.at(i)) *= osc_weight;
-    
-  }
+      std::get<2>(vec_events.at(i)) *= get_weight("add_weight", eval, pfeval, kine, tagger, get_rw_info());
+    }  
+}
 
   map_all_events[input_filename] = vec_events;
 

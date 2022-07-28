@@ -39,8 +39,7 @@ int main( int argc, char** argv )
   CovMatrix cov;
   if (flag_osc) cov.add_osc_config();
   
-
-
+  cov.print_rw(cov.get_rw_info());
   
   TTree *T_BDTvars = (TTree*)file->Get("wcpselection/T_BDTvars");
   TTree *T_eval = (TTree*)file->Get("wcpselection/T_eval");
@@ -258,6 +257,12 @@ int main( int argc, char** argv )
       T_PFeval->SetBranchStatus("muonvtx_diff",1);
       T_PFeval->SetBranchStatus("truth_nuIntType",1);
       T_PFeval->SetBranchStatus("truth_muonMomentum",1);
+      if(T_PFeval->GetBranch("truth_mother")){//prevents throwing an error for the non _PF files
+        T_PFeval->SetBranchStatus("truth_Ntrack",1); 
+        T_PFeval->SetBranchStatus("truth_pdg",1); 
+        T_PFeval->SetBranchStatus("truth_mother",1); 
+        T_PFeval->SetBranchStatus("truth_startMomentum",1); 
+      }
       
   }
   if (pfeval.flag_NCDelta){
@@ -321,7 +326,7 @@ int main( int argc, char** argv )
       
       // std::cout << weight << std::endl;
       // get weight ...
-      double weight_val = get_weight(weight, eval);
+      double weight_val = get_weight(weight, eval, pfeval, kine, tagger, cov.get_rw_info(), flag_data);
 
       if (flag_osc && cov.is_osc_channel(ch_name) && (!flag_data)){
 	osc_weight = cov.get_osc_weight(eval, pfeval);
