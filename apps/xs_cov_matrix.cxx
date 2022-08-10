@@ -35,12 +35,15 @@ int main( int argc, char** argv )
       break;
     }
   }
-  if (run !=17 && run!=0) {
+  if (run !=17 && run!=0 && run!=18 && run!=19) {
     std::cout  << "Force run = 17, check configurations ..." << std::endl;
     run = 17;
   }
 
-  CovMatrix cov("./configurations/cov_input.txt", "./configurations/xf_input.txt", "./configurations/xf_file_ch.txt", "./configurations/rw_cv_input.txt");
+  TString xf_input_config_file = "./configurations/xf_input.txt";
+  if (run>17) xf_input_config_file = "./configurations/rw_sys_input.txt";
+
+  CovMatrix cov("./configurations/cov_input.txt", xf_input_config_file, "./configurations/xf_file_ch.txt", "./configurations/rw_cv_input.txt");
   // cov.add_disabled_ch_name("BG_nueCC_FC_overlay");
   // cov.add_disabled_ch_name("BG_nueCC_PC_overlay");
   // cov.add_disabled_ch_name("BG_nueCC_FC_dirt");
@@ -48,12 +51,16 @@ int main( int argc, char** argv )
 
   cov.add_xs_config();
   
-
   if(run==0) {
     cov.add_rw_config(run);
     std::cout<<"Including reweighting uncertainty in xs systematics"<<std::endl;
     run=17;
   }
+  if(run==18 || run==19) {
+    cov.add_rw_config(run);
+    std::cout<<"Calculating reweighting uncertainty like xs systematics"<<std::endl;
+  }
+
 
   cov.print_rw(cov.get_rw_info());
 
@@ -138,6 +145,8 @@ int main( int argc, char** argv )
   
   // hack ...
   outfile_name = "./hist_rootfiles/XsFlux/cov_xs.root";
+  if(run==18) outfile_name = "./hist_rootfiles/XsFlux/cov_rw.root";
+  if(run==19) outfile_name = "./hist_rootfiles/XsFlux/cov_rw_cor.root";
   std::cout << outfile_name << std::endl;
   TMatrixD* cov_add_mat = cov.get_add_cov_matrix();
   // create a covariance matrix for bootstrapping ...

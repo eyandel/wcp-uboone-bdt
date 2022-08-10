@@ -161,6 +161,7 @@ double LEEana::get_reco_Epion(KineInfo& kine){
 
 bool LEEana::is_true_0p(PFevalInfo& pfeval){
     for(size_t i=0; i<pfeval.truth_Ntrack; i++){
+      if(pfeval.truth_mother[i] != 0) continue;
       if(pfeval.truth_pdg[i] != 2212) continue;
       if(pfeval.truth_startMomentum[i][3] - 0.938272 < 0.035) continue;
       return false;
@@ -3764,7 +3765,7 @@ bool LEEana::is_pi0(KineInfo& kine, bool flag_data){
 
 bool LEEana::is_NCpio_sel(TaggerInfo& tagger_info, KineInfo& kine){ // includes all cuts except FC
   bool flag = false;
-  if (tagger_info.nc_pio_score > 1.68 && tagger_info.numu_cc_flag >=0 && kine.kine_pio_energy_1 > 0. && kine.kine_pio_energy_2 > 0.) flag = true;
+  if (tagger_info.nc_pio_score > 1.816 && tagger_info.numu_cc_flag >=0 && kine.kine_pio_energy_1 > 0. && kine.kine_pio_energy_2 > 0.) flag = true;
   return flag;
 }
 bool LEEana::is_NCdelta_sel(TaggerInfo& tagger_info, PFevalInfo& pfeval){ // includes all cuts except FC
