@@ -9,7 +9,7 @@ struct PFevalInfo{
   bool flag_pf_truth;
   bool flag_pf_reco;
   bool flag_init_pointers;
-  
+
   Int_t run;
   Int_t subrun;
   Int_t event;
@@ -46,11 +46,11 @@ struct PFevalInfo{
   Float_t truth_nu_pos[4];
   Float_t truth_showerMomentum[4];
   Float_t truth_nu_momentum[4];
-  
+
   Float_t nuvtx_diff;
   Float_t showervtx_diff;
   Float_t muonvtx_diff;
-  
+
   Float_t truth_corr_nuvtxX;
   Float_t truth_corr_nuvtxY;
   Float_t truth_corr_nuvtxZ;
@@ -58,6 +58,10 @@ struct PFevalInfo{
   Float_t truth_corr_showervtxY;
   Float_t truth_corr_showervtxZ;
   Float_t truth_showerKE;
+  //Erin
+  Int_t   truth_showerPdg;
+  Int_t   truth_showerMother;
+  //
   Float_t truth_corr_muonvtxX;
   Float_t truth_corr_muonvtxY;
   Float_t truth_corr_muonvtxZ;
@@ -85,6 +89,11 @@ struct PFevalInfo{
   Float_t truth_pio_energy_2;
   Float_t truth_pio_angle;
   Int_t truth_NCDelta;
+  //Erin
+  Int_t   truth_single_photon;
+  Float_t truth_photon_angle;
+  Float_t truth_photon_dis;
+  //
   Float_t reco_protonMomentum[4];
 
 
@@ -132,7 +141,7 @@ struct PFevalInfo{
   Double_t mc_nu_Theta; // angle relative to lepton
   Float_t mc_nu_pos[4];  // interaction position of nu
   Float_t mc_nu_mom[4];  // interaction momentum of nu
-  
+
 };
 
 
@@ -168,12 +177,12 @@ void LEEana::clear_pfeval_info(PFevalInfo& tagger_info){
   tagger_info.flag_recoprotonMomentum = false;
   tagger_info.flag_pf_truth = false;
   tagger_info.flag_pf_reco = false;
-  
+
   if (!tagger_info.flag_init_pointers){
     init_pointers(tagger_info);
     tagger_info.flag_init_pointers = true;
   }
-  
+
   tagger_info.neutrino_type=0;
   tagger_info.reco_nuvtxX=0;
   tagger_info.reco_nuvtxY=0;
@@ -185,11 +194,11 @@ void LEEana::clear_pfeval_info(PFevalInfo& tagger_info){
   tagger_info.reco_muonvtxX=0;
   tagger_info.reco_muonvtxY=0;
   tagger_info.reco_muonvtxZ=0;
-  
+
   tagger_info.nuvtx_diff=0;
   tagger_info.showervtx_diff=0;
   tagger_info.muonvtx_diff=0;
-  
+
   tagger_info.truth_corr_nuvtxX=0;
   tagger_info.truth_corr_nuvtxY=0;
   tagger_info.truth_corr_nuvtxZ=0;
@@ -197,6 +206,10 @@ void LEEana::clear_pfeval_info(PFevalInfo& tagger_info){
   tagger_info.truth_corr_showervtxY=0;
   tagger_info.truth_corr_showervtxZ=0;
   tagger_info.truth_showerKE=0;
+  //Erin
+  tagger_info.truth_showerPdg=0;
+  tagger_info.truth_showerMother=0;
+  //
   tagger_info.truth_corr_muonvtxX=0;
   tagger_info.truth_corr_muonvtxY=0;
   tagger_info.truth_corr_muonvtxZ=0;
@@ -206,7 +219,7 @@ void LEEana::clear_pfeval_info(PFevalInfo& tagger_info){
   tagger_info.truth_muonendX=0;
   tagger_info.truth_muonendY=0;
   tagger_info.truth_muonendZ=0;
-  
+
   tagger_info.truth_nuEnergy=0;
   tagger_info.truth_energyInside=0;
   tagger_info.truth_electronInside=0;
@@ -224,8 +237,13 @@ void LEEana::clear_pfeval_info(PFevalInfo& tagger_info){
   tagger_info.truth_pio_energy_2=0;
   tagger_info.truth_pio_angle=0;
   tagger_info.truth_NCDelta=0;
+  //Erin
+  tagger_info.truth_single_photon=0;
+  tagger_info.truth_photon_angle=0;
+  tagger_info.truth_photon_dis=0;
+  //
 
-  
+
   tagger_info.reco_Nproton=0;
   tagger_info.mcflux_run=0;
   tagger_info.mcflux_evtno=0;
@@ -241,8 +259,8 @@ void LEEana::clear_pfeval_info(PFevalInfo& tagger_info){
   tagger_info.mcflux_dk2gen=0;
   tagger_info.mcflux_gen2vtx=0;
   tagger_info.truth_nuScatType=0;
-  
-  
+
+
   for (Int_t i=0;i!=4;i++){
     tagger_info.reco_muonMomentum[i]=0;
     tagger_info.reco_showerMomentum[i]=0;
@@ -262,7 +280,7 @@ void LEEana::clear_pfeval_info(PFevalInfo& tagger_info){
 
   tagger_info.reco_Ntrack = 0;  // number of tracks in MC
   tagger_info.reco_process->clear();
-  
+
   tagger_info.reco_daughters->clear();  // daughters id of this track; vector
 
   tagger_info.mc_isnu=0; // is neutrino eraction
@@ -274,7 +292,7 @@ void LEEana::clear_pfeval_info(PFevalInfo& tagger_info){
   tagger_info.mc_nu_target=0; // target interaction
   tagger_info.mc_hitnuc=0; // hit nucleon
   tagger_info.mc_hitquark=0; // hit quark
-  
+
   tagger_info.mc_nu_Q2=0; // Q^2
   tagger_info.mc_nu_W=0; // W
   tagger_info.mc_nu_X=0; // X
@@ -285,13 +303,16 @@ void LEEana::clear_pfeval_info(PFevalInfo& tagger_info){
     tagger_info.mc_nu_pos[i] = 0;  // interaction position of nu
     tagger_info.mc_nu_mom[i] = 0;  // interaction momentum of nu
   }
-  
+
 }
 
 void LEEana::set_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
   //  std::cout << "test" << std::endl;
-    
+
   tagger_info.flag_NCDelta = false;
+  //Erin
+  tagger_info.flag_single_photon = false;
+  //
   tagger_info.flag_showerMomentum = false;
   tagger_info.flag_recoprotonMomentum = false;
   tagger_info.flag_pf_truth = false;
@@ -320,10 +341,10 @@ void LEEana::set_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
     tagger_info.flag_showerMomentum = true;
     tree0->SetBranchAddress("reco_showerMomentum",&tagger_info.reco_showerMomentum[0]);
     tree0->SetBranchAddress("reco_Nproton",&tagger_info.reco_Nproton);
-        
+
     if (flag==1){
       tree0->SetBranchAddress("truth_showerMomentum",&tagger_info.truth_showerMomentum[0]);
-      
+
       tree0->SetBranchAddress("mcflux_run",&tagger_info.mcflux_run);
       tree0->SetBranchAddress("mcflux_evtno",&tagger_info.mcflux_evtno);
       tree0->SetBranchAddress("mcflux_ndecay",&tagger_info.mcflux_ndecay);
@@ -339,12 +360,12 @@ void LEEana::set_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
       tree0->SetBranchAddress("mcflux_gen2vtx",&tagger_info.mcflux_gen2vtx);
 
       tree0->SetBranchAddress("truth_nuScatType",&tagger_info.truth_nuScatType);
-      
+
       tree0->SetBranchAddress("truth_nu_pos", &tagger_info.truth_nu_pos[0]);
       tree0->SetBranchAddress("truth_nu_momentum", &tagger_info.truth_nu_momentum[0]);
     }
   }
-  
+
   if (flag==1){
     tree0->SetBranchAddress("nuvtx_diff", &tagger_info.nuvtx_diff);
     tree0->SetBranchAddress("showervtx_diff", &tagger_info.showervtx_diff);
@@ -356,6 +377,12 @@ void LEEana::set_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
     tree0->SetBranchAddress("truth_corr_showervtxY", &tagger_info.truth_corr_showervtxY);
     tree0->SetBranchAddress("truth_corr_showervtxZ", &tagger_info.truth_corr_showervtxZ);
     tree0->SetBranchAddress("truth_showerKE", &tagger_info.truth_showerKE);
+    //Erin
+    if (tree0->GetBranch("truth_single_photon")){
+      tree0->SetBranchAddress("truth_showerPdg", &tagger_info.truth_showerPdg);
+      tree0->SetBranchAddress("truth_showerMother", &tagger_info.truth_showerMother);
+    }
+    //
     tree0->SetBranchAddress("truth_corr_muonvtxX", &tagger_info.truth_corr_muonvtxX);
     tree0->SetBranchAddress("truth_corr_muonvtxY", &tagger_info.truth_corr_muonvtxY);
     tree0->SetBranchAddress("truth_corr_muonvtxZ", &tagger_info.truth_corr_muonvtxZ);
@@ -386,9 +413,17 @@ void LEEana::set_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
       tree0->SetBranchAddress("truth_pio_angle",&tagger_info.truth_pio_angle);
       //tree0->SetBranchAddress("reco_protonMomentum",&tagger_info.reco_protonMomentum[0]);
     }
+    //Erin
+    if (tree0->GetBranch("truth_single_photon")){
+      tagger_info.flag_single_photon = true;
+      tree0->SetBranchAddress("truth_single_photon",&tagger_info.truth_single_photon);
+      tree0->SetBranchAddress("truth_photon_angle",&tagger_info.truth_photon_angle);
+      tree0->SetBranchAddress("truth_photon_dis",&tagger_info.truth_photon_dis);
+    }
+    //
 
-   
-    
+
+
   }
   if (tree0->GetBranch("reco_protonMomentum")){
     tagger_info.flag_recoprotonMomentum = true;
@@ -414,7 +449,7 @@ void LEEana::set_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
     tree0->SetBranchAddress("truth_endMomentum", &tagger_info.truth_endMomentum);
     tree0->SetBranchAddress("truth_daughters", &tagger_info.truth_daughters);
     tree0->SetBranchAddress("fMC_trackPosition", &tagger_info.fMC_trackPosition);
-    
+
     tree0->SetBranchAddress("mc_isnu", &tagger_info.mc_isnu);
     tree0->SetBranchAddress("mc_nGeniePrimaries", &tagger_info.mc_nGeniePrimaries);
     tree0->SetBranchAddress("mc_nu_pdg", &tagger_info.mc_nu_pdg);
@@ -441,7 +476,7 @@ void LEEana::set_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
       init_pointers(tagger_info);
       tagger_info.flag_init_pointers = true;
     }
-    
+
     tree0->SetBranchAddress("reco_Ntrack", &tagger_info.reco_Ntrack);
     tree0->SetBranchAddress("reco_id", &tagger_info.reco_id);
     tree0->SetBranchAddress("reco_pdg", &tagger_info.reco_pdg);
@@ -453,7 +488,7 @@ void LEEana::set_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
     tree0->SetBranchAddress("reco_endMomentum", &tagger_info.reco_endMomentum);
     tree0->SetBranchAddress("reco_daughters", &tagger_info.reco_daughters);
   }
-  
+
 
 }
 
@@ -485,6 +520,12 @@ void LEEana::put_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
     tree0->Branch("truth_corr_showervtxY", &tagger_info.truth_corr_showervtxY,"data/F");
     tree0->Branch("truth_corr_showervtxZ", &tagger_info.truth_corr_showervtxZ,"data/F");
     tree0->Branch("truth_showerKE", &tagger_info.truth_showerKE,"data/F");
+    //Erin
+    if (tagger_info.flag_single_photon){
+      tree0->Branch("truth_showerPdg", &tagger_info.truth_showerPdg,"data/I");
+      tree0->Branch("truth_showerMother", &tagger_info.truth_showerMother,"data/I");
+    }
+    //
     tree0->Branch("truth_corr_muonvtxX", &tagger_info.truth_corr_muonvtxX,"data/F");
     tree0->Branch("truth_corr_muonvtxY", &tagger_info.truth_corr_muonvtxY,"data/F");
     tree0->Branch("truth_corr_muonvtxZ", &tagger_info.truth_corr_muonvtxZ,"data/F");
@@ -514,6 +555,14 @@ void LEEana::put_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
       tree0->Branch("truth_pio_angle",&tagger_info.truth_pio_angle,"truth_pio_angle/F");
       //tree0->Branch("reco_protonMomentum",&tagger_info.reco_protonMomentum[0],"reco_protonMomentum[4]/F");
     }
+
+    //Erin
+    if (tagger_info.flag_single_photon){
+      tree0->Branch("truth_single_photon",&tagger_info.truth_single_photon, "truth_single_photon/I");
+      tree0->Branch("truth_photon_angle",&tagger_info.truth_photon_angle, "truth_photon_angle/F");
+      tree0->Branch("truth_photon_dis",&tagger_info.truth_photon_dis, "truth_photon_dis/F");
+    }
+    //
   }
 
   if (tagger_info.flag_recoprotonMomentum){
@@ -521,11 +570,11 @@ void LEEana::put_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
   }
 
   if (tagger_info.flag_showerMomentum){
-    
+
     tree0->Branch("reco_showerMomentum",&tagger_info.reco_showerMomentum[0],"reco_showerMomentum[4]/F");
     tree0->Branch("reco_Nproton",&tagger_info.reco_Nproton,"reco_Nproton/I");
-    
-    
+
+
     if (flag==1){
       tree0->Branch("truth_showerMomentum",&tagger_info.truth_showerMomentum[0],"truth_showerMomentum[4]/F");
       tree0->Branch("mcflux_run",&tagger_info.mcflux_run,"mcflux_run/I");
@@ -533,7 +582,7 @@ void LEEana::put_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
       tree0->Branch("mcflux_ndecay",&tagger_info.mcflux_ndecay,"mcflux_ndecay/I");
       tree0->Branch("mcflux_ntype",&tagger_info.mcflux_ntype,"mcflux_ntype/I");
       tree0->Branch("truth_nuScatType",&tagger_info.truth_nuScatType,"truth_nuScatType/I");
-      
+
       tree0->Branch("mcflux_nuEnergy",&tagger_info.mcflux_nuEnergy,"mcflux_nuEnergy/F");
       tree0->Branch("mcflux_vx", &tagger_info.mcflux_vx,"mcflux_vx/F");
       tree0->Branch("mcflux_vy", &tagger_info.mcflux_vy,"mcflux_vy/F");
@@ -550,7 +599,7 @@ void LEEana::put_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
 
 
   if (tagger_info.flag_pf_truth){
-    
+
     tree0->Branch("truth_Ntrack", &tagger_info.truth_Ntrack);
     tree0->Branch("truth_id", &tagger_info.truth_id, "truth_id[truth_Ntrack]/I");
     tree0->Branch("truth_pdg", &tagger_info.truth_pdg, "truth_pdg[truth_Ntrack]/I");
@@ -562,8 +611,8 @@ void LEEana::put_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
     tree0->Branch("truth_endMomentum", &tagger_info.truth_endMomentum, "truth_endMomentum[truth_Ntrack][4]/F");
     tree0->Branch("truth_daughters", tagger_info.truth_daughters);
     tree0->Branch("fMC_trackPosition", &tagger_info.fMC_trackPosition);
-    
-    
+
+
 
     tree0->Branch("mc_isnu", &tagger_info.mc_isnu);
     tree0->Branch("mc_nGeniePrimaries", &tagger_info.mc_nGeniePrimaries);
@@ -596,7 +645,7 @@ void LEEana::put_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
     tree0->Branch("reco_endMomentum", &tagger_info.reco_endMomentum, "reco_endMomentum[reco_Ntrack][4]/F");
     tree0->Branch("reco_daughters", tagger_info.reco_daughters);
   }
-  
+
 }
 
 
