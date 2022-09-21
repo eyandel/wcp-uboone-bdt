@@ -51,7 +51,7 @@ int main( int argc, char** argv )
   TString training_list = "";
   string global_file_type = "";
   int skip_cut = 0;
-  
+
   for (Int_t i=1;i!=argc;i++){
     switch(argv[i][1]){
     case 'c':
@@ -71,16 +71,16 @@ int main( int argc, char** argv )
       break;
     }
   }
-  
+
   bool flag_check_run_subrun = false;
   bool flag_use_global_file_type = false;
   if (global_file_type != "") flag_use_global_file_type = true;
-  
-  
+
+
   std::map<string, std::set<std::pair<int, int> > > map_type_run_subrun;
   if (training_list != ""){
     flag_check_run_subrun = true;
-    
+
     ifstream infile(training_list);
     string tmp_type;
     int run, subrun;
@@ -92,27 +92,27 @@ int main( int argc, char** argv )
     // return 0;
   }
 
-  
+
   if (skip_cut == 0)
     std::cout << "Skip runs for BNB side " << std::endl;
   else
     std::cout << "Do not skip runs  " << std::endl;
-    
+
   bool flag_data = true;
   //std::cout << input_file << " " << out_file << std::endl;
 
 
   TFile *file1 = new TFile(input_file);
   TTree *T_BDTvars = (TTree*)file1->Get("wcpselection/T_BDTvars");
-  
+
   TTree *T_eval = (TTree*)file1->Get("wcpselection/T_eval");
   TTree *T_pot = (TTree*)file1->Get("wcpselection/T_pot");
   TTree *T_PFeval = (TTree*)file1->Get("wcpselection/T_PFeval");
   TTree *T_KINEvars = (TTree*)file1->Get("wcpselection/T_KINEvars");
 
-  
 
-  
+
+
   if (T_eval->GetBranch("weight_cv")) flag_data =false;
   //  if (T_eval->GetBranch("file_type")) flag_use_global_file_type = false;
 
@@ -436,9 +436,9 @@ int main( int argc, char** argv )
       14643, 14644, 14645, 14646, 14647, 14648, 14649, 14650, 14651, 14652, 14653, 14654, 14655, 14656, 14657, 14658, 14659, 14660, 14661, 14662, 14663, 14664, 14665, 14666, 14667, 14668, 14669, 14670, 14671, 14672, 14673, 14674, 14675, 14676, 14677, 14678, 14679, 14680, 14681, 14682, 14683, 14684, 14685, 14686, 14687, 14688, 14689, 14690, 14691, 14692, 14693, 14694, 14695, 14696, 14697, 14698, 14699, 14700, 14701, 14702, 14703, 14704, 14705, 14706, 14707, 14708, 14709, 14710, 14711, 14712, 14713, 14714, 14715, 14716, 14717, 14718, 14719, 14720, 14721, 14722, 14723, 14724, 14725, 14726, 14727, 14728, 14729, 14730, 14731, 14732, 14733, 14734, 14735, 14736, 16724, 16725, 16726, 16727, 16728, 16729, 16730, 16731, 16732, 16733, 16734, 16735, 16736, 16737, 16738, 16739, 16740, 16741, 16742, 16743, 16744, 16745, 16746, 16747, 16748, 16749, 16750, 16751, 16752, 16753, 16754, 16755, 16756, 16757, 16758, 16759, 16760, 16761, 16762, 16763, 16764, 16765, 16766, 16767, 16768, 16769, 16770, 16771, 16772, 16773, 16774, 16775, 16776, 16777, 16778, 16779, 16780, 16781, 16782, 16783 // run 3 low electron lifetime runs
       };
   std::set<int> low_lifetime_set(low_lifetime_runs.begin(), low_lifetime_runs.end());
-  
-  
-  
+
+
+
   //  std::cout << T_eval->GetEntries() << std::endl;
   TFile *file2 = new TFile(out_file,"RECREATE");
   file2->mkdir("wcpselection");
@@ -452,11 +452,11 @@ int main( int argc, char** argv )
   //TTree *t2 = T_pot->CloneTree(-1,"");
   //TTree *t3 = T_PFeval->CloneTree(-1,"");
   //  TTree *t5 = T_KINEvars->CloneTree(-1,"");
-  
-  
+
+
   EvalInfo eval;
   eval.file_type = new std::string();
-  
+
   POTInfo pot;
   TaggerInfo tagger;
   PFevalInfo pfeval;
@@ -466,8 +466,8 @@ int main( int argc, char** argv )
   kine.kine_energy_info = new std::vector<int>;
   kine.kine_particle_type = new std::vector<int>;
   kine.kine_energy_included = new std::vector<int>;
-  
-  
+
+
   tagger.pio_2_v_dis2 = new std::vector<float>;
   tagger.pio_2_v_angle2 = new std::vector<float>;
   tagger.pio_2_v_acc_length = new std::vector<float>;
@@ -747,15 +747,15 @@ int main( int argc, char** argv )
 
   set_tree_address(T_KINEvars, kine);
   put_tree_address(t5, kine);
-  
-  
+
+
   //  bool match_isFC;
   //  T_eval->SetBranchAddress("match_isFC",&match_isFC);
   //  T_KINEvars->SetBranchAddress("kine_reco_Enu",&tagger.kine_reco_Enu);
 
 
   // BDTs ...
-   // BDT stuff 
+   // BDT stuff
   TMVA::Reader reader_br3_3;
   float br3_3_v_energy;
   float br3_3_v_angle;
@@ -895,7 +895,7 @@ int main( int argc, char** argv )
   float tro_4_v_energy;
   float tro_4_v_shower_main_length;
   float tro_4_v_flag_shower_trajectory;
-  
+
   reader_tro_4.AddVariable("tro_4_v_dir2_mag",&tro_4_v_dir2_mag);
   reader_tro_4.AddVariable("tro_4_v_angle",&tro_4_v_angle);
   reader_tro_4.AddVariable("tro_4_v_angle1",&tro_4_v_angle1);
@@ -945,29 +945,29 @@ int main( int argc, char** argv )
   float sig_2_v_flag_single_shower;
   float sig_2_v_medium_dQ_dx;
   float sig_2_v_start_dQ_dx;
-  
+
   reader_sig_2.AddVariable("sig_2_v_energy",&sig_2_v_energy);
   reader_sig_2.AddVariable("sig_2_v_shower_angle",&sig_2_v_shower_angle);
   reader_sig_2.AddVariable("sig_2_v_flag_single_shower",&sig_2_v_flag_single_shower);
-  reader_sig_2.AddVariable("sig_2_v_medium_dQ_dx",&sig_2_v_medium_dQ_dx);  
+  reader_sig_2.AddVariable("sig_2_v_medium_dQ_dx",&sig_2_v_medium_dQ_dx);
   reader_sig_2.AddVariable("sig_2_v_start_dQ_dx",&sig_2_v_start_dQ_dx);
 
   reader_sig_2.BookMVA( "MyBDT", "weights/sig_2_BDT.weights.xml");
 
   TMVA::Reader reader_stw_2;
-  
+
   float stw_2_v_medium_dQ_dx;
   float stw_2_v_energy;
   float stw_2_v_angle;
   float stw_2_v_dir_length;
   float stw_2_v_max_dQ_dx;
-  
+
   reader_stw_2.AddVariable("stw_2_v_medium_dQ_dx",&stw_2_v_medium_dQ_dx);
   reader_stw_2.AddVariable("stw_2_v_energy",&stw_2_v_energy);
   reader_stw_2.AddVariable("stw_2_v_angle",&stw_2_v_angle);
   reader_stw_2.AddVariable("stw_2_v_dir_length",&stw_2_v_dir_length);
   reader_stw_2.AddVariable("stw_2_v_max_dQ_dx",&stw_2_v_max_dQ_dx);
-  
+
   reader_stw_2.BookMVA( "MyBDT", "weights/stw_2_BDT.weights.xml");
 
   TMVA::Reader reader_stw_3;
@@ -976,12 +976,12 @@ int main( int argc, char** argv )
   float stw_3_v_dir_length;
   float stw_3_v_energy;
   float stw_3_v_medium_dQ_dx;
-  
+
   reader_stw_3.AddVariable("stw_3_v_angle",&stw_3_v_angle);
   reader_stw_3.AddVariable("stw_3_v_dir_length",&stw_3_v_dir_length);
   reader_stw_3.AddVariable("stw_3_v_energy",&stw_3_v_energy);
   reader_stw_3.AddVariable("stw_3_v_medium_dQ_dx",&stw_3_v_medium_dQ_dx);
-  
+
   reader_stw_3.BookMVA( "MyBDT", "weights/stw_3_BDT.weights.xml");
 
   TMVA::Reader reader_stw_4;
@@ -989,18 +989,18 @@ int main( int argc, char** argv )
   float stw_4_v_angle;
   float stw_4_v_dis;
   float stw_4_v_energy;
-  
+
   reader_stw_4.AddVariable("stw_4_v_angle",&stw_4_v_angle);
   reader_stw_4.AddVariable("stw_4_v_dis",&stw_4_v_dis);
   reader_stw_4.AddVariable("stw_4_v_energy",&stw_4_v_energy);
   reader_stw_4.BookMVA( "MyBDT", "weights/stw_4_BDT.weights.xml");
 
-  
+
   // total BDTs ... to be added ...
   TMVA::Reader reader;
   reader.AddVariable("match_isFC",&tagger.match_isFC);
   reader.AddVariable("kine_reco_Enu",&tagger.kine_reco_Enu);
-  
+
   reader.AddVariable("cme_mu_energy",&tagger.cme_mu_energy);
   reader.AddVariable("cme_energy",&tagger.cme_energy);
   reader.AddVariable("cme_mu_length",&tagger.cme_mu_length);
@@ -1267,18 +1267,18 @@ int main( int argc, char** argv )
   float cosmict_10_flag_dir_weak;
   float cosmict_10_angle_beam;
   float cosmict_10_length;
-  
+
   reader_cosmict_10.AddVariable("cosmict_10_vtx_z",&cosmict_10_vtx_z);
   reader_cosmict_10.AddVariable("cosmict_10_flag_shower",&cosmict_10_flag_shower);
   reader_cosmict_10.AddVariable("cosmict_10_flag_dir_weak",&cosmict_10_flag_dir_weak);
   reader_cosmict_10.AddVariable("cosmict_10_angle_beam",&cosmict_10_angle_beam);
   reader_cosmict_10.AddVariable("cosmict_10_length",&cosmict_10_length);
-      
+
   reader_cosmict_10.BookMVA( "MyBDT", "weights/cos_tagger_10.weights.xml");
 
 
   TMVA::Reader reader_numu_1;
-  
+
   float numu_cc_flag_1;
   float numu_cc_1_particle_type;
   float numu_cc_1_length;
@@ -1287,7 +1287,7 @@ int main( int argc, char** argv )
   float numu_cc_1_direct_length;
   float numu_cc_1_n_daughter_tracks;
   float numu_cc_1_n_daughter_all;
-  
+
   reader_numu_1.AddVariable("numu_cc_1_particle_type",&numu_cc_1_particle_type);
   reader_numu_1.AddVariable("numu_cc_1_length",&numu_cc_1_length);
   reader_numu_1.AddVariable("numu_cc_1_medium_dQ_dx",&numu_cc_1_medium_dQ_dx);
@@ -1295,7 +1295,7 @@ int main( int argc, char** argv )
   reader_numu_1.AddVariable("numu_cc_1_direct_length",&numu_cc_1_direct_length);
   reader_numu_1.AddVariable("numu_cc_1_n_daughter_tracks",&numu_cc_1_n_daughter_tracks);
   reader_numu_1.AddVariable("numu_cc_1_n_daughter_all",&numu_cc_1_n_daughter_all);
-      
+
   reader_numu_1.BookMVA( "MyBDT", "weights/numu_tagger1.weights.xml");
 
 
@@ -1304,17 +1304,17 @@ int main( int argc, char** argv )
   float numu_cc_2_total_length;
   float numu_cc_2_n_daughter_tracks;
   float numu_cc_2_n_daughter_all;
-  
+
   reader_numu_2.AddVariable("numu_cc_2_length",&numu_cc_2_length);
   reader_numu_2.AddVariable("numu_cc_2_total_length",&numu_cc_2_total_length);
   reader_numu_2.AddVariable("numu_cc_2_n_daughter_tracks",&numu_cc_2_n_daughter_tracks);
   reader_numu_2.AddVariable("numu_cc_2_n_daughter_all",&numu_cc_2_n_daughter_all);
-  
+
   reader_numu_2.BookMVA( "MyBDT", "weights/numu_tagger2.weights.xml");
 
 
   TMVA::Reader reader_numu;
-  
+
   reader_numu.AddVariable("numu_cc_flag_3", &tagger.numu_cc_flag_3);
   reader_numu.AddVariable("numu_cc_3_particle_type", &tagger.numu_cc_3_particle_type);
   reader_numu.AddVariable("numu_cc_3_max_length", &tagger.numu_cc_3_max_length);
@@ -1740,7 +1740,7 @@ int main( int argc, char** argv )
   reader_nc_delta.AddVariable("kine_pio_phi_2",&kine.kine_pio_phi_2);
   reader_nc_delta.AddVariable("kine_pio_dis_2",&kine.kine_pio_dis_2);
   reader_nc_delta.AddVariable("kine_pio_angle",&kine.kine_pio_angle);
-  
+
   //  reader_nc_delta.BookMVA( "MyBDT", "weights/NC_Delta_final_weights.xml");
   reader_nc_delta.BookMVA( "MyBDT", "weights/NC_Delta_prev_training_plus_even_subrun_ncpi0_ncdelta.xml");
 
@@ -2091,7 +2091,7 @@ int main( int argc, char** argv )
   reader_nc_delta_0track.AddVariable("kine_pio_phi_2",&kine.kine_pio_phi_2);
   reader_nc_delta_0track.AddVariable("kine_pio_dis_2",&kine.kine_pio_dis_2);
   reader_nc_delta_0track.AddVariable("kine_pio_angle",&kine.kine_pio_angle);
-  
+
   //  reader_nc_delta_0track.BookMVA( "MyBDT", "weights/NC_Delta_final_weights.xml");
   reader_nc_delta_0track.BookMVA( "MyBDT", "weights/NC_delta_0_track_final.xml");
 
@@ -2442,11 +2442,11 @@ int main( int argc, char** argv )
   reader_nc_delta_ntrack.AddVariable("kine_pio_phi_2",&kine.kine_pio_phi_2);
   reader_nc_delta_ntrack.AddVariable("kine_pio_dis_2",&kine.kine_pio_dis_2);
   reader_nc_delta_ntrack.AddVariable("kine_pio_angle",&kine.kine_pio_angle);
-  
+
   //  reader_nc_delta_ntrack.BookMVA( "MyBDT", "weights/NC_Delta_final_weights.xml");
   reader_nc_delta_ntrack.BookMVA( "MyBDT", "weights/NC_delta_N_track_final.xml");
-  
-  
+
+
   // Now NCpio by Giacomo @ Yale
   TMVA::Reader reader_nc_pi0;
   reader_nc_pi0.AddVariable("cosmic_n_solid_tracks",&tagger.cosmic_n_solid_tracks);
@@ -2728,38 +2728,379 @@ int main( int argc, char** argv )
   reader_nc_pi0.AddVariable("kine_pio_angle",&kine.kine_pio_angle);
   reader_nc_pi0.BookMVA( "MyBDT", "weights/ncpio_weights_TMVA.xml");
 
-  
+
+
+  // Single Photon BDTs ... by Erin @ UCSB
+  TMVA::Reader reader_single_photon_numu;
+  TMVA::Reader reader_single_photon_other;
+  TMVA::Reader reader_single_photon_ncpi0;
+  TMVA::Reader reader_single_photon_nue;
+
+  reader_single_photon_numu.AddVariable("numu_cc_flag_3",&tagger.numu_cc_flag_3);
+  reader_single_photon_numu.AddVariable("numu_cc_3_particle_type", &tagger.numu_cc_3_particle_type);
+  reader_single_photon_numu.AddVariable("numu_cc_3_max_length", &tagger.numu_cc_3_max_length);
+  reader_single_photon_numu.AddVariable("numu_cc_3_track_length",&tagger.numu_cc_3_acc_track_length);
+  reader_single_photon_numu.AddVariable("numu_cc_3_max_length_all",&tagger.numu_cc_3_max_length_all);
+  reader_single_photon_numu.AddVariable("numu_cc_3_max_muon_length",&tagger.numu_cc_3_max_muon_length);
+  reader_single_photon_numu.AddVariable("numu_cc_3_n_daughter_tracks",&tagger.numu_cc_3_n_daughter_tracks);
+  reader_single_photon_numu.AddVariable("numu_cc_3_n_daughter_all",&tagger.numu_cc_3_n_daughter_all);
+  reader_single_photon_numu.AddVariable("shw_sp_br1_1_shower_type",&tagger.shw_sp_br1_1_shower_type);
+  reader_single_photon_numu.AddVariable("shw_sp_br1_1_vtx_n_segs",&tagger.shw_sp_br1_1_vtx_n_segs);
+  reader_single_photon_numu.AddVariable("shw_sp_br1_1_n_segs",&tagger.shw_sp_br1_1_n_segs);
+  reader_single_photon_numu.AddVariable("shw_sp_br1_1_sg_length",&tagger.shw_sp_br1_1_sg_length);
+  reader_single_photon_numu.AddVariable("shw_sp_br1_2_n_connected",&tagger.shw_sp_br1_2_n_connected);
+  reader_single_photon_numu.AddVariable("shw_sp_br1_2_max_length",&tagger.shw_sp_br1_2_max_length);
+  reader_single_photon_numu.AddVariable("shw_sp_br1_2_n_connected_1",&tagger.shw_sp_br1_2_n_connected_1);
+  reader_single_photon_numu.AddVariable("shw_sp_br1_2_n_shower_segs",&tagger.shw_sp_br1_2_n_shower_segs);
+  reader_single_photon_numu.AddVariable("shw_sp_br1_2_max_length_ratio",&tagger.shw_sp_br1_2_max_length_ratio);
+  reader_single_photon_numu.AddVariable("shw_sp_br1_2_shower_length",&tagger.shw_sp_br1_2_shower_length);
+  reader_single_photon_numu.AddVariable("shw_sp_br1_3_max_length_p",&tagger.shw_sp_br1_3_max_length_p);
+  reader_single_photon_numu.AddVariable("shw_sp_br1_3_n_shower_main_segs",&tagger.shw_sp_br1_3_n_shower_main_segs);
+  reader_single_photon_numu.AddVariable("shw_sp_br3_1_n_shower_segments",&tagger.shw_sp_br3_1_n_shower_segments);
+  reader_single_photon_numu.AddVariable("shw_sp_br3_1_sg_direct_length",&tagger.shw_sp_br3_1_sg_direct_length);
+  reader_single_photon_numu.AddVariable("shw_sp_br3_1_sg_length",&tagger.shw_sp_br3_1_sg_length);
+  reader_single_photon_numu.AddVariable("shw_sp_br3_1_total_main_length",&tagger.shw_sp_br3_1_total_main_length);
+  reader_single_photon_numu.AddVariable("shw_sp_br3_1_total_length",&tagger.shw_sp_br3_1_total_length);
+  reader_single_photon_numu.AddVariable("shw_sp_br3_2_n_ele",&tagger.shw_sp_br3_2_n_ele);
+  reader_single_photon_numu.AddVariable("shw_sp_br3_2_n_other",&tagger.shw_sp_br3_2_n_other);
+  reader_single_photon_numu.AddVariable("shw_sp_br3_2_other_fid",&tagger.shw_sp_br3_2_other_fid);
+  reader_single_photon_numu.AddVariable("shw_sp_br3_4_acc_length",&tagger.shw_sp_br3_4_acc_length);
+  reader_single_photon_numu.AddVariable("shw_sp_br3_4_total_length",&tagger.shw_sp_br3_4_total_length);
+  reader_single_photon_numu.AddVariable("shw_sp_br3_8_max_dQ_dx",&tagger.shw_sp_br3_8_max_dQ_dx);
+  reader_single_photon_numu.AddVariable("shw_sp_br3_8_n_main_segs",&tagger.shw_sp_br3_8_n_main_segs);
+  reader_single_photon_numu.AddVariable("shw_sp_lem_shower_main_length",&tagger.shw_sp_lem_shower_main_length);
+  reader_single_photon_numu.AddVariable("shw_sp_lem_n_3seg",&tagger.shw_sp_lem_n_3seg);
+  reader_single_photon_numu.AddVariable("shw_sp_lem_e_charge",&tagger.shw_sp_lem_e_charge);
+  reader_single_photon_numu.AddVariable("shw_sp_lem_e_dQdx",&tagger.shw_sp_lem_e_dQdx);
+  reader_single_photon_numu.AddVariable("shw_sp_lem_shower_num_main_segs",&tagger.shw_sp_lem_shower_num_main_segs);
+  reader_single_photon_numu.AddVariable("shw_sp_max_dQ_dx_sample",&tagger.shw_sp_max_dQ_dx_sample);
+  reader_single_photon_numu.AddVariable("shw_sp_n_below_threshold",&tagger.shw_sp_n_below_threshold);
+  reader_single_photon_numu.AddVariable("shw_sp_n_below_zero",&tagger.shw_sp_n_below_zero);
+  reader_single_photon_numu.AddVariable("shw_sp_n_lowest",&tagger.shw_sp_n_lowest);
+  reader_single_photon_numu.AddVariable("shw_sp_n_highest",&tagger.shw_sp_n_highest);
+  reader_single_photon_numu.AddVariable("shw_sp_lowest_dQ_dx",&tagger.shw_sp_lowest_dQ_dx);
+  reader_single_photon_numu.AddVariable("shw_sp_highest_dQ_dx",&tagger.shw_sp_highest_dQ_dx);
+  reader_single_photon_numu.AddVariable("shw_sp_medium_dQ_dx",&tagger.shw_sp_medium_dQ_dx);
+  reader_single_photon_numu.AddVariable("shw_sp_stem_length",&tagger.shw_sp_stem_length);
+  reader_single_photon_numu.AddVariable("shw_sp_length_main",&tagger.shw_sp_length_main);
+  reader_single_photon_numu.AddVariable("shw_sp_length_total",&tagger.shw_sp_length_total);
+  reader_single_photon_numu.AddVariable("shw_sp_n_vertex",&tagger.shw_sp_n_vertex);
+  reader_single_photon_numu.AddVariable("shw_sp_n_good_tracks",&tagger.shw_sp_n_good_tracks);
+  reader_single_photon_numu.AddVariable("shw_sp_E_indirect_max_energy",&tagger.shw_sp_E_indirect_max_energy);
+  reader_single_photon_numu.AddVariable("shw_sp_flag_all_above",&tagger.shw_sp_flag_all_above);
+  reader_single_photon_numu.AddVariable("shw_sp_min_dQ_dx_5",&tagger.shw_sp_min_dQ_dx_5);
+  reader_single_photon_numu.AddVariable("shw_sp_n_other_vertex",&tagger.shw_sp_n_other_vertex);
+  reader_single_photon_numu.AddVariable("shw_sp_n_stem_size",&tagger.shw_sp_n_stem_size);
+  reader_single_photon_numu.AddVariable("shw_sp_min_dis",&tagger.shw_sp_min_dis);
+  reader_single_photon_numu.AddVariable("shw_sp_vec_mean_dedx",&tagger.shw_sp_vec_mean_dedx);
+  reader_single_photon_numu.AddVariable("shw_sp_proton_length_1", &tagger.shw_sp_proton_length_1);
+  reader_single_photon_numu.AddVariable("shw_sp_proton_dqdx_1", &tagger.shw_sp_proton_dqdx_1);
+  reader_single_photon_numu.AddVariable("shw_sp_proton_energy_1",&tagger.shw_sp_proton_energy_1);
+  reader_single_photon_numu.AddVariable("shw_sp_proton_length_2", &tagger.shw_sp_proton_length_2);
+  reader_single_photon_numu.AddVariable("shw_sp_proton_dqdx_2", &tagger.shw_sp_proton_dqdx_2);
+  reader_single_photon_numu.AddVariable("shw_sp_proton_energy_2",&tagger.shw_sp_proton_energy_2);
+  reader_single_photon_numu.AddVariable("shw_sp_n_good_showers", &tagger.shw_sp_n_good_showers);
+  reader_single_photon_numu.AddVariable("shw_sp_n_br1_showers", &tagger.shw_sp_n_br1_showers);
+  reader_single_photon_numu.AddVariable("shw_sp_n_br2_showers", &tagger.shw_sp_n_br2_showers);
+  reader_single_photon_numu.AddVariable("shw_sp_n_br3_showers", &tagger.shw_sp_n_br3_showers);
+  reader_single_photon_numu.AddVariable("shw_sp_n_br4_showers", &tagger.shw_sp_n_br4_showers);
+  reader_single_photon_numu.AddVariable("shw_sp_n_20br1_showers", &tagger.shw_sp_n_20br1_showers);
+  reader_single_photon_numu.AddVariable("shw_sp_shw_vtx_dis", &tagger.shw_sp_shw_vtx_dis);
+  reader_single_photon_numu.AddVariable("shw_sp_max_shw_dis",&tagger.shw_sp_max_shw_dis);
+  reader_single_photon_numu.AddVariable("numu_1_score",&tagger.numu_1_score);
+  reader_single_photon_numu.AddVariable("numu_score",&tagger.numu_score);
+
+  reader_single_photon_numu.BookMVA( "MyBDT", "weights/single_photon_numu_bdt_final.xml");
+
+  reader_single_photon_other.AddVariable("cosmict_flag_2",&tagger.cosmict_flag_2);
+  reader_single_photon_other.AddVariable("cosmict_2_filled",&tagger.cosmict_2_filled);
+  reader_single_photon_other.AddVariable("cosmict_2_particle_type",&tagger.cosmict_2_particle_type);
+  reader_single_photon_other.AddVariable("cosmict_2_n_muon_tracks",&tagger.cosmict_2_n_muon_tracks);
+  reader_single_photon_other.AddVariable("cosmict_2_total_shower_length",&tagger.cosmict_2_total_shower_length);
+  reader_single_photon_other.AddVariable("cosmict_2_flag_inside",&tagger.cosmict_2_flag_inside);
+  reader_single_photon_other.AddVariable("cosmict_2_angle_beam",&tagger.cosmict_2_angle_beam);
+  reader_single_photon_other.AddVariable("cosmict_2_flag_dir_weak",&tagger.cosmict_2_flag_dir_weak);
+  reader_single_photon_other.AddVariable("cosmict_2_dQ_dx_end",&tagger.cosmict_2_dQ_dx_end);
+  reader_single_photon_other.AddVariable("cosmict_2_dQ_dx_front",&tagger.cosmict_2_dQ_dx_front);
+  reader_single_photon_other.AddVariable("cosmict_2_theta",&tagger.cosmict_2_theta);
+  reader_single_photon_other.AddVariable("cosmict_2_phi",&tagger.cosmict_2_phi);
+  reader_single_photon_other.AddVariable("cosmict_2_valid_tracks",&tagger.cosmict_2_valid_tracks);
+  reader_single_photon_other.AddVariable("cosmict_flag_4",&tagger.cosmict_flag_4);
+  reader_single_photon_other.AddVariable("cosmict_4_filled",&tagger.cosmict_4_filled);
+  reader_single_photon_other.AddVariable("cosmict_4_flag_inside",&tagger.cosmict_4_flag_inside);
+  reader_single_photon_other.AddVariable("cosmict_4_angle_beam",&tagger.cosmict_4_angle_beam);
+  reader_single_photon_other.AddVariable("cosmict_4_connected_showers",&tagger.cosmict_4_connected_showers);
+  reader_single_photon_other.AddVariable("cosmict_flag_3",&tagger.cosmict_flag_3);
+  reader_single_photon_other.AddVariable("cosmict_3_filled",&tagger.cosmict_3_filled);
+  reader_single_photon_other.AddVariable("cosmict_3_flag_inside",&tagger.cosmict_3_flag_inside);
+  reader_single_photon_other.AddVariable("cosmict_3_angle_beam",&tagger.cosmict_3_angle_beam);
+  reader_single_photon_other.AddVariable("cosmict_3_flag_dir_weak",&tagger.cosmict_3_flag_dir_weak);
+  reader_single_photon_other.AddVariable("cosmict_3_dQ_dx_end",&tagger.cosmict_3_dQ_dx_end);
+  reader_single_photon_other.AddVariable("cosmict_3_dQ_dx_front",&tagger.cosmict_3_dQ_dx_front);
+  reader_single_photon_other.AddVariable("cosmict_3_theta",&tagger.cosmict_3_theta);
+  reader_single_photon_other.AddVariable("cosmict_3_phi",&tagger.cosmict_3_phi);
+  reader_single_photon_other.AddVariable("cosmict_3_valid_tracks",&tagger.cosmict_3_valid_tracks);
+  reader_single_photon_other.AddVariable("cosmict_flag_5",&tagger.cosmict_flag_5);
+  reader_single_photon_other.AddVariable("cosmict_5_filled",&tagger.cosmict_5_filled);
+  reader_single_photon_other.AddVariable("cosmict_5_flag_inside",&tagger.cosmict_5_flag_inside);
+  reader_single_photon_other.AddVariable("cosmict_5_angle_beam",&tagger.cosmict_5_angle_beam);
+  reader_single_photon_other.AddVariable("cosmict_5_connected_showers",&tagger.cosmict_5_connected_showers);
+  reader_single_photon_other.AddVariable("cosmict_flag_6",&tagger.cosmict_flag_6);
+  reader_single_photon_other.AddVariable("cosmict_6_filled",&tagger.cosmict_6_filled);
+  reader_single_photon_other.AddVariable("cosmict_6_flag_dir_weak",&tagger.cosmict_6_flag_dir_weak);
+  reader_single_photon_other.AddVariable("cosmict_6_flag_inside",&tagger.cosmict_6_flag_inside);
+  reader_single_photon_other.AddVariable("cosmict_6_angle",&tagger.cosmict_6_angle);
+  reader_single_photon_other.AddVariable("cosmict_flag_7",&tagger.cosmict_flag_7);
+  reader_single_photon_other.AddVariable("cosmict_7_filled",&tagger.cosmict_7_filled);
+  reader_single_photon_other.AddVariable("cosmict_7_flag_sec",&tagger.cosmict_7_flag_sec);
+  reader_single_photon_other.AddVariable("cosmict_7_n_muon_tracks",&tagger.cosmict_7_n_muon_tracks);
+  reader_single_photon_other.AddVariable("cosmict_7_total_shower_length",&tagger.cosmict_7_total_shower_length);
+  reader_single_photon_other.AddVariable("cosmict_7_flag_inside",&tagger.cosmict_7_flag_inside);
+  reader_single_photon_other.AddVariable("cosmict_7_angle_beam",&tagger.cosmict_7_angle_beam);
+  reader_single_photon_other.AddVariable("cosmict_7_flag_dir_weak",&tagger.cosmict_7_flag_dir_weak);
+  reader_single_photon_other.AddVariable("cosmict_7_dQ_dx_end",&tagger.cosmict_7_dQ_dx_end);
+  reader_single_photon_other.AddVariable("cosmict_7_dQ_dx_front",&tagger.cosmict_7_dQ_dx_front);
+  reader_single_photon_other.AddVariable("cosmict_7_theta",&tagger.cosmict_7_theta);
+  reader_single_photon_other.AddVariable("cosmict_7_phi",&tagger.cosmict_7_phi);
+  reader_single_photon_other.AddVariable("cosmict_flag_8",&tagger.cosmict_flag_8);
+  reader_single_photon_other.AddVariable("cosmict_8_filled",&tagger.cosmict_8_filled);
+  reader_single_photon_other.AddVariable("cosmict_8_flag_out",&tagger.cosmict_8_flag_out);
+  reader_single_photon_other.AddVariable("cosmict_8_muon_length",&tagger.cosmict_8_muon_length);
+  reader_single_photon_other.AddVariable("cosmict_8_acc_length",&tagger.cosmict_8_acc_length);
+  reader_single_photon_other.AddVariable("cosmict_flag_9",&tagger.cosmict_flag_9);
+  reader_single_photon_other.AddVariable("cosmic_flag",&tagger.cosmic_flag);
+  reader_single_photon_other.AddVariable("cosmic_filled",&tagger.cosmic_filled);
+  reader_single_photon_other.AddVariable("cosmict_flag",&tagger.cosmict_flag);
+  reader_single_photon_other.AddVariable("numu_cc_flag",&tagger.numu_cc_flag);
+  reader_single_photon_other.AddVariable("shw_sp_br2_num_valid_tracks", &tagger.shw_sp_br2_num_valid_tracks);
+  reader_single_photon_other.AddVariable("shw_sp_br2_n_shower_main_segs",&tagger.shw_sp_br2_n_shower_main_segs);
+  reader_single_photon_other.AddVariable("shw_sp_br2_sg_length",&tagger.shw_sp_br2_sg_length);
+  reader_single_photon_other.AddVariable("shw_sp_br4_1_shower_main_length",&tagger.shw_sp_br4_1_shower_main_length);
+  reader_single_photon_other.AddVariable("shw_sp_br4_1_shower_total_length",&tagger.shw_sp_br4_1_shower_total_length);
+  reader_single_photon_other.AddVariable("shw_sp_br4_1_min_dis",&tagger.shw_sp_br4_1_min_dis);
+  reader_single_photon_other.AddVariable("shw_sp_br4_1_flag_avoid_muon_check",&tagger.shw_sp_br4_1_flag_avoid_muon_check);
+  reader_single_photon_other.AddVariable("shw_sp_br4_1_n_vtx_segs",&tagger.shw_sp_br4_1_n_vtx_segs);
+  reader_single_photon_other.AddVariable("shw_sp_br4_1_n_main_segs",&tagger.shw_sp_br4_1_n_main_segs);
+  reader_single_photon_other.AddVariable("shw_sp_br4_2_ratio_45",&tagger.shw_sp_br4_2_ratio_45);
+  reader_single_photon_other.AddVariable("shw_sp_br4_2_ratio_35",&tagger.shw_sp_br4_2_ratio_35);
+  reader_single_photon_other.AddVariable("shw_sp_br4_2_ratio_25",&tagger.shw_sp_br4_2_ratio_25);
+  reader_single_photon_other.AddVariable("shw_sp_br4_2_ratio_15",&tagger.shw_sp_br4_2_ratio_15);
+  reader_single_photon_other.AddVariable("shw_sp_br4_2_ratio1_45",&tagger.shw_sp_br4_2_ratio1_45);
+  reader_single_photon_other.AddVariable("shw_sp_br4_2_ratio1_35",&tagger.shw_sp_br4_2_ratio1_35);
+  reader_single_photon_other.AddVariable("shw_sp_br4_2_ratio1_25",&tagger.shw_sp_br4_2_ratio1_25);
+  reader_single_photon_other.AddVariable("shw_sp_br4_2_ratio1_15",&tagger.shw_sp_br4_2_ratio1_15);
+  reader_single_photon_other.AddVariable("shw_sp_lem_shower_main_length",&tagger.shw_sp_lem_shower_main_length);
+  reader_single_photon_other.AddVariable("shw_sp_lem_n_3seg",&tagger.shw_sp_lem_n_3seg);
+  reader_single_photon_other.AddVariable("shw_sp_lem_e_charge",&tagger.shw_sp_lem_e_charge);
+  reader_single_photon_other.AddVariable("shw_sp_lem_e_dQdx",&tagger.shw_sp_lem_e_dQdx);
+  reader_single_photon_other.AddVariable("shw_sp_lem_shower_num_main_segs",&tagger.shw_sp_lem_shower_num_main_segs);
+  reader_single_photon_other.AddVariable("shw_sp_max_dQ_dx_sample",&tagger.shw_sp_max_dQ_dx_sample);
+  reader_single_photon_other.AddVariable("shw_sp_n_below_threshold",&tagger.shw_sp_n_below_threshold);
+  reader_single_photon_other.AddVariable("shw_sp_n_below_zero",&tagger.shw_sp_n_below_zero);
+  reader_single_photon_other.AddVariable("shw_sp_n_lowest",&tagger.shw_sp_n_lowest);
+  reader_single_photon_other.AddVariable("shw_sp_n_highest",&tagger.shw_sp_n_highest);
+  reader_single_photon_other.AddVariable("shw_sp_lowest_dQ_dx",&tagger.shw_sp_lowest_dQ_dx);
+  reader_single_photon_other.AddVariable("shw_sp_highest_dQ_dx",&tagger.shw_sp_highest_dQ_dx);
+  reader_single_photon_other.AddVariable("shw_sp_medium_dQ_dx",&tagger.shw_sp_medium_dQ_dx);
+  reader_single_photon_other.AddVariable("shw_sp_stem_length",&tagger.shw_sp_stem_length);
+  reader_single_photon_other.AddVariable("shw_sp_length_main",&tagger.shw_sp_length_main);
+  reader_single_photon_other.AddVariable("shw_sp_length_total",&tagger.shw_sp_length_total);
+  reader_single_photon_other.AddVariable("shw_sp_n_vertex",&tagger.shw_sp_n_vertex);
+  reader_single_photon_other.AddVariable("shw_sp_n_good_tracks",&tagger.shw_sp_n_good_tracks);
+  reader_single_photon_other.AddVariable("shw_sp_E_indirect_max_energy",&tagger.shw_sp_E_indirect_max_energy);
+  reader_single_photon_other.AddVariable("shw_sp_flag_all_above",&tagger.shw_sp_flag_all_above);
+  reader_single_photon_other.AddVariable("shw_sp_min_dQ_dx_5",&tagger.shw_sp_min_dQ_dx_5);
+  reader_single_photon_other.AddVariable("shw_sp_n_other_vertex",&tagger.shw_sp_n_other_vertex);
+  reader_single_photon_other.AddVariable("shw_sp_n_stem_size",&tagger.shw_sp_n_stem_size);
+  reader_single_photon_other.AddVariable("shw_sp_min_dis",&tagger.shw_sp_min_dis);
+  reader_single_photon_other.AddVariable("shw_sp_vec_mean_dedx",&tagger.shw_sp_vec_mean_dedx);
+  reader_single_photon_other.AddVariable("shw_sp_vec_dQ_dx_0",&tagger.shw_sp_vec_dQ_dx_0);
+  reader_single_photon_other.AddVariable("shw_sp_vec_dQ_dx_1",&tagger.shw_sp_vec_dQ_dx_1);
+  reader_single_photon_other.AddVariable("shw_sp_vec_dQ_dx_2",&tagger.shw_sp_vec_dQ_dx_2);
+  reader_single_photon_other.AddVariable("shw_sp_vec_dQ_dx_3",&tagger.shw_sp_vec_dQ_dx_3);
+  reader_single_photon_other.AddVariable("shw_sp_vec_dQ_dx_4",&tagger.shw_sp_vec_dQ_dx_4);
+  reader_single_photon_other.AddVariable("shw_sp_vec_dQ_dx_5",&tagger.shw_sp_vec_dQ_dx_5);
+  reader_single_photon_other.AddVariable("shw_sp_vec_dQ_dx_6",&tagger.shw_sp_vec_dQ_dx_6);
+  reader_single_photon_other.AddVariable("shw_sp_vec_dQ_dx_7",&tagger.shw_sp_vec_dQ_dx_7);
+  reader_single_photon_other.AddVariable("shw_sp_vec_dQ_dx_8",&tagger.shw_sp_vec_dQ_dx_8);
+  reader_single_photon_other.AddVariable("shw_sp_vec_dQ_dx_9",&tagger.shw_sp_vec_dQ_dx_9);
+  reader_single_photon_other.AddVariable("shw_sp_vec_dQ_dx_10",&tagger.shw_sp_vec_dQ_dx_10);
+  reader_single_photon_other.AddVariable("shw_sp_vec_dQ_dx_11",&tagger.shw_sp_vec_dQ_dx_11);
+  reader_single_photon_other.AddVariable("shw_sp_vec_dQ_dx_12",&tagger.shw_sp_vec_dQ_dx_12);
+  reader_single_photon_other.AddVariable("shw_sp_vec_dQ_dx_13",&tagger.shw_sp_vec_dQ_dx_13);
+  reader_single_photon_other.AddVariable("shw_sp_vec_dQ_dx_14",&tagger.shw_sp_vec_dQ_dx_14);
+  reader_single_photon_other.AddVariable("shw_sp_vec_dQ_dx_15",&tagger.shw_sp_vec_dQ_dx_15);
+  reader_single_photon_other.AddVariable("shw_sp_vec_dQ_dx_16",&tagger.shw_sp_vec_dQ_dx_16);
+  reader_single_photon_other.AddVariable("shw_sp_vec_dQ_dx_17",&tagger.shw_sp_vec_dQ_dx_17);
+  reader_single_photon_other.AddVariable("shw_sp_vec_dQ_dx_18",&tagger.shw_sp_vec_dQ_dx_18);
+  reader_single_photon_other.AddVariable("shw_sp_vec_dQ_dx_19",&tagger.shw_sp_vec_dQ_dx_19);
+  reader_single_photon_other.AddVariable("shw_sp_vec_median_dedx",&tagger.shw_sp_vec_median_dedx);
+  reader_single_photon_other.AddVariable("shw_sp_proton_length_1", &tagger.shw_sp_proton_length_1);
+  reader_single_photon_other.AddVariable("shw_sp_proton_dqdx_1", &tagger.shw_sp_proton_dqdx_1);
+  reader_single_photon_other.AddVariable("shw_sp_proton_energy_1",&tagger.shw_sp_proton_energy_1);
+  reader_single_photon_other.AddVariable("shw_sp_proton_length_2", &tagger.shw_sp_proton_length_2);
+  reader_single_photon_other.AddVariable("shw_sp_proton_dqdx_2", &tagger.shw_sp_proton_dqdx_2);
+  reader_single_photon_other.AddVariable("shw_sp_proton_energy_2",&tagger.shw_sp_proton_energy_2);
+  reader_single_photon_other.AddVariable("shw_sp_n_good_showers", &tagger.shw_sp_n_good_showers);
+  reader_single_photon_other.AddVariable("shw_sp_n_br1_showers", &tagger.shw_sp_n_br1_showers);
+  reader_single_photon_other.AddVariable("shw_sp_n_br2_showers", &tagger.shw_sp_n_br2_showers);
+  reader_single_photon_other.AddVariable("shw_sp_n_br3_showers", &tagger.shw_sp_n_br3_showers);
+  reader_single_photon_other.AddVariable("shw_sp_n_br4_showers", &tagger.shw_sp_n_br4_showers);
+  reader_single_photon_other.AddVariable("shw_sp_n_20br1_showers", &tagger.shw_sp_n_20br1_showers);
+  reader_single_photon_other.AddVariable("shw_sp_shw_vtx_dis", &tagger.shw_sp_shw_vtx_dis);
+  reader_single_photon_other.AddVariable("shw_sp_max_shw_dis",&tagger.shw_sp_max_shw_dis);
+  reader_single_photon_other.AddVariable("shw_sp_num_mip_tracks",&tagger.shw_sp_num_mip_tracks);
+  reader_single_photon_other.AddVariable("shw_sp_num_muons",&tagger.shw_sp_num_muons);
+  reader_single_photon_other.AddVariable("shw_sp_num_protons",&tagger.shw_sp_num_protons);
+  reader_single_photon_other.AddVariable("shw_sp_hol_2_min_angle",&tagger.shw_sp_hol_2_min_angle);
+  reader_single_photon_other.AddVariable("cosmict_10_score",&tagger.cosmict_10_score);
+  reader_single_photon_other.AddVariable("numu_1_score",&tagger.numu_1_score);
+  reader_single_photon_other.AddVariable("numu_2_score",&tagger.numu_2_score);
+  reader_single_photon_other.AddVariable("numu_score",&tagger.numu_score);
+  reader_single_photon_other.AddVariable("reco_nuvtxY",&pfeval.reco_nuvtxY);
+
+  reader_single_photon_other.BookMVA( "MyBDT", "weights/single_photon_other_bdt_final.xml");
+
+  reader_single_photon_ncpi0.AddVariable("shw_sp_pio_1_mass",&tagger.shw_sp_pio_1_mass);
+  reader_single_photon_ncpi0.AddVariable("shw_sp_pio_1_pio_type",&tagger.shw_sp_pio_1_pio_type);
+  reader_single_photon_ncpi0.AddVariable("shw_sp_pio_1_energy_1",&tagger.shw_sp_pio_1_energy_1);
+  reader_single_photon_ncpi0.AddVariable("shw_sp_pio_1_energy_2",&tagger.shw_sp_pio_1_energy_2);
+  reader_single_photon_ncpi0.AddVariable("shw_sp_pio_1_dis_1",&tagger.shw_sp_pio_1_dis_1);
+  reader_single_photon_ncpi0.AddVariable("shw_sp_pio_1_dis_2",&tagger.shw_sp_pio_1_dis_2);
+  reader_single_photon_ncpi0.AddVariable("shw_sp_pio_mip_id",&tagger.shw_sp_pio_mip_id);
+  reader_single_photon_ncpi0.AddVariable("shw_sp_pio_flag_pio",&tagger.shw_sp_pio_flag_pio);
+  reader_single_photon_ncpi0.AddVariable("shw_sp_n_20br1_showers",&tagger.shw_sp_n_20br1_showers);
+  reader_single_photon_ncpi0.AddVariable("shw_sp_n_br1_showers",&tagger.shw_sp_n_br1_showers);
+  reader_single_photon_ncpi0.AddVariable("shw_sp_n_br2_showers",&tagger.shw_sp_n_br2_showers);
+  reader_single_photon_ncpi0.AddVariable("shw_sp_n_br3_showers",&tagger.shw_sp_n_br3_showers);
+  reader_single_photon_ncpi0.AddVariable("shw_sp_n_br4_showers",&tagger.shw_sp_n_br4_showers);
+  reader_single_photon_ncpi0.AddVariable("shw_sp_E_indirect_max_energy",&tagger.shw_sp_E_indirect_max_energy);
+  reader_single_photon_ncpi0.AddVariable("shw_sp_lol_3_vtx_n_segs",&tagger.shw_sp_lol_3_vtx_n_segs);
+  reader_single_photon_ncpi0.AddVariable("shw_sp_hol_1_min_length",&tagger.shw_sp_hol_1_min_length);
+  reader_single_photon_ncpi0.AddVariable("shw_sp_hol_2_min_angle",&tagger.shw_sp_hol_2_min_angle);
+  reader_single_photon_ncpi0.AddVariable("shw_sp_hol_1_min_angle",&tagger.shw_sp_hol_1_min_angle);
+  reader_single_photon_ncpi0.AddVariable("tro_5_score",&tagger.tro_5_score);
+  reader_single_photon_ncpi0.AddVariable("tro_4_score",&tagger.tro_4_score);
+  reader_single_photon_ncpi0.AddVariable("tro_2_score",&tagger.tro_2_score);
+  reader_single_photon_ncpi0.AddVariable("tro_1_score",&tagger.tro_1_score);
+  reader_single_photon_ncpi0.AddVariable("stw_4_score",&tagger.stw_4_score);
+  reader_single_photon_ncpi0.AddVariable("stw_3_score",&tagger.stw_3_score);
+  reader_single_photon_ncpi0.AddVariable("stw_2_score",&tagger.stw_2_score);
+  reader_single_photon_ncpi0.AddVariable("sig_2_score",&tagger.sig_2_score);
+  reader_single_photon_ncpi0.AddVariable("sig_1_score",&tagger.sig_1_score);
+  reader_single_photon_ncpi0.AddVariable("pio_2_score",&tagger.pio_2_score);
+  reader_single_photon_ncpi0.AddVariable("lol_2_score",&tagger.lol_2_score);
+  reader_single_photon_ncpi0.AddVariable("lol_1_score",&tagger.lol_1_score);
+  reader_single_photon_ncpi0.AddVariable("br3_6_score",&tagger.br3_6_score);
+  reader_single_photon_ncpi0.AddVariable("br3_5_score",&tagger.br3_5_score);
+  reader_single_photon_ncpi0.AddVariable("br3_3_score",&tagger.br3_3_score);
+  reader_single_photon_ncpi0.AddVariable("kine_pio_mass",&kine.kine_pio_mass);
+  reader_single_photon_ncpi0.AddVariable("kine_pio_flag",&kine.kine_pio_flag);
+  reader_single_photon_ncpi0.AddVariable("kine_pio_vtx_dis",&kine.kine_pio_vtx_dis);
+  reader_single_photon_ncpi0.AddVariable("kine_pio_energy_1",&kine.kine_pio_energy_1);
+  reader_single_photon_ncpi0.AddVariable("kine_pio_theta_1",&kine.kine_pio_theta_1);
+  reader_single_photon_ncpi0.AddVariable("kine_pio_phi_1",&kine.kine_pio_phi_1);
+  reader_single_photon_ncpi0.AddVariable("kine_pio_dis_1",&kine.kine_pio_dis_1);
+  reader_single_photon_ncpi0.AddVariable("kine_pio_energy_2",&kine.kine_pio_energy_2);
+  reader_single_photon_ncpi0.AddVariable("kine_pio_theta_2",&kine.kine_pio_theta_2);
+  reader_single_photon_ncpi0.AddVariable("kine_pio_phi_2",&kine.kine_pio_phi_2);
+  reader_single_photon_ncpi0.AddVariable("kine_pio_dis_2",&kine.kine_pio_dis_2);
+  reader_single_photon_ncpi0.AddVariable("kine_pio_angle",&kine.kine_pio_angle);
+
+  reader_single_photon_ncpi0.BookMVA( "MyBDT", "weights/single_photon_ncpi0_bdt_final.xml");
+
+  reader_single_photon_nue.AddVariable("shw_sp_max_dQ_dx_sample",&tagger.shw_sp_max_dQ_dx_sample);
+  reader_single_photon_nue.AddVariable("shw_sp_n_below_threshold",&tagger.shw_sp_n_below_threshold);
+  reader_single_photon_nue.AddVariable("shw_sp_n_below_zero",&tagger.shw_sp_n_below_zero);
+  reader_single_photon_nue.AddVariable("shw_sp_n_lowest",&tagger.shw_sp_n_lowest);
+  reader_single_photon_nue.AddVariable("shw_sp_n_highest",&tagger.shw_sp_n_highest);
+  reader_single_photon_nue.AddVariable("shw_sp_lowest_dQ_dx",&tagger.shw_sp_lowest_dQ_dx);
+  reader_single_photon_nue.AddVariable("shw_sp_highest_dQ_dx",&tagger.shw_sp_highest_dQ_dx);
+  reader_single_photon_nue.AddVariable("shw_sp_medium_dQ_dx",&tagger.shw_sp_medium_dQ_dx);
+  reader_single_photon_nue.AddVariable("shw_sp_stem_length",&tagger.shw_sp_stem_length);
+  reader_single_photon_nue.AddVariable("shw_sp_length_main",&tagger.shw_sp_length_main);
+  reader_single_photon_nue.AddVariable("shw_sp_length_total",&tagger.shw_sp_length_total);
+  reader_single_photon_nue.AddVariable("shw_sp_n_vertex",&tagger.shw_sp_n_vertex);
+  reader_single_photon_nue.AddVariable("shw_sp_n_good_tracks",&tagger.shw_sp_n_good_tracks);
+  reader_single_photon_nue.AddVariable("shw_sp_E_indirect_max_energy",&tagger.shw_sp_E_indirect_max_energy);
+  reader_single_photon_nue.AddVariable("shw_sp_flag_all_above",&tagger.shw_sp_flag_all_above);
+  reader_single_photon_nue.AddVariable("shw_sp_min_dQ_dx_5",&tagger.shw_sp_min_dQ_dx_5);
+  reader_single_photon_nue.AddVariable("shw_sp_n_other_vertex",&tagger.shw_sp_n_other_vertex);
+  reader_single_photon_nue.AddVariable("shw_sp_n_stem_size",&tagger.shw_sp_n_stem_size);
+  reader_single_photon_nue.AddVariable("shw_sp_min_dis",&tagger.shw_sp_min_dis);
+  reader_single_photon_nue.AddVariable("shw_sp_vec_mean_dedx",&tagger.shw_sp_vec_mean_dedx);
+  reader_single_photon_nue.AddVariable("shw_sp_vec_dQ_dx_0",&tagger.shw_sp_vec_dQ_dx_0);
+  reader_single_photon_nue.AddVariable("shw_sp_vec_dQ_dx_1",&tagger.shw_sp_vec_dQ_dx_1);
+  reader_single_photon_nue.AddVariable("shw_sp_vec_dQ_dx_2",&tagger.shw_sp_vec_dQ_dx_2);
+  reader_single_photon_nue.AddVariable("shw_sp_vec_dQ_dx_3",&tagger.shw_sp_vec_dQ_dx_3);
+  reader_single_photon_nue.AddVariable("shw_sp_vec_dQ_dx_4",&tagger.shw_sp_vec_dQ_dx_4);
+  reader_single_photon_nue.AddVariable("shw_sp_vec_dQ_dx_5",&tagger.shw_sp_vec_dQ_dx_5);
+  reader_single_photon_nue.AddVariable("shw_sp_vec_dQ_dx_6",&tagger.shw_sp_vec_dQ_dx_6);
+  reader_single_photon_nue.AddVariable("shw_sp_vec_dQ_dx_7",&tagger.shw_sp_vec_dQ_dx_7);
+  reader_single_photon_nue.AddVariable("shw_sp_vec_dQ_dx_8",&tagger.shw_sp_vec_dQ_dx_8);
+  reader_single_photon_nue.AddVariable("shw_sp_vec_dQ_dx_9",&tagger.shw_sp_vec_dQ_dx_9);
+  reader_single_photon_nue.AddVariable("shw_sp_vec_dQ_dx_10",&tagger.shw_sp_vec_dQ_dx_10);
+  reader_single_photon_nue.AddVariable("shw_sp_vec_dQ_dx_11",&tagger.shw_sp_vec_dQ_dx_11);
+  reader_single_photon_nue.AddVariable("shw_sp_vec_dQ_dx_12",&tagger.shw_sp_vec_dQ_dx_12);
+  reader_single_photon_nue.AddVariable("shw_sp_vec_dQ_dx_13",&tagger.shw_sp_vec_dQ_dx_13);
+  reader_single_photon_nue.AddVariable("shw_sp_vec_dQ_dx_14",&tagger.shw_sp_vec_dQ_dx_14);
+  reader_single_photon_nue.AddVariable("shw_sp_vec_dQ_dx_15",&tagger.shw_sp_vec_dQ_dx_15);
+  reader_single_photon_nue.AddVariable("shw_sp_vec_dQ_dx_16",&tagger.shw_sp_vec_dQ_dx_16);
+  reader_single_photon_nue.AddVariable("shw_sp_vec_dQ_dx_17",&tagger.shw_sp_vec_dQ_dx_17);
+  reader_single_photon_nue.AddVariable("shw_sp_vec_dQ_dx_18",&tagger.shw_sp_vec_dQ_dx_18);
+  reader_single_photon_nue.AddVariable("shw_sp_vec_dQ_dx_19",&tagger.shw_sp_vec_dQ_dx_19);
+  reader_single_photon_nue.AddVariable("shw_sp_vec_median_dedx",&tagger.shw_sp_vec_median_dedx);
+  reader_single_photon_nue.AddVariable("shw_sp_proton_length_1", &tagger.shw_sp_proton_length_1);
+  reader_single_photon_nue.AddVariable("shw_sp_proton_dqdx_1", &tagger.shw_sp_proton_dqdx_1);
+  reader_single_photon_nue.AddVariable("shw_sp_proton_energy_1",&tagger.shw_sp_proton_energy_1);
+  reader_single_photon_nue.AddVariable("shw_sp_proton_length_2", &tagger.shw_sp_proton_length_2);
+  reader_single_photon_nue.AddVariable("shw_sp_proton_dqdx_2", &tagger.shw_sp_proton_dqdx_2);
+  reader_single_photon_nue.AddVariable("shw_sp_proton_energy_2",&tagger.shw_sp_proton_energy_2);
+  reader_single_photon_nue.AddVariable("shw_sp_n_good_showers", &tagger.shw_sp_n_good_showers);
+  reader_single_photon_nue.AddVariable("shw_sp_n_20mev_showers", &tagger.shw_sp_n_20mev_showers);
+  reader_single_photon_nue.AddVariable("shw_sp_n_br1_showers", &tagger.shw_sp_n_br1_showers);
+  reader_single_photon_nue.AddVariable("shw_sp_n_br2_showers", &tagger.shw_sp_n_br2_showers);
+  reader_single_photon_nue.AddVariable("shw_sp_n_br3_showers", &tagger.shw_sp_n_br3_showers);
+  reader_single_photon_nue.AddVariable("shw_sp_n_br4_showers", &tagger.shw_sp_n_br4_showers);
+  reader_single_photon_nue.AddVariable("shw_sp_n_20br1_showers", &tagger.shw_sp_n_20br1_showers);
+  reader_single_photon_nue.AddVariable("shw_sp_shw_vtx_dis", &tagger.shw_sp_shw_vtx_dis);
+  reader_single_photon_nue.AddVariable("shw_sp_max_shw_dis",&tagger.shw_sp_max_shw_dis);
+
+  reader_single_photon_nue.BookMVA( "MyBDT", "weights/single_photon_nue_bdt_final.xml");
+  //
+
+
   std::map<std::pair<int, int>, int> map_rs_n;
   std::map<std::pair<int, int>, std::set<int> > map_rs_f1p5; // Reco 1.5
   std::map<std::pair<int, int>, std::set<int> > map_rs_f2stm; // Reco2 stm
   std::map<std::pair<int, int>, std::set<int> > map_rs_f2pr; // Reco2 Pattern recognition
-  
+
   T_eval->SetBranchStatus("*",0);
-  T_eval->SetBranchStatus("stm_eventtype",1); 
-  T_eval->SetBranchStatus("stm_lowenergy",1); 
-  T_eval->SetBranchStatus("stm_LM",1); 
-  T_eval->SetBranchStatus("stm_TGM",1); 
-  T_eval->SetBranchStatus("stm_STM",1); 
-  T_eval->SetBranchStatus("stm_FullDead",1); 
+  T_eval->SetBranchStatus("stm_eventtype",1);
+  T_eval->SetBranchStatus("stm_lowenergy",1);
+  T_eval->SetBranchStatus("stm_LM",1);
+  T_eval->SetBranchStatus("stm_TGM",1);
+  T_eval->SetBranchStatus("stm_STM",1);
+  T_eval->SetBranchStatus("stm_FullDead",1);
   T_eval->SetBranchStatus("stm_clusterlength",1);
   T_eval->SetBranchStatus("match_found",1);
-  T_eval->SetBranchStatus("run",1); 
-  T_eval->SetBranchStatus("subrun",1); 
+  T_eval->SetBranchStatus("run",1);
+  T_eval->SetBranchStatus("subrun",1);
   T_eval->SetBranchStatus("event",1);
   if (T_eval->GetBranch("file_type")) T_eval->SetBranchStatus("file_type",1);
 
   if (T_eval->GetBranch("match_found_asInt")){
     T_eval->SetBranchStatus("match_found_asInt",1);
   }
-  
+
   T_BDTvars->SetBranchStatus("*",0);
   T_BDTvars->SetBranchStatus("numu_cc_flag",1);
 
   std::set<std::pair<int,int> > remove_set;
-  
+
   bool flag_presel = false;
   for (Int_t i=0;i!=T_eval->GetEntries();i++){
-    
+
     T_eval->GetEntry(i);
     T_BDTvars->GetEntry(i);
 
@@ -2768,9 +3109,9 @@ int main( int argc, char** argv )
 	(*eval.file_type) = global_file_type;
       }
       auto it1 = map_type_run_subrun.find(*eval.file_type);
-      
+
       if (it1 != map_type_run_subrun.end()){
-	
+
 	// hack for now ...
 	if (it1->second.find(std::make_pair(eval.run, eval.subrun)) != it1->second.end()) {
 	  remove_set.insert(std::make_pair(eval.run, eval.subrun));
@@ -2785,12 +3126,12 @@ int main( int argc, char** argv )
     // failed jobs ...
     int tmp_match_found = eval.match_found;
     if (eval.is_match_found_int) tmp_match_found = eval.match_found_asInt;
-    
+
     flag_presel = false;
     if (tmp_match_found != 0 && eval.stm_eventtype != 0 && eval.stm_lowenergy ==0 && eval.stm_LM ==0 && eval.stm_TGM ==0 && eval.stm_STM==0 && eval.stm_FullDead == 0 && eval.stm_clusterlength >0) {
       flag_presel = true; // preselection ...
     }
-    
+
     map_rs_n[std::make_pair(eval.run, eval.subrun)] ++;
     if (tmp_match_found == -1) map_rs_f1p5[std::make_pair(eval.run, eval.subrun)].insert(eval.event);
     if (tmp_match_found == 1 && eval.stm_lowenergy == -1) map_rs_f2stm[std::make_pair(eval.run, eval.subrun)].insert(eval.event);
@@ -2818,11 +3159,11 @@ int main( int argc, char** argv )
   */
 
   //  std::cout << remove_set.size() << std::endl;
-  
+
 
   T_eval->SetBranchStatus("*",1);
   T_BDTvars->SetBranchStatus("*",1);
-  
+
   //  for (int i=0;i!=100;i++){
   for (int i=0;i!=T_BDTvars->GetEntries();i++){
     eval.weight_change = false;
@@ -2832,7 +3173,7 @@ int main( int argc, char** argv )
     T_PFeval->GetEntry(i);
 
     if (remove_set.find(std::make_pair(eval.run, eval.subrun)) != remove_set.end()) continue;
-    
+
     tagger.br3_3_score     = cal_br3_3_bdt(0.3, tagger,  reader_br3_3, br3_3_v_energy,  br3_3_v_angle,  br3_3_v_dir_length, br3_3_v_length);
     tagger.br3_5_score     = cal_br3_5_bdt(0.42, tagger,  reader_br3_5, br3_5_v_dir_length, br3_5_v_total_length, br3_5_v_flag_avoid_muon_check, br3_5_v_n_seg, br3_5_v_angle, br3_5_v_sg_length, br3_5_v_energy, br3_5_v_n_main_segs, br3_5_v_n_segs, br3_5_v_shower_main_length, br3_5_v_shower_total_length);
     tagger.br3_6_score     = cal_br3_6_bdt(0.75, tagger, reader_br3_6, br3_6_v_angle, br3_6_v_angle1, br3_6_v_flag_shower_trajectory, br3_6_v_direct_length, br3_6_v_length, br3_6_v_n_other_vtx_segs, br3_6_v_energy);
@@ -2850,7 +3191,7 @@ int main( int argc, char** argv )
     tagger.tro_4_score     = cal_tro_4_bdt(0.33, tagger, reader_tro_4, tro_4_v_dir2_mag, tro_4_v_angle, tro_4_v_angle1, tro_4_v_angle2, tro_4_v_length, tro_4_v_length1, tro_4_v_medium_dQ_dx, tro_4_v_end_dQ_dx, tro_4_v_energy, tro_4_v_shower_main_length, tro_4_v_flag_shower_trajectory);
     tagger.tro_5_score     = cal_tro_5_bdt(0.5, tagger, reader_tro_5, tro_5_v_max_angle, tro_5_v_min_angle, tro_5_v_max_length, tro_5_v_iso_angle, tro_5_v_n_vtx_segs, tro_5_v_min_count, tro_5_v_max_count, tro_5_v_energy);
     tagger.nue_score       = cal_bdts_xgboost( tagger,  reader);
-    
+
     // BDT calculations
     tagger.numu_1_score = cal_numu_1_bdt(-0.4, tagger, reader_numu_1, numu_cc_flag_1,
 					 numu_cc_1_particle_type,
@@ -2875,16 +3216,16 @@ int main( int argc, char** argv )
     if (std::isnan(tagger.cosmict_7_angle_beam)) tagger.cosmict_7_angle_beam = 0;
     if (std::isnan(tagger.cosmict_7_theta)) tagger.cosmict_7_theta = 0;
     if (std::isnan(tagger.cosmict_7_phi)) tagger.cosmict_7_phi = 0;
-    
-    tagger.numu_score = cal_numu_bdts_xgboost(tagger,reader_numu); 
+
+    tagger.numu_score = cal_numu_bdts_xgboost(tagger,reader_numu);
 
     // NC gamma ... add a NC BDT ... Lee
     tagger.nc_delta_score = cal_nc_delta_bdts_xgboost(tagger, reader_nc_delta);
     tagger.nc_delta_0track_score = cal_nc_delta_0track_bdts_xgboost(tagger, reader_nc_delta_0track);
     tagger.nc_delta_ntrack_score = cal_nc_delta_ntrack_bdts_xgboost(tagger, reader_nc_delta_ntrack);
- 
+
     //    std::cout << tagger.nc_delta_0track_score << " " << tagger.nc_delta_ntrack_score << std::endl;
-    
+
     tagger.nc_pio_score = cal_nc_pio_bdts_xgboost(tagger, reader_nc_pi0);
     // if (eval.run == 6467 && eval.event == 97
     // 	|| eval.run == 7026 && eval.event == 22180
@@ -2899,8 +3240,14 @@ int main( int argc, char** argv )
 
     //hack
     //    tagger.nc_delta_score = -15;
-    
-    
+
+    // Single Photon BDTs ... Erin
+    tagger.single_photon_numu_score = cal_single_photon_numu_bdts_xgboost(tagger, reader_single_photon_numu);
+    tagger.single_photon_other_score = cal_single_photon_other_bdts_xgboost(tagger, reader_single_photon_other);
+    tagger.single_photon_ncpi0_score = cal_single_photon_ncpi0_bdts_xgboost(tagger, reader_single_photon_ncpi0);
+    tagger.single_photon_nue_score = cal_single_photon_nue_bdts_xgboost(tagger, reader_single_photon_nue);
+
+
     // limit the cut val ...
     if (std::isnan(eval.weight_spline) || std::isinf(eval.weight_spline) ||
 	std::isnan(eval.weight_cv) || std::isinf(eval.weight_cv) ||
@@ -2927,7 +3274,7 @@ int main( int argc, char** argv )
       // bnb run 3 high rate
       if (eval.run >=15369 && eval.run <= 15402) continue;
     }
-    
+
     t4->Fill();
     t1->Fill();
     t3->Fill();
@@ -2939,7 +3286,7 @@ int main( int argc, char** argv )
 
   for (Int_t i=0;i!=T_pot->GetEntries();i++){
     T_pot->GetEntry(i);
-    
+
     if (remove_set.find(std::make_pair(pot.runNo, pot.subRunNo)) != remove_set.end()) continue;
 
     if (flag_data && skip_cut == 0){
@@ -2966,12 +3313,12 @@ int main( int argc, char** argv )
   for (auto it = remove_set.begin(); it!= remove_set.end(); it++){
     std::cout <<"remove  run:" << it->first << " subrun:" << it->second << std::endl;
   }
-  
+
   file2->Write();
   file2->Close();
-  
+
   return 0;
 
-  
-  
+
+
 }

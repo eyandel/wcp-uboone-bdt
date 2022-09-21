@@ -9,6 +9,9 @@ struct PFevalInfo{
   bool flag_pf_truth;
   bool flag_pf_reco;
   bool flag_init_pointers;
+  //Erin
+  bool flag_single_photon;
+  //
 
   Int_t run;
   Int_t subrun;
