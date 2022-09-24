@@ -27,71 +27,74 @@ namespace LEEana{
   // correct reco neutrino energy and reco shower energy
   double get_reco_Enu_corr(KineInfo& kine, bool flag_data);
   double get_reco_showerKE_corr(PFevalInfo& pfeval, bool flag_data);
-  
+
   double get_reco_Eproton(KineInfo& kine);
   double get_reco_Epion(KineInfo& kine);
 
   double get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, TaggerInfo& tagger, bool flag_data, TString var_name="kine_reco_Enu");
-  double get_truth_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, TaggerInfo& tagger, TString var_name); 
- 
+  double get_truth_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, TaggerInfo& tagger, TString var_name);
+
   bool get_cut_pass(TString ch_name, TString add_cut, bool flag_data, EvalInfo& eval, PFevalInfo& pfeval, TaggerInfo& tagger, KineInfo& kine);
   bool get_rw_cut_pass(TString cut, EvalInfo& eval, PFevalInfo& pfeval, TaggerInfo& tagger, KineInfo& kine);
   double get_weight(TString weight_name, EvalInfo& eval, PFevalInfo& pfeval, KineInfo& kine, TaggerInfo& tagger, std::tuple< bool, std::vector< std::tuple<bool, TString, TString, double, double, bool, bool, bool,  std::vector<double>, std::vector<double>  > > > rw_info, bool flag_data=false);
   int get_xs_signal_no(int cut_file, std::map<TString, int>& map_cut_xs_bin, EvalInfo& eval, PFevalInfo& pfeval, TaggerInfo& tagger, KineInfo& kine);
-  
+
   // generic neutrino cuts
   // TCut generic_cut = "match_found == 1 && stm_eventtype != 0 &&stm_lowenergy ==0 && stm_LM ==0 && stm_TGM ==0 && stm_STM==0 && stm_FullDead == 0 && stm_cluster_length >15";
   bool is_generic(EvalInfo& info);
-  
+
   // preselection cuts
   // TCut preselect_cut = "match_found == 1 && stm_eventtype != 0 &&stm_lowenergy ==0 && stm_LM ==0 && stm_TGM ==0 && stm_STM==0 && stm_FullDead == 0 && stm_cluster_length > 0";
-  bool is_preselection(EvalInfo& info); 
-  
+  bool is_preselection(EvalInfo& info);
+
   // nueCC cuts
   // TCut nueCC_cut = "numu_cc_flag >=0 && nue_score > 7.0";
   bool is_nueCC(TaggerInfo& tagger_info);
   bool is_loosenueCC(TaggerInfo& tagger_info);
-  
+
   bool is_far_sideband(KineInfo& kine, TaggerInfo& tagger, bool flag_data);
   bool is_near_sideband(KineInfo& kine, TaggerInfo& tagger, bool flag_data);
   bool is_LEE_signal(KineInfo& kine, TaggerInfo& tagger, bool flag_data);
-  
+
   // numuCC cuts
   // TCut numuCC_cut = "numu_cc_flag >=0 && numu_score > 0.9";
   bool is_numuCC(TaggerInfo& tagger_info);
   bool is_numuCC_tight(TaggerInfo& tagger_info, PFevalInfo& pfeval);
   bool is_numuCC_1mu0p(TaggerInfo& tagger_info, KineInfo& kine, PFevalInfo& pfeval);
-  
+
   bool is_0p(TaggerInfo& tagger_info, KineInfo& kine, PFevalInfo& pfeval);
   bool is_1p(TaggerInfo& tagger_info, KineInfo& kine, PFevalInfo& pfeval);
   bool is_0pi(TaggerInfo& tagger_info, KineInfo& kine, PFevalInfo& pfeval);
 
   bool is_numuCC_lowEhad(TaggerInfo& tagger_info, KineInfo& kine, PFevalInfo& pfeval, bool flag_data);
   bool is_numuCC_cutbased(TaggerInfo& tagger_info);
-  
+
   // pio cuts (with and without vertex)
   // TCut pi0_cut = "(kine_pio_flag==1 && kine_pio_vtx_dis < 9 || kine_pio_flag ==2) && kine_pio_energy_1 > 40 && kine_pio_energy_2 > 25 && kine_pio_dis_1 < 110 && kine_pio_dis_2 < 120 && kine_pio_angle > 0  && kine_pio_angle < 174 && kine_pio_mass > 22 && kine_pio_mass < 300";
   bool is_pi0(KineInfo& kine, bool flag_data);
-  
+
   // must be with vertex ...
   // TCut cc_pi0_cut = "(kine_pio_flag==1 && kine_pio_vtx_dis < 9 || kine_pio_flag ==2) && kine_pio_energy_1 > 40 && kine_pio_energy_2 > 25 && kine_pio_dis_1 < 110 && kine_pio_dis_2 < 120 && kine_pio_angle > 0  && kine_pio_angle < 174 && kine_pio_mass > 22 && kine_pio_mass < 300";
   bool is_cc_pi0(KineInfo& kine, bool flag_data);
-  
-  
 
- 
+
+
+
   // NC cuts
   // TCut NC_cut = "(!cosmict_flag) && numu_score < 0.0";
   bool is_NC(TaggerInfo& tagger_info);
   bool is_NCpio_sel(TaggerInfo& tagger_info, KineInfo& kine);
   bool is_NCdelta_sel(TaggerInfo& tagger_info, PFevalInfo& pfeval);
 
-  
+  //Erin
+  bool is_singlephoton_sel(TaggerInfo& tagger_info, PFevalInfo& pfeval);
+
+
   // TCut FC_cut = "match_isFC==1";
-  // TCut PC_cut = "match_isFC==0";  
+  // TCut PC_cut = "match_isFC==0";
   bool is_FC(EvalInfo& eval);
-  
-  
+
+
   // TCut truth_nueCC_inside = "abs(truth_nuPdg)==12 && truth_isCC==1 && truth_vtxInside==1";
   // TCut truth_numuCC_inside = "abs(truth_nuPdg)==14 && truth_isCC==1 && truth_vtxInside==1";
   bool is_truth_nueCC_inside(EvalInfo& eval);
@@ -174,7 +177,7 @@ double LEEana::get_weight(TString weight_name, EvalInfo& eval, PFevalInfo& pfeva
 
   // CV correction from numuCC cross section data
   // if (eval.truth_nuPdg==14 && eval.truth_isCC==1 && eval.truth_vtxInside==1){
-  //   if (eval.truth_nuEnergy>200 && eval.truth_nuEnergy<=540) addtl_weight = 1.28043; 
+  //   if (eval.truth_nuEnergy>200 && eval.truth_nuEnergy<=540) addtl_weight = 1.28043;
   //   else if (eval.truth_nuEnergy>540 && eval.truth_nuEnergy<=705) addtl_weight = 1.21158;
   //   else if (eval.truth_nuEnergy>705 && eval.truth_nuEnergy<=805) addtl_weight = 1.19091;
   //   else if (eval.truth_nuEnergy>805 && eval.truth_nuEnergy<=920) addtl_weight = 1.17733;
@@ -234,7 +237,7 @@ double LEEana::get_weight(TString weight_name, EvalInfo& eval, PFevalInfo& pfeva
       }
     }
   }
-  
+
   if (weight_name == "cv_spline"){
     return addtl_weight*eval.weight_cv * eval.weight_spline;
   }else if (weight_name == "cv_spline_cv_spline"){
@@ -262,8 +265,8 @@ double LEEana::get_weight(TString weight_name, EvalInfo& eval, PFevalInfo& pfeva
   }else{
     std::cout <<"Unknown weights: " << weight_name << std::endl;
   }
-	    
-  
+
+
   return 1;
 }
 
@@ -353,7 +356,7 @@ double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, 
   }else if (var_name == "shower_angle_vertical"){
     return tagger.spt_angle_vertical;
   }else if (var_name == "shwvtx_nuvtx_dis"){
-    return sqrt(pow(pfeval.reco_nuvtxX-pfeval.reco_showervtxX,2)+pow(pfeval.reco_nuvtxY-pfeval.reco_showervtxY,2)+pow(pfeval.reco_nuvtxZ-pfeval.reco_showervtxZ,2)); 
+    return sqrt(pow(pfeval.reco_nuvtxX-pfeval.reco_showervtxX,2)+pow(pfeval.reco_nuvtxY-pfeval.reco_showervtxY,2)+pow(pfeval.reco_nuvtxZ-pfeval.reco_showervtxZ,2));
   }else if (var_name == "median_dQdx"){
     std::vector<float> dqdx;
     dqdx.push_back(tagger.mip_vec_dQ_dx_2);
@@ -461,7 +464,7 @@ double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, 
 
       shower_costheta = TMath::Cos(tagger.mip_angle_beam/180.*TMath::Pi());
 
-      float reco_Emuon =  pfeval.reco_muonMomentum[3]*1000.; // GeV --> MeV                                                                                                            
+      float reco_Emuon =  pfeval.reco_muonMomentum[3]*1000.; // GeV --> MeV
       float reco_Eqe_muon = 0.5 * (2*(neutron_mass-binding_energy)*reco_Emuon - (pow(neutron_mass-binding_energy,2) + pow(muon_mass,2) - pow(proton_mass,2))) / ((neutron_mass-binding_energy) - reco_Emuon + sqrt(pow(reco_Emuon,2)-pow(muon_mass,2))*muon_costheta);
 
       float reco_Eelectron= pfeval.reco_showerMomentum[3]*1000.;
@@ -531,8 +534,8 @@ double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, 
       /* for(size_t i=0; i<kine.kine_energy_particle->size(); i++) */
       /* { */
       /*     int pdgcode = kine.kine_particle_type->at(i); */
-      /*     if(abs(pdgcode)==13) Ehadron = Ehadron - kine.kine_energy_particle->at(i) - 105.658; */ 
-      /*     //if(abs(pdgcode)==11) Ehadron = Ehadron - kine.kine_energy_particle->at(i); */ 
+      /*     if(abs(pdgcode)==13) Ehadron = Ehadron - kine.kine_energy_particle->at(i) - 105.658; */
+      /*     //if(abs(pdgcode)==11) Ehadron = Ehadron - kine.kine_energy_particle->at(i); */
       /* } */
     // return kine.kine_reco_Enu - pfeval.reco_muonMomentum[3]*1000.;
   /*}else if (var_name == "Ehadron_hybrid"){
@@ -589,7 +592,7 @@ double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, 
             N_tracks += 1;
           }
           else if(kine.kine_energy_particle->at(i)>35){ // proton KE threshold
-              N_tracks += 1; 
+              N_tracks += 1;
           }
       }
       return N_tracks;
@@ -729,7 +732,7 @@ double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, 
                 }
                 if(abs(pdgcode)==22 || abs(pdgcode)==11) { // reconstructed shower
                         float shower_energy = 1000. * pfeval.reco_startMomentum[i][3];
-                        if (abs(shower_energy - kine.kine_pio_energy_1) / kine.kine_pio_energy_1 < 0.01) { // very close to gamma 1 energy      
+                        if (abs(shower_energy - kine.kine_pio_energy_1) / kine.kine_pio_energy_1 < 0.01) { // very close to gamma 1 energy
                                 if (debug_pf_info) std::cout << "gamma 1 matched";
                                 if (flag_data) {
                                         gamma_1_momentum = TLorentzVector(em_charge_scale * pfeval.reco_startMomentum[i][0],
@@ -937,7 +940,7 @@ int LEEana::get_xs_signal_no(int cut_file, std::map<TString, int>& map_cut_xs_bi
         if (eval.truth_nuPdg==14 && eval.truth_isCC==1 && eval.truth_vtxInside==1 && Ehadron>1000) return number;
       }else{
           std::cout << "get_xs_signal_no: no cut found!" << std::endl;
-      }       
+      }
     }
     else if (cut_file == 4){
       bool pre_cut = eval.truth_nuPdg==14 && eval.truth_isCC==1 && eval.truth_vtxInside==1 && muonMomentum[3]>0 && Pmuon > 0 && Pmuon <= 2500;
@@ -1055,7 +1058,7 @@ int LEEana::get_xs_signal_no(int cut_file, std::map<TString, int>& map_cut_xs_bi
         std::cout << "get_xs_signal_no: no cut found!" << std::endl;
       }
     }
-    else if (cut_file == 10) { 
+    else if (cut_file == 10) {
       if (cut_name == "numuCC.inside.Ehadron.le.150.gt.30"){
         if (eval.truth_nuPdg==14 && eval.truth_isCC==1 && eval.truth_vtxInside==1 && Ehadron<=150 && Ehadron>30) return number;
       }else if (cut_name == "numuCC.inside.Ehadron.le.275.gt.150"){
@@ -1628,7 +1631,7 @@ int LEEana::get_xs_signal_no(int cut_file, std::map<TString, int>& map_cut_xs_bi
       else{ std::cout << "get_xs_signal_no: no cut found!" << std::endl; }
     }
   }
-  
+
   return -1;
 }
 
@@ -1639,47 +1642,47 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
 
   double KE_muon = pfeval.truth_muonMomentum[3]*1000.-105.66; // MeV
   double Pmuon   = (TMath::Sqrt(pow(KE_muon,2) + 2*KE_muon*105.66));
-  
+
   double Emuon = pfeval.truth_muonMomentum[3]*1000; // MeV
   double Ehadron = eval.truth_nuEnergy - pfeval.truth_muonMomentum[3]*1000.; // MeV
 
   TLorentzVector truth_muonMomentum(pfeval.truth_muonMomentum[0], pfeval.truth_muonMomentum[1], pfeval.truth_muonMomentum[2], pfeval.truth_muonMomentum[3]);
-  
+
   bool flag_truth_inside = false; // in the active volume
   if (eval.truth_vtxX > -1 && eval.truth_vtxX <= 254.3 &&  eval.truth_vtxY >-115.0 && eval.truth_vtxY<=117.0 && eval.truth_vtxZ > 0.6 && eval.truth_vtxZ <=1036.4) flag_truth_inside = true;
 
   // definition of additional cuts
   std::map<std::string, bool> map_cuts_flag;
-  if(is_far_sideband(kine, tagger, flag_data)) map_cuts_flag["farsideband"] = true; 
-  else map_cuts_flag["farsideband"] = false; 
-  
-  if(is_near_sideband(kine, tagger, flag_data)) map_cuts_flag["nearsideband"] = true; 
-  else map_cuts_flag["nearsideband"] = false; 
- 
+  if(is_far_sideband(kine, tagger, flag_data)) map_cuts_flag["farsideband"] = true;
+  else map_cuts_flag["farsideband"] = false;
+
+  if(is_near_sideband(kine, tagger, flag_data)) map_cuts_flag["nearsideband"] = true;
+  else map_cuts_flag["nearsideband"] = false;
+
   if(is_nueCC(tagger)) map_cuts_flag["nueCC"] = true;
   else map_cuts_flag["nueCC"] = false;
 
   if(is_loosenueCC(tagger)) map_cuts_flag["loosenueCC"] = true;
   else map_cuts_flag["loosenueCC"] = false;
-  
+
   if(is_generic(eval)) map_cuts_flag["generic"] = true;
   else map_cuts_flag["generic"] = false;
 
   if(eval.truth_nuEnergy <=400) map_cuts_flag["LowEintnueCC"] = true;
   else map_cuts_flag["LowEintnueCC"] = false;
-  
+
   if (!(eval.truth_nuEnergy <=400)) map_cuts_flag["antiLowEintnueCC"] = true;
   else map_cuts_flag["antiLowEintnueCC"] = false;
 
   if(eval.truth_nuEnergy<=400) map_cuts_flag["LowEnu"] = true;
   else map_cuts_flag["LowEnu"] = false;
-  
+
   if(!(eval.truth_nuEnergy<=400)) map_cuts_flag["antiLowEnu"] = true;
   else map_cuts_flag["antiLowEnu"] = false;
 
   if(eval.match_completeness_energy<=0.1*eval.truth_energyInside) map_cuts_flag["badmatch"] = true;
   else map_cuts_flag["badmatch"] = false;
-  
+
   if(eval.match_completeness_energy>0.1*eval.truth_energyInside && abs(eval.truth_nuPdg)==14 && eval.truth_isCC==1 && eval.truth_vtxInside==1 && pfeval.truth_NprimPio==0) map_cuts_flag["numuCCinFV"] = true;
   else map_cuts_flag["numuCCinFV"] = false;
 
@@ -1692,7 +1695,7 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
   // Xs related cuts ...
 
   map_cuts_flag["XsnumuCCinFV"] = eval.match_completeness_energy>0.1*eval.truth_energyInside && eval.truth_nuPdg==14 && eval.truth_isCC==1 && eval.truth_vtxInside==1;
-  
+
   map_cuts_flag["Xs_Enu_numuCCinFV"] = eval.match_completeness_energy>0.1*eval.truth_energyInside && eval.truth_nuPdg==14 && eval.truth_isCC==1 && eval.truth_vtxInside==1 && truth_muonMomentum[3]>0 && eval.truth_nuEnergy<=4000 && eval.truth_nuEnergy > 200 && Pmuon > 0 && Pmuon <= 2500;
 
   map_cuts_flag["Xs_Enu_mu_numuCCinFV"] = eval.match_completeness_energy>0.1*eval.truth_energyInside && eval.truth_nuPdg==14 && eval.truth_isCC==1 && eval.truth_vtxInside==1 && truth_muonMomentum[3]>0 && eval.truth_nuEnergy<=4000 && eval.truth_nuEnergy > 200 && Pmuon > 0 && Pmuon <= 2500;
@@ -1724,7 +1727,7 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
   // finish Xs related cuts ...
   if(eval.match_completeness_energy>0.1*eval.truth_energyInside && eval.truth_nuPdg==12 && eval.truth_isCC==1 && eval.truth_vtxInside==1 && eval.truth_nuEnergy<=4000 && eval.truth_nuEnergy > 200) map_cuts_flag["Xs_Enu_nueCCinFV"] = true;
   else map_cuts_flag["Xs_Enu_nueCCinFV"] = false;
-  
+
   if(eval.match_completeness_energy>0.1*eval.truth_energyInside && abs(eval.truth_nuPdg)==12 && eval.truth_isCC==1 && eval.truth_vtxInside==1) map_cuts_flag["nueCCinFV"] = true;
   else map_cuts_flag["nueCCinFV"] = false;
 
@@ -1733,16 +1736,16 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
 
   if(eval.match_completeness_energy>0.1*eval.truth_energyInside && eval.truth_nuPdg==-12 && eval.truth_isCC==1 && eval.truth_vtxInside==1) map_cuts_flag["AnueCCinFV"] = true;
   else map_cuts_flag["AnueCCinFV"] = false;
-  
+
   if(eval.match_completeness_energy>0.1*eval.truth_energyInside && eval.truth_isCC==0 && eval.truth_vtxInside==1 && pfeval.truth_NprimPio==0) map_cuts_flag["NCinFV"] = true;
   else map_cuts_flag["NCinFV"] = false;
 
   if(eval.match_completeness_energy>0.1*eval.truth_energyInside && eval.truth_vtxInside==0) map_cuts_flag["outFV"] = true;
   else map_cuts_flag["outFV"] = false;
-      
+
   if(eval.match_completeness_energy>0.1*eval.truth_energyInside && abs(eval.truth_nuPdg)==14 && eval.truth_isCC==1 && eval.truth_vtxInside==1 && pfeval.truth_NprimPio>0) map_cuts_flag["CCpi0inFV"] = true;
   else map_cuts_flag["CCpi0inFV"] = false;
-      
+
   if (eval.match_completeness_energy>0.1*eval.truth_energyInside && eval.truth_isCC==0 && eval.truth_vtxInside==1 && pfeval.truth_NprimPio>0) map_cuts_flag["NCpi0inFV"] = true;
   else map_cuts_flag["NCpi0inFV"] = false;
 
@@ -1762,14 +1765,14 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
   if (eval.match_completeness_energy>0.1*eval.truth_energyInside && eval.truth_vtxInside==1 && eval.truth_isCC==0 && pfeval.truth_NprimPio!=1 && pfeval.truth_NCDelta==0) map_cuts_flag["NCotherinFV"] = true;
   else map_cuts_flag["NCotherinFV"] = false;
   // done with NC Delta breakdown categories
-  
-  
+
+
   if(pfeval.truth_nuScatType==10 && eval.truth_isCC==1 && eval.match_completeness_energy>0.1*eval.truth_energyInside) map_cuts_flag["CCMEC"] = true;
   else map_cuts_flag["CCMEC"] = false;
-  
+
   if(pfeval.truth_nuScatType==10 && eval.truth_isCC==0 && eval.match_completeness_energy>0.1*eval.truth_energyInside) map_cuts_flag["NCMEC"] = true;
   else map_cuts_flag["NCMEC"] = false;
-  
+
   if(pfeval.truth_nuScatType==1 && eval.truth_isCC==1 && eval.match_completeness_energy>0.1*eval.truth_energyInside) map_cuts_flag["CCQE"] = true;
   else map_cuts_flag["CCQE"] = false;
 
@@ -1787,7 +1790,7 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
 
   if(pfeval.truth_nuScatType==3 && eval.truth_isCC==0 && eval.match_completeness_energy>0.1*eval.truth_energyInside) map_cuts_flag["NCDIS"] = true;
   else map_cuts_flag["NCDIS"] = false;
-  
+
   if(pfeval.truth_nuScatType!=10 && pfeval.truth_nuScatType!=1 && pfeval.truth_nuScatType!=3 && pfeval.truth_nuScatType!=4 && eval.match_completeness_energy>0.1*eval.truth_energyInside) map_cuts_flag["OTHER"] = true;
   else map_cuts_flag["OTHER"] = false;
 
@@ -1795,7 +1798,7 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
   // figure out additional cuts and flag_data ...
   bool flag_add = true;
   if(add_cut == "all") flag_add = true;
-  else if( (flag_data && (add_cut=="farsideband" || add_cut=="nearsideband" || add_cut=="nueCC" || add_cut=="generic" || add_cut=="loosenueCC")) || !flag_data ){ 
+  else if( (flag_data && (add_cut=="farsideband" || add_cut=="nearsideband" || add_cut=="nueCC" || add_cut=="generic" || add_cut=="loosenueCC")) || !flag_data ){
       std::istringstream sss(add_cut.Data());
       for(std::string line; std::getline(sss, line, '_');){
           if(map_cuts_flag.find(line)!=map_cuts_flag.end()){
@@ -1805,14 +1808,14 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
               std::cout<<"ERROR: add_cut "<<line<<" not defined!\n";
               exit(EXIT_FAILURE);
           }
-      } 
+      }
   }
-  else{ 
+  else{
     std::cout<<"ERROR: add_cut "<<add_cut<<" of channel "<< ch_name <<" is not assigned to sample "<<flag_data<<" [1: data; 0: mc]\n";
     std::cout<<"Please modify inc/WCPLEEANA/cuts.h\n";
     exit(EXIT_FAILURE);
   }
- 
+
   if (!flag_add) return false;
 
   bool flag_generic = is_generic(eval);
@@ -1824,19 +1827,23 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
   bool flag_numuCC_cutbased = is_numuCC_cutbased(tagger);
   bool flag_nueCC = is_nueCC(tagger);
   bool flag_nueCC_loose = is_loosenueCC(tagger);
-  
+
   bool flag_0p = is_0p(tagger, kine, pfeval);
   bool flag_1p = is_1p(tagger, kine, pfeval);
   bool flag_0pi = is_0pi(tagger, kine, pfeval);
-  
+
   bool flag_pi0 = is_pi0(kine, flag_data);
   bool flag_cc_pi0 = is_cc_pi0(kine, flag_data);
   bool flag_NC = is_NC(tagger);
   bool flag_FC = is_FC(eval);
-  
+
   //bool flag_ncpio_sel = is_NCpio_bdt(tagger) && (!flag_0p);
   bool flag_ncpio_sel = is_NCpio_sel(tagger, kine);
   bool flag_ncdelta_sel = is_NCdelta_sel(tagger, pfeval);
+
+  //Erin
+  bool flag_singlephoton_sel = is_singlephoton_sel(tagger, pfeval);
+  //
 
   float costheta_binning[10] = {-1, -.5, 0, .27, .45, .62, .76, .86, .94, 1};		// PeLEE binning
   //float costheta_binning[7]  = {-1,         .27,      .62, .76, .86, .94, 1};		// coarse binning
@@ -1903,8 +1910,8 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
     else return false;
   }else if (ch_name == "numuCC_signal_Enu_theta0_FC_overlay"     || ch_name == "numuCC_signal_Emu_theta0_FC_overlay"     || ch_name == "numuCC_signal_Pmu_theta0_FC_overlay"     || ch_name == "numuCC_signal_nu_theta0_FC_overlay"
          || ch_name == "numuCC_background_Enu_theta0_FC_overlay" || ch_name == "numuCC_background_Emu_theta0_FC_overlay" || ch_name == "numuCC_background_Pmu_theta0_FC_overlay" || ch_name == "numuCC_background_nu_theta0_FC_overlay"
-         || ch_name == "BG_numuCC_theta0_FC_ext"                 || ch_name =="BG_numuCC_theta0_FC_dirt"                 || ch_name == "numuCC_theta0_FC_bnb"                    
-         || ch_name == "BG_numuCC_theta0_FC_ext_v2"              || ch_name =="BG_numuCC_theta0_FC_dirt_v2"              || ch_name == "numuCC_theta0_FC_bnb_v2" ){                
+         || ch_name == "BG_numuCC_theta0_FC_ext"                 || ch_name =="BG_numuCC_theta0_FC_dirt"                 || ch_name == "numuCC_theta0_FC_bnb"
+         || ch_name == "BG_numuCC_theta0_FC_ext_v2"              || ch_name =="BG_numuCC_theta0_FC_dirt_v2"              || ch_name == "numuCC_theta0_FC_bnb_v2" ){
     if (flag_numuCC && flag_FC && (!flag_nueCC) && (pfeval.reco_muonMomentum[3]>0) && (TMath::Cos(muonMomentum.Theta())>=costheta_binning[0] && TMath::Cos(muonMomentum.Theta())<=costheta_binning[1])) {
       if      (ch_name == "numuCC_signal_Enu_theta0_FC_overlay" || ch_name == "numuCC_background_Enu_theta0_FC_overlay") { return (map_cuts_flag["Xs_Enu_numuCCinFV"] == (ch_name=="numuCC_signal_Enu_theta0_FC_overlay")); }
       else if (ch_name == "numuCC_signal_Emu_theta0_FC_overlay" || ch_name == "numuCC_background_Emu_theta0_FC_overlay") { return (map_cuts_flag["Xs_Emu_numuCCinFV"] == (ch_name=="numuCC_signal_Emu_theta0_FC_overlay")); }
@@ -1937,7 +1944,7 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
   }else if (ch_name == "numuCC_signal_Enu_theta3_FC_overlay"     || ch_name == "numuCC_signal_Emu_theta3_FC_overlay"     || ch_name == "numuCC_signal_Pmu_theta3_FC_overlay"     || ch_name == "numuCC_signal_nu_theta3_FC_overlay"
          || ch_name == "numuCC_background_Enu_theta3_FC_overlay" || ch_name == "numuCC_background_Emu_theta3_FC_overlay" || ch_name == "numuCC_background_Pmu_theta3_FC_overlay" || ch_name == "numuCC_background_nu_theta3_FC_overlay"
          || ch_name == "BG_numuCC_theta3_FC_ext"                 || ch_name =="BG_numuCC_theta3_FC_dirt"                 || ch_name == "numuCC_theta3_FC_bnb"
-         || ch_name == "BG_numuCC_theta3_FC_ext_v2"              || ch_name =="BG_numuCC_theta3_FC_dirt_v2"              || ch_name == "numuCC_theta3_FC_bnb_v2" ){                  
+         || ch_name == "BG_numuCC_theta3_FC_ext_v2"              || ch_name =="BG_numuCC_theta3_FC_dirt_v2"              || ch_name == "numuCC_theta3_FC_bnb_v2" ){
     if (flag_numuCC && flag_FC && (!flag_nueCC) && (pfeval.reco_muonMomentum[3]>0) && (TMath::Cos(muonMomentum.Theta())>=costheta_binning[3] && TMath::Cos(muonMomentum.Theta())<=costheta_binning[4])) {
       if      (ch_name == "numuCC_signal_Enu_theta3_FC_overlay" || ch_name == "numuCC_background_Enu_theta3_FC_overlay") { return (map_cuts_flag["Xs_Enu_numuCCinFV"] == (ch_name=="numuCC_signal_Enu_theta3_FC_overlay")); }
       else if (ch_name == "numuCC_signal_Emu_theta3_FC_overlay" || ch_name == "numuCC_background_Emu_theta3_FC_overlay") { return (map_cuts_flag["Xs_Emu_numuCCinFV"] == (ch_name=="numuCC_signal_Emu_theta3_FC_overlay")); }
@@ -2713,7 +2720,7 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
   }else if (ch_name == "testD_overlay" || ch_name == "testD_ext" || ch_name == "testD_dirt"){
     if (!(eval.truth_isCC==1 && abs(eval.truth_nuPdg)==12 && flag_truth_inside) && ch_name == "testD_overlay" || ch_name != "testD_overlay") return true;
     else return false;
- // Janet's requests: <600 MeV numuCC PC, FC for three variables = 6 obs channels 
+ // Janet's requests: <600 MeV numuCC PC, FC for three variables = 6 obs channels
   }else if (ch_name == "numuCC_600MeV_nopi0_nonueCC_FC_overlay" || ch_name == "BG_numuCC_600MeV_nopi0_nonueCC_FC_ext" || ch_name =="BG_numuCC_600MeV_nopi0_nonueCC_FC_dirt" || ch_name == "numuCC_600MeV_nopi0_nonueCC_FC_bnb"){
     if (flag_numuCC && flag_FC && (!flag_nueCC) && (!flag_cc_pi0) && reco_Enu>=0 && reco_Enu<600) return true;
     else return false;
@@ -2832,7 +2839,7 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
   }else if (ch_name == "BG_nueCC_extra_overlay"){
     if (flag_nueCC && !(eval.truth_isCC==1 && abs(eval.truth_nuPdg)==12 && flag_truth_inside)) return true;
     else return false;
-    
+
   }else if (ch_name == "nueCC_extra_nueoverlay_fc"){
     if (flag_nueCC && flag_truth_inside && flag_FC) return true;
     else return false;
@@ -2842,7 +2849,7 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
   }else if (ch_name == "BG_nueCC_extra_overlay_fc"){
     if (flag_nueCC && !(eval.truth_isCC==1 && abs(eval.truth_nuPdg)==12 && flag_truth_inside) && flag_FC) return true;
     else return false;
-    
+
     // FC and Np
   }else if (ch_name == "nueCC_extra_nueoverlay_fc_np"){
     if (flag_nueCC && flag_truth_inside && flag_FC && (!flag_0p)) return true;
@@ -2863,8 +2870,8 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
   }else if (ch_name == "BG_nueCC_extra_overlay_fc_0p"){
     if (flag_nueCC && !(eval.truth_isCC==1 && abs(eval.truth_nuPdg)==12 && flag_truth_inside)&& flag_FC && (flag_0p)) return true;
     else return false;
-    
- // cut-based numuCC FC/PC 2 obs channels   
+
+ // cut-based numuCC FC/PC 2 obs channels
   }else if (ch_name == "numuCC_cutbased_nopi0_nonueCC_FC_overlay" || ch_name == "BG_numuCC_cutbased_nopi0_nonueCC_FC_ext" || ch_name =="BG_numuCC_cutbased_nopi0_nonueCC_FC_dirt" || ch_name == "numuCC_cutbased_nopi0_nonueCC_FC_bnb"){
     if (flag_numuCC_cutbased && flag_FC && (!flag_nueCC) && (!flag_cc_pi0)) return true;
     else return false;
@@ -2872,11 +2879,11 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
     if (flag_numuCC_cutbased && (!flag_FC) && (!flag_nueCC) && (!flag_cc_pi0)) return true;
     else return false;
 
- // generic selection nu PC+FC 1 obs channel   
+ // generic selection nu PC+FC 1 obs channel
   }else if (ch_name == "generic_nu_overlay" || ch_name == "BG_generic_nu_ext" || ch_name =="BG_generic_nu_dirt" || ch_name == "generic_nu_bnb"){
     if (flag_generic) return true;
     else return false;
- // numuCC selection PC+FC 1 obs channel   
+ // numuCC selection PC+FC 1 obs channel
   }else if (ch_name == "numuCC_overlay" || ch_name == "BG_numuCC_ext" || ch_name =="BG_numuCC_dirt" || ch_name == "numuCC_bnb"){
     if (flag_numuCC) return true;
     else return false;
@@ -2889,11 +2896,11 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
   }else if (ch_name == "numuCC_overlay_fc_0p" || ch_name == "BG_numuCC_ext_fc_0p" || ch_name =="BG_numuCC_dirt_fc_0p" || ch_name == "numuCC_bnb_fc_0p"){
     if (flag_numuCC && flag_FC && (flag_0p)) return true;
     else return false;
- // cutbased numuCC selection PC+FC 1 obs channel   
+ // cutbased numuCC selection PC+FC 1 obs channel
   }else if (ch_name == "numuCC_cutbased_overlay" || ch_name == "BG_numuCC_cutbased_ext" || ch_name =="BG_numuCC_cutbased_dirt" || ch_name == "numuCC_cutbased_bnb"){
     if (flag_numuCC_cutbased) return true;
     else return false;
- // nueCC 3 variables: n_trakcs, n_showers, gap_n_bad, FC/PC x3 = 6 channels; 4 additional channels 
+ // nueCC 3 variables: n_trakcs, n_showers, gap_n_bad, FC/PC x3 = 6 channels; 4 additional channels
   }else if (ch_name == "nueCC2_FC_nueoverlay"){
     if (flag_nueCC && flag_FC && flag_truth_inside) return true;
     else return false;
@@ -2990,7 +2997,7 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
     else if (ch_name == "numuCC_signal_Enu_mu_PC_overlay"     && pre_cut && (!flag_FC) &&   map_cuts_flag["Xs_Enu_mu_numuCCinFV"])  { return true; }
     else if (ch_name == "numuCC_background_Enu_mu_FC_overlay" && pre_cut &&   flag_FC  && (!map_cuts_flag["Xs_Enu_mu_numuCCinFV"])) { return true; }
     else if (ch_name == "numuCC_background_Enu_mu_PC_overlay" && pre_cut && (!flag_FC) && (!map_cuts_flag["Xs_Enu_mu_numuCCinFV"])) { return true; }
-    return false;    
+    return false;
   // ------
   }else if (ch_name == "nueCC_signal_Enu_FC_overlay" || ch_name == "nueCC_signal_Enu_PC_overlay" || ch_name == "nueCC_background_Enu_FC_overlay" || ch_name == "nueCC_background_Enu_PC_overlay"
        || ch_name == "nueCC_signal_Enu_overlay" || ch_name == "nueCC_background_Enu_overlay"
@@ -3009,7 +3016,7 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
       if (flag_nueCC && (!map_cuts_flag["Xs_Enu_nueCCinFV"])) return true;
     }
     return false;
-    
+
   } else if (ch_name == "numuCC_signal_Emu_FC_overlay" || ch_name == "numuCC_signal_Emu_PC_overlay" || ch_name == "numuCC_background_Emu_FC_overlay" || ch_name == "numuCC_background_Emu_PC_overlay"
 	     || ch_name == "numuCC1_signal_Emu_FC_overlay" || ch_name == "numuCC1_signal_Emu_PC_overlay" || ch_name == "numuCC1_background_Emu_FC_overlay" || ch_name == "numuCC1_background_Emu_PC_overlay"
 	     || ch_name == "numuCC2_signal_Emu_FC_overlay" || ch_name == "numuCC2_signal_Emu_PC_overlay" || ch_name == "numuCC2_background_Emu_FC_overlay" || ch_name == "numuCC2_background_Emu_PC_overlay"
@@ -3052,8 +3059,8 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
 	    ){
     if (flag_numuCC && (!flag_FC) && reco_Enu<800) return true;
     else return false;
-  }else if (ch_name == "numuCC_FC_overlay_L800MeV" || ch_name == "numuCC_PC_overlay_L800MeV" 
-	    || ch_name == "numuCC1_FC_overlay_L800MeV" || ch_name == "numuCC1_PC_overlay_L800MeV" 
+  }else if (ch_name == "numuCC_FC_overlay_L800MeV" || ch_name == "numuCC_PC_overlay_L800MeV"
+	    || ch_name == "numuCC1_FC_overlay_L800MeV" || ch_name == "numuCC1_PC_overlay_L800MeV"
 	    || ch_name == "numuCC2_FC_overlay_L800MeV" || ch_name == "numuCC2_PC_overlay_L800MeV"   ){
     if (ch_name == "numuCC_FC_overlay_L800MeV" || ch_name == "numuCC1_FC_overlay_L800MeV" || ch_name == "numuCC2_FC_overlay_L800MeV"){
       if (flag_numuCC && flag_FC && reco_Enu<800) return true;
@@ -3061,8 +3068,8 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
       if (flag_numuCC && (!flag_FC) && reco_Enu<800) return true;
     }
     return false;
-  }else if (ch_name == "numuCC_FC_overlay" || ch_name == "numuCC_PC_overlay" 
-	    || ch_name == "numuCC1_FC_overlay" || ch_name == "numuCC1_PC_overlay" 
+  }else if (ch_name == "numuCC_FC_overlay" || ch_name == "numuCC_PC_overlay"
+	    || ch_name == "numuCC1_FC_overlay" || ch_name == "numuCC1_PC_overlay"
 	    || ch_name == "numuCC2_FC_overlay" || ch_name == "numuCC2_PC_overlay"   ){
     if (ch_name == "numuCC_FC_overlay" || ch_name == "numuCC1_FC_overlay" || ch_name == "numuCC2_FC_overlay"){
       if (flag_numuCC && flag_FC ) return true;
@@ -3077,13 +3084,13 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
 	    || ch_name == "nc_pio_energy_FC_ext" || ch_name == "nc_pio_score_FC_ext"
 	    || ch_name == "nc_pio_energy_FC_dirt" || ch_name == "nc_pio_score_FC_dirt"
 	    ){
-    if (ch_name == "nc_pio_energy_FC" 
-	|| ch_name == "nc_pio_energy_FC_ext" 
+    if (ch_name == "nc_pio_energy_FC"
+	|| ch_name == "nc_pio_energy_FC_ext"
 	|| ch_name == "nc_pio_energy_FC_dirt" ){
       if (flag_ncpio_sel && flag_FC) return true;
     }else if (ch_name == "nc_pio_energy_FC_ncpio_overlay" ){
-      if (flag_ncpio_sel && flag_FC && (eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0 
-					&& !(eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && flag_truth_inside))) return true; 
+      if (flag_ncpio_sel && flag_FC && (eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0
+					&& !(eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && flag_truth_inside))) return true;
     }else if (ch_name == "nc_pio_energy_FC_ncdelta_overlay" ){
       if (flag_ncpio_sel && flag_FC && (eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && flag_truth_inside)) return true;
     }else if (ch_name == "nc_pio_energy_FC_overlay" ){
@@ -3095,9 +3102,9 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
 	|| ch_name == "nc_pio_score_FC_ext"
 	|| ch_name == "nc_pio_score_FC_dirt"){
       if (flag_FC) return true;
-    }else if (ch_name == "nc_pio_score_FC_ncpio_overlay"){ 
-      if (flag_FC && (eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0 
-      && !(eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && flag_truth_inside))) return true; 
+    }else if (ch_name == "nc_pio_score_FC_ncpio_overlay"){
+      if (flag_FC && (eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0
+      && !(eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && flag_truth_inside))) return true;
     }else if (ch_name == "nc_pio_score_FC_ncdelta_overlay"){
       if (flag_FC && (eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && flag_truth_inside)) return true;
     }else if (ch_name == "nc_pio_score_FC_overlay"){
@@ -3106,7 +3113,7 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
 	  && (!(eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && flag_truth_inside))) return true;
       //  if (flag_FC) return true;
     }
-    
+
     return false;
   // start cuts from Lee's cuts.h
   // NC delta (1g) channels:
@@ -3568,7 +3575,7 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
     if (ch_name == "nc_delta_energy_FC_0p" ||  ch_name == "nc_delta_energy_FC_0p_ext" || ch_name == "nc_delta_energy_FC_0p_dirt"){
       if (flag_FC && flag_ncdelta_sel && flag_0p) return true;
     }else if (ch_name == "nc_delta_energy_FC_0p_ncpio_overlay"){
-      if (flag_FC && flag_ncdelta_sel && flag_0p && (eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0 
+      if (flag_FC && flag_ncdelta_sel && flag_0p && (eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0
 						     && !(eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && flag_truth_inside))) return true;
     }else if (ch_name == "nc_delta_energy_FC_0p_ncdelta_overlay"){
       if (flag_FC && flag_ncdelta_sel && flag_0p && (eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && flag_truth_inside)) return true;
@@ -3580,7 +3587,7 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
     }else if (ch_name == "nc_delta_score_FC_0p" ||  ch_name == "nc_delta_score_FC_0p_ext" || ch_name == "nc_delta_score_FC_0p_dirt"){
       if (flag_FC  && flag_0p) return true;
     }else if (ch_name == "nc_delta_score_FC_0p_ncpio_overlay"){
-      if (flag_FC  && flag_0p && (eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0 
+      if (flag_FC  && flag_0p && (eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0
 				  && !(eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && flag_truth_inside))) return true;
     }else if (ch_name == "nc_delta_score_FC_0p_ncdelta_overlay"){
       if (flag_FC  && flag_0p && (eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && flag_truth_inside)) return true;
@@ -3590,7 +3597,7 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
        && (!(eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && flag_truth_inside))) return true;
       //      if (flag_FC  && flag_0p) return true;
     }
-    
+
     return false;
   }else if (ch_name == "nc_delta_energy_FC_Np" || ch_name == "nc_delta_score_FC_Np"
 	    || ch_name == "nc_delta_energy_FC_Np_ncpio_overlay" || ch_name == "nc_delta_score_FC_Np_ncpio_overlay"
@@ -3617,19 +3624,19 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
       if (flag_FC  && (!flag_0p) && (eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0
       					&& !(eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && flag_truth_inside))) return true;
     }else if (ch_name == "nc_delta_score_FC_Np_ncdelta_overlay"){
-      if (flag_FC  && (!flag_0p) && (eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && flag_truth_inside)) return true; 
+      if (flag_FC  && (!flag_0p) && (eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && flag_truth_inside)) return true;
     }else if (ch_name == "nc_delta_score_FC_Np_overlay"){
       if (flag_FC  && (!flag_0p) && (!(eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0
       						       && (!(eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && flag_truth_inside))))
       	  && (!(eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && flag_truth_inside))) return true;
       // if (flag_FC  && (!flag_0p)) return true;
     }
-    
+
     return false;
   }else{
     std::cout << "Not sure what cut: " << ch_name << std::endl;
   }
-  
+
   return false;
 }
 
@@ -3649,6 +3656,9 @@ bool LEEana::get_rw_cut_pass(TString cut, EvalInfo& eval, PFevalInfo& pfeval, Ta
   }else if(cut == "NCDelta0p_scale"){
     if(is_NCdelta_sel(tagger, pfeval) && eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && is_0p(tagger, kine, pfeval)) return true;
     return false;
+  }else if(cut == "singlephoton_scale"){
+    if(is_singlephoton_sel(tagger, pfeval) && pfeval.truth_single_photon==1) return true;
+    return false;
   }else{
     std::cout<<"No matching reweighting cut, check reweight configuration file"<<std::endl;
   }
@@ -3664,7 +3674,7 @@ bool LEEana::is_far_sideband(KineInfo& kine, TaggerInfo& tagger, bool flag_data)
   bool flag_NC = is_NC(tagger);
 
   double reco_Enu = get_reco_Enu_corr(kine, flag_data);
-  
+
   if ((reco_Enu>=800 && tagger.nue_score >=0) ||
       (tagger.nue_score<=0 && (flag_numuCC || (flag_pi0 && flag_NC) ))) flag = true;
   return flag;
@@ -3672,9 +3682,9 @@ bool LEEana::is_far_sideband(KineInfo& kine, TaggerInfo& tagger, bool flag_data)
 bool LEEana::is_near_sideband(KineInfo& kine, TaggerInfo& tagger, bool flag_data){
   bool flag = false;
   double reco_Enu = get_reco_Enu_corr(kine, flag_data);
-  
+
   if (reco_Enu < 800 && tagger.nue_score>0 && (reco_Enu>=600 || tagger.nue_score<=7)) flag = true;
-  
+
   return flag ;
 }
 
@@ -3693,7 +3703,7 @@ bool LEEana::is_truth_nueCC_inside(EvalInfo& eval){
 
   if (fabs(eval.truth_nuPdg)==12 && eval.truth_isCC==1 && eval.truth_vtxInside==1)
     flag = true;
-  
+
   return flag;
 }
 
@@ -3702,7 +3712,7 @@ bool LEEana::is_truth_numuCC_inside(EvalInfo& eval){
 
   if (fabs(eval.truth_nuPdg)==14 && eval.truth_isCC==1 && eval.truth_vtxInside==1)
     flag = true;
-  
+
   return flag;
 }
 
@@ -3719,7 +3729,7 @@ bool LEEana::is_FC(EvalInfo& eval){
 bool LEEana::is_cc_pi0(KineInfo& kine, bool flag_data){
 
   bool flag = false;
-  
+
   if (flag_data){
     if (kine.kine_pio_mass>0){
       //     TLorentzVector p1(kine.kine_pio_energy_1*TMath::Sin(kine.kine_pio_theta_1/180.*3.1415926)*TMath::Cos(kine.kine_pio_phi_1/180.*3.1415926), kine.kine_pio_energy_1*TMath::Sin(kine.kine_pio_theta_1/180.*3.1415926)*TMath::Sin(kine.kine_pio_phi_1/180.*3.1415926), kine.kine_pio_energy_1*TMath::Cos(kine.kine_pio_theta_1/180.*3.1415926), kine.kine_pio_energy_1);
@@ -3727,7 +3737,7 @@ bool LEEana::is_cc_pi0(KineInfo& kine, bool flag_data){
       //TLorentzVector pio = p1 + p2;
       //pio *= em_charge_scale;
       double pio_mass = kine.kine_pio_mass * em_charge_scale;
-      
+
       if ((kine.kine_pio_flag==1 && kine.kine_pio_vtx_dis < 9 ) && kine.kine_pio_energy_1* em_charge_scale > 40 && kine.kine_pio_energy_2* em_charge_scale > 25 && kine.kine_pio_dis_1 < 110 && kine.kine_pio_dis_2 < 120 && kine.kine_pio_angle > 0 && kine.kine_pio_angle < 174  && pio_mass > 22 && pio_mass < 300)
 	flag = true;
     }
@@ -3735,7 +3745,7 @@ bool LEEana::is_cc_pi0(KineInfo& kine, bool flag_data){
     if ((kine.kine_pio_flag==1 && kine.kine_pio_vtx_dis < 9 ) && kine.kine_pio_energy_1 > 40 && kine.kine_pio_energy_2 > 25 && kine.kine_pio_dis_1 < 110 && kine.kine_pio_dis_2 < 120 && kine.kine_pio_angle > 0 && kine.kine_pio_angle < 174  && kine.kine_pio_mass > 22 && kine.kine_pio_mass < 300)
       flag = true;
   }
-  
+
   return flag;
 }
 
@@ -3750,7 +3760,7 @@ bool LEEana::is_pi0(KineInfo& kine, bool flag_data){
       // TLorentzVector pio = p1 + p2;
       // pio *= em_charge_scale;
       double pio_mass = kine.kine_pio_mass * em_charge_scale;
-      
+
       if ((kine.kine_pio_flag==1 && kine.kine_pio_vtx_dis < 9 || kine.kine_pio_flag==2) && kine.kine_pio_energy_1* em_charge_scale > 40 && kine.kine_pio_energy_2* em_charge_scale > 25 && kine.kine_pio_dis_1 < 110 && kine.kine_pio_dis_2 < 120 && kine.kine_pio_angle > 0 && kine.kine_pio_angle < 174  && pio_mass > 22 && pio_mass < 300)
 	flag = true;
     }
@@ -3758,7 +3768,7 @@ bool LEEana::is_pi0(KineInfo& kine, bool flag_data){
     if ((kine.kine_pio_flag==1 && kine.kine_pio_vtx_dis < 9 || kine.kine_pio_flag==2) && kine.kine_pio_energy_1 > 40 && kine.kine_pio_energy_2 > 25 && kine.kine_pio_dis_1 < 110 && kine.kine_pio_dis_2 < 120 && kine.kine_pio_angle > 0 && kine.kine_pio_angle < 174  && kine.kine_pio_mass > 22 && kine.kine_pio_mass < 300)
       flag = true;
   }
-  
+
   return flag;
 }
 
@@ -3774,12 +3784,23 @@ bool LEEana::is_NCdelta_sel(TaggerInfo& tagger_info, PFevalInfo& pfeval){ // inc
   return flag;
 }
 
+//Erin
+bool LEEana::is_singlephoton_sel(TaggerInfo& tagger_info, PFevalInfo& pfeval){ // includes all cuts except FC
+  bool flag = false;
+  if (tagger_info.kine_reco_Enu >=0 && tagger_info.shw_sp_n_20mev_showers>0 &&
+    pfeval.reco_nuvtxX>5.0 && pfeval.reco_nuvtxX<250.0 &&
+    tagger_info.single_photon_numu_score > 0.5 && tagger_info.single_photon_other_score > 0.5 &&
+    tagger_info.single_photon_ncpi0_score > 0.5 && tagger_info.single_photon_nue_score > -1.0 ) {flag = true;}
+  return flag;
+}
+//
+
 
 bool LEEana::is_NC(TaggerInfo& tagger_info){
   bool flag = false;
   if ((!tagger_info.cosmict_flag) && tagger_info.numu_score < 0)
     flag = true;
-  
+
   return flag;
 }
 
@@ -3789,7 +3810,7 @@ bool LEEana::is_numuCC(TaggerInfo& tagger_info){
 
   if (tagger_info.numu_cc_flag>=0 && tagger_info.numu_score > 0.9)
     flag = true;
-  
+
   return flag;
 }
 
@@ -3798,14 +3819,14 @@ bool LEEana::is_numuCC_tight(TaggerInfo& tagger_info, PFevalInfo& pfeval){
 
   if (tagger_info.numu_cc_flag>=0 && tagger_info.numu_score > 0.9 && pfeval.reco_muonMomentum[3]>0)
     flag = true;
-  
+
   return flag;
 }
 
 bool LEEana::is_0p(TaggerInfo& tagger_info, KineInfo& kine, PFevalInfo& pfeval){
   bool flag = false;
-  
-  if (tagger_info.numu_cc_flag>=0){ 
+
+  if (tagger_info.numu_cc_flag>=0){
       // 1 lepton <=1 proton 0 charged pion
       // 1 lepton guaranteed by numu cc flag
       // using pi0 flag to remove pi0 component in channel definition
@@ -3814,12 +3835,12 @@ bool LEEana::is_0p(TaggerInfo& tagger_info, KineInfo& kine, PFevalInfo& pfeval){
       for(size_t i=0; i<kine.kine_energy_particle->size(); i++)
       {
           int pdgcode = kine.kine_particle_type->at(i);
-          if(abs(pdgcode)==2212 && kine.kine_energy_particle->at(i)>35) Nproton++; // KE threshold: 50 MeV, 1.5 cm? 
-          if(abs(pdgcode)==211 && kine.kine_energy_particle->at(i)>10) Npion++; // KE threshold: 10 MeV 
+          if(abs(pdgcode)==2212 && kine.kine_energy_particle->at(i)>35) Nproton++; // KE threshold: 50 MeV, 1.5 cm?
+          if(abs(pdgcode)==211 && kine.kine_energy_particle->at(i)>10) Npion++; // KE threshold: 10 MeV
       }
       if(Nproton==0) flag = true;
-  } 
-  
+  }
+
   return flag;
 }
 
@@ -3827,9 +3848,9 @@ bool LEEana::is_1p(TaggerInfo& tagger_info, KineInfo& kine, PFevalInfo& pfeval){
   bool flag = false;
 
   if (tagger_info.numu_cc_flag>=0){
-    // 1 lepton <=1 proton 0 charged pion                                                                
-    // 1 lepton guaranteed by numu cc flag                       
-    // using pi0 flag to remove pi0 component in channel definition                      
+    // 1 lepton <=1 proton 0 charged pion
+    // 1 lepton guaranteed by numu cc flag
+    // using pi0 flag to remove pi0 component in channel definition
     int Nproton = 0;
     int Npion = 0;
     for(size_t i=0; i<kine.kine_energy_particle->size(); i++)
@@ -3847,8 +3868,8 @@ bool LEEana::is_1p(TaggerInfo& tagger_info, KineInfo& kine, PFevalInfo& pfeval){
 
 bool LEEana::is_0pi(TaggerInfo& tagger_info, KineInfo& kine, PFevalInfo& pfeval){
   bool flag = false;
-  
-  if (tagger_info.numu_cc_flag>=0){ 
+
+  if (tagger_info.numu_cc_flag>=0){
       // 1 lepton <=1 proton 0 charged pion
       // 1 lepton guaranteed by numu cc flag
       // using pi0 flag to remove pi0 component in channel definition
@@ -3857,19 +3878,19 @@ bool LEEana::is_0pi(TaggerInfo& tagger_info, KineInfo& kine, PFevalInfo& pfeval)
       for(size_t i=0; i<kine.kine_energy_particle->size(); i++)
       {
           int pdgcode = kine.kine_particle_type->at(i);
-          if(abs(pdgcode)==2212 && kine.kine_energy_particle->at(i)>35) Nproton++; // KE threshold: 50 MeV, 1.5 cm? 
-          if(abs(pdgcode)==211 && kine.kine_energy_particle->at(i)>10) Npion++; // KE threshold: 10 MeV 
+          if(abs(pdgcode)==2212 && kine.kine_energy_particle->at(i)>35) Nproton++; // KE threshold: 50 MeV, 1.5 cm?
+          if(abs(pdgcode)==211 && kine.kine_energy_particle->at(i)>10) Npion++; // KE threshold: 10 MeV
       }
       if(Npion==0) flag = true;
-  } 
-  
+  }
+
   return flag;
 }
 
 bool LEEana::is_numuCC_1mu0p(TaggerInfo& tagger_info, KineInfo& kine, PFevalInfo& pfeval){
   bool flag = false;
-  
-  if (tagger_info.numu_cc_flag>=0 && tagger_info.numu_score > 0.9 && pfeval.reco_muonMomentum[3]>0){ 
+
+  if (tagger_info.numu_cc_flag>=0 && tagger_info.numu_score > 0.9 && pfeval.reco_muonMomentum[3]>0){
       // 1 lepton <=1 proton 0 charged pion
       // 1 lepton guaranteed by numu cc flag
       // using pi0 flag to remove pi0 component in channel definition
@@ -3878,23 +3899,23 @@ bool LEEana::is_numuCC_1mu0p(TaggerInfo& tagger_info, KineInfo& kine, PFevalInfo
       for(size_t i=0; i<kine.kine_energy_particle->size(); i++)
       {
           int pdgcode = kine.kine_particle_type->at(i);
-          if(abs(pdgcode)==2212 && kine.kine_energy_particle->at(i)>35) Nproton++; // KE threshold: 50 MeV, 1.5 cm? 
-          if(abs(pdgcode)==211 && kine.kine_energy_particle->at(i)>10) Npion++; // KE threshold: 10 MeV 
+          if(abs(pdgcode)==2212 && kine.kine_energy_particle->at(i)>35) Nproton++; // KE threshold: 50 MeV, 1.5 cm?
+          if(abs(pdgcode)==211 && kine.kine_energy_particle->at(i)>10) Npion++; // KE threshold: 10 MeV
       }
       if(Nproton==0) flag = true;
-  } 
-  
+  }
+
   return flag;
 }
 
 
 bool LEEana::is_numuCC_lowEhad(TaggerInfo& tagger_info, KineInfo& kine, PFevalInfo& pfeval, bool flag_data){
     bool flag = false;
-   
+
     if (tagger_info.numu_cc_flag>=0 && tagger_info.numu_score > 0.9 && pfeval.reco_muonMomentum[3]>0){
 
       double reco_Enu = get_reco_Enu_corr(kine, flag_data);
-      
+
       Float_t Ehadron = reco_Enu - pfeval.reco_muonMomentum[3]*1000.;
       if(Ehadron<200) // MeV
         {
@@ -3907,9 +3928,9 @@ bool LEEana::is_numuCC_lowEhad(TaggerInfo& tagger_info, KineInfo& kine, PFevalIn
 bool LEEana::is_numuCC_cutbased(TaggerInfo& tagger_info){
   bool flag = false;
 
-  if (tagger_info.numu_cc_flag==1 && tagger_info.cosmict_flag==0) 
+  if (tagger_info.numu_cc_flag==1 && tagger_info.cosmict_flag==0)
     flag = true;
-  
+
   return flag;
 }
 
@@ -3920,7 +3941,7 @@ bool LEEana::is_nueCC(TaggerInfo& tagger_info){
   if (tagger_info.numu_cc_flag >=0 && tagger_info.nue_score > 7.0)
     //  if (tagger_info.numu_cc_flag >=0 && tagger_info.nue_score <= 7.0 && tagger_info.nue_score > 0)
     flag = true;
-  
+
   return flag;
 }
 
@@ -3928,13 +3949,13 @@ bool LEEana::is_loosenueCC(TaggerInfo& tagger_info){
   bool flag = false;
   if (tagger_info.numu_cc_flag >=0 && tagger_info.nue_score > 4.0)
     flag = true;
-  
+
   return flag;
 }
 
 bool LEEana::is_generic(EvalInfo& eval){
   // not very useful for the main analysis
-  bool flag = is_preselection(eval); 
+  bool flag = is_preselection(eval);
 
   flag = flag && (eval.stm_clusterlength > 15);
   return flag;
@@ -3950,8 +3971,8 @@ bool LEEana::is_preselection(EvalInfo& eval){ // == T_BDTvars.numu_cc_flag >= 0
   }
 
   if (tmp_match_found == 1 && eval.stm_eventtype != 0 && eval.stm_lowenergy ==0 && eval.stm_LM ==0 && eval.stm_TGM ==0 && eval.stm_STM==0 && eval.stm_FullDead == 0 && eval.stm_clusterlength >0) flag = true;
-  
-  
+
+
   return flag;
 }
 
@@ -3979,28 +4000,28 @@ int LEEana::mcc8_pmuon_costheta_bin(float pmuon, float costh){
       else if (pmuon>=0.30 and pmuon<0.45) return 13;
       else if (pmuon>=0.45 and pmuon<0.77) return 14;
       else if (pmuon>=0.77 and pmuon<2.5) return 15;
-      else return -10000;    
+      else return -10000;
     }
     else if (costh>=0.27 and costh<0.45){
       if (pmuon>=0 and pmuon<0.30) return 16;
       else if (pmuon>=0.30 and pmuon<0.45) return 17;
       else if (pmuon>=0.45 and pmuon<0.77) return 18;
       else if (pmuon>=0.77 and pmuon<2.5) return 19;
-      else return -10000;    
+      else return -10000;
     }
     else if (costh>=0.45 and costh<0.62){
       if (pmuon>=0 and pmuon<0.30) return 20;
       else if (pmuon>=0.30 and pmuon<0.45) return 21;
       else if (pmuon>=0.45 and pmuon<0.77) return 22;
       else if (pmuon>=0.77 and pmuon<2.5) return 23;
-      else return -10000;   
+      else return -10000;
     }
     else if (costh>=0.62 and costh<0.76){
       if (pmuon>=0 and pmuon<0.30) return 24;
       else if (pmuon>=0.30 and pmuon<0.45) return 25;
       else if (pmuon>=0.45 and pmuon<0.77) return 26;
       else if (pmuon>=0.77 and pmuon<2.5) return 27;
-      else return -10000;  
+      else return -10000;
     }
     else if (costh>=0.76 and costh<0.86){
       if (pmuon>=0 and pmuon<0.30) return 28;
@@ -4016,7 +4037,7 @@ int LEEana::mcc8_pmuon_costheta_bin(float pmuon, float costh){
       else if (pmuon>=0.45 and pmuon<0.77) return 35;
       else if (pmuon>=0.77 and pmuon<1.28) return 36;
       else if (pmuon>=1.28 and pmuon<2.5) return 37;
-      else return -10000;     
+      else return -10000;
     }
     else if (costh>=0.94 and costh<1.00){
       if (pmuon>=0 and pmuon<0.30) return 38;
@@ -4024,14 +4045,14 @@ int LEEana::mcc8_pmuon_costheta_bin(float pmuon, float costh){
       else if (pmuon>=0.45 and pmuon<0.77) return 40;
       else if (pmuon>=0.77 and pmuon<1.28) return 41;
       else if (pmuon>=1.28 and pmuon<2.5) return 42;
-      else return -10000;   
+      else return -10000;
     }
     else return -10000;
-} 
+}
 
 // return bin number of a variable in alternative binning choice
 // bin edges are defined in config (default: ./configurations/alt_var_xbins.txt)
-int LEEana::alt_var_index(std::string var1, float val1, std::string var2, float val2, std::string config){ 
+int LEEana::alt_var_index(std::string var1, float val1, std::string var2, float val2, std::string config){
 
   if (map_var_hist.empty()) {
     // load all variables from configuration
@@ -4053,7 +4074,7 @@ int LEEana::alt_var_index(std::string var1, float val1, std::string var2, float 
 
   auto varhist1 = map_var_hist[var1];
   auto varhist2 = map_var_hist[var2];
-  int bin1 = varhist1.FindBin(val1);  
+  int bin1 = varhist1.FindBin(val1);
   int bin2 = varhist2.FindBin(val2);
   int nBins1 = varhist1.GetNbinsX();
   int nBins2 = varhist2.GetNbinsX();

@@ -2810,7 +2810,7 @@ int main( int argc, char** argv )
   reader_single_photon_numu.AddVariable("numu_1_score",&tagger.numu_1_score);
   reader_single_photon_numu.AddVariable("numu_score",&tagger.numu_score);
 
-  reader_single_photon_numu.BookMVA( "MyBDT", "weights/single_photon_numu_bdt_final.xml");
+  reader_single_photon_numu.BookMVA( "MyBDT", "weights/single_photon_numu_bdt_test.xml");
 
   reader_single_photon_other.AddVariable("cosmict_flag_2",&tagger.cosmict_flag_2);
   reader_single_photon_other.AddVariable("cosmict_2_filled",&tagger.cosmict_2_filled);
@@ -2959,7 +2959,7 @@ int main( int argc, char** argv )
   reader_single_photon_other.AddVariable("numu_score",&tagger.numu_score);
   reader_single_photon_other.AddVariable("reco_nuvtxY",&pfeval.reco_nuvtxY);
 
-  reader_single_photon_other.BookMVA( "MyBDT", "weights/single_photon_other_bdt_final.xml");
+  reader_single_photon_other.BookMVA( "MyBDT", "weights/single_photon_other_bdt_test.xml");
 
   reader_single_photon_ncpi0.AddVariable("shw_sp_pio_1_mass",&tagger.shw_sp_pio_1_mass);
   reader_single_photon_ncpi0.AddVariable("shw_sp_pio_1_pio_type",&tagger.shw_sp_pio_1_pio_type);
@@ -3007,7 +3007,7 @@ int main( int argc, char** argv )
   reader_single_photon_ncpi0.AddVariable("kine_pio_dis_2",&kine.kine_pio_dis_2);
   reader_single_photon_ncpi0.AddVariable("kine_pio_angle",&kine.kine_pio_angle);
 
-  reader_single_photon_ncpi0.BookMVA( "MyBDT", "weights/single_photon_ncpi0_bdt_final.xml");
+  reader_single_photon_ncpi0.BookMVA( "MyBDT", "weights/single_photon_ncpi0_bdt_test.xml");
 
   reader_single_photon_nue.AddVariable("shw_sp_max_dQ_dx_sample",&tagger.shw_sp_max_dQ_dx_sample);
   reader_single_photon_nue.AddVariable("shw_sp_n_below_threshold",&tagger.shw_sp_n_below_threshold);
@@ -3066,7 +3066,7 @@ int main( int argc, char** argv )
   reader_single_photon_nue.AddVariable("shw_sp_shw_vtx_dis", &tagger.shw_sp_shw_vtx_dis);
   reader_single_photon_nue.AddVariable("shw_sp_max_shw_dis",&tagger.shw_sp_max_shw_dis);
 
-  reader_single_photon_nue.BookMVA( "MyBDT", "weights/single_photon_nue_bdt_final.xml");
+  reader_single_photon_nue.BookMVA( "MyBDT", "weights/single_photon_nue_bdt_test.xml");
   //
 
 

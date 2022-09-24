@@ -93,6 +93,7 @@ struct PFevalInfo{
   Float_t truth_pio_angle;
   Int_t truth_NCDelta;
   //Erin
+  Int_t truth_Npi0;
   Int_t   truth_single_photon;
   Float_t truth_photon_angle;
   Float_t truth_photon_dis;
@@ -241,6 +242,7 @@ void LEEana::clear_pfeval_info(PFevalInfo& tagger_info){
   tagger_info.truth_pio_angle=0;
   tagger_info.truth_NCDelta=0;
   //Erin
+  tagger_info.truth_Npi0=0;
   tagger_info.truth_single_photon=0;
   tagger_info.truth_photon_angle=0;
   tagger_info.truth_photon_dis=0;
@@ -419,6 +421,7 @@ void LEEana::set_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
     //Erin
     if (tree0->GetBranch("truth_single_photon")){
       tagger_info.flag_single_photon = true;
+      tree0->SetBranchAddress("truth_Npi0",&tagger_info.truth_Npi0);
       tree0->SetBranchAddress("truth_single_photon",&tagger_info.truth_single_photon);
       tree0->SetBranchAddress("truth_photon_angle",&tagger_info.truth_photon_angle);
       tree0->SetBranchAddress("truth_photon_dis",&tagger_info.truth_photon_dis);
@@ -561,6 +564,7 @@ void LEEana::put_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
 
     //Erin
     if (tagger_info.flag_single_photon){
+      tree0->Branch("truth_Npi0",&tagger_info.truth_Npi0,"truth_Npi0/I");
       tree0->Branch("truth_single_photon",&tagger_info.truth_single_photon, "truth_single_photon/I");
       tree0->Branch("truth_photon_angle",&tagger_info.truth_photon_angle, "truth_photon_angle/F");
       tree0->Branch("truth_photon_dis",&tagger_info.truth_photon_dis, "truth_photon_dis/F");

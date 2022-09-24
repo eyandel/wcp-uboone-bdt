@@ -3817,12 +3817,12 @@ void LEEana::put_tree_address(TTree *T_tagger, TaggerInfo& tagger_info, int flag
     }
 
     //Erin
-    if (tagger_info.flag_single_photon_bdt){
+    //if (tagger_info.flag_single_photon_bdt){
       T_tagger->Branch("single_photon_numu_score", &tagger_info.single_photon_numu_score,"single_photon_numu_score/F");
       T_tagger->Branch("single_photon_other_score", &tagger_info.single_photon_other_score,"single_photon_other_score/F");
       T_tagger->Branch("single_photon_ncpi0_score", &tagger_info.single_photon_ncpi0_score,"single_photon_ncpi0_score/F");
       T_tagger->Branch("single_photon_nue_score", &tagger_info.single_photon_nue_score,"single_photon_nue_score/F");
-    }
+    //}
     //
 
 
