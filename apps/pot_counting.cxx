@@ -35,7 +35,7 @@ int main(int argc, char** argv){
       break;
     }
   }
-  
+
   TString bnb_file = argv[1];
   TString extbnb_file = argv[2];
 
@@ -60,7 +60,7 @@ int main(int argc, char** argv){
     set_tree_address(T_pot, pot);
     float pass_ratio = 1;
     if (T_pot->GetBranch("pass_ratio")) T_pot->SetBranchAddress("pass_ratio", &pass_ratio);
-   
+
     for (Int_t i=0;i!=T_pot->GetEntries();i++){
       T_pot->GetEntry(i);
       auto it = map_bnb_infos.find(std::make_pair(pot.runNo, pot.subRunNo));
@@ -69,13 +69,14 @@ int main(int argc, char** argv){
       }else{
 	total_bnb_trigger_no += it->second.first * pass_ratio;
 	total_bnb_pot += it->second.second * pass_ratio;
+  map_bnb_infos[std::make_pair(pot.runNo,pot.subRunNo)] = std::make_pair(0.0, 0.0);
       }
     }
 
     std::cout << "BNB: total POT: " << total_bnb_pot << " total trigger: " << total_bnb_trigger_no << std::endl;
   }
 
-  // calculate EXTBNB number ... 
+  // calculate EXTBNB number ...
   if (mode==2){
     std::map<std::pair<int, int>, double >  map_extbnb_infos;
     ifstream infile1("pot_extbnb.txt");
@@ -91,22 +92,23 @@ int main(int argc, char** argv){
     set_tree_address(T_pot, pot);
     float pass_ratio=1;
     if (T_pot->GetBranch("pass_ratio")) T_pot->SetBranchAddress("pass_ratio", &pass_ratio);
-    
-   
+
+
     for (Int_t i=0;i!=T_pot->GetEntries();i++){
       T_pot->GetEntry(i);
       auto it = map_extbnb_infos.find(std::make_pair(pot.runNo, pot.subRunNo));
-      
+
       if (it == map_extbnb_infos.end()  && pot.runNo >=4000  && pot.runNo <= 50000){
 	std::cout << "Run: " << pot.runNo << " subRun: " << pot.subRunNo << "  not found!" << std::endl;
       }else{
 	total_extbnb_trigger_no += it->second * pass_ratio;
+  map_extbnb_infos[std::make_pair(pot.runNo, pot.subRunNo)] = 0.0;
       }
     }
 
     std::cout << "EXTBNB: total trigger: " << total_extbnb_trigger_no << std::endl;
     std::cout << "EXTBNB: total_pot: " << total_extbnb_trigger_no/total_bnb_trigger_no * total_bnb_pot << std::endl;
   }
-  
-  
+
+
 }

@@ -1,0 +1,2 @@
+../spbdt/data/wcpbdt_checkout/checkout_bnboverlay_run3_sp_wcpbdt_trim.root   ./weight_files/bnboverlay_run3/UBGenieFluxSmallUni.root       ./processed_checkout_rootfiles/prodgenie_bnb_nu_overlay_run3/UBGenieFluxSmallUni.root  UBGenieFluxSmallUni
+end   end   end   end

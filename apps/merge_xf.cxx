@@ -52,8 +52,8 @@ int main( int argc, char** argv )
   // if (!(flag_spec && option == "UBGenieFluxSmallUni"))
   //   flag_spec = false;
   // std::cout << "flag_spec: " << flag_spec << std::endl;
-  
-  
+
+
   TFile *file1 = new TFile(input_file_cv);
   TTree *T_BDTvars = (TTree*)file1->Get("wcpselection/T_BDTvars");
   TTree *T_eval = (TTree*)file1->Get("wcpselection/T_eval");
@@ -78,7 +78,7 @@ int main( int argc, char** argv )
   weight.pionqexsec_FluxUnisim= new std::vector<float>;
   weight.piontotxsec_FluxUnisim= new std::vector<float>;
   weight.piplus_PrimaryHadronSWCentralSplineVariation= new std::vector<float>;
-  
+
   weight.All_UBGenie= new std::vector<float>;
   weight.AxFFCCQEshape_UBGenie= new std::vector<float>;
   weight.DecayAngMEC_UBGenie= new std::vector<float>;
@@ -96,15 +96,15 @@ int main( int argc, char** argv )
   weight.xsr_scc_Fa3_SCC= new std::vector<float>;
   weight.xsr_scc_Fv3_SCC= new std::vector<float>;
 
-  
+
   weight.reinteractions_piminus_Geant4 = new std::vector<float>;
   weight.reinteractions_piplus_Geant4 = new std::vector<float>;
-  weight.reinteractions_proton_Geant4 = new std::vector<float>; 
- 
+  weight.reinteractions_proton_Geant4 = new std::vector<float>;
 
-  
-  
-  
+
+
+
+
   if (option == "expskin_FluxUnisim"){
     T = (TTree*)file2->Get("expskin_FluxUnisim");
   }else if (option == "horncurrent_FluxUnisim"){
@@ -142,7 +142,7 @@ int main( int argc, char** argv )
   }
 
 
-  
+
   TFile *file3 = new TFile(out_file,"RECREATE");
   file3->mkdir("wcpselection");
   file3->cd("wcpselection");
@@ -153,7 +153,7 @@ int main( int argc, char** argv )
   TTree *t4 = new TTree("T_BDTvars","T_BDTvars");
 
   TTree *t6 = new TTree("T_weight","T_weight");
-  
+
   EvalInfo eval;
   eval.file_type = new std::string();
   POTInfo pot;
@@ -165,8 +165,8 @@ int main( int argc, char** argv )
   kine.kine_energy_info = new std::vector<int>;
   kine.kine_particle_type = new std::vector<int>;
   kine.kine_energy_included = new std::vector<int>;
-  
-  
+
+
   tagger.pio_2_v_dis2 = new std::vector<float>;
   tagger.pio_2_v_angle2 = new std::vector<float>;
   tagger.pio_2_v_acc_length = new std::vector<float>;
@@ -426,7 +426,7 @@ int main( int argc, char** argv )
   set_tree_address(T_pot, pot);
   set_tree_address(T_KINEvars, kine);
   set_tree_address(T, weight, option);
-  
+
   put_tree_address(t4, tagger,2);
   put_tree_address(t1, eval);
   put_tree_address(t3, pfeval);
@@ -476,12 +476,25 @@ int main( int argc, char** argv )
     T_BDTvars->SetBranchStatus("nc_delta_score", 1);
     T_BDTvars->SetBranchStatus("nc_pio_score", 1);
   }
-  
+
+  //Erin
+  if (tagger.flag_single_photon_bdt){
+    T_BDTvars->SetBranchStatus("single_photon_numu_score", 1);
+    T_BDTvars->SetBranchStatus("single_photon_other_score", 1);
+    T_BDTvars->SetBranchStatus("single_photon_ncpi0_score", 1);
+    T_BDTvars->SetBranchStatus("single_photon_nue_score", 1);
+
+    T_BDTvars->SetBranchStatus("shw_sp_energy",1);
+    T_BDTvars->SetBranchStatus("shw_sp_angle_beam",1);
+    T_BDTvars->SetBranchStatus("shw_sp_n_20mev_showers",1);
+  }
+  //
+
   T_eval->SetBranchStatus("*",0);
   T_eval->SetBranchStatus("match_energy",1);
   T_eval->SetBranchStatus("match_isFC",1);
   T_eval->SetBranchStatus("match_found",1);
-  if (T_eval->GetBranch("match_found_asInt")) T_eval->SetBranchStatus("match_found_asInt",1); 
+  if (T_eval->GetBranch("match_found_asInt")) T_eval->SetBranchStatus("match_found_asInt",1);
   T_eval->SetBranchStatus("stm_eventtype",1);
   T_eval->SetBranchStatus("stm_lowenergy",1);
   T_eval->SetBranchStatus("stm_LM",1);
@@ -489,7 +502,7 @@ int main( int argc, char** argv )
   T_eval->SetBranchStatus("stm_STM",1);
   T_eval->SetBranchStatus("stm_FullDead",1);
   T_eval->SetBranchStatus("stm_clusterlength",1);
-  
+
   T_eval->SetBranchStatus("weight_spline",1);
   T_eval->SetBranchStatus("weight_cv",1);
   T_eval->SetBranchStatus("weight_lee",1);
@@ -508,7 +521,7 @@ int main( int argc, char** argv )
    // Xs related
   T_eval->SetBranchStatus("match_completeness_energy",1);
   T_eval->SetBranchStatus("truth_energyInside",1);
-  
+
   T_KINEvars->SetBranchStatus("*",0);
   T_KINEvars->SetBranchStatus("kine_reco_Enu",1);
   T_KINEvars->SetBranchStatus("kine_energy_particle",1);
@@ -553,7 +566,7 @@ int main( int argc, char** argv )
   T_PFeval->SetBranchStatus("muonvtx_diff",1);
   T_PFeval->SetBranchStatus("truth_muonMomentum",1);
   if (pfeval.flag_NCDelta){
-    
+
       T_PFeval->SetBranchStatus("truth_NCDelta",1);
       T_PFeval->SetBranchStatus("truth_NprimPio",1);
   }
@@ -573,10 +586,19 @@ int main( int argc, char** argv )
     T_PFeval->SetBranchStatus("mcflux_gen2vtx",1);
     T_PFeval->SetBranchStatus("mcflux_ndecay",1);
   }
+  //Erin
+  if (pfeval.flag_single_photon){
+    T_PFeval->SetBranchStatus("truth_Npi0",1);
+    T_PFeval->SetBranchStatus("truth_single_photon",1);
+    T_PFeval->SetBranchStatus("truth_photon_angle",1);
+    T_PFeval->SetBranchStatus("truth_photon_dis",1);
+    T_PFeval->SetBranchStatus("truth_showerMother",1);
+  }
+  //
 
-  
 
-  
+
+
   std::map<std::pair<int, int>, int> map_re_entry;
   std::map<std::pair<int, int>, std::set<std::pair<int, int> > > map_rs_re;
 
@@ -587,12 +609,12 @@ int main( int argc, char** argv )
   for (int i=0;i!=T_eval->GetEntries();i++){
     T_eval->GetEntry(i);
     T_BDTvars->GetEntry(i);
-    
+
     map_rs_re[std::make_pair(eval.run, eval.subrun)].insert(std::make_pair(eval.run, eval.event));
-    
+
     int tmp_match_found = eval.match_found;
     if (eval.is_match_found_int) tmp_match_found = eval.match_found_asInt;
-    
+
     flag_presel = false;
     if (tmp_match_found != 0 && eval.stm_eventtype != 0 && eval.stm_lowenergy ==0 && eval.stm_LM ==0 && eval.stm_TGM ==0 && eval.stm_STM==0 && eval.stm_FullDead == 0 && eval.stm_clusterlength >0) {
       flag_presel = true; // preselection ...
@@ -613,7 +635,7 @@ int main( int argc, char** argv )
     // }
 
     //if (eval.run == 7486 && eval.event==3964) std::cout << flag_presel << " " << tagger.numu_cc_flag << std::endl;
-    
+
     map_re_entry[std::make_pair(eval.run, eval.event)] = i;
   }
 
@@ -648,8 +670,8 @@ int main( int argc, char** argv )
 
 
   std::map<int, int> map_cv_weight_index;
-  
-  
+
+
   for (auto it = map_re_entry.begin(); it != map_re_entry.end(); it++){
     auto it1 = map_re_weight_entry.find(it->first);
     if (it1 != map_re_weight_entry.end()){
@@ -662,41 +684,41 @@ int main( int argc, char** argv )
       T_KINEvars->GetEntry(it->first);
       T_PFeval->GetEntry(it->first);
       T->GetEntry(it->second);
-    
+
 
       t1->Fill();
       t3->Fill();
       t4->Fill();
       t5->Fill();
       t6->Fill();
-    
+
   }
 
   double cv_pot = 0;
   double cv1_pot = 0;
   float pass_ratio;
-  
+
   for (auto it = map_rs_entry_pot.begin(); it != map_rs_entry_pot.end(); it++){
     T_pot->GetEntry(it->second.first);
     cv_pot += it->second.second;
 
     if (map_rs_re[it->first].size()==0) continue;
-    
+
     pass_ratio = 1-map_rs_failed[it->first] * 1.0 / map_rs_re[it->first].size();
-    
+
     cv1_pot += it->second.second * pass_ratio;
 
     pot.pot_tor875 *= pass_ratio;
     pot.pot_tor875good *= pass_ratio;
-    
+
     t2->Fill();
   }
   std::cout << out_file << std::endl;
   std::cout << "Events: " << t1->GetEntries()<<"/"<<T_eval->GetEntries() << std::endl;
   std::cout << "POT:    " << cv1_pot << " " << cv_pot << std::endl;
-  
+
   file3->Write();
   file3->Close();
-  
+
   return 0;
 }

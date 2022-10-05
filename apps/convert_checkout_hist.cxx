@@ -32,21 +32,21 @@ int main( int argc, char** argv )
       break;
     }
   }
-  
-  
+
+
   TFile *file = new TFile(input_filename,"READ");
-  
+
   CovMatrix cov;
   if (flag_osc) cov.add_osc_config();
-  
+
   cov.print_rw(cov.get_rw_info());
-  
+
   TTree *T_BDTvars = (TTree*)file->Get("wcpselection/T_BDTvars");
   TTree *T_eval = (TTree*)file->Get("wcpselection/T_eval");
   TTree *T_pot = (TTree*)file->Get("wcpselection/T_pot");
   TTree *T_PFeval = (TTree*)file->Get("wcpselection/T_PFeval");
   TTree *T_KINEvars = (TTree*)file->Get("wcpselection/T_KINEvars");
- 
+
   if (T_eval->GetBranch("weight_cv")) flag_data = false;
 
   EvalInfo eval;
@@ -75,16 +75,16 @@ int main( int argc, char** argv )
   }
   double ext_pot = cov.get_ext_pot(input_filename);
   if (ext_pot != 0) total_pot = ext_pot;
-  
+
   std::cout << "Total POT: " << total_pot << " external POT: " << ext_pot << std::endl;
 
-  
+
   // prepare histograms ...
   // declare histograms ...
   TH1F *htemp;
   std::map<TString, TH1F*> map_histoname_hist;
   std::vector< std::tuple<TString,  int, float, float, TString, TString, TString, TString > > all_histo_infos;
-  
+
   std::vector< std::tuple<TString,  int, float, float, TString, TString, TString, TString > > histo_infos = cov.get_histograms(input_filename,0);
   std::copy(histo_infos.begin(), histo_infos.end(), std::back_inserter(all_histo_infos));
   //  std::cout << "CV:" << std::endl;
@@ -97,7 +97,7 @@ int main( int argc, char** argv )
     TString ch_name = std::get<5>(*it);
     TString add_cut = std::get<6>(*it);
     TString weight = std::get<7>(*it);
-    
+
     //    std::cout << std::get<0>( *it)  << " " << std::get<1>(*it) << " " << std::get<4>(*it) << " " << std::get<5>(*it) << " " << std::get<6>(*it) << " " << std::get<7>(*it) << std::endl;
     htemp = new TH1F(histoname, histoname, nbin, llimit, hlimit);
     map_histoname_hist[histoname] = htemp;
@@ -139,7 +139,7 @@ int main( int argc, char** argv )
     map_histoname_hist[histoname] = htemp;
   }
   //  std::cout << std::endl;
-  
+
   // fill histogram ...
   T_BDTvars->SetBranchStatus("*",0);
   T_BDTvars->SetBranchStatus("numu_cc_flag",1);
@@ -179,12 +179,25 @@ int main( int argc, char** argv )
     T_BDTvars->SetBranchStatus("nc_delta_score", 1);
     T_BDTvars->SetBranchStatus("nc_pio_score", 1);
   }
-  
+
+  //Erin
+  if (tagger.flag_single_photon_bdt){
+    T_BDTvars->SetBranchStatus("single_photon_numu_score", 1);
+    T_BDTvars->SetBranchStatus("single_photon_other_score", 1);
+    T_BDTvars->SetBranchStatus("single_photon_ncpi0_score", 1);
+    T_BDTvars->SetBranchStatus("single_photon_nue_score", 1);
+
+    T_BDTvars->SetBranchStatus("shw_sp_energy",1);
+    T_BDTvars->SetBranchStatus("shw_sp_angle_beam",1);
+    T_BDTvars->SetBranchStatus("shw_sp_n_20mev_showers",1);
+  }
+  //
+
   T_eval->SetBranchStatus("*",0);
   T_eval->SetBranchStatus("match_energy",1);
   T_eval->SetBranchStatus("match_isFC",1);
   T_eval->SetBranchStatus("match_found",1);
-  if (T_eval->GetBranch("match_found_asInt")) T_eval->SetBranchStatus("match_found_asInt",1); 
+  if (T_eval->GetBranch("match_found_asInt")) T_eval->SetBranchStatus("match_found_asInt",1);
   T_eval->SetBranchStatus("stm_eventtype",1);
   T_eval->SetBranchStatus("stm_lowenergy",1);
   T_eval->SetBranchStatus("stm_LM",1);
@@ -192,7 +205,7 @@ int main( int argc, char** argv )
   T_eval->SetBranchStatus("stm_STM",1);
   T_eval->SetBranchStatus("stm_FullDead",1);
   T_eval->SetBranchStatus("stm_clusterlength",1);
-  
+
   if (!flag_data){
     T_eval->SetBranchStatus("weight_spline",1);
     T_eval->SetBranchStatus("weight_cv",1);
@@ -210,7 +223,7 @@ int main( int argc, char** argv )
     T_eval->SetBranchStatus("match_completeness_energy",1);
   }
 
-  
+
   T_KINEvars->SetBranchStatus("*",0);
   T_KINEvars->SetBranchStatus("kine_reco_Enu",1);
   T_KINEvars->SetBranchStatus("kine_energy_particle",1);
@@ -258,25 +271,38 @@ int main( int argc, char** argv )
       T_PFeval->SetBranchStatus("truth_nuIntType",1);
       T_PFeval->SetBranchStatus("truth_muonMomentum",1);
       if(T_PFeval->GetBranch("truth_mother")){//prevents throwing an error for the non _PF files
-        T_PFeval->SetBranchStatus("truth_Ntrack",1); 
-        T_PFeval->SetBranchStatus("truth_pdg",1); 
-        T_PFeval->SetBranchStatus("truth_mother",1); 
-        T_PFeval->SetBranchStatus("truth_startMomentum",1); 
+        T_PFeval->SetBranchStatus("truth_Ntrack",1);
+        T_PFeval->SetBranchStatus("truth_pdg",1);
+        T_PFeval->SetBranchStatus("truth_mother",1);
+        T_PFeval->SetBranchStatus("truth_startMomentum",1);
       }
-      
+
   }
   if (pfeval.flag_NCDelta){
-    
+
       if (!flag_data){
           T_PFeval->SetBranchStatus("truth_NCDelta",1);
           T_PFeval->SetBranchStatus("truth_NprimPio",1);
       }
   }
-  
+
+  //Erin
+  if (pfeval.flag_single_photon){
+
+      if (!flag_data){
+          T_PFeval->SetBranchStatus("truth_Npi0",1);
+          T_PFeval->SetBranchStatus("truth_single_photon",1);
+          T_PFeval->SetBranchStatus("truth_photon_angle",1);
+          T_PFeval->SetBranchStatus("truth_photon_dis",1);
+          T_PFeval->SetBranchStatus("truth_showerMother",1);
+      }
+  }
+  //
+
   if (pfeval.flag_recoprotonMomentum){
     T_PFeval->SetBranchStatus("reco_protonMomentum",1);
   }
-  
+
   if (pfeval.flag_showerMomentum){
     T_PFeval->SetBranchStatus("reco_showerMomentum",1);
     T_PFeval->SetBranchStatus("reco_Nproton",1);
@@ -301,7 +327,7 @@ int main( int argc, char** argv )
     T_eval->GetEntry(i);
     T_KINEvars->GetEntry(i);
     T_PFeval->GetEntry(i);
-    
+
     if (!is_preselection(eval)) continue;
 
     for (auto it = all_histo_infos.begin(); it != all_histo_infos.end(); it++){
@@ -313,7 +339,7 @@ int main( int argc, char** argv )
       TString ch_name = std::get<5>(*it);
       TString add_cut = std::get<6>(*it);
       TString weight = std::get<7>(*it);
- 
+
       htemp = map_histoname_hist[histoname];
       // get kinematics variable ...
       double val = get_kine_var(kine, eval, pfeval, tagger, flag_data, var_name);
@@ -322,8 +348,8 @@ int main( int argc, char** argv )
 
       double osc_weight = 1.0;
 
-     
-      
+
+
       // std::cout << weight << std::endl;
       // get weight ...
       double weight_val = get_weight(weight, eval, pfeval, kine, tagger, cov.get_rw_info(), flag_data);
@@ -335,12 +361,12 @@ int main( int argc, char** argv )
 	    weight == "spline_spline" )
 	  weight_val *= osc_weight;
       }
-      
+
       if (flag_pass)
 	htemp->Fill(val,weight_val);
     }
   }
-  
+
 
   // save histograms ...
   TFile *file1 = new TFile(out_filename,"RECREATE");
@@ -349,18 +375,18 @@ int main( int argc, char** argv )
   T->SetDirectory(file1);
   T->Branch("pot",&total_pot,"pot/D");
   T->Fill();
-  
+
   for (auto it = map_histoname_hist.begin(); it!= map_histoname_hist.end(); it++){
     //std::cout<<"DEBUG: "<<it->first<<" "<<it->second->GetName()<<" "<<it->second->GetSum()<<"\n";
     it->second->SetDirectory(file1);
   }
-  
+
   file1->Write();
   file1->Close();
 
-  
-   
-  
-  
+
+
+
+
   return 0;
 }

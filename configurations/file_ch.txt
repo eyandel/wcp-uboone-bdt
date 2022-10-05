@@ -1,0 +1,3 @@
+../spbdt/data/wcpbdt_checkout/checkout_bnboverlay_run3_sp_wcpbdt_trim.root    all
+end                                                                           end
+#file                                                                         #cut

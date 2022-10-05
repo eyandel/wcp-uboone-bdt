@@ -65,7 +65,6 @@ int main( int argc, char** argv )
   // filetype, period, outfilename, external pot, fileno
   std::map<TString, std::tuple<int, int, TString, float, int, double, int> > map_inputfile_info = cov.get_map_inputfile_info();
 
-
   TFile *temp_file;
   TH1F *htemp;
   TTree *T;
@@ -104,7 +103,7 @@ int main( int argc, char** argv )
 
     for (size_t i=0;i!=all_histo_infos.size();i++){
       htemp = (TH1F*)temp_file->Get(std::get<0>(all_histo_infos.at(i)));
-      
+
       //std::cout << out_filename << " " << std::get<0>(all_histo_infos.at(i)) << " " << htemp << std::endl;
       //if (htemp == 0) continue;
       //      temp_histograms.push_back(htemp);
@@ -186,7 +185,7 @@ int main( int argc, char** argv )
     /*         } */
     /* } */
 
-
+    
 
   // get Bayesian errrors ...
 
@@ -728,6 +727,8 @@ int main( int argc, char** argv )
         TH1F* hext = (TH1F*)hdata->Clone("hext");
         TH1F* hdirt = (TH1F*)hdata->Clone("hdirt");
         TH1F* hLEE = (TH1F*)hdata->Clone("hLEE");
+        TH1F* hncpi0sig = (TH1F*)hdata->Clone("hncpi0sig");
+        TH1F* hbkg = (TH1F*)hdata->Clone("hbkg");
         hbadmatch->Reset();
         hnumuCCinFV->Reset();
         hnueCCinFV->Reset();
@@ -738,12 +739,24 @@ int main( int argc, char** argv )
         hext->Reset();
         hdirt->Reset();
         hLEE->Reset();
+        hncpi0sig->Reset();
+        hbkg->Reset();
         bool flag_leeexist = false;
         for(size_t i=0; i<it->second.size(); i++){
             TH1F* htemp = map_obsch_subhistos[obschannel].at(i);
             std::string histname = htemp->GetName();
             std::istringstream sss(histname);
             for(std::string line; std::getline(sss, line, '_');){
+                if(line == "bkg") {
+                    std::cout<<"background"<<" "<<histname<<std::endl;
+                    hbkg->Add(htemp);
+                    break;
+                }
+                if(line == "ncpi0sig") {
+                    std::cout<<"nc pi0 sig"<<" "<<histname<<std::endl;
+                    hncpi0sig->Add(htemp);
+                    break;
+                }
                 if(line == "badmatch") {
                     std::cout<<"badmatch"<<" "<<histname<<std::endl;
                     hbadmatch->Add(htemp);
@@ -872,6 +885,20 @@ int main( int argc, char** argv )
         hnueCCinFV->SetFillColorAlpha(kGreen+1, 0.5);
         hnueCCinFV->SetLineColor(kGreen+1);
         hnueCCinFV->SetLineWidth(1);
+
+        hstack[obschannel-1]->Add(hncpi0sig);
+        legend[obschannel-1]->AddEntry(hncpi0sig, Form("NC #pi^{0} 1#gamma, %.1f", hncpi0sig->Integral()), "F");
+        hncpi0sig->SetFillStyle(1001);
+        hncpi0sig->SetFillColorAlpha(kPink+1, 0.5);
+        hncpi0sig->SetLineColor(kPink+1);
+        hncpi0sig->SetLineWidth(1);
+
+        hstack[obschannel-1]->Add(hbkg);
+        legend[obschannel-1]->AddEntry(hbkg, Form("Overlay Background, %.1f", hbkg->Integral()), "F");
+        hncpi0sig->SetFillStyle(1001);
+        hncpi0sig->SetFillColorAlpha(kBlue+1, 0.5);
+        hncpi0sig->SetLineColor(kBlue+1);
+        hncpi0sig->SetLineWidth(1);
 
         if(flag_leeexist){
         hstack[obschannel-1]->Add(hLEE);

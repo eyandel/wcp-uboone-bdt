@@ -786,6 +786,23 @@ double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, 
         } else {
                 std::cout << "No such proton-pi0 variable: " << var_name << std::endl;
         }
+  //Erin
+  }else if (var_name == "single_photon_numu_score"){
+    return tagger.single_photon_numu_score;
+  }else if (var_name == "single_photon_other_score"){
+    return tagger.single_photon_other_score;
+  }else if (var_name == "single_photon_ncpi0_score"){
+    return tagger.single_photon_ncpi0_score;
+  }else if (var_name == "single_photon_nue_score"){
+    return tagger.single_photon_nue_score;
+  }else if (var_name == "shower_energy_sp"){
+    if(flag_data)
+      return tagger.shw_sp_energy*em_charge_scale;
+    else
+      return tagger.shw_sp_energy;
+  }else if (var_name == "shower_angle_beam_sp"){
+    return tagger.shw_sp_angle_beam;
+  //
   }else{
     std::cout << "No such variable: " << var_name << std::endl;
     exit(EXIT_FAILURE);
@@ -1765,6 +1782,25 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
   if (eval.match_completeness_energy>0.1*eval.truth_energyInside && eval.truth_vtxInside==1 && eval.truth_isCC==0 && pfeval.truth_NprimPio!=1 && pfeval.truth_NCDelta==0) map_cuts_flag["NCotherinFV"] = true;
   else map_cuts_flag["NCotherinFV"] = false;
   // done with NC Delta breakdown categories
+
+  //Erin
+  // breakdown categories for single photon analysis
+  if (eval.match_completeness_energy>0.1*eval.truth_energyInside && pfeval.truth_single_photon==1 && eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && eval.truth_vtxInside==1) map_cuts_flag["SPNCDeltaSig"] = true;
+  else map_cuts_flag["SPNCDeltaSig"] = false;
+
+  if (eval.match_completeness_energy>0.1*eval.truth_energyInside && pfeval.truth_single_photon==1 && eval.truth_isCC==0 && pfeval.truth_showerMother==111 && eval.truth_vtxInside==1) map_cuts_flag["SPNCPi0Sig"] = true;
+  else map_cuts_flag["SPNCPi0Sig"] = false;
+
+  if (eval.match_completeness_energy>0.1*eval.truth_energyInside && pfeval.truth_single_photon==1 && eval.truth_isCC==0 && pfeval.truth_showerMother!=111 && pfeval.truth_NCDelta==0 && eval.truth_vtxInside==1) map_cuts_flag["SPNCOtherSig"] = true;
+  else map_cuts_flag["SPNCOtherSig"] = false;
+
+  if (eval.match_completeness_energy>0.1*eval.truth_energyInside && pfeval.truth_single_photon==1 && eval.truth_isCC==1 && abs(eval.truth_nuPdg)==14 && pfeval.truth_muonMomentum[3]-0.105658<0.1 && eval.truth_vtxInside==1) map_cuts_flag["SPNumuCCSig"] = true;
+  else map_cuts_flag["SPNumuCCSig"] = false;
+
+  if (eval.match_completeness_energy>0.1*eval.truth_energyInside && pfeval.truth_single_photon==1 && (eval.truth_isCC==0 || (eval.truth_isCC==1 && abs(eval.truth_nuPdg)==14 && pfeval.truth_muonMomentum[3]-0.105658<0.1)) && eval.truth_vtxInside==0) map_cuts_flag["SPOutFVSig"] = true;
+  else map_cuts_flag["SPOutFVSig"] = false;
+  // done with single photon breakdown categories
+  //
 
 
   if(pfeval.truth_nuScatType==10 && eval.truth_isCC==1 && eval.match_completeness_energy>0.1*eval.truth_energyInside) map_cuts_flag["CCMEC"] = true;
@@ -3633,6 +3669,32 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
     }
 
     return false;
+
+  //Erin
+  }else if (ch_name == "single_photon_bnb" || ch_name == "single_photon_ext"
+    || ch_name == "single_photon_overlay" || ch_name == "single_photon_dirt"){
+            if (flag_singlephoton_sel) return true;
+            return false;
+  }else if (ch_name == "single_photon_ncdel_sig_overlay" || ch_name == "single_photon_ncpi0_sig_overlay" ||
+    ch_name == "single_photon_ncother_sig_overlay" || ch_name == "single_photon_numucc_sig_overlay" ||
+    ch_name == "single_photon_outfv_sig_overlay" || ch_name == "single_photon_bkg_overlay"){
+      if (ch_name == "single_photon_ncdel_sig_overlay"){
+        if (flag_singlephoton_sel && map_cuts_flag["SPNCDeltaSig"]) return true;
+      }else if (ch_name == "single_photon_ncpi0_sig_overlay"){
+        if (flag_singlephoton_sel && map_cuts_flag["SPNCPi0Sig"]) return true;
+      }else if (ch_name == "single_photon_ncother_sig_overlay"){
+        if (flag_singlephoton_sel && map_cuts_flag["SPNCOtherSig"]) return true;
+      }else if (ch_name == "single_photon_numucc_sig_overlay"){
+        if (flag_singlephoton_sel && map_cuts_flag["SPNumuCCSig"]) return true;
+      }else if (ch_name == "single_photon_outfv_sig_overlay"){
+        if (flag_singlephoton_sel && map_cuts_flag["SPOutFVSig"]) return true;
+      }else if (ch_name == "single_photon_bkg_overlay"){
+        if (flag_singlephoton_sel &&
+          !map_cuts_flag["SPNCDeltaSig"] && !map_cuts_flag["SPOutFVSig"] &&
+          !map_cuts_flag["SPNCPi0Sig"] && !map_cuts_flag["SPNCOtherSig"] &&
+          !map_cuts_flag["SPNumuCCSig"]) return true;
+      }
+      return false;
   }else{
     std::cout << "Not sure what cut: " << ch_name << std::endl;
   }
@@ -3785,12 +3847,12 @@ bool LEEana::is_NCdelta_sel(TaggerInfo& tagger_info, PFevalInfo& pfeval){ // inc
 }
 
 //Erin
-bool LEEana::is_singlephoton_sel(TaggerInfo& tagger_info, PFevalInfo& pfeval){ // includes all cuts except FC
+bool LEEana::is_singlephoton_sel(TaggerInfo& tagger_info, PFevalInfo& pfeval){
   bool flag = false;
-  if (tagger_info.kine_reco_Enu >=0 && tagger_info.shw_sp_n_20mev_showers>0 &&
+  if (tagger_info.shw_sp_n_20mev_showers > 0 &&
     pfeval.reco_nuvtxX>5.0 && pfeval.reco_nuvtxX<250.0 &&
-    tagger_info.single_photon_numu_score > 0.5 && tagger_info.single_photon_other_score > 0.5 &&
-    tagger_info.single_photon_ncpi0_score > 0.5 && tagger_info.single_photon_nue_score > -1.0 ) {flag = true;}
+    tagger_info.single_photon_numu_score > -0.5 && tagger_info.single_photon_other_score > -0.5 &&
+    tagger_info.single_photon_ncpi0_score > -0.4 && tagger_info.single_photon_nue_score > -3.2 ) {flag = true;}
   return flag;
 }
 //
