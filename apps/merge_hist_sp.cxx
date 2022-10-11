@@ -91,7 +91,7 @@ int main( int argc, char** argv )
       map_data_period_pot[period] = pot;
     }
 
-    // std::cout << pot << std::endl;
+    //std::cout << pot << std::endl;
 
     std::vector< std::tuple<TString,  int, float, float, TString, TString, TString, TString > > all_histo_infos;
     std::vector< std::tuple<TString,  int, float, float, TString, TString, TString, TString > > histo_infos = cov.get_histograms(input_filename,0);
@@ -185,7 +185,7 @@ int main( int argc, char** argv )
     /*         } */
     /* } */
 
-    
+
 
   // get Bayesian errrors ...
 

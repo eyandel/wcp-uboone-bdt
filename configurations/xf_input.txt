@@ -1,0 +1,3 @@
+1       nu_overlay  1         ./processed_checkout_rootfiles/prodgenie_bnb_nu_overlay_run3/UBGenieFluxSmallUni.root   ./processed_checkout_rootfiles/prodgenie_bnb_nu_overlay_run3/UBGenieFluxSmallUni_hist.root  0         1         1e19     3
+-1      end         -1        end                                                                                     end                                                                                         -1        -1        -1       -1
+#file	  #type			  #period		#filename											                                                          #outfile_name									                                                              #ext_pot	#file_no  #norm		#norm_period

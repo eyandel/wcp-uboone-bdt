@@ -3,20 +3,20 @@
 
 void LEEana::CovMatrix::gen_xf_cov_matrix(int run, std::map<int, TH1F*>& map_covch_hist, std::map<TString, TH1F*>& map_histoname_hist, TVectorD* vec_mean,  TMatrixD* cov_xf_mat){
   // prepare the maps ... name --> no,  covch, lee
-  std::map<TString, std::tuple<int, int, int, TString>> map_histoname_infos ; 
-  std::map<int, TString> map_no_histoname; 
-  
+  std::map<TString, std::tuple<int, int, int, TString>> map_histoname_infos ;
+  std::map<int, TString> map_no_histoname;
+
   int ncount = 0;
   for (auto it = map_inputfile_info.begin(); it != map_inputfile_info.end(); it++){
     TString input_filename = it->first;
     int filetype = std::get<0>(it->second);
     int period = std::get<1>(it->second);
-    
+
     if (period != run) continue;
     TString out_filename = std::get<2>(it->second);
     int file_no = std::get<4>(it->second);
     std::vector< std::tuple<TString,  int, float, float, TString, TString, TString, TString > > histo_infos = get_histograms(input_filename,0);
-    
+
     for (auto it1 = histo_infos.begin(); it1 != histo_infos.end(); it1++){
       int ch = map_name_ch[std::get<5>(*it1)];
       int obsch = get_obsch_name(std::get<5>(*it1));
@@ -45,7 +45,7 @@ void LEEana::CovMatrix::gen_xf_cov_matrix(int run, std::map<int, TH1F*>& map_cov
     int period = std::get<1>(it->second);
     if (period != run) continue;
 
-    
+
     //map_all_events[input_filename];
     std::pair<std::vector<int>, std::vector<int>> lengths_pair = get_events_weights(input_filename, map_passed_events, map_filename_pot, map_histoname_infos);
     std::vector<int> lengths = lengths_pair.first;
@@ -55,38 +55,38 @@ void LEEana::CovMatrix::gen_xf_cov_matrix(int run, std::map<int, TH1F*>& map_cov
     for (size_t i = 0; i != lengths.size();i++){
       if (lengths.at(i) > max_lengths.at(i)) max_lengths.at(i) = lengths.at(i);
     }
-    
+
     if (sup_lengths.size() > max_sup_lengths.size()) max_sup_lengths.resize(sup_lengths.size());
     for (size_t i = 0; i != sup_lengths.size();i++){
       if (sup_lengths.at(i) > max_sup_lengths.at(i)) max_sup_lengths.at(i) = sup_lengths.at(i);
     }
-    
+
     //std::cout << input_filename << " " << lengths.size() << std::endl;
   }
-  
+
   double data_pot = 5e19;
   const int rows = cov_xf_mat->GetNcols();
   float x[rows];
   (*cov_xf_mat).Zero();
- 
+
   int acc_no = 0;
   for (size_t j = 0; j!=max_lengths.size(); j++){
 
     //    if (j>0) continue;
-    
+
     int nsize = max_lengths.at(j);
     int sup_nsize = max_sup_lengths.at(j);
 
     //    std::cout << j << " " << nsize << " " << sup_nsize << std::endl;
-    
+
     TMatrixD temp_mat(rows, rows);
-    temp_mat.Zero(); 
-    
-    
+    temp_mat.Zero();
+
+
     for (int i=0;i!=nsize;i++){
 
       //      if (i>=10) continue;
-      
+
       for (int k = 0; k!= rows;k++){
 	x[k] = 0;
       }
@@ -98,12 +98,12 @@ void LEEana::CovMatrix::gen_xf_cov_matrix(int run, std::map<int, TH1F*>& map_cov
 	int covch = it->first;
 	TH1F *hpred = map_covch_hist[covch];
 	hpred->Reset();
-	
+
 	for (auto it1 = it->second.begin(); it1 != it->second.end(); it1++){
 	  TH1F *htemp = (TH1F*)hpred->Clone("htemp");
 	  htemp->Reset();
 	  std::map<int, double> temp_map_mc_acc_pot;
-	  
+
 	  for (auto it2 = it1->begin(); it2 != it1->end(); it2++){
 	    TString histoname = (*it2).first;
 	    TString input_filename = map_histogram_inputfile[histoname];
@@ -118,7 +118,7 @@ void LEEana::CovMatrix::gen_xf_cov_matrix(int run, std::map<int, TH1F*>& map_cov
 	      temp_map_mc_acc_pot[norm_period] += mc_pot;
 	    }
 	  }
-	  
+
 	  for (auto it2 = it1->begin(); it2 != it1->end(); it2++){
 	    TString histoname = (*it2).first;
 	    TString input_filename = map_histogram_inputfile[histoname];
@@ -127,12 +127,12 @@ void LEEana::CovMatrix::gen_xf_cov_matrix(int run, std::map<int, TH1F*>& map_cov
 	    int norm_period = std::get<6>(it3->second);
 	    data_pot = std::get<5>(map_inputfile_info[input_filename]);
 	    double ratio = data_pot/temp_map_mc_acc_pot[norm_period];
-	    
+
 	    TH1F *hmc = map_histoname_hist[histoname];
 	    htemp->Add(hmc, ratio);
 	    //	std::cout << covch << " " << histoname << " " << ratio << std::endl;
 	  }
-	  
+
 	  hpred->Add(htemp);
 	  delete htemp;
 	}
@@ -148,10 +148,10 @@ void LEEana::CovMatrix::gen_xf_cov_matrix(int run, std::map<int, TH1F*>& map_cov
 	for (size_t m =0; m!=rows;m++){
 	  temp_mat(n,m) += x[n] * x[m];
 	}
-      }  
+      }
     } // i
 
-    
+
     if (nsize==2){  // second check
       temp_mat *= 1./sup_nsize;
     }else{
@@ -159,13 +159,13 @@ void LEEana::CovMatrix::gen_xf_cov_matrix(int run, std::map<int, TH1F*>& map_cov
     }
 
     //std::cout << j << " " << temp_mat(26+26+5,26+26+26) << std::endl;
-    
+
     (*cov_xf_mat) +=  temp_mat;
-    
-    
+
+
     acc_no += nsize;
   } //j
-  
+
   // calculate the CV ...
   for (int i=0;i!=rows;i++){
     (*vec_mean)(i) = 0;
@@ -179,12 +179,12 @@ void LEEana::CovMatrix::gen_xf_cov_matrix(int run, std::map<int, TH1F*>& map_cov
     int covch = it->first;
     TH1F *hpred = map_covch_hist[covch];
     hpred->Reset();
-    
+
     for (auto it1 = it->second.begin(); it1 != it->second.end(); it1++){
       TH1F *htemp = (TH1F*)hpred->Clone("htemp");
       htemp->Reset();
       std::map<int, double> temp_map_mc_acc_pot;
-      
+
       for (auto it2 = it1->begin(); it2 != it1->end(); it2++){
 	TString histoname = (*it2).first;
 	TString input_filename = map_histogram_inputfile[histoname];
@@ -202,7 +202,7 @@ void LEEana::CovMatrix::gen_xf_cov_matrix(int run, std::map<int, TH1F*>& map_cov
       }
 
       //      std::cout << "haha " << std::endl;
-      
+
       for (auto it2 = it1->begin(); it2 != it1->end(); it2++){
 	TString histoname = (*it2).first;
 	TString input_filename = map_histogram_inputfile[histoname];
@@ -211,26 +211,26 @@ void LEEana::CovMatrix::gen_xf_cov_matrix(int run, std::map<int, TH1F*>& map_cov
 	int norm_period = std::get<6>(it3->second);
 	data_pot = std::get<5>(map_inputfile_info[input_filename]);
 	double ratio = data_pot/temp_map_mc_acc_pot[norm_period];
-	
+
 	TH1F *hmc = map_histoname_hist[histoname];
 	htemp->Add(hmc, ratio);
-	
+
 	//	std::cout << covch << " " << histoname << " " << ratio << " " << data_pot << std::endl;
       }
-      
+
       hpred->Add(htemp);
       delete htemp;
     }
-    
+
     int start_bin = map_covch_startbin[covch];
     for (int k=0;k!=hpred->GetNbinsX()+1;k++){
       (*vec_mean)(start_bin+k) = hpred->GetBinContent(k+1) ;
       //	  std::cout << i << " " << x[start_bin+i] << std::endl;
     }
   }
-  
-  
-  
+
+
+
 }
 
 
@@ -262,18 +262,18 @@ void LEEana::CovMatrix::fill_xf_histograms(int num, int tot_num, int acc_no, int
 	if (std::isnan(rel_weight_diff) || std::isinf(rel_weight_diff)) continue;
 	// seems to have extremely small cv weight
 	if (fabs(rel_weight_diff)>100) continue;
-	
+
 
 	if (flag_lee){
 	  htemp->Fill(val, rel_weight_diff * weight * weight_lee);
 	}else{
 	  htemp->Fill(val, rel_weight_diff * weight);
 	}
-	
+
       }
     }
   }
-  
+
 }
 
 void LEEana::CovMatrix::fill_xf_histograms(std::map<TString, std::set<std::tuple<float, float, std::vector<float>, std::vector<int>, std::set<std::pair<int, float> > > > >& map_passed_events, std::map<TString, std::tuple<int, int, int, TString>>& map_histoname_infos, std::map<int, TString>& map_no_histoname,  std::map<TString, TH1F*>& map_histoname_hist){
@@ -295,17 +295,17 @@ void LEEana::CovMatrix::fill_xf_histograms(std::map<TString, std::set<std::tuple
 	TString histoname = map_no_histoname[no];
 	TH1F *htemp = map_histoname_hist[histoname];
 	int flag_lee = std::get<2>(map_histoname_infos[histoname]);
-	
+
 	if (flag_lee){
 	  htemp->Fill(val, weight * weight_lee);
 	}else{
 	  htemp->Fill(val,  weight);
 	}
-	
+
       }
     }
   }
-  
+
 }
 
 
@@ -329,8 +329,8 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
   kine.kine_energy_info = new std::vector<int>;
   kine.kine_particle_type = new std::vector<int>;
   kine.kine_energy_included = new std::vector<int>;
-  
-  
+
+
   tagger.pio_2_v_dis2 = new std::vector<float>;
   tagger.pio_2_v_angle2 = new std::vector<float>;
   tagger.pio_2_v_acc_length = new std::vector<float>;
@@ -637,7 +637,20 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
     T_BDTvars->SetBranchStatus("nc_delta_score", 1);
     T_BDTvars->SetBranchStatus("nc_pio_score", 1);
   }
-  
+
+  //Erin
+  if (tagger.flag_single_photon_bdt){
+    T_BDTvars->SetBranchStatus("single_photon_numu_score", 1);
+    T_BDTvars->SetBranchStatus("single_photon_other_score", 1);
+    T_BDTvars->SetBranchStatus("single_photon_ncpi0_score", 1);
+    T_BDTvars->SetBranchStatus("single_photon_nue_score", 1);
+
+    T_BDTvars->SetBranchStatus("shw_sp_energy",1);
+    T_BDTvars->SetBranchStatus("shw_sp_angle_beam",1);
+    T_BDTvars->SetBranchStatus("shw_sp_n_20mev_showers",1);
+  }
+  //
+
   T_eval->SetBranchStatus("*",0);
   T_eval->SetBranchStatus("run",1);
   T_eval->SetBranchStatus("subrun",1);
@@ -645,7 +658,7 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
   T_eval->SetBranchStatus("match_energy",1);
   T_eval->SetBranchStatus("match_isFC",1);
   T_eval->SetBranchStatus("match_found",1);
-  if (T_eval->GetBranch("match_found_asInt")) T_eval->SetBranchStatus("match_found_asInt",1); 
+  if (T_eval->GetBranch("match_found_asInt")) T_eval->SetBranchStatus("match_found_asInt",1);
   T_eval->SetBranchStatus("stm_eventtype",1);
   T_eval->SetBranchStatus("stm_lowenergy",1);
   T_eval->SetBranchStatus("stm_LM",1);
@@ -653,7 +666,7 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
   T_eval->SetBranchStatus("stm_STM",1);
   T_eval->SetBranchStatus("stm_FullDead",1);
   T_eval->SetBranchStatus("stm_clusterlength",1);
-  
+
   T_eval->SetBranchStatus("weight_spline",1);
   T_eval->SetBranchStatus("weight_cv",1);
   T_eval->SetBranchStatus("weight_lee",1);
@@ -668,8 +681,8 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
   T_eval->SetBranchStatus("truth_vtxY",1);
   T_eval->SetBranchStatus("truth_vtxZ",1);
   T_eval->SetBranchStatus("match_completeness_energy",1);
- 
-  
+
+
   T_KINEvars->SetBranchStatus("*",0);
   T_KINEvars->SetBranchStatus("kine_reco_Enu",1);
   T_KINEvars->SetBranchStatus("kine_energy_particle",1);
@@ -735,10 +748,19 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
   }
   if (T_PFeval->GetBranch("truth_startMomentum")){
     T_PFeval->SetBranchStatus("truth_Ntrack",1);
-    T_PFeval->SetBranchStatus("truth_pdg",1); 
-    T_PFeval->SetBranchStatus("truth_mother",1); 
-    T_PFeval->SetBranchStatus("truth_startMomentum",1); 
+    T_PFeval->SetBranchStatus("truth_pdg",1);
+    T_PFeval->SetBranchStatus("truth_mother",1);
+    T_PFeval->SetBranchStatus("truth_startMomentum",1);
   }
+  //Erin
+  if (pfeval.flag_single_photon){
+    T_PFeval->SetBranchStatus("truth_Npi0",1);
+    T_PFeval->SetBranchStatus("truth_single_photon",1);
+    T_PFeval->SetBranchStatus("truth_photon_angle",1);
+    T_PFeval->SetBranchStatus("truth_photon_dis",1);
+    T_PFeval->SetBranchStatus("truth_showerMother",1);
+  }
+  //
 
   WeightInfo weight;
   TTree *T_weight = (TTree*)file->Get("wcpselection/T_weight");
@@ -756,7 +778,7 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
   weight.pionqexsec_FluxUnisim= new std::vector<float>;
   weight.piontotxsec_FluxUnisim= new std::vector<float>;
   weight.piplus_PrimaryHadronSWCentralSplineVariation= new std::vector<float>;
-  
+
   weight.All_UBGenie= new std::vector<float>;
   weight.AxFFCCQEshape_UBGenie= new std::vector<float>;
   weight.DecayAngMEC_UBGenie= new std::vector<float>;
@@ -776,8 +798,8 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
 
   weight.reinteractions_piminus_Geant4 = new std::vector<float>;
   weight.reinteractions_piplus_Geant4 = new std::vector<float>;
-  weight.reinteractions_proton_Geant4 = new std::vector<float>; 
-  
+  weight.reinteractions_proton_Geant4 = new std::vector<float>;
+
   TString option;
   if (rw_type == 1){
     option = "reweight";
@@ -818,7 +840,7 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
   }else if (T_weight->GetBranch("reinteractions_proton_Geant4")){
     option = "reinteractions_proton_Geant4";
   }
-  
+
   set_tree_address(T_weight, weight, option);
   //std::cout << T_eval->GetEntries() << " " << T_weight->GetEntries() << " " << option << std::endl;
 
@@ -830,7 +852,7 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
   std::vector<int> max_lengths;
   std::vector<int> sup_lengths;
   std::map<TString, int> map_knob_length;
-   
+
   for (size_t i=0;i!=T_eval->GetEntries();i++){
     T_BDTvars->GetEntry(i);
     T_eval->GetEntry(i);
@@ -839,27 +861,27 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
     T_weight->GetEntry(i);
 
     //std::cout << i << std::endl;
-    
+
     std::tuple<float, float, std::vector<float>, std::vector<int>, std::set<std::pair<int, float> > > event_info;
     std::get<0>(event_info) = eval.weight_cv * eval.weight_spline;
     std::get<1>(event_info) = leeweight(eval.truth_nuEnergy);
 
     double osc_weight = 1.0;
     bool flag_updated = false;
-    
+
     for (auto it = histo_infos.begin(); it != histo_infos.end(); it++){
       TString histoname = std::get<0>(*it);
-      
+
       auto it2 = map_histoname_infos.find(histoname);
       int no = std::get<0>(it2->second);
-      
+
       TString var_name = std::get<4>(*it);
       TString ch_name = std::get<5>(*it);
       TString add_cut = std::get<6>(*it);
 
       auto it3 = disabled_ch_names.find(ch_name);
       if (it3 != disabled_ch_names.end()) continue;
-      
+
       float val = get_kine_var(kine, eval, pfeval, tagger, false, var_name);
       bool flag_pass = get_cut_pass(ch_name, add_cut, false, eval, pfeval, tagger, kine);
 
@@ -875,9 +897,9 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
     std::get<0>(event_info) *= osc_weight;
     //apply reweight
     double reweight = get_weight("add_weight", eval, pfeval, kine, tagger, get_rw_info());//automatically 1 if reweighting is not applied
-    std::get<0>(event_info) *= reweight; 
+    std::get<0>(event_info) *= reweight;
 
- 
+
     if (std::get<4>(event_info).size()>0){
       if (option == "expskin_FluxUnisim"){
 	std::get<2>(event_info).resize(weight.expskin_FluxUnisim->size());
@@ -906,7 +928,7 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
 	std::get<2>(event_info).resize(weight.kminus_PrimaryHadronNormalization->size());
 	std::get<3>(event_info).push_back(weight.kminus_PrimaryHadronNormalization->size());
 	for (size_t j=0;j!= weight.kminus_PrimaryHadronNormalization->size(); j++){
-	  std::get<2>(event_info).at(j) = weight.kminus_PrimaryHadronNormalization->at(j) - 1.0; 
+	  std::get<2>(event_info).at(j) = weight.kminus_PrimaryHadronNormalization->at(j) - 1.0;
 	}
 	auto it10 = map_knob_length.find(option);
 	if (it10 == map_knob_length.end()) map_knob_length[option] = weight.kminus_PrimaryHadronNormalization->size();
@@ -1051,7 +1073,7 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
 	    std::get<2>(event_info).at(j) = weight.reinteractions_proton_Geant4->at(j) - 1.0;
 	  }
         }
-	
+
       }else if (option == "reweight"){
         std::get<2>(event_info).resize(1000);
         std::get<3>(event_info).push_back(1000);
@@ -1107,7 +1129,7 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
 	}
 	acc_no += weight.AxFFCCQEshape_UBGenie->size();
 
-	
+
 	std::get<2>(event_info).resize(acc_no + weight.DecayAngMEC_UBGenie->size());
 	std::get<3>(event_info).push_back(weight.DecayAngMEC_UBGenie->size());
 	for (size_t j=0; j!= weight.DecayAngMEC_UBGenie->size(); j++){
@@ -1119,7 +1141,7 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
 	}
 	acc_no += weight.DecayAngMEC_UBGenie->size();
 
-	
+
 	std::get<2>(event_info).resize(acc_no + weight.NormCCCOH_UBGenie->size());
 	std::get<3>(event_info).push_back(weight.NormCCCOH_UBGenie->size());
 	for (size_t j=0; j!= weight.NormCCCOH_UBGenie->size(); j++){
@@ -1131,7 +1153,7 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
 	}
 	acc_no += weight.NormCCCOH_UBGenie->size();
 
-	
+
 	std::get<2>(event_info).resize(acc_no + weight.NormNCCOH_UBGenie->size());
 	std::get<3>(event_info).push_back(weight.NormNCCOH_UBGenie->size());
 	for (size_t j=0; j!= weight.NormNCCOH_UBGenie->size(); j++){
@@ -1155,7 +1177,7 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
 	  }
 	  acc_no += weight.RPA_CCQE_Reduced_UBGenie->size();
 	}
-	
+
 	std::get<2>(event_info).resize(acc_no + weight.RPA_CCQE_UBGenie->size());
 	std::get<3>(event_info).push_back(weight.RPA_CCQE_UBGenie->size());
 	for (size_t j=0; j!= weight.RPA_CCQE_UBGenie->size(); j++){
@@ -1167,7 +1189,7 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
 	}
 	acc_no += weight.RPA_CCQE_UBGenie->size();
 
-	
+
 	std::get<2>(event_info).resize(acc_no + weight.ThetaDelta2NRad_UBGenie->size());
 	std::get<3>(event_info).push_back(weight.ThetaDelta2NRad_UBGenie->size());
 	for (size_t j=0; j!= weight.ThetaDelta2NRad_UBGenie->size(); j++){
@@ -1179,7 +1201,7 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
 	}
 	acc_no += weight.ThetaDelta2NRad_UBGenie->size();
 
-	
+
 	std::get<2>(event_info).resize(acc_no + weight.Theta_Delta2Npi_UBGenie->size());
 	std::get<3>(event_info).push_back(weight.Theta_Delta2Npi_UBGenie->size());
 	for (size_t j=0; j!= weight.Theta_Delta2Npi_UBGenie->size(); j++){
@@ -1191,7 +1213,7 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
 	}
 	acc_no += weight.Theta_Delta2Npi_UBGenie->size();
 
-	
+
 	std::get<2>(event_info).resize(acc_no + weight.VecFFCCQEshape_UBGenie->size());
 	std::get<3>(event_info).push_back(weight.VecFFCCQEshape_UBGenie->size());
 	for (size_t j=0; j!= weight.VecFFCCQEshape_UBGenie->size(); j++){
@@ -1203,7 +1225,7 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
 	}
 	acc_no += weight.VecFFCCQEshape_UBGenie->size();
 
-	
+
 	std::get<2>(event_info).resize(acc_no + weight.XSecShape_CCMEC_UBGenie->size());
 	std::get<3>(event_info).push_back(weight.XSecShape_CCMEC_UBGenie->size());
 	for (size_t j=0; j!= weight.XSecShape_CCMEC_UBGenie->size(); j++){
@@ -1215,7 +1237,7 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
 	}
 	acc_no += weight.XSecShape_CCMEC_UBGenie->size();
 
-	
+
 	std::get<2>(event_info).resize(acc_no + weight.xsr_scc_Fa3_SCC->size());
 	std::get<3>(event_info).push_back(weight.xsr_scc_Fa3_SCC->size());
 	for (size_t j=0; j!= weight.xsr_scc_Fa3_SCC->size(); j++){
@@ -1237,7 +1259,7 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
 	  }
 	}
 	acc_no += weight.xsr_scc_Fv3_SCC->size();
-	
+
       }
 
       if (max_lengths.size() < std::get<3>(event_info).size()) max_lengths.resize(std::get<3>(event_info).size());
@@ -1245,10 +1267,10 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
 	if (max_lengths.at(j) < std::get<3>(event_info).at(j)) max_lengths.at(j) = std::get<3>(event_info).at(j);
       // if (max_length < std::get<3>(event_info).size()) max_length = std::get<3>(event_info).size();
       }
-      
+
       set_events.insert(event_info);
     }
-    
+
   }
 
   //std::cout << map_knob_length[option] << std::endl;
@@ -1323,7 +1345,7 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
 
 
 
-  
+
   delete file;
   return std::make_pair(max_lengths, sup_lengths);
 }
