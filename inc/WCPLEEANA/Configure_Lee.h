@@ -74,7 +74,7 @@ namespace config_Lee
   int syst_cov_flux_Xs_end   = 17;//cov_18.root is uncorrelated reweighting and cov_19.root is correlated
 
   int syst_cov_mc_stat_begin = 0;// files in mc_directory above
-  int syst_cov_mc_stat_end   = 0;//99;
+  int syst_cov_mc_stat_end   = -1;//99;
 
 
   /// some places may need to be changed when use different file-formats
