@@ -67,7 +67,7 @@ namespace config_Lee
 
 
 
-  int channels_observation = 7;// data channels (=hdata_obsch_# in spectra_file above)
+  int channels_observation = 1;// data channels (=hdata_obsch_# in spectra_file above)
                                // which is equal to the channels after collapse
 
   int syst_cov_flux_Xs_begin = 1;// files in flux_Xs_directory above
