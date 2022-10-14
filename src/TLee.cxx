@@ -2721,7 +2721,6 @@ void TLee::Set_Spectra_MatrixCov()
 
   map<int, TString>map_detectorfile_str;
 
-  if(flag_syst_detector){
 
   map_detectorfile_str[1] = detector_directory+"cov_LYDown.root";
   map_detectorfile_str[2] = detector_directory+"cov_LYRayleigh.root";
@@ -2734,12 +2733,12 @@ void TLee::Set_Spectra_MatrixCov()
   map_detectorfile_str[9] = detector_directory+"cov_WMYZ.root";
   map_detectorfile_str[10]= detector_directory+"cov_LYatt.root";
 
-}
-
   map<int, TFile*>map_file_detector_frac;
   map<int, TMatrixD*>map_matrix_detector_frac;
   TMatrixD matrix_detector_frac(bins_oldworld, bins_oldworld);
   map<int, TMatrixD>matrix_detector_sub_frac;
+
+if(flag_syst_detector){
 
   for( auto it=map_detectorfile_str.begin(); it!=map_detectorfile_str.end(); it++ ) {
     int idx = it->first;
@@ -2757,7 +2756,9 @@ void TLee::Set_Spectra_MatrixCov()
     matrix_detector_sub_frac[idx] = (*map_matrix_detector_frac[idx]);
   }
   cout<<endl;
-
+}else{
+  cout<<"No Detector Systematics"<<endl;
+}
 
   if( 0 ) {
     cout<<endl<<" testestest "<<endl<<endl;
