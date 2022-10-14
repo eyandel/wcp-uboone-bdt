@@ -2740,7 +2740,7 @@ void TLee::Set_Spectra_MatrixCov()
   TMatrixD matrix_detector_frac(bins_oldworld, bins_oldworld);
   map<int, TMatrixD>matrix_detector_sub_frac;
 
-if(flag_syst_detector==1){
+if(0){
 
   for( auto it=map_detectorfile_str.begin(); it!=map_detectorfile_str.end(); it++ ) {
     int idx = it->first;
