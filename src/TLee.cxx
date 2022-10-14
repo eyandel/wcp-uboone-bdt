@@ -2719,6 +2719,8 @@ void TLee::Set_Spectra_MatrixCov()
 
   cout<<" Detector systematics"<<endl;
 
+  cout<<"Flag Det: "<<flag_syst_detector<<endl;
+
   map<int, TString>map_detectorfile_str;
 
 
