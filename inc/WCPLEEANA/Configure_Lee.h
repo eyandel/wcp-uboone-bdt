@@ -72,7 +72,7 @@ namespace config_Lee
   double Lee_Np_strength_for_GoF      = 0;
   double Lee_0p_strength_for_GoF      = 0;
 
-  bool flag_GoF_output2file_default_0 = false;
+  bool flag_GoF_output2file_default_0 = true;
 
   bool flag_lookelsewhere             = false;
 
