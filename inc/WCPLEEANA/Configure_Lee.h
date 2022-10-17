@@ -46,16 +46,16 @@ namespace config_Lee
 
   ////////// display graphics flag
 
-  bool flag_display_graphics = 0;
+  bool flag_display_graphics = false;
 
   ////////// systematics flag
 
-  bool flag_syst_flux_Xs    = 1;
-  bool flag_syst_detector   = 0;
-  bool flag_syst_additional = 0;
-  bool flag_syst_mc_stat    = 0;
-  bool flag_syst_reweight        = 0;
-  bool flag_syst_reweight_cor    = 0;
+  bool flag_syst_flux_Xs    = true;
+  bool flag_syst_detector   = false;
+  bool flag_syst_additional = false;
+  bool flag_syst_mc_stat    = false;
+  bool flag_syst_reweight        = false;
+  bool flag_syst_reweight_cor    = false;
 
   //double Lee_strength_for_outputfile_covariance_matrix = 1;
   double Lee_strength_for_outputfile_covariance_matrix = 0;
@@ -63,7 +63,7 @@ namespace config_Lee
   double Lee_Np_strength_for_outputfile_covariance_matrix = 0;
   double Lee_0p_strength_for_outputfile_covariance_matrix = 0;
 
-  bool flag_plotting_systematics   = 1;
+  bool flag_plotting_systematics   = true;
 
   ////////// goodness of fit
 
@@ -72,23 +72,23 @@ namespace config_Lee
   double Lee_Np_strength_for_GoF      = 0;
   double Lee_0p_strength_for_GoF      = 0;
 
-  bool flag_GoF_output2file_default_0 = 0;
+  bool flag_GoF_output2file_default_0 = false;
 
-  bool flag_lookelsewhere             = 0;
+  bool flag_lookelsewhere             = false;
 
-  bool flag_both_numuCC            = 0;// 1
-  bool flag_CCpi0_FC_by_numuCC     = 0;// 2
-  bool flag_CCpi0_PC_by_numuCC     = 0;// 3
-  bool flag_NCpi0_by_numuCC        = 0;// 4
-  bool flag_nueCC_PC_by_numuCC_pi0 = 0;// 5
-  bool flag_nueCC_HghE_FC_by_numuCC_pi0_nueFC = 0;// 6, HghE>800 MeV
-  bool flag_nueCC_LowE_FC_by_all   = 0;// 7
-  bool flag_nueCC_FC_by_all        = 0;// 8
+  bool flag_both_numuCC            = false;// 1
+  bool flag_CCpi0_FC_by_numuCC     = false;// 2
+  bool flag_CCpi0_PC_by_numuCC     = false;// 3
+  bool flag_NCpi0_by_numuCC        = false;// 4
+  bool flag_nueCC_PC_by_numuCC_pi0 = false;// 5
+  bool flag_nueCC_HghE_FC_by_numuCC_pi0_nueFC = false;// 6, HghE>800 MeV
+  bool flag_nueCC_LowE_FC_by_all   = false;// 7
+  bool flag_nueCC_FC_by_all        = false;// 8
 
   ////////// Lee strength fitting -- data
 
-  bool flag_Lee_strength_data = 0;
-  bool flag_Lee_scan_data     = 0;
+  bool flag_Lee_strength_data = false;
+  bool flag_Lee_scan_data     = false;
 
-  bool flag_GOF = 0;
+  bool flag_GOF = false;
 }
