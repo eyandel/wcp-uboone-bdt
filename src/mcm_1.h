@@ -485,6 +485,7 @@ void LEEana::CovMatrix::fill_det_histograms(std::map<TString, TH1D*> map_filenam
     T_BDTvars_cv->SetBranchStatus("shw_sp_energy",1);
     T_BDTvars_cv->SetBranchStatus("shw_sp_angle_beam",1);
     T_BDTvars_cv->SetBranchStatus("shw_sp_n_20mev_showers",1);
+    T_BDTvars_cv->SetBranchStatus("shw_sp_n_20br1_showers",1);
   }
   //
 
@@ -655,6 +656,7 @@ void LEEana::CovMatrix::fill_det_histograms(std::map<TString, TH1D*> map_filenam
     T_BDTvars_det->SetBranchStatus("shw_sp_energy",1);
     T_BDTvars_det->SetBranchStatus("shw_sp_angle_beam",1);
     T_BDTvars_det->SetBranchStatus("shw_sp_n_20mev_showers",1);
+    T_BDTvars_det->SetBranchStatus("shw_sp_n_20br1_showers",1);
   }
   //
 

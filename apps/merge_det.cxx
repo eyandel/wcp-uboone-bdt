@@ -683,6 +683,7 @@ int main( int argc, char** argv )
     T_BDTvars_cv->SetBranchStatus("shw_sp_energy",1);
     T_BDTvars_cv->SetBranchStatus("shw_sp_angle_beam",1);
     T_BDTvars_cv->SetBranchStatus("shw_sp_n_20mev_showers",1);
+    T_BDTvars_cv->SetBranchStatus("shw_sp_n_20br1_showers",1);
   }
   //
 
@@ -843,6 +844,7 @@ int main( int argc, char** argv )
     T_BDTvars_det->SetBranchStatus("shw_sp_energy",1);
     T_BDTvars_det->SetBranchStatus("shw_sp_angle_beam",1);
     T_BDTvars_det->SetBranchStatus("shw_sp_n_20mev_showers",1);
+    T_BDTvars_det->SetBranchStatus("shw_sp_n_20br1_showers",1);
   }
   //
 
