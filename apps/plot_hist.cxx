@@ -947,6 +947,11 @@ int main( int argc, char** argv )
         TH1F* houtFV = (TH1F*)hdata->Clone("houtFV");
         TH1F* hext = (TH1F*)hdata->Clone("hext");
         TH1F* hdirt = (TH1F*)hdata->Clone("hdirt");
+        TH1F* hNCpi1g   = (TH1F*)hdata->Clone("hNCpi1g");
+        TH1F* hNCdel    = (TH1F*)hdata->Clone("hNCdel");
+        TH1F* hNCother  = (TH1F*)hdata->Clone("hNCother");
+        TH1F* hnumuCC1g = (TH1F*)hdata->Clone("hnumuCC1g");
+        TH1F* hout1g    = (TH1F*)hdata->Clone("hout1g");
         TH1F* hLEE = (TH1F*)hdata->Clone("hLEE");
         TH1F* hCCQE = (TH1F*)hdata->Clone("hCCQE");
         TH1F* hNCQE = (TH1F*)hdata->Clone("hNCQE");
@@ -972,6 +977,11 @@ int main( int argc, char** argv )
         houtFV->Reset();
         hext->Reset();
         hdirt->Reset();
+        hNCpi1g->Reset();
+        hNCdel->Reset();
+        hNCother->Reset();
+        hnumuCC1g->Reset();
+        hout1g->Reset();
         hLEE->Reset();
         hCCQE->Reset();
         hNCQE->Reset();
@@ -1007,8 +1017,8 @@ int main( int argc, char** argv )
                     hbadmatch->Add(htemp);
                     break;
                 }
-                if(line == "numuCCinFV") {
-                    std::cout<<"numuCCinFV"<<" "<<histname<<std::endl;
+                if(line == "SPnumuCCBkg") {
+                    std::cout<<"SPnumuCCBkg"<<" "<<histname<<std::endl;
                     hnumuCCinFV->Add(htemp);
                     break;
                 }
@@ -1027,23 +1037,23 @@ int main( int argc, char** argv )
                     hnueCCinFV->Add(htemp);
                     break;
                 }
-                if(line == "NCinFV") {
-                    std::cout<<"NCinFV"<<" "<<histname<<std::endl;
+                if(line == "SPNCBkg") {
+                    std::cout<<"SPNCBkg"<<" "<<histname<<std::endl;
                     hNCinFV->Add(htemp);
                     break;
                 }
-                if(line == "CCpi0inFV") {
-                    std::cout<<"CCpi0inFV"<<" "<<histname<<std::endl;
+                if(line == "SPnumuCCpi0Bkg") {
+                    std::cout<<"SPnumuCCpi0Bkg"<<" "<<histname<<std::endl;
                     hCCpi0inFV->Add(htemp);
                     break;
                 }
-                if(line == "NCpi0inFV") {
-                    std::cout<<"NCpi0inFV"<<" "<<histname<<std::endl;
+                if(line == "SPNCpi0Bkg") {
+                    std::cout<<"SPNCpi0Bkg"<<" "<<histname<<std::endl;
                     hNCpi0inFV->Add(htemp);
                     break;
                 }
-                if(line == "outFV") {
-                    std::cout<<"outFV"<<" "<<histname<<std::endl;
+                if(line == "SPoutFVBkg") {
+                    std::cout<<"SPoutFVBkg"<<" "<<histname<<std::endl;
                     houtFV->Add(htemp);
                     break;
                 }
@@ -1052,9 +1062,34 @@ int main( int argc, char** argv )
                     hext->Add(htemp);
                     break;
                 }
-                if(line == "dirt") {
-                    std::cout<<"dirt"<<" "<<histname<<std::endl;
+                if(line == "SPdirtBkg") {
+                    std::cout<<"SPdirtBkg"<<" "<<histname<<std::endl;
                     hdirt->Add(htemp);
+                    break;
+                }
+                if(line == "SPNCPi0Sig") {
+                    std::cout<<"SPNCPi0Sig"<<" "<<histname<<std::endl;
+                    hNCpi1g->Add(htemp);
+                    break;
+                }
+                if(line == "SPNCDeltaSig") {
+                    std::cout<<"SPNCDeltaSig"<<" "<<histname<<std::endl;
+                    hNCdel->Add(htemp);
+                    break;
+                }
+                if(line == "SPNCOtherSig") {
+                    std::cout<<"SPNCOtherSig"<<" "<<histname<<std::endl;
+                    hNCother->Add(htemp);
+                    break;
+                }
+                if(line == "SPNumuCCSig") {
+                    std::cout<<"SPNumuCCSig"<<" "<<histname<<std::endl;
+                    hnumuCC1g->Add(htemp);
+                    break;
+                }
+                if(line == "SPOutFVSig") {
+                    std::cout<<"SPOutFVSig"<<" "<<histname<<std::endl;
+                    hout1g->Add(htemp);
                     break;
                 }
                 if(line == "LEE") {
@@ -1216,7 +1251,7 @@ int main( int argc, char** argv )
         hnumuCCinFV->SetLineColor(kAzure+6);
         hnumuCCinFV->SetLineWidth(1);
 
-        hstack[obschannel-1]->Add(hRnumuCCinFV);
+      /*  hstack[obschannel-1]->Add(hRnumuCCinFV);
         legend[obschannel-1]->AddEntry(hRnumuCCinFV, Form("#nu_{#mu} CC in FV, %.1f", hRnumuCCinFV->Integral()), "F");
         hRnumuCCinFV->SetFillStyle(1001);
         hRnumuCCinFV->SetFillColorAlpha(kAzure+6, 0.5);
@@ -1228,7 +1263,7 @@ int main( int argc, char** argv )
         hAnumuCCinFV->SetFillStyle(1001);
         hAnumuCCinFV->SetFillColorAlpha(kAzure-6, 0.5);
         hAnumuCCinFV->SetLineColor(kAzure+6);
-        hAnumuCCinFV->SetLineWidth(1);
+        hAnumuCCinFV->SetLineWidth(1);*/
 
         hstack[obschannel-1]->Add(hnueCCinFV);
         legend[obschannel-1]->AddEntry(hnueCCinFV, Form("#nu_{e} CC in FV, %.1f", hnueCCinFV->Integral()), "F");
@@ -1236,6 +1271,41 @@ int main( int argc, char** argv )
         hnueCCinFV->SetFillColorAlpha(kGreen+1, 0.5);
         hnueCCinFV->SetLineColor(kGreen+1);
         hnueCCinFV->SetLineWidth(1);
+
+        hstack[obschannel-1]->Add(hNCpi1g);
+        legend[obschannel-1]->AddEntry(hNCpi1g, Form("NC #pi^{0} 1#gamma, %.1f", hNCpi1g->Integral()), "F");
+        hNCpi1g->SetFillStyle(1001);
+        hNCpi1g->SetFillColorAlpha(kPink+5, 0.5);
+        hNCpi1g->SetLineColor(kPink+5);
+        hNCpi1g->SetLineWidth(1);
+
+        hstack[obschannel-1]->Add(hNCdel);
+        legend[obschannel-1]->AddEntry(hNCdel, Form("NC #Delta 1#gamma, %.1f", hNCdel->Integral()), "F");
+        hNCdel->SetFillStyle(1001);
+        hNCdel->SetFillColorAlpha(kPink-6, 0.5);
+        hNCdel->SetLineColor(kPink-6);
+        hNCdel->SetLineWidth(1);
+
+        hstack[obschannel-1]->Add(hNCother);
+        legend[obschannel-1]->AddEntry(hNCother, Form("NC Other 1#gamma, %.1f", hNCother->Integral()), "F");
+        hNCother->SetFillStyle(1001);
+        hNCother->SetFillColorAlpha(kPink-8, 0.5);
+        hNCother->SetLineColor(kPink-8);
+        hNCother->SetLineWidth(1);
+
+        hstack[obschannel-1]->Add(hnumuCC1g);
+        legend[obschannel-1]->AddEntry(hnumuCC1g, Form("#nu_{#mu}CC 1#gamma #mu<100MeV, %.1f", hnumuCC1g->Integral()), "F");
+        hnumuCC1g->SetFillStyle(1001);
+        hnumuCC1g->SetFillColorAlpha(kPink-7, 0.5);
+        hnumuCC1g->SetLineColor(kPink-7);
+        hnumuCC1g->SetLineWidth(1);
+
+        hstack[obschannel-1]->Add(hout1g);
+        legend[obschannel-1]->AddEntry(hout1g, Form("out of FV 1#gamma, %.1f", hout1g->Integral()), "F");
+        hout1g->SetFillStyle(1001);
+        hout1g->SetFillColorAlpha(kPink, 0.5);
+        hout1g->SetLineColor(kPink);
+        hout1g->SetLineWidth(1);
 
         if(flag_leeexist){
         hstack[obschannel-1]->Add(hLEE);
@@ -1510,7 +1580,7 @@ int main( int argc, char** argv )
         {
             gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco #pi^{0} energy [MeV]");
         }
-        else gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco neutrino energy [MeV]");
+        else gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Energy [MeV]");
         //else gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco neutrino vtx in X-axis [cm]");
         /* if(obschannel <=26) */
         /*     gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco neutrino energy [MeV]"); */

@@ -88,6 +88,9 @@ namespace LEEana{
 
   //Erin
   bool is_singlephoton_sel(TaggerInfo& tagger_info, PFevalInfo& pfeval);
+  bool is_singlephoton_eff_sel(TaggerInfo& tagger_info, PFevalInfo& pfeval);
+  bool is_singleshower_sel(TaggerInfo& tagger_info, PFevalInfo& pfeval);
+  bool is_singleshower_eff_sel(TaggerInfo& tagger_info, PFevalInfo& pfeval);
 
 
   // TCut FC_cut = "match_isFC==1";
@@ -1799,6 +1802,22 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
 
   if (eval.match_completeness_energy>0.1*eval.truth_energyInside && pfeval.truth_single_photon==1 && (eval.truth_isCC==0 || (eval.truth_isCC==1 && abs(eval.truth_nuPdg)==14 && pfeval.truth_muonMomentum[3]-0.105658<0.1)) && eval.truth_vtxInside==0) map_cuts_flag["SPOutFVSig"] = true;
   else map_cuts_flag["SPOutFVSig"] = false;
+
+  map_cuts_flag["SPdirtBkg"] = false;
+  map_cuts_flag["SPoutFVBkg"] = false;
+  map_cuts_flag["SPnumuCCBkg"] = false;
+  map_cuts_flag["SPnumuCCpi0Bkg"] = false;
+  map_cuts_flag["SPNCBkg"] = false;
+  map_cuts_flag["SPNCpi0Bkg"] = false;
+
+  if(!(map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] || map_cuts_flag["SPNumuCCSig"] || map_cuts_flag["SPOutFVSig"])){
+      map_cuts_flag["SPdirtBkg"] = true;
+      if(eval.match_completeness_energy>0.1*eval.truth_energyInside && eval.truth_vtxInside==0) map_cuts_flag["SPoutFVBkg"] = true;
+      if(eval.match_completeness_energy>0.1*eval.truth_energyInside && abs(eval.truth_nuPdg)==14 && eval.truth_isCC==1 && eval.truth_vtxInside==1 && pfeval.truth_Npi0==0) map_cuts_flag["SPnumuCCBkg"] = true;
+      if(eval.match_completeness_energy>0.1*eval.truth_energyInside && abs(eval.truth_nuPdg)==14 && eval.truth_isCC==1 && eval.truth_vtxInside==1 && pfeval.truth_Npi0>0) map_cuts_flag["SPnumuCCpi0Bkg"] = true;
+      if(eval.match_completeness_energy>0.1*eval.truth_energyInside && eval.truth_isCC==0 && eval.truth_vtxInside==1 && pfeval.truth_Npi0==0) map_cuts_flag["SPNCBkg"] = true;
+      if(eval.match_completeness_energy>0.1*eval.truth_energyInside && eval.truth_isCC==0 && eval.truth_vtxInside==1 && pfeval.truth_Npi0>0) map_cuts_flag["SPNCpi0Bkg"] = true;
+  }
   // done with single photon breakdown categories
   //
 
@@ -1879,6 +1898,9 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
 
   //Erin
   bool flag_singlephoton_sel = is_singlephoton_sel(tagger, pfeval);
+  bool flag_singlephoton_eff_sel = is_singlephoton_eff_sel(tagger, pfeval);
+  bool flag_singleshower_sel = is_singleshower_sel(tagger, pfeval);
+  bool flag_singleshower_eff_sel = is_singleshower_eff_sel(tagger, pfeval);
   //
 
   float costheta_binning[10] = {-1, -.5, 0, .27, .45, .62, .76, .86, .94, 1};		// PeLEE binning
@@ -3675,6 +3697,18 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
     || ch_name == "single_photon_overlay" || ch_name == "single_photon_dirt"){
             if (flag_singlephoton_sel) return true;
             return false;
+  }else if (ch_name == "single_photon_eff_bnb" || ch_name == "single_photon_eff_ext"
+    || ch_name == "single_photon_eff_overlay" || ch_name == "single_photon_eff_dirt"){
+            if (flag_singlephoton_eff_sel) return true;
+            return false;
+  }else if (ch_name == "single_shower_bnb" || ch_name == "single_shower_ext"
+    || ch_name == "single_shower_overlay" || ch_name == "single_shower_dirt"){
+            if (flag_singleshower_sel) return true;
+            return false;
+  }else if (ch_name == "single_shower_eff_bnb" || ch_name == "single_shower_eff_ext"
+    || ch_name == "single_shower_eff_overlay" || ch_name == "single_shower_eff_dirt"){
+            if (flag_singleshower_eff_sel) return true;
+            return false;
   }else if (ch_name == "single_photon_ncdel_sig_overlay" || ch_name == "single_photon_ncpi0_sig_overlay" ||
     ch_name == "single_photon_ncother_sig_overlay" || ch_name == "single_photon_numucc_sig_overlay" ||
     ch_name == "single_photon_outfv_sig_overlay" || ch_name == "single_photon_bkg_overlay"){
@@ -3720,6 +3754,15 @@ bool LEEana::get_rw_cut_pass(TString cut, EvalInfo& eval, PFevalInfo& pfeval, Ta
     return false;
   }else if(cut == "singlephoton_scale"){
     if(is_singlephoton_sel(tagger, pfeval) && pfeval.truth_single_photon==1) return true;
+    return false;
+  }else if(cut == "singlephoton_eff_scale"){
+    if(is_singlephoton_eff_sel(tagger, pfeval) && pfeval.truth_single_photon==1) return true;
+    return false;
+  }else if(cut == "singleshower_scale"){
+    if(is_singleshower_sel(tagger, pfeval) && pfeval.truth_single_photon==1) return true;
+    return false;
+  }else if(cut == "singleshower_eff_scale"){
+    if(is_singleshower_eff_sel(tagger, pfeval) && pfeval.truth_single_photon==1) return true;
     return false;
   }else{
     std::cout<<"No matching reweighting cut, check reweight configuration file"<<std::endl;
@@ -3851,8 +3894,36 @@ bool LEEana::is_singlephoton_sel(TaggerInfo& tagger_info, PFevalInfo& pfeval){
   bool flag = false;
   if (tagger_info.shw_sp_n_20mev_showers > 0 &&
     pfeval.reco_nuvtxX>5.0 && pfeval.reco_nuvtxX<250.0 &&
-    tagger_info.single_photon_numu_score > -0.5 && tagger_info.single_photon_other_score > -0.5 &&
-    tagger_info.single_photon_ncpi0_score > -0.4 && tagger_info.single_photon_nue_score > -3.2 ) {flag = true;}
+    tagger_info.single_photon_numu_score > 0.4 && tagger_info.single_photon_other_score > 0.2 &&
+    tagger_info.single_photon_ncpi0_score > -0.05 && tagger_info.single_photon_nue_score > -1.0 &&
+    tagger_info.shw_sp_n_20br1_showers==1) {flag = true;}
+  return flag;
+}
+bool LEEana::is_singlephoton_eff_sel(TaggerInfo& tagger_info, PFevalInfo& pfeval){
+  bool flag = false;
+  if (tagger_info.shw_sp_n_20mev_showers > 0 &&
+    pfeval.reco_nuvtxX>5.0 && pfeval.reco_nuvtxX<250.0 &&
+    tagger_info.single_photon_numu_score > 0.1 && tagger_info.single_photon_other_score > -0.4 &&
+    tagger_info.single_photon_ncpi0_score > -0.4 && tagger_info.single_photon_nue_score > -3.0 &&
+    tagger_info.shw_sp_n_20br1_showers==1) {flag = true;}
+  return flag;
+}
+bool LEEana::is_singleshower_sel(TaggerInfo& tagger_info, PFevalInfo& pfeval){
+  bool flag = false;
+  if (tagger_info.shw_sp_n_20mev_showers > 0 &&
+    pfeval.reco_nuvtxX>5.0 && pfeval.reco_nuvtxX<250.0 &&
+    tagger_info.single_photon_numu_score > 0.4 && tagger_info.single_photon_other_score > 0.2 &&
+    tagger_info.single_photon_ncpi0_score > -0.05 &&
+    tagger_info.shw_sp_n_20br1_showers==1) {flag = true;}
+  return flag;
+}
+bool LEEana::is_singleshower_eff_sel(TaggerInfo& tagger_info, PFevalInfo& pfeval){
+  bool flag = false;
+  if (tagger_info.shw_sp_n_20mev_showers > 0 &&
+    pfeval.reco_nuvtxX>5.0 && pfeval.reco_nuvtxX<250.0 &&
+    tagger_info.single_photon_numu_score > 0.1 && tagger_info.single_photon_other_score > -0.4 &&
+    tagger_info.single_photon_ncpi0_score > -0.4 &&
+    tagger_info.shw_sp_n_20br1_showers==1) {flag = true;}
   return flag;
 }
 //
