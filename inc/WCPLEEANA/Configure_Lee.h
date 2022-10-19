@@ -17,7 +17,7 @@ namespace config_Lee
   int syst_cov_flux_Xs_end   = 17;//cov_18.root is uncorrelated reweighting and cov_19.root is correlated
 
   int syst_cov_mc_stat_begin = 0;// files in mc_directory above
-  int syst_cov_mc_stat_end   = 0;//99;
+  int syst_cov_mc_stat_end   = 99;
 
 
   ///////////////////////////////
@@ -30,8 +30,8 @@ namespace config_Lee
 
   /////////////////////////////// separated Np and 0p strengthes: 2d strengthes
 
-  int array_LEE_Np_ch[6] = {0};// element value "0" will not be set to the LEE_ch
-  int array_LEE_0p_ch[6] = {0};// element value "0" will not be set to the LEE_ch
+  int array_LEE_Np_ch[1] = {0};// element value "0" will not be set to the LEE_ch
+  int array_LEE_0p_ch[1] = {0};// element value "0" will not be set to the LEE_ch
 
   //int array_LEE_Np_ch[1] = {0};
   //int array_LEE_0p_ch[1] = {0};
@@ -52,8 +52,8 @@ namespace config_Lee
 
   bool flag_syst_flux_Xs    = true;
   bool flag_syst_detector   = false;
-  bool flag_syst_additional = false;
-  bool flag_syst_mc_stat    = false;
+  bool flag_syst_additional = true;
+  bool flag_syst_mc_stat    = true;
   bool flag_syst_reweight        = false;
   bool flag_syst_reweight_cor    = false;
 
