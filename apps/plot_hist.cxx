@@ -360,7 +360,7 @@ int main( int argc, char** argv )
     // plotting ...
     TApplication theApp("theApp",&argc,argv);
     theApp.SetReturnFromRun(true);
-    //gStyle->SetOptStat(0);
+    gStyle->SetOptStat(0);
 
     if(flag_breakdown == 0){
     gROOT->ProcessLine(".x DrawOption.cc");
