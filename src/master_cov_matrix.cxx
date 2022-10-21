@@ -2009,7 +2009,7 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
         if(!(flag_reweight)) reweight = get_weight("add_weight", eval, pfeval, kine, tagger, get_rw_info(true));
         for (size_t j=0;j!=1000;j++){
           if(flag_reweight){
-            if (weight.weight_cv>0 && reweight!=1){
+            if (eval.weight_cv>0 && reweight!=1){
               gRandom->SetSeed(j*reweight*77777);
               double rand = gRandom->Gaus(reweight,abs(1-reweight));
               std::get<2>(event_info).at(j) = (rand-reweight)/reweight;
@@ -2024,7 +2024,7 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
         std::get<2>(event_info).resize(1);
         std::get<3>(event_info).push_back(1);
         if(flag_reweight){
-          if (weight.weight_cv>0 && reweight!=1){
+          if (eval.weight_cv>0 && reweight!=1){
             std::get<2>(event_info).at(0) = (1-reweight)/reweight;
           }else{
             std::get<2>(event_info).at(0) = 0;
@@ -2038,8 +2038,8 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
 	std::get<2>(event_info).resize(weight.All_UBGenie->size());
 	std::get<3>(event_info).push_back(weight.All_UBGenie->size());
 	for (size_t j=0;j!=weight.All_UBGenie->size();j++){
-	  if (weight.weight_cv>0){
-	    std::get<2>(event_info).at(acc_no+j) = (weight.All_UBGenie->at(j) - weight.weight_cv)/weight.weight_cv;
+	  if (eval.weight_cv>0){
+	    std::get<2>(event_info).at(acc_no+j) = (weight.All_UBGenie->at(j) - eval.weight_cv)/eval.weight_cv;
 	  }else{
 	    std::get<2>(event_info).at(acc_no+j) = 0;
 	  }
@@ -2052,7 +2052,7 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
           if(!(flag_reweight)) reweight = get_weight("add_weight", eval, pfeval, kine, tagger, get_rw_info(true));
           for (size_t j=0;j!=1000;j++){
             if(flag_reweight){
-              if (weight.weight_cv>0 && reweight!=1){
+              if (eval.weight_cv>0 && reweight!=1){
                 gRandom->SetSeed(j*reweight*77777);
                 double rand = gRandom->Gaus(reweight,abs(1-reweight));
                 std::get<2>(event_info).at(acc_no+j) = (rand-reweight)/reweight;
@@ -2067,7 +2067,7 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
           std::get<2>(event_info).resize(acc_no+1);
           std::get<3>(event_info).push_back(1);
           if(flag_reweight){
-            if (weight.weight_cv>0 && reweight!=1){
+            if (eval.weight_cv>0 && reweight!=1){
               std::get<2>(event_info).at(acc_no) = (1-reweight)/reweight;
             }else{
               std::get<2>(event_info).at(acc_no) = 0;
@@ -2082,8 +2082,8 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
 	std::get<2>(event_info).resize(acc_no + weight.AxFFCCQEshape_UBGenie->size());
 	std::get<3>(event_info).push_back(weight.AxFFCCQEshape_UBGenie->size());
 	for (size_t j=0; j!= weight.AxFFCCQEshape_UBGenie->size(); j++){
-	    if (weight.weight_cv>0){
-	    std::get<2>(event_info).at(acc_no+j) = (weight.AxFFCCQEshape_UBGenie->at(j) - weight.weight_cv)/weight.weight_cv;
+	    if (eval.weight_cv>0){
+	    std::get<2>(event_info).at(acc_no+j) = (weight.AxFFCCQEshape_UBGenie->at(j) - eval.weight_cv)/eval.weight_cv;
 	  }else{
 	    std::get<2>(event_info).at(acc_no+j) = 0;
 	  }
@@ -2094,8 +2094,8 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
 	std::get<2>(event_info).resize(acc_no + weight.DecayAngMEC_UBGenie->size());
 	std::get<3>(event_info).push_back(weight.DecayAngMEC_UBGenie->size());
 	for (size_t j=0; j!= weight.DecayAngMEC_UBGenie->size(); j++){
-	    if (weight.weight_cv>0){
-	    std::get<2>(event_info).at(acc_no+j) = (weight.DecayAngMEC_UBGenie->at(j) - weight.weight_cv)/weight.weight_cv;
+	    if (eval.weight_cv>0){
+	    std::get<2>(event_info).at(acc_no+j) = (weight.DecayAngMEC_UBGenie->at(j) - eval.weight_cv)/eval.weight_cv;
 	  }else{
 	    std::get<2>(event_info).at(acc_no+j) = 0;
 	  }
@@ -2106,8 +2106,8 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
 	std::get<2>(event_info).resize(acc_no + weight.NormCCCOH_UBGenie->size());
 	std::get<3>(event_info).push_back(weight.NormCCCOH_UBGenie->size());
 	for (size_t j=0; j!= weight.NormCCCOH_UBGenie->size(); j++){
-	    if (weight.weight_cv>0){
-	    std::get<2>(event_info).at(acc_no+j) = (weight.NormCCCOH_UBGenie->at(j) - weight.weight_cv)/weight.weight_cv;
+	    if (eval.weight_cv>0){
+	    std::get<2>(event_info).at(acc_no+j) = (weight.NormCCCOH_UBGenie->at(j) - eval.weight_cv)/eval.weight_cv;
 	  }else{
 	    std::get<2>(event_info).at(acc_no+j) = 0;
 	  }
@@ -2118,8 +2118,8 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
 	std::get<2>(event_info).resize(acc_no + weight.NormNCCOH_UBGenie->size());
 	std::get<3>(event_info).push_back(weight.NormNCCOH_UBGenie->size());
 	for (size_t j=0; j!= weight.NormNCCOH_UBGenie->size(); j++){
-	    if (weight.weight_cv>0){
-	    std::get<2>(event_info).at(acc_no+j) = (weight.NormNCCOH_UBGenie->at(j) - weight.weight_cv)/weight.weight_cv;
+	    if (eval.weight_cv>0){
+	    std::get<2>(event_info).at(acc_no+j) = (weight.NormNCCOH_UBGenie->at(j) - eval.weight_cv)/eval.weight_cv;
 	  }else{
 	    std::get<2>(event_info).at(acc_no+j) = 0;
 	  }
@@ -2130,8 +2130,8 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
 	  std::get<2>(event_info).resize(acc_no + weight.RPA_CCQE_Reduced_UBGenie->size());
 	  std::get<3>(event_info).push_back(weight.RPA_CCQE_Reduced_UBGenie->size());
 	  for (size_t j=0; j!= weight.RPA_CCQE_Reduced_UBGenie->size(); j++){
-	    if (weight.weight_cv>0){
-	      std::get<2>(event_info).at(acc_no+j) = (weight.RPA_CCQE_Reduced_UBGenie->at(j) - weight.weight_cv)/weight.weight_cv;
+	    if (eval.weight_cv>0){
+	      std::get<2>(event_info).at(acc_no+j) = (weight.RPA_CCQE_Reduced_UBGenie->at(j) - eval.weight_cv)/eval.weight_cv;
 	    }else{
 	      std::get<2>(event_info).at(acc_no+j) = 0;
 	    }
@@ -2142,8 +2142,8 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
 	std::get<2>(event_info).resize(acc_no + weight.RPA_CCQE_UBGenie->size());
 	std::get<3>(event_info).push_back(weight.RPA_CCQE_UBGenie->size());
 	for (size_t j=0; j!= weight.RPA_CCQE_UBGenie->size(); j++){
-	    if (weight.weight_cv>0){
-	    std::get<2>(event_info).at(acc_no+j) = (weight.RPA_CCQE_UBGenie->at(j) - weight.weight_cv)/weight.weight_cv;
+	    if (eval.weight_cv>0){
+	    std::get<2>(event_info).at(acc_no+j) = (weight.RPA_CCQE_UBGenie->at(j) - eval.weight_cv)/eval.weight_cv;
 	  }else{
 	    std::get<2>(event_info).at(acc_no+j) = 0;
 	  }
@@ -2154,8 +2154,8 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
 	std::get<2>(event_info).resize(acc_no + weight.ThetaDelta2NRad_UBGenie->size());
 	std::get<3>(event_info).push_back(weight.ThetaDelta2NRad_UBGenie->size());
 	for (size_t j=0; j!= weight.ThetaDelta2NRad_UBGenie->size(); j++){
-	    if (weight.weight_cv>0){
-	    std::get<2>(event_info).at(acc_no+j) = (weight.ThetaDelta2NRad_UBGenie->at(j) - weight.weight_cv)/weight.weight_cv;
+	    if (eval.weight_cv>0){
+	    std::get<2>(event_info).at(acc_no+j) = (weight.ThetaDelta2NRad_UBGenie->at(j) - eval.weight_cv)/eval.weight_cv;
 	  }else{
 	    std::get<2>(event_info).at(acc_no+j) = 0;
 	  }
@@ -2166,8 +2166,8 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
 	std::get<2>(event_info).resize(acc_no + weight.Theta_Delta2Npi_UBGenie->size());
 	std::get<3>(event_info).push_back(weight.Theta_Delta2Npi_UBGenie->size());
 	for (size_t j=0; j!= weight.Theta_Delta2Npi_UBGenie->size(); j++){
-	    if (weight.weight_cv>0){
-	    std::get<2>(event_info).at(acc_no+j) = (weight.Theta_Delta2Npi_UBGenie->at(j) - weight.weight_cv)/weight.weight_cv;
+	    if (eval.weight_cv>0){
+	    std::get<2>(event_info).at(acc_no+j) = (weight.Theta_Delta2Npi_UBGenie->at(j) - eval.weight_cv)/eval.weight_cv;
 	  }else{
 	    std::get<2>(event_info).at(acc_no+j) = 0;
 	  }
@@ -2178,8 +2178,8 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
 	std::get<2>(event_info).resize(acc_no + weight.VecFFCCQEshape_UBGenie->size());
 	std::get<3>(event_info).push_back(weight.VecFFCCQEshape_UBGenie->size());
 	for (size_t j=0; j!= weight.VecFFCCQEshape_UBGenie->size(); j++){
-	    if (weight.weight_cv>0){
-	    std::get<2>(event_info).at(acc_no+j) = (weight.VecFFCCQEshape_UBGenie->at(j) - weight.weight_cv)/weight.weight_cv;
+	    if (eval.weight_cv>0){
+	    std::get<2>(event_info).at(acc_no+j) = (weight.VecFFCCQEshape_UBGenie->at(j) - eval.weight_cv)/eval.weight_cv;
 	  }else{
 	    std::get<2>(event_info).at(acc_no+j) = 0;
 	  }
@@ -2190,8 +2190,8 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
 	std::get<2>(event_info).resize(acc_no + weight.XSecShape_CCMEC_UBGenie->size());
 	std::get<3>(event_info).push_back(weight.XSecShape_CCMEC_UBGenie->size());
 	for (size_t j=0; j!= weight.XSecShape_CCMEC_UBGenie->size(); j++){
-	    if (weight.weight_cv>0){
-	    std::get<2>(event_info).at(acc_no+j) = (weight.XSecShape_CCMEC_UBGenie->at(j) - weight.weight_cv)/weight.weight_cv;
+	    if (eval.weight_cv>0){
+	    std::get<2>(event_info).at(acc_no+j) = (weight.XSecShape_CCMEC_UBGenie->at(j) - eval.weight_cv)/eval.weight_cv;
 	  }else{
 	    std::get<2>(event_info).at(acc_no+j) = 0;
 	  }
@@ -2202,8 +2202,8 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
 	std::get<2>(event_info).resize(acc_no + weight.xsr_scc_Fa3_SCC->size());
 	std::get<3>(event_info).push_back(weight.xsr_scc_Fa3_SCC->size());
 	for (size_t j=0; j!= weight.xsr_scc_Fa3_SCC->size(); j++){
-	    if (weight.weight_cv>0){
-	      std::get<2>(event_info).at(acc_no+j) = (weight.xsr_scc_Fa3_SCC->at(j) -1.0);//- weight.weight_cv)/weight.weight_cv;
+	    if (eval.weight_cv>0){
+	      std::get<2>(event_info).at(acc_no+j) = (weight.xsr_scc_Fa3_SCC->at(j) -1.0);//- eval.weight_cv)/eval.weight_cv;
 	  }else{
 	    std::get<2>(event_info).at(acc_no+j) = 0;
 	  }
@@ -2213,8 +2213,8 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
 	std::get<2>(event_info).resize(acc_no + weight.xsr_scc_Fv3_SCC->size());
 	std::get<3>(event_info).push_back(weight.xsr_scc_Fv3_SCC->size());
 	for (size_t j=0; j!= weight.xsr_scc_Fv3_SCC->size(); j++){
-	    if (weight.weight_cv>0){
-	      std::get<2>(event_info).at(acc_no+j) = (weight.xsr_scc_Fv3_SCC->at(j) - 1.0);//weight.weight_cv)/weight.weight_cv;
+	    if (eval.weight_cv>0){
+	      std::get<2>(event_info).at(acc_no+j) = (weight.xsr_scc_Fv3_SCC->at(j) - 1.0);//eval.weight_cv)/eval.weight_cv;
 	  }else{
 	    std::get<2>(event_info).at(acc_no+j) = 0;
 	  }
