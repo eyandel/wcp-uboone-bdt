@@ -2806,7 +2806,9 @@ void TLee::Set_Spectra_MatrixCov()
   TMatrixD matrix_reweight_frac(bins_oldworld, bins_oldworld);
   TMatrixD matrix_reweight_cor_frac(bins_oldworld, bins_oldworld);
 
-  cout << "lhagaman flags, " << flag_syst_flux_Xs << ", " << flag_syst_reweight << ", " << flag_syst_reweight_cor << "\n";
+	flag_syst_reweight = 0;
+	flag_syst_reweight_cor = 0;
+	cout << "lhagaman flags, " << flag_syst_flux_Xs << ", " << flag_syst_reweight << ", " << flag_syst_reweight_cor << "\n";
 
   for(int idx=syst_cov_flux_Xs_begin; idx<=syst_cov_flux_Xs_end; idx++) {
     if( (flag_syst_flux_Xs < 1) && (idx<18) ){
@@ -2834,7 +2836,7 @@ void TLee::Set_Spectra_MatrixCov()
     map_matrix_flux_Xs_frac[idx] = (TMatrixD*)map_file_flux_Xs_frac[idx]->Get(TString::Format("frac_cov_xf_mat_%d", idx));
     cout<<TString::Format(" %2d %s", idx, roostr.Data())<<endl;
 
-    int disable_reweighting_uncertainties = 0;
+    int disable_reweighting_uncertainties = 1;
     if (disable_reweighting_uncertainties) {
     	if (idx==18 || idx==19) {
 	  for (int ibin=0; ibin<bins_oldworld; ibin++) {
@@ -2925,7 +2927,7 @@ void TLee::Set_Spectra_MatrixCov()
         }
       }
 
-    int disable_nc_delta_Xs_uncertainty_2d = 0;
+    int disable_nc_delta_Xs_uncertainty_2d = 1;
     if (disable_nc_delta_Xs_uncertainty_2d) {
       if (idx == 17) {
         //*map_matrix_flux_Xs_frac[idx]
