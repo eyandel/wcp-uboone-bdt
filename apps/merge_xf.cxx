@@ -595,6 +595,10 @@ int main( int argc, char** argv )
     T_PFeval->SetBranchStatus("truth_photon_dis",1);
     T_PFeval->SetBranchStatus("truth_showerMother",1);
   }
+  if (pfeval.flag_nsbeam){
+    T_PFeval->SetBranchStatus("evtDeltaTimeNS",1);
+    T_PFeval->SetBranchStatus("evtTimeNS",1);
+  }
   //
 
 

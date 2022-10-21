@@ -603,6 +603,10 @@ void LEEana::CovMatrix::fill_det_histograms(std::map<TString, TH1D*> map_filenam
     T_PFeval_cv->SetBranchStatus("truth_photon_dis",1);
     T_PFeval_cv->SetBranchStatus("truth_showerMother",1);
   }
+  if (pfeval_cv.flag_nsbeam){
+    T_PFeval_cv->SetBranchStatus("evtDeltaTimeNS",1);
+    T_PFeval_cv->SetBranchStatus("evtTimeNS",1);
+  }
   //
 
 
@@ -758,6 +762,10 @@ void LEEana::CovMatrix::fill_det_histograms(std::map<TString, TH1D*> map_filenam
     T_PFeval_det->SetBranchStatus("truth_photon_angle",1);
     T_PFeval_det->SetBranchStatus("truth_photon_dis",1);
     T_PFeval_det->SetBranchStatus("truth_showerMother",1);
+  }
+  if (pfeval_det.flag_nsbeam){
+    T_PFeval_det->SetBranchStatus("evtDeltaTimeNS",1);
+    T_PFeval_det->SetBranchStatus("evtTimeNS",1);
   }
   //
 

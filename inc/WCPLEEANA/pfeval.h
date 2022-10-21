@@ -11,6 +11,7 @@ struct PFevalInfo{
   bool flag_init_pointers;
   //Erin
   bool flag_single_photon;
+  bool flag_nsbeam;
   //
 
   Int_t run;
@@ -97,6 +98,8 @@ struct PFevalInfo{
   Int_t   truth_single_photon;
   Float_t truth_photon_angle;
   Float_t truth_photon_dis;
+  Float_t evtDeltaTimeNS;
+  Float_t evtTimeNS;
   //
   Float_t reco_protonMomentum[4];
 
@@ -246,6 +249,8 @@ void LEEana::clear_pfeval_info(PFevalInfo& tagger_info){
   tagger_info.truth_single_photon=0;
   tagger_info.truth_photon_angle=0;
   tagger_info.truth_photon_dis=0;
+  tagger_info.evtDeltaTimeNS=0;
+  tagger_info.evtTimeNS=0;
   //
 
 
@@ -317,6 +322,7 @@ void LEEana::set_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
   tagger_info.flag_NCDelta = false;
   //Erin
   tagger_info.flag_single_photon = false;
+  tagger_info.flag_nsbeam = false;
   //
   tagger_info.flag_showerMomentum = false;
   tagger_info.flag_recoprotonMomentum = false;
@@ -425,6 +431,12 @@ void LEEana::set_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
       tree0->SetBranchAddress("truth_single_photon",&tagger_info.truth_single_photon);
       tree0->SetBranchAddress("truth_photon_angle",&tagger_info.truth_photon_angle);
       tree0->SetBranchAddress("truth_photon_dis",&tagger_info.truth_photon_dis);
+    }
+
+    if (tree0->GetBranch("evtDeltaTimeNS")){
+      tagger_info.flag_nsbeam = true;
+      tree0->SetBranchAddress("evtDeltaTimeNS",&tagger_info.evtDeltaTimeNS);
+      tree0->SetBranchAddress("evtTimeNS",&tagger_info.evtTimeNS);
     }
     //
 
@@ -568,6 +580,11 @@ void LEEana::put_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
       tree0->Branch("truth_single_photon",&tagger_info.truth_single_photon, "truth_single_photon/I");
       tree0->Branch("truth_photon_angle",&tagger_info.truth_photon_angle, "truth_photon_angle/F");
       tree0->Branch("truth_photon_dis",&tagger_info.truth_photon_dis, "truth_photon_dis/F");
+    }
+
+    if (tagger_info.flag_nsbeam){
+      tree0->Branch("evtDeltaTimeNS",&tagger_info.evtDeltaTimeNS,"evtDeltaTimeNS/F");
+      tree0->Branch("evtTimeNS",&tagger_info.evtTimeNS,"evtTimeNS/F");
     }
     //
   }
