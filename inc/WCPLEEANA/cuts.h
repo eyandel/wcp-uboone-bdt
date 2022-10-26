@@ -3753,13 +3753,13 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
                 if (flag_FC && flag_ncpio_sel && (!flag_singlephoton_sel)) return true;
                 return false;
   }else if (ch_name == "sp_nc_pi0_0p_dirt" || ch_name == "sp_nc_pi0_2_0p_dirt"){
-                if (flag_FC && flag_ncpio_sel && (!flag_singlephoton_sel) && flag_0p) return true;
+                if (flag_FC && flag_ncpio_sel && (!flag_singlephoton_sel) && flag_0p && !map_cuts_flag["SPOutFVSig"]) return true;
                 return false;
   }else if (ch_name == "sp_nc_pi0_Np_dirt" || ch_name == "sp_nc_pi0_2_Np_dirt"){
-                if (flag_FC && flag_ncpio_sel && (!flag_singlephoton_sel) && (!flag_0p)) return true;
+                if (flag_FC && flag_ncpio_sel && (!flag_singlephoton_sel) && (!flag_0p) && !map_cuts_flag["SPOutFVSig"]) return true;
                 return false;
   }else if (ch_name == "sp_nc_pi0_Xp_dirt" || ch_name == "sp_nc_pi0_2_Xp_dirt"){
-                if (flag_FC && flag_ncpio_sel && (!flag_singlephoton_sel)) return true;
+                if (flag_FC && flag_ncpio_sel && (!flag_singlephoton_sel) && !map_cuts_flag["SPOutFVSig"]) return true;
                 return false;
   }else if (ch_name == "sp_nc_pi0_0p_nc_delta_overlay" || ch_name == "sp_nc_pi0_0p_nc_delta_overlay_add" || ch_name == "sp_nc_pi0_2_0p_nc_delta_overlay"){
                 if (flag_FC && flag_ncpio_sel && (!flag_singlephoton_sel) && flag_0p && (eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && flag_truth_inside)) return true;
@@ -3770,6 +3770,13 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
   }else if (ch_name == "sp_nc_pi0_Xp_nc_delta_overlay" || ch_name == "sp_nc_pi0_Xp_nc_delta_overlay_add" || ch_name == "sp_nc_pi0_2_Xp_nc_delta_overlay"){
                 if (flag_FC && flag_ncpio_sel && (!flag_singlephoton_sel) && (eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && flag_truth_inside)) return true;
                 return false;
+  }else if (ch_name == "sp_nc_pi0_Xp_overlay" || ch_name == "sp_nc_pi0_2_Xp_overlay"){
+                  if (flag_FC && flag_ncpio_sel && (!flag_singlephoton_sel) && (!(eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0
+                      && (!map_cuts_flag["SPNCDeltaSig"] &&
+                      !map_cuts_flag["SPOutFVSig"] && !map_cuts_flag["SPNCPi0Sig"] &&
+                      !map_cuts_flag["SPNCOtherSig"] && !map_cuts_flag["SPNumuCCSig"])))
+                      && (!(eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && flag_truth_inside))) return true;
+                  return false;
   // numuCC channels (with single photon and NC pi0 events removed):
   }else if (ch_name == "sp_numuCC_0p" || ch_name == "sp_numuCC_2_0p"){
                 if (flag_FC && flag_numuCC && !flag_ncpio_sel && (!flag_singlephoton_sel) && flag_0p) return true;
@@ -3790,13 +3797,13 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
                 if (flag_FC && flag_numuCC && !flag_ncpio_sel && (!flag_singlephoton_sel)) return true;
                 return false;
   }else if (ch_name == "sp_numuCC_0p_dirt" || ch_name == "sp_numuCC_2_0p_dirt"){
-                if (flag_FC && flag_numuCC && !flag_ncpio_sel && (!flag_singlephoton_sel) && flag_0p) return true;
+                if (flag_FC && flag_numuCC && !flag_ncpio_sel && (!flag_singlephoton_sel) && flag_0p && !map_cuts_flag["SPOutFVSig"]) return true;
                 return false;
   }else if (ch_name == "sp_numuCC_Np_dirt" || ch_name == "sp_numuCC_2_Np_dirt"){
-                if (flag_FC && flag_numuCC && !flag_ncpio_sel && (!flag_singlephoton_sel) && (!flag_0p)) return true;
+                if (flag_FC && flag_numuCC && !flag_ncpio_sel && (!flag_singlephoton_sel) && (!flag_0p) && !map_cuts_flag["SPOutFVSig"]) return true;
                 return false;
   }else if (ch_name == "sp_numuCC_Xp_dirt" || ch_name == "sp_numuCC_2_Xp_dirt"){
-                if (flag_FC && flag_numuCC && !flag_ncpio_sel && (!flag_singlephoton_sel)) return true;
+                if (flag_FC && flag_numuCC && !flag_ncpio_sel && (!flag_singlephoton_sel) && !map_cuts_flag["SPOutFVSig"]) return true;
                 return false;
   }else if (ch_name == "sp_numuCC_0p_nc_delta_overlay" || ch_name == "sp_numuCC_0p_nc_delta_overlay_add" || ch_name == "sp_numuCC_2_0p_nc_delta_overlay"){
                 if (flag_FC && flag_numuCC && !flag_ncpio_sel && (!flag_singlephoton_sel) && flag_0p && (eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && flag_truth_inside)) return true;
@@ -3806,6 +3813,15 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
                 return false;
   }else if (ch_name == "sp_numuCC_Xp_nc_delta_overlay" || ch_name == "sp_numuCC_Xp_nc_delta_overlay_add" || ch_name == "sp_numuCC_2_Xp_nc_delta_overlay"){
                 if (flag_FC && flag_numuCC && !flag_ncpio_sel && (!flag_singlephoton_sel) && (eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && flag_truth_inside)) return true;
+                return false;
+  }else if (ch_name == "sp_numuCC_Xp_overlay"){
+                if (flag_FC && flag_numuCC && (!flag_ncpio_sel) && (!flag_singlephoton_sel) && (!(eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0
+                    && (!map_cuts_flag["SPNCDeltaSig"] && !map_cuts_flag["SPOutFVSig"] &&
+                    !map_cuts_flag["SPNCPi0Sig"] && !map_cuts_flag["SPNCOtherSig"] &&
+                    !map_cuts_flag["SPNumuCCSig"])))
+                    && (!map_cuts_flag["SPNCDeltaSig"] && !map_cuts_flag["SPOutFVSig"] &&
+                    !map_cuts_flag["SPNCPi0Sig"] && !map_cuts_flag["SPNCOtherSig"] &&
+                    !map_cuts_flag["SPNumuCCSig"])) return true;
                 return false;
   }else{
     std::cout << "Not sure what cut: " << ch_name << std::endl;
