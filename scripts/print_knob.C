@@ -1,8 +1,11 @@
 void print_knob(){
-  auto file = TFile::Open("/pnfs/uboone/persistent/users/jjo/WC_NuMI/files/data_mc_cv/checkout_prodgenie_numi_overlay_run1.root");
+  auto file = TFile::Open("/home/erin/Documents/MicroBoone/spbdt/data/run3_checkout/checkout_bnboverlay_run3_sp_1.root");
   auto t = (TTree*)file->Get("wcpweights/T_wgt");
   // t->Show(0);
   // t->Print();
+  gInterpreter->GenerateDictionary("map<string,vector<float> >", "map");
+
+
 
   auto mcweight = new map<string,vector<float> >;
   t->SetBranchAddress("mcweight", &mcweight);
@@ -17,10 +20,11 @@ void print_knob(){
       for(auto const& e: *mcweight){
         cout << e.first << " " << e.second.size() << endl;
       }
+
     }
   }
 
 
-  
+
 
 }

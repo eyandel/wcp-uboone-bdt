@@ -91,6 +91,8 @@ namespace LEEana{
   bool is_singlephoton_eff_sel(TaggerInfo& tagger_info, PFevalInfo& pfeval);
   bool is_singleshower_sel(TaggerInfo& tagger_info, PFevalInfo& pfeval);
   bool is_singleshower_eff_sel(TaggerInfo& tagger_info, PFevalInfo& pfeval);
+  bool is_singlephoton_numu_sel(TaggerInfo& tagger_info, PFevalInfo& pfeval);
+  bool is_singlephoton_ncpi0_sel(TaggerInfo& tagger_info, PFevalInfo& pfeval);
 
 
   // TCut FC_cut = "match_isFC==1";
@@ -1901,6 +1903,8 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
   bool flag_singlephoton_eff_sel = is_singlephoton_eff_sel(tagger, pfeval);
   bool flag_singleshower_sel = is_singleshower_sel(tagger, pfeval);
   bool flag_singleshower_eff_sel = is_singleshower_eff_sel(tagger, pfeval);
+  bool flag_singlephoton_numu_sel = is_singlephoton_numu_sel(tagger, pfeval);
+  bool flag_singlephoton_ncpi0_sel = is_singlephoton_ncpi0_sel(tagger, pfeval);
   //
 
   float costheta_binning[10] = {-1, -.5, 0, .27, .45, .62, .76, .86, .94, 1};		// PeLEE binning
@@ -3729,6 +3733,80 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
           !map_cuts_flag["SPNumuCCSig"]) return true;
       }
       return false;
+  // NC Pi0 channels (with single photon selected events removed):
+  }else if (ch_name == "sp_nc_pi0_0p" || ch_name == "sp_nc_pi0_2_0p"){
+                if (flag_FC && flag_ncpio_sel && (!flag_singlephoton_sel) && flag_0p) return true;
+                return false;
+  }else if (ch_name == "sp_nc_pi0_Np" || ch_name == "sp_nc_pi0_2_Np"){
+                if (flag_FC && flag_ncpio_sel && (!flag_singlephoton_sel) && (!flag_0p)) return true;
+                return false;
+  }else if (ch_name == "sp_nc_pi0_Xp" || ch_name == "sp_nc_pi0_2_Xp"){
+                if (flag_FC && flag_ncpio_sel && (!flag_singlephoton_sel)) return true;
+                return false;
+  }else if (ch_name == "sp_nc_pi0_0p_ext" || ch_name == "sp_nc_pi0_2_0p_ext"){
+                if (flag_FC && flag_ncpio_sel && (!flag_singlephoton_sel) && flag_0p) return true;
+                return false;
+  }else if (ch_name == "sp_nc_pi0_Np_ext" || ch_name == "sp_nc_pi0_2_Np_ext"){
+                if (flag_FC && flag_ncpio_sel && (!flag_singlephoton_sel) && (!flag_0p)) return true;
+                return false;
+  }else if (ch_name == "sp_nc_pi0_Xp_ext" || ch_name == "sp_nc_pi0_2_Xp_ext"){
+                if (flag_FC && flag_ncpio_sel && (!flag_singlephoton_sel)) return true;
+                return false;
+  }else if (ch_name == "sp_nc_pi0_0p_dirt" || ch_name == "sp_nc_pi0_2_0p_dirt"){
+                if (flag_FC && flag_ncpio_sel && (!flag_singlephoton_sel) && flag_0p) return true;
+                return false;
+  }else if (ch_name == "sp_nc_pi0_Np_dirt" || ch_name == "sp_nc_pi0_2_Np_dirt"){
+                if (flag_FC && flag_ncpio_sel && (!flag_singlephoton_sel) && (!flag_0p)) return true;
+                return false;
+  }else if (ch_name == "sp_nc_pi0_Xp_dirt" || ch_name == "sp_nc_pi0_2_Xp_dirt"){
+                if (flag_FC && flag_ncpio_sel && (!flag_singlephoton_sel)) return true;
+                return false;
+  }else if (ch_name == "sp_nc_pi0_0p_nc_delta_overlay" || ch_name == "sp_nc_pi0_0p_nc_delta_overlay_add" || ch_name == "sp_nc_pi0_2_0p_nc_delta_overlay"){
+                if (flag_FC && flag_ncpio_sel && (!flag_singlephoton_sel) && flag_0p && (eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && flag_truth_inside)) return true;
+                return false;
+  }else if (ch_name == "sp_nc_pi0_Np_nc_delta_overlay" || ch_name == "sp_nc_pi0_Np_nc_delta_overlay_add" || ch_name == "sp_nc_pi0_2_Np_nc_delta_overlay"){
+                if (flag_FC && flag_ncpio_sel && (!flag_singlephoton_sel) && (!flag_0p) && (eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && flag_truth_inside)) return true;
+                return false;
+  }else if (ch_name == "sp_nc_pi0_Xp_nc_delta_overlay" || ch_name == "sp_nc_pi0_Xp_nc_delta_overlay_add" || ch_name == "sp_nc_pi0_2_Xp_nc_delta_overlay"){
+                if (flag_FC && flag_ncpio_sel && (!flag_singlephoton_sel) && (eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && flag_truth_inside)) return true;
+                return false;
+  // numuCC channels (with single photon and NC pi0 events removed):
+  }else if (ch_name == "sp_numuCC_0p" || ch_name == "sp_numuCC_2_0p"){
+                if (flag_FC && flag_numuCC && !flag_ncpio_sel && (!flag_singlephoton_sel) && flag_0p) return true;
+                return false;
+  }else if (ch_name == "sp_numuCC_Np" || ch_name == "sp_numuCC_2_Np"){
+                if (flag_FC && flag_numuCC && !flag_ncpio_sel && (!flag_singlephoton_sel) && (!flag_0p)) return true;
+                return false;
+  }else if (ch_name == "sp_numuCC_Xp" || ch_name == "sp_numuCC_2_Xp"){
+                if (flag_FC && flag_numuCC && !flag_ncpio_sel && (!flag_singlephoton_sel)) return true;
+                return false;
+  }else if (ch_name == "sp_numuCC_0p_ext" || ch_name == "sp_numuCC_2_0p_ext"){
+                if (flag_FC && flag_numuCC && !flag_ncpio_sel && (!flag_singlephoton_sel) && flag_0p) return true;
+                return false;
+  }else if (ch_name == "sp_numuCC_Np_ext" || ch_name == "sp_numuCC_2_Np_ext"){
+                if (flag_FC && flag_numuCC && !flag_ncpio_sel && (!flag_singlephoton_sel) && (!flag_0p)) return true;
+                return false;
+  }else if (ch_name == "sp_numuCC_Xp_ext" || ch_name == "sp_numuCC_2_Xp_ext"){
+                if (flag_FC && flag_numuCC && !flag_ncpio_sel && (!flag_singlephoton_sel)) return true;
+                return false;
+  }else if (ch_name == "sp_numuCC_0p_dirt" || ch_name == "sp_numuCC_2_0p_dirt"){
+                if (flag_FC && flag_numuCC && !flag_ncpio_sel && (!flag_singlephoton_sel) && flag_0p) return true;
+                return false;
+  }else if (ch_name == "sp_numuCC_Np_dirt" || ch_name == "sp_numuCC_2_Np_dirt"){
+                if (flag_FC && flag_numuCC && !flag_ncpio_sel && (!flag_singlephoton_sel) && (!flag_0p)) return true;
+                return false;
+  }else if (ch_name == "sp_numuCC_Xp_dirt" || ch_name == "sp_numuCC_2_Xp_dirt"){
+                if (flag_FC && flag_numuCC && !flag_ncpio_sel && (!flag_singlephoton_sel)) return true;
+                return false;
+  }else if (ch_name == "sp_numuCC_0p_nc_delta_overlay" || ch_name == "sp_numuCC_0p_nc_delta_overlay_add" || ch_name == "sp_numuCC_2_0p_nc_delta_overlay"){
+                if (flag_FC && flag_numuCC && !flag_ncpio_sel && (!flag_singlephoton_sel) && flag_0p && (eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && flag_truth_inside)) return true;
+                return false;
+  }else if (ch_name == "sp_numuCC_Np_nc_delta_overlay" || ch_name == "sp_numuCC_Np_nc_delta_overlay_add" || ch_name == "sp_numuCC_2_Np_nc_delta_overlay"){
+                if (flag_FC && flag_numuCC && !flag_ncpio_sel && (!flag_singlephoton_sel) && (!flag_0p) && (eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && flag_truth_inside)) return true;
+                return false;
+  }else if (ch_name == "sp_numuCC_Xp_nc_delta_overlay" || ch_name == "sp_numuCC_Xp_nc_delta_overlay_add" || ch_name == "sp_numuCC_2_Xp_nc_delta_overlay"){
+                if (flag_FC && flag_numuCC && !flag_ncpio_sel && (!flag_singlephoton_sel) && (eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && flag_truth_inside)) return true;
+                return false;
   }else{
     std::cout << "Not sure what cut: " << ch_name << std::endl;
   }
@@ -3924,6 +4002,23 @@ bool LEEana::is_singleshower_eff_sel(TaggerInfo& tagger_info, PFevalInfo& pfeval
     tagger_info.single_photon_numu_score > 0.1 && tagger_info.single_photon_other_score > -0.4 &&
     tagger_info.single_photon_ncpi0_score > -0.4 &&
     tagger_info.shw_sp_n_20br1_showers==1) {flag = true;}
+  return flag;
+}
+
+bool LEEana::is_singlephoton_numu_sel(TaggerInfo& tagger_info, PFevalInfo& pfeval){
+  bool flag = false;
+  if (tagger_info.shw_sp_n_20mev_showers > 0 &&
+    pfeval.reco_nuvtxX>5.0 && pfeval.reco_nuvtxX<250.0 &&
+    tagger_info.single_photon_numu_score < 0.4 && tagger_info.single_photon_numu_score > -20.0) {flag = true;}
+  return flag;
+}
+
+bool LEEana::is_singlephoton_ncpi0_sel(TaggerInfo& tagger_info, PFevalInfo& pfeval){
+  bool flag = false;
+  if (tagger_info.shw_sp_n_20mev_showers > 0 &&
+    pfeval.reco_nuvtxX>5.0 && pfeval.reco_nuvtxX<250.0 &&
+    tagger_info.single_photon_numu_score > 0.4 && tagger_info.single_photon_other_score > 0.2 &&
+    tagger_info.single_photon_ncpi0_score > -20.0 && tagger_info.single_photon_ncpi0_score < -0.05) {flag = true;}
   return flag;
 }
 //
