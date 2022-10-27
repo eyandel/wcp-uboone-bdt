@@ -375,7 +375,7 @@ int main(int argc, char** argv)
 
   //////////////////////////////// Scripts:
 
-  if( 1 ) {
+  if( 0 ) {
 
     ///////
 
