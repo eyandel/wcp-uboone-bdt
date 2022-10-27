@@ -2897,8 +2897,8 @@ void TLee::Set_Spectra_MatrixCov()
 
         //std::cout << "l hagaman made nums array\n";
 
-        if (idx == 17) {
-          //std::cout << "l hagaman modifying Xs now\n";
+        if ( 0 && idx == 17) {
+          std::cout << "l hagaman modifying Xs now\n";
           for (int ibin=0; ibin<bins_oldworld; ibin++) {
             for (int jbin=0; jbin<bins_oldworld; jbin++) {
 
@@ -2934,13 +2934,14 @@ void TLee::Set_Spectra_MatrixCov()
         for (int ibin=0; ibin<bins_oldworld; ibin++) {
           for (int jbin=0; jbin<bins_oldworld; jbin++) {
             bool flag_user = 0;
+						/*
             if (ibin >= 2*1 && ibin < 2*1+2*2) flag_user=1; // uncollapsed channels 2 and 3
             if (ibin >= 2*4 && ibin < 2*4+2*2) flag_user=1; // channels 5 and 6
             if (ibin >= 2*6+16*1 && ibin < 2*6+16*1+16*2) flag_user=1; // channels 8 and 9
             if (ibin >= 2*6+16*4 && ibin < 2*6+16*4+16*2) flag_user=1; // channels 11 and 12
             if (ibin >= 2*6+16*7 && ibin < 2*6+16*7+16*2) flag_user=1; // channels 14 and 15
             if (ibin >= 2*6+16*10 && ibin < 2*6+16*10+16*2) flag_user=1; // channels 17 and 18
-
+						*/ //Erin
             if (flag_user==1) {
               (*map_matrix_flux_Xs_frac[idx])(ibin, jbin) = 0;
               (*map_matrix_flux_Xs_frac[idx])(jbin, ibin) = 0;
