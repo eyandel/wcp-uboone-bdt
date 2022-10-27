@@ -13,8 +13,6 @@ using namespace std;
 
 #include "TApplication.h"
 
-#include <chrono>
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////// MAIN //////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -81,6 +79,10 @@ int main(int argc, char** argv)
 
   TLee *Lee_test = new TLee();
 
+  Lee_test->flag_syst_flux_Xs    = config_Lee::flag_syst_flux_Xs;
+  Lee_test->flag_syst_reweight    = config_Lee::flag_syst_reweight;
+  Lee_test->flag_syst_reweight_cor    = config_Lee::flag_syst_reweight_cor;
+
   ////////// just do it one time in the whole procedure
 
   Lee_test->channels_observation   = config_Lee::channels_observation;
@@ -91,48 +93,68 @@ int main(int argc, char** argv)
 
   Lee_test->flag_lookelsewhere     = config_Lee::flag_lookelsewhere;
 
+  Lee_test->scaleF_POT = scaleF_POT;
   Lee_test->Set_config_file_directory(config_Lee::spectra_file, config_Lee::flux_Xs_directory,
                                       config_Lee::detector_directory, config_Lee::mc_directory);
-
-  int size_array_LEE_ch = sizeof(config_Lee::array_LEE_ch)/sizeof(config_Lee::array_LEE_ch[0]);
-  for(int idx=0; idx<size_array_LEE_ch; idx++) {
-    if( config_Lee::array_LEE_ch[idx]!=0 ) Lee_test->map_Lee_ch[config_Lee::array_LEE_ch[idx]] = 1;
-  }
-
-  int size_array_LEE_Np_ch = sizeof(config_Lee::array_LEE_Np_ch)/sizeof(config_Lee::array_LEE_Np_ch[0]);
-  for(int idx=0; idx<size_array_LEE_Np_ch; idx++) {
-    if( config_Lee::array_LEE_Np_ch[idx]!=0 ) Lee_test->map_Lee_Np_ch[config_Lee::array_LEE_Np_ch[idx]] = 1;
-  }
-
-  int size_array_LEE_0p_ch = sizeof(config_Lee::array_LEE_0p_ch)/sizeof(config_Lee::array_LEE_0p_ch[0]);
-  for(int idx=0; idx<size_array_LEE_0p_ch; idx++) {
-    if( config_Lee::array_LEE_0p_ch[idx]!=0 ) Lee_test->map_Lee_0p_ch[config_Lee::array_LEE_0p_ch[idx]] = 1;
-  }
-
-  Lee_test->scaleF_POT = scaleF_POT;
-
-  Lee_test->flag_syst_flux_Xs    = config_Lee::flag_syst_flux_Xs;
-  Lee_test->flag_syst_detector   = config_Lee::flag_syst_detector;
-  Lee_test->flag_syst_additional = config_Lee::flag_syst_additional;
-  Lee_test->flag_syst_mc_stat    = config_Lee::flag_syst_mc_stat;
-
   Lee_test->Set_Spectra_MatrixCov();
   Lee_test->Set_POT_implement();
   Lee_test->Set_TransformMatrix();
 
   ////////// can do any times
 
+  Lee_test->flag_syst_flux_Xs    = config_Lee::flag_syst_flux_Xs;
+  Lee_test->flag_syst_detector   = config_Lee::flag_syst_detector;
+  Lee_test->flag_syst_additional = config_Lee::flag_syst_additional;
+  Lee_test->flag_syst_mc_stat    = config_Lee::flag_syst_mc_stat;
+
   Lee_test->scaleF_Lee = config_Lee::Lee_strength_for_outputfile_covariance_matrix;
-  Lee_test->scaleF_Lee_Np = config_Lee::Lee_Np_strength_for_outputfile_covariance_matrix;
-  Lee_test->scaleF_Lee_0p = config_Lee::Lee_0p_strength_for_outputfile_covariance_matrix;
-
   Lee_test->scaleF_Lee = config_Lee::Lee_strength_for_GoF;
-  Lee_test->scaleF_Lee_Np = config_Lee::Lee_Np_strength_for_GoF;
-  Lee_test->scaleF_Lee_0p = config_Lee::Lee_0p_strength_for_GoF;
-
   Lee_test->Set_Collapse();
 
+  Lee_test->flag_Lee_minimization_after_constraint = config_Lee::flag_Lee_minimization_after_constraint;
+
   //////////
+
+  if( 0 ) {// shape only covariance
+
+    int nbins = Lee_test->bins_newworld;
+    TMatrixD matrix_pred = Lee_test->matrix_pred_newworld;
+    TMatrixD matrix_syst = Lee_test->matrix_absolute_cov_newworld;
+    TMatrixD matrix_shape(nbins, nbins);
+    TMatrixD matrix_mixed(nbins, nbins);
+    TMatrixD matrix_norm(nbins, nbins);
+
+    ///
+    double N_T = 0;
+    for(int idx=0; idx<nbins; idx++) N_T += matrix_pred(0, idx);
+
+    ///
+    double M_kl = 0;
+    for(int i=0; i<nbins; i++) {
+      for(int j=0; j<nbins; j++) {
+	M_kl += matrix_syst(i,j);
+      }
+    }
+
+    ///
+    for(int i=0; i<nbins; i++) {
+      for(int j=0; j<nbins; j++) {
+	double N_i = matrix_pred(0, i);
+	double N_j = matrix_pred(0, j);
+
+	double M_ij = matrix_syst(i,j);
+	double M_ik = 0; for(int k=0; k<nbins; k++) M_ik += matrix_syst(i,k);
+	double M_kj = 0; for(int k=0; k<nbins; k++) M_kj += matrix_syst(k,j);
+
+	matrix_shape(i,j) = M_ij - N_j*M_ik/N_T - N_i*M_kj/N_T + N_i*N_j*M_kl/N_T/N_T;
+	matrix_mixed(i,j) = N_j*M_ik/N_T + N_i*M_kj/N_T - 2*N_i*N_j*M_kl/N_T/N_T;
+	matrix_norm(i,j) = N_i*N_j*M_kl/N_T/N_T;
+      }
+    }
+
+    Lee_test->matrix_absolute_cov_newworld = matrix_shape;
+
+  }// shape only covariance
 
   if( 0 ) {// shape only covariance
 
@@ -151,23 +173,23 @@ int main(int argc, char** argv)
     double M_kl = 0;
     for(int i=0; i<nbins; i++) {
       for(int j=0; j<nbins; j++) {
-        M_kl += matrix_syst(i,j);
+	M_kl += matrix_syst(i,j);
       }
     }
 
     ///
     for(int i=0; i<nbins; i++) {
       for(int j=0; j<nbins; j++) {
-        double N_i = matrix_pred(0, i);
-        double N_j = matrix_pred(0, j);
+	double N_i = matrix_pred(0, i);
+	double N_j = matrix_pred(0, j);
 
-        double M_ij = matrix_syst(i,j);
-        double M_ik = 0; for(int k=0; k<nbins; k++) M_ik += matrix_syst(i,k);
-        double M_kj = 0; for(int k=0; k<nbins; k++) M_kj += matrix_syst(k,j);
+	double M_ij = matrix_syst(i,j);
+	double M_ik = 0; for(int k=0; k<nbins; k++) M_ik += matrix_syst(i,k);
+	double M_kj = 0; for(int k=0; k<nbins; k++) M_kj += matrix_syst(k,j);
 
-        matrix_shape(i,j) = M_ij - N_j*M_ik/N_T - N_i*M_kj/N_T + N_i*N_j*M_kl/N_T/N_T;
-        matrix_mixed(i,j) = N_j*M_ik/N_T + N_i*M_kj/N_T - 2*N_i*N_j*M_kl/N_T/N_T;
-        matrix_norm(i,j) = N_i*N_j*M_kl/N_T/N_T;
+	matrix_shape(i,j) = M_ij - N_j*M_ik/N_T - N_i*M_kj/N_T + N_i*N_j*M_kl/N_T/N_T;
+	matrix_mixed(i,j) = N_j*M_ik/N_T + N_i*M_kj/N_T - 2*N_i*N_j*M_kl/N_T/N_T;
+	matrix_norm(i,j) = N_i*N_j*M_kl/N_T/N_T;
       }
     }
 
@@ -185,6 +207,8 @@ int main(int argc, char** argv)
   int flag_syst_detector = config_Lee::flag_syst_detector;
   int flag_syst_additional = config_Lee::flag_syst_additional;
   int flag_syst_mc_stat = config_Lee::flag_syst_mc_stat;
+  int flag_syst_reweight = config_Lee::flag_syst_reweight;
+  int flag_syst_reweight_cor = config_Lee::flag_syst_reweight_cor;
   double user_Lee_strength_for_output_covariance_matrix = config_Lee::Lee_strength_for_outputfile_covariance_matrix;
   double user_scaleF_POT = scaleF_POT;
   vector<double>vc_val_GOF;
@@ -193,6 +217,8 @@ int main(int argc, char** argv)
   tree_config->Branch("flag_syst_detector", &flag_syst_detector, "flag_syst_detector/I" );
   tree_config->Branch("flag_syst_additional", &flag_syst_additional, "flag_syst_additional/I" );
   tree_config->Branch("flag_syst_mc_stat", &flag_syst_mc_stat, "flag_syst_mc_stat/I" );
+  tree_config->Branch("flag_syst_reweight", &flag_syst_reweight, "flag_syst_reweight/I" );
+  tree_config->Branch("flag_syst_reweight_cor", &flag_syst_reweight_cor, "flag_syst_reweight_cor/I" );
   tree_config->Branch("user_Lee_strength_for_output_covariance_matrix", &user_Lee_strength_for_output_covariance_matrix,
                       "user_Lee_strength_for_output_covariance_matrix/D" );
   tree_config->Branch("user_scaleF_POT", &user_scaleF_POT, "user_scaleF_POT/D" );
@@ -241,13 +267,13 @@ int main(int argc, char** argv)
       int size_map = it->second.size();
       int size_before = 0;
       for(int idx=1; idx<val_ch; idx++) {
-        int size_current = Lee_test->map_data_spectrum_ch_bin[idx].size();
-        size_before += size_current;
+	int size_current = Lee_test->map_data_spectrum_ch_bin[idx].size();
+	size_before += size_current;
       }
 
       vector<int>vc_target_chs;
       for(int ibin=1; ibin<size_map; ibin++) {
-        vc_target_chs.push_back( size_before + ibin -1 );
+	vc_target_chs.push_back( size_before + ibin -1 );
       }
 
       vector<int>vc_support_chs;
@@ -264,337 +290,772 @@ int main(int argc, char** argv)
     file_collapsed_covariance_matrix->Close();
   }
 
-  // bool flag_both_numuCC            = config_Lee::flag_both_numuCC;// 1
-  // bool flag_CCpi0_FC_by_numuCC     = config_Lee::flag_CCpi0_FC_by_numuCC;// 2
-  // bool flag_CCpi0_PC_by_numuCC     = config_Lee::flag_CCpi0_PC_by_numuCC;// 3
-  // bool flag_NCpi0_by_numuCC        = config_Lee::flag_NCpi0_by_numuCC;// 4
-  // bool flag_nueCC_PC_by_numuCC_pi0 = config_Lee::flag_nueCC_PC_by_numuCC_pi0;// 5
-  // bool flag_nueCC_HghE_FC_by_numuCC_pi0_nueFC = config_Lee::flag_nueCC_HghE_FC_by_numuCC_pi0_nueFC;// 6, HghE>800 MeV
-  // bool flag_nueCC_LowE_FC_by_all   = config_Lee::flag_nueCC_LowE_FC_by_all;// 7
-  // bool flag_nueCC_FC_by_all        = config_Lee::flag_nueCC_FC_by_all;// 8
+  bool flag_both_numuCC            = config_Lee::flag_both_numuCC;// 1
+  bool flag_CCpi0_FC_by_numuCC     = config_Lee::flag_CCpi0_FC_by_numuCC;// 2
+  bool flag_CCpi0_PC_by_numuCC     = config_Lee::flag_CCpi0_PC_by_numuCC;// 3
+  bool flag_NCpi0_by_numuCC        = config_Lee::flag_NCpi0_by_numuCC;// 4
+  bool flag_nueCC_PC_by_numuCC_pi0 = config_Lee::flag_nueCC_PC_by_numuCC_pi0;// 5
+  bool flag_nueCC_HghE_FC_by_numuCC_pi0_nueFC = config_Lee::flag_nueCC_HghE_FC_by_numuCC_pi0_nueFC;// 6, HghE>800 MeV
+  bool flag_nueCC_LowE_FC_by_all   = config_Lee::flag_nueCC_LowE_FC_by_all;// 7
+  bool flag_nueCC_FC_by_all        = config_Lee::flag_nueCC_FC_by_all;// 8
 
-  //////////////////////////////////////////////////////////////////////////////////////// user's goodness-of-fit test
+  ///////////////////////// gof
 
-  // Lee_test->scaleF_Lee = ?;
-  // Lee_test->scaleF_Lee_Np = ?;
-  // Lee_test->scaleF_Lee_0p = ?;
+  // start lhagaman added
 
-  // Lee_test->Set_Collapse();
+  int make_constrained_one_bin_plots = 1;
 
-  ///////// validated by 1d = 5, and 2d = [5,5], [1,5], [5,1]
+  if (make_constrained_one_bin_plots) {
 
-  if( 0 ) {
-    Lee_test->scaleF_Lee = 5;
+    Lee_test->scaleF_Lee = 0;
+    //Lee_test->scaleF_Lee = 6.77;
     Lee_test->Set_Collapse();
 
+    // both 1gNp and 1g0p, no overflow bins
     vector<int>vc_target_chs;
-    vc_target_chs.push_back( 0 );
+    vc_target_chs.push_back(0);
+    vc_target_chs.push_back(2);
+    vector<int>vc_support_chs;
+    for (int i=4; i < 4 + 16 * 4; i++){
+      vc_support_chs.push_back(i);
+    }
+    //for (int i=4; i < 4 + 16 * 2; i++){
+    //  vc_support_chs.push_back(i);
+    //}
+    Lee_test->Exe_Goodness_of_fit_detailed( vc_target_chs, vc_support_chs, 1001 );
+  }
+
+  if (make_constrained_one_bin_plots) {
+
+    Lee_test->scaleF_Lee = 0;
+    //Lee_test->scaleF_Lee= 0.03;
+    Lee_test->Set_Collapse();
+
+    // just 1gNp, overflow bin
+    vector<int>vc_target_chs;
+    vc_target_chs.push_back(0);
+    vector<int>vc_support_chs;
+    for (int i=4; i < 4 + 16 * 4; i++){
+      vc_support_chs.push_back(i);
+    }
+    //for (int i=4; i < 4 + 16 * 2; i++){
+    //  vc_support_chs.push_back(i);
+    //}
+    Lee_test->Exe_Goodness_of_fit_detailed( vc_target_chs, vc_support_chs, 1002 );
+  }
+
+  if (make_constrained_one_bin_plots) {
+
+    Lee_test->scaleF_Lee = 0;
+    //Lee_test->scaleF_Lee = 8.84;
+    Lee_test->Set_Collapse();
+
+    // just 1g0p, overflow bin
+    vector<int>vc_target_chs;
+    vc_target_chs.push_back(2);
+    vector<int>vc_support_chs;
+    for (int i=4; i < 4 + 16 * 4; i++){
+      vc_support_chs.push_back(i);
+    }
+    //for (int i=4; i < 4 + 16 * 2; i++){
+    //  vc_support_chs.push_back(i);
+    //}
+    Lee_test->Exe_Goodness_of_fit_detailed( vc_target_chs, vc_support_chs, 1003 );
+
+  }
+
+
+  int make_constrained_nc_pi0_plots = 1;
+
+  if (make_constrained_nc_pi0_plots) {
+
+    vector<int>vc_target_chs;
+    vc_target_chs.push_back( 3 );
+
+    vector<int>vc_support_chs;
+    vc_support_chs.push_back( 5 );
+    vc_support_chs.push_back( 6 );
+    Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 2001 );
+
+  }
+
+  if (make_constrained_nc_pi0_plots) {
+
+    vector<int>vc_target_chs;
+    vc_target_chs.push_back( 4 );
+
+    vector<int>vc_support_chs;
+    vc_support_chs.push_back( 5 );
+    vc_support_chs.push_back( 6 );
+    Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 2002 );
+
+  }
+
+  if (make_constrained_nc_pi0_plots) {
+
+    vector<int>vc_target_chs;
+    vc_target_chs.push_back( 3 );
+    vc_target_chs.push_back( 4 );
+
+    vector<int>vc_support_chs;
+    vc_support_chs.push_back( 5 );
+    vc_support_chs.push_back( 6 );
+    Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 2003 );
+
+  }
+
+
+
+  // end lhagaman added
+
+  if( flag_nueCC_FC_by_all ) {
+    vector<int>vc_target_chs;
+    vc_target_chs.push_back( 1 );
+
+    vector<int>vc_support_chs;
+    vc_support_chs.push_back( 2 );
+    vc_support_chs.push_back( 3 );
+    vc_support_chs.push_back( 4 );
+    vc_support_chs.push_back( 5 );
+    vc_support_chs.push_back( 6 );
+    vc_support_chs.push_back( 7 );
+
+    Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 8 );
+  }
+
+  ///////////////////////// gof
+
+  if( flag_nueCC_LowE_FC_by_all ) {
+    TMatrixD matrix_gof_trans( Lee_test->bins_newworld, 26*4 + 11*3 );// oldworld, newworld
+    for( int ibin=1; ibin<=26*4 + 11*3; ibin++) matrix_gof_trans(ibin-1, ibin-1) = 1;
+
+    TMatrixD matrix_gof_trans_T( matrix_gof_trans.GetNcols(), matrix_gof_trans.GetNrows() );
+    matrix_gof_trans_T.Transpose( matrix_gof_trans );
+
+    TMatrixD matrix_gof_pred = Lee_test->matrix_pred_newworld * matrix_gof_trans;
+    TMatrixD matrix_gof_data = Lee_test->matrix_data_newworld * matrix_gof_trans;
+    TMatrixD matrix_gof_syst = matrix_gof_trans_T * (Lee_test->matrix_absolute_cov_newworld) * matrix_gof_trans;
+
+    Lee_test->Exe_Goodness_of_fit( 8, matrix_gof_trans.GetNcols()-8, matrix_gof_pred, matrix_gof_data, matrix_gof_syst, 7);
+  }
+
+
+  if( 0 ) {
+    TMatrixD matrix_gof_trans( Lee_test->bins_newworld, 26*6 + 11*3 );// oldworld, newworld
+    for( int ibin=1; ibin<=26*6 + 11*3; ibin++) matrix_gof_trans(ibin-1, ibin-1) = 1;
+
+    TMatrixD matrix_gof_trans_T( matrix_gof_trans.GetNcols(), matrix_gof_trans.GetNrows() );
+    matrix_gof_trans_T.Transpose( matrix_gof_trans );
+
+    TMatrixD matrix_gof_pred = Lee_test->matrix_pred_newworld * matrix_gof_trans;
+    TMatrixD matrix_gof_data = Lee_test->matrix_data_newworld * matrix_gof_trans;
+    TMatrixD matrix_gof_syst = matrix_gof_trans_T * (Lee_test->matrix_absolute_cov_newworld) * matrix_gof_trans;
+
+    Lee_test->Exe_Goodness_of_fit( 8, matrix_gof_trans.GetNcols()-8, matrix_gof_pred, matrix_gof_data, matrix_gof_syst, 7);
+  }
+
+
+  if( 0 ) {// first 6 bins--> 1 bin, constrained by others
+    int nbins_first = 6;
+    TMatrixD matrix_gof_trans( Lee_test->bins_newworld, 1 + (26-nbins_first) + 26*3 + 11*3 );// oldworld, newworld
+    for( int ibin=1; ibin<=nbins_first; ibin++) matrix_gof_trans(ibin-1, 0) = 1;
+    for( int ibin=1; ibin<=26*4+11*3-nbins_first; ibin++) matrix_gof_trans(nbins_first+ibin-1, ibin) = 1;
+
+
+    TMatrixD matrix_gof_trans_T( matrix_gof_trans.GetNcols(), matrix_gof_trans.GetNrows() );
+    matrix_gof_trans_T.Transpose( matrix_gof_trans );
+
+    TMatrixD matrix_gof_pred = Lee_test->matrix_pred_newworld * matrix_gof_trans;
+    TMatrixD matrix_gof_data = Lee_test->matrix_data_newworld * matrix_gof_trans;
+    TMatrixD matrix_gof_syst = matrix_gof_trans_T * (Lee_test->matrix_absolute_cov_newworld) * matrix_gof_trans;
+
+    Lee_test->Exe_Goodness_of_fit( 1, matrix_gof_trans.GetNcols()-1, matrix_gof_pred, matrix_gof_data, matrix_gof_syst, 201);
+  }
+
+  if( 0 ) {// first 6 bins, constrained by others
+    int nbins_first = 6;
+    TMatrixD matrix_gof_trans( Lee_test->bins_newworld, 26*4 + 11*3 );// oldworld, newworld
+    for( int ibin=1; ibin<=26*4 + 11*3; ibin++) matrix_gof_trans(ibin-1, ibin-1) = 1;
+
+    TMatrixD matrix_gof_trans_T( matrix_gof_trans.GetNcols(), matrix_gof_trans.GetNrows() );
+    matrix_gof_trans_T.Transpose( matrix_gof_trans );
+
+    TMatrixD matrix_gof_pred = Lee_test->matrix_pred_newworld * matrix_gof_trans;
+    TMatrixD matrix_gof_data = Lee_test->matrix_data_newworld * matrix_gof_trans;
+    TMatrixD matrix_gof_syst = matrix_gof_trans_T * (Lee_test->matrix_absolute_cov_newworld) * matrix_gof_trans;
+
+    Lee_test->Exe_Goodness_of_fit( nbins_first, matrix_gof_trans.GetNcols()-nbins_first, matrix_gof_pred, matrix_gof_data, matrix_gof_syst, 202);
+  }
+
+  ///////////////////////// gof
+
+  if( flag_nueCC_HghE_FC_by_numuCC_pi0_nueFC ) {
+    TMatrixD matrix_gof_trans( Lee_test->bins_newworld, (26-8) + 26*3 + 11*3 );// oldworld, newworld
+    for( int ibin=1; ibin<=(26-8) + 26*3 + 11*3; ibin++) matrix_gof_trans(8+ibin-1, ibin-1) = 1;
+
+    TMatrixD matrix_gof_trans_T( matrix_gof_trans.GetNcols(), matrix_gof_trans.GetNrows() );
+    matrix_gof_trans_T.Transpose( matrix_gof_trans );
+
+    TMatrixD matrix_gof_pred = Lee_test->matrix_pred_newworld * matrix_gof_trans;
+    TMatrixD matrix_gof_data = Lee_test->matrix_data_newworld * matrix_gof_trans;
+    TMatrixD matrix_gof_syst = matrix_gof_trans_T * (Lee_test->matrix_absolute_cov_newworld) * matrix_gof_trans;
+
+    Lee_test->Exe_Goodness_of_fit( (26-8), matrix_gof_trans.GetNcols()-(26-8), matrix_gof_pred, matrix_gof_data, matrix_gof_syst, 6);
+  }
+
+  ///////////////////////// gof
+
+  if( flag_nueCC_PC_by_numuCC_pi0) {
+    vector<int>vc_target_chs;
     vc_target_chs.push_back( 2 );
 
     vector<int>vc_support_chs;
-    for(int ibin=1; ibin<=16*4; ibin++) vc_support_chs.push_back( 4+ibin -1 );
+    vc_support_chs.push_back( 3 );
+    vc_support_chs.push_back( 4 );
+    vc_support_chs.push_back( 5 );
+    vc_support_chs.push_back( 6 );
+    vc_support_chs.push_back( 7 );
 
-    Lee_test->Exe_Goodness_of_fit_detailed( vc_target_chs, vc_support_chs, 12301 );
+    Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 5 );
+  }
+
+  ///////////////////////// gof
+
+  if( flag_both_numuCC ) {
+    vector<int>vc_target_chs;
+    vc_target_chs.push_back( 3 );
+    vc_target_chs.push_back( 4 );
+
+    vector<int>vc_support_chs;
+
+    Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 1 );
   }
 
   if( 0 ) {
-    Lee_test->scaleF_Lee_Np = 5;
-    Lee_test->scaleF_Lee_0p = 5;
-    Lee_test->Set_Collapse();
+    TMatrixD matrix_gof_trans( Lee_test->bins_newworld, 52 );// oldworld, newworld
+    for( int ibin=1; ibin<=52; ibin++) matrix_gof_trans(52+ibin-1, ibin-1) = 1;
 
+    TMatrixD matrix_gof_trans_T( matrix_gof_trans.GetNcols(), matrix_gof_trans.GetNrows() );
+    matrix_gof_trans_T.Transpose( matrix_gof_trans );
+
+    TMatrixD matrix_gof_pred = Lee_test->matrix_pred_newworld * matrix_gof_trans;
+    TMatrixD matrix_gof_data = Lee_test->matrix_data_newworld * matrix_gof_trans;
+    TMatrixD matrix_gof_syst = matrix_gof_trans_T * (Lee_test->matrix_absolute_cov_newworld) * matrix_gof_trans;
+
+    Lee_test->Exe_Goodness_of_fit( 52, 0, matrix_gof_pred, matrix_gof_data, matrix_gof_syst, 123);
+
+    TFile *file_numu = new TFile("file_numu.root", "recreate");
+    matrix_gof_pred.Write("matrix_gof_pred");
+    matrix_gof_data.Write("matrix_gof_meas");
+    matrix_gof_syst.Write("matrix_gof_syst");
+    file_numu->Close();
+  }
+
+  ///////////////////////// gof
+
+  if( flag_CCpi0_FC_by_numuCC ) {
     vector<int>vc_target_chs;
-    vc_target_chs.push_back( 0 );
+    vc_target_chs.push_back( 5 );
+
+    vector<int>vc_support_chs;
+    vc_support_chs.push_back( 3 );
+    vc_support_chs.push_back( 4 );
+
+    Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 2 );
+  }
+
+  ///////////////////////// gof
+
+  if( flag_CCpi0_PC_by_numuCC ) {
+    vector<int>vc_target_chs;
+    vc_target_chs.push_back( 6 );
+
+    vector<int>vc_support_chs;
+    vc_support_chs.push_back( 3 );
+    vc_support_chs.push_back( 4 );
+
+    Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 3 );
+  }
+
+  ///////////////////////// gof
+
+  if( flag_NCpi0_by_numuCC ) {
+    vector<int>vc_target_chs;
+    vc_target_chs.push_back( 7 );
+
+    vector<int>vc_support_chs;
+    vc_support_chs.push_back( 3 );
+    vc_support_chs.push_back( 4 );
+
+    Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 4 );
+  }
+
+  ////////////////////////////////////////////////////////////////////
+
+  if( 0 ) {
+    vector<int>vc_target_chs;
+    vc_target_chs.push_back( 1 );
     vc_target_chs.push_back( 2 );
 
     vector<int>vc_support_chs;
-    for(int ibin=1; ibin<=16*4; ibin++) vc_support_chs.push_back( 4+ibin -1 );
+    vc_support_chs.push_back( 3 );
+    vc_support_chs.push_back( 4 );
+    vc_support_chs.push_back( 5 );
+    vc_support_chs.push_back( 6 );
+    vc_support_chs.push_back( 7 );
 
-    Lee_test->Exe_Goodness_of_fit_detailed( vc_target_chs, vc_support_chs, 12302 );
+    Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 101 );
   }
 
-  //////////////////////////////////////////////////////////////////////////////////////// Asimov/Data fitting
-
   if( 0 ) {
-    Lee_test->scaleF_Lee_Np = 5;
-    Lee_test->scaleF_Lee_0p = 5;
-    Lee_test->Set_Collapse();
+    vector<int>vc_target_chs;
+    //vc_target_chs.push_back( 1 );
+    vc_target_chs.push_back( 2 );
 
-    ///////// Four options:
-    //Lee_test->Set_measured_data();// (1), really data
-    // Lee_test->Set_toy_Asimov();// (2), Asiomv sample
-    // Lee_test->Set_Variations(int num_toy);// (3), generate many toy-MC
-    // Lee_test->Set_toy_Variation(int itoy);// which toy-MC to be used
-    // Lee_test->Set_fakedata(TMatrixD matrix_fakedata);// (4), user's defined fakedata
+    vector<int>vc_support_chs;
+    vc_support_chs.push_back( 3 );
+    vc_support_chs.push_back( 4 );
+    vc_support_chs.push_back( 5 );
+    vc_support_chs.push_back( 6 );
+    vc_support_chs.push_back( 7 );
 
-    Lee_test->Set_toy_Asimov();
-
-    Lee_test->Minimization_Lee_Np_0p_strength_FullCov(4, 4, "");
-    // Lee_test->Minimization_Lee_Np_0p_strength_FullCov(5, 4, "Np");// fix Np if the string containts "Np", e.g "NNp"
-    // Lee_test->Minimization_Lee_Np_0p_strength_FullCov(4, 5, "0p");// fix 0p if the string containts "0p", e.g. "A_0p"
-    // Lee_test->Minimization_Lee_Np_0p_strength_FullCov(5, 5, "Np_0p");// fit both if the string containts "Np" and "0p", e.g. "Np_abc_0p"
-
-    ///////// the fitting results/info are saved in
-    // Lee_test->minimization_status;// (int type), should be 0 for a successful fitting
-    // Lee_test->minimization_chi2;
-    // Lee_test->minimization_Lee_Np_strength_val;
-    // Lee_test->minimization_Lee_Np_strength_err;// error from the default Minuit2 setting, which is at the points delta_chi2 = chi2_var - chi2_min = 1
-    // Lee_test->minimization_Lee_0p_strength_val;
-    // Lee_test->minimization_Lee_0p_strength_err;// error from the default Minuit2 setting, which is at the points delta_chi2 = chi2_var - chi2_min = 1
-
-    cout<<endl;
-    cout<<" ---> Fitting results"<<endl;
-    cout<<" Lee_test->minimization_status: "<<Lee_test->minimization_status<<endl;
-    cout<<" Lee_test->minimization_chi2:   "<<Lee_test->minimization_chi2<<endl;
-    cout<<" Lee_test->minimization_Lee_Np_strength_val: "<<Lee_test->minimization_Lee_Np_strength_val
-        <<" +/- "<<Lee_test->minimization_Lee_Np_strength_err<<endl;
-    cout<<" Lee_test->minimization_Lee_0p_strength_val: "<<Lee_test->minimization_Lee_0p_strength_val
-        <<" +/- "<<Lee_test->minimization_Lee_0p_strength_err<<endl;
+    Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 102 );
   }
 
-  //////////////////////////////////////////////////////////////////////////////////////// Feldman-Cousins approach
-
-  /// The (Np, 0p) space are divided into many grid. e.g. 10x10: Np(0, 10), 0p(0, 10) ---> TH2D *h2d_space = new TH2D("h2d_space", "", 10, 0, 10, 10, 0, 10);
-  ///
-  /// At each space point (f_Np, f_0p), we will cacluate the confidence level following Feldman-Cousins approach as following:
-  ///
-  /// (1) Generate the delta_chi2 distribution "distribution_dchi2" by many pseudo experiments, which is corresponding the the pdf of dchi2 at one space point.
-  ///     * dchi2 = chi2_(f_Np, f_0p) - chi2_min
-  ///     * pseduo experiments are generated considering both statistical and systematic uncertainties:
-  ///
-  ///     For each pseudo experiment, we will caculate the chi2_(f_Np, f_0p) and chi2_min
-  ///     ...
-  ///     By many pseudo experiments, we will have the distribution of dchi2
-  ///
-  /// (2) Calculate the dchi2 of "data", "data" can be real data, or Asimov sample, or others wanted to study
-  ///     dchi2_data = chi2_(f_Np, f_0p)_data - chi2_min_data
-  ///
-  /// (3) Calculte the pvalue or the confidence value at one space point (f_Np, f_0p)
-  ///     pvalue: N( distribution_dchi2 > dchi2_data ) / N( distribution_dchi2 )
-  ///     confidence level = 1 - pvalue
-  ///
-
-  //////////////////////////////// Scripts:
 
   if( 0 ) {
+    vector<int>vc_target_chs;
+    for(int idx=1; idx<=8; idx++) vc_target_chs.push_back( idx-1 );
 
-    ///////
-
-    int grid_Np = 0;
-    int grid_0p = 0;
-    double true_Np = 0;
-    double true_0p = 0;
-    vector<int>vec_min_status;
-    vector<double>vec_chi2_var;
-    vector<double>vec_min_chi2;
-    vector<double>vec_dchi2;
-    vector<double>vec_min_fNp_val;
-    vector<double>vec_min_fNp_err;
-    vector<double>vec_min_f0p_val;
-    vector<double>vec_min_f0p_err;
-
-    std::cout << "i file: " << ifile << "\n";
-
-    if (ifile==-1) {
-      std::cout << "creating asimov root file\n";
-      roostr = TString("sub_fit_Asimov.root");
-    } else if (ifile==0) {
-      roostr = TString("sub_fit_data.root");
-    } else {
-      roostr = TString::Format("sub_fit_%06d.root", ifile);
+    vector<int>vc_support_chs;
+    for(int idx=9; idx<=Lee_test->bins_newworld; idx++) {
+      if( idx>=26+1 && idx<=26+8 ) continue;
+      vc_support_chs.push_back( idx-1 );
     }
 
-    TFile *subroofile = new TFile(roostr, "recreate");
-    TTree *tree = new TTree("tree", "tree");
-
-    tree->Branch( "grid_Np",          &grid_Np,          "grid_Np/I" );
-    tree->Branch( "grid_0p",          &grid_0p,          "grid_0p/I" );
-    tree->Branch( "true_Np",          &true_Np,          "true_Np/D" );
-    tree->Branch( "true_0p",          &true_0p,          "true_0p/D" );
-    tree->Branch( "vec_min_status",   &vec_min_status );
-    tree->Branch( "vec_chi2_var",     &vec_chi2_var );
-    tree->Branch( "vec_min_chi2",     &vec_min_chi2 );
-    tree->Branch( "vec_dchi2",        &vec_dchi2 );
-    tree->Branch( "vec_min_fNp_val",  &vec_min_fNp_val );
-    tree->Branch( "vec_min_fNp_err",  &vec_min_fNp_err );
-    tree->Branch( "vec_min_f0p_val",  &vec_min_f0p_val );
-    tree->Branch( "vec_min_f0p_err",  &vec_min_f0p_err );
+    Lee_test->Exe_Goodness_of_fit_detailed( vc_target_chs, vc_support_chs, 101 );
+  }
 
 
-    ///////
-    int Ntoys = 1; // number of toy-MC used to generate the distribution_dchi2
-    // changed this from 100 to 1 since it shouldn't matter for Asimov
 
-    if (ifile==0 or ifile==-1) { // run it with data or Asimov
-      Ntoys = 1;
+
+  ////////////////////////////////////////////////////////////////////
+
+  bool flag_publicnote = 0;
+
+  if( flag_publicnote ) {
+
+    ///////////////////////// gof
+
+    if( 1 ) {
+      vector<int>vc_target_chs;
+      vc_target_chs.push_back( 3 );
+      vc_target_chs.push_back( 4 );
+      vector<int>vc_support_chs;
+      Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 1 );
     }
 
-    /////// 2d space of (Np, 0p)
-    int bins_Np = 16;
-    int bins_0p = 16;
-
-    TH2D *h2d_space = new TH2D("h2d_space", "", bins_Np, -0.5, 15.5, bins_0p, -0.5, 15.5);
-
-    double pars_2d[2] = {0};
-
-
-    /*
-    if (ifile==0) {
-          Lee_test->Set_measured_data();
-    } else if (ifile==-1) {
-          Lee_test->scaleF_Lee_Np = 1.;
-          Lee_test->scaleF_Lee_0p = 1.;
-          Lee_test->Set_Collapse();// apply the values
-          Lee_test->Set_toy_Asimov();
-    } else {
-          Lee_test->Set_Variations( Ntoys );
+    if( 1 ) {
+      vector<int>vc_target_chs;
+      vc_target_chs.push_back( 5 );
+      vector<int>vc_support_chs;
+      vc_support_chs.push_back( 3 );
+      vc_support_chs.push_back( 4 );
+      Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 2 );
     }
-    */
 
-    /////// scan the entrie space defined
-    for(int bin_Np=1; bin_Np<=bins_Np; bin_Np++) {
-      for(int bin_0p=1; bin_0p<=bins_0p; bin_0p++) {
+    if( 1 ) {
+      vector<int>vc_target_chs;
+      vc_target_chs.push_back( 6 );
+      vector<int>vc_support_chs;
+      vc_support_chs.push_back( 3 );
+      vc_support_chs.push_back( 4 );
+      Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 3 );
+    }
 
-	cout<<TString::Format(" processing Np/0p: %3d %3d", bin_Np, bin_0p)<<endl;
+    if( 1 ) {
+      vector<int>vc_target_chs;
+      vc_target_chs.push_back( 7 );
+      vector<int>vc_support_chs;
+      vc_support_chs.push_back( 3 );
+      vc_support_chs.push_back( 4 );
+      Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 4 );
+    }
 
-	/// give values of one space point
-	double grid_Np_val = h2d_space->GetXaxis()->GetBinCenter( bin_Np );
-	double grid_0p_val = h2d_space->GetYaxis()->GetBinCenter( bin_0p );
+    if( 0 ) {
+      vector<int>vc_target_chs;
+      vc_target_chs.push_back( 2 );
 
-	///
-	grid_Np = bin_Np;
-	grid_0p = bin_0p;
-	true_Np = grid_Np_val;
-	true_0p = grid_0p_val;
-	vec_min_status.clear();
-	vec_chi2_var.clear();
-	vec_min_chi2.clear();
-	vec_dchi2.clear();
-	vec_min_fNp_val.clear();
-	vec_min_fNp_err.clear();
-	vec_min_f0p_val.clear();
-	vec_min_f0p_err.clear();
+      vector<int>vc_support_chs;
+      vc_support_chs.push_back( 3 );
+      vc_support_chs.push_back( 4 );
+      vc_support_chs.push_back( 5 );
+      vc_support_chs.push_back( 6 );
+      vc_support_chs.push_back( 7 );
 
-	pars_2d[0] = grid_Np_val;
-	pars_2d[1] = grid_0p_val;
+      Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 5 );
+    }
 
-	/// generate pseudo experiments
+    if( 0 ) {
+      TMatrixD matrix_gof_trans( Lee_test->bins_newworld, (26-8) + 26*3 + 11*3 );// oldworld, newworld
+      for( int ibin=1; ibin<=(26-8) + 26*3 + 11*3; ibin++) matrix_gof_trans(8+ibin-1, ibin-1) = 1;
 
-	if (ifile==0) { // make the data file
-          Lee_test->Set_measured_data();
-        } else if (ifile==-1) { // make the Asimov file at the Standard Model
-	  Lee_test->scaleF_Lee_Np = 1.;
-	  Lee_test->scaleF_Lee_0p = 1.;
-	  Lee_test->Set_Collapse();// apply the values
-          Lee_test->Set_toy_Asimov();
-        } else { // make the variations file
-	  Lee_test->scaleF_Lee_Np = grid_Np_val;
-	  Lee_test->scaleF_Lee_0p = grid_0p_val;
-	  Lee_test->Set_Collapse();// apply the values
-          Lee_test->Set_Variations( Ntoys );
-        }
+      TMatrixD matrix_gof_trans_T( matrix_gof_trans.GetNcols(), matrix_gof_trans.GetNrows() );
+      matrix_gof_trans_T.Transpose( matrix_gof_trans );
 
-	for(int itoy=1; itoy<=Ntoys; itoy++) {// scan each pseudo experiment
+      TMatrixD matrix_gof_pred = Lee_test->matrix_pred_newworld * matrix_gof_trans;
+      TMatrixD matrix_gof_data = Lee_test->matrix_data_newworld * matrix_gof_trans;
+      TMatrixD matrix_gof_syst = matrix_gof_trans_T * (Lee_test->matrix_absolute_cov_newworld) * matrix_gof_trans;
 
-	  if (ifile > 0) { // only for variation files
-	    Lee_test->Set_toy_Variation(itoy);
-          }
+      Lee_test->Exe_Goodness_of_fit( (26-8), matrix_gof_trans.GetNcols()-(26-8), matrix_gof_pred, matrix_gof_data, matrix_gof_syst, 6);
+    }
 
-	  double chi2_var = Lee_test->FCN_Np_0p( pars_2d );// calcualte the chi2 value at the point
+    if( 0 ) {
+      TMatrixD matrix_gof_trans( Lee_test->bins_newworld, 26*4 + 11*3 );// oldworld, newworld
+      for( int ibin=1; ibin<=26*4 + 11*3; ibin++) matrix_gof_trans(ibin-1, ibin-1) = 1;
 
-          //cout << "lhagaman debug, pars2d, chi2: " << pars_2d[0] << ", " << pars_2d[1] << ", " << chi2_var << "\n";
+      TMatrixD matrix_gof_trans_T( matrix_gof_trans.GetNcols(), matrix_gof_trans.GetNrows() );
+      matrix_gof_trans_T.Transpose( matrix_gof_trans );
 
-	  /////// do minimization: initial value is important. May find local minimum if the values are not suitable
+      TMatrixD matrix_gof_pred = Lee_test->matrix_pred_newworld * matrix_gof_trans;
+      TMatrixD matrix_gof_data = Lee_test->matrix_data_newworld * matrix_gof_trans;
+      TMatrixD matrix_gof_syst = matrix_gof_trans_T * (Lee_test->matrix_absolute_cov_newworld) * matrix_gof_trans;
 
-	  double initial_Np = grid_Np_val;
-	  double initial_0p = grid_0p_val;
+      Lee_test->Exe_Goodness_of_fit( 8, matrix_gof_trans.GetNcols()-8, matrix_gof_pred, matrix_gof_data, matrix_gof_syst, 7);
+    }
 
-	  /// a simple way: the true values as the initial value
-	  //if( 1 ) {
-	  //  initial_Np = grid_Np_val;
-	  //  initial_0p = grid_0p_val;
-	  //}
+  }
 
-	  /// a more exact way: scan the space to find suitable initial values
 
-	  ///////
+  //////////////////////////////////////////////////////////////////////////////////////// LEE strength fitting
 
-	  Lee_test->Minimization_Lee_Np_0p_strength_FullCov(initial_Np, initial_0p, "");
+  if( config_Lee::flag_Lee_strength_data ) {
 
-	  double chi2_min = Lee_test->minimization_chi2;
+    Lee_test->Set_measured_data();// use the measured data as the input data for the fitting
 
-	  double dchi2 = chi2_var - chi2_min;
+    Lee_test->Minimization_Lee_strength_FullCov(2, 0);// (initial value, fix or not)
 
-	  if (dchi2 < 0.) dchi2 = 0.; // protects against small negative values, mostly relevant for Asimov at the exact grid point
+    // cout<<endl<<TString::Format(" ---> Best fit of Lee strength: chi2 %6.3f, %5.3f +/- %5.3f",
+    //                             Lee_test->minimization_chi2,
+    //                             Lee_test->minimization_Lee_strength_val,
+    //                             Lee_test->minimization_Lee_strength_err
+    //                             )<<endl<<endl;
 
-	  ///////
-	  vec_min_status.push_back( Lee_test->minimization_status );
-	  vec_chi2_var.push_back( chi2_var );
-	  vec_min_chi2.push_back( chi2_min );
-	  vec_dchi2.push_back( dchi2 );
-	  vec_min_fNp_val.push_back( Lee_test->minimization_Lee_Np_strength_val );
-	  vec_min_fNp_err.push_back( Lee_test->minimization_Lee_Np_strength_err);
-	  vec_min_f0p_val.push_back( Lee_test->minimization_Lee_0p_strength_val );
-	  vec_min_f0p_err.push_back( Lee_test->minimization_Lee_0p_strength_err);
+    cout<<endl<<TString::Format(" ---> Best fit of Lee strength: %6.4f,  chi2 %6.3f",
+                                Lee_test->minimization_Lee_strength_val,
+				Lee_test->minimization_chi2
+                                )<<endl<<endl;
 
-	}// for(int itoy=1; itoy<=Ntoys; itoy++)
+    cout<<endl<<TString::Format(" ---> Best fit of Lee strength: %6.4f +/- %6.4f,  chi2 %6.3f",
+                                Lee_test->minimization_Lee_strength_val,
+				Lee_test->minimization_Lee_strength_err,
+				Lee_test->minimization_chi2
+                                )<<endl<<endl;
 
-	////// save the information into root-file for each space point
+    /////////////////////////////////////////
 
-	tree->Fill();
+    double gmin = Lee_test->minimization_chi2;
+    TGraph *gh_scan = new TGraph();
+    double slow = 0;
+    double shgh = 3;
+    int nscan = 100;
+    double val_max_dchi2 = 0;
+    double step = (shgh-slow)/nscan;
+    for(int idx=1; idx<=nscan; idx++) {
+      if( idx%(max(1, nscan/10))==0 ) cout<<Form(" ---> scan %4.2f, %3d", idx*1./nscan, idx)<<endl;
+      double val_s = slow + (idx-1)*step;
+      Lee_test->Minimization_Lee_strength_FullCov(val_s, 1);// (initial value, fix or not)
+      double val_chi2 = Lee_test->minimization_chi2;
+      gh_scan->SetPoint( gh_scan->GetN(), val_s, val_chi2 - gmin);
+      if( val_max_dchi2<val_chi2 - gmin ) val_max_dchi2 = val_chi2 - gmin;
+    }
 
-      }// for(int bin_0p=1; bin_0p<=bins_0p; bin_0p++)
-    }// for(int bin_Np=1; bin_Np<=bins_Np; bin_Np++)
+    double val_dchi2at0 = gh_scan->Eval(0);
+    double val_dchi2at1 = gh_scan->Eval(1);
+    if( fabs(val_dchi2at0)<1e-6 ) val_dchi2at0 = 0;
 
-    tree->Write();
-    subroofile->Close();
+    cout<<endl<<Form(" ---> dchi2 at LEE 0/1: %7.4f %7.4f", val_dchi2at0, val_dchi2at1 )<<endl<<endl;
+
+    TCanvas *canv_gh_scan = new TCanvas("canv_gh_scan", "canv_gh_scan", 900, 650);
+    canv_gh_scan->SetLeftMargin(0.15); canv_gh_scan->SetRightMargin(0.1);
+    canv_gh_scan->SetTopMargin(0.1); canv_gh_scan->SetBottomMargin(0.15);
+    gh_scan->Draw("al");
+    gh_scan->GetXaxis()->SetTitle("LEE strength"); gh_scan->GetYaxis()->SetTitle("#Delta#chi^{2}");
+    gh_scan->GetXaxis()->SetLabelSize(0.05); gh_scan->GetXaxis()->SetTitleSize(0.05);
+    gh_scan->GetYaxis()->SetLabelSize(0.05); gh_scan->GetYaxis()->SetTitleSize(0.05);
+    gh_scan->GetXaxis()->CenterTitle(); gh_scan->GetYaxis()->CenterTitle();
+    gh_scan->GetXaxis()->SetTitleOffset(1.2);
+    gh_scan->GetYaxis()->SetRangeUser(0, val_max_dchi2*1.1);
+
+    TLine *lineA_dchi2at1 = new TLine(1, 0, 1, val_dchi2at1);
+    lineA_dchi2at1->Draw("same");
+    lineA_dchi2at1->SetLineWidth(2);
+    lineA_dchi2at1->SetLineColor(kBlue);
+    lineA_dchi2at1->SetLineStyle(7);
+    TLine *lineB_dchi2at1 = new TLine(0, val_dchi2at1, 1, val_dchi2at1);
+    lineB_dchi2at1->Draw("same");
+    lineB_dchi2at1->SetLineWidth(2);
+    lineB_dchi2at1->SetLineColor(kBlue);
+    lineB_dchi2at1->SetLineStyle(7);
+    auto *tt_text_data = new TLatex( 0.2, val_dchi2at1*1.1, Form("#Delta#chi^{2} = %4.3f", val_dchi2at1) );
+    tt_text_data->SetTextAlign(11); tt_text_data->SetTextSize(0.05); tt_text_data->SetTextAngle(0);
+    tt_text_data->SetTextFont(42);  tt_text_data->Draw(); tt_text_data->SetTextColor(kBlue);
+
+    canv_gh_scan->SaveAs("canv_gh_scan.png");
 
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////
+  ///////////////////////////// MicroBooNE suggested /////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////
 
-  cout<<endl;
-  cout<<" -----------------------------------"<<endl;
-  cout<<" Check the initialization at the end"<<endl;
-  cout<<" -----------------------------------"<<endl;
+  if( config_Lee::flag_chi2_data_H0 ) {
+
+    Lee_test->Set_measured_data();// use the measured data as the input data for the fitting
+
+    Lee_test->scaleF_Lee = 0;
+    Lee_test->Set_Collapse();
+
+    Lee_test->Minimization_Lee_strength_FullCov(0, 1);
+
+    double chi2 = Lee_test->minimization_chi2;
+    int ndf = Lee_test->bins_newworld;
+    double p_value = TMath::Prob( chi2, ndf );
+
+    cout<<Form(" ---> flag_chi2_data_H0, chi2/ndf %8.2f %3d %8.4f, p-value %f", chi2,ndf, chi2/ndf, p_value)<<endl;
+  }
+
+
+  if( config_Lee::flag_dchi2_H0toH1 ) {
+
+    Lee_test->Set_measured_data();// use the measured data as the input data for the fitting
+
+    Lee_test->scaleF_Lee = 0;
+    Lee_test->Set_Collapse();
+
+    Lee_test->Minimization_Lee_strength_FullCov(0, 1);
+    double chi2_H0 = Lee_test->minimization_chi2;
+
+    Lee_test->Minimization_Lee_strength_FullCov(1, 1);
+    double chi2_H1 = Lee_test->minimization_chi2;
+
+    double dchi2 = chi2_H0 - chi2_H1;
+
+    int ndf = 1;
+    double p_value = TMath::Prob( dchi2, ndf );
+    cout<<Form(" ---> flag_dchi2_H0toH1, chi2/ndf %8.2f %3d %8.4f, p-value %f", dchi2, ndf, dchi2/ndf, p_value)<<endl;
+
+    p_value = TMath::Prob( -dchi2, ndf );
+    cout<<Form(" ---> flag_dchi2_H1toH0, chi2/ndf %8.2f %3d %8.4f, p-value %f", -dchi2, ndf, -dchi2/ndf, p_value)<<endl;
+
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////
+  ///////////////////////////// Advanced Statistics Analysis /////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////
+  //
+  // (*) Hypothesis test always reject the null
+  //
+  // [*] the realization of the functionality is a combination of the tools:
+  //
+  //         Lee_test->Set_measured_data();
+  //
+  //         Lee_test->scaleF_Lee = #;
+  //         Lee_test->Set_Collapse();
+  //
+  //         Lee_test->Set_toy_Asimov();
+  //
+  //         Lee_test->Set_Variations( # );
+  //         Lee_test->Set_toy_Variation( # );
+  //
+  //         Lee_test->Minimization_Lee_strength_FullCov(#, #);
+  //
+
+  /////////////////////////////////////////////////////// example: do fitting on Asimov sample
+
+  if( 0 ) {
+    Lee_test->scaleF_Lee = 1;
+    Lee_test->Set_Collapse();
+
+    Lee_test->Set_toy_Asimov();// use the Asimov sample as the input data for the fitting
+
+    Lee_test->Minimization_Lee_strength_FullCov(2, 0);// (initial value, fix or not)
+
+    cout<<endl<<TString::Format(" ---> Best fit of Lee strength: chi2 %6.2f, %5.2f +/- %5.2f",
+				Lee_test->minimization_chi2,
+				Lee_test->minimization_Lee_strength_val,
+				Lee_test->minimization_Lee_strength_err
+				)<<endl<<endl;
+  }
+
+  ////////////////////////////////////////////////////// example: do fitting on variation sample
+
+  if( 0 ) {
+    Lee_test->scaleF_Lee = 1;
+    Lee_test->Set_Collapse();
+
+    Lee_test->Set_Variations( 10 );// generate 10 variation samples
+    Lee_test->Set_toy_Variation( 4 );// use the 4th sample as the input data for the fitting
+
+    Lee_test->Minimization_Lee_strength_FullCov(2, 0);// (initial value, fix or not)
+
+    cout<<endl<<TString::Format(" ---> Best fit of Lee strength: chi2 %6.2f, %5.2f +/- %5.2f",
+				Lee_test->minimization_chi2,
+				Lee_test->minimization_Lee_strength_val,
+				Lee_test->minimization_Lee_strength_err
+				)<<endl<<endl;
+  }
+
+  //////////////////////////////////////////////////////////////////////////////////////// example: simple versus simple likelihood ratio test
+
+  if( 0 ) {
+    Lee_test->Set_measured_data();// use the measured data as the input data for the fitting
+
+    Lee_test->Minimization_Lee_strength_FullCov(1, 1);// (initial value, fix or not)
+    double val_chi2_Lee = Lee_test->minimization_chi2;
+
+    Lee_test->Minimization_Lee_strength_FullCov(0, 1);// (initial value, fix or not)
+    double val_chi2_sm = Lee_test->minimization_chi2;
+
+    double val_dchi2 = val_chi2_Lee - val_chi2_sm;
+
+    cout<<endl<<TString::Format(" ---> dchi2 = Lee - sm: %7.4f, LEE %7.4f, sm %7.4f", val_dchi2, val_chi2_Lee, val_chi2_sm)<<endl<<endl;
+  }
+
+  ////////////////////////////////////////////////////////// sensitivity calcualtion by FC
+
+  if( 0 ) {
+    double chi2_null_null8sm_true8sm  = 0;
+    double chi2_gmin_null8sm_true8sm  = 0;
+    double chi2_null_null8Lee_true8Lee = 0;
+    double chi2_gmin_null8Lee_true8Lee = 0;
+
+    TFile *file_out = new TFile(TString::Format("file_out_%03d.root", ifile), "recreate");
+    TTree *tree = new TTree("tree", "tree");
+    tree->Branch("chi2_null_null8sm_true8sm", &chi2_null_null8sm_true8sm, "chi2_null_null8sm_true8sm/D" );
+    tree->Branch("chi2_gmin_null8sm_true8sm", &chi2_gmin_null8sm_true8sm, "chi2_gmin_null8sm_true8sm/D" );
+    tree->Branch("chi2_null_null8Lee_true8Lee", &chi2_null_null8Lee_true8Lee, "chi2_null_null8Lee_true8Lee/D" );
+    tree->Branch("chi2_gmin_null8Lee_true8Lee", &chi2_gmin_null8Lee_true8Lee, "chi2_gmin_null8Lee_true8Lee/D" );
+
+    int N_toy = 500;
+
+    for(int itoy=1; itoy<=N_toy; itoy++) {
+
+      if( itoy%max(N_toy/10,1)==0 ) {
+	cout<<TString::Format(" ---> processing toy ( total cov ): %4.2f, %6d", itoy*1./N_toy, itoy)<<endl;
+      }
+      cout<<Form(" running %6d", itoy)<<endl;
+
+      int status_fit = 0;
+
+      /////////////////////////////////// null8sm, true8sm
+
+      Lee_test->scaleF_Lee = 0;
+      Lee_test->Set_Collapse();
+      Lee_test->Set_Variations(1);
+      Lee_test->Set_toy_Variation(1);
+
+      Lee_test->Minimization_Lee_strength_FullCov(0, 1);
+      chi2_null_null8sm_true8sm = Lee_test->minimization_chi2;
+
+      Lee_test->Minimization_Lee_strength_FullCov(1, 0);
+      chi2_gmin_null8sm_true8sm = Lee_test->minimization_chi2;
+      status_fit += Lee_test->minimization_status;
+
+      /////////////////////////////////// null8Lee, true8Lee
+
+      Lee_test->scaleF_Lee = 1;
+      Lee_test->Set_Collapse();
+      Lee_test->Set_Variations(1);
+      Lee_test->Set_toy_Variation(1);
+
+      Lee_test->Minimization_Lee_strength_FullCov(1, 1);
+      chi2_null_null8Lee_true8Lee = Lee_test->minimization_chi2;
+
+      Lee_test->Minimization_Lee_strength_FullCov(1, 0);
+      chi2_gmin_null8Lee_true8Lee = Lee_test->minimization_chi2;
+      status_fit += Lee_test->minimization_status;
+
+      ///////////////////////////////////
+
+      if( status_fit!=0 ) continue;
+      tree->Fill();
+    }
+
+    file_out->cd();
+    tree->Write();
+    file_out->Close();
+
+  }
+
+  //////////////////////////////////////////////// Sensitivity by Asimov sample
+
+  if( 0 ) {
+
+    ///////////////////////// reject SM
+
+    Lee_test->scaleF_Lee = 1;
+    Lee_test->Set_Collapse();
+
+    Lee_test->Set_toy_Asimov();// use the Asimov sample as the input data for the fitting
+    Lee_test->Minimization_Lee_strength_FullCov(0, 1);// (initial value, fix or not)
+
+    double sigma_SM = sqrt( Lee_test->minimization_chi2 );
+    cout<<TString::Format(" ---> Excluding  SM: %5.2f sigma", sigma_SM)<<endl;
+
+    ///////////////////////// reject 1*LEE
+
+    Lee_test->scaleF_Lee = 0;
+    Lee_test->Set_Collapse();
+
+    Lee_test->Set_toy_Asimov();// use the Asimov sample as the input data for the fitting
+    Lee_test->Minimization_Lee_strength_FullCov(1, 1);// (initial value, fix or not)
+
+    double sigma_Lee = sqrt( Lee_test->minimization_chi2 );
+    cout<<TString::Format(" ---> Excluding LEE: %5.2f sigma", sigma_Lee)<<endl<<endl;;
+
+  }
+
+  ////////////////////////////////////////////////  Feldman-Cousins approach --> heavy computation cost
+
+  if( 0 ) {
+
+    /////////////// range: [low, hgh] with step
+
+    double Lee_true_low = 0;
+    double Lee_true_hgh = 3;
+    double Lee_step     = 0.02;
+
+    /////////////// dchi2 distribution
+
+    // int num_toy = 2;
+    // Lee_test->Exe_Feldman_Cousins(Lee_true_low, Lee_true_hgh, Lee_step, num_toy, ifile);
+
+    /////////////// dchi2 of Asimov sample
+
+    Lee_test->Exe_Fledman_Cousins_Asimov(Lee_true_low, Lee_true_hgh, Lee_step);
+
+    /////////////// dchi2 of measured data
+    /*
+    Lee_test->Set_measured_data();
+    TMatrixD matrix_data_input_fc = Lee_test->matrix_data_newworld;
+    Lee_test->Exe_Fiedman_Cousins_Data( matrix_data_input_fc, Lee_true_low, Lee_true_hgh, Lee_step );
+    */
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////
 
   cout<<endl;
   cout<<" ---> flag_syst_flux_Xs    "<<Lee_test->flag_syst_flux_Xs<<endl;
   cout<<" ---> flag_syst_detector   "<<Lee_test->flag_syst_detector<<endl;
   cout<<" ---> flag_syst_additional "<<Lee_test->flag_syst_additional<<endl;
   cout<<" ---> flag_syst_mc_stat    "<<Lee_test->flag_syst_mc_stat<<endl;
-  cout<<endl;
-
-  cout<<" ---> LEE channel size (set by array_LEE_ch in config): "<<Lee_test->map_Lee_ch.size()<<endl;
-  if( (int)(Lee_test->map_Lee_ch.size()) ) {
-    for(auto it_map_Lee=Lee_test->map_Lee_ch.begin(); it_map_Lee!=Lee_test->map_Lee_ch.end(); it_map_Lee++) {
-      cout<<" ---> LEE channel: "<< it_map_Lee->first<<endl;
-    }
-  }
-  cout<<endl;
-
-  cout<<" ---> LEE_Np channel size (set by array_LEE_Np_ch in config): "<<Lee_test->map_Lee_Np_ch.size()<<endl;
-  if( (int)(Lee_test->map_Lee_Np_ch.size()) ) {
-    for(auto it_map_Lee_Np=Lee_test->map_Lee_Np_ch.begin(); it_map_Lee_Np!=Lee_test->map_Lee_Np_ch.end(); it_map_Lee_Np++) {
-      cout<<" ---> LEE_Np channel: "<< it_map_Lee_Np->first<<endl;
-    }
-  }
-  cout<<endl;
-
-  cout<<" ---> LEE_0p channel size (set by array_LEE_0p_ch in config): "<<Lee_test->map_Lee_0p_ch.size()<<endl;
-  if( (int)(Lee_test->map_Lee_0p_ch.size()) ) {
-    for(auto it_map_Lee_0p=Lee_test->map_Lee_0p_ch.begin(); it_map_Lee_0p!=Lee_test->map_Lee_0p_ch.end(); it_map_Lee_0p++) {
-      cout<<" ---> LEE_0p channel: "<< it_map_Lee_0p->first<<endl;
-    }
-  }
-  cout<<endl;
-
-  cout<<" ---> MC stat file: "<<Lee_test->syst_cov_mc_stat_begin<<".log - "<<Lee_test->syst_cov_mc_stat_end<<".log"<<endl;
-  cout<<endl;
-
-  cout<<" ---> check: scaleF_POT "<<scaleF_POT<<", file_flag "<<ifile<<endl<<endl;
+  cout<<" ---> flag_syst_reweight       "<<Lee_test->flag_syst_reweight<<endl;
+  cout<<" ---> flag_syst_reweight_cor   "<<Lee_test->flag_syst_reweight_cor<<endl;
 
   cout<<endl<<endl;
-  cout<<" ---> Complete all the program"<<endl;
+  cout<<" ---> Finish all the program"<<endl;
   cout<<endl<<endl;
 
   if( config_Lee::flag_display_graphics ) {

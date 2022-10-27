@@ -65,6 +65,11 @@ public:
     flag_individual_cov_newworld = true;
     flag_Lee_minimization_after_constraint = false;
 
+    flag_syst_flux_Xs    = false;
+    flag_syst_detector   = false;
+    flag_syst_additional = false;
+    flag_syst_mc_stat    = false;
+
     flag_lookelsewhere = false;
   }
 
@@ -74,6 +79,9 @@ public:
 
   double scaleF_POT;
   double scaleF_Lee;
+
+  double scaleF_Lee_Np;
+  double scaleF_Lee_0p;
 
   bool flag_syst_flux_Xs;
   bool flag_syst_detector;
@@ -104,6 +112,12 @@ public:
 
   map<int, int>map_Lee_ch;
   map<int, int>map_Lee_oldworld;
+
+  map<int, int>map_Lee_Np_ch;
+  map<int, int>map_Lee_Np_oldworld;
+
+  map<int, int>map_Lee_0p_ch;
+  map<int, int>map_Lee_0p_oldworld;
 
   map<int, map<int, double> >map_data_spectrum_ch_bin;
   map<int, double>map_data_spectrum_newworld_bin;
@@ -157,6 +171,11 @@ public:
   int minimization_NDF;
   bool flag_Lee_minimization_after_constraint;
 
+  double minimization_Lee_Np_strength_val;
+  double minimization_Lee_Np_strength_err;
+  double minimization_Lee_0p_strength_val;
+  double minimization_Lee_0p_strength_err;
+
   /////////////////////////////////////////////////////// function member
 
   void Set_config_file_directory(TString spectra_file_, TString flux_Xs_directory_, TString detector_directory_, TString mc_directory_);
@@ -201,6 +220,11 @@ public:
   void Exe_Feldman_Cousins(double Lee_true_low, double Lee_true_hgh, double step, int num_toy, int ifile);
   void Exe_Fledman_Cousins_Asimov(double Lee_true_low, double Lee_true_hgh, double step);
   void Exe_Fiedman_Cousins_Data(TMatrixD matrix_fakedata, double Lee_true_low, double Lee_true_hgh, double step);
+
+  /////// Np_0p
+
+  double FCN_Np_0p(const double *par);
+  void Minimization_Lee_Np_0p_strength_FullCov(double Lee_Np_value, double Lee_0p_value, TString roostr_flag_fixpar);
 };
 
 #endif
