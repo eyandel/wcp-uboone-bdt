@@ -3772,10 +3772,10 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
                 return false;
   }else if (ch_name == "sp_nc_pi0_Xp_overlay" || ch_name == "sp_nc_pi0_2_Xp_overlay"){
                   if (flag_FC && flag_ncpio_sel && (!flag_singlephoton_sel) &&
-                    (!(eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0
+                    /*(!(eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0
                       && (!map_cuts_flag["SPNCDeltaSig"] &&
                       !map_cuts_flag["SPOutFVSig"] && !map_cuts_flag["SPNCPi0Sig"] &&
-                      !map_cuts_flag["SPNCOtherSig"] && !map_cuts_flag["SPNumuCCSig"]))) &&
+                      !map_cuts_flag["SPNCOtherSig"] && !map_cuts_flag["SPNumuCCSig"]))) &&*/
                       (!map_cuts_flag["SPNCDeltaSig"] &&
                       !map_cuts_flag["SPOutFVSig"] && !map_cuts_flag["SPNCPi0Sig"] &&
                       !map_cuts_flag["SPNCOtherSig"] && !map_cuts_flag["SPNumuCCSig"]))
