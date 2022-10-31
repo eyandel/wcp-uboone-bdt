@@ -3774,6 +3774,46 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
                   if (flag_FC && flag_ncpio_sel && (!flag_singlephoton_sel))
                       return true;
                   return false;
+  }else if (ch_name == "sp_bdt_nc_pi0_0p" || ch_name == "sp_bdt_nc_pi0_2_0p"){
+                if (flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && flag_0p) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_nc_pi0_Np" || ch_name == "sp_bdt_nc_pi0_2_Np"){
+                if (flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && (!flag_0p)) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_nc_pi0_Xp" || ch_name == "sp_bdt_nc_pi0_2_Xp"){
+                if (flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel)) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_nc_pi0_0p_ext" || ch_name == "sp_bdt_nc_pi0_2_0p_ext"){
+                if (flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && flag_0p) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_nc_pi0_Np_ext" || ch_name == "sp_bdt_nc_pi0_2_Np_ext"){
+                if (flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && (!flag_0p)) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_nc_pi0_Xp_ext" || ch_name == "sp_bdt_nc_pi0_2_Xp_ext"){
+                if (flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel)) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_nc_pi0_0p_dirt" || ch_name == "sp_bdt_nc_pi0_2_0p_dirt"){
+                if (flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && flag_0p) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_nc_pi0_Np_dirt" || ch_name == "sp_bdt_nc_pi0_2_Np_dirt"){
+                if (flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && (!flag_0p)) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_nc_pi0_Xp_dirt" || ch_name == "sp_bdt_nc_pi0_2_Xp_dirt"){
+                if (flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel)) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_nc_pi0_0p_nc_delta_overlay" || ch_name == "sp_bdt_nc_pi0_0p_nc_delta_overlay_add" || ch_name == "sp_bdt_nc_pi0_2_0p_nc_delta_overlay"){
+                if (flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && flag_0p && (eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && flag_truth_inside)) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_nc_pi0_Np_nc_delta_overlay" || ch_name == "sp_bdt_nc_pi0_Np_nc_delta_overlay_add" || ch_name == "sp_bdt_nc_pi0_2_Np_nc_delta_overlay"){
+                if (flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && (!flag_0p) && (eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && flag_truth_inside)) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_nc_pi0_Xp_nc_delta_overlay" || ch_name == "sp_bdt_nc_pi0_Xp_nc_delta_overlay_add" || ch_name == "sp_bdt_nc_pi0_2_Xp_nc_delta_overlay"){
+                if (flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && (eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && flag_truth_inside)) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_nc_pi0_Xp_overlay" || ch_name == "sp_bdt_nc_pi0_2_Xp_overlay"){
+                  if (flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel))
+                      return true;
+                  return false;
   // numuCC channels (with single photon and NC pi0 events removed):
   }else if (ch_name == "sp_numuCC_0p" || ch_name == "sp_numuCC_2_0p"){
                 if (flag_FC && flag_numuCC && !flag_ncpio_sel && (!flag_singlephoton_sel) && flag_0p) return true;
@@ -3813,6 +3853,45 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
                 return false;
   }else if (ch_name == "sp_numuCC_Xp_overlay"){
                 if (flag_FC && flag_numuCC && (!flag_ncpio_sel) && (!flag_singlephoton_sel)) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_numuCC_0p" || ch_name == "sp_bdt_numuCC_2_0p"){
+                if (flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && flag_0p) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_numuCC_Np" || ch_name == "sp_bdt_numuCC_2_Np"){
+                if (flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && (!flag_0p)) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_numuCC_Xp" || ch_name == "sp_bdt_numuCC_2_Xp"){
+                if (flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel)) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_numuCC_0p_ext" || ch_name == "sp_bdt_numuCC_2_0p_ext"){
+                if (flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && flag_0p) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_numuCC_Np_ext" || ch_name == "sp_bdt_numuCC_2_Np_ext"){
+                if (flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && (!flag_0p)) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_numuCC_Xp_ext" || ch_name == "sp_bdt_numuCC_2_Xp_ext"){
+                if (flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel)) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_numuCC_0p_dirt" || ch_name == "sp_bdt_numuCC_2_0p_dirt"){
+                if (flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && flag_0p) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_numuCC_Np_dirt" || ch_name == "sp_bdt_numuCC_2_Np_dirt"){
+                if (flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && (!flag_0p)) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_numuCC_Xp_dirt" || ch_name == "sp_bdt_numuCC_2_Xp_dirt"){
+                if (flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel)) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_numuCC_0p_nc_delta_overlay" || ch_name == "sp_bdt_numuCC_0p_nc_delta_overlay_add" || ch_name == "sp_bdt_numuCC_2_0p_nc_delta_overlay"){
+                if (flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && flag_0p && (eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && flag_truth_inside)) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_numuCC_Np_nc_delta_overlay" || ch_name == "sp_bdt_numuCC_Np_nc_delta_overlay_add" || ch_name == "sp_bdt_numuCC_2_Np_nc_delta_overlay"){
+                if (flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && (!flag_0p) && (eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && flag_truth_inside)) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_numuCC_Xp_nc_delta_overlay" || ch_name == "sp_bdt_numuCC_Xp_nc_delta_overlay_add" || ch_name == "sp_bdt_numuCC_2_Xp_nc_delta_overlay"){
+                if (flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && (eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && flag_truth_inside)) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_numuCC_Xp_overlay"){
+                if (flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel)) return true;
                 return false;
   }else{
     std::cout << "Not sure what cut: " << ch_name << std::endl;

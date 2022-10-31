@@ -3,15 +3,15 @@ single_photon_dirt		            shower_energy_sp	 30	   0	      1500	 1	   1		  
 single_photon_ext 		            shower_energy_sp	 30	   0	      1500	 1	   0		      0	    0 	      0		      4		      3	      unity   		  0
 single_photon_bnb 		            shower_energy_sp	 30	   0	      1500	 1	   0		      0	    0 	      0		      0		      5	      unity   		  0
 
-sp_nc_pi0_Xp_overlay		          shower_energy_sp	 30	   0	      1500	 2	   1		      0	    0	        0		      2		      2	      cv_spline		  0
-sp_nc_pi0_Xp_dirt		              shower_energy_sp	 30	   0	      1500	 2	   1		      0	    0.5	      0		      2		      4	      cv_spline		  0
-sp_nc_pi0_Xp_ext 		              shower_energy_sp	 30	   0	      1500	 2	   0		      0	    0 	      0		      5		      3	      unity   		  0
-sp_nc_pi0_Xp 		                  shower_energy_sp	 30	   0	      1500	 2	   0		      0	    0 	      0		      0		      5	      unity   		  0
+sp_bdt_nc_pi0_Xp_overlay		      shower_energy_sp	 30	   0	      1500	 2	   1		      0	    0	        0		      2		      2	      cv_spline		  0
+sp_bdt_nc_pi0_Xp_dirt		          shower_energy_sp	 30	   0	      1500	 2	   1		      0	    0.5	      0		      2		      4	      cv_spline		  0
+sp_bdt_nc_pi0_Xp_ext 		          shower_energy_sp	 30	   0	      1500	 2	   0		      0	    0 	      0		      5		      3	      unity   		  0
+sp_bdt_nc_pi0_Xp 		              shower_energy_sp	 30	   0	      1500	 2	   0		      0	    0 	      0		      0		      5	      unity   		  0
 
-sp_numuCC_Xp_overlay		          shower_energy_sp	 30	   0	      1500	 3	   1		      0	    0	        0		      3		      2	      cv_spline		  0
-sp_numuCC_Xp_dirt		              shower_energy_sp	 30	   0	      1500	 3	   1		      0	    0.5	      0		      3		      4	      cv_spline		  0
-sp_numuCC_Xp_ext 		              shower_energy_sp	 30	   0	      1500	 3	   0		      0	    0 	      0		      6		      3	      unity   		  0
-sp_numuCC_Xp 		                  shower_energy_sp	 30	   0	      1500	 3	   0		      0	    0 	      0		      0		      5	      unity   		  0
+sp_bdt_numuCC_Xp_overlay		      shower_energy_sp	 30	   0	      1500	 3	   1		      0	    0	        0		      3		      2	      cv_spline		  0
+sp_bdt_numuCC_Xp_dirt		          shower_energy_sp	 30	   0	      1500	 3	   1		      0	    0.5	      0		      3		      4	      cv_spline		  0
+sp_bdt_numuCC_Xp_ext 		          shower_energy_sp	 30	   0	      1500	 3	   0		      0	    0 	      0		      6		      3	      unity   		  0
+sp_bdt_numuCC_Xp 		              shower_energy_sp	 30	   0	      1500	 3	   0		      0	    0 	      0		      0		      5	      unity   		  0
 End					                      End		             -1	   -1	      -1	   -1	   -1		      -1	  -1		    -1		    -1		    -1	    end		        -1
 #Name:					                  #Var:		           #bin	 #start	  #end	 #obs	 #xs_flux	  #det	#add_sys	#same_mc	#cov_sec	#file	  #weight		    #lee_strength
 single_photon_ncdel_sig_overlay		shower_energy_sp	 30	   0	      1500	 1	   1		      0	    0	        0		      0		      1	      cv_spline		  0
