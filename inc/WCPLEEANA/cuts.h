@@ -807,6 +807,10 @@ double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, 
       return tagger.shw_sp_energy;
   }else if (var_name == "shower_angle_beam_sp"){
     return tagger.shw_sp_angle_beam;
+  }else if (var_name == "cos_shower_angle_beam_sp"){
+    return TMath::Cos(tagger.shw_sp_angle_beam/180.*TMath::Pi());
+  }else if (var_name == "num_shower_sp"){
+    return tagger.shw_sp_n_20br1_showers;
   //
   }else{
     std::cout << "No such variable: " << var_name << std::endl;

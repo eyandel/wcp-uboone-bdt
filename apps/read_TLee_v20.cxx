@@ -424,8 +424,10 @@ int main(int argc, char** argv)
     //for (int i=4; i < 4 + 16 * 4; i++){
     //  vc_support_chs.push_back(i);
     //}
+
     vc_support_chs.push_back(2);
-    vc_support_chs.push_back(3);
+    //vc_support_chs.push_back(3);
+    
     //for (int i=4; i < 4 + 16 * 2; i++){
     //  vc_support_chs.push_back(i);
     //}
