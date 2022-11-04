@@ -102,5 +102,5 @@ namespace config_Lee
   ///// void TLee::Minimization_Lee_strength_FullCov(double Lee_initial_value, bool flag_fixed)
   ///// do the fitting on the spectra and cov_total after constraint ?
   bool flag_Lee_minimization_after_constraint = 0;// hardcoded, only for the standard 7-ch fitting
-  
+
 }

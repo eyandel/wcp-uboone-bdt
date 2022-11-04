@@ -3717,6 +3717,38 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
     || ch_name == "single_shower_eff_overlay" || ch_name == "single_shower_eff_dirt"){
             if (flag_singleshower_eff_sel) return true;
             return false;
+  }else if (ch_name == "single_photon_bnb_0p" || ch_name == "single_photon_ext_0p"
+    || ch_name == "single_photon_overlay_0p" || ch_name == "single_photon_dirt_0p"){
+            if (flag_singlephoton_sel && flag_0p) return true;
+            return false;
+  }else if (ch_name == "single_photon_eff_bnb_0p" || ch_name == "single_photon_eff_ext_0p"
+    || ch_name == "single_photon_eff_overlay_0p" || ch_name == "single_photon_eff_dirt_0p"){
+            if (flag_singlephoton_eff_sel && flag_0p) return true;
+            return false;
+  }else if (ch_name == "single_shower_bnb_0p" || ch_name == "single_shower_ext_0p"
+    || ch_name == "single_shower_overlay_0p" || ch_name == "single_shower_dirt_0p"){
+            if (flag_singleshower_sel && flag_0p) return true;
+            return false;
+  }else if (ch_name == "single_shower_eff_bnb_0p" || ch_name == "single_shower_eff_ext_0p"
+    || ch_name == "single_shower_eff_overlay_0p" || ch_name == "single_shower_eff_dirt_0p"){
+            if (flag_singleshower_eff_sel && flag_0p) return true;
+            return false;
+  }else if (ch_name == "single_photon_bnb_Np" || ch_name == "single_photon_ext_Np"
+    || ch_name == "single_photon_overlay_Np" || ch_name == "single_photon_dirt_Np"){
+            if (flag_singlephoton_sel && !flag_0p) return true;
+            return false;
+  }else if (ch_name == "single_photon_eff_bnb_Np" || ch_name == "single_photon_eff_ext_Np"
+    || ch_name == "single_photon_eff_overlay_Np" || ch_name == "single_photon_eff_dirt_Np"){
+            if (flag_singlephoton_eff_sel && !flag_0p) return true;
+            return false;
+  }else if (ch_name == "single_shower_bnb_Np" || ch_name == "single_shower_ext_Np"
+    || ch_name == "single_shower_overlay_Np" || ch_name == "single_shower_dirt_Np"){
+            if (flag_singleshower_sel && !flag_0p) return true;
+            return false;
+  }else if (ch_name == "single_shower_eff_bnb_Np" || ch_name == "single_shower_eff_ext_Np"
+    || ch_name == "single_shower_eff_overlay_Np" || ch_name == "single_shower_eff_dirt_Np"){
+            if (flag_singleshower_eff_sel && !flag_0p) return true;
+            return false;
   }else if (ch_name == "single_photon_ncdel_sig_overlay" || ch_name == "single_photon_ncpi0_sig_overlay" ||
     ch_name == "single_photon_ncother_sig_overlay" || ch_name == "single_photon_numucc_sig_overlay" ||
     ch_name == "single_photon_outfv_sig_overlay" || ch_name == "single_photon_bkg_overlay"){
@@ -3920,17 +3952,11 @@ bool LEEana::get_rw_cut_pass(TString cut, EvalInfo& eval, PFevalInfo& pfeval, Ta
   }else if(cut == "NCDelta0p_scale"){
     if(is_NCdelta_sel(tagger, pfeval) && eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && is_0p(tagger, kine, pfeval)) return true;
     return false;
-  }else if(cut == "singlephoton_scale"){
-    if(is_singlephoton_sel(tagger, pfeval) && pfeval.truth_single_photon==1) return true;
+  }else if(cut == "NCPi0_NCDelta_Np"){
+    if(eval.truth_isCC==0 && !(is_true_0p(pfeval)) && (pfeval.truth_NprimPio>0 || pfeval.truth_NCDelta==1)) return true;
     return false;
-  }else if(cut == "singlephoton_eff_scale"){
-    if(is_singlephoton_eff_sel(tagger, pfeval) && pfeval.truth_single_photon==1) return true;
-    return false;
-  }else if(cut == "singleshower_scale"){
-    if(is_singleshower_sel(tagger, pfeval) && pfeval.truth_single_photon==1) return true;
-    return false;
-  }else if(cut == "singleshower_eff_scale"){
-    if(is_singleshower_eff_sel(tagger, pfeval) && pfeval.truth_single_photon==1) return true;
+  }else if(cut == "NCPi0_NCDelta_0p"){
+    if(eval.truth_isCC==0 && is_true_0p(pfeval) && (pfeval.truth_NprimPio>0 || pfeval.truth_NCDelta==1)) return true;
     return false;
   }else{
     std::cout<<"No matching reweighting cut, check reweight configuration file"<<std::endl;

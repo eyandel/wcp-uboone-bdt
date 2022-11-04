@@ -1758,6 +1758,15 @@ int TLee::Exe_Goodness_of_fit(int num_Y, int num_X, TMatrixD matrix_pred, TMatri
     if( val_cv==0 ) rel_err = 0;
     h1_pred_Y_wiConstraint_rel_error->SetBinContent(ibin, 1);
     h1_pred_Y_wiConstraint_rel_error->SetBinError(ibin, rel_err);
+
+		bool print_constrained_error = 0;
+
+    if (print_constrained_error && (ibin==1 || ibin==2)) {
+       // here print out constrtained error for certain bins, var_err / val_cv_after_constraint
+       double val_cv_after_constraint = h1_pred_Y_wiConstraint->GetBinContent(ibin);
+       cout << "total constrained systematic error, bin " << ibin << " : " << val_err / val_cv_after_constraint << "\n";
+    }
+
   }
 
   h1_pred_Y_wiConstraint_rel_error->Draw("e2");
@@ -2192,6 +2201,26 @@ void TLee::Plotting_systematics()
   if(flag_syst_reweight) h1_reweight_relerr->Draw("same hist"); h1_reweight_relerr->SetLineColor(color_reweight);
   if(flag_syst_reweight_cor) h1_reweight_cor_relerr->Draw("same hist"); h1_reweight_cor_relerr->SetLineColor(color_reweight_cor);
   h1_detector_relerr->Draw("same hist"); h1_detector_relerr->SetLineColor(color_detector);
+
+	bool print_category_errors = 0;
+  if (print_category_errors) {
+
+    cout << "bin 1 total rel err " << h1_total_relerr->GetBinContent(1) << "\n";
+    cout << "bin 1 dirt err " << h1_additional_relerr->GetBinContent(1) << "\n";
+    cout << "bin 1 mc stat rel err " << h1_mc_stat_relerr->GetBinContent(1) << "\n";
+    cout << "bin 1 flux rel err " << h1_flux_relerr->GetBinContent(1) << "\n";
+    cout << "bin 1 XS rel err " << h1_Xs_relerr->GetBinContent(1) << "\n";
+    cout << "bin 1 detector rel err " << h1_detector_relerr->GetBinContent(1) << "\n";
+
+    cout << "bin 3 total rel err " << h1_total_relerr->GetBinContent(3) << "\n";
+    cout << "bin 3 dirt err " << h1_additional_relerr->GetBinContent(3) << "\n";
+    cout << "bin 3 mc stat rel err " << h1_mc_stat_relerr->GetBinContent(3) << "\n";
+    cout << "bin 3 flux rel err " << h1_flux_relerr->GetBinContent(3) << "\n";
+    cout << "bin 3 XS rel err " << h1_Xs_relerr->GetBinContent(3) << "\n";
+    cout << "bin 3 detector rel err " << h1_detector_relerr->GetBinContent(13) << "\n";
+
+
+  }
 
   for(int idx=1; idx<num_ch; idx++) {
     line_root_xx[idx]->Draw(); line_root_xx[idx]->SetLineStyle(7); line_root_xx[idx]->SetY2(2.5);

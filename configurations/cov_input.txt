@@ -1,22 +1,52 @@
-single_photon_overlay		          cos_shower_angle_beam_sp	     9	   -1.0     1.01	 1	   1		      0	    0	        0		      1		      2	      cv_spline		  0
-single_photon_dirt		            cos_shower_angle_beam_sp	     9	   -1.0     1.01	 1	   1		      0	    0.5	      0		      1		      4	      cv_spline		  0
-single_photon_ext 		            cos_shower_angle_beam_sp	     9	   -1.0     1.01	 1	   0		      0	    0 	      0		      4		      3	      unity   		  0
-single_photon_bnb 		            cos_shower_angle_beam_sp	     9	   -1.0     1.01	 1	   0		      0	    0 	      0		      0		      5	      unity   		  0
+single_photon_overlay_Np          shower_energy_sp	             15	   0	      1500 	 1	   1		      0	    0	        0		      1		      2	      cv_spline		  0
+single_photon_dirt_Np	            shower_energy_sp	             15	   0	      1500	 1	   1		      0	    0.5	      0		      1		      4	      cv_spline		  0
+single_photon_ext_Np	            shower_energy_sp	             15	   0	      1500	 1	   0		      0	    0 	      0		      7		      3	      unity   		  0
+single_photon_bnb_Np	            shower_energy_sp	             15	   0	      1500	 1	   0		      0	    0 	      0		      0		      5	      unity   		  0
+single_photon_overlay_0p          shower_energy_sp	             15	   0	      1500 	 1	   1		      0	    0	        0		      2		      2	      cv_spline		  0
+single_photon_dirt_0p	            shower_energy_sp	             15	   0	      1500	 1	   1		      0	    0.5	      0		      2		      4	      cv_spline		  0
+single_photon_ext_0p	            shower_energy_sp	             15	   0	      1500	 1	   0		      0	    0 	      0		      8		      3	      unity   		  0
+single_photon_bnb_0p	            shower_energy_sp	             15	   0	      1500	 1	   0		      0	    0 	      0		      0		      5	      unity   		  0
 
-sp_bdt_nc_pi0_Xp_overlay		      cos_shower_angle_beam_sp	     9	   -1.0     1.01	 2	   1		      0	    0	        0		      2		      2	      cv_spline		  0
-sp_bdt_nc_pi0_Xp_dirt		          cos_shower_angle_beam_sp	     9	   -1.0     1.01	 2	   1		      0	    0.5	      0		      2		      4	      cv_spline		  0
-sp_bdt_nc_pi0_Xp_ext 		          cos_shower_angle_beam_sp	     9	   -1.0     1.01	 2	   0		      0	    0 	      0		      5		      3	      unity   		  0
-sp_bdt_nc_pi0_Xp 		              cos_shower_angle_beam_sp	     9	   -1.0     1.01	 2	   0		      0	    0 	      0		      0		      5	      unity   		  0
+sp_bdt_nc_pi0_Np_overlay		      shower_energy_sp	             15	   0	      1500	 2	   1		      0	    0	        0		      3		      2	      cv_spline		  0
+sp_bdt_nc_pi0_Np_dirt		          shower_energy_sp	             15	   0	      1500 	 2	   1		      0	    0.5	      0		      3		      4	      cv_spline		  0
+sp_bdt_nc_pi0_Np_ext 		          shower_energy_sp	             15	   0	      1500 	 2	   0		      0	    0 	      0		      9		      3	      unity   		  0
+sp_bdt_nc_pi0_Np 		              shower_energy_sp	             15	   0	      1500 	 2	   0		      0	    0 	      0		      0		      5	      unity   		  0
+sp_bdt_nc_pi0_0p_overlay		      shower_energy_sp	             15	   0	      1500	 2	   1		      0	    0	        0		      4		      2	      cv_spline		  0
+sp_bdt_nc_pi0_0p_dirt		          shower_energy_sp	             15	   0	      1500 	 2	   1		      0	    0.5	      0		      4		      4	      cv_spline		  0
+sp_bdt_nc_pi0_0p_ext 		          shower_energy_sp	             15	   0	      1500 	 2	   0		      0	    0 	      0		      10	      3	      unity   		  0
+sp_bdt_nc_pi0_0p 		              shower_energy_sp	             15	   0	      1500 	 2	   0		      0	    0 	      0		      0		      5	      unity   		  0
 
-sp_bdt_numuCC_Xp_overlay		      cos_shower_angle_beam_sp	     9	   -1.0     1.01	 3	   1		      0	    0	        0		      3		      2	      cv_spline		  0
-sp_bdt_numuCC_Xp_dirt		          cos_shower_angle_beam_sp	     9	   -1.0     1.01	 3	   1		      0	    0.5	      0		      3		      4	      cv_spline		  0
-sp_bdt_numuCC_Xp_ext 		          cos_shower_angle_beam_sp	     9	   -1.0     1.01	 3	   0		      0	    0 	      0		      6		      3	      unity   		  0
-sp_bdt_numuCC_Xp 		              cos_shower_angle_beam_sp	     9	   -1.0     1.01	 3	   0		      0	    0 	      0		      0		      5	      unity   		  0
+sp_bdt_numuCC_Np_overlay		      shower_energy_sp	             15	   0	      1500	 3	   1		      0	    0	        0		      5		      2	      cv_spline		  0
+sp_bdt_numuCC_Np_dirt		          shower_energy_sp	             15	   0	      1500 	 3	   1		      0	    0.5	      0		      5		      4	      cv_spline		  0
+sp_bdt_numuCC_Np_ext 		          shower_energy_sp	             15	   0	      1500 	 3	   0		      0	    0 	      0		      11	      3	      unity   		  0
+sp_bdt_numuCC_Np 		              shower_energy_sp	             15	   0	      1500 	 3	   0		      0	    0 	      0		      0		      5	      unity   		  0
+sp_bdt_numuCC_0p_overlay		      shower_energy_sp	             15	   0	      1500	 3	   1		      0	    0	        0		      6		      2	      cv_spline		  0
+sp_bdt_numuCC_0p_dirt		          shower_energy_sp	             15	   0	      1500 	 3	   1		      0	    0.5	      0		      6		      4	      cv_spline		  0
+sp_bdt_numuCC_0p_ext 		          shower_energy_sp	             15	   0	      1500 	 3	   0		      0	    0 	      0		      12	      3	      unity   		  0
+sp_bdt_numuCC_0p 		              shower_energy_sp	             15	   0	      1500 	 3	   0		      0	    0 	      0		      0		      5	      unity   		  0
+End					                      End		                         -1	   -1	      -1	   -1	   -1		      -1	  -1		    -1		    -1		    -1	    end		        -1
 
-sp_nc_pi0_Xp_overlay		          cos_shower_angle_beam_sp	     9	   -1.0     1.01	 4	   1		      0	    0	        0		      7		      2	      cv_spline		  0
-sp_nc_pi0_Xp_dirt		              cos_shower_angle_beam_sp	     9	   -1.0     1.01	 4	   1		      0	    0.5	      0		      7		      4	      cv_spline		  0
-sp_nc_pi0_Xp_ext 		              cos_shower_angle_beam_sp	     9	   -1.0     1.01	 4	   0		      0	    0 	      0		      8		      3	      unity   		  0
-sp_nc_pi0_Xp 		                  cos_shower_angle_beam_sp	     9	   -1.0     1.01	 4	   0		      0	    0 	      0		      0		      5	      unity   		  0
+
+#Xp config
+single_photon_overlay		          kine_reco_Enu	                 25	   0	      2500 	 1	   1		      0	    0	        0		      1		      2	      cv_spline		  0
+single_photon_dirt		            kine_reco_Enu	                 25	   0	      2500	 1	   1		      0	    0.5	      0		      1		      4	      cv_spline		  0
+single_photon_ext 		            kine_reco_Enu	                 25	   0	      2500	 1	   0		      0	    0 	      0		      4		      3	      unity   		  0
+single_photon_bnb 		            kine_reco_Enu	                 25	   0	      2500	 1	   0		      0	    0 	      0		      0		      5	      unity   		  0
+
+sp_bdt_nc_pi0_Xp_overlay		      kine_reco_Enu	                 25	   0	      2500	 2	   1		      0	    0	        0		      2		      2	      cv_spline		  0
+sp_bdt_nc_pi0_Xp_dirt		          kine_reco_Enu	                 25	   0	      2500 	 2	   1		      0	    0.5	      0		      2		      4	      cv_spline		  0
+sp_bdt_nc_pi0_Xp_ext 		          kine_reco_Enu	                 25	   0	      2500 	 2	   0		      0	    0 	      0		      5		      3	      unity   		  0
+sp_bdt_nc_pi0_Xp 		              kine_reco_Enu	                 25	   0	      2500 	 2	   0		      0	    0 	      0		      0		      5	      unity   		  0
+
+sp_bdt_numuCC_Xp_overlay		      kine_reco_Enu	                 25	   0	      2500	 3	   1		      0	    0	        0		      3		      2	      cv_spline		  0
+sp_bdt_numuCC_Xp_dirt		          kine_reco_Enu	                 25	   0	      2500 	 3	   1		      0	    0.5	      0		      3		      4	      cv_spline		  0
+sp_bdt_numuCC_Xp_ext 		          kine_reco_Enu	                 25	   0	      2500 	 3	   0		      0	    0 	      0		      6		      3	      unity   		  0
+sp_bdt_numuCC_Xp 		              kine_reco_Enu	                 25	   0	      2500 	 3	   0		      0	    0 	      0		      0		      5	      unity   		  0
+
+sp_nc_pi0_Xp_overlay		          kine_reco_Enu	                 25	   0	      2500	 4	   1		      0	    0	        0		      7		      2	      cv_spline		  0
+sp_nc_pi0_Xp_dirt		              kine_reco_Enu	                 25	   0	      2500 	 4	   1		      0	    0.5	      0		      7		      4	      cv_spline		  0
+sp_nc_pi0_Xp_ext 		              kine_reco_Enu	                 25	   0	      2500 	 4	   0		      0	    0 	      0		      8		      3	      unity   		  0
+sp_nc_pi0_Xp 		                  kine_reco_Enu	                 25	   0	      2500 	 4	   0		      0	    0 	      0		      0		      5	      unity   		  0
 End					                      End		                         -1	   -1	      -1	   -1	   -1		      -1	  -1		    -1		    -1		    -1	    end		        -1
 #Name:					                  #Var:		                      #bin	 #start	  #end	 #obs	 #xs_flux	  #det	#add_sys	#same_mc	#cov_sec	#file	  #weight		    #lee_strength
 
@@ -41,6 +71,11 @@ sp_nc_pi0_Xp_ext 		              shower_energy_sp	     30	   0	      1500	 4	   
 sp_nc_pi0_Xp 		                  shower_energy_sp	     30	   0	      1500	 4	   0		      0	    0 	      0		      0		      5	      unity   		  0
 End					                      End		                 -1	   -1	      -1	   -1	   -1		      -1	  -1		    -1		    -1		    -1	    end		        -1
 
+cos_shower_angle_beam_sp	     9	   -1.0     1.01
+num_shower_sp                  10    0        10
+pi0_mass                       30    0        300
+pi0_energy                       15    0      1500
+kine_reco_Enu	                 25	   0	      2500
 
 single_photon_ncdel_sig_overlay		shower_energy_sp	 30	   0	      1500	 1	   1		      0	    0	        0		      0		      1	      cv_spline		  0
 single_photon_ncpi0_sig_overlay   shower_energy_sp	 30	   0	      1500	 1	   1		      0	    0	        0		      0		      1	      cv_spline		  0
