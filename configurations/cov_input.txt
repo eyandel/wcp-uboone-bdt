@@ -1,17 +1,17 @@
-single_photon_overlay		          flag_0p                        2     0        2    	 1	   1		      0	    0	        0		      1		      2	      cv_spline		  0
-single_photon_dirt		            flag_0p                        2     0        2   	 1	   1		      0	    0.5	      0		      1		      4	      cv_spline		  0
-single_photon_ext 		            flag_0p                        2     0        2   	 1	   0		      0	    0 	      0		      4		      3	      unity   		  0
-single_photon_bnb 		            flag_0p                        2     0        2   	 1	   0		      0	    0 	      0		      0		      5	      unity   		  0
+single_photon_overlay		          shower_energy_sp	             15	   0	      1500   	1	   1		      0	    0	        0		      1		      2	      cv_spline		  0
+single_photon_dirt		            shower_energy_sp	             15	   0	      1500  	1	   1		      0	    0.5	      0		      1		      4	      cv_spline		  0
+single_photon_ext 		            shower_energy_sp	             15	   0	      1500  	1	   0		      0	    0 	      0		      4		      3	      unity   		  0
+single_photon_bnb 		            shower_energy_sp	             15	   0	      1500  	1	   0		      0	    0 	      0		      0		      5	      unity   		  0
 
-sp_bdt_nc_pi0_Xp_overlay		      flag_0p                        2     0        2   	 2	   1		      0	    0	        0		      2		      2	      cv_spline		  0
-sp_bdt_nc_pi0_Xp_dirt		          flag_0p                        2     0        2    	 2	   1		      0	    0.5	      0		      2		      4	      cv_spline		  0
-sp_bdt_nc_pi0_Xp_ext 		          flag_0p                        2     0        2    	 2	   0		      0	    0 	      0		      5		      3	      unity   		  0
-sp_bdt_nc_pi0_Xp 		              flag_0p                        2     0        2    	 2	   0		      0	    0 	      0		      0		      5	      unity   		  0
+sp_bdt_nc_pi0_Xp_overlay		      shower_energy_sp	             15	   0	      1500  	2	   1		      0	    0	        0		      2		      2	      cv_spline		  0
+sp_bdt_nc_pi0_Xp_dirt		          shower_energy_sp	             15	   0	      1500   	2	   1		      0	    0.5	      0		      2		      4	      cv_spline		  0
+sp_bdt_nc_pi0_Xp_ext 		          shower_energy_sp	             15	   0	      1500   	2	   0		      0	    0 	      0		      5		      3	      unity   		  0
+sp_bdt_nc_pi0_Xp 		              shower_energy_sp	             15	   0	      1500   	2	   0		      0	    0 	      0		      0		      5	      unity   		  0
 
-sp_bdt_numuCC_Xp_overlay		      flag_0p                        2     0        2   	 3	   1		      0	    0	        0		      3		      2	      cv_spline		  0
-sp_bdt_numuCC_Xp_dirt		          flag_0p                        2     0        2    	 3	   1		      0	    0.5	      0		      3		      4	      cv_spline		  0
-sp_bdt_numuCC_Xp_ext 		          flag_0p                        2     0        2    	 3	   0		      0	    0 	      0		      6		      3	      unity   		  0
-sp_bdt_numuCC_Xp 		              flag_0p                        2     0        2    	 3	   0		      0	    0 	      0		      0		      5	      unity   		  0
+sp_bdt_numuCC_Xp_overlay		      shower_energy_sp	             15	   0	      1500  	3	   1		      0	    0	        0		      3		      2	      cv_spline		  0
+sp_bdt_numuCC_Xp_dirt		          shower_energy_sp	             15	   0	      1500   	3	   1		      0	    0.5	      0		      3		      4	      cv_spline		  0
+sp_bdt_numuCC_Xp_ext 		          shower_energy_sp	             15	   0	      1500   	3	   0		      0	    0 	      0		      6		      3	      unity   		  0
+sp_bdt_numuCC_Xp 		              shower_energy_sp	             15	   0	      1500   	3	   0		      0	    0 	      0		      0		      5	      unity   		  0
 End					                      End		                         -1	   -1	      -1	   -1	   -1		      -1	  -1		    -1		    -1		    -1	    end		        -1
 
 

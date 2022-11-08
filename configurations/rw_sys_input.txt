@@ -1,0 +1,11 @@
+2    nu_overlay     18   /uboone/data/users/eyandel/processed_checkout_rootfiles/prodgenie_bnb_nu_overlay_run1/reinteractions_proton_Geant4.root              /uboone/data/users/eyandel/hist_rootfiles/XsFlux/cov_18.root       0         1       3.10822e+19      1
+2    nu_overlay     18   /uboone/data/users/eyandel/processed_checkout_rootfiles/prodgenie_bnb_nu_overlay_run3/reinteractions_proton_Geant4.root              /uboone/data/users/eyandel/hist_rootfiles/XsFlux/cov_18.root       0         2       5.99550e+18      3
+4    dirt           18   /uboone/data/users/eyandel/processed_checkout_rootfiles/prodgenie_dirt_overlay_run1/reinteractions_proton_Geant4.root                /uboone/data/users/eyandel/hist_rootfiles/XsFlux/cov_18.root       0         3       3.10822e+19      1
+4    dirt           18   /uboone/data/users/eyandel/processed_checkout_rootfiles/prodgenie_dirt_overlay_run3/reinteractions_proton_Geant4.root                /uboone/data/users/eyandel/hist_rootfiles/XsFlux/cov_18.root       0         4       5.99550e+18      3
+
+2    nu_overlay     19   /uboone/data/users/eyandel/processed_checkout_rootfiles/prodgenie_bnb_nu_overlay_run1/UBGenieFluxSmallUni.root                       /uboone/data/users/eyandel/hist_rootfiles/XsFlux/cov_19.root       0         5       3.10822e+19      1
+2    nu_overlay     19   /uboone/data/users/eyandel/processed_checkout_rootfiles/prodgenie_bnb_nu_overlay_run3/UBGenieFluxSmallUni.root                       /uboone/data/users/eyandel/hist_rootfiles/XsFlux/cov_19.root       0         6       5.99550e+18      3
+4    dirt           19   /uboone/data/users/eyandel/processed_checkout_rootfiles/prodgenie_dirt_overlay_run1/UBGenieFluxSmallUni.root                         /uboone/data/users/eyandel/hist_rootfiles/XsFlux/cov_19.root       0         7       3.10822e+19      1
+4    dirt           19   /uboone/data/users/eyandel/processed_checkout_rootfiles/prodgenie_dirt_overlay_run3/UBGenieFluxSmallUni.root                         /uboone/data/users/eyandel/hist_rootfiles/XsFlux/cov_19.root       0         8       5.99550e+18      3
+
+-1        end        -1        end             end         -1            -1           -1-        -1

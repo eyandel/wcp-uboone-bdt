@@ -54,8 +54,8 @@ namespace config_Lee
   bool flag_syst_detector   = false;
   bool flag_syst_additional = true;
   bool flag_syst_mc_stat    = true;
-  bool flag_syst_reweight        = false;
-  bool flag_syst_reweight_cor    = false;
+  bool flag_syst_reweight        = true;
+  bool flag_syst_reweight_cor    = true;
 
   //double Lee_strength_for_outputfile_covariance_matrix = 1;
   double Lee_strength_for_outputfile_covariance_matrix = 0;
