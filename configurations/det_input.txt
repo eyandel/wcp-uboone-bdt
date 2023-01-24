@@ -1,3 +1,9 @@
-
-end						-1		-1	-1	-1
-#file	#type			#period		#filename													#outfile_name					#ext_pot	#file_no  #norm	#norm_period
+2       nu_overlay  1         /uboone/data/users/eyandel/hist_rootfiles/DetVar/checkout_bnboverlay_recomb2_run3b.root          /uboone/data/users/eyandel/hist_rootfiles/DetVar/cov_Recomb2.root       0        1         5e19        3
+2       nu_overlay  2         /uboone/data/users/eyandel/hist_rootfiles/DetVar/checkout_bnboverlay_sce_run3b.root              /uboone/data/users/eyandel/hist_rootfiles/DetVar/cov_SCE.root           0        2         5e19        3
+2       nu_overlay  3         /uboone/data/users/eyandel/hist_rootfiles/DetVar/checkout_bnboverlay_wmdedx_run3b.root           /uboone/data/users/eyandel/hist_rootfiles/DetVar/cov_WMdEdx.root        0        3         5e19        3
+2       nu_overlay  4         /uboone/data/users/eyandel/hist_rootfiles/DetVar/checkout_bnboverlay_wmthxz_run3b.root           /uboone/data/users/eyandel/hist_rootfiles/DetVar/cov_WMThetaXZ.root     0        4         5e19        3
+2       nu_overlay  5         /uboone/data/users/eyandel/hist_rootfiles/DetVar/checkout_bnboverlay_wmthyz_run3b.root           /uboone/data/users/eyandel/hist_rootfiles/DetVar/cov_WMThetaYZ.root     0        5         5e19        3
+2       nu_overlay  6         /uboone/data/users/eyandel/hist_rootfiles/DetVar/checkout_bnboverlay_wmx_run3b.root              /uboone/data/users/eyandel/hist_rootfiles/DetVar/cov_WMX.root           0        6         5e19        3
+2       nu_overlay  7         /uboone/data/users/eyandel/hist_rootfiles/DetVar/checkout_bnboverlay_wmyz_run3b.root             /uboone/data/users/eyandel/hist_rootfiles/DetVar/cov_WMYZ.root          0        7         5e19        3
+-1      end					-1		    end                                                                                              end	                                                                   -1	      -1        -1          -1
+#file	  #type			  #period		#filename												  	                                                             #outfile_name					                                                #ext_pot  #file_no  #norm	      #norm_period
