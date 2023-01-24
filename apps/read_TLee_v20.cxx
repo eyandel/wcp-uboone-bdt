@@ -424,7 +424,7 @@ int main(int argc, char** argv)
 
     //vc_support_chs.push_back(4);
     vc_support_chs.push_back(2);
-    vc_support_chs.push_back(3);
+    //vc_support_chs.push_back(3);
 
     Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 3001 );
   }

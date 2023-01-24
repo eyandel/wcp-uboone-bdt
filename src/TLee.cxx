@@ -1759,9 +1759,9 @@ int TLee::Exe_Goodness_of_fit(int num_Y, int num_X, TMatrixD matrix_pred, TMatri
     h1_pred_Y_wiConstraint_rel_error->SetBinContent(ibin, 1);
     h1_pred_Y_wiConstraint_rel_error->SetBinError(ibin, rel_err);
 
-		bool print_constrained_error = 0;
+		bool print_constrained_error = 1;
 
-    if (print_constrained_error && (ibin==1 || ibin==2)) {
+    if (print_constrained_error /*&& (ibin==1 || ibin==2)*/) {
        // here print out constrtained error for certain bins, var_err / val_cv_after_constraint
        double val_cv_after_constraint = h1_pred_Y_wiConstraint->GetBinContent(ibin);
        cout << "total constrained systematic error, bin " << ibin << " : " << val_err / val_cv_after_constraint << "\n";
@@ -2202,7 +2202,7 @@ void TLee::Plotting_systematics()
   if(flag_syst_reweight_cor) h1_reweight_cor_relerr->Draw("same hist"); h1_reweight_cor_relerr->SetLineColor(color_reweight_cor);
   h1_detector_relerr->Draw("same hist"); h1_detector_relerr->SetLineColor(color_detector);
 
-	bool print_category_errors = 0;
+	bool print_category_errors = 1;
   if (print_category_errors) {
 
     cout << "bin 1 total rel err " << h1_total_relerr->GetBinContent(1) << "\n";
