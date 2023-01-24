@@ -2205,19 +2205,24 @@ void TLee::Plotting_systematics()
 	bool print_category_errors = 1;
   if (print_category_errors) {
 
-    cout << "bin 1 total rel err " << h1_total_relerr->GetBinContent(1) << "\n";
-    cout << "bin 1 dirt err " << h1_additional_relerr->GetBinContent(1) << "\n";
-    cout << "bin 1 mc stat rel err " << h1_mc_stat_relerr->GetBinContent(1) << "\n";
-    cout << "bin 1 flux rel err " << h1_flux_relerr->GetBinContent(1) << "\n";
-    cout << "bin 1 XS rel err " << h1_Xs_relerr->GetBinContent(1) << "\n";
-    cout << "bin 1 detector rel err " << h1_detector_relerr->GetBinContent(1) << "\n";
+		int num_bins = h1_total_relerr->GetNbinsX();
 
-    cout << "bin 3 total rel err " << h1_total_relerr->GetBinContent(3) << "\n";
-    cout << "bin 3 dirt err " << h1_additional_relerr->GetBinContent(3) << "\n";
-    cout << "bin 3 mc stat rel err " << h1_mc_stat_relerr->GetBinContent(3) << "\n";
-    cout << "bin 3 flux rel err " << h1_flux_relerr->GetBinContent(3) << "\n";
-    cout << "bin 3 XS rel err " << h1_Xs_relerr->GetBinContent(3) << "\n";
-    cout << "bin 3 detector rel err " << h1_detector_relerr->GetBinContent(13) << "\n";
+		for (int i_bin = 1; i_bin<=num_bins; i_bin++){
+    	cout << "bin "<<i_bin<<" total rel err " << h1_total_relerr->GetBinContent(i_bin) << "\n";
+    	cout << "bin "<<i_bin<<" dirt err " << h1_additional_relerr->GetBinContent(i_bin) << "\n";
+    	cout << "bin "<<i_bin<<" mc stat rel err " << h1_mc_stat_relerr->GetBinContent(i_bin) << "\n";
+    	cout << "bin "<<i_bin<<" flux rel err " << h1_flux_relerr->GetBinContent(i_bin) << "\n";
+    	cout << "bin "<<i_bin<<" XS rel err " << h1_Xs_relerr->GetBinContent(i_bin) << "\n";
+    	cout << "bin "<<i_bin<<" detector rel err " << h1_detector_relerr->GetBinContent(i_bin) << "\n";
+			cout << "-------------------------"<<"/n";
+		}
+
+    //cout << "bin 3 total rel err " << h1_total_relerr->GetBinContent(3) << "\n";
+    //cout << "bin 3 dirt err " << h1_additional_relerr->GetBinContent(3) << "\n";
+    //cout << "bin 3 mc stat rel err " << h1_mc_stat_relerr->GetBinContent(3) << "\n";
+    //cout << "bin 3 flux rel err " << h1_flux_relerr->GetBinContent(3) << "\n";
+    //cout << "bin 3 XS rel err " << h1_Xs_relerr->GetBinContent(3) << "\n";
+    //cout << "bin 3 detector rel err " << h1_detector_relerr->GetBinContent(13) << "\n";
 
 
   }
@@ -2752,13 +2757,13 @@ void TLee::Set_Spectra_MatrixCov()
 
   //map_detectorfile_str[1] = detector_directory+"cov_LYDown.root";
   //map_detectorfile_str[2] = detector_directory+"cov_LYRayleigh.root";
-  map_detectorfile_str[3] = detector_directory+"cov_Recomb2.root";
-  map_detectorfile_str[4] = detector_directory+"cov_SCE.root";
-  map_detectorfile_str[5] = detector_directory+"cov_WMdEdx.root";
-  map_detectorfile_str[6] = detector_directory+"cov_WMThetaXZ.root";
-  map_detectorfile_str[7] = detector_directory+"cov_WMThetaYZ.root";
-  map_detectorfile_str[8] = detector_directory+"cov_WMX.root";
-  map_detectorfile_str[9] = detector_directory+"cov_WMYZ.root";
+//  map_detectorfile_str[3] = detector_directory+"cov_Recomb2.root";
+//  map_detectorfile_str[4] = detector_directory+"cov_SCE.root";
+//  map_detectorfile_str[5] = detector_directory+"cov_WMdEdx.root";
+//  map_detectorfile_str[6] = detector_directory+"cov_WMThetaXZ.root";
+//  map_detectorfile_str[7] = detector_directory+"cov_WMThetaYZ.root";
+//  map_detectorfile_str[8] = detector_directory+"cov_WMX.root";
+//  map_detectorfile_str[9] = detector_directory+"cov_WMYZ.root";
   //map_detectorfile_str[10]= detector_directory+"cov_LYatt.root";
 
   map<int, TFile*>map_file_detector_frac;

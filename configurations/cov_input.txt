@@ -1,7 +1,7 @@
-single_photon_overlay		          shower_energy_sp	             15	   0	      1500   	1	   1		      1	    0	        0		      1		      2	      cv_spline		  0
-single_photon_dirt		            shower_energy_sp	             15	   0	      1500  	1	   1		      0	    0.5	      0		      1		      4	      cv_spline		  0
-single_photon_ext 		            shower_energy_sp	             15	   0	      1500  	1	   0		      0	    0 	      0		      4		      3	      unity   		  0
-single_photon_bnb 		            shower_energy_sp	             15	   0	      1500  	1	   0		      0	    0 	      0		      0		      5	      unity   		  0
+single_photon_overlay		          shower_energy_sp	             1	   0	      1500   	1	   1		      1	    0	        0		      1		      2	      cv_spline		  0
+single_photon_dirt		            shower_energy_sp	             1	   0	      1500  	1	   1		      0	    0.5	      0		      1		      4	      cv_spline		  0
+single_photon_ext 		            shower_energy_sp	             1	   0	      1500  	1	   0		      0	    0 	      0		      4		      3	      unity   		  0
+single_photon_bnb 		            shower_energy_sp	             1	   0	      1500  	1	   0		      0	    0 	      0		      0		      5	      unity   		  0
 
 sp_bdt_nc_pi0_Xp_overlay		      shower_energy_sp	             15	   0	      1500  	2	   1		      1	    0	        0		      2		      2	      cv_spline		  0
 sp_bdt_nc_pi0_Xp_dirt		          shower_energy_sp	             15	   0	      1500   	2	   1		      0	    0.5	      0		      2		      4	      cv_spline		  0
