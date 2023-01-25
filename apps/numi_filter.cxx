@@ -720,15 +720,15 @@ int main( int argc, char** argv )
     //   clear_pfeval_info(pfeval);
     // }
 
-    if (filter_level==1 && (pot.runNo > 6748 && pot.runNo <=7001 || // RHC
-			    pot.runNo >=10140 && pot.runNo <= 11949 ||
-			    pot.runNo >= 13697 && pot.runNo <=17566 ||
-			    pot.runNo >= 19668 && pot.runNo <=21410 
+    if (filter_level==1 && (eval.run > 6748 && eval.run <=7001 || // RHC
+			    eval.run >=10140 && eval.run <= 11949 ||
+			    eval.run >= 13697 && eval.run <=17566 ||
+			    eval.run >= 19668 && eval.run <=21410 
 			    ) ) continue;
-    if (filter_level!=1 && (pot.runNo <=6748 || // FHC
-			    pot.runNo >=8784 && pot.runNo <=10139 ||
-			    pot.runNo >= 21411 && pot.runNo <= 23259 ||
-			    pot.runNo >= 24256 && pot.runNo <= 25763
+    if (filter_level!=1 && (eval.run <=6748 || // FHC
+			    eval.run >=8784 && eval.run <=10139 ||
+			    eval.run >= 21411 && eval.run <= 23259 ||
+			    eval.run >= 24256 && eval.run <= 25763
 			    )) continue;
     
     t4->Fill();
@@ -741,7 +741,7 @@ int main( int argc, char** argv )
     T_pot->GetEntry(i);
 
     if (good_runlist_set.find(pot.runNo) == good_runlist_set.end()) continue;
-    if (low_lifetime_set.find(eval.run) != low_lifetime_set.end()) continue;
+    if (low_lifetime_set.find(pot.runNo) != low_lifetime_set.end()) continue;
     
     if (filter_level==1 && (pot.runNo > 6748 && pot.runNo <=7001 || // RHC
 			    pot.runNo >=10140 && pot.runNo <= 11949 ||
