@@ -710,14 +710,26 @@ int main( int argc, char** argv )
     T_PFeval->GetEntry(i);
 
     if (good_runlist_set.find(eval.run) == good_runlist_set.end()) continue;
+    if (low_lifetime_set.find(eval.run) != low_lifetime_set.end()) continue;
     
-    if (filter_level==1 && eval.run > 6748 && eval.run <=7001) continue;
-    if (filter_level!=1 && eval.run <=6748) continue;
+    // if (filter_level==1 && eval.run > 6748 && eval.run <=7001) continue;
+    // if (filter_level!=1 && eval.run <=6748) continue;
     // if (flag_remove){
     //   clear_tagger_info(tagger);
     //   clear_kine_info(kine);
     //   clear_pfeval_info(pfeval);
     // }
+
+    if (filter_level==1 && (pot.runNo > 6748 && pot.runNo <=7001 || // RHC
+			    pot.runNo >=10140 && pot.runNo <= 11949 ||
+			    pot.runNo >= 13697 && pot.runNo <=17566 ||
+			    pot.runNo >= 19668 && pot.runNo <=21410 
+			    ) ) continue;
+    if (filter_level!=1 && (pot.runNo <=6748 || // FHC
+			    pot.runNo >=8784 && pot.runNo <=10139 ||
+			    pot.runNo >= 21411 && pot.runNo <= 23259 ||
+			    pot.runNo >= 24256 && pot.runNo <= 25763
+			    )) continue;
     
     t4->Fill();
     t1->Fill();
