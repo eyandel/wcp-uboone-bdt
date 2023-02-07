@@ -4239,8 +4239,8 @@ bool LEEana::is_singlephoton_numu_sel(TaggerInfo& tagger_info, PFevalInfo& pfeva
   bool flag = false;
   if (tagger_info.shw_sp_n_20mev_showers > 0 &&
     pfeval.reco_nuvtxX>5.0 && pfeval.reco_nuvtxX<250.0 &&
-    //tagger_info.single_photon_numu_score < 0.4 &&
-    tagger_info.single_photon_numu_score < 0.1 &&
+    tagger_info.single_photon_numu_score < 0.4 && //pure
+    //tagger_info.single_photon_numu_score < 0.1 && //eff
     tagger_info.single_photon_numu_score > -20.0) {flag = true;}
   return flag;
 }
@@ -4260,10 +4260,10 @@ bool LEEana::is_singlephoton_ncpi0_sel(TaggerInfo& tagger_info, PFevalInfo& pfev
   bool flag = false;
   if (tagger_info.shw_sp_n_20mev_showers > 0 &&
     pfeval.reco_nuvtxX>5.0 && pfeval.reco_nuvtxX<250.0 &&
-    //tagger_info.single_photon_numu_score > 0.4 && tagger_info.single_photon_other_score > 0.2 &&
-    //tagger_info.single_photon_ncpi0_score < -0.05 &&
-    tagger_info.single_photon_numu_score > 0.1 && tagger_info.single_photon_other_score > -0.4 &&
-    tagger_info.single_photon_ncpi0_score < -0.4 &&
+    tagger_info.single_photon_numu_score > 0.4 && tagger_info.single_photon_other_score > 0.2 &&
+    tagger_info.single_photon_ncpi0_score < -0.05 && //pure
+    //tagger_info.single_photon_numu_score > 0.1 && tagger_info.single_photon_other_score > -0.4 &&
+    //tagger_info.single_photon_ncpi0_score < -0.4 && //eff
     tagger_info.single_photon_ncpi0_score > -20.0) {flag = true;}
   return flag;
 }
