@@ -776,6 +776,7 @@ void TLee::Plotting_singlecase(TMatrixD matrix_pred_temp, TMatrixD matrix_meas_t
   h1_meas2pred_syst->GetYaxis()->SetTitleOffset(0.99);
   h1_meas2pred_syst->GetYaxis()->SetNdivisions(509);
 
+
   ff_1->Draw("same");
 
   h1_meas2pred->Draw("same e1");
@@ -1978,6 +1979,21 @@ int TLee::Exe_Goodness_of_fit(int num_Y, int num_X, TMatrixD matrix_pred, TMatri
   // lg_bot_total->SetFillColor(10);
 
   roostr = TString::Format("canv_spectra_GoF_total_%02d.png", index); canv_spectra_GoF_total->SaveAs(roostr);
+
+	//Erin
+	TFile *file_hists = new TFile("file_hists.root", "recreate");
+	file_hists->cd();
+	gh_data->Write();
+	h1_pred_Y_wiConstraint->Write();
+	h1_pred_Y_noConstraint->Write();
+	h1_pred_Y_noConstraint_clone->Write();
+	h1_pred_Y_noConstraint_rel_error->Write();
+	h1_pred_Y_wiConstraint_rel_error->Write();
+	gh_ratio_noConstraint->Write();
+	gh_ratio_wiConstraint->Write();
+	file_hists->Write();
+	file_hists->Close();
+
 
   //////////////////////////////////////////////////////////////////
 
