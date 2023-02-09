@@ -95,7 +95,7 @@ namespace config_Lee
   ////////// MicroBooNE suggested
 
   bool flag_chi2_data_H0 = 1;
-  bool flag_dchi2_H0toH1 = 1;
+  bool flag_dchi2_H0toH1 = 0;
 
   ////////// Advanced tools
 
