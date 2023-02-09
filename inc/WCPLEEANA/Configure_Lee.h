@@ -74,7 +74,7 @@ namespace config_Lee
 
   bool flag_GoF_output2file_default_0 = true;
 
-  bool flag_lookelsewhere             = true;
+  bool flag_lookelsewhere             = false;
 
   bool flag_both_numuCC            = false;// 1
   bool flag_CCpi0_FC_by_numuCC     = false;// 2
@@ -95,7 +95,7 @@ namespace config_Lee
   ////////// MicroBooNE suggested
 
   bool flag_chi2_data_H0 = 1;
-  bool flag_dchi2_H0toH1 = 0;
+  bool flag_dchi2_H0toH1 = 1;
 
   ////////// Advanced tools
 
