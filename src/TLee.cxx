@@ -1983,13 +1983,16 @@ int TLee::Exe_Goodness_of_fit(int num_Y, int num_X, TMatrixD matrix_pred, TMatri
 	//Erin
 	TFile *file_hists = new TFile("file_hists.root", "recreate");
 	file_hists->cd();
+	gh_data->SetName("gh_data");
 	gh_data->Write();
 	h1_pred_Y_wiConstraint->Write();
 	h1_pred_Y_noConstraint->Write();
 	h1_pred_Y_noConstraint_clone->Write();
 	h1_pred_Y_noConstraint_rel_error->Write();
 	h1_pred_Y_wiConstraint_rel_error->Write();
+	gh_ratio_noConstraint->SetName("gh_ratio_noConstraint");
 	gh_ratio_noConstraint->Write();
+	gh_ratio_wiConstraint->SetName("gh_ratio_wiConstraint");
 	gh_ratio_wiConstraint->Write();
 	file_hists->Write();
 	file_hists->Close();
