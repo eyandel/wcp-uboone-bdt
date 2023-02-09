@@ -57,8 +57,8 @@ namespace config_Lee
   bool flag_syst_reweight        = false;
   bool flag_syst_reweight_cor    = false;
 
-  double Lee_strength_for_outputfile_covariance_matrix = 1;
-  //double Lee_strength_for_outputfile_covariance_matrix = 0;
+  //double Lee_strength_for_outputfile_covariance_matrix = 1;
+  double Lee_strength_for_outputfile_covariance_matrix = 0;
 
   double Lee_Np_strength_for_outputfile_covariance_matrix = 0;
   double Lee_0p_strength_for_outputfile_covariance_matrix = 0;
@@ -67,14 +67,14 @@ namespace config_Lee
 
   ////////// goodness of fit
 
-  double Lee_strength_for_GoF         = 1;
+  double Lee_strength_for_GoF         = 0;
 
   double Lee_Np_strength_for_GoF      = 0;
   double Lee_0p_strength_for_GoF      = 0;
 
   bool flag_GoF_output2file_default_0 = true;
 
-  bool flag_lookelsewhere             = false;
+  bool flag_lookelsewhere             = true;
 
   bool flag_both_numuCC            = false;// 1
   bool flag_CCpi0_FC_by_numuCC     = false;// 2

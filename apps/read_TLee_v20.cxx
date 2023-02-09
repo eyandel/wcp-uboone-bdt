@@ -1045,7 +1045,7 @@ int main(int argc, char** argv)
 
   //////////////////////////////////////////////// Sensitivity by Asimov sample
 
-  if( 1 ) {
+  if( 0 ) {
 
     ///////////////////////// reject SM
 
