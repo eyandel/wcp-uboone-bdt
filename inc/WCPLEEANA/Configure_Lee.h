@@ -46,7 +46,7 @@ namespace config_Lee
 
   ////////// display graphics flag
 
-  bool flag_display_graphics = true;
+  bool flag_display_graphics = false;
 
   ////////// systematics flag
 
