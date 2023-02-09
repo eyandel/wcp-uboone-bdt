@@ -57,8 +57,8 @@ namespace config_Lee
   bool flag_syst_reweight        = false;
   bool flag_syst_reweight_cor    = false;
 
-  //double Lee_strength_for_outputfile_covariance_matrix = 1;
-  double Lee_strength_for_outputfile_covariance_matrix = 0;
+  double Lee_strength_for_outputfile_covariance_matrix = 1;
+  //double Lee_strength_for_outputfile_covariance_matrix = 0;
 
   double Lee_Np_strength_for_outputfile_covariance_matrix = 0;
   double Lee_0p_strength_for_outputfile_covariance_matrix = 0;
@@ -67,7 +67,7 @@ namespace config_Lee
 
   ////////// goodness of fit
 
-  double Lee_strength_for_GoF         = 0;
+  double Lee_strength_for_GoF         = 1;
 
   double Lee_Np_strength_for_GoF      = 0;
   double Lee_0p_strength_for_GoF      = 0;
@@ -94,7 +94,7 @@ namespace config_Lee
 
   ////////// MicroBooNE suggested
 
-  bool flag_chi2_data_H0 = 0;
+  bool flag_chi2_data_H0 = 1;
   bool flag_dchi2_H0toH1 = 0;
 
   ////////// Advanced tools
