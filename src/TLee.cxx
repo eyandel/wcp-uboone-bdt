@@ -1987,6 +1987,7 @@ int TLee::Exe_Goodness_of_fit(int num_Y, int num_X, TMatrixD matrix_pred, TMatri
 	gh_data->Write();
 	h1_pred_Y_wiConstraint->Write();
 	h1_pred_Y_noConstraint->Write();
+	h1_pred_Y_wiConstraint_clone->Write();
 	h1_pred_Y_noConstraint_clone->Write();
 	h1_pred_Y_noConstraint_rel_error->Write();
 	h1_pred_Y_wiConstraint_rel_error->Write();
