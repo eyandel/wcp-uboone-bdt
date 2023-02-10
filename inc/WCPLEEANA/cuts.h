@@ -4261,8 +4261,10 @@ bool LEEana::is_singlephoton_ncpi0_sel(TaggerInfo& tagger_info, PFevalInfo& pfev
     pfeval.reco_nuvtxX>5.0 && pfeval.reco_nuvtxX<250.0 &&
     //tagger_info.single_photon_numu_score > 0.4 && tagger_info.single_photon_other_score > 0.2 &&
     //tagger_info.single_photon_ncpi0_score < -0.05 && //pure
-    tagger_info.single_photon_numu_score > 0.1 && tagger_info.single_photon_other_score > -0.4 &&
-    tagger_info.single_photon_ncpi0_score < -0.4 && //eff
+    //tagger_info.single_photon_numu_score > 0.1 && tagger_info.single_photon_other_score > -0.4 &&
+    //tagger_info.single_photon_ncpi0_score < -0.4 && //eff
+    tagger_info.single_photon_numu_score > -1.0 && tagger_info.single_photon_other_score > -0.4 &&
+    tagger_info.single_photon_ncpi0_score < -0.4 && //nc pi0 eff
     tagger_info.single_photon_ncpi0_score > -20.0) {flag = true;}
   return flag;
 }
