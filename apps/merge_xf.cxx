@@ -40,7 +40,7 @@ int main( int argc, char** argv )
   TString out_file = argv[3];
   TString option = argv[4];
 
-  // bool flag_spec = false;
+  // bool flag_spec = true;
   // for (Int_t i=1;i!=argc;i++){
   //   switch(argv[i][1]){
   //   case 's':
@@ -602,6 +602,7 @@ int main( int argc, char** argv )
     // if (flag_spec){
     //   // include ...
     //   if ((tmp_match_found == -1  || (tmp_match_found == 1 && eval.stm_lowenergy == -1) || (flag_presel && tagger.numu_cc_flag == -1)) && (!eval.truth_vtxInside)) {
+    // 	//	std::cout << eval.run << " " << eval.event << " " << flag_presel << " " << tagger.numu_cc_flag << " " << eval.truth_vtxInside << std::endl;
     // 	num_check ++;
     // 	continue;
     //   }
@@ -616,6 +617,8 @@ int main( int argc, char** argv )
     
     map_re_entry[std::make_pair(eval.run, eval.event)] = i;
   }
+
+  std::cout << num_check << " " << map_re_entry.size() << std::endl;
 
   std::map<std::pair<int, int>, std::pair<int, double> > map_rs_entry_pot;
   for (Int_t i=0;i!=T_pot->GetEntries();i++){
