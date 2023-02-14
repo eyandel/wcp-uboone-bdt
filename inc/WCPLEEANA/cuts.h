@@ -4240,8 +4240,8 @@ bool LEEana::is_singlephoton_numu_sel(TaggerInfo& tagger_info, PFevalInfo& pfeva
   if (tagger_info.shw_sp_n_20mev_showers > 0 &&
     pfeval.reco_nuvtxX>5.0 && pfeval.reco_nuvtxX<250.0 &&
     //tagger_info.single_photon_numu_score < 0.4 && //pure
-    //tagger_info.single_photon_numu_score < 0.1 && //eff
-    tagger_info.single_photon_numu_score < -3.0 && //numu pure
+    tagger_info.single_photon_numu_score < 0.1 && //eff
+    //tagger_info.single_photon_numu_score < -3.0 && //numu pure
     tagger_info.single_photon_numu_score > -20.0) {flag = true;}
   return flag;
 }
