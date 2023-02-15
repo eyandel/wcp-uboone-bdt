@@ -432,31 +432,28 @@ void LEEana::set_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
       tree0->SetBranchAddress("truth_photon_angle",&tagger_info.truth_photon_angle);
       tree0->SetBranchAddress("truth_photon_dis",&tagger_info.truth_photon_dis);
     }
-
-    if (tree0->GetBranch("evtTimeNS")){
-      tagger_info.flag_nsbeam = true;
-      std::cout<<"flag_nsbeam: "<< tagger_info.flag_nsbeam<<std::endl;
-      //tree0->SetBranchAddress("evtDeltaTimeNS",&tagger_info.evtDeltaTimeNS);
-      tree0->SetBranchAddress("evtTimeNS",&tagger_info.evtTimeNS);
-        //Merge Peaks
-        double gap=18.936;
-        double Shift=3169.43;
-        if (tagger_info.run >= 13697){ Shift = 3166.9;}
-        double TThelp=tagger_info.evtTimeNS-Shift+gap*0.5;
-        double TT_merged = -9999.;
-
-        //merge peaks
-        if(TThelp>=0 && TThelp<gap*81.0){
-          TT_merged=(TThelp-(int((TThelp)/gap))*gap)-gap*0.5;
-        }
-
-        tagger_info.evtDeltaTimeNS = TT_merged;
-    }
-    //
-
-
-
   }
+
+  if (tree0->GetBranch("evtTimeNS")){
+    tagger_info.flag_nsbeam = true;
+    //tree0->SetBranchAddress("evtDeltaTimeNS",&tagger_info.evtDeltaTimeNS);
+    tree0->SetBranchAddress("evtTimeNS",&tagger_info.evtTimeNS);
+      //Merge Peaks
+      double gap=18.936;
+      double Shift=3169.43;
+      if (tagger_info.run >= 13697){ Shift = 3166.9;}
+      double TThelp=tagger_info.evtTimeNS-Shift+gap*0.5;
+      double TT_merged = -9999.;
+
+      //merge peaks
+      if(TThelp>=0 && TThelp<gap*81.0){
+        TT_merged=(TThelp-(int((TThelp)/gap))*gap)-gap*0.5;
+      }
+
+      tagger_info.evtDeltaTimeNS = TT_merged;
+  }
+  //
+
   if (tree0->GetBranch("reco_protonMomentum")){
     tagger_info.flag_recoprotonMomentum = true;
     tree0->SetBranchAddress("reco_protonMomentum",&tagger_info.reco_protonMomentum[0]);
@@ -596,12 +593,13 @@ void LEEana::put_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
       tree0->Branch("truth_photon_dis",&tagger_info.truth_photon_dis, "truth_photon_dis/F");
     }
 
-    if (tagger_info.flag_nsbeam){
-      tree0->Branch("evtDeltaTimeNS",&tagger_info.evtDeltaTimeNS,"evtDeltaTimeNS/F");
-      tree0->Branch("evtTimeNS",&tagger_info.evtTimeNS,"evtTimeNS/F");
-    }
-    //
   }
+
+  if (tagger_info.flag_nsbeam){
+    tree0->Branch("evtDeltaTimeNS",&tagger_info.evtDeltaTimeNS,"evtDeltaTimeNS/F");
+    tree0->Branch("evtTimeNS",&tagger_info.evtTimeNS,"evtTimeNS/F");
+  }
+  //
 
   if (tagger_info.flag_recoprotonMomentum){
     tree0->Branch("reco_protonMomentum",&tagger_info.reco_protonMomentum[0],"reco_protonMomentum[4]/F");
