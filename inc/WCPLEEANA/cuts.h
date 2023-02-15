@@ -821,6 +821,27 @@ double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, 
     return TMath::Cos(tagger.shw_sp_angle_beam/180.*TMath::Pi());
   }else if (var_name == "num_shower_sp"){
     return tagger.shw_sp_n_20br1_showers;
+  }else if (var_name == "ns_beam_time"){
+    if(flag_data){
+      double delta_time_calc = -9999.;
+      //Merge Peaks
+      double gap=18.936;
+      double Shift=3169.43;
+      if (pfeval.run >= 13697){ Shift = 3166.9;}
+      double TThelp=pfeval.evtTimeNS-Shift+gap*0.5;
+      double TT_merged = -9999.;
+
+      //merge peaks
+      if(TThelp>=0 && TThelp<gap*81.0){
+        TT_merged=(TThelp-(int((TThelp)/gap))*gap)-gap*0.5;
+      }
+
+      delta_time_calc = TT_merged;
+
+      return delta_time_calc;
+    }else{
+      return -9999.;
+    }
   }else if (var_name == "flag_0p"){
     if (is_0p(tagger, kine, pfeval)){
       return 1;
@@ -4327,7 +4348,23 @@ bool LEEana::is_singlephoton_nue_sel(TaggerInfo& tagger_info, PFevalInfo& pfeval
 
 bool LEEana::is_nsbeam(PFevalInfo& pfeval){
   bool flag = false;
-  if (abs(pfeval.evtDeltaTimeNS) < 5.0) {flag = true;}
+
+  double delta_time_calc = -9999.;
+  //Merge Peaks
+  double gap=18.936;
+  double Shift=3169.43;
+  if (pfeval.run >= 13697){ Shift = 3166.9;}
+  double TThelp=pfeval.evtTimeNS-Shift+gap*0.5;
+  double TT_merged = -9999.;
+
+  //merge peaks
+  if(TThelp>=0 && TThelp<gap*81.0){
+    TT_merged=(TThelp-(int((TThelp)/gap))*gap)-gap*0.5;
+  }
+
+  delta_time_calc = TT_merged;
+
+  if (abs(delta_time_calc) < 5.0) {flag = true;}
   return flag;
 }
 //
