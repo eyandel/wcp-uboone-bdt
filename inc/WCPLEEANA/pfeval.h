@@ -435,6 +435,7 @@ void LEEana::set_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
 
     if (tree0->GetBranch("evtTimeNS")){
       tagger_info.flag_nsbeam = true;
+      std::cout<<"flag_nsbeam: "<< tagger_info.flag_nsbeam<<std::endl;
       //tree0->SetBranchAddress("evtDeltaTimeNS",&tagger_info.evtDeltaTimeNS);
       tree0->SetBranchAddress("evtTimeNS",&tagger_info.evtTimeNS);
         //Merge Peaks
