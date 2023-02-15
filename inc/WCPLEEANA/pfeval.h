@@ -433,10 +433,23 @@ void LEEana::set_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
       tree0->SetBranchAddress("truth_photon_dis",&tagger_info.truth_photon_dis);
     }
 
-    if (tree0->GetBranch("evtDeltaTimeNS")){
+    if (tree0->GetBranch("evtTimeNS")){
       tagger_info.flag_nsbeam = true;
-      tree0->SetBranchAddress("evtDeltaTimeNS",&tagger_info.evtDeltaTimeNS);
+      //tree0->SetBranchAddress("evtDeltaTimeNS",&tagger_info.evtDeltaTimeNS);
       tree0->SetBranchAddress("evtTimeNS",&tagger_info.evtTimeNS);
+        //Merge Peaks
+        double gap=18.936;
+        double Shift=3169.43;
+        if (tagger_info.run >= 13697){ Shift = 3166.9;}
+        double TThelp=tagger_info.evtTimeNS-Shift+gap*0.5;
+        double TT_merged = -9999.;
+
+        //merge peaks
+        if(TThelp>=0 && TThelp<gap*81.0){
+          TT_merged=(TThelp-(int((TThelp)/gap))*gap)-gap*0.5;
+        }
+
+        tagger_info.evtDeltaTimeNS = TT_merged;
     }
     //
 

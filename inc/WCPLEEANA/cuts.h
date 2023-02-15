@@ -95,6 +95,7 @@ namespace LEEana{
   bool is_singlephoton_other_sel(TaggerInfo& tagger_info, PFevalInfo& pfeval);
   bool is_singlephoton_ncpi0_sel(TaggerInfo& tagger_info, PFevalInfo& pfeval);
   bool is_singlephoton_nue_sel(TaggerInfo& tagger_info, PFevalInfo& pfeval);
+  bool is_nsbeam(PFevalInfo& pfeval);
 
 
   // TCut FC_cut = "match_isFC==1";
@@ -247,6 +248,13 @@ double LEEana::get_weight(TString weight_name, EvalInfo& eval, PFevalInfo& pfeva
 
   if (weight_name == "cv_spline"){
     return addtl_weight*eval.weight_cv * eval.weight_spline;
+  //Erin - ns beam time scaling
+}else if (weight_name == "cv_spline_nsbeam_mc"){
+    float beam_scale = 0.83;
+    if(eval.match_completeness_energy<=0.1*eval.truth_energyInside){beam_scale = 0.5;}
+    return addtl_weight*eval.weight_cv * eval.weight_spline * beam_scale;
+  }else if (weight_name == "cv_spline_nsbeam_ext"){
+    return addtl_weight*eval.weight_cv * eval.weight_spline * 0.5;
   }else if (weight_name == "cv_spline_cv_spline"){
     return pow(addtl_weight*eval.weight_cv * eval.weight_spline,2);
   }else if (weight_name == "unity" || weight_name == "unity_unity"){
@@ -1919,6 +1927,7 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
   bool flag_singlephoton_other_sel = is_singlephoton_other_sel(tagger, pfeval);
   bool flag_singlephoton_ncpi0_sel = is_singlephoton_ncpi0_sel(tagger, pfeval);
   bool flag_singlephoton_nue_sel = is_singlephoton_nue_sel(tagger, pfeval);
+  bool flag_nsbeam = is_nsbeam(pfeval);
   //
 
   float costheta_binning[10] = {-1, -.5, 0, .27, .45, .62, .76, .86, .94, 1};		// PeLEE binning
@@ -3759,6 +3768,42 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
     || ch_name == "single_shower_eff_overlay_Np" || ch_name == "single_shower_eff_dirt_Np"){
             if (flag_singleshower_eff_sel && !flag_0p) return true;
             return false;
+  }else if (ch_name == "single_photon_bnb_nsbeam"){
+            if (flag_singlephoton_sel && flag_nsbeam) return true;
+            return false;
+  }else if (ch_name == "single_photon_eff_bnb_nsbeam"){
+            if (flag_singlephoton_eff_sel && flag_nsbeam) return true;
+            return false;
+  }else if (ch_name == "single_shower_bnb_nsbeam"){
+            if (flag_singleshower_sel && flag_nsbeam) return true;
+            return false;
+  }else if (ch_name == "single_shower_eff_bnb_nsbeam"){
+            if (flag_singleshower_eff_sel && flag_nsbeam) return true;
+            return false;
+  }else if (ch_name == "single_photon_bnb_0p_nsbeam"){
+            if (flag_singlephoton_sel && flag_0p && flag_nsbeam) return true;
+            return false;
+  }else if (ch_name == "single_photon_eff_bnb_0p_nsbeam"){
+            if (flag_singlephoton_eff_sel && flag_0p && flag_nsbeam) return true;
+            return false;
+  }else if (ch_name == "single_shower_bnb_0p_nsbeam"){
+            if (flag_singleshower_sel && flag_0p && flag_nsbeam) return true;
+            return false;
+  }else if (ch_name == "single_shower_eff_bnb_0p_nsbeam"){
+            if (flag_singleshower_eff_sel && flag_0p && flag_nsbeam) return true;
+            return false;
+  }else if (ch_name == "single_photon_bnb_Np_nsbeam"){
+            if (flag_singlephoton_sel && !flag_0p && flag_nsbeam) return true;
+            return false;
+  }else if (ch_name == "single_photon_eff_bnb_Np_nsbeam"){
+            if (flag_singlephoton_eff_sel && !flag_0p && flag_nsbeam) return true;
+            return false;
+  }else if (ch_name == "single_shower_bnb_Np_nsbeam"){
+            if (flag_singleshower_sel && !flag_0p && flag_nsbeam) return true;
+            return false;
+  }else if (ch_name == "single_shower_eff_bnb_Np_nsbeam"){
+            if (flag_singleshower_eff_sel && !flag_0p && flag_nsbeam) return true;
+            return false;
   }else if (ch_name == "single_photon_ncdel_sig_overlay" || ch_name == "single_photon_ncpi0_sig_overlay" ||
     ch_name == "single_photon_ncother_sig_overlay" || ch_name == "single_photon_numucc_sig_overlay" ||
     ch_name == "single_photon_outfv_sig_overlay" || ch_name == "single_photon_bkg_overlay"){
@@ -4277,6 +4322,12 @@ bool LEEana::is_singlephoton_nue_sel(TaggerInfo& tagger_info, PFevalInfo& pfeval
     tagger_info.single_photon_ncpi0_score > -0.4 && tagger_info.single_photon_nue_score < -3.0 &&
     tagger_info.shw_sp_n_20br1_showers==1 &&
     tagger_info.single_photon_nue_score > -20.0) {flag = true;}
+  return flag;
+}
+
+bool LEEana::is_nsbeam(PFevalInfo& pfeval){
+  bool flag = false;
+  if (abs(pfeval.evtDeltaTimeNS) < 5.0) {flag = true;}
   return flag;
 }
 //
