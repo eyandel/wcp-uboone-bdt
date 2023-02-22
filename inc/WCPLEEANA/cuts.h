@@ -827,7 +827,7 @@ double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, 
       //Merge Peaks
       double gap=18.936;
       double Shift=3166.9;
-      if (pfeval.run < 13697){ Shift = 3169.00;}//43;}
+      if (pfeval.run < 13697){ Shift = 3168.9;}//9.43;}
       double TThelp=pfeval.evtTimeNS-Shift+gap*0.5;
       double TT_merged = -9999.;
 
