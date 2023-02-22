@@ -95,7 +95,7 @@ namespace LEEana{
   bool is_singlephoton_other_sel(TaggerInfo& tagger_info, PFevalInfo& pfeval);
   bool is_singlephoton_ncpi0_sel(TaggerInfo& tagger_info, PFevalInfo& pfeval);
   bool is_singlephoton_nue_sel(TaggerInfo& tagger_info, PFevalInfo& pfeval);
-  bool is_nsbeam(PFevalInfo& pfeval);
+  bool is_nsbeam(PFevalInfo& pfeval, EvalInfo& eval);
 
 
   // TCut FC_cut = "match_isFC==1";
@@ -1949,7 +1949,7 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
   bool flag_singlephoton_other_sel = is_singlephoton_other_sel(tagger, pfeval);
   bool flag_singlephoton_ncpi0_sel = is_singlephoton_ncpi0_sel(tagger, pfeval);
   bool flag_singlephoton_nue_sel = is_singlephoton_nue_sel(tagger, pfeval);
-  bool flag_nsbeam = is_nsbeam(pfeval);
+  bool flag_nsbeam = is_nsbeam(pfeval, eval);
   //
 
   float costheta_binning[10] = {-1, -.5, 0, .27, .45, .62, .76, .86, .94, 1};		// PeLEE binning
@@ -4419,14 +4419,15 @@ bool LEEana::is_singlephoton_nue_sel(TaggerInfo& tagger_info, PFevalInfo& pfeval
   return flag;
 }
 
-bool LEEana::is_nsbeam(PFevalInfo& pfeval){
+bool LEEana::is_nsbeam(PFevalInfo& pfeval, EvalInfo& eval){
   bool flag = false;
 
   double delta_time_calc = -9999.;
   //Merge Peaks
   double gap=18.936;
-  double Shift=3166.9;
-  if (pfeval.run < 13697){ Shift = 3169.43;}
+  double Shift=0;
+  if (eval.run > 13697){ Shift = 3166.9;}
+  if (eval.run < 13697){ Shift = 3168.9;}//9.43;}
   double TThelp=pfeval.evtTimeNS-Shift+gap*0.5;
   double TT_merged = -9999.;
 
