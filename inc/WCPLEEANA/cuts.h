@@ -826,8 +826,9 @@ double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, 
       double delta_time_calc = -9999.;
       //Merge Peaks
       double gap=18.936;
-      double Shift=3166.9;
-      if (pfeval.run < 13697){ Shift = 3168.9;}//9.43;}
+      double Shift=0;
+      if (eval.run > 13697){ Shift = 3166.9;}
+      if (eval.run < 13697){ Shift = 3168.9;}//9.43;}
       double TThelp=pfeval.evtTimeNS-Shift+gap*0.5;
       double TT_merged = -9999.;
 
@@ -4425,7 +4426,7 @@ bool LEEana::is_nsbeam(PFevalInfo& pfeval){
   //Merge Peaks
   double gap=18.936;
   double Shift=3166.9;
-  if (pfeval.run < 13697){ Shift = 3169.43;}
+  if (eval.run < 13697){ Shift = 3169.43;}
   double TThelp=pfeval.evtTimeNS-Shift+gap*0.5;
   double TT_merged = -9999.;
 
