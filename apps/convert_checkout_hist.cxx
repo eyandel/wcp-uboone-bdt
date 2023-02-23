@@ -257,6 +257,9 @@ int main( int argc, char** argv )
 
 
   T_PFeval->SetBranchStatus("*",0);
+  T_PFeval->SetBranchStatus("run",1);
+  T_PFeval->SetBranchStatus("subrun",1);
+  T_PFeval->SetBranchStatus("event",1);
   T_PFeval->SetBranchStatus("reco_nuvtxX",1);
   T_PFeval->SetBranchStatus("reco_nuvtxY",1);
   T_PFeval->SetBranchStatus("reco_nuvtxZ",1);
