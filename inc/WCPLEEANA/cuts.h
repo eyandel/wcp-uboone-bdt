@@ -253,8 +253,8 @@ double LEEana::get_weight(TString weight_name, EvalInfo& eval, PFevalInfo& pfeva
     float beam_scale = 0.83;
     if(eval.match_completeness_energy<=0.1*eval.truth_energyInside){beam_scale = 0.5;}
     return addtl_weight*eval.weight_cv * eval.weight_spline * beam_scale;
-  }else if (weight_name == "cv_spline_nsbeam_ext"){
-    return addtl_weight*eval.weight_cv * eval.weight_spline * 0.5;
+  }else if (weight_name == "nsbeam_ext"){
+    return 0.5;
   }else if (weight_name == "cv_spline_cv_spline"){
     return pow(addtl_weight*eval.weight_cv * eval.weight_spline,2);
   }else if (weight_name == "unity" || weight_name == "unity_unity"){
@@ -3743,6 +3743,9 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
     return false;
 
   //Erin
+  }else if (ch_name == "generic_nu_bnb_nsbeam"){
+    if (flag_generic && flag_nsbeam) return true;
+    else return false;
   }else if (ch_name == "single_photon_bnb" || ch_name == "single_photon_ext"
     || ch_name == "single_photon_overlay" || ch_name == "single_photon_dirt"){
             if (flag_singlephoton_sel) return true;

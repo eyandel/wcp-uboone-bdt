@@ -556,6 +556,9 @@ void LEEana::CovMatrix::fill_det_histograms(std::map<TString, TH1D*> map_filenam
   }
 
   T_PFeval_cv->SetBranchStatus("*",0);
+  T_PFeval_cv->SetBranchStatus("run",1);
+  T_PFeval_cv->SetBranchStatus("subrun",1);
+  T_PFeval_cv->SetBranchStatus("event",1);
   T_PFeval_cv->SetBranchStatus("reco_nuvtxX",1);
   T_PFeval_cv->SetBranchStatus("reco_nuvtxY",1);
   T_PFeval_cv->SetBranchStatus("reco_nuvtxZ",1);
@@ -729,6 +732,9 @@ void LEEana::CovMatrix::fill_det_histograms(std::map<TString, TH1D*> map_filenam
   }
 
   T_PFeval_det->SetBranchStatus("*",0);
+  T_PFeval_det->SetBranchStatus("run",1);
+  T_PFeval_det->SetBranchStatus("subrun",1);
+  T_PFeval_det->SetBranchStatus("event",1);
   T_PFeval_det->SetBranchStatus("reco_nuvtxX",1);
   T_PFeval_det->SetBranchStatus("reco_nuvtxY",1);
   T_PFeval_det->SetBranchStatus("reco_nuvtxZ",1);
