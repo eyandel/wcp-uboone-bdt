@@ -348,16 +348,6 @@ int main( int argc, char** argv )
       TString add_cut = std::get<6>(*it);
       TString weight = std::get<7>(*it);
 
-      std::cout<<
-      histoname <<
-" "<<  nbin <<
-" "<<  llimit <<
-" "<<  hlimit <<
-" "<< var_name <<
-" "<< ch_name <<
-" "<< add_cut <<
-" "<< weight << std::endl;
-
       htemp = map_histoname_hist[histoname];
       // get kinematics variable ...
       double val = get_kine_var(kine, eval, pfeval, tagger, flag_data, var_name);

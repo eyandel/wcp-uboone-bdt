@@ -255,6 +255,12 @@ double LEEana::get_weight(TString weight_name, EvalInfo& eval, PFevalInfo& pfeva
     return addtl_weight*eval.weight_cv * eval.weight_spline * beam_scale;
   }else if (weight_name == "nsbeam_ext"){
     return 0.5;
+  }else if (weight_name == "cv_spline_nsbeam_cv_spline_nsbeam"){
+    float beam_scale = 0.83;
+    if(eval.match_completeness_energy<=0.1*eval.truth_energyInside){beam_scale = 0.5;}
+    return pow(addtl_weight*eval.weight_cv * eval.weight_spline * beam_scale,2);
+  }else if (weight_name == "nsbeam_ext_nsbeam_ext"){
+    return pow(0.5,2);
   }else if (weight_name == "cv_spline_cv_spline"){
     return pow(addtl_weight*eval.weight_cv * eval.weight_spline,2);
   }else if (weight_name == "unity" || weight_name == "unity_unity"){

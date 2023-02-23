@@ -1,5 +1,5 @@
-generic_nu_overlay		            kine_reco_Enu	                 25	   0	      2500   	1	      1		      1	    0	        0		      1		      2	      cv_spline_nsbeam_mc		  0
-BG_generic_nu_dirt		            kine_reco_Enu	                 25	   0	      2500  	1	      1		      0	    0.5	      0		      1		      4	      cv_spline_nsbeam_mc		  0
+generic_nu_overlay		            kine_reco_Enu	                 25	   0	      2500   	1	      1		      1	    0	        0		      1		      2	      cv_spline_nsbeam    		0
+BG_generic_nu_dirt		            kine_reco_Enu	                 25	   0	      2500  	1	      1		      0	    0.5	      0		      1		      4	      cv_spline_nsbeam    		0
 BG_generic_nu_ext 		            kine_reco_Enu	                 25	   0	      2500  	1	      0		      0	    0 	      0		      4		      3	      nsbeam_ext		          0
 generic_nu_bnb_nsbeam             kine_reco_Enu	                 25	   0	      2500  	1	      0		      0	    0 	      0		      0		      5	      unity   		            0
 End					                      End		                         -1	   -1	      -1	   -1	      -1		    -1	  -1		    -1		    -1		    -1	    end		                  -1
