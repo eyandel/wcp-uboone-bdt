@@ -249,7 +249,7 @@ double LEEana::get_weight(TString weight_name, EvalInfo& eval, PFevalInfo& pfeva
   if (weight_name == "cv_spline"){
     return addtl_weight*eval.weight_cv * eval.weight_spline;
   //Erin - ns beam time scaling
-}else if (weight_name == "cv_spline_nsbeam_mc"){
+  }else if (weight_name == "cv_spline_nsbeam"){
     float beam_scale = 0.83;
     if(eval.match_completeness_energy<=0.1*eval.truth_energyInside){beam_scale = 0.5;}
     return addtl_weight*eval.weight_cv * eval.weight_spline * beam_scale;
