@@ -512,25 +512,25 @@ void LEEana::set_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
 }
 
 void LEEana::put_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
-  tree0->Branch("run", &tagger_info.run, "data/I");
-  tree0->Branch("subrun", &tagger_info.subrun,"data/I");
-  tree0->Branch("event", &tagger_info.event,"data/I");
-  tree0->Branch("neutrino_type", &tagger_info.neutrino_type,"data/I");
-  tree0->Branch("reco_nuvtxX", &tagger_info.reco_nuvtxX,"data/F");
-  tree0->Branch("reco_nuvtxY", &tagger_info.reco_nuvtxY,"data/F");
-  tree0->Branch("reco_nuvtxZ", &tagger_info.reco_nuvtxZ,"data/F");
-  tree0->Branch("reco_showervtxX", &tagger_info.reco_showervtxX,"data/F");
-  tree0->Branch("reco_showervtxY", &tagger_info.reco_showervtxY,"data/F");
-  tree0->Branch("reco_showervtxZ", &tagger_info.reco_showervtxZ,"data/F");
-  tree0->Branch("reco_showerKE", &tagger_info.reco_showerKE,"data/F");
-  tree0->Branch("reco_muonvtxX", &tagger_info.reco_muonvtxX,"data/F");
-  tree0->Branch("reco_muonvtxY", &tagger_info.reco_muonvtxY,"data/F");
-  tree0->Branch("reco_muonvtxZ", &tagger_info.reco_muonvtxZ,"data/F");
+  tree0->Branch("run", &tagger_info.run, "run/I");
+  tree0->Branch("subrun", &tagger_info.subrun,"subrun/I");
+  tree0->Branch("event", &tagger_info.event,"event/I");
+  tree0->Branch("neutrino_type", &tagger_info.neutrino_type,"neutrino_type/I");
+  tree0->Branch("reco_nuvtxX", &tagger_info.reco_nuvtxX,"reco_nuvtxX/F");
+  tree0->Branch("reco_nuvtxY", &tagger_info.reco_nuvtxY,"reco_nuvtxY/F");
+  tree0->Branch("reco_nuvtxZ", &tagger_info.reco_nuvtxZ,"reco_nuvtxZ/F");
+  tree0->Branch("reco_showervtxX", &tagger_info.reco_showervtxX,"reco_showervtxX/F");
+  tree0->Branch("reco_showervtxY", &tagger_info.reco_showervtxY,"reco_showervtxY/F");
+  tree0->Branch("reco_showervtxZ", &tagger_info.reco_showervtxZ,"reco_showervtxZ/F");
+  tree0->Branch("reco_showerKE", &tagger_info.reco_showerKE,"reco_showerKE/F");
+  tree0->Branch("reco_muonvtxX", &tagger_info.reco_muonvtxX,"reco_muonvtxX/F");
+  tree0->Branch("reco_muonvtxY", &tagger_info.reco_muonvtxY,"reco_muonvtxY/F");
+  tree0->Branch("reco_muonvtxZ", &tagger_info.reco_muonvtxZ,"reco_muonvtxZ/F");
   tree0->Branch("reco_muonMomentum", &tagger_info.reco_muonMomentum[0],"reco_muonMomentum[4]/F");
 
   if (flag==1){
-    tree0->Branch("nuvtx_diff", &tagger_info.nuvtx_diff,"data/F");
-    tree0->Branch("showervtx_diff", &tagger_info.showervtx_diff,"data/F");
+    tree0->Branch("nuvtx_diff", &tagger_info.nuvtx_diff,"nuvtx_diff/F");
+    tree0->Branch("showervtx_diff", &tagger_info.showervtx_diff,"showervtx_diff/F");
     tree0->Branch("muonvtx_diff", &tagger_info.muonvtx_diff,"data/F");
     tree0->Branch("truth_corr_nuvtxX", &tagger_info.truth_corr_nuvtxX,"data/F");
     tree0->Branch("truth_corr_nuvtxY", &tagger_info.truth_corr_nuvtxY,"data/F");
