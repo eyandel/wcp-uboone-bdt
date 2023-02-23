@@ -828,8 +828,8 @@ double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, 
       double gap=18.936;
       double Shift=0;
       double TThelp=0;
-      if (eval.run > 13697){ Shift = 3166.9;}
-      if (eval.run < 13697){ std::cout<<"run: "<<eval.run<<std::endl; Shift = 3168.9;}//9.43;}
+      if (eval.run >= 13697){ std::cout<<"run: "<<eval.run<<std::endl; Shift = 3166.9;}
+      if (eval.run < 13697){ Shift = 3168.9;}//9.43;}
       TThelp=pfeval.evtTimeNS-Shift+gap*0.5;
       double TT_merged = -9999.;
 
