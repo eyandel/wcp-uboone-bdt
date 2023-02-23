@@ -190,6 +190,9 @@ void LEEana::clear_pfeval_info(PFevalInfo& tagger_info){
     tagger_info.flag_init_pointers = true;
   }
 
+  tagger_info.run=0;
+  tagger_info.subrun=0;
+  tagger_info.event=0;
   tagger_info.neutrino_type=0;
   tagger_info.reco_nuvtxX=0;
   tagger_info.reco_nuvtxY=0;
