@@ -191,6 +191,7 @@ int main( int argc, char** argv )
     T_BDTvars->SetBranchStatus("shw_sp_angle_beam",1);
     T_BDTvars->SetBranchStatus("shw_sp_n_20mev_showers",1);
     T_BDTvars->SetBranchStatus("shw_sp_n_20br1_showers",1);
+    T_BDTvars->SetBranchStatus("shw_sp_vec_median_dedx",1);
   }
   //
 
@@ -347,6 +348,7 @@ int main( int argc, char** argv )
       TString ch_name = std::get<5>(*it);
       TString add_cut = std::get<6>(*it);
       TString weight = std::get<7>(*it);
+
 
       htemp = map_histoname_hist[histoname];
       // get kinematics variable ...

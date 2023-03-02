@@ -1661,6 +1661,7 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
     T_BDTvars->SetBranchStatus("shw_sp_angle_beam",1);
     T_BDTvars->SetBranchStatus("shw_sp_n_20mev_showers",1);
     T_BDTvars->SetBranchStatus("shw_sp_n_20br1_showers",1);
+    T_BDTvars->SetBranchStatus("shw_sp_vec_median_dedx",1);
   }
   //
 

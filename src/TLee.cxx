@@ -2026,7 +2026,7 @@ int TLee::Exe_Goodness_of_fit(int num_Y, int num_X, TMatrixD matrix_pred, TMatri
   h1_spectra_relerr_wi->SetLineColor(color_wi);
 
   h1_spectra_relerr->SetMinimum(0);
-  h1_spectra_relerr->SetMaximum(0.5);
+  //h1_spectra_relerr->SetMaximum(0.5);
   func_title_size(h1_spectra_relerr, 0.05, 0.05, 0.05, 0.05);
 
   h1_spectra_relerr->Draw("same axis");

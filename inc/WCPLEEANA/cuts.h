@@ -827,6 +827,8 @@ double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, 
     return TMath::Cos(tagger.shw_sp_angle_beam/180.*TMath::Pi());
   }else if (var_name == "num_shower_sp"){
     return tagger.shw_sp_n_20br1_showers;
+  }else if (var_name == "median_dEdx_sp"){
+    return tagger.shw_sp_vec_median_dedx;
   }else if (var_name == "ns_beam_time"){
     if(flag_data){
       double delta_time_calc = -9999.;
