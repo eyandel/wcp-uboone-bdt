@@ -3767,7 +3767,9 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
             if (flag_singleshower_sel) return true;
             return false;
   }else if (ch_name == "single_shower_eff_bnb" || ch_name == "single_shower_eff_ext"
-    || ch_name == "single_shower_eff_overlay" || ch_name == "single_shower_eff_dirt"){
+    || ch_name == "single_shower_eff_overlay" || ch_name == "single_shower_eff_dirt"
+    || ch_name == "single_shower_eff_bnb2" || ch_name == "single_shower_eff_ext2"
+      || ch_name == "single_shower_eff_overlay2" || ch_name == "single_shower_eff_dirt2"){
             if (flag_singleshower_eff_sel) return true;
             return false;
   }else if (ch_name == "single_photon_bnb_0p" || ch_name == "single_photon_ext_0p"
