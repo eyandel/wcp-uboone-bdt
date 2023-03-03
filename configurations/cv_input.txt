@@ -17,3 +17,9 @@
 
 3.10822e+19
 5.9955e+18
+
+2       nu_overlay  4         /uboone/data/users/eyandel/processed_checkout_rootfiles/run4b/checkout_bnb_nu_overlay_run4b.root          /uboone/data/users/eyandel/hist_rootfiles/run4b/checkout_bnb_nu_overlay_run4b.root           0                1         0        4
+4       DIRT        4         /uboone/data/users/eyandel/processed_checkout_rootfiles/run4b/checkout_bnb_dirt_run4b.root                /uboone/data/users/eyandel/hist_rootfiles/run4b/checkout_bnb_dirt_run4b.root                 0                2         0        4
+3       EXTBNB      4         /uboone/data/users/eyandel/processed_checkout_rootfiles/run4b/checkout_data_extbnb_run4b.root             /uboone/data/users/eyandel/hist_rootfiles/run4b/checkout_data_extbnb_run4b.root              6.67349e+19      3         0        4
+5       BNB         4         /uboone/data/users/eyandel/processed_checkout_rootfiles/run4b/checkout_data_bnb_run4b.root                /uboone/data/users/eyandel/hist_rootfiles/run4b/checkout_data_bnb_run4b.root                 3.10927e+19      4         0        4
+-1      end         -1        end                                                                                                       end                                                                                          -1               -1        -1       -1
