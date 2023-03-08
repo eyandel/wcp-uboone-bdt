@@ -2996,7 +2996,8 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
     else return false;
 
  // generic selection nu PC+FC 1 obs channel
-  }else if (ch_name == "generic_nu_overlay" || ch_name == "BG_generic_nu_ext" || ch_name =="BG_generic_nu_dirt" || ch_name == "generic_nu_bnb"){
+}else if (ch_name == "generic_nu_overlay" || ch_name == "BG_generic_nu_ext" || ch_name =="BG_generic_nu_dirt" || ch_name == "generic_nu_bnb" ||
+          ch_name == "generic_nu_overlay_2" || ch_name == "BG_generic_nu_ext_2" || ch_name =="BG_generic_nu_dirt_2" || ch_name == "generic_nu_bnb_2"){
     if (flag_generic) return true;
     else return false;
  // numuCC selection PC+FC 1 obs channel

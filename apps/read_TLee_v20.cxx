@@ -428,7 +428,7 @@ int main(int argc, char** argv)
     Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 3001 );
   }
 
-  int make_constrained_sp_Np0p_plot = 1;
+  int make_constrained_sp_Np0p_plot = 0;
 
   if (make_constrained_sp_Np0p_plot) {
 
@@ -460,6 +460,102 @@ int main(int argc, char** argv)
 
     Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 3003 );
   }
+
+  //make a bunch of plots for validation
+  if (1){
+    if (1) {
+
+      Lee_test->scaleF_Lee = 0;
+      Lee_test->Set_Collapse();
+
+      //single photon Np selection, no overflow bins
+      vector<int>vc_target_chs;
+      vc_target_chs.push_back(1);
+      vector<int>vc_support_chs;
+
+      vc_support_chs.push_back(7);
+
+      Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 4001 );
+
+    }
+    if (1) {
+
+      Lee_test->scaleF_Lee = 0;
+      Lee_test->Set_Collapse();
+
+      //single photon Np selection, no overflow bins
+      vector<int>vc_target_chs;
+      vc_target_chs.push_back(2);
+      vector<int>vc_support_chs;
+
+      vc_support_chs.push_back(8);
+
+      Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 4002 );
+
+    }
+    if (1) {
+
+      Lee_test->scaleF_Lee = 0;
+      Lee_test->Set_Collapse();
+
+      //single photon Np selection, no overflow bins
+      vector<int>vc_target_chs;
+      vc_target_chs.push_back(3);
+      vector<int>vc_support_chs;
+
+      vc_support_chs.push_back(7);
+
+      Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 4003 );
+
+    }
+    if (1) {
+
+      Lee_test->scaleF_Lee = 0;
+      Lee_test->Set_Collapse();
+
+      //single photon Np selection, no overflow bins
+      vector<int>vc_target_chs;
+      vc_target_chs.push_back(4);
+      vector<int>vc_support_chs;
+
+      vc_support_chs.push_back(8);
+
+      Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 4004 );
+
+    }
+    if (1) {
+
+      Lee_test->scaleF_Lee = 0;
+      Lee_test->Set_Collapse();
+
+      //single photon Np selection, no overflow bins
+      vector<int>vc_target_chs;
+      vc_target_chs.push_back(5);
+      vector<int>vc_support_chs;
+
+      vc_support_chs.push_back(7);
+
+      Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 4005 );
+
+    }
+    if (1) {
+
+      Lee_test->scaleF_Lee = 0;
+      Lee_test->Set_Collapse();
+
+      //single photon Np selection, no overflow bins
+      vector<int>vc_target_chs;
+      vc_target_chs.push_back(6);
+      vector<int>vc_support_chs;
+
+      vc_support_chs.push_back(8);
+
+      Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 4006 );
+
+    }
+  }
+
+
   //end Erin
 
   if( flag_nueCC_FC_by_all ) {
