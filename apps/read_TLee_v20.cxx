@@ -473,7 +473,7 @@ int main(int argc, char** argv)
       vc_target_chs.push_back(1);
       vector<int>vc_support_chs;
 
-      vc_support_chs.push_back(7);
+      vc_support_chs.push_back(5);
 
       Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 4001 );
 
@@ -488,7 +488,7 @@ int main(int argc, char** argv)
       vc_target_chs.push_back(2);
       vector<int>vc_support_chs;
 
-      vc_support_chs.push_back(8);
+      vc_support_chs.push_back(6);
 
       Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 4002 );
 
@@ -503,7 +503,7 @@ int main(int argc, char** argv)
       vc_target_chs.push_back(3);
       vector<int>vc_support_chs;
 
-      vc_support_chs.push_back(7);
+      vc_support_chs.push_back(5);
 
       Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 4003 );
 
@@ -518,7 +518,7 @@ int main(int argc, char** argv)
       vc_target_chs.push_back(4);
       vector<int>vc_support_chs;
 
-      vc_support_chs.push_back(8);
+      vc_support_chs.push_back(6);
 
       Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 4004 );
 
@@ -533,7 +533,7 @@ int main(int argc, char** argv)
       vc_target_chs.push_back(5);
       vector<int>vc_support_chs;
 
-      vc_support_chs.push_back(7);
+      vc_support_chs.push_back(3);
 
       Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 4005 );
 
@@ -548,7 +548,7 @@ int main(int argc, char** argv)
       vc_target_chs.push_back(6);
       vector<int>vc_support_chs;
 
-      vc_support_chs.push_back(8);
+      vc_support_chs.push_back(4);
 
       Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 4006 );
 
