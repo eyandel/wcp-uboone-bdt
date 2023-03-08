@@ -1982,7 +1982,6 @@ int TLee::Exe_Goodness_of_fit(int num_Y, int num_X, TMatrixD matrix_pred, TMatri
 
 	//Erin
 	TFile *file_hists = new TFile(TString::Format("file_hists_%02d.root", index), "recreate");
-	file_hists->Open();
 	file_hists->cd();
 	gh_data->SetName("gh_data");
 	gh_data->Write();
