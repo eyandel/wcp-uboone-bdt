@@ -3877,6 +3877,78 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
               !map_cuts_flag["SPNCPi0Sig"] && !map_cuts_flag["SPNCOtherSig"] &&
               !map_cuts_flag["SPNumuCCSig"]) return true;
             return false;
+  }else if (ch_name == "single_photon_spoverlay"){
+            if (flag_singlephoton_sel &&
+              (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])) return true;
+            return false;
+  }else if (ch_name == "single_photon_eff_spoverlay"){
+            if (flag_singlephoton_eff_sel &&
+              (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])) return true;
+            return false;
+  }else if (ch_name == "single_shower_spoverlay"){
+            if (flag_singleshower_sel &&
+              (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])) return true;
+            return false;
+  }else if (ch_name == "single_shower_eff_spoverlay"){
+            if (flag_singleshower_eff_sel &&
+              (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])) return true;
+            return false;
+  }else if (ch_name == "single_photon_spoverlay_0p"){
+            if (flag_singlephoton_sel && flag_0p &&
+              (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])) return true;
+            return false;
+  }else if (ch_name == "single_photon_eff_spoverlay_0p"){
+            if (flag_singlephoton_eff_sel && flag_0p &&
+              (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])) return true;
+            return false;
+  }else if (ch_name == "single_shower_spoverlay_0p"){
+            if (flag_singleshower_sel && flag_0p &&
+              (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])) return true;
+            return false;
+  }else if (ch_name == "single_shower_eff_spoverlay_0p"){
+            if (flag_singleshower_eff_sel && flag_0p &&
+              (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])) return true;
+            return false;
+  }else if (ch_name == "single_photon_spoverlay_Np"){
+            if (flag_singlephoton_sel && !flag_0p &&
+              (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])) return true;
+            return false;
+  }else if (ch_name == "single_photon_eff_spoverlay_Np"){
+            if (flag_singlephoton_eff_sel && !flag_0p &&
+              (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])) return true;
+            return false;
+  }else if (ch_name == "single_shower_spoverlay_Np"){
+            if (flag_singleshower_sel && !flag_0p &&
+              (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])) return true;
+            return false;
+  }else if (ch_name == "single_shower_eff_spoverlay_Np"){
+            if (flag_singleshower_eff_sel && !flag_0p &&
+              (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])) return true;
+            return false;
   }else if (ch_name == "single_photon_bnb_nsbeam"){
             if (flag_singlephoton_sel && flag_nsbeam) return true;
             return false;

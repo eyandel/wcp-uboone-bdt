@@ -410,7 +410,7 @@ int main(int argc, char** argv)
 
   //Erin
 
-  int make_constrained_sp_plot = 0;
+  int make_constrained_sp_plot = 1;
 
   if (make_constrained_sp_plot) {
 
@@ -462,7 +462,7 @@ int main(int argc, char** argv)
   }
 
   //make a bunch of plots for validation
-  if (1){
+  if (0){
     if (1) {
 
       Lee_test->scaleF_Lee = 0;
