@@ -1841,19 +1841,19 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
 
   //Erin
   // breakdown categories for single photon analysis
-  if (/*eval.match_completeness_energy>0.1*eval.truth_energyInside &&*/ pfeval.truth_single_photon==1 && eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && eval.truth_vtxInside==1) map_cuts_flag["SPNCDeltaSig"] = true;
+  if (eval.match_completeness_energy>0.1*eval.truth_energyInside && pfeval.truth_single_photon==1 && eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && eval.truth_vtxInside==1) map_cuts_flag["SPNCDeltaSig"] = true;
   else map_cuts_flag["SPNCDeltaSig"] = false;
 
-  if (/*eval.match_completeness_energy>0.1*eval.truth_energyInside &&*/ pfeval.truth_single_photon==1 && eval.truth_isCC==0 && pfeval.truth_showerMother==111 && eval.truth_vtxInside==1) map_cuts_flag["SPNCPi0Sig"] = true;
+  if (eval.match_completeness_energy>0.1*eval.truth_energyInside && pfeval.truth_single_photon==1 && eval.truth_isCC==0 && pfeval.truth_showerMother==111 && eval.truth_vtxInside==1) map_cuts_flag["SPNCPi0Sig"] = true;
   else map_cuts_flag["SPNCPi0Sig"] = false;
 
-  if (/*eval.match_completeness_energy>0.1*eval.truth_energyInside &&*/ pfeval.truth_single_photon==1 && eval.truth_isCC==0 && pfeval.truth_showerMother!=111 && pfeval.truth_NCDelta==0 && eval.truth_vtxInside==1) map_cuts_flag["SPNCOtherSig"] = true;
+  if (eval.match_completeness_energy>0.1*eval.truth_energyInside && pfeval.truth_single_photon==1 && eval.truth_isCC==0 && pfeval.truth_showerMother!=111 && pfeval.truth_NCDelta==0 && eval.truth_vtxInside==1) map_cuts_flag["SPNCOtherSig"] = true;
   else map_cuts_flag["SPNCOtherSig"] = false;
 
-  if (/*eval.match_completeness_energy>0.1*eval.truth_energyInside &&*/ pfeval.truth_single_photon==1 && eval.truth_isCC==1 && abs(eval.truth_nuPdg)==14 && pfeval.truth_muonMomentum[3]-0.105658<0.1 && eval.truth_vtxInside==1) map_cuts_flag["SPNumuCCSig"] = true;
+  if (eval.match_completeness_energy>0.1*eval.truth_energyInside && pfeval.truth_single_photon==1 && eval.truth_isCC==1 && abs(eval.truth_nuPdg)==14 && pfeval.truth_muonMomentum[3]-0.105658<0.1 && eval.truth_vtxInside==1) map_cuts_flag["SPNumuCCSig"] = true;
   else map_cuts_flag["SPNumuCCSig"] = false;
 
-  if (/*eval.match_completeness_energy>0.1*eval.truth_energyInside &&*/ pfeval.truth_single_photon==1 && (eval.truth_isCC==0 || (eval.truth_isCC==1 && abs(eval.truth_nuPdg)==14 && pfeval.truth_muonMomentum[3]-0.105658<0.1)) && eval.truth_vtxInside==0) map_cuts_flag["SPOutFVSig"] = true;
+  if (eval.match_completeness_energy>0.1*eval.truth_energyInside && pfeval.truth_single_photon==1 && (eval.truth_isCC==0 || (eval.truth_isCC==1 && abs(eval.truth_nuPdg)==14 && pfeval.truth_muonMomentum[3]-0.105658<0.1)) && eval.truth_vtxInside==0) map_cuts_flag["SPOutFVSig"] = true;
   else map_cuts_flag["SPOutFVSig"] = false;
 
   map_cuts_flag["SPdirtBkg"] = false;
