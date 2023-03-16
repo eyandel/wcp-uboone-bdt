@@ -1,14 +1,3 @@
-/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_single_photon_cv_low.root        all
-/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_inclusivephoton_run3_sp_low.root all
-/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnboverlay_run1_sp.root          all
-/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnboverlay_run3_sp_1.root        all
-/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_dirt_run1_sp.root                all
-/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_dirt_run3_sp.root                all
-/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_extbnb_C1_run1_sp.root           all
-/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_extbnb_run3F_sp.root             all
-/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnb_5e19_run1_sp.root            all
-/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnb_run3_beamtime_final.root     all
-end                                                                                             end
 /uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnboverlay_run1_sp.root                badmatch
 /uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnboverlay_run1_sp.root                SPoutFVBkg
 /uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnboverlay_run1_sp.root                SPnumuCCBkg
@@ -16,6 +5,11 @@ end                                                                             
 /uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnboverlay_run1_sp.root                SPNCBkg
 /uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnboverlay_run1_sp.root                SPNCpi0Bkg
 /uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnboverlay_run1_sp.root                nueCCinFV
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnboverlay_run1_sp.root                SPNCDeltaSig
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnboverlay_run1_sp.root                SPNCPi0Sig
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnboverlay_run1_sp.root                SPNCOtherSig
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnboverlay_run1_sp.root                SPNumuCCSig
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnboverlay_run1_sp.root                SPOutFVSig
 /uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_single_photon_cv_low.root               SPNCDeltaSig
 /uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_single_photon_cv_low.root               SPNCPi0Sig
 /uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_single_photon_cv_low.root               SPNCOtherSig
@@ -28,6 +22,11 @@ end                                                                             
 /uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnboverlay_run3_sp_1.root              SPNCBkg
 /uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnboverlay_run3_sp_1.root              SPNCpi0Bkg
 /uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnboverlay_run3_sp_1.root              nueCCinFV
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnboverlay_run3_sp_1.root              SPNCDeltaSig
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnboverlay_run3_sp_1.root              SPNCPi0Sig
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnboverlay_run3_sp_1.root              SPNCOtherSig
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnboverlay_run3_sp_1.root              SPNumuCCSig
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnboverlay_run3_sp_1.root              SPOutFVSig
 /uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_inclusivephoton_run3_sp_low.root        SPNCDeltaSig
 /uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_inclusivephoton_run3_sp_low.root        SPNCPi0Sig
 /uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_inclusivephoton_run3_sp_low.root        SPNCOtherSig
@@ -40,7 +39,18 @@ end                                                                             
 /uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_extbnb_C1_run1_sp.root                 all
 /uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_extbnb_run3F_sp.root                   all
 /uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnb_5e19_run1_sp.root                  all
-/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnb_run3_beamtime_sat.root             all
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnb_run3_beamtime_final.root           all
+end                                                                                             end
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_single_photon_cv_low.root        all
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_inclusivephoton_run3_sp_low.root all
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnboverlay_run1_sp.root          all
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnboverlay_run3_sp_1.root        all
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_dirt_run1_sp.root                all
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_dirt_run3_sp.root                all
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_extbnb_C1_run1_sp.root           all
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_extbnb_run3F_sp.root             all
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnb_5e19_run1_sp.root            all
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnb_run3_beamtime_final.root     all
 end                                                                                             end
 
 
