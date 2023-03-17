@@ -3757,15 +3757,11 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
     else return false;
   }else if (ch_name == "generic_nu_spoverlay"){
             if (flag_generic &&
-              (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
-              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
-              map_cuts_flag["SPNumuCCSig"])) return true;
+              (eval.match_completeness_energy>0.1*eval.truth_energyInside && pfeval.truth_single_photon==1)) return true;
             return false;
   }else if (ch_name == "generic_nu_overlay_sp_BG"){
             if (flag_generic &&
-              !(map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
-              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
-              map_cuts_flag["SPNumuCCSig"])) return true;
+              !(eval.match_completeness_energy>0.1*eval.truth_energyInside && pfeval.truth_single_photon==1)) return true;
             return false;
   }else if (ch_name == "single_photon_bnb" || ch_name == "single_photon_ext"
     || ch_name == "single_photon_overlay" || ch_name == "single_photon_dirt"){
