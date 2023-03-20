@@ -1847,7 +1847,7 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
   if (eval.match_completeness_energy>0.1*eval.truth_energyInside && pfeval.truth_single_photon==1 && eval.truth_isCC==0 && (pfeval.truth_showerMother==111 || pfeval.truth_showerMother==22) && eval.truth_vtxInside==1) map_cuts_flag["SPNCPi0Sig"] = true;
   else map_cuts_flag["SPNCPi0Sig"] = false;
 
-  if (eval.match_completeness_energy>0.1*eval.truth_energyInside && pfeval.truth_single_photon==1 && eval.truth_isCC==0 && pfeval.truth_showerMother!=111 && pfeval.truth_NCDelta==0 && eval.truth_vtxInside==1) map_cuts_flag["SPNCOtherSig"] = true;
+  if (eval.match_completeness_energy>0.1*eval.truth_energyInside && pfeval.truth_single_photon==1 && eval.truth_isCC==0 && pfeval.truth_showerMother!=111 && pfeval.truth_showerMother!=22 && pfeval.truth_NCDelta==0 && eval.truth_vtxInside==1) map_cuts_flag["SPNCOtherSig"] = true;
   else map_cuts_flag["SPNCOtherSig"] = false;
 
   if (eval.match_completeness_energy>0.1*eval.truth_energyInside && pfeval.truth_single_photon==1 && eval.truth_isCC==1 && abs(eval.truth_nuPdg)==14 && pfeval.truth_muonMomentum[3]-0.105658<0.1 && eval.truth_vtxInside==1) map_cuts_flag["SPNumuCCSig"] = true;
