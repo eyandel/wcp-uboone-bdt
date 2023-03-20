@@ -52,7 +52,7 @@ int main(int argc, char** argv){
   for (Int_t i=0;i!=T_pot->GetEntries();i++){
     T_pot->GetEntry(i);
     auto it = already_seen.find(std::make_pair(r,s));
-    if (mc_file == "/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_single_photon_cv_low_run3.root"){
+    if (mc_file.Contains("single_photon")){
       if (it != already_seen.end()) continue;
     }
     already_seen[std::make_pair(r,s)] = true;
