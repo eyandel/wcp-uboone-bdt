@@ -69,7 +69,15 @@ int main( int argc, char** argv )
   set_tree_address(T_KINEvars, kine);
 
   double total_pot = 0;
+  //Erin
+  std::map<std::pair<int, int>, bool >  already_seen;
+
   for (Int_t i=0;i!=T_pot->GetEntries();i++){
+    T_pot->GetEntry(i);
+    auto it = already_seen.find(std::make_pair(pot.runNo,pot.subRunNo));
+    if (it != already_seen.end()) continue;
+    already_seen[std::make_pair(pot.runNo,pot.subRunNo)] = true;
+    
     T_pot->GetEntry(i);
     total_pot += pot.pot_tor875;
   }

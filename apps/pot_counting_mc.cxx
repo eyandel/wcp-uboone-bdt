@@ -52,10 +52,9 @@ int main(int argc, char** argv){
   for (Int_t i=0;i!=T_pot->GetEntries();i++){
     T_pot->GetEntry(i);
     auto it = already_seen.find(std::make_pair(r,s));
-    //if (mc_file.Contains("single_photon")){
-      if (it != already_seen.end()) continue;
-      if (r==0  || s==0) continue;
-    //}
+
+    if (it != already_seen.end()) continue;
+
     already_seen[std::make_pair(r,s)] = true;
     total_pot += pot_tor875;
   }
