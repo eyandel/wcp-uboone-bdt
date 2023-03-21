@@ -3758,7 +3758,7 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
   }else if (ch_name == "generic_nu_spoverlay"){
             if (flag_generic &&
               (eval.match_completeness_energy>0.1*eval.truth_energyInside && pfeval.truth_single_photon==1
-              && pfeval.truth_showerMother!=22) return true;
+              && pfeval.truth_showerMother!=22)) return true;
             return false;
   }else if (ch_name == "generic_nu_overlay_sp_BG"){
             if (flag_generic &&
