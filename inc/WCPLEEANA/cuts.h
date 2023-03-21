@@ -1844,7 +1844,7 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
   if (eval.match_completeness_energy>0.1*eval.truth_energyInside && pfeval.truth_single_photon==1 && eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && eval.truth_vtxInside==1) map_cuts_flag["SPNCDeltaSig"] = true;
   else map_cuts_flag["SPNCDeltaSig"] = false;
 
-  if (eval.match_completeness_energy>0.1*eval.truth_energyInside && pfeval.truth_single_photon==1 && eval.truth_isCC==0 && (pfeval.truth_showerMother==111 || pfeval.truth_showerMother==22) && eval.truth_vtxInside==1) map_cuts_flag["SPNCPi0Sig"] = true;
+  if (eval.match_completeness_energy>0.1*eval.truth_energyInside && pfeval.truth_single_photon==1 && eval.truth_isCC==0 && (pfeval.truth_showerMother==111) && eval.truth_vtxInside==1) map_cuts_flag["SPNCPi0Sig"] = true;
   else map_cuts_flag["SPNCPi0Sig"] = false;
 
   if (eval.match_completeness_energy>0.1*eval.truth_energyInside && pfeval.truth_single_photon==1 && eval.truth_isCC==0 && pfeval.truth_showerMother!=111 && pfeval.truth_showerMother!=22 && pfeval.truth_NCDelta==0 && eval.truth_vtxInside==1) map_cuts_flag["SPNCOtherSig"] = true;
@@ -3758,7 +3758,7 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
   }else if (ch_name == "generic_nu_spoverlay"){
             if (flag_generic &&
               (eval.match_completeness_energy>0.1*eval.truth_energyInside && pfeval.truth_single_photon==1
-              && (pfeval.truth_showerMother==111 || pfeval.truth_NCDelta==1))) return true;
+              && pfeval.truth_showerMother!=22) return true;
             return false;
   }else if (ch_name == "generic_nu_overlay_sp_BG"){
             if (flag_generic &&
