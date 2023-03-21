@@ -3756,6 +3756,9 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
     if (flag_generic && flag_nsbeam) return true;
     else return false;
   }else if (ch_name == "generic_nu_spoverlay"){
+      if (pfeval.truth_single_photon==1 && pfeval.truth_showerMother==22){
+        std::cout<<eval.run<<" "<<eval.subrun<<" "<<eval.event;
+      }
             if (flag_generic &&
               (eval.match_completeness_energy>0.1*eval.truth_energyInside && pfeval.truth_single_photon==1
               && pfeval.truth_showerMother!=22 && !(abs(eval.truth_nuPdg)==12 && eval.truth_isCC==1))) return true;
