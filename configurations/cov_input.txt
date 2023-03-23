@@ -1,27 +1,32 @@
 single_photon_eff_overlay		      shower_energy_sp	             15	   0	      1500   	1	   1		      1	    0	        0		      1		      2	      cv_spline		  0
 single_photon_eff_dirt		        shower_energy_sp	             15	   0	      1500  	1	   1		      0	    0.5	      0		      1		      4	      cv_spline		  0
-single_photon_eff_ext 		        shower_energy_sp	             15	   0	      1500  	1	   0		      0	    0 	      0		      6		      3	      unity   		  0
+single_photon_eff_ext 		        shower_energy_sp	             15	   0	      1500  	1	   0		      0	    0 	      0		      7		      3	      unity   		  0
 single_photon_eff_bnb 		        shower_energy_sp	             15	   0	      1500  	1	   0		      0	    0 	      0		      0		      5	      unity   		  0
 
 sp_bdt_numuCC_Xp_overlay		      shower_energy_sp	             15	   0	      1500   	2	   1		      1	    0	        0		      2		      2	      cv_spline		  0
 sp_bdt_numuCC_Xp_dirt			        shower_energy_sp	             15	   0	      1500  	2	   1		      0	    0.5	      0		      2		      4	      cv_spline		  0
-sp_bdt_numuCC_Xp_ext 			        shower_energy_sp	             15	   0	      1500  	2	   0		      0	    0 	      0		      7		      3	      unity   		  0
+sp_bdt_numuCC_Xp_ext 			        shower_energy_sp	             15	   0	      1500  	2	   0		      0	    0 	      0		      8		      3	      unity   		  0
 sp_bdt_numuCC_Xp 		    	        shower_energy_sp	             15	   0	      1500  	2	   0		      0	    0 	      0		      0		      5	      unity   		  0
 
 sp_bdt_other_Xp_overlay		        shower_energy_sp	             15	   0	      1500   	3	   1		      1	    0	        0		      3		      2	      cv_spline		  0
 sp_bdt_other_Xp_dirt			        shower_energy_sp	             15	   0	      1500  	3	   1		      0	    0.5	      0		      3		      4	      cv_spline		  0
-sp_bdt_other_Xp_ext 			        shower_energy_sp	             15	   0	      1500  	3	   0		      0	    0 	      0		      8		      3	      unity   		  0
+sp_bdt_other_Xp_ext 			        shower_energy_sp	             15	   0	      1500  	3	   0		      0	    0 	      0		      9		      3	      unity   		  0
 sp_bdt_other_Xp 		    	        shower_energy_sp	             15	   0	      1500  	3	   0		      0	    0 	      0		      0		      5	      unity   		  0
 
 sp_bdt_nc_pi0_Xp_overlay		      shower_energy_sp	             15	   0	      1500   	4	   1		      1	    0	        0		      4		      2	      cv_spline		  0
 sp_bdt_nc_pi0_Xp_dirt			        shower_energy_sp	             15	   0	      1500  	4	   1		      0	    0.5	      0		      4		      4	      cv_spline		  0
-sp_bdt_nc_pi0_Xp_ext 			        shower_energy_sp	             15	   0	      1500  	4	   0		      0	    0 	      0		      9		      3	      unity   		  0
+sp_bdt_nc_pi0_Xp_ext 			        shower_energy_sp	             15	   0	      1500  	4	   0		      0	    0 	      0		      10		      3	      unity   		  0
 sp_bdt_nc_pi0_Xp 		    	        shower_energy_sp	             15	   0	      1500  	4	   0		      0	    0 	      0		      0		      5	      unity   		  0
 
 sp_bdt_nue_Xp_overlay		          shower_energy_sp	             15	   0	      1500   	5	   1		      1	    0	        0		      5		      2	      cv_spline		  0
 sp_bdt_nue_Xp_dirt			          shower_energy_sp	             15	   0	      1500  	5	   1		      0	    0.5	      0		      5		      4	      cv_spline		  0
-sp_bdt_nue_Xp_ext 			          shower_energy_sp	             15	   0	      1500  	5	   0		      0	    0 	      0		      10	      3	      unity   		  0
+sp_bdt_nue_Xp_ext 			          shower_energy_sp	             15	   0	      1500  	5	   0		      0	    0 	      0		      11	      3	      unity   		  0
 sp_bdt_nue_Xp 		    	          shower_energy_sp	             15	   0	      1500  	5	   0		      0	    0 	      0		      0		      5	      unity   		  0
+
+sp_bdt_other_2_Xp_overlay		      shw_backwards_projected_dist	 20	   0	      500     6	   1		      1	    0	        0		      6		      2	      cv_spline		  0
+sp_bdt_other_2_Xp_dirt			      shw_backwards_projected_dist	 20	   0	      500   	6    1		      0	    0.5	      0		      6		      4	      cv_spline		  0
+sp_bdt_other_2_Xp_ext 			      shw_backwards_projected_dist	 20	   0	      500   	6    0		      0	    0 	      0		      12		    3	      unity   		  0
+sp_bdt_other_2_Xp 		    	      shw_backwards_projected_dist	 20	   0	      500   	6    0		      0	    0 	      0		      0		      5	      unity   		  0
 End					                      End		                         -1	   -1	      -1	   -1	   -1		      -1	  -1		    -1		    -1		    -1	    end		        -1
 
 generic_nu_spoverlay		          kine_reco_Enu	                 25	   0	      2500   	1	      1		      1	    0	        0		      1		      9	      cv_spline           		0
