@@ -3761,11 +3761,12 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
       }*/
             if (flag_generic &&
               (eval.match_completeness_energy>0.1*eval.truth_energyInside && pfeval.truth_single_photon==1
-              && pfeval.truth_showerMother!=22 && pfeval.truth_showerMother!=2212 && !(abs(eval.truth_nuPdg)==12 && eval.truth_isCC==1))) return true;
+              /*&& pfeval.truth_showerMother!=22 && pfeval.truth_showerMother!=2212 && !(abs(eval.truth_nuPdg)==12 && eval.truth_isCC==1)*/
+              && flag_truth_inside)) return true;
             return false;
   }else if (ch_name == "generic_nu_overlay_sp_BG"){
             if (flag_generic &&
-              !(eval.match_completeness_energy>0.1*eval.truth_energyInside && pfeval.truth_single_photon==1)) return true;
+              !(eval.match_completeness_energy>0.1*eval.truth_energyInside && pfeval.truth_single_photon==1 && flag_truth_inside)) return true;
             return false;
   }else if (ch_name == "single_photon_bnb" || ch_name == "single_photon_ext"
     || ch_name == "single_photon_overlay" || ch_name == "single_photon_dirt"){
