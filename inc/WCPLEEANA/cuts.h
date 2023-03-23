@@ -840,30 +840,30 @@ double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, 
         float shower_momentum_total_3d = sqrt(pfeval.reco_showerMomentum[0] * pfeval.reco_showerMomentum[0] +
                                            pfeval.reco_showerMomentum[1] * pfeval.reco_showerMomentum[1] +
                                            pfeval.reco_showerMomentum[2] * pfeval.reco_showerMomentum[2]);
-        std::vector<float> shower_unit_vector_3d = [pfeval.reco_showerMomentum[0] / shower_momentum_total_3d,
+        std::vector<float> shower_unit_vector_3d = {pfeval.reco_showerMomentum[0] / shower_momentum_total_3d,
                                  pfeval.reco_showerMomentum[1] / shower_momentum_total_3d,
-                                 pfeval.reco_showerMomentum[2] / shower_momentum_total_3d];
+                                 pfeval.reco_showerMomentum[2] / shower_momentum_total_3d};
         float center_x = 130.;
         float center_y = 0.;
         float center_z = 525.;
         float towards_center_length = sqrt((pfeval.reco_showervtxX - center_x) * (pfeval.reco_showervtxX - center_x) +
                                         (pfeval.reco_showervtxY - center_y) * (pfeval.reco_showervtxY - center_y) +
                                         (pfeval.reco_showervtxZ - center_z) * (pfeval.reco_showervtxZ - center_z));
-        std::vector<float> towards_center_unit_vector_3d = [(center_x - pfeval.reco_showervtxX) / towards_center_length,
+        std::vector<float> towards_center_unit_vector_3d = {(center_x - pfeval.reco_showervtxX) / towards_center_length,
                                          (center_y - pfeval.reco_showervtxY) / towards_center_length,
-                                         (center_z - pfeval.reco_showervtxZ) / towards_center_length];
+                                         (center_z - pfeval.reco_showervtxZ) / towards_center_length};
         float inwardness_3d = (shower_unit_vector_3d[0] * towards_center_unit_vector_3d[0]) +
                              (shower_unit_vector_3d[1] * towards_center_unit_vector_3d[1]) +
                              (shower_unit_vector_3d[2] * towards_center_unit_vector_3d[2]);
 
         float shower_momentum_total_2d = sqrt(pfeval.reco_showerMomentum[0] * pfeval.reco_showerMomentum[0] +
                                            pfeval.reco_showerMomentum[1] * pfeval.reco_showerMomentum[1]);
-        std::vector<float> shower_unit_vector_2d = [pfeval.reco_showerMomentum[0] / shower_momentum_total_3d,
-                                 pfeval.reco_showerMomentum[1] / shower_momentum_total_3d];
-        float towards_center_length = sqrt((pfeval.reco_showervtxX - center_x) * (pfeval.reco_showervtxX - center_x) +
+        std::vector<float> shower_unit_vector_2d = {pfeval.reco_showerMomentum[0] / shower_momentum_total_3d,
+                                 pfeval.reco_showerMomentum[1] / shower_momentum_total_3d};
+        towards_center_length = sqrt((pfeval.reco_showervtxX - center_x) * (pfeval.reco_showervtxX - center_x) +
                                         (pfeval.reco_showervtxY - center_y) * (pfeval.reco_showervtxY - center_y));
-        std::vector<float> towards_center_unit_vector_2d = [(center_x - pfeval.reco_showervtxX) / towards_center_length,
-                                         (center_y - pfeval.reco_showervtxY) / towards_center_length];
+        std::vector<float> towards_center_unit_vector_2d = {(center_x - pfeval.reco_showervtxX) / towards_center_length,
+                                         (center_y - pfeval.reco_showervtxY) / towards_center_length};
         float inwardness_2d = (shower_unit_vector_2d[0] * towards_center_unit_vector_2d[0]) +
                              (shower_unit_vector_2d[1] * towards_center_unit_vector_2d[1]);
 
@@ -872,21 +872,27 @@ double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, 
 
         //projecting to x walls
         if (shower_unit_vector_3d[0] > 0){
-            min_backwards_projected_dist = std::min(min_backwards_projected_dist, (pfeval.reco_showervtxX - (-1.0)) / shower_unit_vector_3d[0]);
+            if ((pfeval.reco_showervtxX - (-1.0)) / shower_unit_vector_3d[0] < min_backwards_projected_dist)
+              min_backwards_projected_dist =  (pfeval.reco_showervtxX - (-1.0)) / shower_unit_vector_3d[0];
         }else{
-            min_backwards_projected_dist = std::min(min_backwards_projected_dist, (pfeval.reco_showervtxX - (254.3)) / shower_unit_vector_3d[0]);
+          if ((pfeval.reco_showervtxX - (254.3)) / shower_unit_vector_3d[0] < min_backwards_projected_dist)
+            min_backwards_projected_dist = (pfeval.reco_showervtxX - (254.3)) / shower_unit_vector_3d[0];
         }
         //projecting to y walls
         if (shower_unit_vector_3d[1] > 0){
-            min_backwards_projected_dist = std::min(min_backwards_projected_dist, (pfeval.reco_showervtxY - (-115.)) / shower_unit_vector_3d[1]);
+          if ((pfeval.reco_showervtxY - (-115.0)) / shower_unit_vector_3d[1] < min_backwards_projected_dist)
+            min_backwards_projected_dist = (pfeval.reco_showervtxY - (-115.)) / shower_unit_vector_3d[1];
         }else{
-            min_backwards_projected_dist = std::min(min_backwards_projected_dist, (pfeval.reco_showervtxY - (117.)) / shower_unit_vector_3d[1]);
+          if ((pfeval.reco_showervtxY - (117.0)) / shower_unit_vector_3d[1] < min_backwards_projected_dist)
+            min_backwards_projected_dist = (pfeval.reco_showervtxY - (117.)) / shower_unit_vector_3d[1];
         }
         //projecting to z walls
         if (shower_unit_vector_3d[2] > 0){
-            min_backwards_projected_dist = std::min(min_backwards_projected_dist, (pfeval.reco_showervtxZ - (0.6)) / shower_unit_vector_3d[2]);
+          if ((pfeval.reco_showervtxZ - (0.6)) / shower_unit_vector_3d[2] < min_backwards_projected_dist)
+            min_backwards_projected_dist = (pfeval.reco_showervtxZ - (0.6)) / shower_unit_vector_3d[2];
         }else{
-            min_backwards_projected_dist = std::min(min_backwards_projected_dist, (pfeval.reco_showervtxZ - (1036.4)) / shower_unit_vector_3d[2]);
+          if ((pfeval.reco_showervtxZ - (1036.4)) / shower_unit_vector_3d[2] < min_backwards_projected_dist)
+            min_backwards_projected_dist = (pfeval.reco_showervtxZ - (1036.4)) / shower_unit_vector_3d[2];
         }
         if (isinf(min_backwards_projected_dist)) min_backwards_projected_dist = -99999.0;
 
