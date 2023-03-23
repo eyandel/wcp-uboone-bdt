@@ -877,17 +877,17 @@ double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, 
             min_backwards_projected_dist = std::min(min_backwards_projected_dist, (pfeval.reco_showervtxX - (254.3)) / shower_unit_vector_3d[0]);
         }
         //projecting to y walls
-        if shower_unit_vector_3d[1] > 0:
+        if (shower_unit_vector_3d[1] > 0){
             min_backwards_projected_dist = std::min(min_backwards_projected_dist, (pfeval.reco_showervtxY - (-115.)) / shower_unit_vector_3d[1]);
-        else:
+        }else{
             min_backwards_projected_dist = std::min(min_backwards_projected_dist, (pfeval.reco_showervtxY - (117.)) / shower_unit_vector_3d[1]);
-
+        }
         //projecting to z walls
-        if shower_unit_vector_3d[2] > 0:
+        if (shower_unit_vector_3d[2] > 0){
             min_backwards_projected_dist = std::min(min_backwards_projected_dist, (pfeval.reco_showervtxZ - (0.6)) / shower_unit_vector_3d[2]);
-        else:
+        }else{
             min_backwards_projected_dist = std::min(min_backwards_projected_dist, (pfeval.reco_showervtxZ - (1036.4)) / shower_unit_vector_3d[2]);
-
+        }
         if (isinf(min_backwards_projected_dist)) min_backwards_projected_dist = -99999.0;
 
         backwards_projected_dist = min_backwards_projected_dist;
