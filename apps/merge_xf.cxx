@@ -570,6 +570,9 @@ int main( int argc, char** argv )
   T_PFeval->SetBranchStatus("showervtx_diff",1);
   T_PFeval->SetBranchStatus("muonvtx_diff",1);
   T_PFeval->SetBranchStatus("truth_muonMomentum",1);
+  T_PFeval->SetBranchStatus("truth_corr_nuvtxX",1);
+  T_PFeval->SetBranchStatus("truth_corr_nuvtxY",1);
+  T_PFeval->SetBranchStatus("truth_corr_nuvtxZ",1);
   if (pfeval.flag_NCDelta){
 
       T_PFeval->SetBranchStatus("truth_NCDelta",1);

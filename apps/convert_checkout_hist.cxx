@@ -77,7 +77,7 @@ int main( int argc, char** argv )
     auto it = already_seen.find(std::make_pair(pot.runNo,pot.subRunNo));
     if (it != already_seen.end()) continue;
     already_seen[std::make_pair(pot.runNo,pot.subRunNo)] = true;
-    
+
     T_pot->GetEntry(i);
     total_pot += pot.pot_tor875;
   }
@@ -283,6 +283,9 @@ int main( int argc, char** argv )
       T_PFeval->SetBranchStatus("muonvtx_diff",1);
       T_PFeval->SetBranchStatus("truth_nuIntType",1);
       T_PFeval->SetBranchStatus("truth_muonMomentum",1);
+      T_PFeval->SetBranchStatus("truth_corr_nuvtxX",1);
+      T_PFeval->SetBranchStatus("truth_corr_nuvtxY",1);
+      T_PFeval->SetBranchStatus("truth_corr_nuvtxZ",1);
       if(T_PFeval->GetBranch("truth_mother")){//prevents throwing an error for the non _PF files
         T_PFeval->SetBranchStatus("truth_Ntrack",1);
         T_PFeval->SetBranchStatus("truth_pdg",1);

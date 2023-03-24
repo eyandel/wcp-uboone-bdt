@@ -1,9 +1,9 @@
 void LEEana::CovMatrix::gen_pred_stat_cov_matrix(int run, std::map<int, TH1F*>& map_covch_hist, std::map<TString, TH1F*>& map_histoname_hist, TVectorD* vec_mean, TMatrixD* cov_mat){
   // prepare the maps ... name --> no,  covch, lee
-  std::map<TString, std::tuple<int, int, int, TString>> map_histoname_infos ; 
+  std::map<TString, std::tuple<int, int, int, TString>> map_histoname_infos ;
   std::map<int, TString> map_no_histoname;
-  
-  
+
+
   int ncount = 0;
   for (auto it = map_inputfile_info.begin(); it != map_inputfile_info.end(); it++){
     TString input_filename = it->first;
@@ -12,7 +12,7 @@ void LEEana::CovMatrix::gen_pred_stat_cov_matrix(int run, std::map<int, TH1F*>& 
 
     if (filetype == 5 || filetype == 15)   continue; // if this is data ...
 
-    
+
     if (period != run && run!=0) continue;
     TString out_filename = std::get<2>(it->second);
     int file_no = std::get<4>(it->second);
@@ -32,22 +32,22 @@ void LEEana::CovMatrix::gen_pred_stat_cov_matrix(int run, std::map<int, TH1F*>& 
 
       //std::cout << histoname << obsch << " " << covch << " " << flag_lee << std::endl;
     }
-    
+
   }
 
 
-  // results ... filename --> re --> variable, weight, lee weight, 
+  // results ... filename --> re --> variable, weight, lee weight,
   std::map<TString, std::vector<std::tuple<int, int, double, double, std::set<std::tuple<int, double, bool> > > > > map_all_events;
   std::map<TString, double> map_filename_pot;
   std::map<int, double> map_data_period_pot;
 
   std::map<TString, std::set<std::pair<TString, double> > > map_filename_set_histoname_ratio;
-  
+
   for (auto it = map_inputfile_info.begin(); it != map_inputfile_info.end(); it++){
     TString input_filename = it->first;
     int filetype = std::get<0>(it->second);
     int period = std::get<1>(it->second);
-    
+
     if (filetype == 5 || filetype == 15) {
       map_data_period_pot[period] = get_ext_pot(input_filename);
       //      std::cout << period << " " << map_data_period_pot[period] << std::endl;
@@ -55,31 +55,31 @@ void LEEana::CovMatrix::gen_pred_stat_cov_matrix(int run, std::map<int, TH1F*>& 
     }
     if (period != run && run !=0) continue;
 
-    get_pred_events_info(input_filename, map_all_events, map_filename_pot, map_histoname_infos);      
+    get_pred_events_info(input_filename, map_all_events, map_filename_pot, map_histoname_infos);
   }
 
- 
+
   fill_pred_stat_histograms(map_all_events, map_histoname_infos, map_no_histoname, map_histoname_hist);
-  
+
   // merge histograms according to POTs ...
   for (auto it = map_pred_covch_histos.begin(); it!=map_pred_covch_histos.end();it++){
     //std::cout << it->first << std::endl;
     int covch = it->first;
     TH1F *hpred = map_covch_hist[covch];
     hpred->Reset();
-    
+
     for (auto it1 = it->second.begin(); it1 != it->second.end(); it1++){
       TH1F *htemp = (TH1F*)hpred->Clone("htemp");
       htemp->Reset();
       std::map<int, double> temp_map_mc_acc_pot;
-       
+
       for (auto it2 = it1->begin(); it2 != it1->end(); it2++){
     	TString histoname = (*it2).first;
     	TString input_filename = map_histogram_inputfile[histoname];
     	auto it3 = map_inputfile_info.find(input_filename);
     	int period = std::get<1>(it3->second);
     	if (period != run && run != 0) continue;
-       
+
     	double mc_pot = map_filename_pot[input_filename];
     	//std::cout << mc_pot << std::endl;
     	if (temp_map_mc_acc_pot.find(period) == temp_map_mc_acc_pot.end()){
@@ -88,7 +88,7 @@ void LEEana::CovMatrix::gen_pred_stat_cov_matrix(int run, std::map<int, TH1F*>& 
     	  temp_map_mc_acc_pot[period] += mc_pot;
     	}
       }
-       
+
       for (auto it2 = it1->begin(); it2 != it1->end(); it2++){
     	TString histoname = (*it2).first;
     	TString input_filename = map_histogram_inputfile[histoname];
@@ -99,15 +99,15 @@ void LEEana::CovMatrix::gen_pred_stat_cov_matrix(int run, std::map<int, TH1F*>& 
     	double ratio = data_pot/temp_map_mc_acc_pot[period];
 
 	map_filename_set_histoname_ratio[input_filename].insert(std::make_pair(histoname, ratio));
-	
+
     	TH1F *hmc = map_histoname_hist[histoname];
     	htemp->Add(hmc, ratio);
       }
-      
+
       hpred->Add(htemp);
       delete htemp;
     }
-     
+
     int start_bin = map_covch_startbin[covch];
     for (int i=0;i!=hpred->GetNbinsX()+1;i++){
       (*vec_mean)[start_bin+i] = hpred->GetBinContent(i+1);
@@ -131,92 +131,92 @@ void LEEana::CovMatrix::gen_pred_stat_cov_matrix(int run, std::map<int, TH1F*>& 
       htemp->SetBinContent(i+1, std::get<2>(it->second.at(i)) );
     }
     map_filename_histo[filename] = htemp;
-  } 
+  }
 
   int nround = 5000;
   for (int qx = 0; qx != nround; qx++){
     if (qx % 500 ==0) std::cout << qx << std::endl;
-    
+
     for (int i=0;i!=rows;i++){
       x[i] = 0;
     }
-        
+
     // fill the histogram with variation ...
     fill_pred_stat_histograms(map_filename_histo, map_all_events, map_histoname_infos, map_no_histoname, map_histoname_hist, map_filename_set_histoname_ratio);
-    
+
      // merge histograms according to POTs ...
     for (auto it = map_pred_covch_histos.begin(); it!=map_pred_covch_histos.end();it++){
       //std::cout << it->first << std::endl;
       int covch = it->first;
       TH1F *hpred = map_covch_hist[covch];
       hpred->Reset();
-      
+
       for (auto it1 = it->second.begin(); it1 != it->second.end(); it1++){
 	TH1F *htemp = (TH1F*)hpred->Clone("htemp");
 	htemp->Reset();
-	
-	
+
+
 	for (auto it2 = it1->begin(); it2 != it1->end(); it2++){
 	  TString histoname = (*it2).first;
 	  TString input_filename = map_histogram_inputfile[histoname];
 	  auto it3 = map_inputfile_info.find(input_filename);
 	  int period = std::get<1>(it3->second);
 	  if (period != run && run !=0) continue; // skip ...
-	  	  
+
 	  TH1F *hmc = map_histoname_hist[histoname];
 	  htemp->Add(hmc, 1);
 	}
-	
+
 	hpred->Add(htemp);
 	delete htemp;
       }
-      
+
       int start_bin = map_covch_startbin[covch];
       for (int i=0;i!=hpred->GetNbinsX()+1;i++){
 	x[start_bin+i]= hpred->GetBinContent(i+1);
 	//	std::cout << (*vec_mean)(start_bin+i) << " " << x[start_bin+i] << std::endl;
       }
     }
-    
-    
+
+
     // add covariance matrix ...
     for (size_t n = 0;n!=rows; n++){
       for (size_t m =0; m!=rows;m++){
 	(*cov_mat)(n,m) += (x[n]-(*vec_mean)[n]) * (x[m] - (*vec_mean)[m]) * 1./nround;
       }
-    }  
+    }
   }
-  
+
 
   // clean up the memory ...
   for (auto it = map_filename_histo.begin(); it != map_filename_histo.end(); it++){
     delete it->second;
   }
-  
+
 
 
   // update the final  ones ...
    fill_pred_stat_histograms(map_all_events, map_histoname_infos, map_no_histoname, map_histoname_hist);
-  
+
   // merge histograms according to POTs ...
   for (auto it = map_pred_covch_histos.begin(); it!=map_pred_covch_histos.end();it++){
     //std::cout << it->first << std::endl;
     int covch = it->first;
     TH1F *hpred = map_covch_hist[covch];
     hpred->Reset();
-    
+
     for (auto it1 = it->second.begin(); it1 != it->second.end(); it1++){
       TH1F *htemp = (TH1F*)hpred->Clone("htemp");
       htemp->Reset();
       std::map<int, double> temp_map_mc_acc_pot;
-       
+
       for (auto it2 = it1->begin(); it2 != it1->end(); it2++){
     	TString histoname = (*it2).first;
     	TString input_filename = map_histogram_inputfile[histoname];
     	auto it3 = map_inputfile_info.find(input_filename);
     	int period = std::get<1>(it3->second);
     	if (period != run && run != 0) continue;
-       
+
     	double mc_pot = map_filename_pot[input_filename];
     	//std::cout << mc_pot << std::endl;
     	if (temp_map_mc_acc_pot.find(period) == temp_map_mc_acc_pot.end()){
@@ -225,7 +225,7 @@ void LEEana::CovMatrix::gen_pred_stat_cov_matrix(int run, std::map<int, TH1F*>& 
     	  temp_map_mc_acc_pot[period] += mc_pot;
     	}
       }
-       
+
       for (auto it2 = it1->begin(); it2 != it1->end(); it2++){
     	TString histoname = (*it2).first;
     	TString input_filename = map_histogram_inputfile[histoname];
@@ -234,15 +234,15 @@ void LEEana::CovMatrix::gen_pred_stat_cov_matrix(int run, std::map<int, TH1F*>& 
     	if (period != run && run !=0) continue; // skip ...
     	double data_pot = map_data_period_pot[period];
     	double ratio = data_pot/temp_map_mc_acc_pot[period];
-	 
+
     	TH1F *hmc = map_histoname_hist[histoname];
     	htemp->Add(hmc, ratio);
       }
-      
+
       hpred->Add(htemp);
       delete htemp;
     }
-     
+
     //    int start_bin = map_covch_startbin[covch];
     // for (int i=0;i!=hpred->GetNbinsX()+1;i++){
     //  (*vec_mean)[start_bin+i] = hpred->GetBinContent(i+1);
@@ -251,7 +251,7 @@ void LEEana::CovMatrix::gen_pred_stat_cov_matrix(int run, std::map<int, TH1F*>& 
       // std::cout << x[start_bin+i] << std::endl;
     //}
   }
-  
+
 }
 
 void LEEana::CovMatrix::fill_pred_stat_histograms(std::map<TString, TH1D*> map_filename_histo, std::map<TString, std::vector< std::tuple<int, int, double, double, std::set<std::tuple<int, double, bool> > > > >&map_all_events, std::map<TString, std::tuple<int, int, int, TString>>& map_histoname_infos, std::map<int, TString>& map_no_histoname,  std::map<TString, TH1F*>& map_histoname_hist, std::map<TString, std::set<std::pair<TString, double> > >& map_filename_histoname_ratio){
@@ -259,12 +259,12 @@ void LEEana::CovMatrix::fill_pred_stat_histograms(std::map<TString, TH1D*> map_f
   for (auto it = map_histoname_hist.begin(); it != map_histoname_hist.end(); it++){
     it->second->Reset();
   }
-  
+
   // loop over files
   for (auto it = map_all_events.begin(); it!=map_all_events.end(); it++){
     TString filename = it->first;
     TH1D *hweight = map_filename_histo[filename];
-    
+
     auto it2 = map_filename_histoname_ratio.find(filename);
     if (it2 == map_filename_histoname_ratio.end()) continue;
 
@@ -272,11 +272,11 @@ void LEEana::CovMatrix::fill_pred_stat_histograms(std::map<TString, TH1D*> map_f
     std::map<TString, double> map_histoname_sum;
 
     std::map<double, double> map_ratio_sum;
-    
+
     for (auto it3 = it2->second.begin(); it3 != it2->second.end(); it3++){
       double ratio = it3->second;
       TString temp_histoname = it3->first;
-      
+
       auto it4 = map_ratio_sum.find(ratio);
       if (it4 == map_ratio_sum.end()){
 	double sum = gRandom->Poisson(hweight->GetSum() * ratio);
@@ -288,12 +288,12 @@ void LEEana::CovMatrix::fill_pred_stat_histograms(std::map<TString, TH1D*> map_f
 	map_histoname_sum[temp_histoname] = sum;
       }
     }
-    
-    
+
+
     for (size_t i=0;i<max_sum;i++){
       int global_index = hweight->FindBin(hweight->GetRandom())-1;
       double weight_lee = std::get<3>(it->second.at(global_index));
-      
+
        for (auto it1 = std::get<4>(it->second.at(global_index)).begin(); it1 != std::get<4>(it->second.at(global_index)).end(); it1++){
 	 int no = std::get<0>(*it1);
 	 double val_cv = std::get<1>(*it1);
@@ -302,13 +302,13 @@ void LEEana::CovMatrix::fill_pred_stat_histograms(std::map<TString, TH1D*> map_f
 	 TString histoname = map_no_histoname[no];
 	 TH1F *htemp = map_histoname_hist[histoname];
 	 int flag_lee = std::get<2>(map_histoname_infos[histoname]);
-	 
+
 	 auto it4 = map_histoname_sum.find(histoname);
 	 if (it4 == map_histoname_sum.end()) std::cout << "something wrong! " << std::endl;
 	 double sum = it4->second;
-	 
+
 	 if (i>=sum) continue; // go over ...
-	 
+
 	  if (flag_cv){
 	    if (flag_lee){
 	      htemp->Fill(val_cv,weight_lee);
@@ -317,10 +317,10 @@ void LEEana::CovMatrix::fill_pred_stat_histograms(std::map<TString, TH1D*> map_f
 	    }
 	  }
        }
-      
+
     }
   }
-  
+
 }
 
 
@@ -328,15 +328,15 @@ void LEEana::CovMatrix::fill_pred_stat_histograms(std::map<TString, std::vector<
   for (auto it = map_histoname_hist.begin(); it != map_histoname_hist.end(); it++){
     it->second->Reset();
   }
-  
+
   // fill central value ...
-  
+
   // loop over files
   for (auto it = map_all_events.begin(); it!=map_all_events.end(); it++){
     // loop over events ...
     //std::cout << it->first << " " << it->second.size() << std::endl;
-   
-	 
+
+
     for (size_t i=0;i!=it->second.size(); i++){
        double weight = std::get<2>(it->second.at(i));
        double weight_lee = std::get<3>(it->second.at(i));
@@ -379,7 +379,7 @@ void LEEana::CovMatrix::get_pred_events_info(TString input_filename, std::map<TS
   kine.kine_energy_info = new std::vector<int>;
   kine.kine_particle_type = new std::vector<int>;
   kine.kine_energy_included = new std::vector<int>;
-  
+
   tagger.pio_2_v_dis2 = new std::vector<float>;
   tagger.pio_2_v_angle2 = new std::vector<float>;
   tagger.pio_2_v_acc_length = new std::vector<float>;
@@ -635,19 +635,19 @@ void LEEana::CovMatrix::get_pred_events_info(TString input_filename, std::map<TS
 
   bool flag_data = true;
   if (T_eval->GetBranch("weight_cv")) flag_data = false;
-  
+
   set_tree_address(T_BDTvars, tagger, 2);
   if (flag_data){
-    set_tree_address(T_eval, eval,2); 
+    set_tree_address(T_eval, eval,2);
     set_tree_address(T_PFeval, pfeval,2);
   }else{
-    set_tree_address(T_eval, eval); 
+    set_tree_address(T_eval, eval);
     set_tree_address(T_PFeval, pfeval);
   }
 
   //  std::cout << flag_data << " " << input_filename << std::endl;
-  
-  set_tree_address(T_pot, pot); 
+
+  set_tree_address(T_pot, pot);
   set_tree_address(T_KINEvars, kine);
 
   double total_pot = 0;
@@ -701,17 +701,17 @@ void LEEana::CovMatrix::get_pred_events_info(TString input_filename, std::map<TS
     T_BDTvars->SetBranchStatus("nc_delta_score", 1);
     T_BDTvars->SetBranchStatus("nc_pio_score", 1);
   }
-  
-  
+
+
   T_eval->SetBranchStatus("*",0);
   T_eval->SetBranchStatus("run",1);
   T_eval->SetBranchStatus("subrun",1);
   T_eval->SetBranchStatus("event",1);
-  
+
   T_eval->SetBranchStatus("match_energy",1);
   T_eval->SetBranchStatus("match_isFC",1);
   T_eval->SetBranchStatus("match_found",1);
-  if (T_eval->GetBranch("match_found_asInt")) T_eval->SetBranchStatus("match_found_asInt",1); 
+  if (T_eval->GetBranch("match_found_asInt")) T_eval->SetBranchStatus("match_found_asInt",1);
   T_eval->SetBranchStatus("stm_eventtype",1);
   T_eval->SetBranchStatus("stm_lowenergy",1);
   T_eval->SetBranchStatus("stm_LM",1);
@@ -719,7 +719,7 @@ void LEEana::CovMatrix::get_pred_events_info(TString input_filename, std::map<TS
   T_eval->SetBranchStatus("stm_STM",1);
   T_eval->SetBranchStatus("stm_FullDead",1);
   T_eval->SetBranchStatus("stm_clusterlength",1);
-  
+
   if (!flag_data){
     T_eval->SetBranchStatus("weight_spline",1);
     T_eval->SetBranchStatus("weight_cv",1);
@@ -737,7 +737,7 @@ void LEEana::CovMatrix::get_pred_events_info(TString input_filename, std::map<TS
     T_eval->SetBranchStatus("match_completeness_energy",1);
     T_eval->SetBranchStatus("truth_energyInside",1);
   }
-  
+
   T_KINEvars->SetBranchStatus("*",0);
   T_KINEvars->SetBranchStatus("kine_reco_Enu",1);
   T_KINEvars->SetBranchStatus("kine_energy_particle",1);
@@ -782,9 +782,12 @@ void LEEana::CovMatrix::get_pred_events_info(TString input_filename, std::map<TS
     T_PFeval->SetBranchStatus("showervtx_diff",1);
     T_PFeval->SetBranchStatus("muonvtx_diff",1);
     T_PFeval->SetBranchStatus("truth_muonMomentum",1);
+    T_PFeval->SetBranchStatus("truth_corr_nuvtxX",1);
+    T_PFeval->SetBranchStatus("truth_corr_nuvtxY",1);
+    T_PFeval->SetBranchStatus("truth_corr_nuvtxZ",1);
   }
   if (pfeval.flag_NCDelta){
-    
+
     if (!flag_data){
       T_PFeval->SetBranchStatus("truth_NCDelta",1);
       T_PFeval->SetBranchStatus("truth_NprimPio",1);
@@ -793,7 +796,7 @@ void LEEana::CovMatrix::get_pred_events_info(TString input_filename, std::map<TS
   if (pfeval.flag_recoprotonMomentum){
     T_PFeval->SetBranchStatus("reco_protonMomentum",1);
   }
-  
+
   if (pfeval.flag_showerMomentum){
     T_PFeval->SetBranchStatus("reco_showerMomentum",1);
     T_PFeval->SetBranchStatus("reco_Nproton",1);
@@ -810,10 +813,10 @@ void LEEana::CovMatrix::get_pred_events_info(TString input_filename, std::map<TS
     }
   }
   if (T_PFeval->GetBranch("truth_pdg")){
-     T_PFeval->SetBranchStatus("truth_Ntrack",1); 
-     T_PFeval->SetBranchStatus("truth_pdg",1); 
-     T_PFeval->SetBranchStatus("truth_mother",1); 
-     T_PFeval->SetBranchStatus("truth_startMomentum",1); 
+     T_PFeval->SetBranchStatus("truth_Ntrack",1);
+     T_PFeval->SetBranchStatus("truth_pdg",1);
+     T_PFeval->SetBranchStatus("truth_mother",1);
+     T_PFeval->SetBranchStatus("truth_startMomentum",1);
   }
 
   std::vector<std::tuple<int, int, double, double, std::set<std::tuple<int, double, bool> > > > vec_events;
@@ -842,13 +845,13 @@ void LEEana::CovMatrix::get_pred_events_info(TString input_filename, std::map<TS
 
     double osc_weight = 1.0;
     bool flag_updated = false;
-    
+
     for (auto it = histo_infos.begin(); it != histo_infos.end(); it++){
       TString histoname = std::get<0>(*it);
-      
+
       auto it2 = map_histoname_infos.find(histoname);
       int no = std::get<0>(it2->second);
-      
+
       TString var_name = std::get<4>(*it);
       TString ch_name = std::get<5>(*it);
       TString add_cut = std::get<6>(*it);
@@ -857,7 +860,7 @@ void LEEana::CovMatrix::get_pred_events_info(TString input_filename, std::map<TS
       bool flag_pass = get_cut_pass(ch_name, add_cut, flag_data, eval, pfeval, tagger, kine);
 
       if (flag_pass) std::get<4>(vec_events.at(i)).insert(std::make_tuple(no, val, flag_pass));
-      
+
       if (flag_osc && is_osc_channel(ch_name) && (!flag_updated)){
 	osc_weight = get_osc_weight(eval, pfeval);
 	flag_updated = true;
@@ -866,11 +869,11 @@ void LEEana::CovMatrix::get_pred_events_info(TString input_filename, std::map<TS
     if (!flag_data){
       std::get<2>(vec_events.at(i)) *= osc_weight;
       std::get<2>(vec_events.at(i)) *= get_weight("add_weight", eval, pfeval, kine, tagger, get_rw_info());
-    }  
+    }
 }
 
   map_all_events[input_filename] = vec_events;
 
   delete file;
-  
+
 }

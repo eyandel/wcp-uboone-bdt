@@ -22,24 +22,24 @@ int main( int argc, char** argv )
   TString input_filename = argv[1];
   TString out_filename =  argv[2];
 
-  
+
   bool flag_data = true;
 
   TFile *file = new TFile(input_filename,"READ");
-  
+
   CovMatrix cov;
   cov.add_xs_config();
-  
+
   std::cout << "Xs mode: " << std::endl;
 
   cov.print_rw(cov.get_rw_info());
-  
+
   TTree *T_BDTvars = (TTree*)file->Get("wcpselection/T_BDTvars");
   TTree *T_eval = (TTree*)file->Get("wcpselection/T_eval");
   TTree *T_pot = (TTree*)file->Get("wcpselection/T_pot");
   TTree *T_PFeval = (TTree*)file->Get("wcpselection/T_PFeval");
   TTree *T_KINEvars = (TTree*)file->Get("wcpselection/T_KINEvars");
- 
+
   if (T_eval->GetBranch("weight_cv")) flag_data = false;
 
   EvalInfo eval;
@@ -68,17 +68,17 @@ int main( int argc, char** argv )
   }
   double ext_pot = cov.get_ext_pot(input_filename);
   if (ext_pot != 0) total_pot = ext_pot;
-  
+
   std::cout << "Total POT: " << total_pot << " external POT: " << ext_pot << std::endl;
 
-  
+
   // prepare histograms ...
   // declare histograms ...
   TH1F *htemp = 0; TH1F *htemp1 = 0; TH2F *htemp2 = 0; int num = 0;
   std::map<TString, std::tuple<TH1F*, TH1F*, TH2F*, int> > map_histoname_hists;
-  
+
   std::vector< std::tuple<TString,  int, float, float, TString, TString, TString, TString > > all_histo_infos;
-  
+
   std::vector< std::tuple<TString,  int, float, float, TString, TString, TString, TString > > histo_infos = cov.get_histograms(input_filename,0);
   std::copy(histo_infos.begin(), histo_infos.end(), std::back_inserter(all_histo_infos));
   //  std::cout << "CV:" << std::endl;
@@ -92,11 +92,11 @@ int main( int argc, char** argv )
     TString ch_name = std::get<5>(*it);
     TString add_cut = std::get<6>(*it);
     TString weight = std::get<7>(*it);
-    
+
     //    std::cout << std::get<0>( *it)  << " " << std::get<1>(*it) << " " << std::get<4>(*it) << " " << std::get<5>(*it) << " " << std::get<6>(*it) << " " << std::get<7>(*it) << std::endl;
     htemp = new TH1F(histoname, histoname, nbin, llimit, hlimit);
     num = 1;
-    
+
     bool flag_spec = cov.is_xs_chname(ch_name) ;
     if (flag_spec){
       int nbins1 = cov.get_xs_nsignals();
@@ -124,7 +124,7 @@ int main( int argc, char** argv )
     TString weight = std::get<7>(*it);
     //std::cout << std::get<0>( *it) << " " << std::get<1>(*it) << " " << std::get<4>(*it) << " " << std::get<5>(*it) << " " << std::get<6>(*it) << " " << std::get<7>(*it) << std::endl;
     htemp = new TH1F(histoname, histoname, nbin, llimit, hlimit);
-        
+
     map_histoname_hists[histoname] = std::make_tuple(htemp, (TH1F*)(0), (TH2F*)(0), 1);
   }
   //  std::cout << std::endl;
@@ -146,7 +146,7 @@ int main( int argc, char** argv )
     map_histoname_hists[histoname] = std::make_tuple(htemp, (TH1F*)(0), (TH2F*)(0),1);
   }
   //  std::cout << std::endl;
-  
+
   // fill histogram ...
   T_BDTvars->SetBranchStatus("*",0);
   T_BDTvars->SetBranchStatus("numu_cc_flag",1);
@@ -186,12 +186,12 @@ int main( int argc, char** argv )
     T_BDTvars->SetBranchStatus("nc_delta_score", 1);
     T_BDTvars->SetBranchStatus("nc_pio_score", 1);
   }
-  
+
   T_eval->SetBranchStatus("*",0);
   T_eval->SetBranchStatus("match_energy",1);
   T_eval->SetBranchStatus("match_isFC",1);
   T_eval->SetBranchStatus("match_found",1);
-  if (T_eval->GetBranch("match_found_asInt")) T_eval->SetBranchStatus("match_found_asInt",1); 
+  if (T_eval->GetBranch("match_found_asInt")) T_eval->SetBranchStatus("match_found_asInt",1);
   T_eval->SetBranchStatus("stm_eventtype",1);
   T_eval->SetBranchStatus("stm_lowenergy",1);
   T_eval->SetBranchStatus("stm_LM",1);
@@ -203,7 +203,7 @@ int main( int argc, char** argv )
   // T_eval->SetBranchStatus("run",1);
   // T_eval->SetBranchStatus("subrun",1);
   // T_eval->SetBranchStatus("event",1);
-  
+
   if (!flag_data){
     T_eval->SetBranchStatus("weight_spline",1);
     T_eval->SetBranchStatus("weight_cv",1);
@@ -221,7 +221,7 @@ int main( int argc, char** argv )
     T_eval->SetBranchStatus("match_completeness_energy",1);
   }
 
-  
+
   T_KINEvars->SetBranchStatus("*",0);
   T_KINEvars->SetBranchStatus("kine_reco_Enu",1);
   T_KINEvars->SetBranchStatus("kine_energy_particle",1);
@@ -268,15 +268,18 @@ int main( int argc, char** argv )
       T_PFeval->SetBranchStatus("muonvtx_diff",1);
       T_PFeval->SetBranchStatus("truth_nuIntType",1);
       T_PFeval->SetBranchStatus("truth_muonMomentum",1);
+      T_PFeval->SetBranchStatus("truth_corr_nuvtxX",1);
+      T_PFeval->SetBranchStatus("truth_corr_nuvtxY",1);
+      T_PFeval->SetBranchStatus("truth_corr_nuvtxZ",1);
       if(T_PFeval->GetBranch("truth_mother")){//prevents throwing an error for the non _PF files
         T_PFeval->SetBranchStatus("truth_Ntrack",1);
-        T_PFeval->SetBranchStatus("truth_pdg",1); 
-        T_PFeval->SetBranchStatus("truth_mother",1); 
+        T_PFeval->SetBranchStatus("truth_pdg",1);
+        T_PFeval->SetBranchStatus("truth_mother",1);
         T_PFeval->SetBranchStatus("truth_startMomentum",1);
       }
   }
   if (pfeval.flag_NCDelta){
-    
+
       if (!flag_data){
           T_PFeval->SetBranchStatus("truth_NCDelta",1);
           T_PFeval->SetBranchStatus("truth_NprimPio",1);
@@ -285,7 +288,7 @@ int main( int argc, char** argv )
   if (pfeval.flag_recoprotonMomentum){
     T_PFeval->SetBranchStatus("reco_protonMomentum",1);
   }
-  
+
   if (pfeval.flag_showerMomentum){
     T_PFeval->SetBranchStatus("reco_showerMomentum",1);
     T_PFeval->SetBranchStatus("reco_Nproton",1);
@@ -303,7 +306,7 @@ int main( int argc, char** argv )
     T_eval->GetEntry(i);
     T_KINEvars->GetEntry(i);
     T_PFeval->GetEntry(i);
-    
+
     //    if (!is_preselection(eval)) continue;
 
     for (auto it = all_histo_infos.begin(); it != all_histo_infos.end(); it++){
@@ -329,8 +332,8 @@ int main( int argc, char** argv )
       double weight_val = get_weight(weight, eval, pfeval, kine, tagger, cov.get_rw_info(), flag_data);
 
       //  if (ch_name == "numuCC_signal_Enu_FC_overlay" && weight == "cv_spline") std::cout << "Xin: " << " " << flag_pass << " " << signal_bin << " " << weight_val << " " <<eval.run << " " << eval.subrun << " " << eval.event << std::endl;
-      
-      
+
+
       //     htemp = map_histoname_hist[histoname];
       auto tmp_hists = map_histoname_hists[histoname];
       TH1F *h1 = std::get<0>(tmp_hists);
@@ -348,12 +351,12 @@ int main( int argc, char** argv )
        	  std::cout << "[convt-hist-xs] Something wrong: cut/channel mismatch !" << std::endl;
        	}
       } // else
- 
+
 
 
     }
   }
-  
+
 
   // save histograms ...
   TFile *file1 = new TFile(out_filename,"RECREATE");
@@ -362,7 +365,7 @@ int main( int argc, char** argv )
   T->SetDirectory(file1);
   T->Branch("pot",&total_pot,"pot/D");
   T->Fill();
-  
+
   for (auto it = map_histoname_hists.begin(); it!= map_histoname_hists.end(); it++){
   //   //std::cout<<"DEBUG: "<<it->first<<" "<<it->second->GetName()<<" "<<it->second->GetSum()<<"\n";
     TH1F *h1 = std::get<0>(it->second);
@@ -378,13 +381,13 @@ int main( int argc, char** argv )
     }
     //   it->second->SetDirectory(file1);
   }
-  
+
   file1->Write();
   file1->Close();
 
-  
-     
-  
-  
+
+
+
+
   return 0;
 }

@@ -572,6 +572,9 @@ void LEEana::CovMatrix::fill_det_histograms(std::map<TString, TH1D*> map_filenam
   T_PFeval_cv->SetBranchStatus("showervtx_diff",1);
   T_PFeval_cv->SetBranchStatus("muonvtx_diff",1);
   T_PFeval_cv->SetBranchStatus("truth_muonMomentum",1);
+  T_PFeval_cv->SetBranchStatus("truth_corr_nuvtxX",1);
+  T_PFeval_cv->SetBranchStatus("truth_corr_nuvtxY",1);
+  T_PFeval_cv->SetBranchStatus("truth_corr_nuvtxZ",1);
   if (pfeval_cv.flag_NCDelta){
 
     T_PFeval_cv->SetBranchStatus("truth_NCDelta",1);
@@ -749,6 +752,9 @@ void LEEana::CovMatrix::fill_det_histograms(std::map<TString, TH1D*> map_filenam
   T_PFeval_det->SetBranchStatus("showervtx_diff",1);
   T_PFeval_det->SetBranchStatus("muonvtx_diff",1);
   T_PFeval_det->SetBranchStatus("truth_muonMomentum",1);
+  T_PFeval_det->SetBranchStatus("truth_corr_nuvtxX",1);
+  T_PFeval_det->SetBranchStatus("truth_corr_nuvtxY",1);
+  T_PFeval_det->SetBranchStatus("truth_corr_nuvtxZ",1);
   if (pfeval_det.flag_NCDelta){
 
       T_PFeval_det->SetBranchStatus("truth_NCDelta",1);

@@ -764,6 +764,9 @@ int main( int argc, char** argv )
   T_PFeval_cv->SetBranchStatus("showervtx_diff",1);
   T_PFeval_cv->SetBranchStatus("muonvtx_diff",1);
   T_PFeval_cv->SetBranchStatus("truth_muonMomentum",1);
+  T_PFeval_cv->SetBranchStatus("truth_corr_nuvtxX",1);
+  T_PFeval_cv->SetBranchStatus("truth_corr_nuvtxY",1);
+  T_PFeval_cv->SetBranchStatus("truth_corr_nuvtxZ",1);
   if (pfeval_cv.flag_NCDelta){
 
       T_PFeval_cv->SetBranchStatus("truth_NCDelta",1);
@@ -919,6 +922,9 @@ int main( int argc, char** argv )
   T_PFeval_det->SetBranchStatus("showervtx_diff",1);
   T_PFeval_det->SetBranchStatus("muonvtx_diff",1);
   T_PFeval_det->SetBranchStatus("truth_muonMomentum",1);
+  T_PFeval_det->SetBranchStatus("truth_corr_nuvtxX",1);
+  T_PFeval_det->SetBranchStatus("truth_corr_nuvtxY",1);
+  T_PFeval_det->SetBranchStatus("truth_corr_nuvtxZ",1);
   if (pfeval_det.flag_NCDelta){
 
       T_PFeval_det->SetBranchStatus("truth_NCDelta",1);
