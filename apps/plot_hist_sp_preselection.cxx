@@ -1576,11 +1576,12 @@ int main( int argc, char** argv )
         gratio_mc2[obschannel-1]->GetYaxis()->SetRangeUser(0,int(1.5*maxratio)<2?int(1.5*maxratio):2);
         gratio_mc2[obschannel-1]->GetXaxis()->SetRangeUser(hmc->GetXaxis()->GetXmin(),hmc->GetXaxis()->GetXmax());
         }
-        //labels
+        //labels preselection
         if(obschannel==1) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Neutrino Energy [MeV]");
         if(obschannel==2) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Number of Reco Showers");
         if(obschannel==3) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Neutrino Vertex X Position [cm]");
-        if(obschannel==1) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Interaction Timing [ns]");
+        if(obschannel==4) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Interaction Timing [ns]");
+        //labels bdt scores
       /*  if(obschannel>=5) //hard coded at this moment
         {
             gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco #pi^{0} energy [MeV]");
