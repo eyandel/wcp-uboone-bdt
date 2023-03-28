@@ -3068,7 +3068,9 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
 
  // generic selection nu PC+FC 1 obs channel
 }else if (ch_name == "generic_nu_overlay" || ch_name == "BG_generic_nu_ext" || ch_name =="BG_generic_nu_dirt" || ch_name == "generic_nu_bnb" ||
-          ch_name == "generic_nu_overlay_2" || ch_name == "BG_generic_nu_ext_2" || ch_name =="BG_generic_nu_dirt_2" || ch_name == "generic_nu_bnb_2"){
+          ch_name == "generic_nu_overlay_2" || ch_name == "BG_generic_nu_ext_2" || ch_name =="BG_generic_nu_dirt_2" || ch_name == "generic_nu_bnb_2" ||
+          ch_name == "generic_nu_overlay_3" || ch_name == "BG_generic_nu_ext_3" || ch_name =="BG_generic_nu_dirt_3" || ch_name == "generic_nu_bnb_3" ||
+          ch_name == "generic_nu_overlay_4" || ch_name == "BG_generic_nu_ext_4" || ch_name =="BG_generic_nu_dirt_4" || ch_name == "generic_nu_bnb_4"){
     if (flag_generic) return true;
     else return false;
  // numuCC selection PC+FC 1 obs channel
@@ -4099,6 +4101,15 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
   }else if (ch_name == "sp_nc_pi0_Xp" || ch_name == "sp_nc_pi0_2_Xp"){
                 if (flag_FC && flag_ncpio_sel && (!flag_singlephoton_sel)) return true;
                 return false;
+  }else if (ch_name == "sp_nc_pi0_0p_nsbeam" || ch_name == "sp_nc_pi0_2_0p_nsbeam"){
+                if (flag_FC && flag_ncpio_sel && (!flag_singlephoton_sel) && flag_0p && flag_nsbeam) return true;
+                return false;
+  }else if (ch_name == "sp_nc_pi0_Np_nsbeam" || ch_name == "sp_nc_pi0_2_Np_nsbeam"){
+                if (flag_FC && flag_ncpio_sel && (!flag_singlephoton_sel) && (!flag_0p) && flag_nsbeam) return true;
+                return false;
+  }else if (ch_name == "sp_nc_pi0_Xp_nsbeam" || ch_name == "sp_nc_pi0_2_Xp_nsbeam"){
+                if (flag_FC && flag_ncpio_sel && (!flag_singlephoton_sel) && flag_nsbeam) return true;
+                return false;
   }else if (ch_name == "sp_nc_pi0_0p_ext" || ch_name == "sp_nc_pi0_2_0p_ext"){
                 if (flag_FC && flag_ncpio_sel && (!flag_singlephoton_sel) && flag_0p) return true;
                 return false;
@@ -4188,6 +4199,15 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
   }else if (ch_name == "sp_numuCC_Xp" || ch_name == "sp_numuCC_2_Xp"){
                 if (flag_FC && flag_numuCC && !flag_ncpio_sel && (!flag_singlephoton_sel)) return true;
                 return false;
+  }else if (ch_name == "sp_numuCC_0p_nsbeam" || ch_name == "sp_numuCC_2_0p_nsbeam"){
+                if (flag_FC && flag_numuCC && !flag_ncpio_sel && (!flag_singlephoton_sel) && flag_0p && flag_nsbeam) return true;
+                return false;
+  }else if (ch_name == "sp_numuCC_Np_nsbeam" || ch_name == "sp_numuCC_2_Np_nsbeam"){
+                if (flag_FC && flag_numuCC && !flag_ncpio_sel && (!flag_singlephoton_sel) && (!flag_0p) && flag_nsbeam) return true;
+                return false;
+  }else if (ch_name == "sp_numuCC_Xp_nsbeam" || ch_name == "sp_numuCC_2_Xp_nsbeam"){
+                if (flag_FC && flag_numuCC && !flag_ncpio_sel && (!flag_singlephoton_sel) && flag_nsbeam) return true;
+                return false;
   }else if (ch_name == "sp_numuCC_0p_ext" || ch_name == "sp_numuCC_2_0p_ext"){
                 if (flag_FC && flag_numuCC && !flag_ncpio_sel && (!flag_singlephoton_sel) && flag_0p) return true;
                 return false;
@@ -4272,6 +4292,15 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
   }else if (ch_name == "sp_bdt_other_Xp" || ch_name == "sp_bdt_other_2_Xp"){
                 if (flag_singlephoton_other_sel && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel)) return true;
                 return false;
+  }else if (ch_name == "sp_bdt_other_0p_nsbeam" || ch_name == "sp_bdt_other_2_0p_nsbeam"){
+                if (flag_singlephoton_other_sel && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && flag_0p && flag_nsbeam) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_other_Np_nsbeam" || ch_name == "sp_bdt_other_2_Np_nsbeam"){
+                if (flag_singlephoton_other_sel && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && (!flag_0p) && flag_nsbeam) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_other_Xp_nsbeam" || ch_name == "sp_bdt_other_2_Xp_nsbeam"){
+                if (flag_singlephoton_other_sel && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && flag_nsbeam) return true;
+                return false;
   }else if (ch_name == "sp_bdt_other_0p_ext" || ch_name == "sp_bdt_other_2_0p_ext"){
                 if (flag_singlephoton_other_sel && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && flag_0p) return true;
                 return false;
@@ -4316,6 +4345,15 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
                 return false;
   }else if (ch_name == "sp_bdt_nue_Xp" || ch_name == "sp_bdt_nue_2_Xp"){
                 if (flag_singlephoton_nue_sel && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel)) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_nue_0p_nsbeam" || ch_name == "sp_bdt_nue_2_0p_nsbeam"){
+                if (flag_singlephoton_nue_sel && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && flag_0p && flag_nsbeam) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_nue_Np_nsbeam" || ch_name == "sp_bdt_nue_2_Np_nsbeam"){
+                if (flag_singlephoton_nue_sel && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && (!flag_0p) && flag_nsbeam) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_nue_Xp_nsbeam" || ch_name == "sp_bdt_nue_2_Xp_nsbeam"){
+                if (flag_singlephoton_nue_sel && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && flag_nsbeam) return true;
                 return false;
   }else if (ch_name == "sp_bdt_nue_0p_ext" || ch_name == "sp_bdt_nue_2_0p_ext"){
                 if (flag_singlephoton_nue_sel && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && flag_0p) return true;

@@ -1,0 +1,11 @@
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_single_photon_cv_low.root        all
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_inclusivephoton_run3_sp_low.root all
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnboverlay_run1_sp.root          all
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnboverlay_run3_sp_1.root        all
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_dirt_run1_sp.root                all
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_dirt_run3_sp.root                all
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_extbnb_C1_run1_sp.root           all
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_extbnb_run3F_sp.root             all
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnb_5e19_run1_sp.root            all
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnb_run3_beamtime_final.root     all
+end                                                                                             end

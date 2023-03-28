@@ -1,52 +1,8 @@
-generic_nu_overlay                kine_reco_Enu	                 25	   0	      2500    1	      1		      1	    0	        0		      1		      2	      cv_spline           		0
-BG_generic_nu_dirt		            kine_reco_Enu	                 25	   0	      2500    1	      1		      0	    0.5	      0		      1		      4	      cv_spline    		        0
-BG_generic_nu_ext 		            kine_reco_Enu	                 25	   0	      2500    1	      0		      0	    0 	      0		      5		      3	      unity		                0
-generic_nu_bnb                    kine_reco_Enu	                 25	   0	      2500    1	      0		      0	    0 	      0		      0		      5	      unity   		            0
-
-generic_nu_overlay_2              num_shower_sp                  10    0        10     	2	      1		      1	    0	        0		      2		      2	      cv_spline           		0
-BG_generic_nu_dirt_2	            num_shower_sp                  10    0        10    	2	      1		      0	    0.5	      0		      2		      4	      cv_spline    		        0
-BG_generic_nu_ext_2 	            num_shower_sp                  10    0        10    	2	      0		      0	    0 	      0		      6		      3	      unity		                0
-generic_nu_bnb_2                  num_shower_sp                  10    0        10    	2	      0		      0	    0 	      0		      0		      5	      unity   		            0
-
-generic_nu_overlay_3              reco_nuvtxX                    30	   -10      290     3	      1		      1	    0	        0		      3		      2	      cv_spline           		0
-BG_generic_nu_dirt_3	            reco_nuvtxX                    30	   -10      290     3	      1		      0	    0.5	      0		      3		      4	      cv_spline    		        0
-BG_generic_nu_ext_3 	            reco_nuvtxX                    30	   -10      290     3	      0		      0	    0 	      0		      7		      3	      unity		                0
-generic_nu_bnb_3                  reco_nuvtxX                    30	   -10      290     3	      0		      0	    0 	      0		      0		      5	      unity   		            0
-
-generic_nu_overlay_4              ns_beam_time	                 30    -15      15     	4	      1		      1	    0	        0		      4		      2	      cv_spline           		0
-BG_generic_nu_dirt_4	            ns_beam_time	                 30    -15      15    	4	      1		      0	    0.5	      0		      4		      4	      cv_spline    		        0
-BG_generic_nu_ext_4 	            ns_beam_time	                 30    -15      15    	4	      0		      0	    0 	      0		      8		      3	      unity		                0
-generic_nu_bnb_4                  ns_beam_time	                 30    -15      15    	4	      0		      0	    0 	      0		      0		      5	      unity   		            0
-End					                      End		                         -1	   -1	      -1	   -1	      -1		    -1	  -1		    -1		    -1		    -1	    end		                  -1
-
-
 generic_nu_spoverlay		          kine_reco_Enu	                 25	   0	      2500   	1	      1		      1	    0	        0		      1		      9	      cv_spline           		0
-generic_nu_overlay                kine_reco_Enu	                 25	   0	      2500   	1	      1		      1	    0	        0		      1		      2	      cv_spline           		0
+generic_nu_overlay_sp_BG          kine_reco_Enu	                 25	   0	      2500   	1	      1		      1	    0	        0		      1		      2	      cv_spline           		0
 BG_generic_nu_dirt		            kine_reco_Enu	                 25	   0	      2500  	1	      1		      0	    0.5	      0		      1		      4	      cv_spline    		        0
 BG_generic_nu_ext 		            kine_reco_Enu	                 25	   0	      2500  	1	      0		      0	    0 	      0		      2		      3	      unity		                0
 generic_nu_bnb                    kine_reco_Enu	                 25	   0	      2500  	1	      0		      0	    0 	      0		      0		      5	      unity   		            0
-End					                      End		                         -1	   -1	      -1	   -1	      -1		    -1	  -1		    -1		    -1		    -1	    end		                  -1
-
-
-generic_nu_overlay                single_photon_numu_score       60	   -15	    15     	1	      1		      1	    0	        0		      1		      2	      cv_spline           		0
-BG_generic_nu_dirt		            single_photon_numu_score       60	   -15	    15    	1	      1		      0	    0.5	      0		      1		      4	      cv_spline    		        0
-BG_generic_nu_ext 		            single_photon_numu_score       60	   -15	    15    	1	      0		      0	    0 	      0		      5		      3	      unity		                0
-generic_nu_bnb                    single_photon_numu_score       60	   -15	    15    	1	      0		      0	    0 	      0		      0		      5	      unity   		            0
-
-generic_nu_overlay_2              single_photon_other_score      60	   -15	    15     	2	      1		      1	    0	        0		      2		      2	      cv_spline           		0
-BG_generic_nu_dirt_2	            single_photon_other_score      60	   -15	    15    	2	      1		      0	    0.5	      0		      2		      4	      cv_spline    		        0
-BG_generic_nu_ext_2 	            single_photon_other_score      60	   -15	    15    	2	      0		      0	    0 	      0		      6		      3	      unity		                0
-generic_nu_bnb_2                  single_photon_other_score      60	   -15	    15    	2	      0		      0	    0 	      0		      0		      5	      unity   		            0
-
-generic_nu_overlay_3              single_photon_ncpi0_score      60	   -15	    15     	3	      1		      1	    0	        0		      3		      2	      cv_spline           		0
-BG_generic_nu_dirt_3	            single_photon_ncpi0_score      60	   -15	    15    	3	      1		      0	    0.5	      0		      3		      4	      cv_spline    		        0
-BG_generic_nu_ext_3 	            single_photon_ncpi0_score      60	   -15	    15    	3	      0		      0	    0 	      0		      7		      3	      unity		                0
-generic_nu_bnb_3                  single_photon_ncpi0_score      60	   -15	    15    	3	      0		      0	    0 	      0		      0		      5	      unity   		            0
-
-generic_nu_overlay_4              single_photon_nue_score        60	   -15	    15     	4	      1		      1	    0	        0		      4		      2	      cv_spline           		0
-BG_generic_nu_dirt_4	            single_photon_nue_score        60	   -15	    15    	4	      1		      0	    0.5	      0		      4		      4	      cv_spline    		        0
-BG_generic_nu_ext_4 	            single_photon_nue_score        60	   -15	    15    	4	      0		      0	    0 	      0		      8		      3	      unity		                0
-generic_nu_bnb_4                  single_photon_nue_score        60	   -15	    15    	4	      0		      0	    0 	      0		      0		      5	      unity   		            0
 End					                      End		                         -1	   -1	      -1	   -1	      -1		    -1	  -1		    -1		    -1		    -1	    end		                  -1
 
 
