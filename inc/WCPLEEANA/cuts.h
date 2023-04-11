@@ -1973,6 +1973,7 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
   if(pfeval.truth_nuScatType!=10 && pfeval.truth_nuScatType!=1 && pfeval.truth_nuScatType!=3 && pfeval.truth_nuScatType!=4 && eval.match_completeness_energy>0.1*eval.truth_energyInside) map_cuts_flag["OTHER"] = true;
   else map_cuts_flag["OTHER"] = false;
 
+  map_cuts_flag["none"] = false;
 
   // figure out additional cuts and flag_data ...
   bool flag_add = true;
