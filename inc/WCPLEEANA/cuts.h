@@ -1978,7 +1978,7 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
   // figure out additional cuts and flag_data ...
   bool flag_add = true;
   if(add_cut == "all") flag_add = true;
-  else if( (flag_data && (add_cut=="farsideband" || add_cut=="nearsideband" || add_cut=="nueCC" || add_cut=="generic" || add_cut=="loosenueCC")) || !flag_data ){
+  else if( (flag_data && (add_cut=="none" || add_cut=="farsideband" || add_cut=="nearsideband" || add_cut=="nueCC" || add_cut=="generic" || add_cut=="loosenueCC")) || !flag_data ){
       std::istringstream sss(add_cut.Data());
       for(std::string line; std::getline(sss, line, '_');){
           if(map_cuts_flag.find(line)!=map_cuts_flag.end()){
