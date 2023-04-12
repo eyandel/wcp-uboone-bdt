@@ -20,4 +20,6 @@
 /uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_spoverlay_run1_voltpc.root        SPOutFVSig
 /uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_dirt_run1_sp.root                      SPOutFVSig
 /uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_dirt_run3_sp.root                      SPOutFVSig
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnb_5e19_run1_sp.root                  none
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnb_run3_beamtime_final.root           none
 end                                                                                             end
