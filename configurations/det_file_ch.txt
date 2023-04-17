@@ -1,12 +1,21 @@
 /uboone/data/users/eyandel/hist_rootfiles/DetVar/checkout_single_photon_lydown_low_run1.root    	all
+/uboone/data/users/eyandel/hist_rootfiles/DetVar/checkout_single_photon_lydown_low_run3.root    	all
 /uboone/data/users/eyandel/hist_rootfiles/DetVar/checkout_single_photon_lyatten_low_run1.root    	all
+/uboone/data/users/eyandel/hist_rootfiles/DetVar/checkout_single_photon_lyatten_low_run3.root    	all
 /uboone/data/users/eyandel/hist_rootfiles/DetVar/checkout_single_photon_lyrayleigh_low_run1.root  	all
+/uboone/data/users/eyandel/hist_rootfiles/DetVar/checkout_single_photon_lyrayleigh_low_run3.root  	all
 /uboone/data/users/eyandel/hist_rootfiles/DetVar/checkout_single_photon_recomb2_low_run1.root  	 all
+/uboone/data/users/eyandel/hist_rootfiles/DetVar/checkout_single_photon_recomb2_low_run3.root  	 all
 /uboone/data/users/eyandel/hist_rootfiles/DetVar/checkout_single_photon_sce_low_run1.root        all
+/uboone/data/users/eyandel/hist_rootfiles/DetVar/checkout_single_photon_sce_low_run3.root        all
 /uboone/data/users/eyandel/hist_rootfiles/DetVar/checkout_single_photon_wmthxz_low_run1.root	   all
+/uboone/data/users/eyandel/hist_rootfiles/DetVar/checkout_single_photon_wmthxz_low_run3.root	   all
 /uboone/data/users/eyandel/hist_rootfiles/DetVar/checkout_single_photon_wmthyz_low_run1.root	   all
+/uboone/data/users/eyandel/hist_rootfiles/DetVar/checkout_single_photon_wmthyz_low_run3.root	   all
 /uboone/data/users/eyandel/hist_rootfiles/DetVar/checkout_single_photon_wmx_low_run1.root        all
+/uboone/data/users/eyandel/hist_rootfiles/DetVar/checkout_single_photon_wmx_low_run3.root        all
 /uboone/data/users/eyandel/hist_rootfiles/DetVar/checkout_single_photon_wmyz_low_run1.root       all
+/uboone/data/users/eyandel/hist_rootfiles/DetVar/checkout_single_photon_wmyz_low_run3.root       all
 end														                                                            end
 
 /uboone/data/users/eyandel/hist_rootfiles/DetVar/checkout_bnboverlay_recomb2_run1.root  	all
