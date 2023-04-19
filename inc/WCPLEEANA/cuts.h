@@ -4411,6 +4411,10 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
              || ch_name == "sp_bdt_numuCC_5_Xp" || ch_name == "sp_bdt_numuCC_6_Xp" || ch_name == "sp_bdt_numuCC_7_Xp" || ch_name == "sp_bdt_numuCC_8_Xp"){
                 if (flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel)) return true;
                 return false;
+  }else if (ch_name == "sp_bdt_numuCC_Xp_nsbeam" || ch_name == "sp_bdt_numuCC_2_Xp_nsbeam" || ch_name == "sp_bdt_numuCC_3_Xp_nsbeam" || ch_name == "sp_bdt_numuCC_4_Xp_nsbeam"
+             || ch_name == "sp_bdt_numuCC_5_Xp_nsbeam" || ch_name == "sp_bdt_numuCC_6_Xp_nsbeam" || ch_name == "sp_bdt_numuCC_7_Xp_nsbeam" || ch_name == "sp_bdt_numuCC_8_Xp_nsbeam"){
+                if (flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && flag_nsbeam) return true;
+                return false;
   }else if (ch_name == "sp_bdt_numuCC_0p_ext" || ch_name == "sp_bdt_numuCC_2_0p_ext" || ch_name == "sp_bdt_numuCC_3_0p_ext" || ch_name == "sp_bdt_numuCC_4_0p_ext"
              || ch_name == "sp_bdt_numuCC_5_0p_ext" || ch_name == "sp_bdt_numuCC_6_0p_ext" || ch_name == "sp_bdt_numuCC_7_0p_ext" || ch_name == "sp_bdt_numuCC_8_0p_ext"){
                 if (flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && flag_0p) return true;
