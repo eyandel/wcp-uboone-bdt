@@ -1590,10 +1590,14 @@ int main( int argc, char** argv )
          if(obschannel<=2) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Neutrino Energy [MeV]");
          if(obschannel==3) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Energy [MeV]");
          if(obschannel==4) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower cos#theta (relative to Z/beam)");
-         if(obschannel==5) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Neutrino Vertex X [cm]");
-         if(obschannel==6) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Neutrino Vertex Y [cm]");
-         if(obschannel==7) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Neutrino Vertex Z [cm]");
-         if(obschannel==8) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("#nu_{#mu}CC Background BDT Score");
+         if(obschannel==5) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Neutrino to Shower Vertex Distance [cm]");
+         if(obschannel==6) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Number of Showers");
+         if(obschannel==7) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco #pi^{0} Mass [MeV]");
+         if(obschannel==8) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Vertex X [cm]");
+         if(obschannel==9) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Vertex Y [cm]");
+         if(obschannel==10) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Vertex Z [cm]");
+         if(obschannel==11) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco #pi^{0} Opening Angle [degrees]");
+         if(obschannel==12) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("NC #pi^{0} Background BDT Score");
         /* else if(obschannel==3) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("nue BDT score"); */
         /* if(obschannel==1) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Median dQ/dx (1-5 cm) [43k e-/cm]"); */
         /* if(obschannel==2) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Shower angle to beam (Z-axis) [degree]"); */

@@ -412,6 +412,10 @@ double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, 
     return median_dedx; // MeV/cm
   }else if (var_name == "reco_showervtxX"){
       return pfeval.reco_showervtxX;
+  }else if (var_name == "reco_showervtxY"){
+      return pfeval.reco_showervtxY;
+  }else if (var_name == "reco_showervtxZ"){
+      return pfeval.reco_showervtxZ;
   }else if (var_name == "reco_nuvtxX"){
       return pfeval.reco_nuvtxX;
   }else if (var_name == "reco_nuvtxY"){
@@ -4129,40 +4133,64 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
       }
       return false;
   // NC Pi0 channels (with single photon selected events removed):
-  }else if (ch_name == "sp_nc_pi0_0p" || ch_name == "sp_nc_pi0_2_0p"){
+}else if (ch_name == "sp_nc_pi0_0p" || ch_name == "sp_nc_pi0_2_0p" || ch_name == "sp_nc_pi0_3_0p" || ch_name == "sp_nc_pi0_4_0p"
+           || ch_name == "sp_nc_pi0_5_0p" || ch_name == "sp_nc_pi0_6_0p" || ch_name == "sp_nc_pi0_7_0p" || ch_name == "sp_nc_pi0_8_0p"
+           || ch_name == "sp_nc_pi0_9_0p" || ch_name == "sp_nc_pi0_10_0p" || ch_name == "sp_nc_pi0_11_0p" || ch_name == "sp_nc_pi0_12_0p"){
                 if (flag_FC && flag_ncpio_sel && (!flag_singlephoton_sel) && flag_0p) return true;
                 return false;
-  }else if (ch_name == "sp_nc_pi0_Np" || ch_name == "sp_nc_pi0_2_Np"){
+  }else if (ch_name == "sp_nc_pi0_Np" || ch_name == "sp_nc_pi0_2_Np" || ch_name == "sp_nc_pi0_3_Np" || ch_name == "sp_nc_pi0_4_Np"
+            || ch_name == "sp_nc_pi0_5_Np" || ch_name == "sp_nc_pi0_6_Np" || ch_name == "sp_nc_pi0_7_Np" || ch_name == "sp_nc_pi0_8_Np"
+            || ch_name == "sp_nc_pi0_9_Np" || ch_name == "sp_nc_pi0_10_Np" || ch_name == "sp_nc_pi0_11_Np" || ch_name == "sp_nc_pi0_12_Np"){
                 if (flag_FC && flag_ncpio_sel && (!flag_singlephoton_sel) && (!flag_0p)) return true;
                 return false;
-  }else if (ch_name == "sp_nc_pi0_Xp" || ch_name == "sp_nc_pi0_2_Xp"){
+  }else if (ch_name == "sp_nc_pi0_Xp" || ch_name == "sp_nc_pi0_2_Xp" || ch_name == "sp_nc_pi0_3_Xp" || ch_name == "sp_nc_pi0_4_Xp"
+            || ch_name == "sp_nc_pi0_5_Xp" || ch_name == "sp_nc_pi0_6_Xp" || ch_name == "sp_nc_pi0_7_Xp" || ch_name == "sp_nc_pi0_8_Xp"
+            || ch_name == "sp_nc_pi0_9_Xp" || ch_name == "sp_nc_pi0_10_Xp" || ch_name == "sp_nc_pi0_11_Xp" || ch_name == "sp_nc_pi0_12_Xp"){
                 if (flag_FC && flag_ncpio_sel && (!flag_singlephoton_sel)) return true;
                 return false;
-  }else if (ch_name == "sp_nc_pi0_0p_nsbeam" || ch_name == "sp_nc_pi0_2_0p_nsbeam"){
+  }else if (ch_name == "sp_nc_pi0_0p_nsbeam" || ch_name == "sp_nc_pi0_2_0p_nsbeam" || ch_name == "sp_nc_pi0_3_0p_nsbeam" || ch_name == "sp_nc_pi0_4_0p_nsbeam"
+            || ch_name == "sp_nc_pi0_5_0p_nsbeam" || ch_name == "sp_nc_pi0_6_0p_nsbeam" || ch_name == "sp_nc_pi0_7_0p_nsbeam" || ch_name == "sp_nc_pi0_8_0p_nsbeam"
+            || ch_name == "sp_nc_pi0_9_0p_nsbeam" || ch_name == "sp_nc_pi0_10_0p_nsbeam" || ch_name == "sp_nc_pi0_11_0p_nsbeam" || ch_name == "sp_nc_pi0_12_0p_nsbeam"){
                 if (flag_FC && flag_ncpio_sel && (!flag_singlephoton_sel) && flag_0p && flag_nsbeam) return true;
                 return false;
-  }else if (ch_name == "sp_nc_pi0_Np_nsbeam" || ch_name == "sp_nc_pi0_2_Np_nsbeam"){
+  }else if (ch_name == "sp_nc_pi0_Np_nsbeam" || ch_name == "sp_nc_pi0_2_Np_nsbeam" || ch_name == "sp_nc_pi0_3_Np_nsbeam" || ch_name == "sp_nc_pi0_4_Np_nsbeam"
+            || ch_name == "sp_nc_pi0_5_Np_nsbeam" || ch_name == "sp_nc_pi0_6_Np_nsbeam" || ch_name == "sp_nc_pi0_7_Np_nsbeam" || ch_name == "sp_nc_pi0_8_Np_nsbeam"
+            || ch_name == "sp_nc_pi0_9_Np_nsbeam" || ch_name == "sp_nc_pi0_10_Np_nsbeam" || ch_name == "sp_nc_pi0_11_Np_nsbeam" || ch_name == "sp_nc_pi0_12_Np_nsbeam"){
                 if (flag_FC && flag_ncpio_sel && (!flag_singlephoton_sel) && (!flag_0p) && flag_nsbeam) return true;
                 return false;
-  }else if (ch_name == "sp_nc_pi0_Xp_nsbeam" || ch_name == "sp_nc_pi0_2_Xp_nsbeam"){
+  }else if (ch_name == "sp_nc_pi0_Xp_nsbeam" || ch_name == "sp_nc_pi0_2_Xp_nsbeam" || ch_name == "sp_nc_pi0_3_Xp_nsbeam" || ch_name == "sp_nc_pi0_4_Xp_nsbeam"
+            || ch_name == "sp_nc_pi0_5_Xp_nsbeam" || ch_name == "sp_nc_pi0_6_Xp_nsbeam" || ch_name == "sp_nc_pi0_7_Xp_nsbeam" || ch_name == "sp_nc_pi0_8_Xp_nsbeam"
+            || ch_name == "sp_nc_pi0_9_Xp_nsbeam" || ch_name == "sp_nc_pi0_10_Xp_nsbeam" || ch_name == "sp_nc_pi0_11_Xp_nsbeam" || ch_name == "sp_nc_pi0_12_Xp_nsbeam"){
                 if (flag_FC && flag_ncpio_sel && (!flag_singlephoton_sel) && flag_nsbeam) return true;
                 return false;
-  }else if (ch_name == "sp_nc_pi0_0p_ext" || ch_name == "sp_nc_pi0_2_0p_ext"){
+  }else if (ch_name == "sp_nc_pi0_0p_ext" || ch_name == "sp_nc_pi0_2_0p_ext" || ch_name == "sp_nc_pi0_3_0p_ext" || ch_name == "sp_nc_pi0_4_0p_ext"
+            || ch_name == "sp_nc_pi0_5_0p_ext" || ch_name == "sp_nc_pi0_6_0p_ext" || ch_name == "sp_nc_pi0_7_0p_ext" || ch_name == "sp_nc_pi0_8_0p_ext"
+            || ch_name == "sp_nc_pi0_9_0p_ext" || ch_name == "sp_nc_pi0_10_0p_ext" || ch_name == "sp_nc_pi0_11_0p_ext" || ch_name == "sp_nc_pi0_12_0p_ext"){
                 if (flag_FC && flag_ncpio_sel && (!flag_singlephoton_sel) && flag_0p) return true;
                 return false;
-  }else if (ch_name == "sp_nc_pi0_Np_ext" || ch_name == "sp_nc_pi0_2_Np_ext"){
+  }else if (ch_name == "sp_nc_pi0_Np_ext" || ch_name == "sp_nc_pi0_2_Np_ext" || ch_name == "sp_nc_pi0_3_Np_ext" || ch_name == "sp_nc_pi0_4_Np_ext"
+            || ch_name == "sp_nc_pi0_5_Np_ext" || ch_name == "sp_nc_pi0_6_Np_ext" || ch_name == "sp_nc_pi0_7_Np_ext" || ch_name == "sp_nc_pi0_8_Np_ext"
+            || ch_name == "sp_nc_pi0_9_Np_ext" || ch_name == "sp_nc_pi0_10_Np_ext" || ch_name == "sp_nc_pi0_11_Np_ext" || ch_name == "sp_nc_pi0_12_Np_ext"){
                 if (flag_FC && flag_ncpio_sel && (!flag_singlephoton_sel) && (!flag_0p)) return true;
                 return false;
-  }else if (ch_name == "sp_nc_pi0_Xp_ext" || ch_name == "sp_nc_pi0_2_Xp_ext"){
+  }else if (ch_name == "sp_nc_pi0_Xp_ext" || ch_name == "sp_nc_pi0_2_Xp_ext" || ch_name == "sp_nc_pi0_3_Xp_ext" || ch_name == "sp_nc_pi0_4_Xp_ext"
+            || ch_name == "sp_nc_pi0_5_Xp_ext" || ch_name == "sp_nc_pi0_6_Xp_ext" || ch_name == "sp_nc_pi0_7_Xp_ext" || ch_name == "sp_nc_pi0_8_Xp_ext"
+            || ch_name == "sp_nc_pi0_9_Xp_ext" || ch_name == "sp_nc_pi0_10_Xp_ext" || ch_name == "sp_nc_pi0_11_Xp_ext" || ch_name == "sp_nc_pi0_12_Xp_ext"){
                 if (flag_FC && flag_ncpio_sel && (!flag_singlephoton_sel)) return true;
                 return false;
-  }else if (ch_name == "sp_nc_pi0_0p_dirt" || ch_name == "sp_nc_pi0_2_0p_dirt"){
+  }else if (ch_name == "sp_nc_pi0_0p_dirt" || ch_name == "sp_nc_pi0_2_0p_dirt" || ch_name == "sp_nc_pi0_3_0p_dirt" || ch_name == "sp_nc_pi0_4_0p_dirt"
+            || ch_name == "sp_nc_pi0_5_0p_dirt" || ch_name == "sp_nc_pi0_6_0p_dirt" || ch_name == "sp_nc_pi0_7_0p_dirt" || ch_name == "sp_nc_pi0_8_0p_dirt"
+            || ch_name == "sp_nc_pi0_9_0p_dirt" || ch_name == "sp_nc_pi0_10_0p_dirt" || ch_name == "sp_nc_pi0_11_0p_dirt" || ch_name == "sp_nc_pi0_12_0p_dirt"){
                 if (flag_FC && flag_ncpio_sel && (!flag_singlephoton_sel) && flag_0p) return true;
                 return false;
-  }else if (ch_name == "sp_nc_pi0_Np_dirt" || ch_name == "sp_nc_pi0_2_Np_dirt"){
+  }else if (ch_name == "sp_nc_pi0_Np_dirt" || ch_name == "sp_nc_pi0_2_Np_dirt" || ch_name == "sp_nc_pi0_3_Np_dirt" || ch_name == "sp_nc_pi0_4_Np_dirt"
+            || ch_name == "sp_nc_pi0_5_Np_dirt" || ch_name == "sp_nc_pi0_6_Np_dirt" || ch_name == "sp_nc_pi0_7_Np_dirt" || ch_name == "sp_nc_pi0_8_Np_dirt"
+            || ch_name == "sp_nc_pi0_9_Np_dirt" || ch_name == "sp_nc_pi0_10_Np_dirt" || ch_name == "sp_nc_pi0_11_Np_dirt" || ch_name == "sp_nc_pi0_12_Np_dirt"){
                 if (flag_FC && flag_ncpio_sel && (!flag_singlephoton_sel) && (!flag_0p)) return true;
                 return false;
-  }else if (ch_name == "sp_nc_pi0_Xp_dirt" || ch_name == "sp_nc_pi0_2_Xp_dirt"){
+  }else if (ch_name == "sp_nc_pi0_Xp_dirt" || ch_name == "sp_nc_pi0_2_Xp_dirt" || ch_name == "sp_nc_pi0_3_Xp_dirt" || ch_name == "sp_nc_pi0_4_Xp_dirt"
+            || ch_name == "sp_nc_pi0_5_Xp_dirt" || ch_name == "sp_nc_pi0_6_Xp_dirt" || ch_name == "sp_nc_pi0_7_Xp_dirt" || ch_name == "sp_nc_pi0_8_Xp_dirt"
+            || ch_name == "sp_nc_pi0_9_Xp_dirt" || ch_name == "sp_nc_pi0_10_Xp_dirt" || ch_name == "sp_nc_pi0_11_Xp_dirt" || ch_name == "sp_nc_pi0_12_Xp_dirt"){
                 if (flag_FC && flag_ncpio_sel && (!flag_singlephoton_sel)) return true;
                 return false;
   }else if (ch_name == "sp_nc_pi0_0p_nc_delta_overlay" || ch_name == "sp_nc_pi0_0p_nc_delta_overlay_add" || ch_name == "sp_nc_pi0_2_0p_nc_delta_overlay"){
@@ -4174,35 +4202,56 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
   }else if (ch_name == "sp_nc_pi0_Xp_nc_delta_overlay" || ch_name == "sp_nc_pi0_Xp_nc_delta_overlay_add" || ch_name == "sp_nc_pi0_2_Xp_nc_delta_overlay"){
                 if (flag_FC && flag_ncpio_sel && (!flag_singlephoton_sel) && (eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && flag_truth_inside)) return true;
                 return false;
-  }else if (ch_name == "sp_nc_pi0_Xp_overlay" || ch_name == "sp_nc_pi0_2_Xp_overlay"){
+  }else if (ch_name == "sp_nc_pi0_Xp_overlay" || ch_name == "sp_nc_pi0_2_Xp_overlay" || ch_name == "sp_nc_pi0_3_Xp_overlay" || ch_name == "sp_nc_pi0_4_Xp_overlay"
+            || ch_name == "sp_nc_pi0_5_Xp_overlay" || ch_name == "sp_nc_pi0_6_Xp_overlay" || ch_name == "sp_nc_pi0_7_Xp_overlay" || ch_name == "sp_nc_pi0_8_Xp_overlay"
+            || ch_name == "sp_nc_pi0_9_Xp_overlay" || ch_name == "sp_nc_pi0_10_Xp_overlay" || ch_name == "sp_nc_pi0_11_Xp_overlay" || ch_name == "sp_nc_pi0_12_Xp_overlay"){
                   if (flag_FC && flag_ncpio_sel && (!flag_singlephoton_sel))
                       return true;
                   return false;
-  }else if (ch_name == "sp_bdt_nc_pi0_0p" || ch_name == "sp_bdt_nc_pi0_2_0p"){
+  //nc pi0 sp sideband
+}else if (ch_name == "sp_bdt_nc_pi0_0p" || ch_name == "sp_bdt_nc_pi0_2_0p" || ch_name == "sp_bdt_nc_pi0_3_0p" || ch_name == "sp_bdt_nc_pi0_4_0p"
+          || ch_name == "sp_bdt_nc_pi0_5_0p" || ch_name == "sp_bdt_nc_pi0_6_0p" || ch_name == "sp_bdt_nc_pi0_7_0p" || ch_name == "sp_bdt_nc_pi0_8_0p"
+          || ch_name == "sp_bdt_nc_pi0_9_0p" || ch_name == "sp_bdt_nc_pi0_10_0p" || ch_name == "sp_bdt_nc_pi0_11_0p" || ch_name == "sp_bdt_nc_pi0_12_0p"){
                 if (flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && flag_0p) return true;
                 return false;
-  }else if (ch_name == "sp_bdt_nc_pi0_Np" || ch_name == "sp_bdt_nc_pi0_2_Np"){
+  }else if (ch_name == "sp_bdt_nc_pi0_Np" || ch_name == "sp_bdt_nc_pi0_2_Np" || ch_name == "sp_bdt_nc_pi0_3_Np" || ch_name == "sp_bdt_nc_pi0_4_Np"
+            || ch_name == "sp_bdt_nc_pi0_5_Np" || ch_name == "sp_bdt_nc_pi0_6_Np" || ch_name == "sp_bdt_nc_pi0_7_Np" || ch_name == "sp_bdt_nc_pi0_8_Np"
+            || ch_name == "sp_bdt_nc_pi0_9_Np" || ch_name == "sp_bdt_nc_pi0_10_Np" || ch_name == "sp_bdt_nc_pi0_11_Np" || ch_name == "sp_bdt_nc_pi0_12_Np"){
                 if (flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && (!flag_0p)) return true;
                 return false;
-  }else if (ch_name == "sp_bdt_nc_pi0_Xp" || ch_name == "sp_bdt_nc_pi0_2_Xp"){
+  }else if (ch_name == "sp_bdt_nc_pi0_Xp" || ch_name == "sp_bdt_nc_pi0_2_Xp" || ch_name == "sp_bdt_nc_pi0_3_Xp" || ch_name == "sp_bdt_nc_pi0_4_Xp"
+            || ch_name == "sp_bdt_nc_pi0_5_Xp" || ch_name == "sp_bdt_nc_pi0_6_Xp" || ch_name == "sp_bdt_nc_pi0_7_Xp" || ch_name == "sp_bdt_nc_pi0_8_Xp"
+            || ch_name == "sp_bdt_nc_pi0_9_Xp" || ch_name == "sp_bdt_nc_pi0_10_Xp" || ch_name == "sp_bdt_nc_pi0_11_Xp" || ch_name == "sp_bdt_nc_pi0_12_Xp"){
                 if (flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel)) return true;
                 return false;
-  }else if (ch_name == "sp_bdt_nc_pi0_0p_ext" || ch_name == "sp_bdt_nc_pi0_2_0p_ext"){
+  }else if (ch_name == "sp_bdt_nc_pi0_0p_ext" || ch_name == "sp_bdt_nc_pi0_2_0p_ext" || ch_name == "sp_bdt_nc_pi0_3_0p_ext" || ch_name == "sp_bdt_nc_pi0_4_0p_ext"
+             || ch_name == "sp_bdt_nc_pi0_5_0p_ext" || ch_name == "sp_bdt_nc_pi0_6_0p_ext" || ch_name == "sp_bdt_nc_pi0_7_0p_ext" || ch_name == "sp_bdt_nc_pi0_8_0p_ext"
+             || ch_name == "sp_bdt_nc_pi0_9_0p_ext" || ch_name == "sp_bdt_nc_pi0_10_0p_ext" || ch_name == "sp_bdt_nc_pi0_11_0p_ext" || ch_name == "sp_bdt_nc_pi0_12_0p_ext"){
                 if (flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && flag_0p) return true;
                 return false;
-  }else if (ch_name == "sp_bdt_nc_pi0_Np_ext" || ch_name == "sp_bdt_nc_pi0_2_Np_ext"){
+  }else if (ch_name == "sp_bdt_nc_pi0_Np_ext" || ch_name == "sp_bdt_nc_pi0_2_Np_ext" || ch_name == "sp_bdt_nc_pi0_3_Np_ext" || ch_name == "sp_bdt_nc_pi0_4_Np_ext"
+            || ch_name == "sp_bdt_nc_pi0_5_Np_ext" || ch_name == "sp_bdt_nc_pi0_6_Np_ext" || ch_name == "sp_bdt_nc_pi0_7_Np_ext" || ch_name == "sp_bdt_nc_pi0_8_Np_ext"
+            || ch_name == "sp_bdt_nc_pi0_9_Np_ext" || ch_name == "sp_bdt_nc_pi0_10_Np_ext" || ch_name == "sp_bdt_nc_pi0_11_Np_ext" || ch_name == "sp_bdt_nc_pi0_12_Np_ext"){
                 if (flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && (!flag_0p)) return true;
                 return false;
-  }else if (ch_name == "sp_bdt_nc_pi0_Xp_ext" || ch_name == "sp_bdt_nc_pi0_2_Xp_ext"){
+  }else if (ch_name == "sp_bdt_nc_pi0_Xp_ext" || ch_name == "sp_bdt_nc_pi0_2_Xp_ext" || ch_name == "sp_bdt_nc_pi0_3_Xp_ext" || ch_name == "sp_bdt_nc_pi0_4_Xp_ext"
+            || ch_name == "sp_bdt_nc_pi0_5_Xp_ext" || ch_name == "sp_bdt_nc_pi0_6_Xp_ext" || ch_name == "sp_bdt_nc_pi0_7_Xp_ext" || ch_name == "sp_bdt_nc_pi0_8_Xp_ext"
+            || ch_name == "sp_bdt_nc_pi0_9_Xp_ext" || ch_name == "sp_bdt_nc_pi0_10_Xp_ext" || ch_name == "sp_bdt_nc_pi0_11_Xp_ext" || ch_name == "sp_bdt_nc_pi0_12_Xp_ext"){
                 if (flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel)) return true;
                 return false;
-  }else if (ch_name == "sp_bdt_nc_pi0_0p_dirt" || ch_name == "sp_bdt_nc_pi0_2_0p_dirt"){
+  }else if (ch_name == "sp_bdt_nc_pi0_0p_dirt" || ch_name == "sp_bdt_nc_pi0_2_0p_dirt" || ch_name == "sp_bdt_nc_pi0_3_0p_dirt" || ch_name == "sp_bdt_nc_pi0_4_0p_dirt"
+            || ch_name == "sp_bdt_nc_pi0_5_0p_dirt" || ch_name == "sp_bdt_nc_pi0_6_0p_dirt" || ch_name == "sp_bdt_nc_pi0_7_0p_dirt" || ch_name == "sp_bdt_nc_pi0_8_0p_dirt"
+            || ch_name == "sp_bdt_nc_pi0_9_0p_dirt" || ch_name == "sp_bdt_nc_pi0_10_0p_dirt" || ch_name == "sp_bdt_nc_pi0_11_0p_dirt" || ch_name == "sp_bdt_nc_pi0_12_0p_dirt"){
                 if (flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && flag_0p) return true;
                 return false;
-  }else if (ch_name == "sp_bdt_nc_pi0_Np_dirt" || ch_name == "sp_bdt_nc_pi0_2_Np_dirt"){
+  }else if (ch_name == "sp_bdt_nc_pi0_Np_dirt" || ch_name == "sp_bdt_nc_pi0_2_Np_dirt" || ch_name == "sp_bdt_nc_pi0_3_Np_dirt" || ch_name == "sp_bdt_nc_pi0_4_Np_dirt"
+            || ch_name == "sp_bdt_nc_pi0_5_Np_dirt" || ch_name == "sp_bdt_nc_pi0_6_Np_dirt" || ch_name == "sp_bdt_nc_pi0_7_Np_dirt" || ch_name == "sp_bdt_nc_pi0_8_Np_dirt"
+            || ch_name == "sp_bdt_nc_pi0_9_Np_dirt" || ch_name == "sp_bdt_nc_pi0_10_Np_dirt" || ch_name == "sp_bdt_nc_pi0_11_Np_dirt" || ch_name == "sp_bdt_nc_pi0_12_Np_dirt"){
                 if (flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && (!flag_0p)) return true;
                 return false;
-  }else if (ch_name == "sp_bdt_nc_pi0_Xp_dirt" || ch_name == "sp_bdt_nc_pi0_2_Xp_dirt"){
+  }else if (ch_name == "sp_bdt_nc_pi0_Xp_dirt" || ch_name == "sp_bdt_nc_pi0_2_Xp_dirt" || ch_name == "sp_bdt_nc_pi0_3_Xp_dirt" || ch_name == "sp_bdt_nc_pi0_4_Xp_dirt"
+            || ch_name == "sp_bdt_nc_pi0_5_Xp_dirt" || ch_name == "sp_bdt_nc_pi0_6_Xp_dirt" || ch_name == "sp_bdt_nc_pi0_7_Xp_dirt" || ch_name == "sp_bdt_nc_pi0_8_Xp_dirt"
+            || ch_name == "sp_bdt_nc_pi0_9_Xp_dirt" || ch_name == "sp_bdt_nc_pi0_10_Xp_dirt" || ch_name == "sp_bdt_nc_pi0_11_Xp_dirt" || ch_name == "sp_bdt_nc_pi0_12_Xp_dirt"){
                 if (flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel)) return true;
                 return false;
   }else if (ch_name == "sp_bdt_nc_pi0_0p_nc_delta_overlay" || ch_name == "sp_bdt_nc_pi0_0p_nc_delta_overlay_add" || ch_name == "sp_bdt_nc_pi0_2_0p_nc_delta_overlay"){
@@ -4214,19 +4263,27 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
   }else if (ch_name == "sp_bdt_nc_pi0_Xp_nc_delta_overlay" || ch_name == "sp_bdt_nc_pi0_Xp_nc_delta_overlay_add" || ch_name == "sp_bdt_nc_pi0_2_Xp_nc_delta_overlay"){
                 if (flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && (eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && flag_truth_inside)) return true;
                 return false;
-  }else if (ch_name == "sp_bdt_nc_pi0_0p_overlay" || ch_name == "sp_bdt_nc_pi0_2_0p_overlay"){
+  }else if (ch_name == "sp_bdt_nc_pi0_0p_overlay" || ch_name == "sp_bdt_nc_pi0_2_0p_overlay" || ch_name == "sp_bdt_nc_pi0_3_0p_overlay" || ch_name == "sp_bdt_nc_pi0_4_0p_overlay"
+            || ch_name == "sp_bdt_nc_pi0_5_0p_overlay" || ch_name == "sp_bdt_nc_pi0_6_0p_overlay" || ch_name == "sp_bdt_nc_pi0_7_0p_overlay" || ch_name == "sp_bdt_nc_pi0_8_0p_overlay"
+            || ch_name == "sp_bdt_nc_pi0_9_0p_overlay" || ch_name == "sp_bdt_nc_pi0_10_0p_overlay" || ch_name == "sp_bdt_nc_pi0_11_0p_overlay" || ch_name == "sp_bdt_nc_pi0_12_0p_overlay"){
                   if (flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && flag_0p)
                       return true;
                   return false;
-  }else if (ch_name == "sp_bdt_nc_pi0_Np_overlay" || ch_name == "sp_bdt_nc_pi0_2_Np_overlay"){
+  }else if (ch_name == "sp_bdt_nc_pi0_Np_overlay" || ch_name == "sp_bdt_nc_pi0_2_Np_overlay" || ch_name == "sp_bdt_nc_pi0_3_Np_overlay" || ch_name == "sp_bdt_nc_pi0_4_Np_overlay"
+             || ch_name == "sp_bdt_nc_pi0_5_Np_overlay" || ch_name == "sp_bdt_nc_pi0_6_Np_overlay" || ch_name == "sp_bdt_nc_pi0_7_Np_overlay" || ch_name == "sp_bdt_nc_pi0_8_Np_overlay"
+             || ch_name == "sp_bdt_nc_pi0_9_Np_overlay" || ch_name == "sp_bdt_nc_pi0_10_Np_overlay" || ch_name == "sp_bdt_nc_pi0_11_Np_overlay" || ch_name == "sp_bdt_nc_pi0_12_Np_overlay"){
                   if (flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && !flag_0p)
                       return true;
                   return false;
-  }else if (ch_name == "sp_bdt_nc_pi0_Xp_overlay" || ch_name == "sp_bdt_nc_pi0_2_Xp_overlay"){
+  }else if (ch_name == "sp_bdt_nc_pi0_Xp_overlay" || ch_name == "sp_bdt_nc_pi0_2_Xp_overlay" || ch_name == "sp_bdt_nc_pi0_3_Xp_overlay" || ch_name == "sp_bdt_nc_pi0_4_Xp_overlay"
+            || ch_name == "sp_bdt_nc_pi0_5_Xp_overlay" || ch_name == "sp_bdt_nc_pi0_6_Xp_overlay" || ch_name == "sp_bdt_nc_pi0_7_Xp_overlay" || ch_name == "sp_bdt_nc_pi0_8_Xp_overlay"
+            || ch_name == "sp_bdt_nc_pi0_9_Xp_overlay" || ch_name == "sp_bdt_nc_pi0_10_Xp_overlay" || ch_name == "sp_bdt_nc_pi0_11_Xp_overlay" || ch_name == "sp_bdt_nc_pi0_12_Xp_overlay"){
                   if (flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel))
                       return true;
                   return false;
-  }else if (ch_name == "sp_bdt_nc_pi0_0p_overlay_BG" || ch_name == "sp_bdt_nc_pi0_2_0p_overlay_BG"){
+  }else if (ch_name == "sp_bdt_nc_pi0_0p_overlay_BG" || ch_name == "sp_bdt_nc_pi0_2_0p_overlay_BG" || ch_name == "sp_bdt_nc_pi0_3_0p_overlay_BG" || ch_name == "sp_bdt_nc_pi0_4_0p_overlay_BG"
+            || ch_name == "sp_bdt_nc_pi0_5_0p_overlay_BG" || ch_name == "sp_bdt_nc_pi0_6_0p_overlay_BG" || ch_name == "sp_bdt_nc_pi0_7_0p_overlay_BG" || ch_name == "sp_bdt_nc_pi0_8_0p_overlay_BG"
+            || ch_name == "sp_bdt_nc_pi0_9_0p_overlay_BG" || ch_name == "sp_bdt_nc_pi0_10_0p_overlay_BG" || ch_name == "sp_bdt_nc_pi0_11_0p_overlay_BG" || ch_name == "sp_bdt_nc_pi0_12_0p_overlay_BG"){
             if (flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && flag_0p &&
               !(map_cuts_flag["SPNCDeltaSig"] ||
               map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
@@ -4235,7 +4292,9 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
               && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
               && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0)) return true;
             return false;
-  }else if (ch_name == "sp_bdt_nc_pi0_Np_overlay_BG" || ch_name == "sp_bdt_nc_pi0_2_Np_overlay_BG"){
+  }else if (ch_name == "sp_bdt_nc_pi0_Np_overlay_BG" || ch_name == "sp_bdt_nc_pi0_2_Np_overlay_BG" || ch_name == "sp_bdt_nc_pi0_3_Np_overlay_BG" || ch_name == "sp_bdt_nc_pi0_4_Np_overlay_BG"
+             || ch_name == "sp_bdt_nc_pi0_5_Np_overlay_BG" || ch_name == "sp_bdt_nc_pi0_6_Np_overlay_BG" || ch_name == "sp_bdt_nc_pi0_7_Np_overlay_BG" || ch_name == "sp_bdt_nc_pi0_8_Np_overlay_BG"
+             || ch_name == "sp_bdt_nc_pi0_9_Np_overlay_BG" || ch_name == "sp_bdt_nc_pi0_10_Np_overlay_BG" || ch_name == "sp_bdt_nc_pi0_11_Np_overlay_BG" || ch_name == "sp_bdt_nc_pi0_12_Np_overlay_BG"){
             if (flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && !flag_0p &&
               !(map_cuts_flag["SPNCDeltaSig"] ||
               map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
@@ -4244,7 +4303,9 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
               && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
               && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0)) return true;
             return false;
-  }else if (ch_name == "sp_bdt_nc_pi0_Xp_overlay_BG" || ch_name == "sp_bdt_nc_pi0_2_Xp_overlay_BG"){
+  }else if (ch_name == "sp_bdt_nc_pi0_Xp_overlay_BG" || ch_name == "sp_bdt_nc_pi0_2_Xp_overlay_BG" || ch_name == "sp_bdt_nc_pi0_3_Xp_overlay_BG" || ch_name == "sp_bdt_nc_pi0_4_Xp_overlay_BG"
+             || ch_name == "sp_bdt_nc_pi0_5_Xp_overlay_BG" || ch_name == "sp_bdt_nc_pi0_6_Xp_overlay_BG" || ch_name == "sp_bdt_nc_pi0_7_Xp_overlay_BG" || ch_name == "sp_bdt_nc_pi0_8_Xp_overlay_BG"
+             || ch_name == "sp_bdt_nc_pi0_9_Xp_overlay_BG" || ch_name == "sp_bdt_nc_pi0_10_Xp_overlay_BG" || ch_name == "sp_bdt_nc_pi0_11_Xp_overlay_BG" || ch_name == "sp_bdt_nc_pi0_12_Xp_overlay_BG"){
             if (flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) &&
               !(map_cuts_flag["SPNCDeltaSig"] ||
               map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
@@ -4253,19 +4314,25 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
               && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
               && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0)) return true;
             return false;
-  }else if (ch_name == "sp_bdt_nc_pi0_0p_spoverlay" || ch_name == "sp_bdt_nc_pi0_2_0p_spoverlay"){
+  }else if (ch_name == "sp_bdt_nc_pi0_0p_spoverlay" || ch_name == "sp_bdt_nc_pi0_2_0p_spoverlay" || ch_name == "sp_bdt_nc_pi0_3_0p_spoverlay" || ch_name == "sp_bdt_nc_pi0_4_0p_spoverlay"
+            || ch_name == "sp_bdt_nc_pi0_5_0p_spoverlay" || ch_name == "sp_bdt_nc_pi0_6_0p_spoverlay" || ch_name == "sp_bdt_nc_pi0_7_0p_spoverlay" || ch_name == "sp_bdt_nc_pi0_8_0p_spoverlay"
+            || ch_name == "sp_bdt_nc_pi0_9_0p_spoverlay" || ch_name == "sp_bdt_nc_pi0_10_0p_spoverlay" || ch_name == "sp_bdt_nc_pi0_11_0p_spoverlay" || ch_name == "sp_bdt_nc_pi0_12_0p_spoverlay"){
             if (flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && flag_0p &&
               (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
               map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
               map_cuts_flag["SPNumuCCSig"])) return true;
             return false;
-  }else if (ch_name == "sp_bdt_nc_pi0_Np_spoverlay" || ch_name == "sp_bdt_nc_pi0_2_Np_spoverlay"){
+  }else if (ch_name == "sp_bdt_nc_pi0_Np_spoverlay" || ch_name == "sp_bdt_nc_pi0_2_Np_spoverlay" || ch_name == "sp_bdt_nc_pi0_3_Np_spoverlay" || ch_name == "sp_bdt_nc_pi0_4_Np_spoverlay"
+            || ch_name == "sp_bdt_nc_pi0_5_Np_spoverlay" || ch_name == "sp_bdt_nc_pi0_6_Np_spoverlay" || ch_name == "sp_bdt_nc_pi0_7_Np_spoverlay" || ch_name == "sp_bdt_nc_pi0_8_Np_spoverlay"
+            || ch_name == "sp_bdt_nc_pi0_9_Np_spoverlay" || ch_name == "sp_bdt_nc_pi0_10_Np_spoverlay" || ch_name == "sp_bdt_nc_pi0_11_Np_spoverlay" || ch_name == "sp_bdt_nc_pi0_12_Np_spoverlay"){
             if (flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && !flag_0p &&
               (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
               map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
               map_cuts_flag["SPNumuCCSig"])) return true;
             return false;
-  }else if (ch_name == "sp_bdt_nc_pi0_Xp_spoverlay" || ch_name == "sp_bdt_nc_pi0_2_Xp_spoverlay"){
+  }else if (ch_name == "sp_bdt_nc_pi0_Xp_spoverlay" || ch_name == "sp_bdt_nc_pi0_2_Xp_spoverlay" || ch_name == "sp_bdt_nc_pi0_3_Xp_spoverlay" || ch_name == "sp_bdt_nc_pi0_4_Xp_spoverlay"
+             || ch_name == "sp_bdt_nc_pi0_5_Xp_spoverlay" || ch_name == "sp_bdt_nc_pi0_6_Xp_spoverlay" || ch_name == "sp_bdt_nc_pi0_7_Xp_spoverlay" || ch_name == "sp_bdt_nc_pi0_8_Xp_spoverlay"
+             || ch_name == "sp_bdt_nc_pi0_9_Xp_spoverlay" || ch_name == "sp_bdt_nc_pi0_10_Xp_spoverlay" || ch_name == "sp_bdt_nc_pi0_11_Xp_spoverlay" || ch_name == "sp_bdt_nc_pi0_12_Xp_spoverlay"){
             if (flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) &&
               (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
               map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
@@ -4441,40 +4508,64 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
                   map_cuts_flag["SPNumuCCSig"])) return true;
                 return false;
   //single photon other sideband
-  }else if (ch_name == "sp_bdt_other_0p" || ch_name == "sp_bdt_other_2_0p"){
+}else if (ch_name == "sp_bdt_other_0p" || ch_name == "sp_bdt_other_2_0p" || ch_name == "sp_bdt_other_3_0p" || ch_name == "sp_bdt_other_4_0p"
+           || ch_name == "sp_bdt_other_5_0p" || ch_name == "sp_bdt_other_6_0p" || ch_name == "sp_bdt_other_7_0p" || ch_name == "sp_bdt_other_8_0p"
+          || ch_name == "sp_bdt_other_9_0p" || ch_name == "sp_bdt_other_10_0p" || ch_name == "sp_bdt_other_11_0p" || ch_name == "sp_bdt_other_12_0p"){
                 if (flag_singlephoton_other_sel && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && flag_0p) return true;
                 return false;
-  }else if (ch_name == "sp_bdt_other_Np" || ch_name == "sp_bdt_other_2_Np"){
+  }else if (ch_name == "sp_bdt_other_Np" || ch_name == "sp_bdt_other_2_Np" || ch_name == "sp_bdt_other_3_Np" || ch_name == "sp_bdt_other_4_Np"
+           || ch_name == "sp_bdt_other_5_Np" || ch_name == "sp_bdt_other_6_Np" || ch_name == "sp_bdt_other_7_Np" || ch_name == "sp_bdt_other_8_Np"
+          || ch_name == "sp_bdt_other_9_Np" || ch_name == "sp_bdt_other_10_Np" || ch_name == "sp_bdt_other_11_Np" || ch_name == "sp_bdt_other_12_Np"){
                 if (flag_singlephoton_other_sel && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && (!flag_0p)) return true;
                 return false;
-  }else if (ch_name == "sp_bdt_other_Xp" || ch_name == "sp_bdt_other_2_Xp"){
+  }else if (ch_name == "sp_bdt_other_Xp" || ch_name == "sp_bdt_other_2_Xp" || ch_name == "sp_bdt_other_3_Xp" || ch_name == "sp_bdt_other_4_Xp"
+             || ch_name == "sp_bdt_other_5_Xp" || ch_name == "sp_bdt_other_6_Xp" || ch_name == "sp_bdt_other_7_Xp" || ch_name == "sp_bdt_other_8_Xp"
+            || ch_name == "sp_bdt_other_9_Xp" || ch_name == "sp_bdt_other_10_Xp" || ch_name == "sp_bdt_other_11_Xp" || ch_name == "sp_bdt_other_12_Xp"){
                 if (flag_singlephoton_other_sel && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel)) return true;
                 return false;
-  }else if (ch_name == "sp_bdt_other_0p_nsbeam" || ch_name == "sp_bdt_other_2_0p_nsbeam"){
+  }else if (ch_name == "sp_bdt_other_0p_nsbeam" || ch_name == "sp_bdt_other_2_0p_nsbeam" || ch_name == "sp_bdt_other_3_0p_nsbeam" || ch_name == "sp_bdt_other_4_0p_nsbeam"
+             || ch_name == "sp_bdt_other_5_0p_nsbeam" || ch_name == "sp_bdt_other_6_0p_nsbeam" || ch_name == "sp_bdt_other_7_0p_nsbeam" || ch_name == "sp_bdt_other_8_0p_nsbeam"
+             || ch_name == "sp_bdt_other_9_0p_nsbeam" || ch_name == "sp_bdt_other_10_0p_nsbeam" || ch_name == "sp_bdt_other_11_0p_nsbeam" || ch_name == "sp_bdt_other_12_0p_nsbeam"){
                 if (flag_singlephoton_other_sel && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && flag_0p && flag_nsbeam) return true;
                 return false;
-  }else if (ch_name == "sp_bdt_other_Np_nsbeam" || ch_name == "sp_bdt_other_2_Np_nsbeam"){
+  }else if (ch_name == "sp_bdt_other_Np_nsbeam" || ch_name == "sp_bdt_other_2_Np_nsbeam" || ch_name == "sp_bdt_other_3_Np_nsbeam" || ch_name == "sp_bdt_other_4_Np_nsbeam"
+             || ch_name == "sp_bdt_other_5_Np_nsbeam" || ch_name == "sp_bdt_other_6_Np_nsbeam" || ch_name == "sp_bdt_other_7_Np_nsbeam" || ch_name == "sp_bdt_other_8_Np_nsbeam"
+             || ch_name == "sp_bdt_other_9_Np_nsbeam" || ch_name == "sp_bdt_other_10_Np_nsbeam" || ch_name == "sp_bdt_other_11_Np_nsbeam" || ch_name == "sp_bdt_other_12_Np_nsbeam"){
                 if (flag_singlephoton_other_sel && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && (!flag_0p) && flag_nsbeam) return true;
                 return false;
-  }else if (ch_name == "sp_bdt_other_Xp_nsbeam" || ch_name == "sp_bdt_other_2_Xp_nsbeam"){
+  }else if (ch_name == "sp_bdt_other_Xp_nsbeam" || ch_name == "sp_bdt_other_2_Xp_nsbeam" || ch_name == "sp_bdt_other_3_Xp_nsbeam" || ch_name == "sp_bdt_other_4_Xp_nsbeam"
+           || ch_name == "sp_bdt_other_5_Xp_nsbeam" || ch_name == "sp_bdt_other_6_Xp_nsbeam" || ch_name == "sp_bdt_other_7_Xp_nsbeam" || ch_name == "sp_bdt_other_8_Xp_nsbeam"
+             || ch_name == "sp_bdt_other_9_Xp_nsbeam" || ch_name == "sp_bdt_other_10_Xp_nsbeam" || ch_name == "sp_bdt_other_11_Xp_nsbeam" || ch_name == "sp_bdt_other_12_Xp_nsbeam"){
                 if (flag_singlephoton_other_sel && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && flag_nsbeam) return true;
                 return false;
-  }else if (ch_name == "sp_bdt_other_0p_ext" || ch_name == "sp_bdt_other_2_0p_ext"){
+  }else if (ch_name == "sp_bdt_other_0p_ext" || ch_name == "sp_bdt_other_2_0p_ext" || ch_name == "sp_bdt_other_3_0p_ext" || ch_name == "sp_bdt_other_4_0p_ext"
+             || ch_name == "sp_bdt_other_5_0p_ext" || ch_name == "sp_bdt_other_6_0p_ext" || ch_name == "sp_bdt_other_7_0p_ext" || ch_name == "sp_bdt_other_8_0p_ext"
+               || ch_name == "sp_bdt_other_9_0p_ext" || ch_name == "sp_bdt_other_10_0p_ext" || ch_name == "sp_bdt_other_11_0p_ext" || ch_name == "sp_bdt_other_12_0p_ext"){
                 if (flag_singlephoton_other_sel && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && flag_0p) return true;
                 return false;
-  }else if (ch_name == "sp_bdt_other_Np_ext" || ch_name == "sp_bdt_other_2_Np_ext"){
+  }else if (ch_name == "sp_bdt_other_Np_ext" || ch_name == "sp_bdt_other_2_Np_ext" || ch_name == "sp_bdt_other_3_Np_ext" || ch_name == "sp_bdt_other_4_Np_ext"
+             || ch_name == "sp_bdt_other_5_Np_ext" || ch_name == "sp_bdt_other_6_Np_ext" || ch_name == "sp_bdt_other_7_Np_ext" || ch_name == "sp_bdt_other_8_Np_ext"
+             || ch_name == "sp_bdt_other_9_Np_ext" || ch_name == "sp_bdt_other_10_Np_ext" || ch_name == "sp_bdt_other_11_Np_ext" || ch_name == "sp_bdt_other_12_Np_ext"){
                 if (flag_singlephoton_other_sel && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && (!flag_0p)) return true;
                 return false;
-  }else if (ch_name == "sp_bdt_other_Xp_ext" || ch_name == "sp_bdt_other_2_Xp_ext"){
+  }else if (ch_name == "sp_bdt_other_Xp_ext" || ch_name == "sp_bdt_other_2_Xp_ext" || ch_name == "sp_bdt_other_3_Xp_ext" || ch_name == "sp_bdt_other_4_Xp_ext"
+             || ch_name == "sp_bdt_other_5_Xp_ext" || ch_name == "sp_bdt_other_6_Xp_ext" || ch_name == "sp_bdt_other_7_Xp_ext" || ch_name == "sp_bdt_other_8_Xp_ext"
+            || ch_name == "sp_bdt_other_9_Xp_ext" || ch_name == "sp_bdt_other_10_Xp_ext" || ch_name == "sp_bdt_other_11_Xp_ext" || ch_name == "sp_bdt_other_12_Xp_ext"){
                 if (flag_singlephoton_other_sel && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel)) return true;
                 return false;
-  }else if (ch_name == "sp_bdt_other_0p_dirt" || ch_name == "sp_bdt_other_2_0p_dirt"){
+  }else if (ch_name == "sp_bdt_other_0p_dirt" || ch_name == "sp_bdt_other_2_0p_dirt" || ch_name == "sp_bdt_other_3_0p_dirt" || ch_name == "sp_bdt_other_4_0p_dirt"
+             || ch_name == "sp_bdt_other_5_0p_dirt" || ch_name == "sp_bdt_other_6_0p_dirt" || ch_name == "sp_bdt_other_7_0p_dirt" || ch_name == "sp_bdt_other_8_0p_dirt"
+             || ch_name == "sp_bdt_other_9_0p_dirt" || ch_name == "sp_bdt_other_10_0p_dirt" || ch_name == "sp_bdt_other_11_0p_dirt" || ch_name == "sp_bdt_other_12_0p_dirt"){
                 if (flag_singlephoton_other_sel && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && flag_0p) return true;
                 return false;
-  }else if (ch_name == "sp_bdt_other_Np_dirt" || ch_name == "sp_bdt_other_2_Np_dirt"){
+  }else if (ch_name == "sp_bdt_other_Np_dirt" || ch_name == "sp_bdt_other_2_Np_dirt" || ch_name == "sp_bdt_other_3_Np_dirt" || ch_name == "sp_bdt_other_4_Np_dirt"
+             || ch_name == "sp_bdt_other_5_Np_dirt" || ch_name == "sp_bdt_other_6_Np_dirt" || ch_name == "sp_bdt_other_7_Np_dirt" || ch_name == "sp_bdt_other_8_Np_dirt"
+            || ch_name == "sp_bdt_other_9_Np_dirt" || ch_name == "sp_bdt_other_10_Np_dirt" || ch_name == "sp_bdt_other_11_Np_dirt" || ch_name == "sp_bdt_other_12_Np_dirt"){
                 if (flag_singlephoton_other_sel && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && (!flag_0p)) return true;
                 return false;
-  }else if (ch_name == "sp_bdt_other_Xp_dirt" || ch_name == "sp_bdt_other_2_Xp_dirt"){
+  }else if (ch_name == "sp_bdt_other_Xp_dirt" || ch_name == "sp_bdt_other_2_Xp_dirt" || ch_name == "sp_bdt_other_3_Xp_dirt" || ch_name == "sp_bdt_other_4_Xp_dirt"
+             || ch_name == "sp_bdt_other_5_Xp_dirt" || ch_name == "sp_bdt_other_6_Xp_dirt" || ch_name == "sp_bdt_other_7_Xp_dirt" || ch_name == "sp_bdt_other_8_Xp_dirt"
+            || ch_name == "sp_bdt_other_9_Xp_dirt" || ch_name == "sp_bdt_other_10_Xp_dirt" || ch_name == "sp_bdt_other_11_Xp_dirt" || ch_name == "sp_bdt_other_12_Xp_dirt"){
                 if (flag_singlephoton_other_sel && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel)) return true;
                 return false;
   }else if (ch_name == "sp_bdt_other_0p_nc_delta_overlay" || ch_name == "sp_bdt_other_0p_nc_delta_overlay_add" || ch_name == "sp_bdt_other_2_0p_nc_delta_overlay"){
@@ -4486,16 +4577,24 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
   }else if (ch_name == "sp_bdt_other_Xp_nc_delta_overlay" || ch_name == "sp_bdt_other_Xp_nc_delta_overlay_add" || ch_name == "sp_bdt_other_2_Xp_nc_delta_overlay"){
                 if (flag_singlephoton_other_sel && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && (eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && flag_truth_inside)) return true;
                 return false;
-  }else if (ch_name == "sp_bdt_other_Xp_overlay" || ch_name == "sp_bdt_other_2_Xp_overlay"){
+  }else if (ch_name == "sp_bdt_other_Xp_overlay" || ch_name == "sp_bdt_other_2_Xp_overlay" || ch_name == "sp_bdt_other_3_Xp_overlay" || ch_name == "sp_bdt_other_4_Xp_overlay"
+             || ch_name == "sp_bdt_other_5_Xp_overlay" || ch_name == "sp_bdt_other_6_Xp_overlay" || ch_name == "sp_bdt_other_7_Xp_overlay" || ch_name == "sp_bdt_other_8_Xp_overlay"
+             || ch_name == "sp_bdt_other_9_Xp_overlay" || ch_name == "sp_bdt_other_10_Xp_overlay" || ch_name == "sp_bdt_other_11_Xp_overlay" || ch_name == "sp_bdt_other_2_Xp_overlay"){
                 if (flag_singlephoton_other_sel && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel)) return true;
                 return false;
-  }else if (ch_name == "sp_bdt_other_0p_overlay" || ch_name == "sp_bdt_other_2_0p_overlay"){
+  }else if (ch_name == "sp_bdt_other_0p_overlay" || ch_name == "sp_bdt_other_2_0p_overlay" || ch_name == "sp_bdt_other_3_0p_overlay" || ch_name == "sp_bdt_other_4_0p_overlay"
+             || ch_name == "sp_bdt_other_5_0p_overlay" || ch_name == "sp_bdt_other_6_0p_overlay" || ch_name == "sp_bdt_other_7_0p_overlay" || ch_name == "sp_bdt_other_8_0p_overlay"
+            || ch_name == "sp_bdt_other_9_0p_overlay"|| ch_name == "sp_bdt_other_10_0p_overlay" || ch_name == "sp_bdt_other_11_0p_overlay" || ch_name == "sp_bdt_other_12_0p_overlay"){
                 if (flag_singlephoton_other_sel && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && flag_0p) return true;
                 return false;
-  }else if (ch_name == "sp_bdt_other_Np_overlay" || ch_name == "sp_bdt_other_2_Np_overlay"){
+  }else if (ch_name == "sp_bdt_other_Np_overlay" || ch_name == "sp_bdt_other_2_Np_overlay" || ch_name == "sp_bdt_other_3_Np_overlay" || ch_name == "sp_bdt_other_4_Np_overlay"
+           || ch_name == "sp_bdt_other_5_Np_overlay" || ch_name == "sp_bdt_other_6_Np_overlay" || ch_name == "sp_bdt_other_7_Np_overlay" || ch_name == "sp_bdt_other_8_Np_overlay"
+           || ch_name == "sp_bdt_other_9_Np_overlay" || ch_name == "sp_bdt_other_10_Np_overlay" || ch_name == "sp_bdt_other_11_Np_overlay" || ch_name == "sp_bdt_other_12_Np_overlay"){
                 if (flag_singlephoton_other_sel && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && !flag_0p) return true;
                 return false;
-  }else if (ch_name == "sp_bdt_other_Xp_overlay_BG" || ch_name == "sp_bdt_other_2_Xp_overlay_BG"){
+  }else if (ch_name == "sp_bdt_other_Xp_overlay_BG" || ch_name == "sp_bdt_other_2_Xp_overlay_BG" || ch_name == "sp_bdt_other_3_Xp_overlay_BG" || ch_name == "sp_bdt_other_4_Xp_overlay_BG"
+             || ch_name == "sp_bdt_other_5_Xp_overlay_BG" || ch_name == "sp_bdt_other_6_Xp_overlay_BG" || ch_name == "sp_bdt_other_7_Xp_overlay_BG" || ch_name == "sp_bdt_other_8_Xp_overlay_BG"
+             || ch_name == "sp_bdt_other_9_Xp_overlay_BG" || ch_name == "sp_bdt_other_10_Xp_overlay_BG" || ch_name == "sp_bdt_other_11_Xp_overlay_BG" || ch_name == "sp_bdt_other_12_Xp_overlay_BG"){
                 if (flag_singlephoton_other_sel && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) &&
                   !(map_cuts_flag["SPNCDeltaSig"] ||
                   map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
@@ -4504,7 +4603,9 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
                   && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
                   && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0)) return true;
                 return false;
-  }else if (ch_name == "sp_bdt_other_0p_overlay_BG" || ch_name == "sp_bdt_other_2_0p_overlay_BG"){
+  }else if (ch_name == "sp_bdt_other_0p_overlay_BG" || ch_name == "sp_bdt_other_2_0p_overlay_BG" || ch_name == "sp_bdt_other_3_0p_overlay_BG" || ch_name == "sp_bdt_other_4_0p_overlay_BG"
+             || ch_name == "sp_bdt_other_5_0p_overlay_BG" || ch_name == "sp_bdt_other_6_0p_overlay_BG" || ch_name == "sp_bdt_other_7_0p_overlay_BG" || ch_name == "sp_bdt_other_8_0p_overlay_BG"
+             || ch_name == "sp_bdt_other_9_0p_overlay_BG" || ch_name == "sp_bdt_other_10_0p_overlay_BG" || ch_name == "sp_bdt_other_11_0p_overlay_BG" || ch_name == "sp_bdt_other_12_0p_overlay_BG"){
                 if (flag_singlephoton_other_sel && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && flag_0p &&
                   !(map_cuts_flag["SPNCDeltaSig"] ||
                   map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
@@ -4513,7 +4614,9 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
                   && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
                   && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0)) return true;
                 return false;
-  }else if (ch_name == "sp_bdt_other_Np_overlay_BG" || ch_name == "sp_bdt_other_2_Np_overlay_BG"){
+  }else if (ch_name == "sp_bdt_other_Np_overlay_BG" || ch_name == "sp_bdt_other_2_Np_overlay_BG" || ch_name == "sp_bdt_other_3_Np_overlay_BG" || ch_name == "sp_bdt_other_4_Np_overlay_BG"
+             || ch_name == "sp_bdt_other_5_Np_overlay_BG" || ch_name == "sp_bdt_other_6_Np_overlay_BG" || ch_name == "sp_bdt_other_7_Np_overlay_BG" || ch_name == "sp_bdt_other_8_Np_overlay_BG"
+             || ch_name == "sp_bdt_other_9_Np_overlay_BG" || ch_name == "sp_bdt_other_10_Np_overlay_BG" || ch_name == "sp_bdt_other_11_Np_overlay_BG" || ch_name == "sp_bdt_other_12_Np_overlay_BG"){
                 if (flag_singlephoton_other_sel && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && !flag_0p &&
                   !(map_cuts_flag["SPNCDeltaSig"] ||
                   map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
@@ -4522,19 +4625,25 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
                   && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
                   && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0)) return true;
                 return false;
-  }else if (ch_name == "sp_bdt_other_Xp_spoverlay" || ch_name == "sp_bdt_other_2_Xp_spoverlay"){
+  }else if (ch_name == "sp_bdt_other_Xp_spoverlay" || ch_name == "sp_bdt_other_2_Xp_spoverlay" || ch_name == "sp_bdt_other_3_Xp_spoverlay" || ch_name == "sp_bdt_other_4_Xp_spoverlay"
+             || ch_name == "sp_bdt_other_5_Xp_spoverlay" || ch_name == "sp_bdt_other_6_Xp_spoverlay" || ch_name == "sp_bdt_other_7_Xp_spoverlay" || ch_name == "sp_bdt_other_8_Xp_spoverlay"
+             || ch_name == "sp_bdt_other_9_Xp_spoverlay" || ch_name == "sp_bdt_other_10_Xp_spoverlay" || ch_name == "sp_bdt_other_11_Xp_spoverlay" || ch_name == "sp_bdt_other_12_Xp_spoverlay"){
                 if (flag_singlephoton_other_sel && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) &&
                   (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
                   map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
                   map_cuts_flag["SPNumuCCSig"])) return true;
                 return false;
-  }else if (ch_name == "sp_bdt_other_0p_spoverlay" || ch_name == "sp_bdt_other_2_0p_spoverlay"){
+  }else if (ch_name == "sp_bdt_other_0p_spoverlay" || ch_name == "sp_bdt_other_2_0p_spoverlay" || ch_name == "sp_bdt_other_3_0p_spoverlay" || ch_name == "sp_bdt_other_4_0p_spoverlay"
+            || ch_name == "sp_bdt_other_5_0p_spoverlay" || ch_name == "sp_bdt_other_6_0p_spoverlay" || ch_name == "sp_bdt_other_7_0p_spoverlay" || ch_name == "sp_bdt_other_8_0p_spoverlay"
+            || ch_name == "sp_bdt_other_9_0p_spoverlay" || ch_name == "sp_bdt_other_10_0p_spoverlay" || ch_name == "sp_bdt_other_11_0p_spoverlay" || ch_name == "sp_bdt_other_12_0p_spoverlay"){
                 if (flag_singlephoton_other_sel && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && flag_0p &&
                   (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
                   map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
                   map_cuts_flag["SPNumuCCSig"])) return true;
                 return false;
-  }else if (ch_name == "sp_bdt_other_Np_spoverlay" || ch_name == "sp_bdt_other_2_Np_spoverlay"){
+  }else if (ch_name == "sp_bdt_other_Np_spoverlay" || ch_name == "sp_bdt_other_2_Np_spoverlay" || ch_name == "sp_bdt_other_3_Np_spoverlay" || ch_name == "sp_bdt_other_4_Np_spoverlay"
+            || ch_name == "sp_bdt_other_5_Np_spoverlay" || ch_name == "sp_bdt_other_6_Np_spoverlay" || ch_name == "sp_bdt_other_7_Np_spoverlay" || ch_name == "sp_bdt_other_8_Np_spoverlay"
+            || ch_name == "sp_bdt_other_9_Np_spoverlay" || ch_name == "sp_bdt_other_10_Np_spoverlay" || ch_name == "sp_bdt_other_11_Np_spoverlay" || ch_name == "sp_bdt_other_12_Np_spoverlay"){
                 if (flag_singlephoton_other_sel && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && !flag_0p &&
                   (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
                   map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
