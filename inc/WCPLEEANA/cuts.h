@@ -4224,6 +4224,11 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
             || ch_name == "sp_bdt_nc_pi0_9_Xp" || ch_name == "sp_bdt_nc_pi0_10_Xp" || ch_name == "sp_bdt_nc_pi0_11_Xp" || ch_name == "sp_bdt_nc_pi0_12_Xp"){
                 if (flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel)) return true;
                 return false;
+  }else if (ch_name == "sp_bdt_nc_pi0_Xp_nsbeam" || ch_name == "sp_bdt_nc_pi0_2_Xp_nsbeam" || ch_name == "sp_bdt_nc_pi0_3_Xp_nsbeam" || ch_name == "sp_bdt_nc_pi0_4_Xp_nsbeam"
+            || ch_name == "sp_bdt_nc_pi0_5_Xp_nsbeam" || ch_name == "sp_bdt_nc_pi0_6_Xp_nsbeam" || ch_name == "sp_bdt_nc_pi0_7_Xp_nsbeam" || ch_name == "sp_bdt_nc_pi0_8_Xp_nsbeam"
+            || ch_name == "sp_bdt_nc_pi0_9_Xp_nsbeam" || ch_name == "sp_bdt_nc_pi0_10_Xp_nsbeam" || ch_name == "sp_bdt_nc_pi0_11_Xp_nsbeam" || ch_name == "sp_bdt_nc_pi0_12_Xp_nsbeam"){
+                if (flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && flag_nsbeam) return true;
+                return false;
   }else if (ch_name == "sp_bdt_nc_pi0_0p_ext" || ch_name == "sp_bdt_nc_pi0_2_0p_ext" || ch_name == "sp_bdt_nc_pi0_3_0p_ext" || ch_name == "sp_bdt_nc_pi0_4_0p_ext"
              || ch_name == "sp_bdt_nc_pi0_5_0p_ext" || ch_name == "sp_bdt_nc_pi0_6_0p_ext" || ch_name == "sp_bdt_nc_pi0_7_0p_ext" || ch_name == "sp_bdt_nc_pi0_8_0p_ext"
              || ch_name == "sp_bdt_nc_pi0_9_0p_ext" || ch_name == "sp_bdt_nc_pi0_10_0p_ext" || ch_name == "sp_bdt_nc_pi0_11_0p_ext" || ch_name == "sp_bdt_nc_pi0_12_0p_ext"){
