@@ -2774,7 +2774,7 @@ void TLee::Set_Spectra_MatrixCov()
   cout<<" Detector systematics"<<endl;
 
   map<int, TString>map_detectorfile_str;
-
+/*
   map_detectorfile_str[1] = detector_directory+"cov_LYDown.root";
   map_detectorfile_str[2] = detector_directory+"cov_LYRayleigh.root";
   map_detectorfile_str[3] = detector_directory+"cov_Recomb2.root";
@@ -2784,8 +2784,8 @@ void TLee::Set_Spectra_MatrixCov()
   map_detectorfile_str[7] = detector_directory+"cov_WMThetaYZ.root";
   map_detectorfile_str[8] = detector_directory+"cov_WMX.root";
   map_detectorfile_str[9] = detector_directory+"cov_WMYZ.root";
-  map_detectorfile_str[10]= detector_directory+"cov_LYatt.root"; 
-
+  map_detectorfile_str[10]= detector_directory+"cov_LYatt.root";
+*/
   map<int, TFile*>map_file_detector_frac;
   map<int, TMatrixD*>map_matrix_detector_frac;
   TMatrixD matrix_detector_frac(bins_oldworld, bins_oldworld);
