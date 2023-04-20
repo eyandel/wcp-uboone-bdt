@@ -1720,9 +1720,9 @@ int main( int argc, char** argv )
         //canvas[obschannel-1]->Print(Form("canvas%d.png", obschannel));
         canvas[obschannel-1]->Print((TString)hdata->GetTitle()+".png");
 
-        if(obschannel==1) canvas[obschannel-1]->Print("selection.png(");
-        else if(obschannel==nchannels) canvas[obschannel-1]->Print("selection.png)");
-        else canvas[obschannel-1]->Print("selection.png");
+        if(obschannel==1) canvas[obschannel-1]->Print("selection.pdf(");
+        else if(obschannel==nchannels) canvas[obschannel-1]->Print("selection.pdf)");
+        else canvas[obschannel-1]->Print("selection.pdf");
 
     }
     theApp.Run();
