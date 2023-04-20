@@ -252,8 +252,8 @@ void LEEana::clear_pfeval_info(PFevalInfo& tagger_info){
   tagger_info.truth_single_photon=0;
   tagger_info.truth_photon_angle=0;
   tagger_info.truth_photon_dis=0;
-  tagger_info.evtDeltaTimeNS=0;
-  tagger_info.evtTimeNS=0;
+  tagger_info.evtDeltaTimeNS=-9999.;
+  tagger_info.evtTimeNS=-9999.;
   //
 
 
@@ -585,7 +585,7 @@ void LEEana::put_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
 
   }
 
-  if (tagger_info.flag_nsbeam){
+  if (flag!=1){//tagger_info.flag_nsbeam){
     tree0->Branch("evtDeltaTimeNS",&tagger_info.evtDeltaTimeNS,"evtDeltaTimeNS/F");
     tree0->Branch("evtTimeNS",&tagger_info.evtTimeNS,"evtTimeNS/F");
   }
