@@ -411,11 +411,44 @@ double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, 
     if(median_dedx>50) median_dedx = 50;
     return median_dedx; // MeV/cm
   }else if (var_name == "reco_showervtxX"){
+    if(pfeval.reco_showerKE>0.){
       return pfeval.reco_showervtxX;
+    }else{
+      Float_t x = -9999.;
+      Float_t max_KE = 0.02;
+      for (Int_t i_p = 0; i_p < pfeval.reco_Ntrack; i_p++){
+        if (pfeval.reco_pdg[i_p]==11 || pfeval.reco_pdg[i_p]==22 && pfeval.reco_startMomentum[i_p][3]>max_KE){
+          x = pfeval.reco_startXYZT[i_p][0];
+        }
+      }
+      return x;
+    }
   }else if (var_name == "reco_showervtxY"){
+    if(pfeval.reco_showerKE>0.){
       return pfeval.reco_showervtxY;
+    }else{
+      Float_t y = -9999.;
+      Float_t max_KE = 0.02;
+      for (Int_t i_p = 0; i_p < pfeval.reco_Ntrack; i_p++){
+        if (pfeval.reco_pdg[i_p]==11 || pfeval.reco_pdg[i_p]==22 && pfeval.reco_startMomentum[i_p][3]>max_KE){
+          y = pfeval.reco_startXYZT[i_p][1];
+        }
+      }
+      return y;
+    }
   }else if (var_name == "reco_showervtxZ"){
+    if(pfeval.reco_showerKE>0.){
       return pfeval.reco_showervtxZ;
+    }else{
+      Float_t z = -9999.;
+      Float_t max_KE = 0.02;
+      for (Int_t i_p = 0; i_p < pfeval.reco_Ntrack; i_p++){
+        if (pfeval.reco_pdg[i_p]==11 || pfeval.reco_pdg[i_p]==22 && pfeval.reco_startMomentum[i_p][3]>max_KE){
+          z = pfeval.reco_startXYZT[i_p][2];
+        }
+      }
+      return z;
+    }
   }else if (var_name == "reco_nuvtxX"){
       return pfeval.reco_nuvtxX;
   }else if (var_name == "reco_nuvtxY"){
