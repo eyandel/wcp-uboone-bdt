@@ -487,6 +487,8 @@ void LEEana::CovMatrix::fill_det_histograms(std::map<TString, TH1D*> map_filenam
     T_BDTvars_cv->SetBranchStatus("shw_sp_n_20mev_showers",1);
     T_BDTvars_cv->SetBranchStatus("shw_sp_n_20br1_showers",1);
     T_BDTvars_cv->SetBranchStatus("shw_sp_vec_median_dedx",1);
+    T_BDTvars_cv->SetBranchStatus("shw_sp_shw_vtx_dis",1);
+    T_BDTvars_cv->SetBranchStatus("shw_sp_max_shw_dis",1);
   }
   //
 
@@ -556,7 +558,7 @@ void LEEana::CovMatrix::fill_det_histograms(std::map<TString, TH1D*> map_filenam
     // T_KINEvars_cv->SetBranchStatus("vlne_nue_partial_totalE",1);
   }
 
-  T_PFeval_cv->SetBranchStatus("*",0);
+  T_PFeval_cv->SetBranchStatus("*",1);
   T_PFeval_cv->SetBranchStatus("run",1);
   T_PFeval_cv->SetBranchStatus("subrun",1);
   T_PFeval_cv->SetBranchStatus("event",1);
@@ -669,6 +671,8 @@ void LEEana::CovMatrix::fill_det_histograms(std::map<TString, TH1D*> map_filenam
     T_BDTvars_det->SetBranchStatus("shw_sp_n_20mev_showers",1);
     T_BDTvars_det->SetBranchStatus("shw_sp_n_20br1_showers",1);
     T_BDTvars_det->SetBranchStatus("shw_sp_vec_median_dedx",1);
+    T_BDTvars_det->SetBranchStatus("shw_sp_shw_vtx_dis",1);
+    T_BDTvars_det->SetBranchStatus("shw_sp_max_shw_dis",1);
   }
   //
 
@@ -736,7 +740,7 @@ void LEEana::CovMatrix::fill_det_histograms(std::map<TString, TH1D*> map_filenam
     // T_KINEvars_det->SetBranchStatus("vlne_nue_partial_totalE",1);
   }
 
-  T_PFeval_det->SetBranchStatus("*",0);
+  T_PFeval_det->SetBranchStatus("*",1);
   T_PFeval_det->SetBranchStatus("run",1);
   T_PFeval_det->SetBranchStatus("subrun",1);
   T_PFeval_det->SetBranchStatus("event",1);

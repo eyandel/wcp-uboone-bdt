@@ -200,6 +200,8 @@ int main( int argc, char** argv )
     T_BDTvars->SetBranchStatus("shw_sp_n_20mev_showers",1);
     T_BDTvars->SetBranchStatus("shw_sp_n_20br1_showers",1);
     T_BDTvars->SetBranchStatus("shw_sp_vec_median_dedx",1);
+    T_BDTvars->SetBranchStatus("shw_sp_shw_vtx_dis",1);
+    T_BDTvars->SetBranchStatus("shw_sp_max_shw_dis",1);
   }
   //
 
@@ -265,7 +267,7 @@ int main( int argc, char** argv )
   }
 
 
-  T_PFeval->SetBranchStatus("*",0);
+  T_PFeval->SetBranchStatus("*",1);
   T_PFeval->SetBranchStatus("run",1);
   T_PFeval->SetBranchStatus("subrun",1);
   T_PFeval->SetBranchStatus("event",1);
