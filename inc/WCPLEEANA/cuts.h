@@ -866,6 +866,11 @@ double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, 
     return tagger.shw_sp_n_20br1_showers;
   }else if (var_name == "median_dEdx_sp"){
     return tagger.shw_sp_vec_median_dedx;
+  }else if (var_name == "shw_vtx_dis_sp"){
+    return tagger.shw_sp_shw_vtx_dis;
+  }else if (var_name == "max_shw_dis_sp"){
+    return tagger.shw_sp_max_shw_dis;
+  }
   }else if (var_name == "shw_backwards_projected_dist"){
     float backwards_projected_dist = -99999.0;
 

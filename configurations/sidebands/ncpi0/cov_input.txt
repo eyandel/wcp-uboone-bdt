@@ -22,11 +22,11 @@ sp_bdt_nc_pi0_4_Xp_dirt			      cos_shower_angle_beam_sp	     9	   -1.0     1.01
 sp_bdt_nc_pi0_4_Xp_ext 			      cos_shower_angle_beam_sp	     9	   -1.0     1.01   4	   0		      0	    0 	      0		      16	      3	      unity   		  0
 sp_bdt_nc_pi0_4_Xp 		    	      cos_shower_angle_beam_sp	     9	   -1.0     1.01   4	   0		      0	    0 	      0		      0		      5	      unity   		  0
 
-sp_bdt_nc_pi0_5_Xp_spoverlay	    shwvtx_nuvtx_dis               20    0        100    5	   1		      1	    0	        0		      5		      9	      cv_spline		  0
-sp_bdt_nc_pi0_5_Xp_overlay_BG		  shwvtx_nuvtx_dis               20    0        100    5	   1		      1	    0	        0		      5		      2	      cv_spline		  0
-sp_bdt_nc_pi0_5_Xp_dirt			      shwvtx_nuvtx_dis               20    0        100  	 5	   1		      0	    0.5	      0		      5		      4	      cv_spline		  0
-sp_bdt_nc_pi0_5_Xp_ext 			      shwvtx_nuvtx_dis               20    0        100  	 5	   0		      0	    0 	      0		      17	      3	      unity   		  0
-sp_bdt_nc_pi0_5_Xp 		    	      shwvtx_nuvtx_dis               20    0        100  	 5	   0		      0	    0 	      0		      0		      5	      unity   		  0
+sp_bdt_nc_pi0_5_Xp_spoverlay	    shw_vtx_dis_sp                 20    0        100    5	   1		      1	    0	        0		      5		      9	      cv_spline		  0
+sp_bdt_nc_pi0_5_Xp_overlay_BG		  shw_vtx_dis_sp                 20    0        100    5	   1		      1	    0	        0		      5		      2	      cv_spline		  0
+sp_bdt_nc_pi0_5_Xp_dirt			      shw_vtx_dis_sp                 20    0        100  	 5	   1		      0	    0.5	      0		      5		      4	      cv_spline		  0
+sp_bdt_nc_pi0_5_Xp_ext 			      shw_vtx_dis_sp                 20    0        100  	 5	   0		      0	    0 	      0		      17	      3	      unity   		  0
+sp_bdt_nc_pi0_5_Xp 		    	      shw_vtx_dis_sp                 20    0        100  	 5	   0		      0	    0 	      0		      0		      5	      unity   		  0
 
 sp_bdt_nc_pi0_6_Xp_spoverlay	    num_shower_sp                  10    0        10     6	   1		      1	    0	        0		      6		      9	      cv_spline		  0
 sp_bdt_nc_pi0_6_Xp_overlay_BG		  num_shower_sp                  10    0        10     6	   1		      1	    0	        0		      6		      2	      cv_spline		  0
