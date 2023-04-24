@@ -1463,7 +1463,7 @@ int main( int argc, char** argv )
         hmc->Scale(scalePOT);
         hmc->GetXaxis()->SetTitle("Interaction Time [ns]");
         hmc->Draw("hist");
-        hmc->GetYaxis()->SetTitle("Event counts");
+        //hmc->GetYaxis()->SetTitle("Event counts");
         hmc->GetYaxis()->SetTitleSize(0.05);
         hmc->GetYaxis()->SetTitleFont(132);
         hmc->GetYaxis()->SetTitleOffset(0.73);
@@ -1482,7 +1482,7 @@ int main( int argc, char** argv )
         hdata->Scale(scalePOT);
         hdata->GetXaxis()->SetTitle("Interaction Time [ns]");
         hdata->Draw();
-        hdata->GetYaxis()->SetTitle("Event counts");
+        //hdata->GetYaxis()->SetTitle("Event counts");
         hdata->GetYaxis()->SetTitleSize(0.05);
         hdata->GetYaxis()->SetTitleFont(132);
         hdata->GetYaxis()->SetTitleOffset(0.73);
@@ -1579,7 +1579,7 @@ int main( int argc, char** argv )
         double relerr_data = 1./TMath::Sqrt(hdata->Integral());
         double relerr_pred = TMath::Sqrt(sumtotalcov[obschannel])/hmc->Integral();
         double data_pred_ratio = hdata->Integral()/normalization/hmc->Integral();
-        legend[obschannel-1]->SetHeader(Form("#SigmaDATA/#Sigma(MC+EXT)=%.2f#pm%.2f(data err)#pm%.2f(pred err)", data_pred_ratio, relerr_data*data_pred_ratio, relerr_pred*data_pred_ratio), "C");
+        //legend[obschannel-1]->SetHeader(Form("#SigmaDATA/#Sigma(MC+EXT)=%.2f#pm%.2f(data err)#pm%.2f(pred err)", data_pred_ratio, relerr_data*data_pred_ratio, relerr_pred*data_pred_ratio), "C");
         legend[obschannel-1]->Draw();
         canvas[obschannel-1]->Modified();
         //pad1->Modified();
@@ -1721,7 +1721,7 @@ int main( int argc, char** argv )
         hist->GetYaxis()->SetNdivisions(405);
         hist->GetXaxis()->SetTitle("Interaction Time [ns]");
         //hmc->Draw("hist");
-        hist->GetYaxis()->SetTitle("Event counts");
+        //hist->GetYaxis()->SetTitle("Event counts");
         hist->GetYaxis()->SetTitleSize(0.05);
         hist->GetYaxis()->SetTitleFont(132);
         hist->GetYaxis()->SetTitleOffset(0.73);
