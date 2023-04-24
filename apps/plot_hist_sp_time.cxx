@@ -1462,7 +1462,7 @@ int main( int argc, char** argv )
         hmc->Sumw2();
         hmc->Scale(scalePOT);
         hmc->GetXaxis()->SetTitle("Interaction Time [ns]");
-        hmc->Draw("hist");
+        //hmc->Draw("hist");
         hmc->GetYaxis()->SetTitle("Event counts");
         hmc->GetYaxis()->SetTitleSize(0.05);
         hmc->GetYaxis()->SetTitleFont(132);
@@ -1482,7 +1482,7 @@ int main( int argc, char** argv )
         hstack[obschannel-1]->Draw("hist same");
         hmcerror->Sumw2();
         hmcerror->Scale(scalePOT);
-        hmcerror->Draw("same E2");
+        //hmcerror->Draw("same E2");
         hmcerror->SetFillColor(kGray+2);
         hmcerror->SetFillStyle(3002);
         hmcerror->SetLineWidth(0);
@@ -1538,7 +1538,7 @@ int main( int argc, char** argv )
                 else gratio_data2[obschannel-1]->SetPointError(i, x_err, x_err, 0, 0);
             }
         }
-        gr[obschannel-1]->Draw("P same");
+        //gr[obschannel-1]->Draw("P same");
         gr[obschannel-1]->SetLineWidth(2);
         gr[obschannel-1]->SetMarkerStyle(20);
         gr[obschannel-1]->SetMarkerSize(1.5);
@@ -1698,8 +1698,24 @@ int main( int argc, char** argv )
         TH1F* hist = (TH1F*)hdata->Clone("hist");
         hist->Reset();
         hist->Scale(scalePOT);
-        //hist->Draw("axis same");
+        hist->Draw("axis same");
         hist->GetYaxis()->SetNdivisions(405);
+        hmc->GetXaxis()->SetTitle("Interaction Time [ns]");
+        //hmc->Draw("hist");
+        hist->GetYaxis()->SetTitle("Event counts");
+        hist->GetYaxis()->SetTitleSize(0.05);
+        hist->GetYaxis()->SetTitleFont(132);
+        hist->GetYaxis()->SetTitleOffset(0.73);
+        hist->GetYaxis()->SetLabelFont(132);
+        hist->GetYaxis()->SetLabelSize(0.04);
+        //if(obschannel==9) hmc->GetXaxis()->SetRangeUser(0.5,1);
+        float mcymax = hmc->GetBinContent(hmc->GetMaximumBin())*scalePOT;
+        float dataymax = hdata->GetBinContent(hdata->GetMaximumBin())*scalePOT/normalization;
+        if(dataymax>mcymax) mcymax = dataymax;
+        hmc->SetMaximum(2.0*mcymax);
+        hmc->GetYaxis()->SetRangeUser(-0.02*mcymax, 1.6*mcymax);
+        hmc->SetLineColor(kBlack);
+        hmc->SetLineWidth(5);
 
         TLine* line;
         line = new TLine(hmc->GetXaxis()->GetXmin(),1,hmc->GetXaxis()->GetXmax(),1);
