@@ -932,7 +932,7 @@ int main( int argc, char** argv )
         pad2->SetRightMargin(0.1);
         pad2->SetBottomMargin(0.20);
         pad1->Draw();*/
-        canvas[obschannel-1]->cd();
+        canvas[obschannel-1]->Draw();
         //pad2->Draw();
         hstack[obschannel-1] = new THStack(Form("hs%d", obschannel),"");
         legend[obschannel-1] = new TLegend(0.3, 0.65, 0.85, 0.92);
