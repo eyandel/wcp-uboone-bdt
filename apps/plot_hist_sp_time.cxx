@@ -1185,7 +1185,7 @@ int main( int argc, char** argv )
         if(obschannel==999) legend[obschannel-1]->AddEntry((TObject*)0, Form("NuMI POT: %.3e", datapot_numi*scalePOT), "");
         else legend[obschannel-1]->AddEntry((TObject*)0, Form("Data POT: %.3e", datapot*scalePOT), "");
         //else legend[obschannel-1]->AddEntry((TObject*)0, Form("Scaled to POT: %.3e", datapot*scalePOT), "");
-        legend[obschannel-1]->AddEntry((TObject*)0, Form("#chi^{2}/ndf=%.2f/%d", GOF[obschannel-1].first, GOF[obschannel-1].second), "");
+    //    legend[obschannel-1]->AddEntry((TObject*)0, Form("#chi^{2}/ndf=%.2f/%d", GOF[obschannel-1].first, GOF[obschannel-1].second), "");
         legend[obschannel-1]->AddEntry(gr[obschannel-1], Form("BNB data, %.1f", hdata->Integral()*scalePOT), "lp");
         //legend[obschannel-1]->AddEntry(gr[obschannel-1], Form("Fake data, %.1f", hdata->Integral()*scalePOT), "lp");
         //legend[obschannel-1]->AddEntry(gr[obschannel-1], Form("Scaled BNB data, %.1f", hdata->Integral()*scalePOT), "lp");
@@ -1193,61 +1193,61 @@ int main( int argc, char** argv )
         TH1F* hmc = (TH1F*)map_obsch_histos[obschannel].at(1)->Clone("hmc");
         TH1F* hmc2 = (TH1F*)map_obsch_histos[obschannel].at(2)->Clone("hmc2");
         TH1F* hmcerror = (TH1F*)hmc->Clone("hmcerror");
-        legend[obschannel-1]->AddEntry(hmcerror, "Pred. uncertainty", "lf");
+    //    legend[obschannel-1]->AddEntry(hmcerror, "Pred. uncertainty", "lf");
 
         if(flag_truthlabel==0){
         // truth labels start
         hstack[obschannel-1]->Add(hbadmatch);
-        legend[obschannel-1]->AddEntry(hbadmatch, Form("Cosmic, %.1f", hbadmatch->Integral()), "F");
+    //    legend[obschannel-1]->AddEntry(hbadmatch, Form("Cosmic, %.1f", hbadmatch->Integral()), "F");
         hbadmatch->SetFillStyle(3004);
         hbadmatch->SetFillColorAlpha(kRed+2, 0.5);
         hbadmatch->SetLineColor(kRed+2);
         hbadmatch->SetLineWidth(1);
 
         hstack[obschannel-1]->Add(hext);
-        legend[obschannel-1]->AddEntry(hext, Form("EXT, %.1f", hext->Integral()), "F");
+    //    legend[obschannel-1]->AddEntry(hext, Form("EXT, %.1f", hext->Integral()), "F");
         hext->SetFillStyle(3004);
         hext->SetFillColorAlpha(kOrange+3, 0.5);
         hext->SetLineColor(kOrange+3);
         hext->SetLineWidth(1);
 
         hstack[obschannel-1]->Add(hdirt);
-        legend[obschannel-1]->AddEntry(hdirt, Form("Dirt, %.1f", hdirt->Integral()), "F");
+    //    legend[obschannel-1]->AddEntry(hdirt, Form("Dirt, %.1f", hdirt->Integral()), "F");
         hdirt->SetFillStyle(3224);
         hdirt->SetFillColorAlpha(kGray, 0.5);
         hdirt->SetLineColor(kGray+2);
         hdirt->SetLineWidth(1);
 
         hstack[obschannel-1]->Add(houtFV);
-        legend[obschannel-1]->AddEntry(houtFV, Form("out FV, %.1f", houtFV->Integral()), "F");
+  //      legend[obschannel-1]->AddEntry(houtFV, Form("out FV, %.1f", houtFV->Integral()), "F");
         houtFV->SetFillStyle(3224);
         houtFV->SetFillColorAlpha(kOrange+1, 0.5);
         houtFV->SetLineColor(kOrange+1);
         houtFV->SetLineWidth(1);
 
         hstack[obschannel-1]->Add(hNCpi0inFV);
-        legend[obschannel-1]->AddEntry(hNCpi0inFV, Form("NC #pi^{0} in FV,  %.1f", hNCpi0inFV->Integral()), "F");
+  //      legend[obschannel-1]->AddEntry(hNCpi0inFV, Form("NC #pi^{0} in FV,  %.1f", hNCpi0inFV->Integral()), "F");
         hNCpi0inFV->SetFillStyle(1001);
         hNCpi0inFV->SetFillColorAlpha(38, 0.5);
         hNCpi0inFV->SetLineColor(38);
         hNCpi0inFV->SetLineWidth(1);
 
         hstack[obschannel-1]->Add(hCCpi0inFV);
-        legend[obschannel-1]->AddEntry(hCCpi0inFV, Form("CC #pi^{0} in FV, %.1f", hCCpi0inFV->Integral()), "F");
+  //      legend[obschannel-1]->AddEntry(hCCpi0inFV, Form("CC #pi^{0} in FV, %.1f", hCCpi0inFV->Integral()), "F");
         hCCpi0inFV->SetFillStyle(1001);
         hCCpi0inFV->SetFillColorAlpha(30, 0.5);
         hCCpi0inFV->SetLineColor(30);
         hCCpi0inFV->SetLineWidth(1);
 
         hstack[obschannel-1]->Add(hNCinFV);
-        legend[obschannel-1]->AddEntry(hNCinFV, Form("NC in FV, %.1f", hNCinFV->Integral()), "F");
+  //      legend[obschannel-1]->AddEntry(hNCinFV, Form("NC in FV, %.1f", hNCinFV->Integral()), "F");
         hNCinFV->SetFillStyle(1001);
         hNCinFV->SetFillColorAlpha(kOrange+1, 0.5);
         hNCinFV->SetLineColor(kOrange+1);
         hNCinFV->SetLineWidth(1);
 
         hstack[obschannel-1]->Add(hnumuCCinFV);
-        legend[obschannel-1]->AddEntry(hnumuCCinFV, Form("#nu_{#mu} CC in FV, %.1f", hnumuCCinFV->Integral()), "F");
+  //      legend[obschannel-1]->AddEntry(hnumuCCinFV, Form("#nu_{#mu} CC in FV, %.1f", hnumuCCinFV->Integral()), "F");
         hnumuCCinFV->SetFillStyle(1001);
         hnumuCCinFV->SetFillColorAlpha(kAzure+6, 0.5);
         hnumuCCinFV->SetLineColor(kAzure+6);
@@ -1268,42 +1268,42 @@ int main( int argc, char** argv )
         hAnumuCCinFV->SetLineWidth(1);*/
 
         hstack[obschannel-1]->Add(hnueCCinFV);
-        legend[obschannel-1]->AddEntry(hnueCCinFV, Form("#nu_{e} CC in FV, %.1f", hnueCCinFV->Integral()), "F");
+  //      legend[obschannel-1]->AddEntry(hnueCCinFV, Form("#nu_{e} CC in FV, %.1f", hnueCCinFV->Integral()), "F");
         hnueCCinFV->SetFillStyle(1001);
         hnueCCinFV->SetFillColorAlpha(kGreen+1, 0.5);
         hnueCCinFV->SetLineColor(kGreen+1);
         hnueCCinFV->SetLineWidth(1);
 
         hstack[obschannel-1]->Add(hNCpi1g);
-        legend[obschannel-1]->AddEntry(hNCpi1g, Form("NC #pi^{0} 1#gamma, %.1f", hNCpi1g->Integral()), "F");
+  //      legend[obschannel-1]->AddEntry(hNCpi1g, Form("NC #pi^{0} 1#gamma, %.1f", hNCpi1g->Integral()), "F");
         hNCpi1g->SetFillStyle(1001);
         hNCpi1g->SetFillColorAlpha(kPink+5, 0.5);
         hNCpi1g->SetLineColor(kPink+5);
         hNCpi1g->SetLineWidth(1);
 
         hstack[obschannel-1]->Add(hNCdel);
-        legend[obschannel-1]->AddEntry(hNCdel, Form("NC #Delta 1#gamma, %.1f", hNCdel->Integral()), "F");
+  //      legend[obschannel-1]->AddEntry(hNCdel, Form("NC #Delta 1#gamma, %.1f", hNCdel->Integral()), "F");
         hNCdel->SetFillStyle(1001);
         hNCdel->SetFillColorAlpha(kPink-6, 0.5);
         hNCdel->SetLineColor(kPink-6);
         hNCdel->SetLineWidth(1);
 
         hstack[obschannel-1]->Add(hNCother);
-        legend[obschannel-1]->AddEntry(hNCother, Form("NC Other 1#gamma, %.1f", hNCother->Integral()), "F");
+  //      legend[obschannel-1]->AddEntry(hNCother, Form("NC Other 1#gamma, %.1f", hNCother->Integral()), "F");
         hNCother->SetFillStyle(1001);
         hNCother->SetFillColorAlpha(kPink-8, 0.5);
         hNCother->SetLineColor(kPink-8);
         hNCother->SetLineWidth(1);
 
         hstack[obschannel-1]->Add(hnumuCC1g);
-        legend[obschannel-1]->AddEntry(hnumuCC1g, Form("#nu_{#mu}CC 1#gamma #mu<100MeV, %.1f", hnumuCC1g->Integral()), "F");
+  //      legend[obschannel-1]->AddEntry(hnumuCC1g, Form("#nu_{#mu}CC 1#gamma #mu<100MeV, %.1f", hnumuCC1g->Integral()), "F");
         hnumuCC1g->SetFillStyle(1001);
         hnumuCC1g->SetFillColorAlpha(kPink-7, 0.5);
         hnumuCC1g->SetLineColor(kPink-7);
         hnumuCC1g->SetLineWidth(1);
 
         hstack[obschannel-1]->Add(hout1g);
-        legend[obschannel-1]->AddEntry(hout1g, Form("out of FV 1#gamma, %.1f", hout1g->Integral()), "F");
+  //      legend[obschannel-1]->AddEntry(hout1g, Form("out of FV 1#gamma, %.1f", hout1g->Integral()), "F");
         hout1g->SetFillStyle(1001);
         hout1g->SetFillColorAlpha(kPink, 0.5);
         hout1g->SetLineColor(kPink);
