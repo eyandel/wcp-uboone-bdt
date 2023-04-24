@@ -922,7 +922,7 @@ int main( int argc, char** argv )
         int obschannel = it->first;
         std::cout<<"Channel: "<<obschannel<<std::endl;
         canvas[obschannel-1] = new TCanvas(Form("canvas%d", obschannel), Form("channel%d", obschannel), 1200, 900);
-        TPad *pad1 = new TPad("pad1", "", 0.01,0.3,0.99,0.99,0,0,0);
+        /*TPad *pad1 = new TPad("pad1", "", 0.01,0.3,0.99,0.99,0,0,0);
         TPad *pad2 = new TPad("pad2", "", 0.01,0.01,0.99,0.3,0,0,0);
         pad1->SetBottomMargin(0);
         pad1->SetLeftMargin(0.12);
@@ -931,7 +931,8 @@ int main( int argc, char** argv )
         pad2->SetLeftMargin(0.12);
         pad2->SetRightMargin(0.1);
         pad2->SetBottomMargin(0.20);
-        pad1->Draw();
+        pad1->Draw();*/
+        canvas[obschannel-1]->cd();
         //pad2->Draw();
         hstack[obschannel-1] = new THStack(Form("hs%d", obschannel),"");
         legend[obschannel-1] = new TLegend(0.3, 0.65, 0.85, 0.92);
@@ -1165,7 +1166,8 @@ int main( int argc, char** argv )
                 }
             }
         }
-        pad1->cd();
+        //pad1->cd();
+        canvas[obschannel-1]->cd();
         //gStyle->SetOptTitle(kFALSE);
         float datapot = 0;
         float datapot_numi = 0;
@@ -1560,7 +1562,8 @@ int main( int argc, char** argv )
         double data_pred_ratio = hdata->Integral()/normalization/hmc->Integral();
         legend[obschannel-1]->SetHeader(Form("#SigmaDATA/#Sigma(MC+EXT)=%.2f#pm%.2f(data err)#pm%.2f(pred err)", data_pred_ratio, relerr_data*data_pred_ratio, relerr_pred*data_pred_ratio), "C");
         legend[obschannel-1]->Draw();
-        pad1->Modified();
+        canvas[obschannel-1]->Modified();
+        //pad1->Modified();
         //pad2->cd();
         //gratio_mc[obschannel-1]->Draw("a2");
         gratio_mc[obschannel-1]->SetFillColor(kBlue-10);
@@ -1680,7 +1683,7 @@ int main( int argc, char** argv )
         gratio_mc[obschannel-1]->GetYaxis()->SetTitleSize(0.1);
         gratio_mc[obschannel-1]->GetYaxis()->SetTitleOffset(0.35);
         gratio_mc[obschannel-1]->GetYaxis()->SetLabelSize(0.1);
-        gratio_data[obschannel-1]->Draw("P same");
+        //gratio_data[obschannel-1]->Draw("P same");
         gratio_data[obschannel-1]->SetLineWidth(2);
         gratio_data[obschannel-1]->SetMarkerStyle(20);
         gratio_data[obschannel-1]->SetMarkerSize(1.5);
@@ -1695,13 +1698,13 @@ int main( int argc, char** argv )
         TH1F* hist = (TH1F*)hdata->Clone("hist");
         hist->Reset();
         hist->Scale(scalePOT);
-        hist->Draw("axis same");
+        //hist->Draw("axis same");
         hist->GetYaxis()->SetNdivisions(405);
 
         TLine* line;
         line = new TLine(hmc->GetXaxis()->GetXmin(),1,hmc->GetXaxis()->GetXmax(),1);
         //if(obschannel==5 || obschannel==6) line = new TLine(0,1,1200,1);
-        line->Draw();
+        //line->Draw();
         line->SetLineWidth(2);
         line->SetLineStyle(kDashed);
         legend2[obschannel-1] = new TLegend(0.2, 0.7, 0.8, 0.95);
@@ -1715,8 +1718,8 @@ int main( int argc, char** argv )
         //legend2[obschannel-1]->AddEntry(gratio_data2[obschannel-1],"Data with stat. uncertainty (normalized)", "lp");
         legend2[obschannel-1]->SetTextSize(0.08);
         legend2[obschannel-1]->SetFillStyle(0);
-        legend2[obschannel-1]->Draw();
-        pad2->Modified();
+        //legend2[obschannel-1]->Draw();
+        //pad2->Modified();
 
         //canvas[obschannel-1]->Print(Form("canvas%d.png", obschannel));
         canvas[obschannel-1]->Print((TString)hdata->GetTitle()+".png");
