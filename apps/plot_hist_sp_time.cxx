@@ -1700,7 +1700,7 @@ int main( int argc, char** argv )
         hist->Scale(scalePOT);
         hist->Draw("axis same");
         hist->GetYaxis()->SetNdivisions(405);
-        hmc->GetXaxis()->SetTitle("Interaction Time [ns]");
+        hist->GetXaxis()->SetTitle("Interaction Time [ns]");
         //hmc->Draw("hist");
         hist->GetYaxis()->SetTitle("Event counts");
         hist->GetYaxis()->SetTitleSize(0.05);
@@ -1709,13 +1709,11 @@ int main( int argc, char** argv )
         hist->GetYaxis()->SetLabelFont(132);
         hist->GetYaxis()->SetLabelSize(0.04);
         //if(obschannel==9) hmc->GetXaxis()->SetRangeUser(0.5,1);
-        float mcymax = hmc->GetBinContent(hmc->GetMaximumBin())*scalePOT;
-        float dataymax = hdata->GetBinContent(hdata->GetMaximumBin())*scalePOT/normalization;
         if(dataymax>mcymax) mcymax = dataymax;
-        hmc->SetMaximum(2.0*mcymax);
-        hmc->GetYaxis()->SetRangeUser(-0.02*mcymax, 1.6*mcymax);
-        hmc->SetLineColor(kBlack);
-        hmc->SetLineWidth(5);
+        hist->SetMaximum(2.0*mcymax);
+        hist->GetYaxis()->SetRangeUser(-0.02*mcymax, 1.6*mcymax);
+        hist->SetLineColor(kBlack);
+        hist->SetLineWidth(5);
 
         TLine* line;
         line = new TLine(hmc->GetXaxis()->GetXmin(),1,hmc->GetXaxis()->GetXmax(),1);
