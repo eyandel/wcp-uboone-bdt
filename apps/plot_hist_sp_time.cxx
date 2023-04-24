@@ -1481,7 +1481,7 @@ int main( int argc, char** argv )
         hdata->Sumw2();
         hdata->Scale(scalePOT);
         hdata->GetXaxis()->SetTitle("Interaction Time [ns]");
-        hdata->Draw("hist");
+        hdata->Draw();
         hdata->GetYaxis()->SetTitle("Event counts");
         hdata->GetYaxis()->SetTitleSize(0.05);
         hdata->GetYaxis()->SetTitleFont(132);
