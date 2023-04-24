@@ -1478,6 +1478,25 @@ int main( int argc, char** argv )
         hmc->SetLineColor(kBlack);
         hmc->SetLineWidth(5);
 
+        hdata->Sumw2();
+        hdata->Scale(scalePOT);
+        hdata->GetXaxis()->SetTitle("Interaction Time [ns]");
+        hdata->Draw("hist");
+        hdata->GetYaxis()->SetTitle("Event counts");
+        hdata->GetYaxis()->SetTitleSize(0.05);
+        hdata->GetYaxis()->SetTitleFont(132);
+        hdata->GetYaxis()->SetTitleOffset(0.73);
+        hdata->GetYaxis()->SetLabelFont(132);
+        hdata->GetYaxis()->SetLabelSize(0.04);
+        //if(obschannel==9) hmc->GetXaxis()->SetRangeUser(0.5,1);
+        mcymax = hmc->GetBinContent(hmc->GetMaximumBin())*scalePOT;
+        dataymax = hdata->GetBinContent(hdata->GetMaximumBin())*scalePOT/normalization;
+        if(dataymax>mcymax) mcymax = dataymax;
+        hdata->SetMaximum(2.0*mcymax);
+        hdata->GetYaxis()->SetRangeUser(-0.02*mcymax, 1.6*mcymax);
+        hdata->SetLineColor(kBlack);
+        hdata->SetLineWidth(5);
+
 
         hstack[obschannel-1]->Draw("hist same");
         hmcerror->Sumw2();
