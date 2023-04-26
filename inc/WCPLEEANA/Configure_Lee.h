@@ -50,10 +50,10 @@ namespace config_Lee
 
   ////////// systematics flag
 
-  bool flag_syst_flux_Xs    = false;
+  bool flag_syst_flux_Xs    = true;
   bool flag_syst_detector   = false;
   bool flag_syst_additional = true;
-  bool flag_syst_mc_stat    = true;
+  bool flag_syst_mc_stat    = false;
   bool flag_syst_reweight        = false;
   bool flag_syst_reweight_cor    = false;
 
