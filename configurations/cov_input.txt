@@ -1,35 +1,35 @@
-single_photon_spoverlay	                shower_energy_sp	             15	   0	      1500   	1	      1		      1	    0	        0		      1		      9	      cv_spline		  0
-single_photon_overlay_BG                shower_energy_sp	             15	   0	      1500   	1	      1		      1	    0	        0		      1		      2	      cv_spline		  0
-single_photon_dirt		                  shower_energy_sp	             15	   0	      1500  	1	      1		      0	    0.5	      0		      1		      4	      cv_spline		  0
-single_photon_ext 		                  shower_energy_sp	             15	   0	      1500  	1	      0		      0	    0 	      0		      7		      3	      unity   		  0
-single_photon_bnb 		                  shower_energy_sp	             15	   0	      1500  	1	      0		      0	    0 	      0		      0		      5	      unity   		  0
+single_photon_spoverlay	                shower_energy_sp	             15	   0	      1500   	1	      1		      1	    0	        0		      1		      9	      cv_spline_nsbeam		  0
+single_photon_overlay_BG                shower_energy_sp	             15	   0	      1500   	1	      1		      1	    0	        0		      1		      2	      cv_spline_nsbeam		  0
+single_photon_dirt		                  shower_energy_sp	             15	   0	      1500  	1	      1		      0	    0.5	      0		      1		      4	      cv_spline_nsbeam		  0
+single_photon_ext 		                  shower_energy_sp	             15	   0	      1500  	1	      0		      0	    0 	      0		      7		      3	      nsbeam_ext   		      0
+single_photon_bnb_nsbeam                shower_energy_sp	             15	   0	      1500  	1	      0		      0	    0 	      0		      0		      5	      unity   		          0
 
-single_photon_eff_spoverlay	            shower_energy_sp	             15	   0	      1500   	2	      1		      1	    0	        0		      2		      9	      cv_spline		  0
-single_photon_eff_overlay_BG            shower_energy_sp	             15	   0	      1500   	2	      1		      1	    0	        0		      2		      2	      cv_spline		  0
-single_photon_eff_dirt		              shower_energy_sp	             15	   0	      1500  	2	      1		      0	    0.5	      0		      2		      4	      cv_spline		  0
-single_photon_eff_ext 		              shower_energy_sp	             15	   0	      1500  	2	      0		      0	    0 	      0		      8		      3	      unity   		  0
-single_photon_eff_bnb 		              shower_energy_sp	             15	   0	      1500  	2	      0		      0	    0 	      0		      0		      5	      unity   		  0
+single_photon_eff_spoverlay	            shower_energy_sp	             15	   0	      1500   	2	      1		      1	    0	        0		      2		      9	      cv_spline_nsbeam		  0
+single_photon_eff_overlay_BG            shower_energy_sp	             15	   0	      1500   	2	      1		      1	    0	        0		      2		      2	      cv_spline_nsbeam		  0
+single_photon_eff_dirt		              shower_energy_sp	             15	   0	      1500  	2	      1		      0	    0.5	      0		      2		      4	      cv_spline_nsbeam		  0
+single_photon_eff_ext 		              shower_energy_sp	             15	   0	      1500  	2	      0		      0	    0 	      0		      8		      3	      nsbeam_ext     	  	  0
+single_photon_eff_bnb_nsbeam 	          shower_energy_sp	             15	   0	      1500  	2	      0		      0	    0 	      0		      0		      5	      unity   		          0
 
 single_photon_eff_pre_spoverlay		      single_photon_numu_score       60	   -15	    15     	3	      1		      1	    0	        0		      3		      9	      cv_spline     0
-single_photon_eff_pre_overlay_sp_BG     single_photon_numu_score       60	   -15	    15     	3	      1		      1	    0	        0		      3		      2	      cv_spline     0
+single_photon_eff_pre_overlay_BG        single_photon_numu_score       60	   -15	    15     	3	      1		      1	    0	        0		      3		      2	      cv_spline     0
 single_photon_eff_pre_dirt		          single_photon_numu_score       60	   -15	    15    	3	      1		      0	    0.5	      0		      3		      4	      cv_spline    	0
 single_photon_eff_pre_ext 		          single_photon_numu_score       60	   -15	    15    	3	      0		      0	    0 	      0		      9		      3	      unity		      0
 single_photon_eff_pre_bnb               single_photon_numu_score       60	   -15	    15    	3	      0		      0	    0 	      0		      0		      5	      unity   		  0
 
 single_photon_eff_numu_spoverlay		    single_photon_other_score      60	   -15	    15     	4	      1		      1	    0	        0		      4		      9	      cv_spline     0
-single_photon_eff_numu_overlay_sp_BG    single_photon_other_score      60	   -15	    15     	4	      1		      1	    0	        0		      4		      2	      cv_spline     0
+single_photon_eff_numu_overlay_BG       single_photon_other_score      60	   -15	    15     	4	      1		      1	    0	        0		      4		      2	      cv_spline     0
 single_photon_eff_numu_dirt		          single_photon_other_score      60	   -15	    15    	4	      1		      0	    0.5	      0		      4		      4	      cv_spline    	0
 single_photon_eff_numu_ext 		          single_photon_other_score      60	   -15	    15    	4	      0		      0	    0 	      0		      10	      3	      unity		      0
 single_photon_eff_numu_bnb              single_photon_other_score      60	   -15	    15    	4	      0		      0	    0 	      0		      0		      5	      unity   		  0
 
 single_photon_eff_other_spoverlay		    single_photon_ncpi0_score      60	   -15	    15     	5	      1		      1	    0	        0		      5		      9	      cv_spline     0
-single_photon_eff_other_overlay_sp_BG   single_photon_ncpi0_score      60	   -15	    15     	5	      1		      1	    0	        0		      5		      2	      cv_spline     0
+single_photon_eff_other_overlay_BG      single_photon_ncpi0_score      60	   -15	    15     	5	      1		      1	    0	        0		      5		      2	      cv_spline     0
 single_photon_eff_other_dirt		        single_photon_ncpi0_score      60	   -15	    15    	5	      1		      0	    0.5	      0		      5		      4	      cv_spline     0
 single_photon_eff_other_ext 		        single_photon_ncpi0_score      60	   -15	    15    	5	      0		      0	    0 	      0		      11	      3	      unity		      0
 single_photon_eff_other_bnb             single_photon_ncpi0_score      60	   -15	    15    	5	      0		      0	    0 	      0		      0		      5	      unity   		  0
 
 single_photon_eff_ncpi0_spoverlay		    single_photon_nue_score        60	   -15	    15     	6	      1		      1	    0	        0		      6		      9	      cv_spline     0
-single_photon_eff_ncpi0_overlay_sp_BG   single_photon_nue_score        60	   -15	    15     	6	      1		      1	    0	        0		      6		      2	      cv_spline     0
+single_photon_eff_ncpi0_overlay_BG      single_photon_nue_score        60	   -15	    15     	6	      1		      1	    0	        0		      6		      2	      cv_spline     0
 single_photon_eff_ncpi0_dirt		        single_photon_nue_score        60	   -15	    15    	6	      1		      0	    0.5	      0		      6		      4	      cv_spline     0
 single_photon_eff_ncpi0_ext 		        single_photon_nue_score        60	   -15	    15    	6	      0		      0	    0 	      0		      12	      3	      unity		      0
 single_photon_eff_ncpi0_bnb             single_photon_nue_score        60	   -15	    15    	6	      0		      0	    0 	      0		      0		      5	      unity   		  0

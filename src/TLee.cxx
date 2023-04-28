@@ -2227,7 +2227,7 @@ void TLee::Plotting_systematics()
 
 		int num_bins = h1_total_relerr->GetNbinsX();
 
-		for (int i_bin = 1; i_bin<=2; i_bin++){
+		for (int i_bin = 1; i_bin<=num_bins; i_bin++){
     	cout << "bin "<<i_bin<<" total rel err " << h1_total_relerr->GetBinContent(i_bin) << "\n";
     	cout << "bin "<<i_bin<<" dirt err " << h1_additional_relerr->GetBinContent(i_bin) << "\n";
     	cout << "bin "<<i_bin<<" mc stat rel err " << h1_mc_stat_relerr->GetBinContent(i_bin) << "\n";
