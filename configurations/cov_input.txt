@@ -1,3 +1,10 @@
+sp_bdt_numuCC_Xp_overlay		      ns_beam_time	                 60    -15      15   	1	      1		      1	    0	        0		      1		      2	      cv_spline		  0
+sp_bdt_numuCC_Xp_dirt		          ns_beam_time	                 60    -15      15  	1	      1		      0	    0.5	      0		      1		      4	      cv_spline		  0
+sp_bdt_numuCC_Xp_ext 		          ns_beam_time	                 60    -15      15  	1	      0		      0	    0 	      0		      4		      3	      unity   		  0
+sp_bdt_numuCC_Xp		              ns_beam_time	                 60    -15      15  	1	      0		      0	    0 	      0		      0		      5	      unity   		  0
+End					                      End		                         -1	   -1	      -1	   -1	   -1		      -1	  -1		    -1		    -1		    -1	    end		        -1
+
+
 single_photon_spoverlay	                shower_energy_sp	             15	   0	      1500   	1	      1		      1	    0	        0		      1		      9	      cv_spline_nsbeam		  0
 single_photon_overlay_BG                shower_energy_sp	             15	   0	      1500   	1	      1		      1	    0	        0		      1		      2	      cv_spline_nsbeam		  0
 single_photon_dirt		                  shower_energy_sp	             15	   0	      1500  	1	      1		      0	    0.5	      0		      1		      4	      cv_spline_nsbeam		  0
