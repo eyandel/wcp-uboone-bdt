@@ -256,17 +256,37 @@ double LEEana::get_weight(TString weight_name, EvalInfo& eval, PFevalInfo& pfeva
     return addtl_weight*eval.weight_cv * eval.weight_spline;
   //Erin - ns beam time scaling
   }else if (weight_name == "cv_spline_nsbeam"){
-    float beam_scale = 0.83;
+    float beam_scale = 0.86;
+    if (pfeval.run >= 13697){ beam_scale=0.913671; }
+    else if (pfeval.run >= 8321){ beam_scale=0.900644;}
+    else if (pfeval.run > 0 ){ beam_scale=0.885887;}
+    beam_scale = beam_scale - 0.03;
     if(eval.match_completeness_energy<=0.1*eval.truth_energyInside){beam_scale = 0.5;}
     return addtl_weight*eval.weight_cv * eval.weight_spline * beam_scale;
   }else if (weight_name == "nsbeam_ext"){
-    return 0.5;
+    float ext_rej = 0.47;
+    if (pfeval.run >= 13697){ ext_rej = 0.471911; }
+    else if (pfeval.run >= 8321){ ext_rej = 0.471911;}
+    else if (pfeval.run > 0 ){ ext_rej = 0.471911;}
+    ext_rej = ext_rej + 0.03;
+    float ext_scale = 1.0 - ext_rej;
+    return ext_scale;
   }else if (weight_name == "cv_spline_nsbeam_cv_spline_nsbeam"){
-    float beam_scale = 0.83;
+    float beam_scale = 0.86;
+    if (pfeval.run >= 13697){ beam_scale=0.913671; }
+    else if (pfeval.run >= 8321){ beam_scale=0.900644;}
+    else if (pfeval.run > 0 ){ beam_scale=0.885887;}
+    beam_scale = beam_scale - 0.03;
     if(eval.match_completeness_energy<=0.1*eval.truth_energyInside){beam_scale = 0.5;}
     return pow(addtl_weight*eval.weight_cv * eval.weight_spline * beam_scale,2);
   }else if (weight_name == "nsbeam_ext_nsbeam_ext"){
-    return pow(0.5,2);
+    float ext_rej = 0.47;
+    if (pfeval.run >= 13697){ ext_rej = 0.471911; }
+    else if (pfeval.run >= 8321){ ext_rej = 0.471911;}
+    else if (pfeval.run > 0 ){ ext_rej = 0.471911;}
+    ext_rej = ext_rej + 0.03;
+    float ext_scale = 1.0 - ext_rej;
+    return pow(ext_scale,2);
   }else if (weight_name == "cv_spline_cv_spline"){
     return pow(addtl_weight*eval.weight_cv * eval.weight_spline,2);
   }else if (weight_name == "unity" || weight_name == "unity_unity"){
@@ -958,7 +978,7 @@ double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, 
       else if (pfeval.run >= 13697){ Shift = 3166.1;}
       else if (pfeval.run >= 10812){ Shift = 3568.5; }
       else if (pfeval.run >= 8321){ Shift = 3610.7;}
-      else if (pfeval.run > 0 ){ Shift = 3167.99;}
+      else if (pfeval.run > 0 ){ Shift = 3168.9;}
       /*if (pfeval.run >= 13697){ Shift = 3166.9;}
       else if(pfeval.run>=10812){ Shift = 3568.5; }
       else if (pfeval.run >= 8321){ Shift = 3610.7;}
@@ -5176,7 +5196,7 @@ bool LEEana::is_nsbeam(PFevalInfo& pfeval, EvalInfo& eval){
   else if (pfeval.run >= 13697){ Shift = 3166.1;}
   else if (pfeval.run >= 10812){ Shift = 3568.5; }
   else if (pfeval.run >= 8321){ Shift = 3610.7;}
-  else if (pfeval.run > 0 ){ Shift = 3167.99;}
+  else if (pfeval.run > 0 ){ Shift = 3168.9;}
   //if(run>8000 && run<10812){Shift=3610.7; }
   //if(run>=10812 && run <12500){Shift=3568.5; }
   double TThelp=pfeval.evtTimeNS-Shift+gap*0.5;
