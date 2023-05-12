@@ -361,6 +361,7 @@ int main( int argc, char** argv )
     TApplication theApp("theApp",&argc,argv);
     theApp.SetReturnFromRun(true);
     gStyle->SetOptStat(0);
+    gStyle->SetOptFit(1011);
 
     if(flag_breakdown == 0){
     gROOT->ProcessLine(".x DrawOption.cc");
@@ -907,6 +908,7 @@ int main( int argc, char** argv )
     gStyle->SetLegendFillColor(0);
     gStyle->SetLegendFont(132);
     gStyle->SetLegendTextSize(0.04);
+    gStyle->SetOptFit(1011);
 
     int nchannels = map_obsch_subhistos.size();
     TCanvas *canvas[nchannels];
@@ -1496,6 +1498,14 @@ int main( int argc, char** argv )
         hdata->GetYaxis()->SetRangeUser(-0.02*mcymax, 1.6*mcymax);
         hdata->SetLineColor(kBlack);
         hdata->SetLineWidth(5);
+
+
+        //Fit to a guassian with an offset
+        TF1 *fitFunc = new TF1("fitFunc", "[0] * exp(-0.5 * pow((x - [1]) / [2], 2)) + [3]", -10, 10);
+        fitFunc->SetParameters(100, 0, 1, 10);  // Set initial parameter values
+        fitFunc->SetParNames("Amplitude", "Mean", "Sigma", "Offset");
+        hdata->Fit("fitFunc");
+        hdata->Draw();
 
 
         hstack[obschannel-1]->Draw("hist same");
