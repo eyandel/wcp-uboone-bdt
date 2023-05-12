@@ -1750,8 +1750,8 @@ int main( int argc, char** argv )
         //line->Draw();
         line->SetLineWidth(2);
         line->SetLineStyle(kDashed);
-        legend2[obschannel-1] = new TLegend(0.2, 0.7, 0.8, 0.95);
-        legend2[obschannel-1]->SetNColumns(2);
+        legend2[obschannel-1] = new TLegend(0.2, 0.7, 0.5, 0.95);
+        //legend2[obschannel-1]->SetNColumns(2);
         if(flag_err==1) legend2[obschannel-1]->AddEntry(gratio_mc[obschannel-1],"Pred stat uncertainty", "F");
         if(flag_err==2) legend2[obschannel-1]->AddEntry(gratio_mc[obschannel-1],"Pred stat uncertainty (Bayesian)", "F");
         if(flag_err==3) legend2[obschannel-1]->AddEntry(gratio_mc[obschannel-1],"Pred total uncertainty", "F");
