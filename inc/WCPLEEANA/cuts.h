@@ -281,7 +281,7 @@ double LEEana::get_weight(TString weight_name, EvalInfo& eval, PFevalInfo& pfeva
     return pow(addtl_weight*eval.weight_cv * eval.weight_spline * beam_scale,2);
   }else if (weight_name == "nsbeam_ext_nsbeam_ext"){
     float ext_rej = 0.47;
-    if (pfeval.run >= 13697){ ext_rej = 0.571911 + 0.0812331; }
+    if (pfeval.run >= 13697){ ext_rej = 0.60 + 0.0812331; }
     else if (pfeval.run >= 8321){ ext_rej = 0.571911 + 0.044328;}
     else if (pfeval.run > 0 ){ ext_rej = 0.571911 + 0.0315298;}
     //ext_rej = ext_rej + 0.03;
