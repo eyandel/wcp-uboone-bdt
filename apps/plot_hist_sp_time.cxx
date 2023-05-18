@@ -1323,8 +1323,8 @@ int main( int argc, char** argv )
           hstack[obschannel-1]->Add(hbeam);
           legend[obschannel-1]->AddEntry(hbeam, Form("Beam Events, %.1f", hbeam->Integral()), "F");
           hbeam->SetFillStyle(1001);
-          hbeam->SetFillColorAlpha(kAzure+6, 0.5);
-          hbeam->SetLineColor(kAzure+6);
+          hbeam->SetFillColorAlpha(kMagenta, 0.5);
+          hbeam->SetLineColor(kMagenta);
           hbeam->SetLineWidth(1);
 
         if(flag_leeexist){
@@ -1482,7 +1482,7 @@ int main( int argc, char** argv )
         hmc->GetXaxis()->SetTitle("Interaction Time [ns]");
         hmc->GetXaxis()->SetTitle("Reconstructed Neutrino Energy [MeV]");
         hmc->Draw("hist");
-        //hmc->GetYaxis()->SetTitle("Event counts");
+        hmc->GetYaxis()->SetTitle("Event counts");
         hmc->GetYaxis()->SetTitleSize(0.05);
         hmc->GetYaxis()->SetTitleFont(132);
         hmc->GetYaxis()->SetTitleOffset(0.73);
@@ -1502,7 +1502,7 @@ int main( int argc, char** argv )
         hdata->GetXaxis()->SetTitle("Interaction Time [ns]");
         hdata->GetXaxis()->SetTitle("Reconstructed Neutrino Energy [MeV]");
         hdata->Draw();
-        //hdata->GetYaxis()->SetTitle("Event counts");
+        hdata->GetYaxis()->SetTitle("Event counts");
         hdata->GetYaxis()->SetTitleSize(0.05);
         hdata->GetYaxis()->SetTitleFont(132);
         hdata->GetYaxis()->SetTitleOffset(0.73);
@@ -1529,7 +1529,7 @@ int main( int argc, char** argv )
         hstack[obschannel-1]->Draw("hist same");
         hmcerror->Sumw2();
         hmcerror->Scale(scalePOT);
-        //hmcerror->Draw("same E2");
+        hmcerror->Draw("same E2");
         hmcerror->SetFillColor(kGray+2);
         hmcerror->SetFillStyle(3002);
         hmcerror->SetLineWidth(0);
@@ -1607,7 +1607,7 @@ int main( int argc, char** argv )
         double relerr_data = 1./TMath::Sqrt(hdata->Integral());
         double relerr_pred = TMath::Sqrt(sumtotalcov[obschannel])/hmc->Integral();
         double data_pred_ratio = hdata->Integral()/normalization/hmc->Integral();
-        //legend[obschannel-1]->SetHeader(Form("#SigmaDATA/#Sigma(MC+EXT)=%.2f#pm%.2f(data err)#pm%.2f(pred err)", data_pred_ratio, relerr_data*data_pred_ratio, relerr_pred*data_pred_ratio), "C");
+        legend[obschannel-1]->SetHeader(Form("#SigmaDATA/#Sigma(MC+EXT)=%.2f#pm%.2f(data err)#pm%.2f(pred err)", data_pred_ratio, relerr_data*data_pred_ratio, relerr_pred*data_pred_ratio), "C");
         legend[obschannel-1]->Draw();
         canvas[obschannel-1]->Modified();
         //pad1->Modified();
