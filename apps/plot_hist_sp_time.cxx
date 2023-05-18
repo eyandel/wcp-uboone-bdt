@@ -937,7 +937,7 @@ int main( int argc, char** argv )
         canvas[obschannel-1]->Draw();
         //pad2->Draw();
         hstack[obschannel-1] = new THStack(Form("hs%d", obschannel),"");
-        legend[obschannel-1] = new TLegend(0.6,0.7,0.8,0.95);//0.3, 0.65, 0.5, 0.92);
+        legend[obschannel-1] = new TLegend(0.5,0.7,0.8,0.95);//0.3, 0.65, 0.5, 0.92);
         TH1F* hdata = (TH1F*)map_obsch_histos[obschannel].at(0)->Clone("hdata");
         TH1F* hbeam = (TH1F*)hdata->Clone("hbeam");
         TH1F* hbadmatch = (TH1F*)hdata->Clone("hbadmatch");
@@ -1189,7 +1189,7 @@ int main( int argc, char** argv )
         }else datapot = map_data_period_pot[run];
 
         gr[obschannel-1] = new TGraphAsymmErrors();
-        //legend[obschannel-1]->SetNColumns(2);
+        legend[obschannel-1]->SetNColumns(2);
         // numi channels
         if(obschannel==999) legend[obschannel-1]->AddEntry((TObject*)0, Form("NuMI POT: %.3e", datapot_numi*scalePOT), "");
         else legend[obschannel-1]->AddEntry((TObject*)0, Form("Data POT: %.3e", datapot*scalePOT), "");
@@ -1501,7 +1501,7 @@ int main( int argc, char** argv )
         hdata->Scale(scalePOT);
         hdata->GetXaxis()->SetTitle("Interaction Time [ns]");
         hdata->GetXaxis()->SetTitle("Reconstructed Neutrino Energy [MeV]");
-        hdata->Draw();
+        //hdata->Draw();
         hdata->GetYaxis()->SetTitle("Event counts");
         hdata->GetYaxis()->SetTitleSize(0.05);
         hdata->GetYaxis()->SetTitleFont(132);
