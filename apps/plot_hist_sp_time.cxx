@@ -1749,7 +1749,7 @@ int main( int argc, char** argv )
         hist->GetYaxis()->SetNdivisions(405);
         hist->GetXaxis()->SetTitle("Interaction Time [ns]");
         hist->GetXaxis()->SetTitle("Reconstructed Neutrino Energy [MeV]");
-        hmc->Draw("hist");
+        hist->Draw("hist same");
         hist->GetYaxis()->SetTitle("Event counts");
         hist->GetYaxis()->SetTitleSize(0.05);
         hist->GetYaxis()->SetTitleFont(132);
