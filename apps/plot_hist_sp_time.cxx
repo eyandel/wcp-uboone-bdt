@@ -937,7 +937,7 @@ int main( int argc, char** argv )
         canvas[obschannel-1]->Draw();
         //pad2->Draw();
         hstack[obschannel-1] = new THStack(Form("hs%d", obschannel),"");
-        legend[obschannel-1] = new TLegend(0.3, 0.65, 0.5, 0.92);
+        legend[obschannel-1] = new TLegend(0.6,0.7,0.8,0.95);//0.3, 0.65, 0.5, 0.92);
         TH1F* hdata = (TH1F*)map_obsch_histos[obschannel].at(0)->Clone("hdata");
         TH1F* hbeam = (TH1F*)hdata->Clone("hbeam");
         TH1F* hbadmatch = (TH1F*)hdata->Clone("hbadmatch");
@@ -1749,8 +1749,8 @@ int main( int argc, char** argv )
         hist->GetYaxis()->SetNdivisions(405);
         hist->GetXaxis()->SetTitle("Interaction Time [ns]");
         hist->GetXaxis()->SetTitle("Reconstructed Neutrino Energy [MeV]");
-        //hmc->Draw("hist");
-        //hist->GetYaxis()->SetTitle("Event counts");
+        hmc->Draw("hist");
+        hist->GetYaxis()->SetTitle("Event counts");
         hist->GetYaxis()->SetTitleSize(0.05);
         hist->GetYaxis()->SetTitleFont(132);
         hist->GetYaxis()->SetTitleOffset(0.73);
@@ -1769,7 +1769,7 @@ int main( int argc, char** argv )
         //line->Draw();
         line->SetLineWidth(2);
         line->SetLineStyle(kDashed);
-        legend2[obschannel-1] = new TLegend(0.2, 0.7, 0.5, 0.95);
+        legend2[obschannel-1] = new TLegend(0.6,0.7,0.8,0.95);//0.2, 0.7, 0.5, 0.95);
         //legend2[obschannel-1]->SetNColumns(2);
         if(flag_err==1) legend2[obschannel-1]->AddEntry(gratio_mc[obschannel-1],"Pred stat uncertainty", "F");
         if(flag_err==2) legend2[obschannel-1]->AddEntry(gratio_mc[obschannel-1],"Pred stat uncertainty (Bayesian)", "F");
