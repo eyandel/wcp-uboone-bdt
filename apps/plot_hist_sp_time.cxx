@@ -937,7 +937,7 @@ int main( int argc, char** argv )
         canvas[obschannel-1]->Draw();
         //pad2->Draw();
         hstack[obschannel-1] = new THStack(Form("hs%d", obschannel),"");
-        legend[obschannel-1] = new TLegend(0.3, 0.75, 0.85, 0.92);//0.3, 0.65, 0.5, 0.92);
+        legend[obschannel-1] = new TLegend(0.35, 0.77, 0.9, 0.95);//0.3, 0.65, 0.5, 0.92);
         TH1F* hdata = (TH1F*)map_obsch_histos[obschannel].at(0)->Clone("hdata");
         TH1F* hbeam = (TH1F*)hdata->Clone("hbeam");
         TH1F* hbadmatch = (TH1F*)hdata->Clone("hbadmatch");
