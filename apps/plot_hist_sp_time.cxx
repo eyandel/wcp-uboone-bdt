@@ -939,6 +939,7 @@ int main( int argc, char** argv )
         hstack[obschannel-1] = new THStack(Form("hs%d", obschannel),"");
         legend[obschannel-1] = new TLegend(0.3, 0.65, 0.5, 0.92);
         TH1F* hdata = (TH1F*)map_obsch_histos[obschannel].at(0)->Clone("hdata");
+        TH1F* hbeam = (TH1F*)hdata->Clone("hbeam");
         TH1F* hbadmatch = (TH1F*)hdata->Clone("hbadmatch");
         TH1F* hnumuCCinFV = (TH1F*)hdata->Clone("hnumuCCinFV");
         TH1F* hRnumuCCinFV = (TH1F*)hdata->Clone("hRnumuCCinFV");
@@ -970,6 +971,7 @@ int main( int argc, char** argv )
         TH1F* hXsecNC = (TH1F*)hdata->Clone("hXsecNC");
         TH1F* hXsecBkgCC = (TH1F*)hdata->Clone("hXsecBkgCC");
         hbadmatch->Reset();
+        hbeam->Reset();
         hnumuCCinFV->Reset();
         hRnumuCCinFV->Reset();
         hAnumuCCinFV->Reset();
@@ -1020,6 +1022,11 @@ int main( int argc, char** argv )
                     hbadmatch->Add(htemp);
                     break;
                 }
+              /*  if(line == "beam") {
+                  std::cout<<"beam"<<" "<<histname<<std::endl;
+                  hbeam->Add(htemp);
+                  break;
+                }*/
                 if(line == "SPnumuCCBkg") {
                     std::cout<<"SPnumuCCBkg"<<" "<<histname<<std::endl;
                     hnumuCCinFV->Add(htemp);
@@ -1199,61 +1206,63 @@ int main( int argc, char** argv )
 
         if(flag_truthlabel==0){
         // truth labels start
-        hstack[obschannel-1]->Add(hbadmatch);
+        //hstack[obschannel-1]->Add(hbadmatch);
     //    legend[obschannel-1]->AddEntry(hbadmatch, Form("Cosmic, %.1f", hbadmatch->Integral()), "F");
-        hbadmatch->SetFillStyle(3004);
-        hbadmatch->SetFillColorAlpha(kRed+2, 0.5);
-        hbadmatch->SetLineColor(kRed+2);
-        hbadmatch->SetLineWidth(1);
+        //hbadmatch->SetFillStyle(3004);
+        //hbadmatch->SetFillColorAlpha(kRed+2, 0.5);
+        //hbadmatch->SetLineColor(kRed+2);
+        //hbadmatch->SetLineWidth(1);
 
+        hext->Add(hbadmatch);
         hstack[obschannel-1]->Add(hext);
-    //    legend[obschannel-1]->AddEntry(hext, Form("EXT, %.1f", hext->Integral()), "F");
+        legend[obschannel-1]->AddEntry(hext, Form("Cosmic Background, %.1f", hext->Integral()), "F");
         hext->SetFillStyle(3004);
         hext->SetFillColorAlpha(kOrange+3, 0.5);
         hext->SetLineColor(kOrange+3);
         hext->SetLineWidth(1);
 
-        hstack[obschannel-1]->Add(hdirt);
+        //hstack[obschannel-1]->Add(hdirt);
+        hbeam->Add(hdirt);
     //    legend[obschannel-1]->AddEntry(hdirt, Form("Dirt, %.1f", hdirt->Integral()), "F");
-        hdirt->SetFillStyle(3224);
-        hdirt->SetFillColorAlpha(kGray, 0.5);
-        hdirt->SetLineColor(kGray+2);
-        hdirt->SetLineWidth(1);
+      //  hdirt->SetFillStyle(3224);
+      //  hdirt->SetFillColorAlpha(kGray, 0.5);
+      //  hdirt->SetLineColor(kGray+2);
+      //  hdirt->SetLineWidth(1);
 
-        hstack[obschannel-1]->Add(houtFV);
+        hbeam->Add(houtFV);
   //      legend[obschannel-1]->AddEntry(houtFV, Form("out FV, %.1f", houtFV->Integral()), "F");
-        houtFV->SetFillStyle(3224);
-        houtFV->SetFillColorAlpha(kOrange+1, 0.5);
-        houtFV->SetLineColor(kOrange+1);
-        houtFV->SetLineWidth(1);
+      //  houtFV->SetFillStyle(3224);
+      //  houtFV->SetFillColorAlpha(kOrange+1, 0.5);
+      //  houtFV->SetLineColor(kOrange+1);
+      //  houtFV->SetLineWidth(1);
 
-        hstack[obschannel-1]->Add(hNCpi0inFV);
+        hbeam->Add(hNCpi0inFV);
   //      legend[obschannel-1]->AddEntry(hNCpi0inFV, Form("NC #pi^{0} in FV,  %.1f", hNCpi0inFV->Integral()), "F");
-        hNCpi0inFV->SetFillStyle(1001);
-        hNCpi0inFV->SetFillColorAlpha(38, 0.5);
-        hNCpi0inFV->SetLineColor(38);
-        hNCpi0inFV->SetLineWidth(1);
+      //  hNCpi0inFV->SetFillStyle(1001);
+      //  hNCpi0inFV->SetFillColorAlpha(38, 0.5);
+      //  hNCpi0inFV->SetLineColor(38);
+      //  hNCpi0inFV->SetLineWidth(1);
 
-        hstack[obschannel-1]->Add(hCCpi0inFV);
+        hbeam->Add(hCCpi0inFV);
   //      legend[obschannel-1]->AddEntry(hCCpi0inFV, Form("CC #pi^{0} in FV, %.1f", hCCpi0inFV->Integral()), "F");
-        hCCpi0inFV->SetFillStyle(1001);
-        hCCpi0inFV->SetFillColorAlpha(30, 0.5);
-        hCCpi0inFV->SetLineColor(30);
-        hCCpi0inFV->SetLineWidth(1);
+      //  hCCpi0inFV->SetFillStyle(1001);
+      //  hCCpi0inFV->SetFillColorAlpha(30, 0.5);
+      //  hCCpi0inFV->SetLineColor(30);
+      //  hCCpi0inFV->SetLineWidth(1);
 
-        hstack[obschannel-1]->Add(hNCinFV);
+        hbeam->Add(hNCinFV);
   //      legend[obschannel-1]->AddEntry(hNCinFV, Form("NC in FV, %.1f", hNCinFV->Integral()), "F");
-        hNCinFV->SetFillStyle(1001);
-        hNCinFV->SetFillColorAlpha(kOrange+1, 0.5);
-        hNCinFV->SetLineColor(kOrange+1);
-        hNCinFV->SetLineWidth(1);
+    //    hNCinFV->SetFillStyle(1001);
+    //    hNCinFV->SetFillColorAlpha(kOrange+1, 0.5);
+    //    hNCinFV->SetLineColor(kOrange+1);
+    //    hNCinFV->SetLineWidth(1);
 
-        hstack[obschannel-1]->Add(hnumuCCinFV);
+        hbeam->Add(hnumuCCinFV);
   //      legend[obschannel-1]->AddEntry(hnumuCCinFV, Form("#nu_{#mu} CC in FV, %.1f", hnumuCCinFV->Integral()), "F");
-        hnumuCCinFV->SetFillStyle(1001);
-        hnumuCCinFV->SetFillColorAlpha(kAzure+6, 0.5);
-        hnumuCCinFV->SetLineColor(kAzure+6);
-        hnumuCCinFV->SetLineWidth(1);
+    //    hnumuCCinFV->SetFillStyle(1001);
+    //    hnumuCCinFV->SetFillColorAlpha(kAzure+6, 0.5);
+    //    hnumuCCinFV->SetLineColor(kAzure+6);
+    //    hnumuCCinFV->SetLineWidth(1);
 
       /*  hstack[obschannel-1]->Add(hRnumuCCinFV);
         legend[obschannel-1]->AddEntry(hRnumuCCinFV, Form("#nu_{#mu} CC in FV, %.1f", hRnumuCCinFV->Integral()), "F");
@@ -1269,47 +1278,54 @@ int main( int argc, char** argv )
         hAnumuCCinFV->SetLineColor(kAzure+6);
         hAnumuCCinFV->SetLineWidth(1);*/
 
-        hstack[obschannel-1]->Add(hnueCCinFV);
+        hbeam->Add(hnueCCinFV);
   //      legend[obschannel-1]->AddEntry(hnueCCinFV, Form("#nu_{e} CC in FV, %.1f", hnueCCinFV->Integral()), "F");
-        hnueCCinFV->SetFillStyle(1001);
-        hnueCCinFV->SetFillColorAlpha(kGreen+1, 0.5);
-        hnueCCinFV->SetLineColor(kGreen+1);
-        hnueCCinFV->SetLineWidth(1);
+      //  hnueCCinFV->SetFillStyle(1001);
+      //  hnueCCinFV->SetFillColorAlpha(kGreen+1, 0.5);
+      //  hnueCCinFV->SetLineColor(kGreen+1);
+      //  hnueCCinFV->SetLineWidth(1);
 
-        hstack[obschannel-1]->Add(hNCpi1g);
+        hbeam->Add(hNCpi1g);
   //      legend[obschannel-1]->AddEntry(hNCpi1g, Form("NC #pi^{0} 1#gamma, %.1f", hNCpi1g->Integral()), "F");
-        hNCpi1g->SetFillStyle(1001);
-        hNCpi1g->SetFillColorAlpha(kPink+5, 0.5);
-        hNCpi1g->SetLineColor(kPink+5);
-        hNCpi1g->SetLineWidth(1);
+    //    hNCpi1g->SetFillStyle(1001);
+    //    hNCpi1g->SetFillColorAlpha(kPink+5, 0.5);
+    //    hNCpi1g->SetLineColor(kPink+5);
+    //    hNCpi1g->SetLineWidth(1);
 
-        hstack[obschannel-1]->Add(hNCdel);
+        hbeam->Add(hNCdel);
   //      legend[obschannel-1]->AddEntry(hNCdel, Form("NC #Delta 1#gamma, %.1f", hNCdel->Integral()), "F");
-        hNCdel->SetFillStyle(1001);
-        hNCdel->SetFillColorAlpha(kPink-6, 0.5);
-        hNCdel->SetLineColor(kPink-6);
-        hNCdel->SetLineWidth(1);
+      //  hNCdel->SetFillStyle(1001);
+      //  hNCdel->SetFillColorAlpha(kPink-6, 0.5);
+      //  hNCdel->SetLineColor(kPink-6);
+      //  hNCdel->SetLineWidth(1);
 
-        hstack[obschannel-1]->Add(hNCother);
+        hbeam->Add(hNCother);
   //      legend[obschannel-1]->AddEntry(hNCother, Form("NC Other 1#gamma, %.1f", hNCother->Integral()), "F");
-        hNCother->SetFillStyle(1001);
-        hNCother->SetFillColorAlpha(kPink-8, 0.5);
-        hNCother->SetLineColor(kPink-8);
-        hNCother->SetLineWidth(1);
+    //    hNCother->SetFillStyle(1001);
+    //    hNCother->SetFillColorAlpha(kPink-8, 0.5);
+    //    hNCother->SetLineColor(kPink-8);
+    //    hNCother->SetLineWidth(1);
 
-        hstack[obschannel-1]->Add(hnumuCC1g);
+        hbeam->Add(hnumuCC1g);
   //      legend[obschannel-1]->AddEntry(hnumuCC1g, Form("#nu_{#mu}CC 1#gamma #mu<100MeV, %.1f", hnumuCC1g->Integral()), "F");
-        hnumuCC1g->SetFillStyle(1001);
-        hnumuCC1g->SetFillColorAlpha(kPink-7, 0.5);
-        hnumuCC1g->SetLineColor(kPink-7);
-        hnumuCC1g->SetLineWidth(1);
+    //    hnumuCC1g->SetFillStyle(1001);
+    //    hnumuCC1g->SetFillColorAlpha(kPink-7, 0.5);
+    //    hnumuCC1g->SetLineColor(kPink-7);
+    //    hnumuCC1g->SetLineWidth(1);
 
-        hstack[obschannel-1]->Add(hout1g);
+        hbeam->Add(hout1g);
   //      legend[obschannel-1]->AddEntry(hout1g, Form("out of FV 1#gamma, %.1f", hout1g->Integral()), "F");
-        hout1g->SetFillStyle(1001);
-        hout1g->SetFillColorAlpha(kPink, 0.5);
-        hout1g->SetLineColor(kPink);
-        hout1g->SetLineWidth(1);
+    //    hout1g->SetFillStyle(1001);
+    //    hout1g->SetFillColorAlpha(kPink, 0.5);
+    //    hout1g->SetLineColor(kPink);
+    //    hout1g->SetLineWidth(1);
+
+          hstack[obschannel-1]->Add(hbeam);
+          legend[obschannel-1]->AddEntry(hbeam, Form("Beam Events, %.1f", hbeam->Integral()), "F");
+          hbeam->SetFillStyle(1001);
+          hbeam->SetFillColorAlpha(kAzure+6, 0.5);
+          hbeam->SetLineColor(kAzure+6);
+          hbeam->SetLineWidth(1);
 
         if(flag_leeexist){
         hstack[obschannel-1]->Add(hLEE);
@@ -1464,6 +1480,7 @@ int main( int argc, char** argv )
         hmc->Sumw2();
         hmc->Scale(scalePOT);
         hmc->GetXaxis()->SetTitle("Interaction Time [ns]");
+        hmc->GetXaxis()->SetTitle("Reconstructed Neutrino Energy [MeV]");
         hmc->Draw("hist");
         //hmc->GetYaxis()->SetTitle("Event counts");
         hmc->GetYaxis()->SetTitleSize(0.05);
@@ -1483,6 +1500,7 @@ int main( int argc, char** argv )
         hdata->Sumw2();
         hdata->Scale(scalePOT);
         hdata->GetXaxis()->SetTitle("Interaction Time [ns]");
+        hdata->GetXaxis()->SetTitle("Reconstructed Neutrino Energy [MeV]");
         hdata->Draw();
         //hdata->GetYaxis()->SetTitle("Event counts");
         hdata->GetYaxis()->SetTitleSize(0.05);
@@ -1730,6 +1748,7 @@ int main( int argc, char** argv )
         hist->Draw("axis same");
         hist->GetYaxis()->SetNdivisions(405);
         hist->GetXaxis()->SetTitle("Interaction Time [ns]");
+        hist->GetXaxis()->SetTitle("Reconstructed Neutrino Energy [MeV]");
         //hmc->Draw("hist");
         //hist->GetYaxis()->SetTitle("Event counts");
         hist->GetYaxis()->SetTitleSize(0.05);
