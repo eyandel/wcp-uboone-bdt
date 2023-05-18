@@ -1585,7 +1585,7 @@ int main( int argc, char** argv )
                 else gratio_data2[obschannel-1]->SetPointError(i, x_err, x_err, 0, 0);
             }
         }
-        //gr[obschannel-1]->Draw("P same");
+        gr[obschannel-1]->Draw("P same");
         gr[obschannel-1]->SetLineWidth(2);
         gr[obschannel-1]->SetMarkerStyle(20);
         gr[obschannel-1]->SetMarkerSize(1.5);
@@ -1749,7 +1749,7 @@ int main( int argc, char** argv )
         hist->GetYaxis()->SetNdivisions(405);
         hist->GetXaxis()->SetTitle("Interaction Time [ns]");
         hist->GetXaxis()->SetTitle("Reconstructed Neutrino Energy [MeV]");
-        hist->Draw("hist same");
+        //hist->Draw("hist same");
         hist->GetYaxis()->SetTitle("Event counts");
         hist->GetYaxis()->SetTitleSize(0.05);
         hist->GetYaxis()->SetTitleFont(132);
