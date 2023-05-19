@@ -51,6 +51,7 @@ int main( int argc, char** argv )
   TString training_list = "";
   string global_file_type = "";
   int skip_cut = 0;
+  int flag_numi = 0;
   
   for (Int_t i=1;i!=argc;i++){
     switch(argv[i][1]){
@@ -68,6 +69,9 @@ int main( int argc, char** argv )
       break;
     case 's':
       skip_cut = atoi(&argv[i][2]);
+      break;
+    case 'n':
+      flag_numi = atoi(&argv[i][2]);
       break;
     }
   }
@@ -437,7 +441,8 @@ int main( int argc, char** argv )
       };
   std::set<int> low_lifetime_set(low_lifetime_runs.begin(), low_lifetime_runs.end());
   
-  
+  std::vector<int> low_neutrino_count_numi_run2RHC{11858,11875,11876,11878,11879,11880,11881,11882,11884,11885,11886,11887,11888,11889,11891,11892,11893,11894,11895,11896,11897,11898,11900,11901,11904,11905,11906,11907,11909,11911,11912,11913,11914,11915,11917,11919,11920,11921,11922,11923,11924,11925,11926,11927,11928,11929,11930,11931,11933,11934,11935,11936,11937,11938,11939,11940,11943};
+  std::set<int> low_neutrino_count_numi_run2RHC_set(low_neutrino_count_numi_run2RHC.begin(), low_neutrino_count_numi_run2RHC.end());
   
   //  std::cout << T_eval->GetEntries() << std::endl;
   TFile *file2 = new TFile(out_file,"RECREATE");
@@ -2914,6 +2919,7 @@ int main( int argc, char** argv )
     if (flag_data && skip_cut == 0){
       if (good_runlist_set.find(eval.run) == good_runlist_set.end()) continue;
       if (low_lifetime_set.find(eval.run) != low_lifetime_set.end()) continue;
+      if (flag_numi && low_neutrino_count_numi_run2RHC_set.find(eval.run) != low_neutrino_count_numi_run2RHC_set.end()) continue;
       // bad run in run 1 due to beam filter bnb
       // if (eval.run <= 5367 && eval.run >= 5320) continue;
       // ext bnb in run 1, high rate
@@ -2945,6 +2951,7 @@ int main( int argc, char** argv )
     if (flag_data && skip_cut == 0){
       if (good_runlist_set.find(pot.runNo) == good_runlist_set.end()) continue;
       if (low_lifetime_set.find(pot.runNo) != low_lifetime_set.end()) continue;
+      if (flag_numi && low_neutrino_count_numi_run2RHC_set.find(eval.run) != low_neutrino_count_numi_run2RHC_set.end()) continue;
 
       //bad run in run 1 due to beam filter bnb
       //if (pot.runNo <= 5367 && pot.runNo >= 5320) continue;
