@@ -923,7 +923,7 @@ int main( int argc, char** argv )
     for(auto it = map_obsch_subhistos.begin(); it!= map_obsch_subhistos.end(); it++){
         int obschannel = it->first;
         std::cout<<"Channel: "<<obschannel<<std::endl;
-        canvas[obschannel-1] = new TCanvas(Form("canvas%d", obschannel), Form("channel%d", obschannel), 1200, 900);
+        canvas[obschannel-1] = new TCanvas(Form("canvas%d", obschannel), Form("channel%d", obschannel), 1200, 1200);//900);
         /*TPad *pad1 = new TPad("pad1", "", 0.01,0.3,0.99,0.99,0,0,0);
         TPad *pad2 = new TPad("pad2", "", 0.01,0.01,0.99,0.3,0,0,0);
         pad1->SetBottomMargin(0);
@@ -934,6 +934,8 @@ int main( int argc, char** argv )
         pad2->SetRightMargin(0.1);
         pad2->SetBottomMargin(0.20);
         pad1->Draw();*/
+        //canvas[obschannel-1]->SetLeftMargin(0.12);
+        //canvas[obschannel-1]->SetRightMargin(0.1);
         canvas[obschannel-1]->Draw();
         //pad2->Draw();
         hstack[obschannel-1] = new THStack(Form("hs%d", obschannel),"");
