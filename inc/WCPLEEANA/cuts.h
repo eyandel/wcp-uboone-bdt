@@ -257,33 +257,41 @@ double LEEana::get_weight(TString weight_name, EvalInfo& eval, PFevalInfo& pfeva
   //Erin - ns beam time scaling
   }else if (weight_name == "cv_spline_nsbeam"){
     float beam_scale = 0.86;
-    if (pfeval.run >= 13697){ beam_scale=0.913671 - 0.0812331; }
-    else if (pfeval.run >= 8321){ beam_scale=0.900644 - 0.044328;}
-    else if (pfeval.run > 0 ){ beam_scale=0.885887 - 0.0315298;}
+    if (pfeval.run >= 13697){ beam_scale=0.931503;}//0.913671 - 0.0812331; }
+    else if (pfeval.run >= 8321){ beam_scale=0.919618;}//0.900644 - 0.044328;}
+    else if (pfeval.run > 0 ){ beam_scale=0.912832;}//0.885887 - 0.0315298;}
     //beam_scale = beam_scale - 0.03;
-    if(eval.match_completeness_energy<=0.1*eval.truth_energyInside){beam_scale = 0.5;}
+    float ext_rej = 0.47;
+    if (pfeval.run >= 13697){ ext_rej = 0.470884;}//0.471911 + 0.0812331; }
+    else if (pfeval.run >= 8321){ ext_rej = 0.465323;}//0.471911 + 0.044328;}
+    else if (pfeval.run > 0 ){ ext_rej = 0.465687;}//0.471911 + 0.0315298;}
+    if(eval.match_completeness_energy<=0.1*eval.truth_energyInside){beam_scale = 1.0-ext_rej;}
     return addtl_weight*eval.weight_cv * eval.weight_spline * beam_scale;
   }else if (weight_name == "nsbeam_ext"){
     float ext_rej = 0.47;
-    if (pfeval.run >= 13697){ ext_rej = 0.471911 + 0.0812331; }
-    else if (pfeval.run >= 8321){ ext_rej = 0.471911 + 0.044328;}
-    else if (pfeval.run > 0 ){ ext_rej = 0.471911 + 0.0315298;}
+    if (pfeval.run >= 13697){ ext_rej = 0.470884;}//0.471911 + 0.0812331; }
+    else if (pfeval.run >= 8321){ ext_rej = 0.465323;}//0.471911 + 0.044328;}
+    else if (pfeval.run > 0 ){ ext_rej = 0.465687;}//0.471911 + 0.0315298;}
     //ext_rej = ext_rej + 0.03;
     float ext_scale = 1.0 - ext_rej;
     return ext_scale;
   }else if (weight_name == "cv_spline_nsbeam_cv_spline_nsbeam"){
     float beam_scale = 0.86;
-    if (pfeval.run >= 13697){ beam_scale=0.913671 - 0.0812331; }
-    else if (pfeval.run >= 8321){ beam_scale=0.900644 - 0.044328;}
-    else if (pfeval.run > 0 ){ beam_scale=0.885887 - 0.0315298;}
+    if (pfeval.run >= 13697){ beam_scale=0.931503;}//0.913671 - 0.0812331; }
+    else if (pfeval.run >= 8321){ beam_scale=0.919618;}//0.900644 - 0.044328;}
+    else if (pfeval.run > 0 ){ beam_scale=0.912832;}//0.885887 - 0.0315298;}
     //beam_scale = beam_scale - 0.03;
-    if(eval.match_completeness_energy<=0.1*eval.truth_energyInside){beam_scale = 0.5;}
+    float ext_rej = 0.47;
+    if (pfeval.run >= 13697){ ext_rej = 0.470884;}//0.471911 + 0.0812331; }
+    else if (pfeval.run >= 8321){ ext_rej = 0.465323;}//0.471911 + 0.044328;}
+    else if (pfeval.run > 0 ){ ext_rej = 0.465687;}//0.471911 + 0.0315298;}
+    if(eval.match_completeness_energy<=0.1*eval.truth_energyInside){beam_scale = 1.0-ext_rej;}
     return pow(addtl_weight*eval.weight_cv * eval.weight_spline * beam_scale,2);
   }else if (weight_name == "nsbeam_ext_nsbeam_ext"){
     float ext_rej = 0.47;
-    if (pfeval.run >= 13697){ ext_rej = 0.471911 + 0.0812331; }
-    else if (pfeval.run >= 8321){ ext_rej = 0.471911 + 0.044328;}
-    else if (pfeval.run > 0 ){ ext_rej = 0.471911 + 0.0315298;}
+    if (pfeval.run >= 13697){ ext_rej = 0.470884;}//0.471911 + 0.0812331; }
+    else if (pfeval.run >= 8321){ ext_rej = 0.465323;}//0.471911 + 0.044328;}
+    else if (pfeval.run > 0 ){ ext_rej = 0.465687;}//0.471911 + 0.0315298;}
     //ext_rej = ext_rej + 0.03;
     float ext_scale = 1.0 - ext_rej;
     return pow(ext_scale,2);
@@ -990,9 +998,9 @@ double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, 
       double TT_merged = -9999.;
 
       //merge peaks
-      if(TThelp>=0 && TThelp<gap*81.0){
+      //if(TThelp>=0 && TThelp<gap*81.0){
         TT_merged=(TThelp-(int((TThelp)/gap))*gap)-gap*0.5;
-      }
+      //}
 
       delta_time_calc = TT_merged;
 
@@ -5203,9 +5211,9 @@ bool LEEana::is_nsbeam(PFevalInfo& pfeval, EvalInfo& eval){
   double TT_merged = -9999.;
 
   //merge peaks
-  if(TThelp>=0 && TThelp<gap*81.0){
+  //if(TThelp>=0 && TThelp<gap*81.0){
     TT_merged=(TThelp-(int((TThelp)/gap))*gap)-gap*0.5;
-  }
+  //}
 
   delta_time_calc = TT_merged;
 
