@@ -258,25 +258,25 @@ double LEEana::get_weight(TString weight_name, EvalInfo& eval, PFevalInfo& pfeva
   }else if (weight_name == "cv_spline_nsbeam"){
     float beam_scale = 0.86;
     if (pfeval.run >= 13697){ beam_scale=0.87;}//0.931503;}//0.913671 - 0.0812331; }
-    else if (pfeval.run >= 8321){ beam_scale=0.919618;}//0.900644 - 0.044328;}
+    else if (pfeval.run >= 8321){ beam_scale=0.88;}//0.919618;}//0.900644 - 0.044328;}
     else if (pfeval.run > 0 ){ beam_scale=0.912832;}//0.885887 - 0.0315298;}
     //beam_scale = beam_scale - 0.03;
     float ext_rej = 0.47;
     if (pfeval.run >= 13697){ ext_rej = 0.60;}//0.535783;}//0.471911 + 0.0812331; }
-    else if (pfeval.run >= 8321){ ext_rej = 0.532919;}//0.471911 + 0.044328;}
+    else if (pfeval.run >= 8321){ ext_rej = 0.663;}//0.532919;}//0.471911 + 0.044328;}
     else if (pfeval.run > 0 ){ ext_rej = 0.527815;}//0.471911 + 0.0315298;}
     if(eval.match_completeness_energy<=0.1*eval.truth_energyInside){beam_scale = 1.0-ext_rej;}
     return addtl_weight*eval.weight_cv * eval.weight_spline * beam_scale;
   }else if (weight_name == "dirt_nsbeam"){
     float ext_rej = 0.47;
     if (pfeval.run >= 13697){ ext_rej = 0.60;}//0.535783;}//0.471911 + 0.0812331; }
-    else if (pfeval.run >= 8321){ ext_rej = 0.532919;}//0.471911 + 0.044328;}
+    else if (pfeval.run >= 8321){ ext_rej = 0.663;}//0.532919;}//0.471911 + 0.044328;}
     else if (pfeval.run > 0 ){ ext_rej = 0.527815;}//0.471911 + 0.0315298;}
     return addtl_weight*eval.weight_cv * eval.weight_spline * (1.0-ext_rej);
   }else if (weight_name == "nsbeam_ext"){
     float ext_rej = 0.47;
     if (pfeval.run >= 13697){ ext_rej = 0.60;}//0.535783;}//0.471911 + 0.0812331; }
-    else if (pfeval.run >= 8321){ ext_rej = 0.532919;}//0.471911 + 0.044328;}
+    else if (pfeval.run >= 8321){ ext_rej = 0.663;}//0.532919;}//0.471911 + 0.044328;}
     else if (pfeval.run > 0 ){ ext_rej = 0.527815;}//0.471911 + 0.0315298;}
     //ext_rej = ext_rej + 0.03;
     float ext_scale = 1.0 - ext_rej;
@@ -284,25 +284,25 @@ double LEEana::get_weight(TString weight_name, EvalInfo& eval, PFevalInfo& pfeva
   }else if (weight_name == "cv_spline_nsbeam_cv_spline_nsbeam"){
     float beam_scale = 0.86;
     if (pfeval.run >= 13697){ beam_scale=0.87;}//0.931503;}//0.913671 - 0.0812331; }
-    else if (pfeval.run >= 8321){ beam_scale=0.919618;}//0.900644 - 0.044328;}
+    else if (pfeval.run >= 8321){ beam_scale=0.88;}//0.919618;}//0.900644 - 0.044328;}
     else if (pfeval.run > 0 ){ beam_scale=0.912832;}//0.885887 - 0.0315298;}
     //beam_scale = beam_scale - 0.03;
     float ext_rej = 0.47;
     if (pfeval.run >= 13697){ ext_rej = 0.60;}//0.535783;}//0.471911 + 0.0812331; }
-    else if (pfeval.run >= 8321){ ext_rej = 0.532919;}//0.471911 + 0.044328;}
+    else if (pfeval.run >= 8321){ ext_rej = 0.663;}//0.532919;}//0.471911 + 0.044328;}
     else if (pfeval.run > 0 ){ ext_rej = 0.527815;}//0.471911 + 0.0315298;}
     if(eval.match_completeness_energy<=0.1*eval.truth_energyInside){beam_scale = 1.0-ext_rej;}
     return pow(addtl_weight*eval.weight_cv * eval.weight_spline * beam_scale,2);
   }else if (weight_name == "dirt_nsbeam_dirt_nsbeam"){
     float ext_rej = 0.47;
     if (pfeval.run >= 13697){ ext_rej = 0.60;}//0.535783;}//0.471911 + 0.0812331; }
-    else if (pfeval.run >= 8321){ ext_rej = 0.532919;}//0.471911 + 0.044328;}
+    else if (pfeval.run >= 8321){ ext_rej = 0.663;}//0.532919;}//0.471911 + 0.044328;}
     else if (pfeval.run > 0 ){ ext_rej = 0.527815;}//0.471911 + 0.0315298;}
     return pow(addtl_weight*eval.weight_cv * eval.weight_spline * (1.0-ext_rej),2);
   }else if (weight_name == "nsbeam_ext_nsbeam_ext"){
     float ext_rej = 0.47;
     if (pfeval.run >= 13697){ ext_rej = 0.60;}//0.535783;}//0.471911 + 0.0812331; }
-    else if (pfeval.run >= 8321){ ext_rej = 0.532919;}//0.471911 + 0.044328;}
+    else if (pfeval.run >= 8321){ ext_rej = 0.663;}//0.532919;}//0.471911 + 0.044328;}
     else if (pfeval.run > 0 ){ ext_rej = 0.527815;}//0.471911 + 0.0315298;}
     //ext_rej = ext_rej + 0.03;
     float ext_scale = 1.0 - ext_rej;
