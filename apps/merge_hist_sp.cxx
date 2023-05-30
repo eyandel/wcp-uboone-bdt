@@ -136,6 +136,28 @@ int main( int argc, char** argv )
 	  //if (htemp == 0) continue;
 	  //      temp_histograms.push_back(htemp);
 	  map_name_histogram[std::get<0>(all_histo_infos.at(i))] = std::make_pair(htemp, pot);
+
+    //Erin
+    //fill time errors per bin
+    std::vector<double> time_errors_temp;
+    //fill time errors per bin
+    cout<<std::get<0>(all_histo_infos.at(i))<<endl;
+    for (int i_h=0; i_h>=htemp->GetNbinsX(); i_h++){
+
+      double ext_err = (htemp->GetBinContent(i+1)/map_cos_period_time_weight[run])*map_cos_period_time_weight_err[run];
+      double cos_err = (htemp->GetBinContent(i+1)/map_cos_period_time_weight[run])*map_cos_period_time_weight_err[run];
+      double mc_err = ((htemp->GetBinContent(i+1))/map_mc_period_time_weight[run])*map_mc_period_time_weight_err[run];
+      if (true){
+        time_errors_temp.push_back(mc_err+ext_err+cos_err);
+        cout<<"Time error: "<<mc_err+ext_err+cos_err<<endl;
+      }else{
+        time_errors_temp.push_back(0.0);
+      }
+    }
+    time_errors_per_bin.push_back(time_errors_temp);
+    //
+
+
 	}
   }
 
@@ -953,10 +975,6 @@ int main( int argc, char** argv )
 		gratio_mc[obschannel-1] = new TGraphAsymmErrors();
 		gratio_data[obschannel-1] = new TGraphAsymmErrors();
 		float maxratio = 1.5;
-    //Erin
-    //fill time errors per bin
-    std::vector<double> time_errors_temp;
-    //
 		for(int i=0; i<hdata->GetNbinsX(); i++)
 		{
 		  double x = hdata->GetBinCenter(i+1);
@@ -989,21 +1007,7 @@ int main( int argc, char** argv )
 			if(ymc!=0) gratio_data[obschannel-1]->SetPointError(i, x_err, x_err, y_err/ymc, y_err/ymc);
 			else gratio_data[obschannel-1]->SetPointError(i, x_err, x_err, 0, 0);
 		  }
-
-      //Erin
-      //fill time errors per bin
-      double ext_err = (hext->GetBinContent(i+1)/map_cos_period_time_weight[run])*map_cos_period_time_weight_err[run];
-      double cos_err = (hbadmatch->GetBinContent(i+1)/map_cos_period_time_weight[run])*map_cos_period_time_weight_err[run];
-      double mc_err = ((hmc->GetBinContent(i+1)-hext->GetBinContent(i+1)-hbadmatch->GetBinContent(i+1))/map_mc_period_time_weight[run])*map_mc_period_time_weight_err[run];
-      if (true){
-        time_errors_temp.push_back(mc_err+ext_err+cos_err);
-        cout<<"Time error: "<<mc_err+ext_err+cos_err<<endl;
-      }else{
-        time_errors_temp.push_back(0.0);
-      }
-      //
 		}
-    time_errors_per_bin.push_back(time_errors_temp);
 		gr[obschannel-1]->Draw("P same");
 		gr[obschannel-1]->SetLineWidth(2);
 		gr[obschannel-1]->SetMarkerStyle(20);
