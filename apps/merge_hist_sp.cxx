@@ -235,10 +235,8 @@ int main( int argc, char** argv )
     TH1F* hdata = (TH1F*)map_obsch_histos[obschannel].at(0)->Clone("hdata");
     TH1F* hbadmatch = (TH1F*)hdata->Clone("hbadmatch");
     TH1F* hext = (TH1F*)hdata->Clone("hext");
-    TH1F* hbeam = (TH1F*)hdata->Clone("hbeam");
     hbadmatch->Reset();
     hext->Reset();
-    hbeam->Reset();
     for(size_t i=0; i<it->second.size(); i++) {
       TH1F* htemp = map_obsch_subhistos[obschannel].at(i);
       std::string histname = htemp->GetName();
@@ -282,7 +280,9 @@ int main( int argc, char** argv )
         time_errors_temp.push_back(0.0);
       }
     }
+    time_errors_per_bin.push_back(time_errors_temp);
   }
+  //
 
 
   // get Bayesian errrors ...
