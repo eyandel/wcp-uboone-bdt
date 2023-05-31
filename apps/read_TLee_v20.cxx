@@ -241,6 +241,7 @@ int main(int argc, char** argv)
   Lee_test->matrix_absolute_detector_cov_newworld.Write("matrix_absolute_detector_cov_newworld");
   Lee_test->matrix_absolute_mc_stat_cov_newworld.Write("matrix_absolute_mc_stat_cov_newworld");
   Lee_test->matrix_absolute_additional_cov_newworld.Write("matrix_absolute_additional_cov_newworld");
+  Lee_test->matrix_absolute_time_cov_newworld.Write("matrix_absolute_time_cov_newworld");
 
   for(auto it=Lee_test->matrix_input_cov_detector_sub.begin(); it!=Lee_test->matrix_input_cov_detector_sub.end(); it++) {
     int idx = it->first;
