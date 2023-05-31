@@ -2230,10 +2230,6 @@ void TLee::Plotting_systematics()
   h2_relerr_total->GetXaxis()->SetTitleOffset(1.2); h2_relerr_total->GetYaxis()->SetTitleOffset(1.);
 
   h1_total_relerr->Draw("same hist"); h1_total_relerr->SetLineColor(color_total); h1_total_relerr->SetLineWidth(4);
-  //Erin
-  if(flag_syst_time) h1_time_relerr->Draw("same hist");
-	h1_time_relerr->SetLineColor(color_time);
-  //
   h1_additional_relerr->Draw("same hist"); h1_additional_relerr->SetLineColor(color_additional);
   h1_mc_stat_relerr->Draw("same hist"); h1_mc_stat_relerr->SetLineColor(color_mc_stat);
   h1_flux_relerr->Draw("same hist"); h1_flux_relerr->SetLineColor(color_flux);
@@ -2244,6 +2240,10 @@ void TLee::Plotting_systematics()
 	h1_reweight_cor_relerr->SetLineColor(color_reweight_cor);
   h1_detector_relerr->Draw("same hist");
 	h1_detector_relerr->SetLineColor(color_detector);
+  //Erin
+  if(flag_syst_time) h1_time_relerr->Draw("same hist");
+	h1_time_relerr->SetLineColor(color_time);
+  //
 
   bool print_category_errors = 1;
   if (print_category_errors) {
@@ -2276,13 +2276,13 @@ void TLee::Plotting_systematics()
 
   TLegend *lg_relerr_total = new TLegend(0.81, 0.5, 0.98, 0.89);
   lg_relerr_total->AddEntry(h1_total_relerr, "Total", "l");
+  //Erin
+  if(flag_syst_time) lg_relerr_total->AddEntry(h1_time_relerr, "Time/Scaling", "l");
+  //
   lg_relerr_total->AddEntry(h1_flux_relerr, "Flux", "l");
   lg_relerr_total->AddEntry(h1_Xs_relerr, "Xs", "l");
   if(flag_syst_reweight) lg_relerr_total->AddEntry(h1_reweight_relerr, "Reweight", "l");
   if(flag_syst_reweight_cor) lg_relerr_total->AddEntry(h1_reweight_cor_relerr, "Reweight cor", "l");
-  //Erin
-  if(flag_syst_time) lg_relerr_total->AddEntry(h1_time_relerr, "Time/Scaling", "l");
-  //
   lg_relerr_total->AddEntry(h1_detector_relerr, "Detector", "l");
   lg_relerr_total->AddEntry(h1_mc_stat_relerr, "MC stat", "l");
   lg_relerr_total->AddEntry(h1_additional_relerr, "Dirt", "l");
