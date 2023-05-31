@@ -267,7 +267,7 @@ int main( int argc, char** argv )
 
     std::vector<double> time_errors_temp;
 
-    for(int i=0; i<=hdata->GetNbinsX()+1; i++)
+    for(int i=1; i<=hdata->GetNbinsX()+1; i++)
     {
       //fill time errors per bin
       double ext_err = (hext->GetBinContent(i)/map_cos_period_time_weight[run])*map_cos_period_time_weight_err[run];
@@ -1154,23 +1154,22 @@ int main( int argc, char** argv )
 		TH1F *htemp1 = map_covch_histo[covch];
 
 		//std::cout << covch << " " << obsch << " " << i << " " << htemp1->GetSum() << std::endl;
-    cout<<bayes_inputs.at(i).size()<<endl;
-    cout<<time_errors_per_bin.at(i).size()<<endl;
 		for (size_t j=0; j!=bayes_inputs.at(i).size(); j++) {
 		  htemp1->SetBinContent(j+1, htemp1->GetBinContent(j+1) + std::get<0>(bayes_inputs.at(i).at(j)));
 		  htemp1->SetBinError(j+1, sqrt(pow(htemp1->GetBinError(j+1),2) + std::get<1>(bayes_inputs.at(i).at(j))));
 
 		  (*mat_add_cov)(start_bin + j, start_bin + j) += std::get<4>(bayes_inputs.at(i).at(j));
 
-		  //Erin
-		  (*mat_time_cov)(start_bin + j, start_bin + j) += time_errors_per_bin.at(i).at(j);
-		  //
-
 		  //  if (covch == 8 && obsch == 1)
 		  //  std::cout << "bin: " << j << " " << std::get<0>(bayes_inputs.at(i).at(j)) << " " << std::get<1>(bayes_inputs.at(i).at(j)) << " " << std::get<3>(bayes_inputs.at(i).at(j)) << std::endl;
 		  //	  if (std::get<4>(bayes_inputs.at(i).at(j)) > 0)
 		  //  std::cout << obsch << " " << i << " " << start_bin + j << " " <<  std::get<4>(bayes_inputs.at(i).at(j)) << std::endl;
 		}
+    //Erin
+    for (size_t j=0; j<time_errors_per_bin.at(i).size(); j++){
+		  (*mat_time_cov)(start_bin + j, start_bin + j) += time_errors_per_bin.at(i).at(j);
+    }
+    //
 
 		//	std::cout << obsch << " " << bayes_inputs.size() << " " << bayes_inputs.at(0).size() << " " << i << " " << covch << " " << start_bin << std::endl;
 		//  break;
