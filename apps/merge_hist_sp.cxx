@@ -267,7 +267,7 @@ int main( int argc, char** argv )
 
     std::vector<double> time_errors_temp;
 
-    for(int i=0; i<hdata->GetNbinsX(); i++)
+    for(int i=0; i<hdata->GetNbinsX()+1; i++)
     {
       //fill time errors per bin
       double ext_err = (hext->GetBinContent(i+1)/map_cos_period_time_weight[run])*map_cos_period_time_weight_err[run];
@@ -1134,7 +1134,6 @@ int main( int argc, char** argv )
 	//
 
 	std::map<int, TH1F*> map_covch_histo;
-cout<<map_obsch_infos.size()<<endl;
 	for (auto it = map_obsch_infos.begin(); it != map_obsch_infos.end(); it++) {
 	  int obsch = it->first;
 	  std::vector<std::vector< std::tuple<double, double, double, int, double> > >  bayes_inputs = it->second;
@@ -1155,7 +1154,6 @@ cout<<map_obsch_infos.size()<<endl;
 		TH1F *htemp1 = map_covch_histo[covch];
 
 		//std::cout << covch << " " << obsch << " " << i << " " << htemp1->GetSum() << std::endl;
-    cout<<bayes_inputs.at(i).size()<<endl;
 		for (size_t j=0; j!=bayes_inputs.at(i).size(); j++) {
 		  htemp1->SetBinContent(j+1, htemp1->GetBinContent(j+1) + std::get<0>(bayes_inputs.at(i).at(j)));
 		  htemp1->SetBinError(j+1, sqrt(pow(htemp1->GetBinError(j+1),2) + std::get<1>(bayes_inputs.at(i).at(j))));
