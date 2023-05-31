@@ -57,7 +57,7 @@ namespace config_Lee
   bool flag_syst_reweight        = false;
   bool flag_syst_reweight_cor    = false;
   //ns timing error
-  bool flag_syst_time = false;
+  bool flag_syst_time = true;
 
   //double Lee_strength_for_outputfile_covariance_matrix = 1;
   double Lee_strength_for_outputfile_covariance_matrix = 0;

@@ -81,6 +81,9 @@ public:
   bool flag_syst_mc_stat;
   bool flag_syst_reweight;
   bool flag_syst_reweight_cor;
+  //Erin
+  bool flag_syst_time;
+  //
 
   bool flag_lookelsewhere;
 
@@ -114,6 +117,9 @@ public:
   TMatrixD matrix_input_cov_additional;
   TMatrixD matrix_input_cov_reweight;
   TMatrixD matrix_input_cov_reweight_cor;
+  //Erin
+  TMatrixD matrix_input_cov_time;
+  //
 
   TMatrixD matrix_input_cov_flux;
   TMatrixD matrix_input_cov_Xs;
@@ -138,6 +144,9 @@ public:
   TMatrixD matrix_absolute_additional_cov_newworld;
   TMatrixD matrix_absolute_reweight_cov_newworld;
   TMatrixD matrix_absolute_reweight_cor_cov_newworld;
+  //Erin
+  TMatrixD matrix_absolute_time_cov_newworld;
+  //
 
   map<int, TMatrixD>matrix_sub_flux_geant4_Xs_oldworld;
   map<int, TMatrixD>matrix_sub_flux_geant4_Xs_newworld;

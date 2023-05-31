@@ -1,3 +1,15 @@
+generic_nu_overlay		            kine_reco_Enu	                 25	   0	      2500   	1	      1		      1	    0	        0		      1		      2	      cv_spline           		0
+BG_generic_nu_dirt		            kine_reco_Enu	                 25	   0	      2500  	1	      1		      0	    0.5	      0		      1		      4	      cv_spline    		        0
+BG_generic_nu_ext 		            kine_reco_Enu	                 25	   0	      2500  	1	      0		      0	    0 	      0		      3		      3	      unity		                0
+generic_nu_bnb                    kine_reco_Enu	                 25	   0	      2500  	1	      0		      0	    0 	      0		      0		      5	      unity   		            0
+
+generic_nu_overlay_2		          kine_reco_Enu	                 25	   0	      2500   	2	      1		      1	    0	        0		      2		      2	      cv_spline_nsbeam    		0
+BG_generic_nu_dirt_2		          kine_reco_Enu	                 25	   0	      2500  	2	      1		      0	    0.5	      0		      2		      4	      cv_spline_nsbeam    		0
+BG_generic_nu_ext_2 		          kine_reco_Enu	                 25	   0	      2500  	2	      0		      0	    0 	      0		      4		      3	      nsbeam_ext		          0
+generic_nu_bnb_nsbeam             kine_reco_Enu	                 25	   0	      2500  	2	      0		      0	    0 	      0		      0		      5	      unity   		            0
+End					                      End		                         -1	   -1	      -1	   -1	      -1		    -1	  -1		    -1		    -1		    -1	    end		                  -1
+
+
 sp_bdt_numuCC_Xp_overlay		      ns_beam_time	                 60    -10      10   	1	      1		      1	    0	        0		      1		      2	      cv_spline		  0
 sp_bdt_numuCC_Xp_dirt		          ns_beam_time	                 60    -10      10  	1	      1		      0	    0.5	      0		      1		      4	      cv_spline		  0
 sp_bdt_numuCC_Xp_ext 		          ns_beam_time	                 60    -10      10  	1	      0		      0	    0 	      0		      4		      3	      unity   		  0

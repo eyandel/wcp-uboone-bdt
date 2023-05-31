@@ -82,6 +82,9 @@ int main(int argc, char** argv)
   Lee_test->flag_syst_flux_Xs    = config_Lee::flag_syst_flux_Xs;
   Lee_test->flag_syst_reweight    = config_Lee::flag_syst_reweight;
   Lee_test->flag_syst_reweight_cor    = config_Lee::flag_syst_reweight_cor;
+  //Erin
+  Lee_test->flag_syst_time    = config_Lee::flag_syst_time;
+  //
 
   ////////// just do it one time in the whole procedure
 
@@ -209,6 +212,9 @@ int main(int argc, char** argv)
   int flag_syst_mc_stat = config_Lee::flag_syst_mc_stat;
   int flag_syst_reweight = config_Lee::flag_syst_reweight;
   int flag_syst_reweight_cor = config_Lee::flag_syst_reweight_cor;
+  //Erin
+  int flag_syst_time = config_Lee::flag_syst_time;
+  //
   double user_Lee_strength_for_output_covariance_matrix = config_Lee::Lee_strength_for_outputfile_covariance_matrix;
   double user_scaleF_POT = scaleF_POT;
   vector<double>vc_val_GOF;
@@ -219,6 +225,9 @@ int main(int argc, char** argv)
   tree_config->Branch("flag_syst_mc_stat", &flag_syst_mc_stat, "flag_syst_mc_stat/I" );
   tree_config->Branch("flag_syst_reweight", &flag_syst_reweight, "flag_syst_reweight/I" );
   tree_config->Branch("flag_syst_reweight_cor", &flag_syst_reweight_cor, "flag_syst_reweight_cor/I" );
+  //Erin
+  tree_config->Branch("flag_syst_time", &flag_syst_time, "flag_syst_time/I" );
+  //
   tree_config->Branch("user_Lee_strength_for_output_covariance_matrix", &user_Lee_strength_for_output_covariance_matrix,
                       "user_Lee_strength_for_output_covariance_matrix/D" );
   tree_config->Branch("user_scaleF_POT", &user_scaleF_POT, "user_scaleF_POT/D" );
@@ -1203,6 +1212,9 @@ int main(int argc, char** argv)
   cout<<" ---> flag_syst_mc_stat    "<<Lee_test->flag_syst_mc_stat<<endl;
   cout<<" ---> flag_syst_reweight       "<<Lee_test->flag_syst_reweight<<endl;
   cout<<" ---> flag_syst_reweight_cor   "<<Lee_test->flag_syst_reweight_cor<<endl;
+  //Erin
+  cout<<" ---> flag_syst_time       "<<Lee_test->flag_syst_time<<endl;
+  //
 
   cout<<endl<<endl;
   cout<<" ---> Finish all the program"<<endl;
