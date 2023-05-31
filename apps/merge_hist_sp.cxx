@@ -281,6 +281,7 @@ int main( int argc, char** argv )
       }
     }
     time_errors_per_bin.push_back(time_errors_temp);
+    cout<<"Fill time array"<<endl;
   }
   //
 
