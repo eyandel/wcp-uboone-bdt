@@ -272,6 +272,7 @@ int main( int argc, char** argv )
       //fill time errors per bin
       double ext_err = (hext->GetBinContent(i+1)/map_cos_period_time_weight[run])*map_cos_period_time_weight_err[run];
       double cos_err = (hbadmatch->GetBinContent(i+1)/map_cos_period_time_weight[run])*map_cos_period_time_weight_err[run];
+      cout<<"hmc Bin content: "<<hmc->GetBinContent(i+1)<<endl;
       double mc_err = ((hmc->GetBinContent(i+1)-hext->GetBinContent(i+1)-hbadmatch->GetBinContent(i+1))/map_mc_period_time_weight[run])*map_mc_period_time_weight_err[run];
       if (map_channel_nstime[obschannel]){
         time_errors_temp.push_back(mc_err+ext_err+cos_err);
@@ -281,7 +282,7 @@ int main( int argc, char** argv )
       }
     }
     time_errors_per_bin.push_back(time_errors_temp);
-    cout<<"Fill time array"<<endl;
+    cout<<"time_errors_temp size: "<<time_errors_temp.size()<<endl;
   }
   //
 
