@@ -1130,8 +1130,8 @@ int main( int argc, char** argv )
 	TMatrixD* mat_add_cov = cov.get_add_cov_matrix();
 	//Erin
 	//timing/scaling covariance matrix
-	TMatrixD* mat_time_cov = cov.get_add_cov_matrix();
-  int time_start_bin = 0;
+	TMatrixD* mat_time_cov = new TMatrixD(mat_add_cov->GetNrows(), mat_add_cov->GetNcols());
+  	int time_start_bin = 0;
 	//
 
 	std::map<int, TH1F*> map_covch_histo;
@@ -1200,10 +1200,10 @@ int main( int argc, char** argv )
 	}
 
 	mat_add_cov->Write("cov_mat_add");
-  //Erin
-  //wrote time error cov matrix
-  mat_time_cov->Write("cov_mat_time");
-  //
+  	//Erin
+  	//wrote time error cov matrix
+  	mat_time_cov->Write("cov_mat_time");
+  	//
 
 	file3->Write();
 	file3->Close();
