@@ -137,26 +137,6 @@ int main( int argc, char** argv )
 	  //      temp_histograms.push_back(htemp);
 	  map_name_histogram[std::get<0>(all_histo_infos.at(i))] = std::make_pair(htemp, pot);
 
-    //Erin
-    //fill time errors per bin
-    std::vector<double> time_errors_temp;
-    //fill time errors per bin
-    cout<<std::get<0>(all_histo_infos.at(i))<<endl;
-    for (int i_h=0; i_h>=htemp->GetNbinsX(); i_h++){
-
-      double ext_err = (htemp->GetBinContent(i+1)/map_cos_period_time_weight[run])*map_cos_period_time_weight_err[run];
-      double cos_err = (htemp->GetBinContent(i+1)/map_cos_period_time_weight[run])*map_cos_period_time_weight_err[run];
-      double mc_err = ((htemp->GetBinContent(i+1))/map_mc_period_time_weight[run])*map_mc_period_time_weight_err[run];
-      if (true){
-        time_errors_temp.push_back(mc_err+ext_err+cos_err);
-        cout<<"Time error: "<<mc_err+ext_err+cos_err<<endl;
-      }else{
-        time_errors_temp.push_back(0.0);
-      }
-    }
-    time_errors_per_bin.push_back(time_errors_temp);
-    //
-
 
 	}
   }
@@ -173,6 +153,9 @@ int main( int argc, char** argv )
   // obsch --> bin with overflow bin --> vector of all channels (merge certain channels) --> mean and err2
   std::map<int, std::vector< std::vector< std::tuple<double, double, double, int, double> > > > map_obsch_bayes;
   std::map<int, std::vector< std::vector< std::tuple<double, double, double, int, double> > > > map_obsch_infos;
+
+  //Erin
+  std::map<int, bool> map_channel_nstime;
 
   for (auto it = map_inputfile_info.begin(); it != map_inputfile_info.end(); it++) {
 	TString input_filename = it->first;
@@ -211,6 +194,14 @@ int main( int argc, char** argv )
 		//   map_obsch_bayes[obsch].push_back(temp);
 		// }
 
+    //Erin
+    //set if this channel uses ns timing
+    map_channel_nstime[obsch] = false;
+    if (std::get<0>(*it1).Contains("nsbeam")){
+      map_channel_nstime[obsch] = true;
+    }
+    //
+
 
 		//std::cout << std::get<5>(*it1) << " " << obsch << " " << htemp->GetSum() << std::endl;
 	  }
@@ -235,6 +226,63 @@ int main( int argc, char** argv )
   /*         } */
   /* } */
 
+
+  //Erin
+  //get ns timing errors
+  for(auto it = map_obsch_subhistos.begin(); it!= map_obsch_subhistos.end(); it++) {
+    int obschannel = it->first;
+    std::cout<<"Channel: "<<obschannel<<std::endl;
+    TH1F* hdata = (TH1F*)map_obsch_histos[obschannel].at(0)->Clone("hdata");
+    TH1F* hbadmatch = (TH1F*)hdata->Clone("hbadmatch");
+    TH1F* hext = (TH1F*)hdata->Clone("hext");
+    TH1F* hbeam = (TH1F*)hdata->Clone("hbeam");
+    hbadmatch->Reset();
+    hext->Reset();
+    hbeam->Reset();
+    for(size_t i=0; i<it->second.size(); i++) {
+      TH1F* htemp = map_obsch_subhistos[obschannel].at(i);
+      std::string histname = htemp->GetName();
+      std::istringstream sss(histname);
+      for(std::string line; std::getline(sss, line, '_');) {
+        if(line == "badmatch") {
+          std::cout<<"badmatch"<<" "<<histname<<std::endl;
+          hbadmatch->Add(htemp);
+          break;
+        }
+        if(line == "ext") {
+          std::cout<<"ext"<<" "<<histname<<std::endl;
+          hext->Add(htemp);
+          break;
+        }
+      }
+    }
+
+    float datapot = 0;
+    if(run == 0) {
+    for(auto it=map_data_period_pot.begin(); it!=map_data_period_pot.end(); it++)
+    {
+      datapot += it->second;
+    }
+    }else datapot = map_data_period_pot[run];
+
+    TH1F* hmc = (TH1F*)map_obsch_histos[obschannel].at(1)->Clone("hmc");
+
+    std::vector<double> time_errors_temp;
+
+    for(int i=0; i<hdata->GetNbinsX(); i++)
+    {
+      //fill time errors per bin
+      double ext_err = (hext->GetBinContent(i+1)/map_cos_period_time_weight[run])*map_cos_period_time_weight_err[run];
+      double cos_err = (hbadmatch->GetBinContent(i+1)/map_cos_period_time_weight[run])*map_cos_period_time_weight_err[run];
+      double mc_err = ((hmc->GetBinContent(i+1)-hext->GetBinContent(i+1)-hbadmatch->GetBinContent(i+1))/map_mc_period_time_weight[run])*map_mc_period_time_weight_err[run];
+      if (map_channel_nstime[obschannel]){
+        time_errors_temp.push_back(mc_err+ext_err+cos_err);
+        cout<<"Time error: "<<mc_err+ext_err+cos_err<<endl;
+      }else{
+        time_errors_temp.push_back(0.0);
+      }
+    }
+  }
 
 
   // get Bayesian errrors ...
@@ -749,317 +797,317 @@ int main( int argc, char** argv )
 	  THStack *hstack[nchannels];
 	  TLegend *legend[nchannels];
 	  TLegend *legend2[nchannels];
-	  for(auto it = map_obsch_subhistos.begin(); it!= map_obsch_subhistos.end(); it++) {
-		int obschannel = it->first;
-		std::cout<<"Channel: "<<obschannel<<std::endl;
-		canvas[obschannel-1] = new TCanvas(Form("canvas%d", obschannel), Form("channel%d", obschannel), 1200, 900);
-		TPad *pad1 = new TPad("pad1", "", 0.01,0.3,0.99,0.99,0,0,0);
-		TPad *pad2 = new TPad("pad2", "", 0.01,0.01,0.99,0.3,0,0,0);
-		pad1->SetBottomMargin(0);
-		pad1->SetLeftMargin(0.12);
-		pad1->SetRightMargin(0.1);
-		pad2->SetTopMargin(0.05);
-		pad2->SetLeftMargin(0.12);
-		pad2->SetRightMargin(0.1);
-		pad2->SetBottomMargin(0.20);
-		pad1->Draw();
-		pad2->Draw();
-		hstack[obschannel-1] = new THStack(Form("hs%d", obschannel),"");
-		legend[obschannel-1] = new TLegend(0.3, 0.65, 0.85, 0.92);
-		TH1F* hdata = (TH1F*)map_obsch_histos[obschannel].at(0)->Clone("hdata");
-		TH1F* hbadmatch = (TH1F*)hdata->Clone("hbadmatch");
-		TH1F* hnumuCCinFV = (TH1F*)hdata->Clone("hnumuCCinFV");
-		TH1F* hnueCCinFV = (TH1F*)hdata->Clone("hnueCCinFV");
-		TH1F* hNCinFV = (TH1F*)hdata->Clone("hNCinFV");
-		TH1F* hCCpi0inFV = (TH1F*)hdata->Clone("hCCpi0inFV");
-		TH1F* hNCpi0inFV = (TH1F*)hdata->Clone("hNCpi0inFV");
-		TH1F* houtFV = (TH1F*)hdata->Clone("houtFV");
-		TH1F* hext = (TH1F*)hdata->Clone("hext");
-		TH1F* hdirt = (TH1F*)hdata->Clone("hdirt");
-		TH1F* hLEE = (TH1F*)hdata->Clone("hLEE");
-		TH1F* hncpi0sig = (TH1F*)hdata->Clone("hncpi0sig");
-		TH1F* hbkg = (TH1F*)hdata->Clone("hbkg");
-		hbadmatch->Reset();
-		hnumuCCinFV->Reset();
-		hnueCCinFV->Reset();
-		hNCinFV->Reset();
-		hCCpi0inFV->Reset();
-		hNCpi0inFV->Reset();
-		houtFV->Reset();
-		hext->Reset();
-		hdirt->Reset();
-		hLEE->Reset();
-		hncpi0sig->Reset();
-		hbkg->Reset();
-		bool flag_leeexist = false;
-		for(size_t i=0; i<it->second.size(); i++) {
-		  TH1F* htemp = map_obsch_subhistos[obschannel].at(i);
-		  std::string histname = htemp->GetName();
-		  std::istringstream sss(histname);
-		  for(std::string line; std::getline(sss, line, '_');) {
-			if(line == "bkg") {
-			  std::cout<<"background"<<" "<<histname<<std::endl;
-			  hbkg->Add(htemp);
-			  break;
-			}
-			if(line == "ncpi0sig") {
-			  std::cout<<"nc pi0 sig"<<" "<<histname<<std::endl;
-			  hncpi0sig->Add(htemp);
-			  break;
-			}
-			if(line == "badmatch") {
-			  std::cout<<"badmatch"<<" "<<histname<<std::endl;
-			  hbadmatch->Add(htemp);
-			  break;
-			}
-			if(line == "numuCCinFV") {
-			  std::cout<<"numuCCinFV"<<" "<<histname<<std::endl;
-			  hnumuCCinFV->Add(htemp);
-			  break;
-			}
-			if(line == "nueCCinFV") {
-			  std::cout<<"nueCCinFV"<<" "<<histname<<std::endl;
-			  hnueCCinFV->Add(htemp);
-			  break;
-			}
-			if(line == "NCinFV") {
-			  std::cout<<"NCinFV"<<" "<<histname<<std::endl;
-			  hNCinFV->Add(htemp);
-			  break;
-			}
-			if(line == "CCpi0inFV") {
-			  std::cout<<"CCpi0inFV"<<" "<<histname<<std::endl;
-			  hCCpi0inFV->Add(htemp);
-			  break;
-			}
-			if(line == "NCpi0inFV") {
-			  std::cout<<"NCpi0inFV"<<" "<<histname<<std::endl;
-			  hNCpi0inFV->Add(htemp);
-			  break;
-			}
-			if(line == "outFV") {
-			  std::cout<<"outFV"<<" "<<histname<<std::endl;
-			  houtFV->Add(htemp);
-			  break;
-			}
-			if(line == "ext") {
-			  std::cout<<"ext"<<" "<<histname<<std::endl;
-			  hext->Add(htemp);
-			  break;
-			}
-			if(line == "dirt") {
-			  std::cout<<"dirt"<<" "<<histname<<std::endl;
-			  hdirt->Add(htemp);
-			  break;
-			}
-			if(line == "LEE") {
-			  std::cout<<"LEE"<<" "<<histname<<std::endl;
-			  flag_leeexist = true;
-			  hLEE->Add(htemp);
-			  break;
-			}
-		  }
-		}
+    for(auto it = map_obsch_subhistos.begin(); it!= map_obsch_subhistos.end(); it++) {
+      int obschannel = it->first;
+      std::cout<<"Channel: "<<obschannel<<std::endl;
+      canvas[obschannel-1] = new TCanvas(Form("canvas%d", obschannel), Form("channel%d", obschannel), 1200, 900);
+      TPad *pad1 = new TPad("pad1", "", 0.01,0.3,0.99,0.99,0,0,0);
+      TPad *pad2 = new TPad("pad2", "", 0.01,0.01,0.99,0.3,0,0,0);
+      pad1->SetBottomMargin(0);
+      pad1->SetLeftMargin(0.12);
+      pad1->SetRightMargin(0.1);
+      pad2->SetTopMargin(0.05);
+      pad2->SetLeftMargin(0.12);
+      pad2->SetRightMargin(0.1);
+      pad2->SetBottomMargin(0.20);
+      pad1->Draw();
+      pad2->Draw();
+      hstack[obschannel-1] = new THStack(Form("hs%d", obschannel),"");
+      legend[obschannel-1] = new TLegend(0.3, 0.65, 0.85, 0.92);
+      TH1F* hdata = (TH1F*)map_obsch_histos[obschannel].at(0)->Clone("hdata");
+      TH1F* hbadmatch = (TH1F*)hdata->Clone("hbadmatch");
+      TH1F* hnumuCCinFV = (TH1F*)hdata->Clone("hnumuCCinFV");
+      TH1F* hnueCCinFV = (TH1F*)hdata->Clone("hnueCCinFV");
+      TH1F* hNCinFV = (TH1F*)hdata->Clone("hNCinFV");
+      TH1F* hCCpi0inFV = (TH1F*)hdata->Clone("hCCpi0inFV");
+      TH1F* hNCpi0inFV = (TH1F*)hdata->Clone("hNCpi0inFV");
+      TH1F* houtFV = (TH1F*)hdata->Clone("houtFV");
+      TH1F* hext = (TH1F*)hdata->Clone("hext");
+      TH1F* hdirt = (TH1F*)hdata->Clone("hdirt");
+      TH1F* hLEE = (TH1F*)hdata->Clone("hLEE");
+      TH1F* hncpi0sig = (TH1F*)hdata->Clone("hncpi0sig");
+      TH1F* hbkg = (TH1F*)hdata->Clone("hbkg");
+      hbadmatch->Reset();
+      hnumuCCinFV->Reset();
+      hnueCCinFV->Reset();
+      hNCinFV->Reset();
+      hCCpi0inFV->Reset();
+      hNCpi0inFV->Reset();
+      houtFV->Reset();
+      hext->Reset();
+      hdirt->Reset();
+      hLEE->Reset();
+      hncpi0sig->Reset();
+      hbkg->Reset();
+      bool flag_leeexist = false;
+      for(size_t i=0; i<it->second.size(); i++) {
+    	TH1F* htemp = map_obsch_subhistos[obschannel].at(i);
+    	std::string histname = htemp->GetName();
+    	std::istringstream sss(histname);
+    	for(std::string line; std::getline(sss, line, '_');) {
+    	  if(line == "bkg") {
+    		std::cout<<"background"<<" "<<histname<<std::endl;
+    		hbkg->Add(htemp);
+    		break;
+    	  }
+    	  if(line == "ncpi0sig") {
+    		std::cout<<"nc pi0 sig"<<" "<<histname<<std::endl;
+    		hncpi0sig->Add(htemp);
+    		break;
+    	  }
+    	  if(line == "badmatch") {
+    		std::cout<<"badmatch"<<" "<<histname<<std::endl;
+    		hbadmatch->Add(htemp);
+    		break;
+    	  }
+    	  if(line == "numuCCinFV") {
+    		std::cout<<"numuCCinFV"<<" "<<histname<<std::endl;
+    		hnumuCCinFV->Add(htemp);
+    		break;
+    	  }
+    	  if(line == "nueCCinFV") {
+    		std::cout<<"nueCCinFV"<<" "<<histname<<std::endl;
+    		hnueCCinFV->Add(htemp);
+    		break;
+    	  }
+    	  if(line == "NCinFV") {
+    		std::cout<<"NCinFV"<<" "<<histname<<std::endl;
+    		hNCinFV->Add(htemp);
+    		break;
+    	  }
+    	  if(line == "CCpi0inFV") {
+    		std::cout<<"CCpi0inFV"<<" "<<histname<<std::endl;
+    		hCCpi0inFV->Add(htemp);
+    		break;
+    	  }
+    	  if(line == "NCpi0inFV") {
+    		std::cout<<"NCpi0inFV"<<" "<<histname<<std::endl;
+    		hNCpi0inFV->Add(htemp);
+    		break;
+    	  }
+    	  if(line == "outFV") {
+    		std::cout<<"outFV"<<" "<<histname<<std::endl;
+    		houtFV->Add(htemp);
+    		break;
+    	  }
+    	  if(line == "ext") {
+    		std::cout<<"ext"<<" "<<histname<<std::endl;
+    		hext->Add(htemp);
+    		break;
+    	  }
+    	  if(line == "dirt") {
+    		std::cout<<"dirt"<<" "<<histname<<std::endl;
+    		hdirt->Add(htemp);
+    		break;
+    	  }
+    	  if(line == "LEE") {
+    		std::cout<<"LEE"<<" "<<histname<<std::endl;
+    		flag_leeexist = true;
+    		hLEE->Add(htemp);
+    		break;
+    	  }
+    	}
+      }
 
-		pad1->cd();
-		float datapot = 0;
-		if(run == 0) {
-		  for(auto it=map_data_period_pot.begin(); it!=map_data_period_pot.end(); it++)
-		  {
-			datapot += it->second;
-		  }
-		}else datapot = map_data_period_pot[run];
+      pad1->cd();
+      float datapot = 0;
+      if(run == 0) {
+    	for(auto it=map_data_period_pot.begin(); it!=map_data_period_pot.end(); it++)
+    	{
+    	  datapot += it->second;
+    	}
+      }else datapot = map_data_period_pot[run];
 
-		gr[obschannel-1] = new TGraphAsymmErrors();
-		legend[obschannel-1]->SetNColumns(2);
-		legend[obschannel-1]->AddEntry((TObject*)0, Form("Data POT: %.3e", datapot), "");
-		legend[obschannel-1]->AddEntry(gr[obschannel-1], Form("BNB data, %.1f", hdata->Integral()), "lp");
-		hstack[obschannel-1]->Add(hbadmatch);
-		legend[obschannel-1]->AddEntry(hbadmatch, Form("Cosmic, %.1f", hbadmatch->Integral()), "F");
-		hbadmatch->SetFillStyle(3004);
-		hbadmatch->SetFillColorAlpha(kRed+2, 0.5);
-		hbadmatch->SetLineColor(kRed+2);
-		hbadmatch->SetLineWidth(1);
+      gr[obschannel-1] = new TGraphAsymmErrors();
+      legend[obschannel-1]->SetNColumns(2);
+      legend[obschannel-1]->AddEntry((TObject*)0, Form("Data POT: %.3e", datapot), "");
+      legend[obschannel-1]->AddEntry(gr[obschannel-1], Form("BNB data, %.1f", hdata->Integral()), "lp");
+      hstack[obschannel-1]->Add(hbadmatch);
+      legend[obschannel-1]->AddEntry(hbadmatch, Form("Cosmic, %.1f", hbadmatch->Integral()), "F");
+      hbadmatch->SetFillStyle(3004);
+      hbadmatch->SetFillColorAlpha(kRed+2, 0.5);
+      hbadmatch->SetLineColor(kRed+2);
+      hbadmatch->SetLineWidth(1);
 
-		hstack[obschannel-1]->Add(hext);
-		legend[obschannel-1]->AddEntry(hext, Form("EXT, %.1f", hext->Integral()), "F");
-		hext->SetFillStyle(3004);
-		hext->SetFillColorAlpha(kOrange+3, 0.5);
-		hext->SetLineColor(kOrange+3);
-		hext->SetLineWidth(1);
+      hstack[obschannel-1]->Add(hext);
+      legend[obschannel-1]->AddEntry(hext, Form("EXT, %.1f", hext->Integral()), "F");
+      hext->SetFillStyle(3004);
+      hext->SetFillColorAlpha(kOrange+3, 0.5);
+      hext->SetLineColor(kOrange+3);
+      hext->SetLineWidth(1);
 
-		hstack[obschannel-1]->Add(hdirt);
-		legend[obschannel-1]->AddEntry(hdirt, Form("Dirt, %.1f", hdirt->Integral()), "F");
-		hdirt->SetFillStyle(3224);
-		hdirt->SetFillColorAlpha(kGray, 0.5);
-		hdirt->SetLineColor(kGray+2);
-		hdirt->SetLineWidth(1);
+      hstack[obschannel-1]->Add(hdirt);
+      legend[obschannel-1]->AddEntry(hdirt, Form("Dirt, %.1f", hdirt->Integral()), "F");
+      hdirt->SetFillStyle(3224);
+      hdirt->SetFillColorAlpha(kGray, 0.5);
+      hdirt->SetLineColor(kGray+2);
+      hdirt->SetLineWidth(1);
 
-		hstack[obschannel-1]->Add(houtFV);
-		legend[obschannel-1]->AddEntry(houtFV, Form("out FV, %.1f", houtFV->Integral()), "F");
-		houtFV->SetFillStyle(3224);
-		houtFV->SetFillColorAlpha(kOrange+1, 0.5);
-		houtFV->SetLineColor(kOrange+1);
-		houtFV->SetLineWidth(1);
+      hstack[obschannel-1]->Add(houtFV);
+      legend[obschannel-1]->AddEntry(houtFV, Form("out FV, %.1f", houtFV->Integral()), "F");
+      houtFV->SetFillStyle(3224);
+      houtFV->SetFillColorAlpha(kOrange+1, 0.5);
+      houtFV->SetLineColor(kOrange+1);
+      houtFV->SetLineWidth(1);
 
-		hstack[obschannel-1]->Add(hNCpi0inFV);
-		legend[obschannel-1]->AddEntry(hNCpi0inFV, Form("NC #pi^{0} in FV,  %.1f", hNCpi0inFV->Integral()), "F");
-		hNCpi0inFV->SetFillStyle(1001);
-		hNCpi0inFV->SetFillColorAlpha(38, 0.5);
-		hNCpi0inFV->SetLineColor(38);
-		hNCpi0inFV->SetLineWidth(1);
+      hstack[obschannel-1]->Add(hNCpi0inFV);
+      legend[obschannel-1]->AddEntry(hNCpi0inFV, Form("NC #pi^{0} in FV,  %.1f", hNCpi0inFV->Integral()), "F");
+      hNCpi0inFV->SetFillStyle(1001);
+      hNCpi0inFV->SetFillColorAlpha(38, 0.5);
+      hNCpi0inFV->SetLineColor(38);
+      hNCpi0inFV->SetLineWidth(1);
 
-		hstack[obschannel-1]->Add(hCCpi0inFV);
-		legend[obschannel-1]->AddEntry(hCCpi0inFV, Form("CC #pi^{0} in FV, %.1f", hCCpi0inFV->Integral()), "F");
-		hCCpi0inFV->SetFillStyle(1001);
-		hCCpi0inFV->SetFillColorAlpha(30, 0.5);
-		hCCpi0inFV->SetLineColor(30);
-		hCCpi0inFV->SetLineWidth(1);
+      hstack[obschannel-1]->Add(hCCpi0inFV);
+      legend[obschannel-1]->AddEntry(hCCpi0inFV, Form("CC #pi^{0} in FV, %.1f", hCCpi0inFV->Integral()), "F");
+      hCCpi0inFV->SetFillStyle(1001);
+      hCCpi0inFV->SetFillColorAlpha(30, 0.5);
+      hCCpi0inFV->SetLineColor(30);
+      hCCpi0inFV->SetLineWidth(1);
 
-		hstack[obschannel-1]->Add(hNCinFV);
-		legend[obschannel-1]->AddEntry(hNCinFV, Form("NC in FV, %.1f", hNCinFV->Integral()), "F");
-		hNCinFV->SetFillStyle(1001);
-		hNCinFV->SetFillColorAlpha(kOrange+1, 0.5);
-		hNCinFV->SetLineColor(kOrange+1);
-		hNCinFV->SetLineWidth(1);
+      hstack[obschannel-1]->Add(hNCinFV);
+      legend[obschannel-1]->AddEntry(hNCinFV, Form("NC in FV, %.1f", hNCinFV->Integral()), "F");
+      hNCinFV->SetFillStyle(1001);
+      hNCinFV->SetFillColorAlpha(kOrange+1, 0.5);
+      hNCinFV->SetLineColor(kOrange+1);
+      hNCinFV->SetLineWidth(1);
 
-		hstack[obschannel-1]->Add(hnumuCCinFV);
-		legend[obschannel-1]->AddEntry(hnumuCCinFV, Form("#nu_{#mu} CC in FV, %.1f", hnumuCCinFV->Integral()), "F");
-		hnumuCCinFV->SetFillStyle(1001);
-		hnumuCCinFV->SetFillColorAlpha(kAzure+6, 0.5);
-		hnumuCCinFV->SetLineColor(kAzure+6);
-		hnumuCCinFV->SetLineWidth(1);
+      hstack[obschannel-1]->Add(hnumuCCinFV);
+      legend[obschannel-1]->AddEntry(hnumuCCinFV, Form("#nu_{#mu} CC in FV, %.1f", hnumuCCinFV->Integral()), "F");
+      hnumuCCinFV->SetFillStyle(1001);
+      hnumuCCinFV->SetFillColorAlpha(kAzure+6, 0.5);
+      hnumuCCinFV->SetLineColor(kAzure+6);
+      hnumuCCinFV->SetLineWidth(1);
 
-		hstack[obschannel-1]->Add(hnueCCinFV);
-		legend[obschannel-1]->AddEntry(hnueCCinFV, Form("#nu_{e} CC in FV, %.1f", hnueCCinFV->Integral()), "F");
-		hnueCCinFV->SetFillStyle(1001);
-		hnueCCinFV->SetFillColorAlpha(kGreen+1, 0.5);
-		hnueCCinFV->SetLineColor(kGreen+1);
-		hnueCCinFV->SetLineWidth(1);
+      hstack[obschannel-1]->Add(hnueCCinFV);
+      legend[obschannel-1]->AddEntry(hnueCCinFV, Form("#nu_{e} CC in FV, %.1f", hnueCCinFV->Integral()), "F");
+      hnueCCinFV->SetFillStyle(1001);
+      hnueCCinFV->SetFillColorAlpha(kGreen+1, 0.5);
+      hnueCCinFV->SetLineColor(kGreen+1);
+      hnueCCinFV->SetLineWidth(1);
 
-		hstack[obschannel-1]->Add(hncpi0sig);
-		legend[obschannel-1]->AddEntry(hncpi0sig, Form("NC #pi^{0} 1#gamma, %.1f", hncpi0sig->Integral()), "F");
-		hncpi0sig->SetFillStyle(1001);
-		hncpi0sig->SetFillColorAlpha(kPink+1, 0.5);
-		hncpi0sig->SetLineColor(kPink+1);
-		hncpi0sig->SetLineWidth(1);
+      hstack[obschannel-1]->Add(hncpi0sig);
+      legend[obschannel-1]->AddEntry(hncpi0sig, Form("NC #pi^{0} 1#gamma, %.1f", hncpi0sig->Integral()), "F");
+      hncpi0sig->SetFillStyle(1001);
+      hncpi0sig->SetFillColorAlpha(kPink+1, 0.5);
+      hncpi0sig->SetLineColor(kPink+1);
+      hncpi0sig->SetLineWidth(1);
 
-		hstack[obschannel-1]->Add(hbkg);
-		legend[obschannel-1]->AddEntry(hbkg, Form("Overlay Background, %.1f", hbkg->Integral()), "F");
-		hncpi0sig->SetFillStyle(1001);
-		hncpi0sig->SetFillColorAlpha(kBlue+1, 0.5);
-		hncpi0sig->SetLineColor(kBlue+1);
-		hncpi0sig->SetLineWidth(1);
+      hstack[obschannel-1]->Add(hbkg);
+      legend[obschannel-1]->AddEntry(hbkg, Form("Overlay Background, %.1f", hbkg->Integral()), "F");
+      hncpi0sig->SetFillStyle(1001);
+      hncpi0sig->SetFillColorAlpha(kBlue+1, 0.5);
+      hncpi0sig->SetLineColor(kBlue+1);
+      hncpi0sig->SetLineWidth(1);
 
-		if(flag_leeexist) {
-		  hstack[obschannel-1]->Add(hLEE);
-		  legend[obschannel-1]->AddEntry(hLEE, Form("LEE, %.1f", hLEE->Integral()), "F");
-		  hLEE->SetFillStyle(1001);
-		  hLEE->SetFillColorAlpha(kMagenta, 0.5);
-		  hLEE->SetLineColor(kMagenta);
-		  hLEE->SetLineWidth(1);
-		}
+      if(flag_leeexist) {
+    	hstack[obschannel-1]->Add(hLEE);
+    	legend[obschannel-1]->AddEntry(hLEE, Form("LEE, %.1f", hLEE->Integral()), "F");
+    	hLEE->SetFillStyle(1001);
+    	hLEE->SetFillColorAlpha(kMagenta, 0.5);
+    	hLEE->SetLineColor(kMagenta);
+    	hLEE->SetLineWidth(1);
+      }
 
-		TH1F* hmc = (TH1F*)map_obsch_histos[obschannel].at(1)->Clone("hmc");
-		hmc->Draw("hist");
-		hmc->GetYaxis()->SetTitle("Event counts");
-		float mcymax = hmc->GetBinContent(hmc->GetMaximumBin());
-		float dataymax = hdata->GetBinContent(hdata->GetMaximumBin());
-		if(dataymax>mcymax) mcymax = dataymax;
-		hmc->SetMaximum(2.0*mcymax);
-		hmc->GetYaxis()->SetRangeUser(-0.02*mcymax, 1.6*mcymax);
-		hmc->SetLineColor(kBlack);
-		hmc->SetLineWidth(5);
-		hstack[obschannel-1]->Draw("hist same");
+      TH1F* hmc = (TH1F*)map_obsch_histos[obschannel].at(1)->Clone("hmc");
+      hmc->Draw("hist");
+      hmc->GetYaxis()->SetTitle("Event counts");
+      float mcymax = hmc->GetBinContent(hmc->GetMaximumBin());
+      float dataymax = hdata->GetBinContent(hdata->GetMaximumBin());
+      if(dataymax>mcymax) mcymax = dataymax;
+      hmc->SetMaximum(2.0*mcymax);
+      hmc->GetYaxis()->SetRangeUser(-0.02*mcymax, 1.6*mcymax);
+      hmc->SetLineColor(kBlack);
+      hmc->SetLineWidth(5);
+      hstack[obschannel-1]->Draw("hist same");
 
-		gratio_mc[obschannel-1] = new TGraphAsymmErrors();
-		gratio_data[obschannel-1] = new TGraphAsymmErrors();
-		float maxratio = 1.5;
-		for(int i=0; i<hdata->GetNbinsX(); i++)
-		{
-		  double x = hdata->GetBinCenter(i+1);
-		  double x_err = hdata->GetBinWidth(1)*0.5;
-		  double y = hdata->GetBinContent(i+1);
-		  double y_err = hdata->GetBinError(i+1);
-		  auto bayesError = cov.get_bayes_errors(y);
-		  double bayesError_low = bayesError.first;
-		  double bayesError_up = bayesError.second;
-		  double ymc = hmc->GetBinContent(i+1);
-		  double ymc_err = hmc->GetBinError(i+1);
-		  gr[obschannel-1]->SetPoint(i,x,y);
-		  gratio_mc[obschannel-1]->SetPoint(i,x,1);
-		  if(ymc!=0) {
-			gratio_data[obschannel-1]->SetPoint(i,x,y/ymc);
-			if(maxratio<y/ymc) maxratio = y/ymc;
-			gratio_mc[obschannel-1]->SetPointError(i, x_err, x_err, ymc_err/ymc, ymc_err/ymc);
-		  }
-		  else {
-			gratio_data[obschannel-1]->SetPoint(i, x, 10);     // invalid value
-			gratio_mc[obschannel-1]->SetPointError(i, x_err, x_err, 0, 0);
-		  }
-		  if(flag_err==2) {  //update data point errors
-			gr[obschannel-1]->SetPointError(i, x_err, x_err, bayesError_low, bayesError_up);
-			if(ymc!=0) gratio_data[obschannel-1]->SetPointError(i, x_err, x_err, bayesError_low/ymc, bayesError_up/ymc);
-			else gratio_data[obschannel-1]->SetPointError(i, x_err, x_err, 0, 0);
-		  }
-		  if(flag_err==1) {
-			gr[obschannel-1]->SetPointError(i, x_err, x_err, y_err, y_err);
-			if(ymc!=0) gratio_data[obschannel-1]->SetPointError(i, x_err, x_err, y_err/ymc, y_err/ymc);
-			else gratio_data[obschannel-1]->SetPointError(i, x_err, x_err, 0, 0);
-		  }
-		}
-		gr[obschannel-1]->Draw("P same");
-		gr[obschannel-1]->SetLineWidth(2);
-		gr[obschannel-1]->SetMarkerStyle(20);
-		gr[obschannel-1]->SetMarkerSize(1.5);
-		gr[obschannel-1]->SetLineColor(kBlack);
+      gratio_mc[obschannel-1] = new TGraphAsymmErrors();
+      gratio_data[obschannel-1] = new TGraphAsymmErrors();
+      float maxratio = 1.5;
+      for(int i=0; i<hdata->GetNbinsX(); i++)
+      {
+    	double x = hdata->GetBinCenter(i+1);
+    	double x_err = hdata->GetBinWidth(1)*0.5;
+    	double y = hdata->GetBinContent(i+1);
+    	double y_err = hdata->GetBinError(i+1);
+    	auto bayesError = cov.get_bayes_errors(y);
+    	double bayesError_low = bayesError.first;
+    	double bayesError_up = bayesError.second;
+    	double ymc = hmc->GetBinContent(i+1);
+    	double ymc_err = hmc->GetBinError(i+1);
+    	gr[obschannel-1]->SetPoint(i,x,y);
+    	gratio_mc[obschannel-1]->SetPoint(i,x,1);
+    	if(ymc!=0) {
+    	  gratio_data[obschannel-1]->SetPoint(i,x,y/ymc);
+    	  if(maxratio<y/ymc) maxratio = y/ymc;
+    	  gratio_mc[obschannel-1]->SetPointError(i, x_err, x_err, ymc_err/ymc, ymc_err/ymc);
+    	}
+    	else {
+    	  gratio_data[obschannel-1]->SetPoint(i, x, 10);                       // invalid value
+    	  gratio_mc[obschannel-1]->SetPointError(i, x_err, x_err, 0, 0);
+    	}
+    	if(flag_err==2) {                //update data point errors
+    	  gr[obschannel-1]->SetPointError(i, x_err, x_err, bayesError_low, bayesError_up);
+    	  if(ymc!=0) gratio_data[obschannel-1]->SetPointError(i, x_err, x_err, bayesError_low/ymc, bayesError_up/ymc);
+    	  else gratio_data[obschannel-1]->SetPointError(i, x_err, x_err, 0, 0);
+    	}
+    	if(flag_err==1) {
+    	  gr[obschannel-1]->SetPointError(i, x_err, x_err, y_err, y_err);
+    	  if(ymc!=0) gratio_data[obschannel-1]->SetPointError(i, x_err, x_err, y_err/ymc, y_err/ymc);
+    	  else gratio_data[obschannel-1]->SetPointError(i, x_err, x_err, 0, 0);
+    	}
+      }
+      gr[obschannel-1]->Draw("P same");
+      gr[obschannel-1]->SetLineWidth(2);
+      gr[obschannel-1]->SetMarkerStyle(20);
+      gr[obschannel-1]->SetMarkerSize(1.5);
+      gr[obschannel-1]->SetLineColor(kBlack);
 
-		//legend[obschannel-1]->SetFillStyle(0);
-		legend[obschannel-1]->SetHeader(Form("#SigmaDATA/#Sigma(MC+EXT)=%.2f", hdata->Integral()/hmc->Integral()), "C");
-		legend[obschannel-1]->Draw();
-		pad2->cd();
-		gratio_mc[obschannel-1]->Draw("a2");
-		gratio_mc[obschannel-1]->SetFillColor(kGray);
-		gratio_mc[obschannel-1]->GetYaxis()->SetRangeUser(0,int(1.5*maxratio));
-		gratio_mc[obschannel-1]->GetXaxis()->SetRangeUser(hmc->GetXaxis()->GetXmin(),hmc->GetXaxis()->GetXmax());
-		gratio_mc[obschannel-1]->GetYaxis()->SetTitle("Data/Pred");
-		gratio_mc[obschannel-1]->GetYaxis()->SetTitleOffset(0.5);
-		if(obschannel>=5) //hard coded at this moment
-		{
-		  gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco #pi^{0} mass [MeV]");
-		}
-		else gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco neutrino energy [MeV]");
-		gratio_mc[obschannel-1]->GetXaxis()->SetTitleSize(0.1);
-		gratio_mc[obschannel-1]->GetXaxis()->SetLabelSize(0.1);
-		gratio_mc[obschannel-1]->GetYaxis()->SetTitleSize(0.1);
-		gratio_mc[obschannel-1]->GetYaxis()->SetTitleOffset(0.35);
-		gratio_mc[obschannel-1]->GetYaxis()->SetLabelSize(0.1);
-		gratio_data[obschannel-1]->Draw("P same");
-		gratio_data[obschannel-1]->SetLineWidth(2);
-		gratio_data[obschannel-1]->SetMarkerStyle(20);
-		gratio_data[obschannel-1]->SetMarkerSize(1.5);
-		gratio_data[obschannel-1]->SetLineColor(kBlack);
+      //legend[obschannel-1]->SetFillStyle(0);
+      legend[obschannel-1]->SetHeader(Form("#SigmaDATA/#Sigma(MC+EXT)=%.2f", hdata->Integral()/hmc->Integral()), "C");
+      legend[obschannel-1]->Draw();
+      pad2->cd();
+      gratio_mc[obschannel-1]->Draw("a2");
+      gratio_mc[obschannel-1]->SetFillColor(kGray);
+      gratio_mc[obschannel-1]->GetYaxis()->SetRangeUser(0,int(1.5*maxratio));
+      gratio_mc[obschannel-1]->GetXaxis()->SetRangeUser(hmc->GetXaxis()->GetXmin(),hmc->GetXaxis()->GetXmax());
+      gratio_mc[obschannel-1]->GetYaxis()->SetTitle("Data/Pred");
+      gratio_mc[obschannel-1]->GetYaxis()->SetTitleOffset(0.5);
+      if(obschannel>=5)               //hard coded at this moment
+      {
+    	gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco #pi^{0} mass [MeV]");
+      }
+      else gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco neutrino energy [MeV]");
+      gratio_mc[obschannel-1]->GetXaxis()->SetTitleSize(0.1);
+      gratio_mc[obschannel-1]->GetXaxis()->SetLabelSize(0.1);
+      gratio_mc[obschannel-1]->GetYaxis()->SetTitleSize(0.1);
+      gratio_mc[obschannel-1]->GetYaxis()->SetTitleOffset(0.35);
+      gratio_mc[obschannel-1]->GetYaxis()->SetLabelSize(0.1);
+      gratio_data[obschannel-1]->Draw("P same");
+      gratio_data[obschannel-1]->SetLineWidth(2);
+      gratio_data[obschannel-1]->SetMarkerStyle(20);
+      gratio_data[obschannel-1]->SetMarkerSize(1.5);
+      gratio_data[obschannel-1]->SetLineColor(kBlack);
 
-		TH1F* hist = (TH1F*)hdata->Clone("hist");
-		hist->Reset();
-		hist->Draw("axis same");
+      TH1F* hist = (TH1F*)hdata->Clone("hist");
+      hist->Reset();
+      hist->Draw("axis same");
 
-		TLine* line = new TLine(hmc->GetXaxis()->GetXmin(),1,hmc->GetXaxis()->GetXmax(),1);
-		line->Draw();
-		line->SetLineWidth(2);
-		line->SetLineStyle(kDashed);
-		legend2[obschannel-1] = new TLegend(0.2, 0.7, 0.8, 0.95);
-		legend2[obschannel-1]->SetNColumns(2);
-		legend2[obschannel-1]->AddEntry(gratio_mc[obschannel-1],"Pred stat. uncertainty (Bayesian)", "F");
-		legend2[obschannel-1]->AddEntry(gratio_data[obschannel-1],"Data stat. uncertainty (Bayesian)", "lp");
-		legend2[obschannel-1]->SetTextSize(0.06);
-		legend2[obschannel-1]->SetFillStyle(0);
-		legend2[obschannel-1]->Draw();
+      TLine* line = new TLine(hmc->GetXaxis()->GetXmin(),1,hmc->GetXaxis()->GetXmax(),1);
+      line->Draw();
+      line->SetLineWidth(2);
+      line->SetLineStyle(kDashed);
+      legend2[obschannel-1] = new TLegend(0.2, 0.7, 0.8, 0.95);
+      legend2[obschannel-1]->SetNColumns(2);
+      legend2[obschannel-1]->AddEntry(gratio_mc[obschannel-1],"Pred stat. uncertainty (Bayesian)", "F");
+      legend2[obschannel-1]->AddEntry(gratio_data[obschannel-1],"Data stat. uncertainty (Bayesian)", "lp");
+      legend2[obschannel-1]->SetTextSize(0.06);
+      legend2[obschannel-1]->SetFillStyle(0);
+      legend2[obschannel-1]->Draw();
 
-		if(obschannel==1) canvas[obschannel-1]->Print("selection.pdf(");
-		else if(obschannel==nchannels) canvas[obschannel-1]->Print("selection.pdf)");
-		else canvas[obschannel-1]->Print("selection.pdf");
-	  }
+      if(obschannel==1) canvas[obschannel-1]->Print("selection.pdf(");
+      else if(obschannel==nchannels) canvas[obschannel-1]->Print("selection.pdf)");
+      else canvas[obschannel-1]->Print("selection.pdf");
+    }
 	  theApp.Run();
 	} // flag_breakdown end
   }
