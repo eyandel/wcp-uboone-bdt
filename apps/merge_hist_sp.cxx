@@ -1131,6 +1131,7 @@ int main( int argc, char** argv )
 	//Erin
 	//timing/scaling covariance matrix
 	TMatrixD* mat_time_cov = cov.get_mat_collapse();
+  int time_start_bin = 0;
 	//
 
 	std::map<int, TH1F*> map_covch_histo;
@@ -1169,6 +1170,7 @@ int main( int argc, char** argv )
     for (size_t j=0; j<time_errors_per_bin.at(i).size(); j++){
 		  (*mat_time_cov)(start_bin + j, start_bin + j) += time_errors_per_bin.at(i).at(j);
     }
+    time_start_bin += time_errors_per_bin.at(i).size();
     //
 
 		//	std::cout << obsch << " " << bayes_inputs.size() << " " << bayes_inputs.at(0).size() << " " << i << " " << covch << " " << start_bin << std::endl;
