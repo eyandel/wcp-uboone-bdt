@@ -1167,10 +1167,10 @@ int main( int argc, char** argv )
 		  //  std::cout << obsch << " " << i << " " << start_bin + j << " " <<  std::get<4>(bayes_inputs.at(i).at(j)) << std::endl;
 		}
     //Erin
-    for (size_t j=0; j<time_errors_per_bin.at(i).size(); j++){
-		  (*mat_time_cov)(time_start_bin + j, time_start_bin + j) += time_errors_per_bin.at(i).at(j);
+    for (size_t j=0; j<time_errors_per_bin.at(i-1).size(); j++){
+		  (*mat_time_cov)(time_start_bin + j, time_start_bin + j) += time_errors_per_bin.at(i-1).at(j);
     }
-    time_start_bin += time_errors_per_bin.at(i).size();
+    time_start_bin += time_errors_per_bin.at(i-1).size();
     //
 
 		//	std::cout << obsch << " " << bayes_inputs.size() << " " << bayes_inputs.at(0).size() << " " << i << " " << covch << " " << start_bin << std::endl;
