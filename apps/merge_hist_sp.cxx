@@ -267,7 +267,7 @@ int main( int argc, char** argv )
 
     std::vector<double> time_errors_temp;
 
-    for(int i=0; i<hdata->GetNbinsX()+1; i++)
+    for(int i=0; i<=hdata->GetNbinsX()+1; i++)
     {
       //fill time errors per bin
       double ext_err = (hext->GetBinContent(i+1)/map_cos_period_time_weight[run])*map_cos_period_time_weight_err[run];
