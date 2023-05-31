@@ -1166,16 +1166,16 @@ int main( int argc, char** argv )
 		  //	  if (std::get<4>(bayes_inputs.at(i).at(j)) > 0)
 		  //  std::cout << obsch << " " << i << " " << start_bin + j << " " <<  std::get<4>(bayes_inputs.at(i).at(j)) << std::endl;
 		}
-    //Erin
-    for (size_t j=0; j<time_errors_per_bin.at(i-1).size(); j++){
-		  (*mat_time_cov)(time_start_bin + j, time_start_bin + j) += time_errors_per_bin.at(i-1).at(j);
-    }
-    time_start_bin += time_errors_per_bin.at(i-1).size();
-    //
 
 		//	std::cout << obsch << " " << bayes_inputs.size() << " " << bayes_inputs.at(0).size() << " " << i << " " << covch << " " << start_bin << std::endl;
 		//  break;
 	  }
+    //Erin
+    for (size_t j=0; j<time_errors_per_bin.at(obsch-1).size(); j++){
+		  (*mat_time_cov)(time_start_bin + j, time_start_bin + j) += time_errors_per_bin.at(obsch-1).at(j);
+    }
+    time_start_bin += time_errors_per_bin.at(obsch-1).size();
+    //
 	}
 
 	//for (auto it = map_name_histogram.begin(); it != map_name_histogram.end(); it++){
