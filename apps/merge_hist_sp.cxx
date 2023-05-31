@@ -1168,7 +1168,7 @@ int main( int argc, char** argv )
 		}
     //Erin
     for (size_t j=0; j<time_errors_per_bin.at(i).size(); j++){
-		  (*mat_time_cov)(start_bin + j, start_bin + j) += time_errors_per_bin.at(i).at(j);
+		  (*mat_time_cov)(time_start_bin + j, time_start_bin + j) += time_errors_per_bin.at(i).at(j);
     }
     time_start_bin += time_errors_per_bin.at(i).size();
     //
