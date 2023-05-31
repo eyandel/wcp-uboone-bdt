@@ -1130,7 +1130,7 @@ int main( int argc, char** argv )
 	TMatrixD* mat_add_cov = cov.get_add_cov_matrix();
 	//Erin
 	//timing/scaling covariance matrix
-	TMatrixD* mat_time_cov = cov.get_add_cov_matrix();
+	TMatrixD* mat_time_cov = cov.get_mat_collapse();
 	//
 
 	std::map<int, TH1F*> map_covch_histo;
