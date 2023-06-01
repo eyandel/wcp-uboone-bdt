@@ -51,11 +51,11 @@ LEEana::CovMatrix::CovMatrix(TString cov_filename, TString cv_filename, TString 
   std::ifstream infile_time(time_filename);
   if(infile_time.is_open()){
     while(!infile_time.eof()){
-      int run = -1;
-      double eff = 1.0;
-      double eff_err = 0.0;
-      double rej = 0.0;
-      double rej_err = 0.0;
+      int run;
+      double eff;
+      double eff_err;
+      double rej;
+      double rej_err;
       //reads the time weights and errors per run
       std::string line;
       std::getline(infile_time, line);
