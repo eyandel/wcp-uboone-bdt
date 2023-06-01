@@ -85,22 +85,22 @@ int main( int argc, char** argv )
   std::vector<std::vector<double>> time_errors_per_bin;
 
 
-  //temporary hard code of weights
-  map_mc_period_time_weight[1] = 0.88;
-  map_mc_period_time_weight[2] = 0.88;
-  map_mc_period_time_weight[3] = 0.845;
+  //get scaling weights and errors
+  map_mc_period_time_weight[1] = std::get<0>(cov.get_time_info(1));
+  map_mc_period_time_weight[2] = std::get<0>(cov.get_time_info(2));
+  map_mc_period_time_weight[3] = std::get<0>(cov.get_time_info(3));
 
-  map_mc_period_time_weight_err[1] = 0.014;
-  map_mc_period_time_weight_err[2] = 0.014;
-  map_mc_period_time_weight_err[3] = 0.017;
+  map_mc_period_time_weight_err[1] = std::get<1>(cov.get_time_info(1));
+  map_mc_period_time_weight_err[2] = std::get<1>(cov.get_time_info(2));
+  map_mc_period_time_weight_err[3] = std::get<1>(cov.get_time_info(3));
 
-  map_cos_period_time_weight[1] = 1.0 - 0.66;
-  map_cos_period_time_weight[2] = 1.0 - 0.66;
-  map_cos_period_time_weight[3] = 1.0 - 0.68;
+  map_cos_period_time_weight[1] = 1.0 - std::get<2>(cov.get_time_info(1));
+  map_cos_period_time_weight[2] = 1.0 - std::get<2>(cov.get_time_info(2));
+  map_cos_period_time_weight[3] = 1.0 - std::get<2>(cov.get_time_info(3));
 
-  map_cos_period_time_weight_err[1] = 0.05;
-  map_cos_period_time_weight_err[2] = 0.05;
-  map_cos_period_time_weight_err[3] = 0.06;
+  map_cos_period_time_weight_err[1] = std::get<3>(cov.get_time_info(1));
+  map_cos_period_time_weight_err[2] = std::get<3>(cov.get_time_info(2));
+  map_cos_period_time_weight_err[3] = std::get<3>(cov.get_time_info(3));
   //
 
   // open all the histograms ...

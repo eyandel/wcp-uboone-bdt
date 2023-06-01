@@ -24,7 +24,7 @@
 namespace LEEana{
   class CovMatrix{
   public:
-    CovMatrix(TString cov_filename = "./configurations/cov_input.txt", TString cv_filename = "./configurations/cv_input.txt", TString file_filename = "./configurations/file_ch.txt", TString rw_filename = "./configurations/rw_cv_input.txt");
+    CovMatrix(TString cov_filename = "./configurations/cov_input.txt", TString cv_filename = "./configurations/cv_input.txt", TString file_filename = "./configurations/file_ch.txt", TString rw_filename = "./configurations/rw_cv_input.txt", TString time_filename = "./configurations/time_input.txt");
     ~CovMatrix();
 
     void add_xs_config(TString xs_ch_filename = "./configurations/xs_ch.txt", TString xs_real_bin_filename = "./configurations/xs_real_bin.txt");
@@ -156,6 +156,13 @@ namespace LEEana{
       return rw_info;
     };
 
+    //Erin 
+    //get ns time scaling info 
+    std::tuple< double, double, double, double > get_time_info(int run){
+      return time_info[run];
+    };
+    //
+
   private:
     TGraph *gl, *gh;
     int g_llimit, g_hlimit;
@@ -264,6 +271,9 @@ namespace LEEana{
     // special weights ...
     bool flag_spec_weights;
     std::vector<std::vector<float> > spec_weights;
+
+    //ns time scaling weights
+    std::map< int, std::tuple<double, double, double, double >> time_info;
 
   };
 }

@@ -43,8 +43,30 @@ float leeweight(float Enu)
 #include "mcm_data_stat.h"
 #include "mcm_pred_stat.h"
 
-LEEana::CovMatrix::CovMatrix(TString cov_filename, TString cv_filename, TString file_filename, TString rw_filename){
+LEEana::CovMatrix::CovMatrix(TString cov_filename, TString cv_filename, TString file_filename, TString rw_filename, TString time_filename){
   flag_osc = false;
+
+  //Erin
+  //read in timing scaling file
+  std::ifstream infile_time(time_filename);
+  if(infile_time.is_open()){
+    while(!infile_time.eof()){
+      int run = -1;
+      double eff = 1.0;
+      double eff_err = 0.0;
+      double rej = 0.0;
+      double rej_err = 0.0;
+      //reads the time weights and errors per run
+      std::string line;
+      std::getline(infile_time, line);
+      while(line.empty()) {std::getline(infile_time, line);}
+      if(line == -1) break;
+      std::istringstream iss(line);
+      iss >> run >> eff >> eff_err >> rej >> rej_err;
+      time_info[run] = std::make_tuple(eff, eff_err, rej, rej_err);
+    }
+  }
+  //
 
   rw_type = 0;
   flag_reweight = false;
