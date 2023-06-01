@@ -849,7 +849,7 @@ void LEEana::CovMatrix::fill_det_histograms(std::map<TString, TH1D*> map_filenam
 
     }
     std::get<2>(vec_events.at(i)) *= osc_weight;
-    double reweight = get_weight("add_weight", eval_cv, pfeval_cv, kine_cv, tagger_cv, get_rw_info());//automatically 1 if reweighting is not applied
+    double reweight = get_weight("add_weight", eval_cv, pfeval_cv, kine_cv, tagger_cv, get_rw_info(), get_time_info_allruns());//automatically 1 if reweighting is not applied
     std::get<2>(vec_events.at(i)) *= reweight;
 
 

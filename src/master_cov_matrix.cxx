@@ -57,11 +57,6 @@ LEEana::CovMatrix::CovMatrix(TString cov_filename, TString cv_filename, TString 
       double rej;
       double rej_err;
       //reads the time weights and errors per run
-      //std::string line;
-      //std::getline(infile_time, line);
-      //while(line.empty()) {std::getline(infile_time, line);}
-      //if(line == "end") break;
-      //std::istringstream iss(line);
       infile_time >> run >> eff >> eff_err >> rej >> rej_err;
       if(run == -1) break;
       time_info[run] = std::make_tuple(eff, eff_err, rej, rej_err);
@@ -1909,7 +1904,7 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
     std::get<0>(event_info) = eval.weight_cv * eval.weight_spline;
     std::get<1>(event_info) = leeweight(eval.truth_nuEnergy);
 
-    double reweight = get_weight("add_weight", eval, pfeval, kine, tagger, get_rw_info());//automatically 1 if reweighting is not applied
+    double reweight = get_weight("add_weight", eval, pfeval, kine, tagger, get_rw_info(), get_time_info_allruns());//automatically 1 if reweighting is not applied
     std::get<0>(event_info) *= reweight;
 
      for (auto it = histo_infos.begin(); it != histo_infos.end(); it++){
@@ -2042,7 +2037,7 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
       }else if (option == "reweight"){
         std::get<2>(event_info).resize(1000);
         std::get<3>(event_info).push_back(1000);
-        if(!(flag_reweight)) reweight = get_weight("add_weight", eval, pfeval, kine, tagger, get_rw_info(true));
+        if(!(flag_reweight)) reweight = get_weight("add_weight", eval, pfeval, kine, tagger, get_rw_info(true), get_time_info_allruns());
         for (size_t j=0;j!=1000;j++){
           if(flag_reweight){
             if (eval.weight_cv>0 && reweight!=1){
@@ -2066,7 +2061,7 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
             std::get<2>(event_info).at(0) = 0;
           }
         }else{
-           reweight = get_weight("add_weight", eval, pfeval, kine, tagger, get_rw_info(true));
+           reweight = get_weight("add_weight", eval, pfeval, kine, tagger, get_rw_info(true) , get_time_info_allruns());
            std::get<2>(event_info).at(0) = reweight-1;
         }
       }else if (option == "UBGenieFluxSmallUni"){
@@ -2085,7 +2080,7 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
         if(rw_type==3){
           std::get<2>(event_info).resize(acc_no+1000);
           std::get<3>(event_info).push_back(1000);
-          if(!(flag_reweight)) reweight = get_weight("add_weight", eval, pfeval, kine, tagger, get_rw_info(true));
+          if(!(flag_reweight)) reweight = get_weight("add_weight", eval, pfeval, kine, tagger, get_rw_info(true), get_time_info_allruns());
           for (size_t j=0;j!=1000;j++){
             if(flag_reweight){
               if (eval.weight_cv>0 && reweight!=1){
@@ -2109,7 +2104,7 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
               std::get<2>(event_info).at(acc_no) = 0;
             }
           }else{
-             reweight = get_weight("add_weight", eval, pfeval, kine, tagger, get_rw_info(true));
+             reweight = get_weight("add_weight", eval, pfeval, kine, tagger, get_rw_info(true), get_time_info_allruns());
              std::get<2>(event_info).at(acc_no) = reweight-1;
           }
           acc_no++;

@@ -375,7 +375,7 @@ int main( int argc, char** argv )
 
       // std::cout << weight << std::endl;
       // get weight ...
-      double weight_val = get_weight(weight, eval, pfeval, kine, tagger, cov.get_rw_info(), flag_data);
+      double weight_val = get_weight(weight, eval, pfeval, kine, tagger, cov.get_rw_info(), cov.get_time_info_allruns() ,flag_data);
 
       if (flag_osc && cov.is_osc_channel(ch_name) && (!flag_data)){
 	osc_weight = cov.get_osc_weight(eval, pfeval);

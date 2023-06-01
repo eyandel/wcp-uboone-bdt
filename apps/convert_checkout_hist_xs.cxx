@@ -329,7 +329,7 @@ int main( int argc, char** argv )
 
       if (!((signal_bin != -1) || flag_pass)) continue;
       // get weight ...
-      double weight_val = get_weight(weight, eval, pfeval, kine, tagger, cov.get_rw_info(), flag_data);
+      double weight_val = get_weight(weight, eval, pfeval, kine, tagger, cov.get_rw_info(), cov.get_time_info_allruns(), flag_data);
 
       //  if (ch_name == "numuCC_signal_Enu_FC_overlay" && weight == "cv_spline") std::cout << "Xin: " << " " << flag_pass << " " << signal_bin << " " << weight_val << " " <<eval.run << " " << eval.subrun << " " << eval.event << std::endl;
 

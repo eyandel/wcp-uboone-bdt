@@ -161,6 +161,10 @@ namespace LEEana{
     std::tuple< double, double, double, double > get_time_info(int run){
       return time_info[run];
     };
+
+    std::map<int, std::tuple< double, double, double, double > > get_time_info_allruns(){
+      return time_info;
+    };
     //
 
   private:

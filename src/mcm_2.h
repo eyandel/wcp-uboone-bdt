@@ -910,7 +910,7 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
     // apply oscillation ...
     std::get<0>(event_info) *= osc_weight;
     //apply reweight
-    double reweight = get_weight("add_weight", eval, pfeval, kine, tagger, get_rw_info());//automatically 1 if reweighting is not applied
+    double reweight = get_weight("add_weight", eval, pfeval, kine, tagger, get_rw_info(), get_time_info_allruns());//automatically 1 if reweighting is not applied
     std::get<0>(event_info) *= reweight;
 
 
@@ -1091,7 +1091,7 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
       }else if (option == "reweight"){
         std::get<2>(event_info).resize(1000);
         std::get<3>(event_info).push_back(1000);
-        if(!(flag_reweight)) reweight = get_weight("add_weight", eval, pfeval, kine, tagger, get_rw_info(true));
+        if(!(flag_reweight)) reweight = get_weight("add_weight", eval, pfeval, kine, tagger, get_rw_info(true), get_time_info_allruns());
         for (size_t j=0;j!=1000;j++){
           if(flag_reweight){
             if (eval.weight_cv>0 && reweight!=1){
@@ -1115,7 +1115,7 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
             std::get<2>(event_info).at(0) = 0;
           }
         }else{
-           reweight = get_weight("add_weight", eval, pfeval, kine, tagger, get_rw_info(true));
+           reweight = get_weight("add_weight", eval, pfeval, kine, tagger, get_rw_info(true), get_time_info_allruns());
            std::get<2>(event_info).at(0) = reweight-1;
         }
 

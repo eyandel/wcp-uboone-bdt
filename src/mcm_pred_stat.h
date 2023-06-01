@@ -868,7 +868,7 @@ void LEEana::CovMatrix::get_pred_events_info(TString input_filename, std::map<TS
     }
     if (!flag_data){
       std::get<2>(vec_events.at(i)) *= osc_weight;
-      std::get<2>(vec_events.at(i)) *= get_weight("add_weight", eval, pfeval, kine, tagger, get_rw_info());
+      std::get<2>(vec_events.at(i)) *= get_weight("add_weight", eval, pfeval, kine, tagger, get_rw_info(), get_time_info_allruns());
     }
 }
 
