@@ -284,9 +284,9 @@ for (int i_time = 0; i_time<num_runs; i_time++){
     for(int i=1; i<=hdata->GetNbinsX()+1; i++)
     {
       //fill time errors per bin
-      double ext_err = (hext->GetBinContent(i)/map_cos_period_time_weight[run])*map_cos_period_time_weight_err[run];
-      double cos_err = (hbadmatch->GetBinContent(i)/map_cos_period_time_weight[run])*map_cos_period_time_weight_err[run];
-      double mc_err = ((hmc->GetBinContent(i)-hext->GetBinContent(i)-hbadmatch->GetBinContent(i))/map_mc_period_time_weight[run])*map_mc_period_time_weight_err[run];
+      double ext_err = (hext->GetBinContent(i)/map_cos_period_time_weight[time_period])*map_cos_period_time_weight_err[time_period];
+      double cos_err = (hbadmatch->GetBinContent(i)/map_cos_period_time_weight[time_period])*map_cos_period_time_weight_err[time_period];
+      double mc_err = ((hmc->GetBinContent(i)-hext->GetBinContent(i)-hbadmatch->GetBinContent(i))/map_mc_period_time_weight[time_period])*map_mc_period_time_weight_err[time_period];
       if (map_channel_nstime[obschannel]){
         time_errors_temp.push_back(mc_err+ext_err+cos_err);
         cout<<"Time error: "<<mc_err+ext_err+cos_err<<endl;
