@@ -83,6 +83,8 @@ int main( int argc, char** argv )
   std::map<int, double> map_cos_period_time_weight_err;
   //arrays for timing errors
   std::vector<std::vector<double>> time_errors_per_bin;
+  //map for data period to hists 
+  std::map<TString, int> map_name_period;
 
 
   //get scaling weights and errors
@@ -137,6 +139,9 @@ int main( int argc, char** argv )
 	  //      temp_histograms.push_back(htemp);
 	  map_name_histogram[std::get<0>(all_histo_infos.at(i))] = std::make_pair(htemp, pot);
 
+	  //Erin 
+	  map_name_period[std::get<0>(all_histo_infos.at(i))] = period;
+	  //
 
 	}
   }
@@ -210,15 +215,33 @@ int main( int argc, char** argv )
 	}
   }
 
+  //Erin
+  //get timing errors for each run separately
+  int num_runs = 1;
+  if (run==0){
+  	num_runs = 3;
+  }
 
+for (int i_time = 0; i_time<num_runs; i_time++){
+	int time_period = run;
+	if (run == 0){ time_period = i_time + 1; }
+	// create histograms for data, create histograms for predictions
+  // obsch --> histograms (data, prediction, prediction_err2
+  std::map<int, std::vector<TH1F*> > map_obsch_histos_time;
+  // obsch --> break down histograms (truth label: add_cut) prediction
+  std::map<int, std::vector<TH1F*> > map_obsch_subhistos_time;
+  // Bayesian error needed ...
+  // obsch --> bin with overflow bin --> vector of all channels (merge certain channels) --> mean and err2
+  std::map<int, std::vector< std::vector< std::tuple<double, double, double, int, double> > > > map_obsch_bayes_time;
+  std::map<int, std::vector< std::vector< std::tuple<double, double, double, int, double> > > > map_obsch_infos_time;
 
-  // get data histograms ...
-  cov.fill_data_histograms(run, map_obsch_histos, map_name_histogram);
+// get data histograms ...
+  cov.fill_data_histograms(time_period, map_obsch_histos_time, map_name_histogram);
 
 
 
   // get predictions and its uncertainties ...,
-  cov.fill_pred_histograms(run, map_obsch_histos, map_obsch_bayes, map_obsch_infos, map_name_histogram, lee_strength, map_data_period_pot, flag_breakdown, map_obsch_subhistos);
+  cov.fill_pred_histograms(time_period, map_obsch_histos_time, map_obsch_bayes_time, map_obsch_infos_time, map_name_histogram, lee_strength, map_data_period_pot, flag_breakdown, map_obsch_subhistos_time);
 
   /* for (auto it = map_obsch_subhistos.begin(); it!= map_obsch_subhistos.end(); it++){ */
   /*         for(size_t i=0; i<it->second.size(); i++){ */
@@ -227,7 +250,7 @@ int main( int argc, char** argv )
   /* } */
 
 
-  //Erin
+
   //get ns timing errors
   for(auto it = map_obsch_subhistos.begin(); it!= map_obsch_subhistos.end(); it++) {
     int obschannel = it->first;
@@ -280,9 +303,30 @@ int main( int argc, char** argv )
         time_errors_temp.push_back(0.0);
       }
     }
-    time_errors_per_bin.push_back(time_errors_temp);
+	if(i_time==0){
+    	time_errors_per_bin.push_back(time_errors_temp);
+	}else{
+		for (int i_b = 0; i_b<time_errors_temp.size(); i_b++){
+			time_errors_per_bin.at(obschannel).at(i_b)+=time_errors_temp.at(i_b);
+		}
+	}
   }
+}
   //
+
+  // get data histograms ...
+  cov.fill_data_histograms(run, map_obsch_histos, map_name_histogram);
+
+
+
+  // get predictions and its uncertainties ...,
+  cov.fill_pred_histograms(run, map_obsch_histos, map_obsch_bayes, map_obsch_infos, map_name_histogram, lee_strength, map_data_period_pot, flag_breakdown, map_obsch_subhistos);
+
+  /* for (auto it = map_obsch_subhistos.begin(); it!= map_obsch_subhistos.end(); it++){ */
+  /*         for(size_t i=0; i<it->second.size(); i++){ */
+  /*             std::cout<<"DEBUG2: "<<it->first<<": "<<map_obsch_subhistos[it->first].at(i)->GetName()<<std::endl; */
+  /*         } */
+  /* } */
 
 
   // get Bayesian errrors ...
