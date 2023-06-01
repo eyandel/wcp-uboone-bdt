@@ -1,5 +1,5 @@
 1       0.88                    0.014               0.66                0.05
 2       0.88                    0.014               0.66                0.05
 3       0.845                   0.017               0.68                0.06
-end      -1                      -1                  -1                  -1   
+-1      -1                      -1                  -1                  -1   
 #run    #neutrino efficiency    #efficiency error   #cosmic rejection   #rejection error 

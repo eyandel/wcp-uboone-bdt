@@ -57,12 +57,13 @@ LEEana::CovMatrix::CovMatrix(TString cov_filename, TString cv_filename, TString 
       double rej;
       double rej_err;
       //reads the time weights and errors per run
-      std::string line;
-      std::getline(infile_time, line);
-      while(line.empty()) {std::getline(infile_time, line);}
-      if(line == "end") break;
-      std::istringstream iss(line);
-      iss >> run >> eff >> eff_err >> rej >> rej_err;
+      //std::string line;
+      //std::getline(infile_time, line);
+      //while(line.empty()) {std::getline(infile_time, line);}
+      //if(line == "end") break;
+      //std::istringstream iss(line);
+      infile_time >> run >> eff >> eff_err >> rej >> rej_err;
+      if(run == -1) break;
       time_info[run] = std::make_tuple(eff, eff_err, rej, rej_err);
     }
   }
