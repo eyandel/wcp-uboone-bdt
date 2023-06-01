@@ -215,7 +215,7 @@ int main( int argc, char** argv )
   if (run==0){
   	num_runs = 3;
   }
-cout<<"218"<<endl;
+
 for (int i_time = 0; i_time<num_runs; i_time++){
 	int time_period = run;
 	if (run == 0){ time_period = i_time + 1; }
@@ -228,15 +228,15 @@ for (int i_time = 0; i_time<num_runs; i_time++){
   // obsch --> bin with overflow bin --> vector of all channels (merge certain channels) --> mean and err2
   std::map<int, std::vector< std::vector< std::tuple<double, double, double, int, double> > > > map_obsch_bayes_time;
   std::map<int, std::vector< std::vector< std::tuple<double, double, double, int, double> > > > map_obsch_infos_time;
-
+cout<<"231"<<endl;
 // get data histograms ...
   cov.fill_data_histograms(time_period, map_obsch_histos_time, map_name_histogram);
-
+cout<<"234"<<endl;
 
 
   // get predictions and its uncertainties ...,
   cov.fill_pred_histograms(time_period, map_obsch_histos_time, map_obsch_bayes_time, map_obsch_infos_time, map_name_histogram, lee_strength, map_data_period_pot, flag_breakdown, map_obsch_subhistos_time);
-
+cout<<"239"<<endl;
   /* for (auto it = map_obsch_subhistos.begin(); it!= map_obsch_subhistos.end(); it++){ */
   /*         for(size_t i=0; i<it->second.size(); i++){ */
   /*             std::cout<<"DEBUG2: "<<it->first<<": "<<map_obsch_subhistos[it->first].at(i)->GetName()<<std::endl; */
@@ -271,7 +271,7 @@ for (int i_time = 0; i_time<num_runs; i_time++){
         }
       }
     }
-
+cout<<"274"<<endl;
     float datapot = 0;
     if(run == 0) {
     for(auto it=map_data_period_pot.begin(); it!=map_data_period_pot.end(); it++)
