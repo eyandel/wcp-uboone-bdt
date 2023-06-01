@@ -298,7 +298,7 @@ for (int i_time = 0; i_time<num_runs; i_time++){
     	time_errors_per_bin.push_back(time_errors_temp);
 	}else{
 		for (int i_b = 0; i_b<time_errors_temp.size(); i_b++){
-			time_errors_per_bin.at(obschannel).at(i_b)+=time_errors_temp.at(i_b);
+			time_errors_per_bin.at(obschannel-1).at(i_b)+=time_errors_temp.at(i_b);
 		}
 	}
   }
