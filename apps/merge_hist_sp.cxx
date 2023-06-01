@@ -139,10 +139,6 @@ int main( int argc, char** argv )
 	  //      temp_histograms.push_back(htemp);
 	  map_name_histogram[std::get<0>(all_histo_infos.at(i))] = std::make_pair(htemp, pot);
 
-	  //Erin 
-	  map_name_period[std::get<0>(all_histo_infos.at(i))] = period;
-	  //
-
 	}
   }
 
