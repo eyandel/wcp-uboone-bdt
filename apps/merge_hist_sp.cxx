@@ -252,16 +252,16 @@ for (int i_time = 0; i_time<num_runs; i_time++){
 
 
   //get ns timing errors
-  for(auto it = map_obsch_subhistos.begin(); it!= map_obsch_subhistos.end(); it++) {
+  for(auto it = map_obsch_subhistos_time.begin(); it!= map_obsch_subhistos_time.end(); it++) {
     int obschannel = it->first;
     std::cout<<"Channel: "<<obschannel<<std::endl;
-    TH1F* hdata = (TH1F*)map_obsch_histos[obschannel].at(0)->Clone("hdata");
+    TH1F* hdata = (TH1F*)map_obsch_histos_time[obschannel].at(0)->Clone("hdata");
     TH1F* hbadmatch = (TH1F*)hdata->Clone("hbadmatch");
     TH1F* hext = (TH1F*)hdata->Clone("hext");
     hbadmatch->Reset();
     hext->Reset();
     for(size_t i=0; i<it->second.size(); i++) {
-      TH1F* htemp = map_obsch_subhistos[obschannel].at(i);
+      TH1F* htemp = map_obsch_subhistos_time[obschannel].at(i);
       std::string histname = htemp->GetName();
       std::istringstream sss(histname);
       for(std::string line; std::getline(sss, line, '_');) {
@@ -286,7 +286,7 @@ for (int i_time = 0; i_time<num_runs; i_time++){
     }
     }else datapot = map_data_period_pot[run];
 
-    TH1F* hmc = (TH1F*)map_obsch_histos[obschannel].at(1)->Clone("hmc");
+    TH1F* hmc = (TH1F*)map_obsch_histos_time[obschannel].at(1)->Clone("hmc");
 
     std::vector<double> time_errors_temp;
 
