@@ -60,7 +60,7 @@ LEEana::CovMatrix::CovMatrix(TString cov_filename, TString cv_filename, TString 
       std::string line;
       std::getline(infile_time, line);
       while(line.empty()) {std::getline(infile_time, line);}
-      if(line == -1) break;
+      if(line == "end") break;
       std::istringstream iss(line);
       iss >> run >> eff >> eff_err >> rej >> rej_err;
       time_info[run] = std::make_tuple(eff, eff_err, rej, rej_err);
