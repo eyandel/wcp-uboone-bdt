@@ -83,8 +83,6 @@ int main( int argc, char** argv )
   std::map<int, double> map_cos_period_time_weight_err;
   //arrays for timing errors
   std::vector<std::vector<double>> time_errors_per_bin;
-  //map for data period to hists 
-  std::map<TString, int> map_name_period;
 
 
   //get scaling weights and errors
@@ -217,7 +215,7 @@ int main( int argc, char** argv )
   if (run==0){
   	num_runs = 3;
   }
-
+cout<<"218"<<endl;
 for (int i_time = 0; i_time<num_runs; i_time++){
 	int time_period = run;
 	if (run == 0){ time_period = i_time + 1; }
