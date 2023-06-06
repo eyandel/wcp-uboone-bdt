@@ -1156,7 +1156,7 @@ for (int i_time = 0; i_time<num_runs; i_time++){
 
   if (flag_err == 1) {
 	// prediction ...
-	TFile *file3 = new TFile("merge.root","RECREATE");
+	TFile *file3 = new TFile("merge_time.root","RECREATE");
 
 	TMatrixD* mat_collapse = cov.get_mat_collapse();
 	mat_collapse->Write("mat_collapse");
