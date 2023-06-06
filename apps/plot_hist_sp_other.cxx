@@ -263,6 +263,9 @@ int main( int argc, char** argv )
     int flag_syst_detector = 0;
     int flag_syst_additional = 0;
     int flag_syst_mc_stat = 0;
+    //Erin 
+    int flag_syst_time = 0;
+    //
     double cov_lee_strength = 0;
     std::vector<double> *vc_val_GOF = new std::vector<double>;
     std::vector<int> *vc_val_GOF_NDF = new std::vector<int>;
@@ -271,6 +274,9 @@ int main( int argc, char** argv )
     t_covconfig->SetBranchAddress("flag_syst_detector", &flag_syst_detector);
     t_covconfig->SetBranchAddress("flag_syst_additional", &flag_syst_additional);
     t_covconfig->SetBranchAddress("flag_syst_mc_stat", &flag_syst_mc_stat);
+    //Erin
+    t_covconfig->SetBranchAddress("flag_syst_time", &flag_syst_time);
+    //
     t_covconfig->SetBranchAddress("user_Lee_strength_for_output_covariance_matrix", &cov_lee_strength);
     t_covconfig->SetBranchAddress("vc_val_GOF", &vc_val_GOF);
     t_covconfig->SetBranchAddress("vc_val_GOF_NDF", &vc_val_GOF_NDF);
@@ -292,6 +298,7 @@ int main( int argc, char** argv )
                 <<"\t syst_detector: "<< flag_syst_detector << std::endl
                 <<"\t syst_additional: "<< flag_syst_additional << std::endl
                 <<"\t syst_mc_stat: "<< flag_syst_mc_stat << std::endl
+                <<"\t syst_time: "<< flag_syst_time << std::endl
                 <<"\t LEE_strength: "<< cov_lee_strength << std::endl;
     if( abs(lee_strength-cov_lee_strength)>1e-6 ) {
         std::cout<<"ERROR: plot_hist -l option is inconsistent with external cov matrix LEE strength!\n";
