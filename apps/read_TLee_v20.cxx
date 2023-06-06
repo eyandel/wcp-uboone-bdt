@@ -98,7 +98,8 @@ int main(int argc, char** argv)
 
   Lee_test->scaleF_POT = scaleF_POT;
   Lee_test->Set_config_file_directory(config_Lee::spectra_file, config_Lee::flux_Xs_directory,
-                                      config_Lee::detector_directory, config_Lee::mc_directory);
+                                      config_Lee::detector_directory, config_Lee::mc_directory,
+                                      config_Lee::time_file);
   Lee_test->Set_Spectra_MatrixCov();
   Lee_test->Set_POT_implement();
   Lee_test->Set_TransformMatrix();

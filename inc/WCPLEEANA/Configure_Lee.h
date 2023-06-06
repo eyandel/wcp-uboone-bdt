@@ -3,6 +3,9 @@ namespace config_Lee
   ////////// input files for spectra and covariance matrixes
 
   TString spectra_file = "./merge.root";
+  //Erin
+  TString time_file = "./merge_time.root";
+  //
   TString flux_Xs_directory = "/uboone/data/users/eyandel/hist_rootfiles/XsFlux/";
   TString detector_directory = "/uboone/data/users/eyandel/hist_rootfiles/det/";
   TString mc_directory = "/uboone/data/users/eyandel/hist_rootfiles/mc_stat/";

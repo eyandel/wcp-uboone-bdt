@@ -88,6 +88,9 @@ public:
   bool flag_lookelsewhere;
 
   TString spectra_file;
+  //Erin 
+  TString time_file;
+  //
   TString flux_Xs_directory;
   TString detector_directory;
   TString mc_directory;
@@ -168,7 +171,7 @@ public:
 
   /////////////////////////////////////////////////////// function member
 
-  void Set_config_file_directory(TString spectra_file_, TString flux_Xs_directory_, TString detector_directory_, TString mc_directory_);
+  void Set_config_file_directory(TString spectra_file_, TString flux_Xs_directory_, TString detector_directory_, TString mc_directory_, TString time_file_);
 
   //
   void Set_Spectra_MatrixCov();

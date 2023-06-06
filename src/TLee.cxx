@@ -2598,16 +2598,22 @@ void TLee::Set_POT_implement()
 
 ///////////////////////////////////////////////////////// ccc
 
-void TLee::Set_config_file_directory(TString spectra_file_, TString flux_Xs_directory_, TString detector_directory_, TString mc_directory_)
+void TLee::Set_config_file_directory(TString spectra_file_, TString flux_Xs_directory_, TString detector_directory_, TString mc_directory_, TString time_file_)
 {
   cout<<endl<<" ---> Set_config_file_directory"<<endl<<endl;
 
   spectra_file       = spectra_file_;
+  //Erin
+  time_file          = time_file_;
+  //
   flux_Xs_directory  = flux_Xs_directory_;
   detector_directory = detector_directory_;
   mc_directory       = mc_directory_;
 
   cout<<Form(" spectra_file       %-10s", spectra_file.Data() )<<endl;
+  //Erin
+  cout<<Form(" time_file       %-10s", time_file.Data() )<<endl;
+  //
   cout<<Form(" flux_Xs_directory  %-10s", flux_Xs_directory.Data() )<<endl;
   cout<<Form(" detector_directory %-10s", detector_directory.Data() )<<endl;
   cout<<Form(" mc_directory       %-10s", mc_directory.Data() )<<endl;
@@ -2625,6 +2631,8 @@ void TLee::Set_Spectra_MatrixCov()
 
   roostr = spectra_file;
   TFile *file_spectra = new TFile(roostr, "read");
+  //Erin
+  TFile *file_time = new TFile(time_file, "read");
 
   ///
   TMatrixD *mat_collapse = (TMatrixD*)file_spectra->Get("mat_collapse");
@@ -2903,7 +2911,7 @@ void TLee::Set_Spectra_MatrixCov()
   ////////////////////////////////////////// ns time/scaling
   TMatrixD *matrix_time_abs_point;
   if (flag_syst_time){
-    matrix_time_abs_point = (TMatrixD*)file_spectra->Get("cov_mat_time");
+    matrix_time_abs_point = (TMatrixD*)file_time->Get("cov_mat_time");
   }else{
     matrix_time_abs_point = (TMatrixD*)file_spectra->Get("cov_mat_add");
   }
