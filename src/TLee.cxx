@@ -2840,7 +2840,7 @@ void TLee::Set_Spectra_MatrixCov()
    map_detectorfile_str[6] = detector_directory+"cov_WMThetaXZ.root";
    map_detectorfile_str[7] = detector_directory+"cov_WMThetaYZ.root";
    map_detectorfile_str[8] = detector_directory+"cov_WMX.root";
-   //map_detectorfile_str[9] = detector_directory+"cov_WMYZ.root";
+   map_detectorfile_str[9] = detector_directory+"cov_WMYZ.root";
    //map_detectorfile_str[10]= detector_directory+"cov_LYatt.root";
  
   map<int, TFile*>map_file_detector_frac;
