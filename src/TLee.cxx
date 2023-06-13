@@ -2837,7 +2837,7 @@ void TLee::Set_Spectra_MatrixCov()
    map_detectorfile_str[3] = detector_directory+"cov_Recomb2.root";
    map_detectorfile_str[4] = detector_directory+"cov_SCE.root";
         //map_detectorfile_str[5] = detector_directory+"cov_WMdEdx.root";
-   //map_detectorfile_str[6] = detector_directory+"cov_WMThetaXZ.root";
+   map_detectorfile_str[6] = detector_directory+"cov_WMThetaXZ.root";
    //map_detectorfile_str[7] = detector_directory+"cov_WMThetaYZ.root";
    //map_detectorfile_str[8] = detector_directory+"cov_WMX.root";
    //map_detectorfile_str[9] = detector_directory+"cov_WMYZ.root";
