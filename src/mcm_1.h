@@ -74,7 +74,7 @@ void LEEana::CovMatrix::gen_det_cov_matrix(int run, std::map<int, TH1F*>& map_co
   }
 
   // working on the bootstrapping ...
-  for (int qx = 0; qx != 1000; qx++){
+  for (int qx = 0; qx != 10000; qx++){
     if (qx % 500 ==0) std::cout << qx << std::endl;
 
     for (int i=0;i!=rows;i++){
