@@ -1483,11 +1483,13 @@ int main( int argc, char** argv )
         hmc->Scale(scalePOT);
         hmc->GetXaxis()->SetTitle("Interaction Time [ns]");
         hmc->GetXaxis()->SetTitle("Reconstructed Neutrino Energy [MeV]");
+        hmc->GetXaxis()->CenterTitle(true);
         hmc->Draw("hist");
-        hmc->GetYaxis()->SetTitle("Event counts");
+        hmc->GetYaxis()->SetTitle("Events / 100 MeV");
         hmc->GetYaxis()->SetTitleSize(0.05);
         hmc->GetYaxis()->SetTitleFont(132);
         hmc->GetYaxis()->SetTitleOffset(0.73);
+        hmc->GetYaxis()->CenterTitle(true);
         hmc->GetYaxis()->SetLabelFont(132);
         hmc->GetYaxis()->SetLabelSize(0.04);
         //if(obschannel==9) hmc->GetXaxis()->SetRangeUser(0.5,1);
@@ -1503,11 +1505,13 @@ int main( int argc, char** argv )
         hdata->Scale(scalePOT);
         hdata->GetXaxis()->SetTitle("Interaction Time [ns]");
         hdata->GetXaxis()->SetTitle("Reconstructed Neutrino Energy [MeV]");
+        hdata->GetXaxis()->CenterTitle(true);
         //hdata->Draw();
-        hdata->GetYaxis()->SetTitle("Event counts");
+        hdata->GetYaxis()->SetTitle("Events / 100 MeV");
         hdata->GetYaxis()->SetTitleSize(0.05);
         hdata->GetYaxis()->SetTitleFont(132);
         hdata->GetYaxis()->SetTitleOffset(0.73);
+        hdata->GetYaxis()->CenterTitle(true);
         hdata->GetYaxis()->SetLabelFont(132);
         hdata->GetYaxis()->SetLabelSize(0.04);
         //if(obschannel==9) hmc->GetXaxis()->SetRangeUser(0.5,1);
@@ -1729,9 +1733,11 @@ int main( int argc, char** argv )
 
         gratio_mc[obschannel-1]->GetXaxis()->SetTitleSize(0.1);
         gratio_mc[obschannel-1]->GetXaxis()->SetLabelSize(0.1);
+        gratio_mc[obschannel-1]->GetXaxis()->CenterTitle(true);
         gratio_mc[obschannel-1]->GetYaxis()->SetTitleSize(0.1);
         gratio_mc[obschannel-1]->GetYaxis()->SetTitleOffset(0.35);
         gratio_mc[obschannel-1]->GetYaxis()->SetLabelSize(0.1);
+        gratio_mc[obschannel-1]->GetYaxis()->CenterTitle(true);
         //gratio_data[obschannel-1]->Draw("P same");
         gratio_data[obschannel-1]->SetLineWidth(2);
         gratio_data[obschannel-1]->SetMarkerStyle(20);
@@ -1752,10 +1758,11 @@ int main( int argc, char** argv )
         hist->GetXaxis()->SetTitle("Interaction Time [ns]");
         hist->GetXaxis()->SetTitle("Reconstructed Neutrino Energy [MeV]");
         //hist->Draw("hist same");
-        hist->GetYaxis()->SetTitle("Event counts");
+        hist->GetYaxis()->SetTitle("Events / 100 MeV");
         hist->GetYaxis()->SetTitleSize(0.05);
         hist->GetYaxis()->SetTitleFont(132);
         hist->GetYaxis()->SetTitleOffset(0.73);
+        hist->GetYaxis()->CenterTitle(true);
         hist->GetYaxis()->SetLabelFont(132);
         hist->GetYaxis()->SetLabelSize(0.04);
         //if(obschannel==9) hmc->GetXaxis()->SetRangeUser(0.5,1);
