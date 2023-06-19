@@ -673,7 +673,7 @@ int main( int argc, char** argv )
     T_BDTvars_cv->SetBranchStatus("nc_pio_score", 1);
   }
   
-  T_eval_cv->SetBranchStatus("*",0);
+  T_eval_cv->SetBranchStatus("*",1);
   T_eval_cv->SetBranchStatus("match_energy",1);
   T_eval_cv->SetBranchStatus("match_isFC",1);
   T_eval_cv->SetBranchStatus("match_found",1);
@@ -811,7 +811,7 @@ int main( int argc, char** argv )
     T_BDTvars_det->SetBranchStatus("nc_pio_score", 1);
   }
   
-  T_eval_det->SetBranchStatus("*",0);
+  T_eval_det->SetBranchStatus("*",1);
   T_eval_det->SetBranchStatus("match_energy",1);
   T_eval_det->SetBranchStatus("match_isFC",1);
   T_eval_det->SetBranchStatus("match_found",1);

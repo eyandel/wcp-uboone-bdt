@@ -84,8 +84,8 @@ namespace LEEana{
 
     // gLEE
     Bool_t flag_gl;
-    Int_t gl_sel_type;
-    Float_t gl_true_Enu, gl_true_Elep, gl_reco_Eshower, gl_simple_pot_weight, gl_overlap_weight;
+    Int_t gl_sel_type, gl_file_type;
+    Float_t gl_true_Enu, gl_true_Elep, gl_reco_Eshower, gl_simple_pot_weight, gl_rem_orig_wc_pot_weight, gl_new_pot_weight, gl_overlap_weight,gl_wc_total_overlapped_weight;
 };
 
  void set_tree_address(TTree *tree0, EvalInfo& eval_info, int flag = 1);
@@ -115,11 +115,15 @@ void LEEana::set_tree_address(TTree *tree0, EvalInfo& eval_info, int flag){
   if (tree0->GetBranch("gl_sel_type")){
     eval_info.flag_gl = true;
     tree0->SetBranchAddress("gl_sel_type",&eval_info.gl_sel_type);
+    tree0->SetBranchAddress("gl_file_type",&eval_info.gl_file_type);
     tree0->SetBranchAddress("gl_true_Enu",&eval_info.gl_true_Enu);
     tree0->SetBranchAddress("gl_true_Elep",&eval_info.gl_true_Elep);
     tree0->SetBranchAddress("gl_reco_Eshower",&eval_info.gl_reco_Eshower);
     tree0->SetBranchAddress("gl_simple_pot_weight",&eval_info.gl_simple_pot_weight);
+    tree0->SetBranchAddress("gl_rem_orig_wc_pot_weight",&eval_info.gl_rem_orig_wc_pot_weight);
+    tree0->SetBranchAddress("gl_new_pot_weight",&eval_info.gl_new_pot_weight);
     tree0->SetBranchAddress("gl_overlap_weight",&eval_info.gl_overlap_weight);
+    tree0->SetBranchAddress("gl_wc_total_overlapped_weight",&eval_info.gl_wc_total_overlapped_weight);
   }
   
   
@@ -283,11 +287,15 @@ void LEEana::put_tree_address(TTree *tree0, EvalInfo& eval_info, int flag){
 
   if (eval_info.flag_gl){
     tree0->Branch("gl_sel_type",&eval_info.gl_sel_type,"gl_sel_type/I");
+    tree0->Branch("gl_file_type",&eval_info.gl_file_type,"gl_file_type/I");
     tree0->Branch("gl_true_Enu",&eval_info.gl_true_Enu,"gl_true_Enu/F");
     tree0->Branch("gl_true_Elep",&eval_info.gl_true_Elep,"gl_true_Elep/F");
     tree0->Branch("gl_reco_Eshower",&eval_info.gl_reco_Eshower,"gl_reco_Eshower/F");
     tree0->Branch("gl_simple_pot_weight",&eval_info.gl_simple_pot_weight,"gl_simple_pot_weight/F");
+    tree0->Branch("gl_rem_orig_wc_pot_weight",&eval_info.gl_rem_orig_wc_pot_weight,"gl_rem_orig_wc_pot_weight/F");
+    tree0->Branch("gl_new_pot_weight",&eval_info.gl_new_pot_weight,"gl_new_pot_weight/F");
     tree0->Branch("gl_overlap_weight",&eval_info.gl_overlap_weight,"gl_overlap_weight/F");
+    tree0->Branch("gl_wc_total_overlapped_weight",&eval_info.gl_wc_total_overlapped_weight,"gl_wc_total_overlapped_weight/F");
   }
   
 }
