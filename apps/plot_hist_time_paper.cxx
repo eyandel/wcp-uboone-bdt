@@ -361,7 +361,7 @@ int main( int argc, char** argv )
     TApplication theApp("theApp",&argc,argv);
     theApp.SetReturnFromRun(true);
     gStyle->SetOptStat(0);
-    gStyle->SetOptFit(1011);
+    //gStyle->SetOptFit(1011);
 
     if(flag_breakdown == 0){
     gROOT->ProcessLine(".x DrawOption.cc");
@@ -908,7 +908,7 @@ int main( int argc, char** argv )
     gStyle->SetLegendFillColor(0);
     gStyle->SetLegendFont(132);
     gStyle->SetLegendTextSize(0.03);//0.04);
-    gStyle->SetOptFit(1011);
+    //gStyle->SetOptFit(1011);
 
     int nchannels = map_obsch_subhistos.size();
     TCanvas *canvas[nchannels];
@@ -1482,7 +1482,7 @@ int main( int argc, char** argv )
         hmc->Sumw2();
         hmc->Scale(scalePOT);
         hmc->GetXaxis()->SetTitle("Interaction Time [ns]");
-        //hmc->GetXaxis()->SetTitle("Reconstructed Neutrino Energy [MeV]");
+        hmc->GetXaxis()->SetTitle("Reconstructed Neutrino Energy [MeV]");
         hmc->GetXaxis()->CenterTitle(true);
         hmc->Draw("hist");
         hmc->GetYaxis()->SetTitle("Events / 100 MeV");
@@ -1504,7 +1504,7 @@ int main( int argc, char** argv )
         hdata->Sumw2();
         hdata->Scale(scalePOT);
         hdata->GetXaxis()->SetTitle("Interaction Time [ns]");
-        //hdata->GetXaxis()->SetTitle("Reconstructed Neutrino Energy [MeV]");
+        hdata->GetXaxis()->SetTitle("Reconstructed Neutrino Energy [MeV]");
         hdata->GetXaxis()->CenterTitle(true);
         //hdata->Draw();
         hdata->GetYaxis()->SetTitle("Events / 100 MeV");
@@ -1528,8 +1528,8 @@ int main( int argc, char** argv )
         TF1 *fitFunc = new TF1("fitFunc", "[0] * exp(-0.5 * pow((x - [1]) / [2], 2)) + [3]", -10, 10);
         fitFunc->SetParameters(100, 0, 1, 10);  // Set initial parameter values
         fitFunc->SetParNames("Amplitude", "Mean", "Sigma", "Offset");
-        hdata->Fit("fitFunc");
-        hdata->Draw();
+        //hdata->Fit("fitFunc");
+        //hdata->Draw();
 
 
         hstack[obschannel-1]->Draw("hist same");
@@ -1756,7 +1756,7 @@ int main( int argc, char** argv )
         hist->Draw("axis same");
         hist->GetYaxis()->SetNdivisions(405);
         hist->GetXaxis()->SetTitle("Interaction Time [ns]");
-        //hist->GetXaxis()->SetTitle("Reconstructed Neutrino Energy [MeV]");
+        hist->GetXaxis()->SetTitle("Reconstructed Neutrino Energy [MeV]");
         //hist->Draw("hist same");
         hist->GetYaxis()->SetTitle("Events / 100 MeV");
         hist->GetYaxis()->SetTitleSize(0.05);
