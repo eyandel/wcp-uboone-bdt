@@ -4498,6 +4498,1071 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
   }else if (ch_name == "single_shower_eff_bnb_Np_nsbeam"){
             if (flag_singleshower_eff_sel && !flag_0p && flag_nsbeam) return true;
             return false;
+  //FC
+  }else if (ch_name == "single_photon_bnb_FC" || ch_name == "single_photon_ext_FC"
+    || ch_name == "single_photon_overlay_FC" || ch_name == "single_photon_dirt_FC"){
+            if (flag_singlephoton_sel && flag_FC) return true;
+            return false;
+  }else if (ch_name == "single_photon_eff_bnb_FC" || ch_name == "single_photon_eff_ext_FC"
+    || ch_name == "single_photon_eff_overlay_FC" || ch_name == "single_photon_eff_dirt_FC"){
+            if (flag_singlephoton_eff_sel && flag_FC) return true;
+            return false;
+  }else if (ch_name == "single_shower_bnb_FC" || ch_name == "single_shower_ext_FC"
+    || ch_name == "single_shower_overlay_FC" || ch_name == "single_shower_dirt_FC"){
+            if (flag_singleshower_sel && flag_FC) return true;
+            return false;
+  }else if (ch_name == "single_shower_eff_bnb_FC" || ch_name == "single_shower_eff_ext_FC"
+    || ch_name == "single_shower_eff_overlay_FC" || ch_name == "single_shower_eff_dirt_FC"
+    || ch_name == "single_shower_eff_bnb_2_FC" || ch_name == "single_shower_eff_ext_2_FC"
+      || ch_name == "single_shower_eff_overlay_2_FC" || ch_name == "single_shower_eff_dirt_2_FC"){
+            if (flag_singleshower_eff_sel && flag_FC) return true;
+            return false;
+  }else if (ch_name == "single_photon_bnb_0p_FC" || ch_name == "single_photon_ext_0p_FC"
+    || ch_name == "single_photon_overlay_0p_FC" || ch_name == "single_photon_dirt_0p_FC"){
+            if (flag_singlephoton_sel && flag_0p && flag_FC) return true;
+            return false;
+  }else if (ch_name == "single_photon_eff_bnb_0p_FC" || ch_name == "single_photon_eff_ext_0p_FC"
+    || ch_name == "single_photon_eff_overlay_0p_FC" || ch_name == "single_photon_eff_dirt_0p_FC"){
+            if (flag_singlephoton_eff_sel && flag_0p && flag_FC) return true;
+            return false;
+  }else if (ch_name == "single_shower_bnb_0p_FC" || ch_name == "single_shower_ext_0p_FC"
+    || ch_name == "single_shower_overlay_0p_FC" || ch_name == "single_shower_dirt_0p_FC"){
+            if (flag_singleshower_sel && flag_0p && flag_FC) return true;
+            return false;
+  }else if (ch_name == "single_shower_eff_bnb_0p_FC" || ch_name == "single_shower_eff_ext_0p_FC"
+    || ch_name == "single_shower_eff_overlay_0p_FC" || ch_name == "single_shower_eff_dirt_0p_FC"){
+            if (flag_singleshower_eff_sel && flag_0p && flag_FC) return true;
+            return false;
+  }else if (ch_name == "single_photon_bnb_Np_FC" || ch_name == "single_photon_ext_Np_FC"
+    || ch_name == "single_photon_overlay_Np_FC" || ch_name == "single_photon_dirt_Np_FC"){
+            if (flag_singlephoton_sel && !flag_0p && flag_FC) return true;
+            return false;
+  }else if (ch_name == "single_photon_eff_bnb_Np_FC" || ch_name == "single_photon_eff_ext_Np_FC"
+    || ch_name == "single_photon_eff_overlay_Np_FC" || ch_name == "single_photon_eff_dirt_Np_FC"){
+            if (flag_singlephoton_eff_sel && !flag_0p && flag_FC) return true;
+            return false;
+  }else if (ch_name == "single_shower_bnb_Np_FC" || ch_name == "single_shower_ext_Np_FC"
+    || ch_name == "single_shower_overlay_Np_FC" || ch_name == "single_shower_dirt_Np_FC"){
+            if (flag_singleshower_sel && !flag_0p && flag_FC) return true;
+            return false;
+  }else if (ch_name == "single_shower_eff_bnb_Np_FC" || ch_name == "single_shower_eff_ext_Np_FC"
+    || ch_name == "single_shower_eff_overlay_Np_FC" || ch_name == "single_shower_eff_dirt_Np_FC"){
+            if (flag_singleshower_eff_sel && !flag_0p && flag_FC) return true;
+            return false;
+  }else if (ch_name == "single_photon_overlay_BG_FC"){
+            if (flag_singlephoton_sel && flag_FC &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0)) return true;
+            return false;
+  }else if (ch_name == "single_photon_eff_overlay_BG_FC"){
+            if (flag_singlephoton_eff_sel && flag_FC &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0)) return true;
+            return false;
+  }else if (ch_name == "single_shower_overlay_BG_FC"){
+            if (flag_singleshower_sel && flag_FC &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0)) return true;
+            return false;
+  }else if (ch_name == "single_shower_eff_overlay_BG_FC"){
+            if (flag_singleshower_eff_sel && flag_FC &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0)) return true;
+            return false;
+  }else if (ch_name == "single_photon_overlay_0p_BG_FC"){
+            if (flag_singlephoton_sel && flag_FC && flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0)) return true;
+            return false;
+  }else if (ch_name == "single_photon_eff_overlay_0p_BG_FC"){
+            if (flag_singlephoton_eff_sel && flag_FC && flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0)) return true;
+            return false;
+  }else if (ch_name == "single_shower_overlay_0p_BG_FC"){
+            if (flag_singleshower_sel && flag_FC && flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0)) return true;
+            return false;
+  }else if (ch_name == "single_shower_eff_overlay_0p_BG_FC"){
+            if (flag_singleshower_eff_sel && flag_FC && flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0)) return true;
+            return false;
+  }else if (ch_name == "single_photon_overlay_Np_BG_FC"){
+            if (flag_singlephoton_sel && flag_FC && !flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0)) return true;
+            return false;
+  }else if (ch_name == "single_photon_eff_overlay_Np_BG_FC"){
+            if (flag_singlephoton_eff_sel && flag_FC && !flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0)) return true;
+            return false;
+  }else if (ch_name == "single_shower_overlay_Np_BG_FC"){
+            if (flag_singleshower_sel && flag_FC && !flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0)) return true;
+            return false;
+  }else if (ch_name == "single_shower_eff_overlay_Np_BG_FC"){
+            if (flag_singleshower_eff_sel && flag_FC && !flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0)) return true;
+            return false;
+  }else if (ch_name == "single_photon_spoverlay_FC"){
+            if (flag_singlephoton_sel && flag_FC &&
+              (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])) return true;
+            return false;
+  }else if (ch_name == "single_photon_eff_spoverlay_FC"){
+            if (flag_singlephoton_eff_sel && flag_FC &&
+              (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])) return true;
+            return false;
+  }else if (ch_name == "single_shower_spoverlay_FC"){
+            if (flag_singleshower_sel && flag_FC &&
+              (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])) return true;
+            return false;
+  }else if (ch_name == "single_shower_eff_spoverlay_FC"){
+            if (flag_singleshower_eff_sel && flag_FC &&
+              (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])) return true;
+            return false;
+  }else if (ch_name == "single_photon_spoverlay_0p_FC"){
+            if (flag_singlephoton_sel && flag_FC && flag_0p &&
+              (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])) return true;
+            return false;
+  }else if (ch_name == "single_photon_eff_spoverlay_0p_FC"){
+            if (flag_singlephoton_eff_sel && flag_FC && flag_0p &&
+              (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])) return true;
+            return false;
+  }else if (ch_name == "single_shower_spoverlay_0p_FC"){
+            if (flag_singleshower_sel && flag_FC && flag_0p &&
+              (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])) return true;
+            return false;
+  }else if (ch_name == "single_shower_eff_spoverlay_0p_FC"){
+            if (flag_singleshower_eff_sel && flag_FC && flag_0p &&
+              (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])) return true;
+            return false;
+  }else if (ch_name == "single_photon_spoverlay_Np_FC"){
+            if (flag_singlephoton_sel && flag_FC && !flag_0p &&
+              (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])) return true;
+            return false;
+  }else if (ch_name == "single_photon_eff_spoverlay_Np_FC"){
+            if (flag_singlephoton_eff_sel && flag_FC && !flag_0p &&
+              (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])) return true;
+            return false;
+  }else if (ch_name == "single_shower_spoverlay_Np_FC"){
+            if (flag_singleshower_sel && flag_FC && !flag_0p &&
+              (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])) return true;
+            return false;
+  }else if (ch_name == "single_shower_eff_spoverlay_Np_FC"){
+            if (flag_singleshower_eff_sel && flag_FC && !flag_0p &&
+              (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])) return true;
+            return false;
+  //nc pi0 overlay FC
+  }else if (ch_name == "single_photon_ncpi0overlay_FC"){
+            if (flag_singlephoton_sel && flag_FC &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && (eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_photon_overlay_ncpi0_BG_FC"){
+            if (flag_singlephoton_sel && flag_FC &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && !(eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_photon_eff_ncpi0overlay_FC"){
+            if (flag_singlephoton_eff_sel && flag_FC &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && (eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_photon_eff_overlay_ncpi0_BG_FC"){
+            if (flag_singlephoton_eff_sel && flag_FC &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && !(eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_shower_ncpi0overlay_FC"){
+            if (flag_singleshower_sel && flag_FC &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && (eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_shower_overlay_ncpi0_BG_FC"){
+            if (flag_singleshower_sel && flag_FC &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && !(eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_shower_eff_ncpi0overlay_FC"){
+            if (flag_singleshower_eff_sel && flag_FC &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && (eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_shower_eff_overlay_ncpi0_BG_FC"){
+            if (flag_singleshower_eff_sel && flag_FC &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && !(eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_photon_ncpi0overlay_0p_FC"){
+            if (flag_singlephoton_sel && flag_FC && flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && (eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_photon_overlay_ncpi0_0p_BG_FC"){
+            if (flag_singlephoton_sel && flag_FC && flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && !(eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_photon_eff_ncpi0overlay_0p_FC"){
+            if (flag_singlephoton_eff_sel && flag_FC && flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && (eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_photon_eff_overlay_ncpi0_0p_BG_FC"){
+            if (flag_singlephoton_eff_sel && flag_FC && flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && !(eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_shower_ncpi0overlay_0p_FC"){
+            if (flag_singleshower_sel && flag_FC && flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && (eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_shower_overlay_ncpi0_0p_BG_FC"){
+            if (flag_singleshower_sel && flag_FC && flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && !(eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_shower_eff_ncpi0overlay_0p_FC"){
+            if (flag_singleshower_eff_sel && flag_FC && flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && (eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_shower_eff_overlay_ncpi0_0p_BG_FC"){
+            if (flag_singleshower_eff_sel && flag_FC && flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && !(eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_photon_ncpi0overlay_Np_FC"){
+            if (flag_singlephoton_sel && flag_FC && !flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && (eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_photon_overlay_ncpi0_Np_BG_FC"){
+            if (flag_singlephoton_sel && flag_FC && !flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && !(eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_photon_eff_ncpi0overlay_Np_FC"){
+            if (flag_singlephoton_eff_sel && flag_FC && !flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && (eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_photon_eff_overlay_ncpi0_Np_BG_FC"){
+            if (flag_singlephoton_eff_sel && flag_FC && !flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && !(eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_shower_ncpi0overlay_Np_FC"){
+            if (flag_singleshower_sel && flag_FC && !flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && (eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_shower_overlay_ncpi0_Np_BG_FC"){
+            if (flag_singleshower_sel && flag_FC && !flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && !(eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_shower_eff_ncpi0overlay_Np_FC"){
+            if (flag_singleshower_eff_sel && flag_FC && !flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && (eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_shower_eff_overlay_ncpi0_Np_BG_FC"){
+            if (flag_singleshower_eff_sel && flag_FC && !flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && !(eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_photon_bnb_nsbeam_FC"){
+            if (flag_singlephoton_sel && flag_FC && flag_nsbeam) return true;
+            return false;
+  }else if (ch_name == "single_photon_eff_bnb_nsbeam_FC"){
+            if (flag_singlephoton_eff_sel && flag_FC && flag_nsbeam) return true;
+            return false;
+  }else if (ch_name == "single_shower_bnb_nsbeam_FC"){
+            if (flag_singleshower_sel && flag_FC && flag_nsbeam) return true;
+            return false;
+  }else if (ch_name == "single_shower_eff_bnb_nsbeam_FC"){
+            if (flag_singleshower_eff_sel && flag_FC && flag_nsbeam) return true;
+            return false;
+  }else if (ch_name == "single_photon_bnb_0p_nsbeam_FC"){
+            if (flag_singlephoton_sel && flag_FC && flag_0p && flag_nsbeam) return true;
+            return false;
+  }else if (ch_name == "single_photon_eff_bnb_0p_nsbeam_FC"){
+            if (flag_singlephoton_eff_sel && flag_FC && flag_0p && flag_nsbeam) return true;
+            return false;
+  }else if (ch_name == "single_shower_bnb_0p_nsbeam_FC"){
+            if (flag_singleshower_sel && flag_FC && flag_0p && flag_nsbeam) return true;
+            return false;
+  }else if (ch_name == "single_shower_eff_bnb_0p_nsbeam_FC"){
+            if (flag_singleshower_eff_sel && flag_FC && flag_0p && flag_nsbeam) return true;
+            return false;
+  }else if (ch_name == "single_photon_bnb_Np_nsbeam_FC"){
+            if (flag_singlephoton_sel && flag_FC && !flag_0p && flag_nsbeam) return true;
+            return false;
+  }else if (ch_name == "single_photon_eff_bnb_Np_nsbeam_FC"){
+            if (flag_singlephoton_eff_sel && flag_FC && !flag_0p && flag_nsbeam) return true;
+            return false;
+  }else if (ch_name == "single_shower_bnb_Np_nsbeam_FC"){
+            if (flag_singleshower_sel && flag_FC && !flag_0p && flag_nsbeam) return true;
+            return false;
+  }else if (ch_name == "single_shower_eff_bnb_Np_nsbeam_FC"){
+            if (flag_singleshower_eff_sel && flag_FC && !flag_0p && flag_nsbeam) return true;
+            return false;
+  //PC
+  }else if (ch_name == "single_photon_bnb_PC" || ch_name == "single_photon_ext_PC"
+    || ch_name == "single_photon_overlay_PC" || ch_name == "single_photon_dirt_PC"){
+            if (flag_singlephoton_sel && !flag_FC) return true;
+            return false;
+  }else if (ch_name == "single_photon_eff_bnb_PC" || ch_name == "single_photon_eff_ext_PC"
+    || ch_name == "single_photon_eff_overlay_PC" || ch_name == "single_photon_eff_dirt_PC"){
+            if (flag_singlephoton_eff_sel && !flag_FC) return true;
+            return false;
+  }else if (ch_name == "single_shower_bnb_PC" || ch_name == "single_shower_ext_PC"
+    || ch_name == "single_shower_overlay_PC" || ch_name == "single_shower_dirt_PC"){
+            if (flag_singleshower_sel && !flag_FC) return true;
+            return false;
+  }else if (ch_name == "single_shower_eff_bnb_PC" || ch_name == "single_shower_eff_ext_PC"
+    || ch_name == "single_shower_eff_overlay_PC" || ch_name == "single_shower_eff_dirt_PC"
+    || ch_name == "single_shower_eff_bnb_2_PC" || ch_name == "single_shower_eff_ext_2_PC"
+      || ch_name == "single_shower_eff_overlay_2_PC" || ch_name == "single_shower_eff_dirt_2_PC"){
+            if (flag_singleshower_eff_sel && !flag_FC) return true;
+            return false;
+  }else if (ch_name == "single_photon_bnb_0p_PC" || ch_name == "single_photon_ext_0p_PC"
+    || ch_name == "single_photon_overlay_0p_PC" || ch_name == "single_photon_dirt_0p_PC"){
+            if (flag_singlephoton_sel && flag_0p && !flag_FC) return true;
+            return false;
+  }else if (ch_name == "single_photon_eff_bnb_0p_PC" || ch_name == "single_photon_eff_ext_0p_PC"
+    || ch_name == "single_photon_eff_overlay_0p_PC" || ch_name == "single_photon_eff_dirt_0p_PC"){
+            if (flag_singlephoton_eff_sel && flag_0p && !flag_FC) return true;
+            return false;
+  }else if (ch_name == "single_shower_bnb_0p_PC" || ch_name == "single_shower_ext_0p_PC"
+    || ch_name == "single_shower_overlay_0p_PC" || ch_name == "single_shower_dirt_0p_PC"){
+            if (flag_singleshower_sel && flag_0p && !flag_FC) return true;
+            return false;
+  }else if (ch_name == "single_shower_eff_bnb_0p_PC" || ch_name == "single_shower_eff_ext_0p_PC"
+    || ch_name == "single_shower_eff_overlay_0p_PC" || ch_name == "single_shower_eff_dirt_0p_PC"){
+            if (flag_singleshower_eff_sel && flag_0p && !flag_FC) return true;
+            return false;
+  }else if (ch_name == "single_photon_bnb_Np_PC" || ch_name == "single_photon_ext_Np_PC"
+    || ch_name == "single_photon_overlay_Np_PC" || ch_name == "single_photon_dirt_Np_PC"){
+            if (flag_singlephoton_sel && !flag_0p && !flag_FC) return true;
+            return false;
+  }else if (ch_name == "single_photon_eff_bnb_Np_PC" || ch_name == "single_photon_eff_ext_Np_PC"
+    || ch_name == "single_photon_eff_overlay_Np_PC" || ch_name == "single_photon_eff_dirt_Np_PC"){
+            if (flag_singlephoton_eff_sel && !flag_0p && !flag_FC) return true;
+            return false;
+  }else if (ch_name == "single_shower_bnb_Np_PC" || ch_name == "single_shower_ext_Np_PC"
+    || ch_name == "single_shower_overlay_Np_PC" || ch_name == "single_shower_dirt_Np_PC"){
+            if (flag_singleshower_sel && !flag_0p && !flag_FC) return true;
+            return false;
+  }else if (ch_name == "single_shower_eff_bnb_Np_PC" || ch_name == "single_shower_eff_ext_Np_PC"
+    || ch_name == "single_shower_eff_overlay_Np_PC" || ch_name == "single_shower_eff_dirt_Np_PC"){
+            if (flag_singleshower_eff_sel && !flag_0p && !flag_FC) return true;
+            return false;
+  }else if (ch_name == "single_photon_overlay_BG_PC"){
+            if (flag_singlephoton_sel && !flag_FC &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0)) return true;
+            return false;
+  }else if (ch_name == "single_photon_eff_overlay_BG_PC"){
+            if (flag_singlephoton_eff_sel && !flag_FC &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0)) return true;
+            return false;
+  }else if (ch_name == "single_shower_overlay_BG_PC"){
+            if (flag_singleshower_sel && !flag_FC &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0)) return true;
+            return false;
+  }else if (ch_name == "single_shower_eff_overlay_BG_PC"){
+            if (flag_singleshower_eff_sel && !flag_FC &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0)) return true;
+            return false;
+  }else if (ch_name == "single_photon_overlay_0p_BG_PC"){
+            if (flag_singlephoton_sel && !flag_FC && flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0)) return true;
+            return false;
+  }else if (ch_name == "single_photon_eff_overlay_0p_BG_PC"){
+            if (flag_singlephoton_eff_sel && !flag_FC && flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0)) return true;
+            return false;
+  }else if (ch_name == "single_shower_overlay_0p_BG_PC"){
+            if (flag_singleshower_sel && !flag_FC && flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0)) return true;
+            return false;
+  }else if (ch_name == "single_shower_eff_overlay_0p_BG_PC"){
+            if (flag_singleshower_eff_sel && !flag_FC && flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0)) return true;
+            return false;
+  }else if (ch_name == "single_photon_overlay_Np_BG_PC"){
+            if (flag_singlephoton_sel && !flag_FC && !flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0)) return true;
+            return false;
+  }else if (ch_name == "single_photon_eff_overlay_Np_BG_PC"){
+            if (flag_singlephoton_eff_sel && !flag_FC && !flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0)) return true;
+            return false;
+  }else if (ch_name == "single_shower_overlay_Np_BG_PC"){
+            if (flag_singleshower_sel && !flag_FC && !flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0)) return true;
+            return false;
+  }else if (ch_name == "single_shower_eff_overlay_Np_BG_PC"){
+            if (flag_singleshower_eff_sel && !flag_FC && !flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0)) return true;
+            return false;
+  }else if (ch_name == "single_photon_spoverlay_PC"){
+            if (flag_singlephoton_sel && !flag_FC &&
+              (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])) return true;
+            return false;
+  }else if (ch_name == "single_photon_eff_spoverlay_PC"){
+            if (flag_singlephoton_eff_sel && !flag_FC &&
+              (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])) return true;
+            return false;
+  }else if (ch_name == "single_shower_spoverlay_PC"){
+            if (flag_singleshower_sel && !flag_FC &&
+              (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])) return true;
+            return false;
+  }else if (ch_name == "single_shower_eff_spoverlay_PC"){
+            if (flag_singleshower_eff_sel && !flag_FC &&
+              (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])) return true;
+            return false;
+  }else if (ch_name == "single_photon_spoverlay_0p_PC"){
+            if (flag_singlephoton_sel && !flag_FC && flag_0p &&
+              (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])) return true;
+            return false;
+  }else if (ch_name == "single_photon_eff_spoverlay_0p_PC"){
+            if (flag_singlephoton_eff_sel && !flag_FC && flag_0p &&
+              (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])) return true;
+            return false;
+  }else if (ch_name == "single_shower_spoverlay_0p_PC"){
+            if (flag_singleshower_sel && !flag_FC && flag_0p &&
+              (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])) return true;
+            return false;
+  }else if (ch_name == "single_shower_eff_spoverlay_0p_PC"){
+            if (flag_singleshower_eff_sel && !flag_FC && flag_0p &&
+              (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])) return true;
+            return false;
+  }else if (ch_name == "single_photon_spoverlay_Np_PC"){
+            if (flag_singlephoton_sel && !flag_FC && !flag_0p &&
+              (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])) return true;
+            return false;
+  }else if (ch_name == "single_photon_eff_spoverlay_Np_PC"){
+            if (flag_singlephoton_eff_sel && !flag_FC && !flag_0p &&
+              (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])) return true;
+            return false;
+  }else if (ch_name == "single_shower_spoverlay_Np_PC"){
+            if (flag_singleshower_sel && !flag_FC && !flag_0p &&
+              (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])) return true;
+            return false;
+  }else if (ch_name == "single_shower_eff_spoverlay_Np_PC"){
+            if (flag_singleshower_eff_sel && !flag_FC && !flag_0p &&
+              (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])) return true;
+            return false;
+  //nc pi0 overlay PC
+  }else if (ch_name == "single_photon_ncpi0overlay_PC"){
+            if (flag_singlephoton_sel && !flag_FC &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && (eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_photon_overlay_ncpi0_BG_PC"){
+            if (flag_singlephoton_sel && !flag_FC &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && !(eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_photon_eff_ncpi0overlay_PC"){
+            if (flag_singlephoton_eff_sel && !flag_FC &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && (eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_photon_eff_overlay_ncpi0_BG_PC"){
+            if (flag_singlephoton_eff_sel && !flag_FC &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && !(eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_shower_ncpi0overlay_PC"){
+            if (flag_singleshower_sel && !flag_FC &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && (eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_shower_overlay_ncpi0_BG_PC"){
+            if (flag_singleshower_sel && !flag_FC &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && !(eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_shower_eff_ncpi0overlay_PC"){
+            if (flag_singleshower_eff_sel && !flag_FC &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && (eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_shower_eff_overlay_ncpi0_BG_PC"){
+            if (flag_singleshower_eff_sel && !flag_FC &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && !(eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_photon_ncpi0overlay_0p_PC"){
+            if (flag_singlephoton_sel && !flag_FC && flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && (eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_photon_overlay_ncpi0_0p_BG_PC"){
+            if (flag_singlephoton_sel && !flag_FC && flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && !(eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_photon_eff_ncpi0overlay_0p_PC"){
+            if (flag_singlephoton_eff_sel && !flag_FC && flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && (eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_photon_eff_overlay_ncpi0_0p_BG_PC"){
+            if (flag_singlephoton_eff_sel && !flag_FC && flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && !(eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_shower_ncpi0overlay_0p_PC"){
+            if (flag_singleshower_sel && !flag_FC && flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && (eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_shower_overlay_ncpi0_0p_BG_PC"){
+            if (flag_singleshower_sel && !flag_FC && flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && !(eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_shower_eff_ncpi0overlay_0p_PC"){
+            if (flag_singleshower_eff_sel && !flag_FC && flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && (eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_shower_eff_overlay_ncpi0_0p_BG_PC"){
+            if (flag_singleshower_eff_sel && !flag_FC && flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && !(eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_photon_ncpi0overlay_Np_PC"){
+            if (flag_singlephoton_sel && !flag_FC && !flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && (eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_photon_overlay_ncpi0_Np_BG_PC"){
+            if (flag_singlephoton_sel && !flag_FC && !flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && !(eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_photon_eff_ncpi0overlay_Np_PC"){
+            if (flag_singlephoton_eff_sel && !flag_FC && !flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && (eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_photon_eff_overlay_ncpi0_Np_BG_PC"){
+            if (flag_singlephoton_eff_sel && !flag_FC && !flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && !(eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_shower_ncpi0overlay_Np_PC"){
+            if (flag_singleshower_sel && !flag_FC && !flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && (eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_shower_overlay_ncpi0_Np_BG_PC"){
+            if (flag_singleshower_sel && !flag_FC && !flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && !(eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_shower_eff_ncpi0overlay_Np_PC"){
+            if (flag_singleshower_eff_sel && !flag_FC && !flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && (eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_shower_eff_overlay_ncpi0_Np_BG_PC"){
+            if (flag_singleshower_eff_sel && !flag_FC && !flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && !(eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+            return false;
+  }else if (ch_name == "single_photon_bnb_nsbeam_PC"){
+            if (flag_singlephoton_sel && !flag_FC && flag_nsbeam) return true;
+            return false;
+  }else if (ch_name == "single_photon_eff_bnb_nsbeam_PC"){
+            if (flag_singlephoton_eff_sel && !flag_FC && flag_nsbeam) return true;
+            return false;
+  }else if (ch_name == "single_shower_bnb_nsbeam_PC"){
+            if (flag_singleshower_sel && !flag_FC && flag_nsbeam) return true;
+            return false;
+  }else if (ch_name == "single_shower_eff_bnb_nsbeam_PC"){
+            if (flag_singleshower_eff_sel && !flag_FC && flag_nsbeam) return true;
+            return false;
+  }else if (ch_name == "single_photon_bnb_0p_nsbeam_PC"){
+            if (flag_singlephoton_sel && !flag_FC && flag_0p && flag_nsbeam) return true;
+            return false;
+  }else if (ch_name == "single_photon_eff_bnb_0p_nsbeam_PC"){
+            if (flag_singlephoton_eff_sel && !flag_FC && flag_0p && flag_nsbeam) return true;
+            return false;
+  }else if (ch_name == "single_shower_bnb_0p_nsbeam_PC"){
+            if (flag_singleshower_sel && !flag_FC && flag_0p && flag_nsbeam) return true;
+            return false;
+  }else if (ch_name == "single_shower_eff_bnb_0p_nsbeam_PC"){
+            if (flag_singleshower_eff_sel && !flag_FC && flag_0p && flag_nsbeam) return true;
+            return false;
+  }else if (ch_name == "single_photon_bnb_Np_nsbeam_PC"){
+            if (flag_singlephoton_sel && !flag_FC && !flag_0p && flag_nsbeam) return true;
+            return false;
+  }else if (ch_name == "single_photon_eff_bnb_Np_nsbeam_PC"){
+            if (flag_singlephoton_eff_sel && !flag_FC && !flag_0p && flag_nsbeam) return true;
+            return false;
+  }else if (ch_name == "single_shower_bnb_Np_nsbeam_PC"){
+            if (flag_singleshower_sel && !flag_FC && !flag_0p && flag_nsbeam) return true;
+            return false;
+  }else if (ch_name == "single_shower_eff_bnb_Np_nsbeam_PC"){
+            if (flag_singleshower_eff_sel && !flag_FC && !flag_0p && flag_nsbeam) return true;
+            return false;
+  //nue bdt cut
   }else if (ch_name == "single_photon_eff_nue_overlay" ||
             ch_name == "single_photon_eff_nue_dirt" ||
             ch_name == "single_photon_eff_nue_ext" ||
@@ -4546,6 +5611,7 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
               && !(eval.match_completeness_energy>0.1*eval.truth_energyInside
                 && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
       return false;
+  //ncpi0 bdt cut
   }else if (ch_name == "single_photon_eff_ncpi0_overlay" ||
             ch_name == "single_photon_eff_ncpi0_dirt" ||
             ch_name == "single_photon_eff_ncpi0_ext" ||
