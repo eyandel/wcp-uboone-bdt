@@ -1,22 +1,90 @@
 generic_nu_overlay		            kine_reco_Enu	                 25	   0	      2500   	1	      1		      1	    0	        0		      1		      2	      cv_spline           		0
 BG_generic_nu_dirt		            kine_reco_Enu	                 25	   0	      2500  	1	      1		      0	    0.5	      0		      1		      4	      cv_spline    		        0
 BG_generic_nu_ext 		            kine_reco_Enu	                 25	   0	      2500  	1	      0		      0	    0 	      0		      3		      3	      unity		                0
-generic_nu_bnb                    kine_reco_Enu	                 25	   0	      2500  	1	      0		      0	    0 	      0		      0		      5	      unity   		            0
+generic_nu_bnb                      kine_reco_Enu	                 25	   0	      2500  	1	      0		      0	    0 	      0		      0		      5	      unity   		            0
 
-generic_nu_overlay_2		          kine_reco_Enu	                 25	   0	      2500   	2	      1		      1	    0	        0		      2		      2	      cv_spline_nsbeam    		0
-BG_generic_nu_dirt_2		          kine_reco_Enu	                 25	   0	      2500  	2	      1		      0	    0.5	      0		      2		      4	      cv_spline_nsbeam    		0
-BG_generic_nu_ext_2 		          kine_reco_Enu	                 25	   0	      2500  	2	      0		      0	    0 	      0		      4		      3	      nsbeam_ext		          0
-generic_nu_bnb_nsbeam             kine_reco_Enu	                 25	   0	      2500  	2	      0		      0	    0 	      0		      0		      5	      unity   		            0
+generic_nu_overlay_2		        kine_reco_Enu	                 25	   0	      2500   	2	      1		      1	    0	        0		      2		      2	      cv_spline_nsbeam    		0
+BG_generic_nu_dirt_2		        kine_reco_Enu	                 25	   0	      2500  	2	      1		      0	    0.5	      0		      2		      4	      cv_spline_nsbeam    		0
+BG_generic_nu_ext_2 		        kine_reco_Enu	                 25	   0	      2500  	2	      0		      0	    0 	      0		      4		      3	      nsbeam_ext		          0
+generic_nu_bnb_nsbeam               kine_reco_Enu	                 25	   0	      2500  	2	      0		      0	    0 	      0		      0		      5	      unity   		            0
 End					                      End		                         -1	   -1	      -1	   -1	      -1		    -1	  -1		    -1		    -1		    -1	    end		                  -1
-
+#for Dante's paper 
 
 sp_bdt_numuCC_Xp_overlay		      ns_beam_time	                 60    -10      10   	1	      1		      1	    0	        0		      1		      2	      cv_spline		  0
 sp_bdt_numuCC_Xp_dirt		          ns_beam_time	                 60    -10      10  	1	      1		      0	    0.5	      0		      1		      4	      cv_spline		  0
 sp_bdt_numuCC_Xp_ext 		          ns_beam_time	                 60    -10      10  	1	      0		      0	    0 	      0		      4		      3	      unity   		  0
 sp_bdt_numuCC_Xp		              ns_beam_time	                 60    -10      10  	1	      0		      0	    0 	      0		      0		      5	      unity   		  0
 End					                      End		                         -1	   -1	      -1	   -1	   -1		      -1	  -1		    -1		    -1		    -1	    end		        -1
+#numu sideband beam time 
+
+sp_bdt_other_Xp_overlay		          ns_beam_time	                 60    -10      10   	1	      1		      1	    0	        0		      1		      2	      cv_spline		  0
+sp_bdt_other_Xp_dirt		          ns_beam_time	                 60    -10      10  	1	      1		      0	    0.5	      0		      1		      4	      cv_spline		  0
+sp_bdt_other_Xp_ext 		          ns_beam_time	                 60    -10      10  	1	      0		      0	    0 	      0		      4		      3	      unity   		  0
+sp_bdt_other_Xp		                  ns_beam_time	                 60    -10      10  	1	      0		      0	    0 	      0		      0		      5	      unity   		  0
+End					                      End		                         -1	   -1	      -1	   -1	   -1		      -1	  -1		    -1		    -1		    -1	    end		        -1
+#other sideband beam time 
+
+sp_bdt_nc_pi0_Xp_overlay		      ns_beam_time	                 60    -10      10   	1	      1		      1	    0	        0		      1		      2	      cv_spline		  0
+sp_bdt_nc_pi0_Xp_dirt		          ns_beam_time	                 60    -10      10  	1	      1		      0	    0.5	      0		      1		      4	      cv_spline		  0
+sp_bdt_nc_pi0_Xp_ext 		          ns_beam_time	                 60    -10      10  	1	      0		      0	    0 	      0		      4		      3	      unity   		  0
+sp_bdt_nc_pi0_Xp		              ns_beam_time	                 60    -10      10  	1	      0		      0	    0 	      0		      0		      5	      unity   		  0
+End					                      End		                         -1	   -1	      -1	   -1	   -1		      -1	  -1		    -1		    -1		    -1	    end		        -1
+#nc pi0 sideband beam time 
+
+sp_bdt_nue_Xp_overlay		          ns_beam_time	                 60    -10      10   	1	      1		      1	    0	        0		      1		      2	      cv_spline		  0
+sp_bdt_nue_pi0_Xp_dirt		          ns_beam_time	                 60    -10      10  	1	      1		      0	    0.5	      0		      1		      4	      cv_spline		  0
+sp_bdt_nue_pi0_Xp_ext 		          ns_beam_time	                 60    -10      10  	1	      0		      0	    0 	      0		      4		      3	      unity   		  0
+sp_bdt_nue_pi0_Xp		              ns_beam_time	                 60    -10      10  	1	      0		      0	    0 	      0		      0		      5	      unity   		  0
+End					                      End		                         -1	   -1	      -1	   -1	   -1		      -1	  -1		    -1		    -1		    -1	    end		        -1
+#nue sideband beam time 
+
+single_photon_eff_overlay	          ns_beam_time	                 60    -10      10   	1	      1		      1	    0	        0		      1		      2	      cv_spline		  0
+single_photon_eff_dirt		          ns_beam_time	                 60    -10      10  	1	      1		      0	    0.5	      0		      1		      4	      cv_spline		  0
+single_photon_eff_ext 		          ns_beam_time	                 60    -10      10  	1	      0		      0	    0 	      0		      4		      3	      unity   		  0
+single_photon_eff_bnb 	              ns_beam_time	                 60    -10      10  	1	      0		      0	    0 	      0		      0		      5	      unity   		  0
+End					                      End		                         -1	   -1	      -1	   -1	   -1		      -1	  -1		    -1		    -1		    -1	    end		        -1
+#eff selection beam time 
+
+single_photon_overlay	              ns_beam_time	                 60    -10      10   	1	      1		      1	    0	        0		      1		      2	      cv_spline		  0
+single_photon_dirt		              ns_beam_time	                 60    -10      10  	1	      1		      0	    0.5	      0		      1		      4	      cv_spline		  0
+single_photon_ext 		              ns_beam_time	                 60    -10      10  	1	      0		      0	    0 	      0		      4		      3	      unity   		  0
+single_photon_bnb 	                  ns_beam_time	                 60    -10      10  	1	      0		      0	    0 	      0		      0		      5	      unity   		  0
+End					                      End		                         -1	   -1	      -1	   -1	   -1		      -1	  -1		    -1		    -1		    -1	    end		        -1
+#pure selection beam time 
+
+single_photon_spoverlay	                shower_energy_sp	             15	   0	      1500   	1	      1		      1	    0	      0		      1		      9	      cv_spline_nsbeam		  0
+single_photon_overlay_BG                shower_energy_sp	             15	   0	      1500   	1	      1		      1	    0	      0		      1		      2	      cv_spline_nsbeam		  0
+single_photon_dirt		                shower_energy_sp	             15	   0	      1500  	1	      1		      0	    0.5	      0		      1		      4	      cv_spline_nsbeam		  0
+single_photon_ext 		                shower_energy_sp	             15	   0	      1500  	1	      0		      0	    0 	      0		      2		      3	      nsbeam_ext   		      0
+single_photon_bnb_nsbeam                shower_energy_sp	             15	   0	      1500  	1	      0		      0	    0 	      0		      0		      5	      unity   		          0
+#pure selection shower energy (no constraints)
+
+single_photon_eff_spoverlay	            shower_energy_sp	             15	   0	      1500   	1	      1		      1	    0	      0		      1		      9	      cv_spline_nsbeam		  0
+single_photon_eff_overlay_BG            shower_energy_sp	             15	   0	      1500   	1	      1		      1	    0	      0		      1		      2	      cv_spline_nsbeam		  0
+single_photon_eff_dirt		            shower_energy_sp	             15	   0	      1500  	1	      1		      0	    0.5	      0		      1		      4	      cv_spline_nsbeam		  0
+single_photon_eff_ext 		            shower_energy_sp	             15	   0	      1500  	1	      0		      0	    0 	      0		      2		      3	      nsbeam_ext     	  	  0
+single_photon_eff_bnb_nsbeam 	        shower_energy_sp	             15	   0	      1500  	1	      0		      0	    0 	      0		      0		      5	      unity   		          0
+#eff selection shower energy (no constraints)
+
+single_photon_spoverlay	                cos_shower_angle_beam_sp	     9	   -1.0     1.01       	1	      1		      1	    0	      0		      1		      9	      cv_spline_nsbeam		  0
+single_photon_overlay_BG                cos_shower_angle_beam_sp	     9	   -1.0     1.01       	1	      1		      1	    0	      0		      1		      2	      cv_spline_nsbeam		  0
+single_photon_dirt		                cos_shower_angle_beam_sp	     9	   -1.0     1.01      	1	      1		      0	    0.5	      0		      1		      4	      cv_spline_nsbeam		  0
+single_photon_ext 		                cos_shower_angle_beam_sp	     9	   -1.0     1.01      	1	      0		      0	    0 	      0		      2		      3	      nsbeam_ext   		      0
+single_photon_bnb_nsbeam                cos_shower_angle_beam_sp	     9	   -1.0     1.01      	1	      0		      0	    0 	      0		      0		      5	      unity   		          0
+#pure selection shower angle (no constraints)
+
+single_photon_eff_spoverlay	            cos_shower_angle_beam_sp	     9	   -1.0     1.01       	1	      1		      1	    0	      0		      1		      9	      cv_spline_nsbeam		  0
+single_photon_eff_overlay_BG            cos_shower_angle_beam_sp	     9	   -1.0     1.01       	1	      1		      1	    0	      0		      1		      2	      cv_spline_nsbeam		  0
+single_photon_eff_dirt		            cos_shower_angle_beam_sp	     9	   -1.0     1.01      	1	      1		      0	    0.5	      0		      1		      4	      cv_spline_nsbeam		  0
+single_photon_eff_ext 		            cos_shower_angle_beam_sp	     9	   -1.0     1.01      	1	      0		      0	    0 	      0		      2		      3	      nsbeam_ext     	  	  0
+single_photon_eff_bnb_nsbeam 	        cos_shower_angle_beam_sp	     9	   -1.0     1.01      	1	      0		      0	    0 	      0		      0		      5	      unity   		          0
+#eff selection shower angle (no constraints)
 
 
+
+
+
+#old configurations
 single_photon_spoverlay	                shower_energy_sp	             15	   0	      1500   	1	      1		      1	    0	        0		      1		      9	      cv_spline_nsbeam		  0
 single_photon_overlay_BG                shower_energy_sp	             15	   0	      1500   	1	      1		      1	    0	        0		      1		      2	      cv_spline_nsbeam		  0
 single_photon_dirt		                  shower_energy_sp	             15	   0	      1500  	1	      1		      0	    0.5	      0		      1		      4	      cv_spline_nsbeam		  0
