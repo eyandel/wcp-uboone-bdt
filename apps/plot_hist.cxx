@@ -1583,7 +1583,8 @@ int main( int argc, char** argv )
         else*/ 
         //Erin 
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Energy [MeV]");
-        gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Cosine Angle");
+        //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Cosine Angle");
+        gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Number of Tracks");
 
 
         //else gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco neutrino vtx in X-axis [cm]");
