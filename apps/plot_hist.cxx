@@ -1576,11 +1576,16 @@ int main( int argc, char** argv )
         gratio_mc2[obschannel-1]->GetYaxis()->SetRangeUser(0,int(1.5*maxratio)<2?int(1.5*maxratio):2);
         gratio_mc2[obschannel-1]->GetXaxis()->SetRangeUser(hmc->GetXaxis()->GetXmin(),hmc->GetXaxis()->GetXmax());
         }
-        if(obschannel>=5) //hard coded at this moment
+        /*if(obschannel>=5) //hard coded at this moment
         {
             gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco #pi^{0} energy [MeV]");
         }
-        else gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Energy [MeV]");
+        else*/ 
+        //Erin 
+        //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Energy [MeV]");
+        gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Cosine Angle");
+
+
         //else gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco neutrino vtx in X-axis [cm]");
         /* if(obschannel <=26) */
         /*     gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco neutrino energy [MeV]"); */
