@@ -1286,8 +1286,9 @@ int main( int argc, char** argv )
         hnueCCinFV->SetLineColor(kGreen+1);
         hnueCCinFV->SetLineWidth(1);
 
+        float scale_amount = 1.0;
+        float signal_amount = 0.0;
         if (obschannel == 1){
-            float scale_amount = 1.0;
             float num_bkg = 0.0;
             TList *stackHists = hstack[obschannel-1]->GetHists();
             for (int i=0;i<stackHists->GetSize();++i) {
@@ -1297,12 +1298,12 @@ int main( int argc, char** argv )
             scale_amount = (hdata->Integral() - num_bkg) / h1gscale->Integral();
             cout<< "scale_amount = " << scale_amount << endl;
             h1gscale->Scale(scale_amount);
-            float signal_amount = h1gscale->Integral();
+            signal_amount = h1gscale->Integral();
             //TList *stackHists = hstack[obschannel-1]->GetHists();
             for (int i=0;i<stackHists->GetSize();++i) {
                 h1gscale->Add((TH1*)stackHists->At(i));
             }
-            legend[obschannel-1]->AddEntry(h1gscale, Form("Signal x %.1f, %.1f", scale_amount, signal_amount), "F");
+            //legend[obschannel-1]->AddEntry(h1gscale, Form("Signal x %.1f, %.1f", scale_amount, signal_amount), "F");
             h1gscale->SetFillStyle(0);
             h1gscale->SetFillColorAlpha(kMagenta, 0.5);
             h1gscale->SetLineColor(kMagenta);
@@ -1525,6 +1526,7 @@ int main( int argc, char** argv )
         hmcerror->SetMarkerSize(0);
 
         if (obschannel==1){
+            legend[obschannel-1]->AddEntry(h1gscale, Form("Signal x %.1f, %.1f", scale_amount, signal_amount), "F");
             h1gscale->Draw("hist same");
         }
 
