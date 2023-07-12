@@ -1282,10 +1282,15 @@ int main( int argc, char** argv )
 
         if (obschannel == 1){
             float scale_amount = 1.0;
-            scale_amount = (hdata->Integral() - hstack[obschannel-1]->Integral()) / h1gscale->Integral();
+            float num_bkg = 0.0;
+            TList *stackHists = hstack[obschannel-1]->GetHists();
+            for (int i=0;i<stackHists->GetSize();++i) {
+                num_bkg+=((TH1*)stackHists->At(i))->Integral();
+            }
+            scale_amount = (hdata->Integral() - num_bkg) / h1gscale->Integral();
             h1gscale->Scale(scale_amount);
             float signal_amount = h1gscale->Integral();
-            TList *stackHists = hstack[obschannel-1]->GetHists();
+            //TList *stackHists = hstack[obschannel-1]->GetHists();
             for (int i=0;i<stackHists->GetSize();++i) {
                 h1gscale->Add((TH1*)stackHists->At(i));
             }
