@@ -918,6 +918,10 @@ int main( int argc, char** argv )
     THStack *hstack[nchannels];
     TLegend *legend[nchannels];
     TLegend *legend2[nchannels];
+
+    float scale_amount = 1.0;
+    float signal_amount = 0.0;
+
     for(auto it = map_obsch_subhistos.begin(); it!= map_obsch_subhistos.end(); it++){
         int obschannel = it->first;
         std::cout<<"Channel: "<<obschannel<<std::endl;
@@ -1200,9 +1204,6 @@ int main( int argc, char** argv )
         TH1F* hmc2 = (TH1F*)map_obsch_histos[obschannel].at(2)->Clone("hmc2");
         TH1F* hmcerror = (TH1F*)hmc->Clone("hmcerror");
         legend[obschannel-1]->AddEntry(hmcerror, "Pred. uncertainty", "lf");
-
-        float scale_amount = 1.0;
-        float signal_amount = 0.0;
 
         if(flag_truthlabel==0){
         // truth labels start
