@@ -1589,7 +1589,10 @@ int main( int argc, char** argv )
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Neutrino Energy [MeV]");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("NC#pi^{0} BDT Score");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco #pi^{0} Mass [MeV]");
-        gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Number of Showers");
+        //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Number of Showers");
+        gratio_mc[obschannel-1]->GetXaxis()->SetTitle("");
+        gratio_mc[obschannel-1]->GetXaxis()->SetBinLabel(1,"Np");
+        gratio_mc[obschannel-1]->GetXaxis()->SetBinLabel(2,"0p");
 
 
         //else gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco neutrino vtx in X-axis [cm]");
