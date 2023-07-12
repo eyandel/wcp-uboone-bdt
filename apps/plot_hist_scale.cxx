@@ -1069,6 +1069,12 @@ int main( int argc, char** argv )
                     hdirt->Add(htemp);
                     break;
                 }
+                if(line == "SPOutFVSig" || line == "SPNumuCCSig" || line == "SPNCOtherSig" || 
+                    line == "SPNCDeltaSig" || line == "SPNCPi0Sig") {
+                    std::cout<<"1gSigScale"<<" "<<histname<<std::endl;
+                    h1gscale->Add(htemp);
+                    //break;
+                }
                 if(line == "SPNCPi0Sig") {
                     std::cout<<"SPNCPi0Sig"<<" "<<histname<<std::endl;
                     hNCpi1g->Add(htemp);
@@ -1098,7 +1104,7 @@ int main( int argc, char** argv )
                     line == "SPNCDeltaSig" || line == "SPNCPi0Sig") {
                     std::cout<<"1gSigScale"<<" "<<histname<<std::endl;
                     h1gscale->Add(htemp);
-                    break;
+                    //break;
                 }
                 if(line == "LEE") {
                     std::cout<<"LEE"<<" "<<histname<<std::endl;
