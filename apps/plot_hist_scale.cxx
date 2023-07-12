@@ -1517,7 +1517,7 @@ int main( int argc, char** argv )
         hmcerror->SetMarkerSize(0);
 
         if (obschannel==1){
-            h1gscale->Draw("hist same")
+            h1gscale->Draw("hist same");
         }
 
         gratio_mc[obschannel-1] = new TGraphAsymmErrors();
