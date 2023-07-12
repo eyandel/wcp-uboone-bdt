@@ -1287,7 +1287,9 @@ int main( int argc, char** argv )
             for (int i=0;i<stackHists->GetSize();++i) {
                 num_bkg+=((TH1*)stackHists->At(i))->Integral();
             }
+            cout<< "num_bkg = " << num_bkg << endl;
             scale_amount = (hdata->Integral() - num_bkg) / h1gscale->Integral();
+            cout<< "scale_amount = " << scale_amount << endl;
             h1gscale->Scale(scale_amount);
             float signal_amount = h1gscale->Integral();
             //TList *stackHists = hstack[obschannel-1]->GetHists();
