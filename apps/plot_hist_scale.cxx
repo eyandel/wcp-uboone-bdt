@@ -1285,8 +1285,9 @@ int main( int argc, char** argv )
             scale_amount = (hdata->Integral() - hstack[obschannel-1]->Integral()) / h1gscale->Integral();
             h1gscale->Scale(scale_amount);
             float signal_amount = h1gscale->Integral();
-            for (int i=0;i<hstack[obschannel-1]->GetSize();++i) {
-                h1gscale->Add((TH1*)hstack[obschannel-1]->At(i));
+            TList *stackHists = hstack[obschannel-1]->GetHists();
+            for (int i=0;i<stackHists->GetSize();++i) {
+                h1gscale->Add((TH1*)stackHists->At(i));
             }
             legend[obschannel-1]->AddEntry(h1gscale, Form("Signal x %.1f, %.1f", scale_amount, signal_amount), "F");
             h1gscale->SetFillStyle(0);
