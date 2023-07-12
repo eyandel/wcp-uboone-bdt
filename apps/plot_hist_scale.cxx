@@ -1207,6 +1207,9 @@ int main( int argc, char** argv )
         TH1F* hmcerror = (TH1F*)hmc->Clone("hmcerror");
         legend[obschannel-1]->AddEntry(hmcerror, "Pred. uncertainty", "lf");
 
+        float scale_amount = 1.0;
+        float signal_amount = 0.0;
+
         if(flag_truthlabel==0){
         // truth labels start
         hstack[obschannel-1]->Add(hbadmatch);
@@ -1286,8 +1289,7 @@ int main( int argc, char** argv )
         hnueCCinFV->SetLineColor(kGreen+1);
         hnueCCinFV->SetLineWidth(1);
 
-        float scale_amount = 1.0;
-        float signal_amount = 0.0;
+
         if (obschannel == 1){
             float num_bkg = 0.0;
             TList *stackHists = hstack[obschannel-1]->GetHists();
