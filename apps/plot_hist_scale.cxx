@@ -1100,12 +1100,6 @@ int main( int argc, char** argv )
                     hout1g->Add(htemp);
                     break;
                 }
-                if(line == "SPOutFVSig" || line == "SPNumuCCSig" || line == "SPNCOtherSig" || 
-                    line == "SPNCDeltaSig" || line == "SPNCPi0Sig") {
-                    std::cout<<"1gSigScale"<<" "<<histname<<std::endl;
-                    h1gscale->Add(htemp);
-                    //break;
-                }
                 if(line == "LEE") {
                     std::cout<<"LEE"<<" "<<histname<<std::endl;
                     flag_leeexist = true;
@@ -1296,9 +1290,10 @@ int main( int argc, char** argv )
             for (int i=0;i<stackHists->GetSize();++i) {
                 num_bkg+=((TH1*)stackHists->At(i))->Integral();
             }
-            cout<< "h1gscale = " << h1gscale->Integral() << endl;
+            //cout<< "h1gscale = " << h1gscale->Integral() << endl;
             scale_amount = (hdata->Integral() - num_bkg) / h1gscale->Integral();
-            cout<< "scale_amount = " << scale_amount << endl;
+        }
+            //cout<< "scale_amount = " << scale_amount << endl;
             h1gscale->Scale(scale_amount);
             signal_amount = h1gscale->Integral();
             //TList *stackHists = hstack[obschannel-1]->GetHists();
@@ -1310,7 +1305,7 @@ int main( int argc, char** argv )
             h1gscale->SetFillColorAlpha(kMagenta, 0.5);
             h1gscale->SetLineColor(kMagenta);
             h1gscale->SetLineWidth(2);
-        }
+        //}
 
         hstack[obschannel-1]->Add(hNCpi1g);
         legend[obschannel-1]->AddEntry(hNCpi1g, Form("NC #pi^{0} 1#gamma, %.1f", hNCpi1g->Integral()), "F");
@@ -1527,10 +1522,10 @@ int main( int argc, char** argv )
         hmcerror->SetMarkerColor(0);
         hmcerror->SetMarkerSize(0);
 
-        if (obschannel==1){
+        //if (obschannel==1){
             legend[obschannel-1]->AddEntry(h1gscale, Form("Signal x %.1f, %.1f", scale_amount, signal_amount), "F");
             h1gscale->Draw("hist same");
-        }
+        //}
 
         gratio_mc[obschannel-1] = new TGraphAsymmErrors();
         gratio_mc2[obschannel-1] = new TGraphAsymmErrors();
