@@ -1283,10 +1283,9 @@ int main( int argc, char** argv )
         hnueCCinFV->SetLineColor(kGreen+1);
         hnueCCinFV->SetLineWidth(1);
 
-
+        TList *stackHists = hstack[obschannel-1]->GetHists();
         if (obschannel == 1){
             float num_bkg = 0.0;
-            TList *stackHists = hstack[obschannel-1]->GetHists();
             for (int i=0;i<stackHists->GetSize();++i) {
                 num_bkg+=((TH1*)stackHists->At(i))->Integral();
             }
