@@ -65,8 +65,8 @@ namespace LEEana{
     Float_t match_purity_xz;
 
     Float_t match_purity_xy;
-    Float_t weight_spline;
-    Float_t weight_cv;
+    Float_t weight_spline = 1.0;
+    Float_t weight_cv = 1.0;
     Float_t weight_lee;
 
     Bool_t weight_change;
