@@ -1304,7 +1304,7 @@ int main( int argc, char** argv )
             h1gscale->SetFillStyle(0);
             h1gscale->SetFillColorAlpha(kMagenta, 0.5);
             h1gscale->SetLineColor(kMagenta);
-            h1fscale->SetLineStyle(kDashed);
+            h1gscale->SetLineStyle(kDashed);
             h1gscale->SetLineWidth(2);
         //}
 
