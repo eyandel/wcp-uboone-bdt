@@ -1995,6 +1995,9 @@ int TLee::Exe_Goodness_of_fit(int num_Y, int num_X, TMatrixD matrix_pred, TMatri
   gh_ratio_noConstraint->Write();
   gh_ratio_wiConstraint->SetName("gh_ratio_wiConstraint");
   gh_ratio_wiConstraint->Write();
+  matrix_data_Y.SetName("matrix_data_Y");
+  matrix_Y_under_X.SetName("matrix_Y_under_X");
+  matrix_YY_under_XX.SetName("matrix_YY_under_XX");
   matrix_data_Y.Write();
   matrix_Y_under_X.Write();
   matrix_YY_under_XX.Write();
