@@ -1304,6 +1304,7 @@ int main( int argc, char** argv )
             h1gscale->SetFillStyle(0);
             h1gscale->SetFillColorAlpha(kMagenta, 0.5);
             h1gscale->SetLineColor(kMagenta);
+            h1fscale->SetLineStyle(kDashed);
             h1gscale->SetLineWidth(2);
         //}
 
@@ -1523,7 +1524,8 @@ int main( int argc, char** argv )
         hmcerror->SetMarkerSize(0);
 
         //if (obschannel==1){
-            legend[obschannel-1]->AddEntry(h1gscale, Form("Signal x %.1f, %.1f", scale_amount, signal_amount), "F");
+            double scalechi2 = hdata->Chi2Test(h1gscale,"CHI2");
+            legend[obschannel-1]->AddEntry(h1gscale, Form("Signal x %.1f, %.1f, #chi^{2} = %.2f", scale_amount, signal_amount, scalechi2), "F");
             h1gscale->Draw("hist same");
         //}
 
@@ -1622,9 +1624,9 @@ int main( int argc, char** argv )
         }
         else*/ 
         //Erin 
-        //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Energy [MeV]");
+        gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Energy [MeV]");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Cosine Angle");
-        gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Number of Tracks");
+        //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Number of Tracks");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("#nu_{e}CC BDT Score");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Neutrino Energy [MeV]");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("NC#pi^{0} BDT Score");
@@ -1765,12 +1767,12 @@ int main( int argc, char** argv )
         legend2[obschannel-1]->Draw();
         pad2->Modified();
 
-        canvas[obschannel-1]->Print((TString)hdata->GetTitle()+".png");
-        canvas[obschannel-1]->Print(Form("canvas%d.pdf", obschannel));
+        canvas[obschannel-1]->Print((TString)hdata->GetTitle()+"_scale.png");
+        canvas[obschannel-1]->Print(Form("scale_canvas%d.pdf", obschannel));
 
-        if(obschannel==1) canvas[obschannel-1]->Print("selection.pdf(");
-        else if(obschannel==nchannels) canvas[obschannel-1]->Print("selection.pdf)");
-        else canvas[obschannel-1]->Print("selection.pdf");
+        if(obschannel==1) canvas[obschannel-1]->Print("scale_selection.pdf(");
+        else if(obschannel==nchannels) canvas[obschannel-1]->Print("scale_selection.pdf)");
+        else canvas[obschannel-1]->Print("scale_selection.pdf");
 
     }
     theApp.Run();
