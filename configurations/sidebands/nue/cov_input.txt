@@ -1,8 +1,16 @@
-generic_nu_spoverlay		          kine_reco_Enu	                 25	   0	      2500   	1	      1		      1	    0	        0		      1		      9	      cv_spline           		0
-generic_nu_overlay_sp_BG          kine_reco_Enu	                 25	   0	      2500   	1	      1		      1	    0	        0		      1		      2	      cv_spline           		0
-BG_generic_nu_dirt		            kine_reco_Enu	                 25	   0	      2500  	1	      1		      0	    0.5	      0		      1		      4	      cv_spline    		        0
-BG_generic_nu_ext 		            kine_reco_Enu	                 25	   0	      2500  	1	      0		      0	    0 	      0		      2		      3	      unity		                0
-generic_nu_bnb                    kine_reco_Enu	                 25	   0	      2500  	1	      0		      0	    0 	      0		      0		      5	      unity   		            0
+sp_bdt_nue_Xp_spoverlay           median_dEdx_sp	               40    0        8   	 1	   1		      1	    0	        0		      1		      9	      cv_spline		      0
+sp_bdt_nue_Xp_ncpi0overlay        median_dEdx_sp	               40    0        8   	 1	   1		      1	    0	        0		      1		      6	      cv_spline		      0
+sp_bdt_nue_Xp_overlay_ncpi0_BG    median_dEdx_sp	               40    0        8   	 1	   1		      1	    0	        0		      1		      2	      cv_spline		      0
+sp_bdt_nue_Xp_dirt		            median_dEdx_sp	               40    0        8    	 1	   1		      0	    0.5	      0		      1		      4	      cv_spline		      0
+sp_bdt_nue_Xp_ext 		            median_dEdx_sp	               40    0        8    	 1	   0		      0	    0 	      0		      3		      3	      unity   		      0
+sp_bdt_nue_Xp 		                median_dEdx_sp	               40    0        8    	 1	   0		      0	    0 	      0		      0		      5	      unity   		      0
+
+sp_bdt_nue_2_Xp_spoverlay         shw_vtx_dis_sp	               20    0        10  	 2	   1		      1	    0	        0		      2		      9	      cv_spline		      0
+sp_bdt_nue_2_Xp_ncpi0overlay      shw_vtx_dis_sp	               20    0        10  	 2	   1		      1	    0	        0		      2		      6	      cv_spline		      0
+sp_bdt_nue_2_Xp_overlay_ncpi0_BG  shw_vtx_dis_sp	               20    0        10  	 2	   1		      1	    0	        0		      2		      2	      cv_spline		      0
+sp_bdt_nue_2_Xp_dirt		          shw_vtx_dis_sp	               20    0        10   	 2	   1		      0	    0.5	      0		      2		      4	      cv_spline		      0
+sp_bdt_nue_2_Xp_ext 		          shw_vtx_dis_sp	               20    0        10   	 2	   0		      0	    0 	      0		      4		      3	      unity   		      0
+sp_bdt_nue_2_Xp 		              shw_vtx_dis_sp	               20    0        10   	 2	   0		      0	    0 	      0		      0		      5	      unity   		      0
 End					                      End		                         -1	   -1	      -1	   -1	      -1		    -1	  -1		    -1		    -1		    -1	    end		                  -1
 
 

@@ -49,7 +49,7 @@
 /uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_inclusivephoton_run3_low_cv.root       SPNCOtherSig
 /uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_inclusivephoton_run3_low_cv.root       SPNumuCCSig
 /uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_inclusivephoton_run3_low_cv.root       SPOutFVSig
-/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_fakedata_3_sp.root                    all
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_fakedata_2_sp.root                    all
 /uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_dirt_run2_sp.root                     none
 /uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_dirt_run3_sp.root                     none
 end                                                                                                     end
