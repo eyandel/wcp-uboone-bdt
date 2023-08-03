@@ -912,6 +912,25 @@ double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, 
     return tagger.shw_sp_n_20br1_showers;
   }else if (var_name == "median_dEdx_sp"){
     return tagger.shw_sp_vec_median_dedx;
+  }else if (var_name == "median_dEdx_sp_15"){
+    std::vector<float> dqdx;
+    dqdx.push_back(tagger.shw_sp_vec_dQ_dx_2);
+    dqdx.push_back(tagger.shw_sp_vec_dQ_dx_3);
+    dqdx.push_back(tagger.shw_sp_vec_dQ_dx_4);
+    dqdx.push_back(tagger.shw_sp_vec_dQ_dx_5);
+    dqdx.push_back(tagger.shw_sp_vec_dQ_dx_6);
+    dqdx.push_back(tagger.shw_sp_vec_dQ_dx_7);
+    dqdx.push_back(tagger.shw_sp_vec_dQ_dx_8);
+    std::sort(dqdx.begin(), dqdx.end());
+    size_t vecsize = dqdx.size();
+    size_t mid = vecsize/2;
+    float median_dqdx = vecsize%2==0 ? (dqdx[mid]+dqdx[mid-1])/2:dqdx[mid];
+    float alpha = 1.;
+    float beta = 0.255;
+    float median_dedx = (exp((median_dqdx*43e3) * 23.6e-6*beta/1.38/0.273) - alpha)/(beta/1.38/0.273);
+    if(median_dedx<0) median_dedx = 0;
+    if(median_dedx>50) median_dedx = 50;
+    return median_dedx; // MeV/cm
   }else if (var_name == "shw_vtx_dis_sp"){
     return tagger.shw_sp_shw_vtx_dis;
   }else if (var_name == "max_shw_dis_sp"){
