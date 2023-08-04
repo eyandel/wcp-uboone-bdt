@@ -1682,6 +1682,26 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
     T_BDTvars->SetBranchStatus("shw_sp_vec_median_dedx",1);
     T_BDTvars->SetBranchStatus("shw_sp_shw_vtx_dis",1);
     T_BDTvars->SetBranchStatus("shw_sp_max_shw_dis",1);
+    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_0",1);
+    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_1",1);
+    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_2",1);
+    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_3",1);
+    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_4",1);
+    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_5",1);
+    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_6",1);
+    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_7",1);
+    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_8",1);
+    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_9",1);
+    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_10",1);
+    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_11",1);
+    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_12",1);
+    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_13",1);
+    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_14",1);
+    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_15",1);
+    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_16",1);
+    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_17",1);
+    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_18",1);
+    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_19",1);
   }
   //
 
