@@ -1589,6 +1589,7 @@ int main( int argc, char** argv )
         ///hack
          if(obschannel==1) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Median dE/dx (0-4 cm) [MeV/cm]");
          if(obschannel==2) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Shower Conversion Distance [cm]");
+         if(obschannel==2) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("#nu_{e}CC Background BDT Score");
         /* else if(obschannel==3) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("nue BDT score"); */
         /* if(obschannel==1) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Median dQ/dx (1-5 cm) [43k e-/cm]"); */
         /* if(obschannel==2) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Shower angle to beam (Z-axis) [degree]"); */
