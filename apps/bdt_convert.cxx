@@ -3020,6 +3020,10 @@ int main( int argc, char** argv )
   TMVA::Reader reader_single_photon_ncpi0;
   TMVA::Reader reader_single_photon_nue;
 
+  double em_charge_scale = 0.95;
+  auto vec_median_dedx = tagger.shw_sp_vec_median_dedx;
+  if(flag_data) vec_median_dedx*=em_charge_scale;
+
   reader_single_photon_numu.AddVariable("numu_cc_flag_3",&tagger.numu_cc_flag_3);
   reader_single_photon_numu.AddVariable("numu_cc_3_particle_type", &tagger.numu_cc_3_particle_type);
   reader_single_photon_numu.AddVariable("numu_cc_3_max_length", &tagger.numu_cc_3_max_length);
@@ -3218,7 +3222,7 @@ int main( int argc, char** argv )
   reader_single_photon_other.AddVariable("shw_sp_vec_dQ_dx_17",&tagger.shw_sp_vec_dQ_dx_17);
   reader_single_photon_other.AddVariable("shw_sp_vec_dQ_dx_18",&tagger.shw_sp_vec_dQ_dx_18);
   reader_single_photon_other.AddVariable("shw_sp_vec_dQ_dx_19",&tagger.shw_sp_vec_dQ_dx_19);
-  reader_single_photon_other.AddVariable("shw_sp_vec_median_dedx",&tagger.shw_sp_vec_median_dedx);
+  reader_single_photon_other.AddVariable("shw_sp_vec_median_dedx",&vec_median_dedx);
   reader_single_photon_other.AddVariable("shw_sp_proton_length_1", &tagger.shw_sp_proton_length_1);
   reader_single_photon_other.AddVariable("shw_sp_proton_dqdx_1", &tagger.shw_sp_proton_dqdx_1);
   reader_single_photon_other.AddVariable("shw_sp_proton_energy_1",&tagger.shw_sp_proton_energy_1);
@@ -3333,7 +3337,7 @@ int main( int argc, char** argv )
   reader_single_photon_nue.AddVariable("shw_sp_vec_dQ_dx_17",&tagger.shw_sp_vec_dQ_dx_17);
   reader_single_photon_nue.AddVariable("shw_sp_vec_dQ_dx_18",&tagger.shw_sp_vec_dQ_dx_18);
   reader_single_photon_nue.AddVariable("shw_sp_vec_dQ_dx_19",&tagger.shw_sp_vec_dQ_dx_19);
-  reader_single_photon_nue.AddVariable("shw_sp_vec_median_dedx",&tagger.shw_sp_vec_median_dedx);
+  reader_single_photon_nue.AddVariable("shw_sp_vec_median_dedx",&vec_median_dedx);
   reader_single_photon_nue.AddVariable("shw_sp_proton_length_1", &tagger.shw_sp_proton_length_1);
   reader_single_photon_nue.AddVariable("shw_sp_proton_dqdx_1", &tagger.shw_sp_proton_dqdx_1);
   reader_single_photon_nue.AddVariable("shw_sp_proton_energy_1",&tagger.shw_sp_proton_energy_1);
