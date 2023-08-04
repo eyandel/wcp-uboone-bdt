@@ -911,7 +911,10 @@ double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, 
   }else if (var_name == "num_shower_sp"){
     return tagger.shw_sp_n_20br1_showers;
   }else if (var_name == "median_dEdx_sp"){
-    return tagger.shw_sp_vec_median_dedx;
+    if(flag_data)
+      return tagger.shw_sp_vec_median_dedx*em_charge_scale;
+    else
+      return tagger.shw_sp_vec_median_dedx;
   }else if (var_name == "median_dEdx_sp_15"){
     std::vector<float> dqdx;
     dqdx.push_back(tagger.shw_sp_vec_dQ_dx_2);
