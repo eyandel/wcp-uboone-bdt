@@ -933,7 +933,10 @@ double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, 
     float median_dedx = (exp((median_dqdx*43e3) * 23.6e-6*beta/1.38/0.273) - alpha)/(beta/1.38/0.273);
     if(median_dedx<0) median_dedx = 0;
     if(median_dedx>50) median_dedx = 50;
-    return median_dedx; // MeV/cm
+    if(flag_data)
+      return median_dedx*em_charge_scale;
+    else
+      return median_dedx; // MeV/cm
   }else if (var_name == "dQdx_0_sp"){
     if(flag_data)
       return tagger.shw_sp_vec_dQ_dx_0*em_charge_scale;
