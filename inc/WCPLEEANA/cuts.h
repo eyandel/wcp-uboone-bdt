@@ -934,6 +934,16 @@ double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, 
     if(median_dedx<0) median_dedx = 0;
     if(median_dedx>50) median_dedx = 50;
     return median_dedx; // MeV/cm
+  }else if (var_name == "dQdx_0_sp"){
+    //if(flag_data)
+    //  return tagger.shw_sp_vec_median_dedx*em_charge_scale;
+    //else
+      return tagger.shw_sp_vec_dQ_dx_0;
+  }else if (var_name == "dQdx_1_sp"){
+    //if(flag_data)
+    //  return tagger.shw_sp_vec_median_dedx*em_charge_scale;
+    //else
+      return tagger.shw_sp_vec_dQ_dx_1;
   }else if (var_name == "shw_vtx_dis_sp"){
     return tagger.shw_sp_shw_vtx_dis;
   }else if (var_name == "max_shw_dis_sp"){
