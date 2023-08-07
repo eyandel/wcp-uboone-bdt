@@ -940,9 +940,9 @@ double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, 
     //else
       return tagger.shw_sp_vec_dQ_dx_0;
   }else if (var_name == "dQdx_1_sp"){
-    //if(flag_data)
-    //  return tagger.shw_sp_vec_median_dedx*em_charge_scale;
-    //else
+    if(flag_data)
+      return tagger.shw_sp_vec_dQ_dx_1*em_charge_scale;
+    else
       return tagger.shw_sp_vec_dQ_dx_1;
   }else if (var_name == "shw_vtx_dis_sp"){
     return tagger.shw_sp_shw_vtx_dis;
