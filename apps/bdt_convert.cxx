@@ -3043,7 +3043,7 @@ int main( int argc, char** argv )
   auto vec_dQ_dx_17    = tagger.shw_sp_vec_dQ_dx_17;
   auto vec_dQ_dx_18    = tagger.shw_sp_vec_dQ_dx_18;
   auto vec_dQ_dx_19    = tagger.shw_sp_vec_dQ_dx_19;
-  if(flag_data) {
+  /*if(flag_data) {
     vec_median_dedx *= em_charge_scale;
     vec_mean_dedx   *= em_charge_scale;
     vec_dQ_dx_0     *= em_charge_scale;
@@ -3066,7 +3066,7 @@ int main( int argc, char** argv )
     vec_dQ_dx_17    *= em_charge_scale;
     vec_dQ_dx_18    *= em_charge_scale;
     vec_dQ_dx_19    *= em_charge_scale;
-  }
+  }*/
 
   reader_single_photon_numu.AddVariable("numu_cc_flag_3",&tagger.numu_cc_flag_3);
   reader_single_photon_numu.AddVariable("numu_cc_3_particle_type", &tagger.numu_cc_3_particle_type);
