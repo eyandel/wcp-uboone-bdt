@@ -414,7 +414,7 @@ void extractNuMIGeometryWeights(string path_to_CV, string path_to_weightHistos,s
       }
     }
 
-    if(truth_nuPdg==14 && hornMode=="RHC"){
+    if(truth_nuPdg==12 && hornMode=="RHC"){
       for (size_t j=0; j<50; j++) {
         mcweight->push_back(1+sqrt(10)*(-1+h_nue_RHC_variation1->GetBinContent(h_nue_RHC_variation1->FindBin(truth_nuEnergy/1000))));
         mcweight->push_back(1+sqrt(10)*(-1+h_nue_RHC_variation2->GetBinContent(h_nue_RHC_variation2->FindBin(truth_nuEnergy/1000))));
@@ -439,7 +439,7 @@ void extractNuMIGeometryWeights(string path_to_CV, string path_to_weightHistos,s
       }
     }
 
-    if(truth_nuPdg==-14 && hornMode=="RHC"){
+    if(truth_nuPdg==-12 && hornMode=="RHC"){
       for (size_t j=0; j<50; j++) {
         mcweight->push_back(1+sqrt(10)*(-1+h_nuebar_RHC_variation1->GetBinContent(h_nuebar_RHC_variation1->FindBin(truth_nuEnergy/1000))));
         mcweight->push_back(1+sqrt(10)*(-1+h_nuebar_RHC_variation2->GetBinContent(h_nuebar_RHC_variation2->FindBin(truth_nuEnergy/1000))));

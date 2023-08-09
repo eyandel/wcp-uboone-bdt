@@ -2951,7 +2951,7 @@ int main( int argc, char** argv )
     if (flag_data && skip_cut == 0){
       if (good_runlist_set.find(pot.runNo) == good_runlist_set.end()) continue;
       if (low_lifetime_set.find(pot.runNo) != low_lifetime_set.end()) continue;
-      if (flag_numi && low_neutrino_count_numi_run2RHC_set.find(eval.run) != low_neutrino_count_numi_run2RHC_set.end()) continue;
+      if (flag_numi && low_neutrino_count_numi_run2RHC_set.find(pot.runNo) != low_neutrino_count_numi_run2RHC_set.end()) continue;
 
       //bad run in run 1 due to beam filter bnb
       //if (pot.runNo <= 5367 && pot.runNo >= 5320) continue;
