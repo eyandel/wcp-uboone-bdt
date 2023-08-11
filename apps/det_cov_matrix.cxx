@@ -96,6 +96,10 @@ int main( int argc, char** argv )
   cov.add_disabled_ch_name("single_photon_eff_ncpi0overlay_Np");
   cov.add_disabled_ch_name("single_shower_ncpi0overlay_Np");
   cov.add_disabled_ch_name("single_shower_eff_ncpi0overlay_Np");
+
+  cov.add_disabled_ch_name("sp_bdt_nc_pi0_Xp_overlay_ncpi0_BG");
+  cov.add_disabled_ch_name("sp_bdt_nc_pi0_Xp_overlay_ncpi0_0p_BG");
+  cov.add_disabled_ch_name("sp_bdt_nc_pi0_Xp_overlay_ncpi0_Np_BG");
   //
 
   if (flag_osc) cov.add_osc_config();
