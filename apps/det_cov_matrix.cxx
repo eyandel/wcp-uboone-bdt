@@ -83,7 +83,7 @@ int main( int argc, char** argv )
   cov.add_disabled_ch_name("single_photon_eff_overlay_ncpi0_Np_BG");
   cov.add_disabled_ch_name("single_shower_overlay_ncpi0_Np_BG");
   cov.add_disabled_ch_name("single_shower_eff_overlay_ncpi0_Np_BG");
-  sp_bdt_nue_Xp_ncpi0overlay
+  
   cov.add_disabled_ch_name("single_photon_ncpi0overlay");
   cov.add_disabled_ch_name("single_photon_eff_ncpi0overlay");
   cov.add_disabled_ch_name("single_shower_ncpi0overlay");
