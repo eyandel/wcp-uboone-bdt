@@ -1525,7 +1525,7 @@ int main( int argc, char** argv )
 
         //if (obschannel==1){
             double scalechi2 = hdata->Chi2Test(h1gscale,"CHI2");
-            legend[obschannel-1]->AddEntry(h1gscale, Form("Signal x %.1f, %.1f, #chi^{2} = %.2f", scale_amount, signal_amount, scalechi2), "F");
+            legend[obschannel-1]->AddEntry(h1gscale, Form("Signal x %.2f, %.1f, #chi^{2} = %.2f", scale_amount, signal_amount, scalechi2), "F");
             h1gscale->Draw("hist same");
         //}
 
