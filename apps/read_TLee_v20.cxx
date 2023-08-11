@@ -1070,7 +1070,7 @@ int main(int argc, char** argv)
 
   //////////////////////////////////////////////////////////////////////////////////////// example: simple versus simple likelihood ratio test
 
-  if( 0 ) {
+  if( 1 ) {
     Lee_test->Set_measured_data();// use the measured data as the input data for the fitting
 
     Lee_test->Minimization_Lee_strength_FullCov(1, 1);// (initial value, fix or not)
