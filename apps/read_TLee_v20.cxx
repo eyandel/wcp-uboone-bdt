@@ -1070,7 +1070,7 @@ int main(int argc, char** argv)
 
   //////////////////////////////////////////////////////////////////////////////////////// example: simple versus simple likelihood ratio test
 
-  if( 1 ) {
+  if( 0 ) {
     Lee_test->Set_measured_data();// use the measured data as the input data for the fitting
 
     Lee_test->Minimization_Lee_strength_FullCov(1, 1);// (initial value, fix or not)
@@ -1086,7 +1086,7 @@ int main(int argc, char** argv)
 
   ////////////////////////////////////////////////////////// sensitivity calcualtion by FC
 
-  if( 0 ) {
+  if( 1 ) {
     double chi2_null_null8sm_true8sm  = 0;
     double chi2_gmin_null8sm_true8sm  = 0;
     double chi2_null_null8Lee_true8Lee = 0;
