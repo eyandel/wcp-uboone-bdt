@@ -6998,7 +6998,7 @@ bool LEEana::is_singlephoton_nue_sel(TaggerInfo& tagger_info, PFevalInfo& pfeval
     pfeval.reco_nuvtxX>5.0 && pfeval.reco_nuvtxX<250.0 &&
     tagger_info.single_photon_numu_score > 0.1 && tagger_info.single_photon_other_score > -0.4 &&
     tagger_info.single_photon_ncpi0_score > -0.4 && tagger_info.single_photon_nue_score < -3.0 &&
-    //tagger_info.shw_sp_n_20br1_showers==1 &&
+    tagger_info.shw_sp_n_20br1_showers==1 &&
     tagger_info.single_photon_nue_score > -20.0) {flag = true;}
   return flag;
 }
