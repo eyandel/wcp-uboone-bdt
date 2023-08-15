@@ -1086,7 +1086,7 @@ int main(int argc, char** argv)
 
   ////////////////////////////////////////////////////////// sensitivity calcualtion by FC
 
-  if( 1 ) {
+  if( 0 ) {
     double chi2_null_null8sm_true8sm  = 0;
     double chi2_gmin_null8sm_true8sm  = 0;
     double chi2_null_null8Lee_true8Lee = 0;
