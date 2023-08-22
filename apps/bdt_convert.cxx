@@ -3527,7 +3527,7 @@ int main( int argc, char** argv )
 
     // Single Photon BDTs ... Erin
     float em_charge_scale = 1.0;
-    if(flag_data) em_charge_scale = 0.95;
+    //if(flag_data) em_charge_scale = 0.95;
     tagger.shw_sp_vec_median_dedx *= em_charge_scale;
     tagger.shw_sp_vec_mean_dedx   *= em_charge_scale;
     tagger.shw_sp_vec_dQ_dx_0     *= em_charge_scale;
