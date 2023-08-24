@@ -922,18 +922,6 @@ int main( int argc, char** argv )
     float scale_amount = 1.0;
     float signal_amount = 0.0;
 
-    float scale_amount_NCpi1g   = 1.0;
-    float scale_amount_NCdel    = 1.0;
-    float scale_amount_NCother  = 1.0;
-    float scale_amount_numuCC1g = 1.0;
-    float scale_amount_out1g    = 1.0;
-
-    float signal_amount_NCpi1g   = 0.0;
-    float signal_amount_NCdel    = 0.0;
-    float signal_amount_NCother  = 0.0;
-    float signal_amount_numuCC1g = 0.0;
-    float signal_amount_out1g    = 0.0;
-
     for(auto it = map_obsch_subhistos.begin(); it!= map_obsch_subhistos.end(); it++){
         int obschannel = it->first;
         std::cout<<"Channel: "<<obschannel<<std::endl;
@@ -968,14 +956,7 @@ int main( int argc, char** argv )
         TH1F* hNCother  = (TH1F*)hdata->Clone("hNCother");
         TH1F* hnumuCC1g = (TH1F*)hdata->Clone("hnumuCC1g");
         TH1F* hout1g    = (TH1F*)hdata->Clone("hout1g");
-        //scale
         TH1F* h1gscale    = (TH1F*)hdata->Clone("h1gscale");
-        TH1F* hNCpi1gscale    = (TH1F*)hdata->Clone("hNCpi1gscale");
-        TH1F* hNCdelscale    = (TH1F*)hdata->Clone("hNCdelscale");
-        TH1F* hNCotherscale    = (TH1F*)hdata->Clone("hNCotherscale");
-        TH1F* hnumuCC1gscale    = (TH1F*)hdata->Clone("hnumuCC1gscale");
-        TH1F* hout1gscale    = (TH1F*)hdata->Clone("hout1gscale");
-        //
         TH1F* hLEE = (TH1F*)hdata->Clone("hLEE");
         TH1F* hCCQE = (TH1F*)hdata->Clone("hCCQE");
         TH1F* hNCQE = (TH1F*)hdata->Clone("hNCQE");
@@ -1007,11 +988,6 @@ int main( int argc, char** argv )
         hnumuCC1g->Reset();
         hout1g->Reset();
         h1gscale->Reset();
-        hNCpi1gscale->Reset();
-        hNCdelscale->Reset();
-        hNCotherscale->Reset();
-        hnumuCC1gscale->Reset();
-        hout1gscale->Reset();
         hLEE->Reset();
         hCCQE->Reset();
         hNCQE->Reset();
@@ -1106,31 +1082,26 @@ int main( int argc, char** argv )
                 if(line == "SPNCPi0Sig") {
                     std::cout<<"SPNCPi0Sig"<<" "<<histname<<std::endl;
                     hNCpi1g->Add(htemp);
-                    hNCpi1gscale->Add(htemp);
                     break;
                 }
                 if(line == "SPNCDeltaSig") {
                     std::cout<<"SPNCDeltaSig"<<" "<<histname<<std::endl;
                     hNCdel->Add(htemp);
-                    hNCdelscale->Add(htemp);
                     break;
                 }
                 if(line == "SPNCOtherSig") {
                     std::cout<<"SPNCOtherSig"<<" "<<histname<<std::endl;
                     hNCother->Add(htemp);
-                    hNCotherscale->Add(htemp);
                     break;
                 }
                 if(line == "SPNumuCCSig") {
                     std::cout<<"SPNumuCCSig"<<" "<<histname<<std::endl;
                     hnumuCC1g->Add(htemp);
-                    hnumuCC1gscale->Add(htemp);
                     break;
                 }
                 if(line == "SPOutFVSig") {
                     std::cout<<"SPOutFVSig"<<" "<<histname<<std::endl;
                     hout1g->Add(htemp);
-                    hout1gscale->Add(htemp);
                     break;
                 }
                 if(line == "LEE") {
@@ -1321,18 +1292,6 @@ int main( int argc, char** argv )
             }
             //cout<< "h1gscale = " << h1gscale->Integral() << endl;
             scale_amount = (hdata->Integral() - num_bkg) / h1gscale->Integral();
-
-            float num_bkg_NCpi1g = num_bkg + hNCdel->Integral() + hNCother->Integral() + hnumuCC1g->Integral() + hout1g->Integral();
-            float num_bkg_NCdel = num_bkg + hNCpi1g->Integral() + hNCother->Integral() + hnumuCC1g->Integral() + hout1g->Integral();
-            float num_bkg_NCother = num_bkg + hNCpi1g->Integral() + hNCdel->Integral() + hnumuCC1g->Integral() + hout1g->Integral();
-            float num_bkg_numuCC1g = num_bkg + hNCpi1g->Integral() + hNCdel->Integral() + hNCother->Integral() + hout1g->Integral();
-            float num_bkg_out1g = num_bkg + hNCpi1g->Integral() + hNCdel->Integral() + hNCother->Integral() + hnumuCC1g->Integral();
-
-            scale_amount_NCpi1g   = (hdata->Integral() - num_bkg_NCpi1g) / hNCpi1gscale->Integral();
-            scale_amount_NCdel    = (hdata->Integral() - num_bkg_NCdel) / hNCdelscale->Integral();
-            scale_amount_NCother  = (hdata->Integral() - num_bkg_NCother) / hNCotherscale->Integral();
-            scale_amount_numuCC1g = (hdata->Integral() - num_bkg_numuCC1g) / hnumuCC1gscale->Integral();
-            scale_amount_out1g    = (hdata->Integral() - num_bkg_out1g) / hout1gscale->Integral();
         }
             //cout<< "scale_amount = " << scale_amount << endl;
             h1gscale->Scale(scale_amount);
@@ -1347,81 +1306,6 @@ int main( int argc, char** argv )
             h1gscale->SetLineColor(kMagenta);
             h1gscale->SetLineStyle(kDashed);
             h1gscale->SetLineWidth(2);
-
-            hNCpi1gscale->Scale(scale_amount_NCpi1g);
-            signal_amount_NCpi1g = hNCpi1gscale->Integral();
-            for (int i=0;i<stackHists->GetSize();++i) {
-                hNCpi1gscale->Add((TH1*)stackHists->At(i));
-            }
-            hNCpi1gscale->Add(hNCdel);
-            hNCpi1gscale->Add(hNCother);
-            hNCpi1gscale->Add(hnumuCC1g);
-            hNCpi1gscale->Add(hout1g);
-            hNCpi1gscale->SetFillStyle(0);
-            hNCpi1gscale->SetFillColorAlpha(kPink+5, 0.5);
-            hNCpi1gscale->SetLineColor(kPink+5);
-            hNCpi1gscale->SetLineStyle(kDashed);
-            hNCpi1gscale->SetLineWidth(2);
-
-            hNCdelscale->Scale(scale_amount_NCdel);
-            signal_amount_NCdel = hNCdelscale->Integral();
-            for (int i=0;i<stackHists->GetSize();++i) {
-                hNCdelscale->Add((TH1*)stackHists->At(i));
-            }
-            hNCdelscale->Add(hNCpi1g);
-            hNCdelscale->Add(hNCother);
-            hNCdelscale->Add(hnumuCC1g);
-            hNCdelscale->Add(hout1g);
-            hNCdelscale->SetFillStyle(0);
-            hNCdelscale->SetFillColorAlpha(kPink-6, 0.5);
-            hNCdelscale->SetLineColor(kPink-6);
-            hNCdelscale->SetLineStyle(kDashed);
-            hNCdelscale->SetLineWidth(2);
-
-            hNCotherscale->Scale(scale_amount_NCother);
-            signal_amount_NCother = hNCotherscale->Integral();
-            for (int i=0;i<stackHists->GetSize();++i) {
-                hNCotherscale->Add((TH1*)stackHists->At(i));
-            }
-            hNCotherscale->Add(hNCpi1g);
-            hNCotherscale->Add(hNCdel);
-            hNCotherscale->Add(hnumuCC1g);
-            hNCotherscale->Add(hout1g);
-            hNCotherscale->SetFillStyle(0);
-            hNCotherscale->SetFillColorAlpha(kPink-8, 0.5);
-            hNCotherscale->SetLineColor(kPink-8);
-            hNCotherscale->SetLineStyle(kDashed);
-            hNCotherscale->SetLineWidth(2);
-
-            hnumuCC1gscale->Scale(scale_amount_numuCC1g);
-            signal_amount_numuCC1g = hnumuCC1gscale->Integral();
-            for (int i=0;i<stackHists->GetSize();++i) {
-                hnumuCC1gscale->Add((TH1*)stackHists->At(i));
-            }
-            hnumuCC1gscale->Add(hNCpi1g);
-            hnumuCC1gscale->Add(hNCdel);
-            hnumuCC1gscale->Add(hNCother);
-            hnumuCC1gscale->Add(hout1g);
-            hnumuCC1gscale->SetFillStyle(0);
-            hnumuCC1gscale->SetFillColorAlpha(kPink-7, 0.5);
-            hnumuCC1gscale->SetLineColor(kPink-7);
-            hnumuCC1gscale->SetLineStyle(kDashed);
-            hnumuCC1gscale->SetLineWidth(2);
-
-            hout1gscale->Scale(scale_amount_out1g);
-            signal_amount_out1g = hout1gscale->Integral();
-            for (int i=0;i<stackHists->GetSize();++i) {
-                hout1gscale->Add((TH1*)stackHists->At(i));
-            }
-            hout1gscale->Add(hNCpi1g);
-            hout1gscale->Add(hNCdel);
-            hout1gscale->Add(hNCother);
-            hout1gscale->Add(hnumuCC1g);
-            hout1gscale->SetFillStyle(0);
-            hout1gscale->SetFillColorAlpha(kPink, 0.5);
-            hout1gscale->SetLineColor(kPink);
-            hout1gscale->SetLineStyle(kDashed);
-            hout1gscale->SetLineWidth(2);
         //}
 
         hstack[obschannel-1]->Add(hNCpi1g);
@@ -1643,26 +1527,6 @@ int main( int argc, char** argv )
             double scalechi2 = hdata->Chi2Test(h1gscale,"CHI2");
             legend[obschannel-1]->AddEntry(h1gscale, Form("Signal x %.2f, %.1f, #chi^{2} = %.2f", scale_amount, signal_amount, scalechi2), "F");
             h1gscale->Draw("hist same");
-
-            double scalechi2_NCpi1g = hdata->Chi2Test(hNCpi1gscale,"CHI2");
-            legend[obschannel-1]->AddEntry(hNCpi1gscale, Form("NC #pi^{0} 1#gamma x %.2f, %.1f, #chi^{2} = %.2f", scale_amount_NCpi1g, signal_amount_NCpi1g, scalechi2_NCpi1g), "F");
-            hNCpi1gscale->Draw("hist same");
-
-            double scalechi2_NCdel = hdata->Chi2Test(hNCdelscale,"CHI2");
-            legend[obschannel-1]->AddEntry(hNCdelscale, Form("NC #Delta 1#gamma x %.2f, %.1f, #chi^{2} = %.2f", scale_amount_NCdel, signal_amount_NCdel, scalechi2_NCdel), "F");
-            hNCdelscale->Draw("hist same");     
-
-            double scalechi2_NCother = hdata->Chi2Test(hNCotherscale,"CHI2");
-            legend[obschannel-1]->AddEntry(hNCotherscale, Form("NC Other 1#gamma x %.2f, %.1f, #chi^{2} = %.2f", scale_amount_NCother, signal_amount_NCother, scalechi2_NCother), "F");
-            hNCotherscale->Draw("hist same"); 
-
-            double scalechi2_numuCC1g = hdata->Chi2Test(hnumuCC1gscale,"CHI2");
-            legend[obschannel-1]->AddEntry(hnumuCC1gscale, Form("#nu_{#mu}CC 1#gamma x %.2f, %.1f, #chi^{2} = %.2f", scale_amount_numuCC1g, signal_amount_numuCC1g, scalechi2_numuCC1g), "F");
-            hnumuCC1gscale->Draw("hist same");
-
-            double scalechi2_out1g = hdata->Chi2Test(hout1gscale,"CHI2");
-            legend[obschannel-1]->AddEntry(hout1gscale, Form("out of FV 1#gamma x %.2f, %.1f, #chi^{2} = %.2f", scale_amount_out1g, signal_amount_out1g, scalechi2_out1g), "F");
-            hout1gscale->Draw("hist same");
         //}
 
         gratio_mc[obschannel-1] = new TGraphAsymmErrors();
