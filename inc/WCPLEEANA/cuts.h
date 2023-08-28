@@ -4160,6 +4160,16 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
               && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
               && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0)) return true;
             return false;
+  }else if (ch_name == "single_photon_spoverlay_nodelta"){
+            if (flag_singlephoton_sel &&
+              (map_cuts_flag["SPOutFVSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])) return true;
+            return false;
+  }else if (ch_name == "single_photon_spoverlay_delta"){
+            if (flag_singlephoton_sel &&
+              map_cuts_flag["SPNCDeltaSig"]) return true;
+            return false;
   }else if (ch_name == "single_photon_spoverlay"){
             if (flag_singlephoton_sel &&
               (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
@@ -6055,6 +6065,16 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
               map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
               map_cuts_flag["SPNumuCCSig"])) return true;
             return false;
+  }else if (ch_name == "sp_bdt_nc_pi0_Xp_spoverlay_nodelta"){
+            if (flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) &&
+              (map_cuts_flag["SPOutFVSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])) return true;
+            return false;
+  }else if (ch_name == "sp_bdt_nc_pi0_Xp_spoverlay_delta"){
+            if (flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) &&
+              map_cuts_flag["SPNCDeltaSig"]) return true;
+            return false;
   }else if (ch_name == "sp_bdt_nc_pi0_0p_ncpi0overlay" || ch_name == "sp_bdt_nc_pi0_2_0p_ncpi0overlay" || ch_name == "sp_bdt_nc_pi0_3_0p_ncpi0overlay" || ch_name == "sp_bdt_nc_pi0_4_0p_ncpi0overlay"
             || ch_name == "sp_bdt_nc_pi0_5_0p_ncpi0overlay" || ch_name == "sp_bdt_nc_pi0_6_0p_ncpi0overlay" || ch_name == "sp_bdt_nc_pi0_7_0p_ncpi0overlay" || ch_name == "sp_bdt_nc_pi0_8_0p_ncpi0overlay"
             || ch_name == "sp_bdt_nc_pi0_9_0p_ncpi0overlay" || ch_name == "sp_bdt_nc_pi0_10_0p_ncpi0overlay" || ch_name == "sp_bdt_nc_pi0_11_0p_ncpi0overlay" || ch_name == "sp_bdt_nc_pi0_12_0p_ncpi0overlay"){
@@ -6284,6 +6304,16 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
                   && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
                   && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
                   && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0)) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_numuCC_Xp_spoverlay_nodelta" ){
+                if (flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) &&
+                  (map_cuts_flag["SPOutFVSig"] ||
+                  map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+                  map_cuts_flag["SPNumuCCSig"])) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_numuCC_Xp_spoverlay_delta" ){
+                if (flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) &&
+                  map_cuts_flag["SPNCDeltaSig"]) return true;
                 return false;
   }else if (ch_name == "sp_bdt_numuCC_Xp_spoverlay" || ch_name == "sp_bdt_numuCC_2_Xp_spoverlay" || ch_name == "sp_bdt_numuCC_3_Xp_spoverlay" || ch_name == "sp_bdt_numuCC_4_Xp_spoverlay"
              || ch_name == "sp_bdt_numuCC_5_Xp_spoverlay" || ch_name == "sp_bdt_numuCC_6_Xp_spoverlay" || ch_name == "sp_bdt_numuCC_7_Xp_spoverlay" || ch_name == "sp_bdt_numuCC_8_Xp_spoverlay"){
