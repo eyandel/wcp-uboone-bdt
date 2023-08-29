@@ -421,7 +421,7 @@ int main(int argc, char** argv)
 
   //Erin
 
-  int make_constrained_sp_plot = 1;
+  int make_constrained_sp_plot = 0;
 
   if (make_constrained_sp_plot) {
 
