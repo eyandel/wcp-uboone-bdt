@@ -98,8 +98,19 @@ int main( int argc, char** argv )
   cov.add_disabled_ch_name("single_shower_eff_ncpi0overlay_Np");
 
   cov.add_disabled_ch_name("sp_bdt_nc_pi0_Xp_overlay_ncpi0_BG");
-  cov.add_disabled_ch_name("sp_bdt_nc_pi0_Xp_overlay_ncpi0_0p_BG");
-  cov.add_disabled_ch_name("sp_bdt_nc_pi0_Xp_overlay_ncpi0_Np_BG");
+  cov.add_disabled_ch_name("sp_bdt_nc_pi0_0p_overlay_ncpi0_BG");
+  cov.add_disabled_ch_name("sp_bdt_nc_pi0_Np_overlay_ncpi0_BG");
+  cov.add_disabled_ch_name("sp_bdt_nc_pi0_2_Xp_overlay_ncpi0_BG");
+  cov.add_disabled_ch_name("sp_bdt_nc_pi0_3_Xp_overlay_ncpi0_BG");
+  cov.add_disabled_ch_name("sp_bdt_nc_pi0_4_Xp_overlay_ncpi0_BG");
+  cov.add_disabled_ch_name("sp_bdt_nc_pi0_5_Xp_overlay_ncpi0_BG");
+  cov.add_disabled_ch_name("sp_bdt_nc_pi0_6_Xp_overlay_ncpi0_BG");
+  cov.add_disabled_ch_name("sp_bdt_nc_pi0_7_Xp_overlay_ncpi0_BG");
+  cov.add_disabled_ch_name("sp_bdt_nc_pi0_8_Xp_overlay_ncpi0_BG");
+  cov.add_disabled_ch_name("sp_bdt_nc_pi0_9_Xp_overlay_ncpi0_BG");
+  cov.add_disabled_ch_name("sp_bdt_nc_pi0_10_Xp_overlay_ncpi0_BG");
+  cov.add_disabled_ch_name("sp_bdt_nc_pi0_11_Xp_overlay_ncpi0_BG");
+  cov.add_disabled_ch_name("sp_bdt_nc_pi0_12_Xp_overlay_ncpi0_BG");
   //
 
   if (flag_osc) cov.add_osc_config();
