@@ -1,3 +1,19 @@
+sp_bdt_nue_Xp_spoverlay           dQdx_0_sp     	               40    0        8   	 1	   1		      1	    0	        0		      1		      9	      cv_spline		      0
+sp_bdt_nue_Xp_ncpi0overlay        dQdx_0_sp     	               40    0        8   	 1	   1		      1	    0	        0		      1		      6	      cv_spline		      0
+sp_bdt_nue_Xp_overlay_ncpi0_BG    dQdx_0_sp     	               40    0        8   	 1	   1		      1	    0	        0		      1		      2	      cv_spline		      0
+sp_bdt_nue_Xp_dirt		            dQdx_0_sp     	               40    0        8    	 1	   1		      0	    0.5	      0		      1		      4	      cv_spline		      0
+sp_bdt_nue_Xp_ext 		            dQdx_0_sp     	               40    0        8    	 1	   0		      0	    0 	      0		      3		      3	      unity   		      0
+sp_bdt_nue_Xp 		                dQdx_0_sp     	               40    0        8    	 1	   0		      0	    0 	      0		      0		      5	      unity   		      0
+
+sp_bdt_nue_2_Xp_spoverlay         dQdx_1_sp     	               40    0        8   	 2	   1		      1	    0	        0		      2		      9	      cv_spline		      0
+sp_bdt_nue_2_Xp_ncpi0overlay      dQdx_1_sp     	               40    0        8   	 2	   1		      1	    0	        0		      2		      6	      cv_spline		      0
+sp_bdt_nue_2_Xp_overlay_ncpi0_BG  dQdx_1_sp     	               40    0        8   	 2	   1		      1	    0	        0		      2		      2	      cv_spline		      0
+sp_bdt_nue_2_Xp_dirt		          dQdx_1_sp     	               40    0        8    	 2	   1		      0	    0.5	      0		      2		      4	      cv_spline		      0
+sp_bdt_nue_2_Xp_ext 		          dQdx_1_sp     	               40    0        8    	 2	   0		      0	    0 	      0		      4		      3	      unity   		      0
+sp_bdt_nue_2_Xp 		              dQdx_1_sp     	               40    0        8    	 2	   0		      0	    0 	      0		      0		      5	      unity   		      0
+End					                      End		                         -1	   -1	      -1	   -1	      -1		    -1	  -1		    -1		    -1		    -1	    end		                  -1
+
+
 sp_bdt_nue_Xp_spoverlay           median_dEdx_sp	               40    0        8   	 1	   1		      1	    0	        0		      1		      9	      cv_spline		      0
 sp_bdt_nue_Xp_ncpi0overlay        median_dEdx_sp	               40    0        8   	 1	   1		      1	    0	        0		      1		      6	      cv_spline		      0
 sp_bdt_nue_Xp_overlay_ncpi0_BG    median_dEdx_sp	               40    0        8   	 1	   1		      1	    0	        0		      1		      2	      cv_spline		      0
