@@ -1588,8 +1588,9 @@ int main( int argc, char** argv )
         //    gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco muon kinetic energy [MeV]");
         ///hack
          //if(obschannel==1) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Median dE/dx (0-4 cm) [MeV/cm]");
-         if(obschannel==2) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Shower Conversion Distance [cm]");
-         if(obschannel==1) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("#nu_{e}CC Background BDT Score");
+         //if(obschannel==2) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Shower Conversion Distance [cm]");
+         if(obschannel==1) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Number of reco showers");
+         if(obschannel==2) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("#nu_{e}CC Background BDT Score");
          //if(obschannel==2) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Median dE/dx (1-5 cm) [MeV/cm]");
 
          //if(obschannel==1) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Shower dQ/dx 0 (~0-0.4 cm) [43k e-/cm]");

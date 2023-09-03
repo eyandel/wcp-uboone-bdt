@@ -95,6 +95,7 @@ namespace LEEana{
   bool is_singlephoton_other_sel(TaggerInfo& tagger_info, PFevalInfo& pfeval);
   bool is_singlephoton_ncpi0_sel(TaggerInfo& tagger_info, PFevalInfo& pfeval);
   bool is_singlephoton_nue_sel(TaggerInfo& tagger_info, PFevalInfo& pfeval);
+  bool is_singlephoton_nue_sel_allshw(TaggerInfo& tagger_info, PFevalInfo& pfeval);
   bool is_nsbeam(PFevalInfo& pfeval, EvalInfo& eval);
   bool is_singlephoton_pre(TaggerInfo& tagger_info, PFevalInfo& pfeval);
   bool is_singlephoton_eff_numu(TaggerInfo& tagger_info, PFevalInfo& pfeval);
@@ -2162,6 +2163,7 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
   bool flag_singlephoton_other_sel = is_singlephoton_other_sel(tagger, pfeval);
   bool flag_singlephoton_ncpi0_sel = is_singlephoton_ncpi0_sel(tagger, pfeval);
   bool flag_singlephoton_nue_sel = is_singlephoton_nue_sel(tagger, pfeval);
+  bool flag_singlephoton_nue_sel_allshw = is_singlephoton_nue_sel_allshw(tagger, pfeval);
   bool flag_nsbeam = is_nsbeam(pfeval, eval);
   bool flag_singlephoton_pre = is_singlephoton_pre(tagger, pfeval);
   bool flag_singlephoton_eff_numu = is_singlephoton_eff_numu(tagger, pfeval);
@@ -6795,6 +6797,174 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
                     && !(eval.match_completeness_energy>0.1*eval.truth_energyInside
                     && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
                 return false;
+  
+  //single photon nue cc sideband - all showers
+  }else if (ch_name == "sp_bdt_nue_allshw_0p" || ch_name == "sp_bdt_nue_allshw_2_0p"){
+                if (flag_singlephoton_nue_sel_allshw && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && flag_0p) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_nue_allshw_Np" || ch_name == "sp_bdt_nue_allshw_2_Np"){
+                if (flag_singlephoton_nue_sel_allshw && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && (!flag_0p)) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_nue_allshw_Xp" || ch_name == "sp_bdt_nue_allshw_2_Xp"){
+                if (flag_singlephoton_nue_sel_allshw && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel)) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_nue_allshw_0p_nsbeam" || ch_name == "sp_bdt_nue_allshw_2_0p_nsbeam"){
+                if (flag_singlephoton_nue_sel_allshw && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && flag_0p && flag_nsbeam) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_nue_allshw_Np_nsbeam" || ch_name == "sp_bdt_nue_allshw_2_Np_nsbeam"){
+                if (flag_singlephoton_nue_sel_allshw && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && (!flag_0p) && flag_nsbeam) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_nue_allshw_Xp_nsbeam" || ch_name == "sp_bdt_nue_allshw_2_Xp_nsbeam"){
+                if (flag_singlephoton_nue_sel_allshw && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && flag_nsbeam) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_nue_allshw_0p_ext" || ch_name == "sp_bdt_nue_allshw_2_0p_ext"){
+                if (flag_singlephoton_nue_sel_allshw && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && flag_0p) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_nue_allshw_Np_ext" || ch_name == "sp_bdt_nue_allshw_2_Np_ext"){
+                if (flag_singlephoton_nue_sel_allshw && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && (!flag_0p)) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_nue_allshw_Xp_ext" || ch_name == "sp_bdt_nue_allshw_2_Xp_ext"){
+                if (flag_singlephoton_nue_sel_allshw && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel)) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_nue_allshw_0p_dirt" || ch_name == "sp_bdt_nue_allshw_2_0p_dirt"){
+                if (flag_singlephoton_nue_sel_allshw && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && flag_0p) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_nue_allshw_Np_dirt" || ch_name == "sp_bdt_nue_allshw_2_Np_dirt"){
+                if (flag_singlephoton_nue_sel_allshw && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && (!flag_0p)) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_nue_allshw_Xp_dirt" || ch_name == "sp_bdt_nue_allshw_2_Xp_dirt"){
+                if (flag_singlephoton_nue_sel_allshw && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel)) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_nue_allshw_0p_nc_delta_overlay" || ch_name == "sp_bdt_nue_allshw_0p_nc_delta_overlay_add" || ch_name == "sp_bdt_nue_allshw_2_0p_nc_delta_overlay"){
+                if (flag_singlephoton_nue_sel_allshw && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && flag_0p && (eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && flag_truth_inside)) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_nue_allshw_Np_nc_delta_overlay" || ch_name == "sp_bdt_nue_allshw_Np_nc_delta_overlay_add" || ch_name == "sp_bdt_nue_allshw_2_Np_nc_delta_overlay"){
+                if (flag_singlephoton_nue_sel_allshw && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && (!flag_0p) && (eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && flag_truth_inside)) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_nue_allshw_Xp_nc_delta_overlay" || ch_name == "sp_bdt_nue_allshw_Xp_nc_delta_overlay_add" || ch_name == "sp_bdt_nue_allshw_2_Xp_nc_delta_overlay"){
+                if (flag_singlephoton_nue_sel_allshw && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && (eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && flag_truth_inside)) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_nue_allshw_Xp_overlay" || ch_name == "sp_bdt_nue_allshw_2_Xp_overlay"){
+                if (flag_singlephoton_nue_sel_allshw && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel)) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_nue_allshw_0p_overlay" || ch_name == "sp_bdt_nue_allshw_2_0p_overlay"){
+                if (flag_singlephoton_nue_sel_allshw && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && flag_0p) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_nue_allshw_Np_overlay" || ch_name == "sp_bdt_nue_allshw_2_Np_overlay"){
+                if (flag_singlephoton_nue_sel_allshw && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && !flag_0p) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_nue_allshw_Xp_overlay_BG" || ch_name == "sp_bdt_nue_allshw_2_Xp_overlay_BG"){
+                if (flag_singlephoton_nue_sel_allshw && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) &&
+                  !(map_cuts_flag["SPNCDeltaSig"] ||
+                  map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+                  map_cuts_flag["SPNumuCCSig"])
+                  && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+                  && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+                  && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0)) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_nue_allshw_0p_overlay_BG" || ch_name == "sp_bdt_nue_allshw_2_0p_overlay_BG"){
+                if (flag_singlephoton_nue_sel_allshw && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && flag_0p &&
+                  !(map_cuts_flag["SPNCDeltaSig"] ||
+                  map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+                  map_cuts_flag["SPNumuCCSig"])
+                  && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+                  && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+                  && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0)) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_nue_allshw_Np_overlay_BG" || ch_name == "sp_bdt_nue_allshw_2_Np_overlay_BG"){
+                if (flag_singlephoton_nue_sel_allshw && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && !flag_0p &&
+                  !(map_cuts_flag["SPNCDeltaSig"] ||
+                  map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+                  map_cuts_flag["SPNumuCCSig"])
+                  && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+                  && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+                  && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0)) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_nue_allshw_Xp_spoverlay" || ch_name == "sp_bdt_nue_allshw_2_Xp_spoverlay"){
+                if (flag_singlephoton_nue_sel_allshw && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) &&
+                  (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
+                  map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+                  map_cuts_flag["SPNumuCCSig"])) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_nue_allshw_0p_spoverlay" || ch_name == "sp_bdt_nue_allshw_2_0p_spoverlay"){
+                if (flag_singlephoton_nue_sel_allshw && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && flag_0p &&
+                  (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
+                  map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+                  map_cuts_flag["SPNumuCCSig"])) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_nue_allshw_Np_spoverlay" || ch_name == "sp_bdt_nue_allshw_2_Np_spoverlay"){
+                if (flag_singlephoton_nue_sel_allshw && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && !flag_0p &&
+                  (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
+                  map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+                  map_cuts_flag["SPNumuCCSig"])) return true;
+                return false;
+
+  }else if (ch_name == "sp_bdt_nue_allshw_Xp_ncpi0overlay" || ch_name == "sp_bdt_nue_allshw_2_Xp_ncpi0overlay"){
+                if (flag_singlephoton_nue_sel_allshw && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) &&
+                  !(map_cuts_flag["SPNCDeltaSig"] ||
+                    map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+                    map_cuts_flag["SPNumuCCSig"])
+                    && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+                    && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+                    && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+                    && (eval.match_completeness_energy>0.1*eval.truth_energyInside
+                    && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_nue_allshw_Xp_overlay_ncpi0_BG" || ch_name == "sp_bdt_nue_allshw_2_Xp_overlay_ncpi0_BG"){
+                if (flag_singlephoton_nue_sel_allshw && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) &&
+                  !(map_cuts_flag["SPNCDeltaSig"] ||
+                    map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+                    map_cuts_flag["SPNumuCCSig"])
+                    && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+                    && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+                    && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+                    && !(eval.match_completeness_energy>0.1*eval.truth_energyInside
+                    && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_nue_allshw_0p_ncpi0overlay" || ch_name == "sp_bdt_nue_allshw_2_0p_ncpi0overlay"){
+                if (flag_singlephoton_nue_sel_allshw && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && flag_0p &&
+                  !(map_cuts_flag["SPNCDeltaSig"] ||
+                    map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+                    map_cuts_flag["SPNumuCCSig"])
+                    && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+                    && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+                    && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+                    && (eval.match_completeness_energy>0.1*eval.truth_energyInside
+                    && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_nue_allshw_0p_overlay_ncpi0_BG" || ch_name == "sp_bdt_nue_allshw_2_0p_overlay_ncpi0_BG"){
+                if (flag_singlephoton_nue_sel_allshw && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && flag_0p &&
+                  !(map_cuts_flag["SPNCDeltaSig"] ||
+                    map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+                    map_cuts_flag["SPNumuCCSig"])
+                    && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+                    && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+                    && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+                    && !(eval.match_completeness_energy>0.1*eval.truth_energyInside
+                    && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_nue_allshw_Np_ncpi0overlay" || ch_name == "sp_bdt_nue_allshw_2_Np_ncpi0overlay"){
+                if (flag_singlephoton_nue_sel_allshw && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && !flag_0p &&
+                  !(map_cuts_flag["SPNCDeltaSig"] ||
+                    map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+                    map_cuts_flag["SPNumuCCSig"])
+                    && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+                    && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+                    && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+                    && (eval.match_completeness_energy>0.1*eval.truth_energyInside
+                    && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+                return false;
+  }else if (ch_name == "sp_bdt_nue_allshw_Np_overlay_ncpi0_BG" || ch_name == "sp_bdt_nue_allshw_2_Np_overlay_ncpi0_BG"){
+                if (flag_singlephoton_nue_sel_allshw && !flag_singlephoton_numu_sel && !flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && !flag_0p &&
+                  !(map_cuts_flag["SPNCDeltaSig"] ||
+                    map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+                    map_cuts_flag["SPNumuCCSig"])
+                    && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+                    && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+                    && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+                    && !(eval.match_completeness_energy>0.1*eval.truth_energyInside
+                    && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
+                return false;
 
   }else{
     std::cout << "Not sure what cut: " << ch_name << std::endl;
@@ -7029,6 +7199,16 @@ bool LEEana::is_singlephoton_nue_sel(TaggerInfo& tagger_info, PFevalInfo& pfeval
     tagger_info.single_photon_numu_score > 0.1 && tagger_info.single_photon_other_score > -0.4 &&
     tagger_info.single_photon_ncpi0_score > -0.4 && tagger_info.single_photon_nue_score < -3.0 &&
     tagger_info.shw_sp_n_20br1_showers==1 &&
+    tagger_info.single_photon_nue_score > -20.0) {flag = true;}
+  return flag;
+}
+
+bool LEEana::is_singlephoton_nue_sel_allshw(TaggerInfo& tagger_info, PFevalInfo& pfeval){
+  bool flag = false;
+  if (tagger_info.shw_sp_n_20mev_showers > 0 &&
+    pfeval.reco_nuvtxX>5.0 && pfeval.reco_nuvtxX<250.0 &&
+    tagger_info.single_photon_numu_score > 0.1 && tagger_info.single_photon_other_score > -0.4 &&
+    tagger_info.single_photon_ncpi0_score > -0.4 && tagger_info.single_photon_nue_score < -3.0 &&
     tagger_info.single_photon_nue_score > -20.0) {flag = true;}
   return flag;
 }
