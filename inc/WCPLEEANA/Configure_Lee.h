@@ -19,8 +19,8 @@ namespace config_Lee
   int syst_cov_flux_Xs_begin = 1;// files in flux_Xs_directory above
   int syst_cov_flux_Xs_end   = 17;//cov_18.root is uncorrelated reweighting and cov_19.root is correlated
 
-  int syst_cov_mc_stat_begin = 1;// files in mc_directory above
-  int syst_cov_mc_stat_end   = 1;
+  int syst_cov_mc_stat_begin = 2;// files in mc_directory above
+  int syst_cov_mc_stat_end   = 2;
 
 
   ///////////////////////////////
@@ -63,7 +63,7 @@ namespace config_Lee
   bool flag_syst_time = true;
 
   //double Lee_strength_for_outputfile_covariance_matrix = 1;
-  double Lee_strength_for_outputfile_covariance_matrix = 1.0;
+  double Lee_strength_for_outputfile_covariance_matrix = 2.0;
 
   double Lee_Np_strength_for_outputfile_covariance_matrix = 0;
   double Lee_0p_strength_for_outputfile_covariance_matrix = 0;
