@@ -1,0 +1,33 @@
+single_photon_spoverlay             shower_energy_sp	             15	   0	      1500   	1	   1		      1	    0	        0		      1		      9	      cv_spline_nsbeam		  0
+single_photon_ncpi0overlay	        shower_energy_sp	             15	   0	      1500      1	   1		      1	    0	        0		      1		      6	      cv_spline_nsbeam		  0
+single_photon_overlay_ncpi0_BG      shower_energy_sp	             15	   0	      1500   	1	   1		      1	    0	        0		      1		      2	      cv_spline_nsbeam		  0
+single_photon_dirt		            shower_energy_sp	             15	   0	      1500 	    1	   1		      0	    0.5	        0		      1		      4	      cv_spline_nsbeam        0
+single_photon_ext 		            shower_energy_sp	             15	   0	      1500 	    1	   0		      0	    0 	        0		      4	          3	      nsbeam_ext   	          0
+single_photon_bnb_nsbeam 		    shower_energy_sp	             15	   0	      1500  	1	   0		      0	    0 	        0		      0		      5	      unity		              0
+
+sp_bdt_nc_pi0_Xp_spoverlay	        shower_energy_sp	             15	   0	      1500      2	   1		      1	    0	        0		      2		      9	      cv_spline_nsbeam		  0
+sp_bdt_nc_pi0_Xp_ncpi0overlay	    shower_energy_sp	             15	   0	      1500      2	   1		      1	    0	        0		      2		      6	      cv_spline_nsbeam		  0
+sp_bdt_nc_pi0_Xp_overlay_ncpi0_BG	shower_energy_sp	             15	   0	      1500      2	   1		      1	    0	        0		      2		      2	      cv_spline_nsbeam		  0
+sp_bdt_nc_pi0_Xp_dirt			    shower_energy_sp	             15	   0	      1500      2	   1		      0	    0.5	        0		      2		      4	      cv_spline_nsbeam		  0
+sp_bdt_nc_pi0_Xp_ext 			    shower_energy_sp	             15	   0	      1500      2	   0		      0	    0 	        0		      5	          3	      nsbeam_ext   	  		  0
+sp_bdt_nc_pi0_Xp_nsbeam     	    shower_energy_sp	             15	   0	      1500      2	   0		      0	    0 	        0		      0		      5	      unity		      		  0
+
+sp_bdt_numuCC_Xp_spoverlay	        shower_energy_sp	             15	   0	      1500      3	   1		      1	    0	        0		      3		      9	      cv_spline_nsbeam		  0
+sp_bdt_numuCC_Xp_ncpi0overlay	    shower_energy_sp	             15	   0	      1500      3	   1		      1	    0	        0		      3		      6	      cv_spline_nsbeam		  0
+sp_bdt_numuCC_Xp_overlay_ncpi0_BG	shower_energy_sp	             15	   0	      1500      3	   1		      1	    0	        0		      3		      2	      cv_spline_nsbeam		  0
+sp_bdt_numuCC_Xp_dirt			    shower_energy_sp	             15	   0	      1500      3	   1		      0	    0.5	        0		      3		      4	      cv_spline_nsbeam		  0
+sp_bdt_numuCC_Xp_ext 			    shower_energy_sp	             15	   0	      1500      3	   0		      0	    0 	        0		      6	          3	      nsbeam_ext   	  		  0
+sp_bdt_numuCC_Xp_nsbeam     	    shower_energy_sp	             15	   0	      1500      3	   0		      0	    0 	        0		      0		      5	      unity		      		  0
+End					                      End		                         -1	   -1	      -1	   -1	   -1		      -1	  -1		    -1		    -1		    -1	    end		        -1
+
+
+#Name:					                  #Var:		                      #bin	 #start	  #end	 #obs	 #xs_flux	  #det	#add_sys	#same_mc	#cov_sec	#file	  #weight		    #lee_strength
+
+
+cos_shower_angle_beam_sp	     9	   -1.0     1.01
+num_shower_sp                  10    0        10
+pi0_mass                       30    0        300
+pi0_energy                     15    0        1500
+kine_reco_Enu	                 25	   0	      2500
+flag_0p                        2     0        2
+median_dEdx_sp	               20    0        8
