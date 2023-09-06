@@ -5807,6 +5807,9 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
               ch_name == "single_photon_eff_pre_bnb"){
       if (flag_singlephoton_pre) return true;
         return false;
+    }else if (ch_name == "single_photon_eff_pre_bnb_nsbeam"){
+      if (flag_singlephoton_pre && flag_nsbeam) return true;
+        return false;
     }else if (ch_name == "single_photon_eff_pre_spoverlay"){
       if (flag_singlephoton_pre &&
           (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||

@@ -1,9 +1,9 @@
-single_photon_pre_spoverlay		      kine_reco_Enu	                 25	   0	    2500    1	      1		      1	    0	        0		      1		      9	      cv_spline_nsbeam     0
-single_photon_pre_ncpi0overlay	      kine_reco_Enu	                 25	   0	    2500    1	      1		      1	    0	        0		      1		      6	      cv_spline_nsbeam	   0
-single_photon_pre_overlay_ncpi0_BG    kine_reco_Enu	                 25	   0	    2500    1	      1		      1	    0	        0		      1		      2	      cv_spline_nsbeam     0
-single_photon_pre_dirt		          kine_reco_Enu	                 25	   0	    2500    1	      1		      0	    0.5	        0		      1		      4	      cv_spline_nsbeam     0
-single_photon_pre_ext 		          kine_reco_Enu	                 25	   0	    2500    1	      0		      0	    0 	        0		      6		      3	      nsbeam_ext 		   0
-single_photon_pre_bnb_nsbeam          kine_reco_Enu	                 25	   0	    2500    1	      0		      0	    0 	        0		      0		      5	      unity   		       0
+single_photon_eff_pre_spoverlay		      kine_reco_Enu	                 25	   0	    2500    1	      1		      1	    0	        0		      1		      9	      cv_spline_nsbeam     0
+single_photon_eff_pre_ncpi0overlay	      kine_reco_Enu	                 25	   0	    2500    1	      1		      1	    0	        0		      1		      6	      cv_spline_nsbeam	   0
+single_photon_eff_pre_overlay_ncpi0_BG    kine_reco_Enu	                 25	   0	    2500    1	      1		      1	    0	        0		      1		      2	      cv_spline_nsbeam     0
+single_photon_eff_pre_dirt		          kine_reco_Enu	                 25	   0	    2500    1	      1		      0	    0.5	        0		      1		      4	      cv_spline_nsbeam     0
+single_photon_eff_pre_ext 		          kine_reco_Enu	                 25	   0	    2500    1	      0		      0	    0 	        0		      6		      3	      nsbeam_ext 		   0
+single_photon_eff_pre_bnb_nsbeam          kine_reco_Enu	                 25	   0	    2500    1	      0		      0	    0 	        0		      0		      5	      unity   		       0
 
 single_photon_pre_spoverlay		      single_photon_numu_score       60	   -15	    15     	2	      1		      1	    0	        0		      2		      9	      cv_spline_nsbeam     0
 single_photon_pre_ncpi0overlay	      single_photon_numu_score       60	   -15	    15      2	      1		      1	    0	        0		      2		      6	      cv_spline_nsbeam	   0
