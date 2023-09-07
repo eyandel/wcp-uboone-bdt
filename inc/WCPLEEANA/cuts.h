@@ -965,7 +965,7 @@ double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, 
   }else if (var_name == "shw_sp_lem_n_3seg"){
     return tagger.shw_sp_lem_n_3seg;
   }else if (var_name == "kine_pio_phi_2"){
-    return tagger.kine_pio_phi_2;
+    return kine.kine_pio_phi_2;
   }else if (var_name == "shw_sp_pio_flag_pio"){
     return tagger.shw_sp_pio_flag_pio;
   }else if (var_name == "shw_sp_length_total"){
