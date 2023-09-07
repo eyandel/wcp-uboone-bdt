@@ -1583,11 +1583,11 @@ int main( int argc, char** argv )
         if(obschannel==4) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Interaction Timing [ns]");
         */
         //labels bdt scores
-        if(obschannel<=2) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Energy [MeV]");
-        if(obschannel==3) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("#nu_{#mu} CC Background BDT Score");
-        if(obschannel==4) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Other Background BDT Score");
-        if(obschannel==5) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("NC #pi^{0} Background BDT Score");
-        if(obschannel==6) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("#nu_{e} CC Background BDT Score");
+        if(obschannel==1) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco neutrino energy [MeV");
+        if(obschannel==2) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("#nu_{#mu} CC Background BDT Score");
+        if(obschannel==3) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Other Background BDT Score");
+        if(obschannel==4) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("NC #pi^{0} Background BDT Score");
+        if(obschannel==5) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("#nu_{e} CC Background BDT Score");
       /*  if(obschannel>=5) //hard coded at this moment
         {
             gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco #pi^{0} energy [MeV]");
