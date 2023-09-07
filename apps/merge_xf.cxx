@@ -511,6 +511,7 @@ int main( int argc, char** argv )
     T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_17",1);
     T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_18",1);
     T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_19",1);
+    T_BDTvars->SetBranchStatus("shw_sp_br3_1_n_shower_segments",1);
   }
   //
 
