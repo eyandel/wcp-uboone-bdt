@@ -1,16 +1,16 @@
-single_photon_eff_pre_spoverlay		      numu_score                           60	   -15	    15    1	      1		      1	    0	        0		      1		      9	      cv_spline_nsbeam     0
-single_photon_eff_pre_ncpi0overlay	      numu_score                           60	   -15	    15    1	      1		      1	    0	        0		      1		      6	      cv_spline_nsbeam	   0
-single_photon_eff_pre_overlay_ncpi0_BG    numu_score                           60	   -15	    15    1	      1		      1	    0	        0		      1		      2	      cv_spline_nsbeam     0
-single_photon_eff_pre_dirt		          numu_score                           60	   -15	    15    1	      1		      0	    0.5	        0		      1		      4	      cv_spline_nsbeam     0
-single_photon_eff_pre_ext 		          numu_score                           60	   -15	    15    1	      0		      0	    0 	        0		      3		      3	      nsbeam_ext 		   0
-single_photon_eff_pre_bnb_nsbeam          numu_score                           60	   -15	    15    1	      0		      0	    0 	        0		      0		      5	      unity   		       0
+single_photon_eff_pre_spoverlay		      shw_sp_E_indirect_max_energy         20    0        1000    1	      1		      1	    0	        0		      1		      9	      cv_spline_nsbeam     0
+single_photon_eff_pre_ncpi0overlay	      shw_sp_E_indirect_max_energy         20    0        1000    1	      1		      1	    0	        0		      1		      6	      cv_spline_nsbeam	   0
+single_photon_eff_pre_overlay_ncpi0_BG    shw_sp_E_indirect_max_energy         20    0        1000    1	      1		      1	    0	        0		      1		      2	      cv_spline_nsbeam     0
+single_photon_eff_pre_dirt		          shw_sp_E_indirect_max_energy         20    0        1000    1	      1		      0	    0.5	        0		      1		      4	      cv_spline_nsbeam     0
+single_photon_eff_pre_ext 		          shw_sp_E_indirect_max_energy         20    0        1000    1	      0		      0	    0 	        0		      3		      3	      nsbeam_ext 		   0
+single_photon_eff_pre_bnb_nsbeam          shw_sp_E_indirect_max_energy         20    0        1000    1	      0		      0	    0 	        0		      0		      5	      unity   		       0
 
-single_photon_pre_spoverlay		          shw_sp_br3_1_n_shower_segments       20      0        100   2	      1		      1	    0	        0		      2		      9	      cv_spline_nsbeam     0
-single_photon_pre_ncpi0overlay	          shw_sp_br3_1_n_shower_segments       20      0        100   2	      1		      1	    0	        0		      2		      6	      cv_spline_nsbeam	   0
-single_photon_pre_overlay_ncpi0_BG        shw_sp_br3_1_n_shower_segments       20      0        100   2	      1		      1	    0	        0		      2		      2	      cv_spline_nsbeam     0
-single_photon_pre_dirt		              shw_sp_br3_1_n_shower_segments       20      0        100   2	      1		      0	    0.5	        0		      2		      4	      cv_spline_nsbeam     0
-single_photon_pre_ext 		              shw_sp_br3_1_n_shower_segments       20      0        100   2	      0		      0	    0 	        0		      4		      3	      nsbeam_ext 		   0
-single_photon_pre_bnb_nsbeam              shw_sp_br3_1_n_shower_segments       20      0        100   2	      0		      0	    0 	        0		      0		      5	      unity   		       0
+single_photon_pre_spoverlay		          shw_sp_lem_n_3seg                    10    0        10      2	      1		      1	    0	        0		      2		      9	      cv_spline_nsbeam     0
+single_photon_pre_ncpi0overlay	          shw_sp_lem_n_3seg                    10    0        10      2	      1		      1	    0	        0		      2		      6	      cv_spline_nsbeam	   0
+single_photon_pre_overlay_ncpi0_BG        shw_sp_lem_n_3seg                    10    0        10      2	      1		      1	    0	        0		      2		      2	      cv_spline_nsbeam     0
+single_photon_pre_dirt		              shw_sp_lem_n_3seg                    10    0        10      2	      1		      0	    0.5	        0		      2		      4	      cv_spline_nsbeam     0
+single_photon_pre_ext 		              shw_sp_lem_n_3seg                    10    0        10      2	      0		      0	    0 	        0		      4		      3	      nsbeam_ext 		   0
+single_photon_pre_bnb_nsbeam              shw_sp_lem_n_3seg                    10    0        10      2	      0		      0	    0 	        0		      0		      5	      unity   		       0
 End					                      End		                           -1	   -1	      -1	   -1	   -1		      -1	  -1		    -1		    -1		    -1	    end		        -1
 
 
@@ -86,3 +86,13 @@ pi0_energy                       15    0          1500
 kine_reco_Enu	                 25	   0	      2500
 flag_0p                          2     0          2
 median_dEdx_sp	                 20    0          8
+
+numu_score                           60	   -15	    15
+shw_sp_br3_1_n_shower_segments       20    0        100
+
+shw_sp_E_indirect_max_energy         20    0        1000     
+shw_sp_lem_n_3seg                    10    0        10
+kine_pio_phi_2
+shw_sp_pio_flag_pio
+shw_sp_length_total
+shw_sp_n_vertex

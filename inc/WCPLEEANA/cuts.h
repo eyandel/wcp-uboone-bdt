@@ -958,6 +958,20 @@ double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, 
     return tagger.shw_sp_max_shw_dis;
   }else if (var_name == "shw_sp_br3_1_n_shower_segments"){
     return tagger.shw_sp_br3_1_n_shower_segments;
+  }else if (var_name == "shw_sp_E_indirect_max_energy"){
+    return tagger.shw_sp_E_indirect_max_energy;
+  }else if (var_name == "shw_sp_lem_n_3seg"){
+    return tagger.shw_sp_lem_n_3seg;
+  }else if (var_name == "shw_sp_lem_n_3seg"){
+    return tagger.shw_sp_lem_n_3seg;
+  }else if (var_name == "kine_pio_phi_2"){
+    return tagger.kine_pio_phi_2;
+  }else if (var_name == "shw_sp_pio_flag_pio"){
+    return tagger.shw_sp_pio_flag_pio;
+  }else if (var_name == "shw_sp_length_total"){
+    return tagger.shw_sp_length_total;
+  }else if (var_name == "shw_sp_n_vertex"){
+    return tagger.shw_sp_n_vertex;
   }else if (var_name == "shw_backwards_projected_dist"){
     float backwards_projected_dist = -99999.0;
 

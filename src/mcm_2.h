@@ -673,6 +673,10 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
     T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_18",1);
     T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_19",1);
     T_BDTvars->SetBranchStatus("shw_sp_br3_1_n_shower_segments",1);
+    T_BDTvars->SetBranchStatus("shw_sp_E_indirect_max_energy",1);
+    T_BDTvars->SetBranchStatus("shw_sp_lem_n_3seg",1);
+    T_BDTvars->SetBranchStatus("shw_sp_pio_flag_pio",1);
+    T_BDTvars->SetBranchStatus("shw_sp_length_total",1);
   }
   //
 

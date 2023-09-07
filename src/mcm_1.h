@@ -510,6 +510,11 @@ void LEEana::CovMatrix::fill_det_histograms(std::map<TString, TH1D*> map_filenam
     T_BDTvars_cv->SetBranchStatus("shw_sp_vec_dQ_dx_18",1);
     T_BDTvars_cv->SetBranchStatus("shw_sp_vec_dQ_dx_19",1);
     T_BDTvars_cv->SetBranchStatus("shw_sp_br3_1_n_shower_segments",1);
+    T_BDTvars_cv->SetBranchStatus("shw_sp_E_indirect_max_energy",1);
+    T_BDTvars_cv->SetBranchStatus("shw_sp_lem_n_3seg",1);
+    T_BDTvars_cv->SetBranchStatus("shw_sp_pio_flag_pio",1);
+    T_BDTvars_cv->SetBranchStatus("shw_sp_length_total",1);
+    T_BDTvars_cv->SetBranchStatus("shw_sp_n_vertex",1);
   }
   //
 
@@ -715,6 +720,11 @@ void LEEana::CovMatrix::fill_det_histograms(std::map<TString, TH1D*> map_filenam
     T_BDTvars_det->SetBranchStatus("shw_sp_vec_dQ_dx_18",1);
     T_BDTvars_det->SetBranchStatus("shw_sp_vec_dQ_dx_19",1);
     T_BDTvars_det->SetBranchStatus("shw_sp_br3_1_n_shower_segments",1);
+    T_BDTvars_det->SetBranchStatus("shw_sp_E_indirect_max_energy",1);
+    T_BDTvars_det->SetBranchStatus("shw_sp_lem_n_3seg",1);
+    T_BDTvars_det->SetBranchStatus("shw_sp_pio_flag_pio",1);
+    T_BDTvars_det->SetBranchStatus("shw_sp_length_total",1);
+    T_BDTvars_det->SetBranchStatus("shw_sp_n_vertex",1);
   }
   //
 
