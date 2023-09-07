@@ -1584,8 +1584,8 @@ int main( int argc, char** argv )
         */
         //labels bdt scores
         //if(obschannel==1) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco neutrino energy [MeV");
-        if(obschannel==1) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("numu_score");
-        if(obschannel==2) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("shw_sp_br3_1_n_shower_segments");
+        if(obschannel==1) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("shw_sp_E_indirect_max_energy");
+        if(obschannel==2) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("shw_sp_lem_n_3seg");
         //if(obschannel==3) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Other Background BDT Score");
         //if(obschannel==4) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("NC #pi^{0} Background BDT Score");
         //if(obschannel==5) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("#nu_{e} CC Background BDT Score");
