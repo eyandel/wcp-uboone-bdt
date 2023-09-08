@@ -677,6 +677,7 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
     T_BDTvars->SetBranchStatus("shw_sp_lem_n_3seg",1);
     T_BDTvars->SetBranchStatus("shw_sp_pio_flag_pio",1);
     T_BDTvars->SetBranchStatus("shw_sp_length_total",1);
+    T_BDTvars->SetBranchStatus("shw_sp_n_vertex",1);
   }
   //
 
