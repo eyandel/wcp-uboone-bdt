@@ -1,3 +1,26 @@
+generic_nu_spoverlay        		      kine_reco_Enu	                 25	   0	    2500    1	      1		      1	    0	        0		      1		      9	      cv_spline            0
+generic_nu_ncpi0overlay         	      kine_reco_Enu	                 25	   0	    2500    1	      1		      1	    0	        0		      1		      6	      cv_spline       	   0
+generic_nu_overlay_sp_ncpi0_BG            kine_reco_Enu	                 25	   0	    2500    1	      1		      1	    0	        0		      1		      2	      cv_spline            0
+BG_generic_nu_dirt      		          kine_reco_Enu	                 25	   0	    2500    1	      1		      0	    0.5	        0		      1		      4	      cv_spline            0
+BG_generic_nu_ext       		          kine_reco_Enu	                 25	   0	    2500    1	      0		      0	    0 	        0		      4		      3	      unity     		   0
+generic_nu_bnb                            kine_reco_Enu	                 25	   0	    2500    1	      0		      0	    0 	        0		      0		      5	      unity   		       0
+
+generic_nu_spoverlay_2        		      num_shower_sp                  10    0        10     	2	      1		      1	    0	        0		      2		      9	      cv_spline            0
+generic_nu_ncpi0overlay_2         	      num_shower_sp                  10    0        10     	2	      1		      1	    0	        0		      2		      6	      cv_spline       	   0
+generic_nu_overlay_sp_ncpi0_BG_2          num_shower_sp                  10    0        10     	2	      1		      1	    0	        0		      2		      2	      cv_spline            0
+BG_generic_nu_dirt_2      		          num_shower_sp                  10    0        10     	2	      1		      0	    0.5	        0		      2		      4	      cv_spline            0
+BG_generic_nu_ext_2       		          num_shower_sp                  10    0        10     	2	      0		      0	    0 	        0		      5		      3	      unity     		   0
+generic_nu_bnb_2                          num_shower_sp                  10    0        10     	2	      0		      0	    0 	        0		      0		      5	      unity   		       0
+
+generic_nu_spoverlay_3        		      reco_nuvtxX                    30	   -10      290     3	      1		      1	    0	        0		      3		      9	      cv_spline            0
+generic_nu_ncpi0overlay_3         	      reco_nuvtxX                    30	   -10      290     3	      1		      1	    0	        0		      3		      6	      cv_spline       	   0
+generic_nu_overlay_sp_ncpi0_BG_3          reco_nuvtxX                    30	   -10      290     3	      1		      1	    0	        0		      3		      2	      cv_spline            0
+BG_generic_nu_dirt_3      		          reco_nuvtxX                    30	   -10      290     3	      1		      0	    0.5	        0		      3		      4	      cv_spline            0
+BG_generic_nu_ext_3      		          reco_nuvtxX                    30	   -10      290     3	      0		      0	    0 	        0		      6		      3	      unity     		   0
+generic_nu_bnb_3                          reco_nuvtxX                    30	   -10      290     3	      0		      0	    0 	        0		      0		      5	      unity   		       0
+End					                      End		                           -1	   -1	      -1	   -1	   -1		      -1	  -1		    -1		    -1		    -1	    end		        -1
+
+
 single_photon_eff_pre_spoverlay		      shw_sp_length_total                  40    0        200     1	      1		      1	    0	        0		      1		      9	      cv_spline_nsbeam     0
 single_photon_eff_pre_ncpi0overlay	      shw_sp_length_total                  40    0        200     1	      1		      1	    0	        0		      1		      6	      cv_spline_nsbeam	   0
 single_photon_eff_pre_overlay_ncpi0_BG    shw_sp_length_total                  40    0        200     1	      1		      1	    0	        0		      1		      2	      cv_spline_nsbeam     0

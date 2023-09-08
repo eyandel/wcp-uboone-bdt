@@ -1577,15 +1577,15 @@ int main( int argc, char** argv )
         gratio_mc2[obschannel-1]->GetXaxis()->SetRangeUser(hmc->GetXaxis()->GetXmin(),hmc->GetXaxis()->GetXmax());
         }
         //labels preselection
-        /*if(obschannel==1) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Neutrino Energy [MeV]");
+        if(obschannel==1) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Neutrino Energy [MeV]");
         if(obschannel==2) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Number of Reco Showers");
         if(obschannel==3) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Neutrino Vertex X Position [cm]");
         if(obschannel==4) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Interaction Timing [ns]");
-        */
+        
         //labels bdt scores
         //if(obschannel==1) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco neutrino energy [MeV");
-        if(obschannel==1) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("shw_sp_length_total");
-        if(obschannel==2) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("shw_sp_n_vertex");
+        //if(obschannel==1) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("shw_sp_length_total");
+        //if(obschannel==2) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("shw_sp_n_vertex");
         //if(obschannel==3) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Other Background BDT Score");
         //if(obschannel==4) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("NC #pi^{0} Background BDT Score");
         //if(obschannel==5) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("#nu_{e} CC Background BDT Score");

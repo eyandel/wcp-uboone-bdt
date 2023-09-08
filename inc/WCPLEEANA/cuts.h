@@ -3993,11 +3993,11 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
   }else if (ch_name == "generic_nu_bnb_nsbeam"){
     if (flag_generic && flag_nsbeam) return true;
     else return false;
-  }else if (ch_name == "generic_nu_spoverlay"){
+  }else if (ch_name == "generic_nu_spoverlay" || ch_name == "generic_nu_spoverlay_2" || ch_name == "generic_nu_spoverlay_3"){
             if (flag_generic &&
               (eval.match_completeness_energy>0.1*eval.truth_energyInside && pfeval.truth_single_photon==1)) return true;
             return false;
-  }else if (ch_name == "generic_nu_ncpi0overlay"){
+  }else if (ch_name == "generic_nu_ncpi0overlay" || ch_name == "generic_nu_ncpi0overlay_2" || ch_name == "generic_nu_ncpi0overlay_3"){
             if (flag_generic &&
               !(map_cuts_flag["SPNCDeltaSig"] ||
               map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
@@ -4008,7 +4008,7 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
               && (eval.match_completeness_energy>0.1*eval.truth_energyInside
                 && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
             return false;
-  }else if (ch_name == "generic_nu_overlay_sp_ncpi0_BG"){
+  }else if (ch_name == "generic_nu_overlay_sp_ncpi0_BG" || ch_name == "generic_nu_overlay_sp_ncpi0_BG_2" || ch_name == "generic_nu_overlay_sp_ncpi0_BG_3"){
             if (flag_generic &&
               !(map_cuts_flag["SPNCDeltaSig"] ||
               map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
