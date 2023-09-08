@@ -93,6 +93,5 @@ shw_sp_E_indirect_max_energy         20    0        1000
 shw_sp_lem_n_3seg                    10    0        10
 kine_pio_phi_2                       45    -180     180 
 shw_sp_pio_flag_pio                  5     0        5
-
 shw_sp_length_total                  40    0        200
 shw_sp_n_vertex                      10    0        10
