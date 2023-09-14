@@ -1320,7 +1320,7 @@ int main( int argc, char** argv )
                 num_bkg+=((TH1*)stackHists->At(i))->Integral();
             }
             //cout<< "h1gscale = " << h1gscale->Integral() << endl;
-            scale_amount = (hdata->Integral() - num_bkg) / h1gscale->Integral();
+            scale_amount = abs(hdata->Integral() - num_bkg) / h1gscale->Integral();
 
             float num_bkg_NCpi1g = num_bkg + hNCdel->Integral() + hNCother->Integral() + hnumuCC1g->Integral() + hout1g->Integral();
             float num_bkg_NCdel = num_bkg + hNCpi1g->Integral() + hNCother->Integral() + hnumuCC1g->Integral() + hout1g->Integral();
@@ -1328,11 +1328,11 @@ int main( int argc, char** argv )
             float num_bkg_numuCC1g = num_bkg + hNCpi1g->Integral() + hNCdel->Integral() + hNCother->Integral() + hout1g->Integral();
             float num_bkg_out1g = num_bkg + hNCpi1g->Integral() + hNCdel->Integral() + hNCother->Integral() + hnumuCC1g->Integral();
 
-            scale_amount_NCpi1g   = (hdata->Integral() - num_bkg_NCpi1g) / hNCpi1gscale->Integral();
-            scale_amount_NCdel    = (hdata->Integral() - num_bkg_NCdel) / hNCdelscale->Integral();
-            scale_amount_NCother  = (hdata->Integral() - num_bkg_NCother) / hNCotherscale->Integral();
-            scale_amount_numuCC1g = (hdata->Integral() - num_bkg_numuCC1g) / hnumuCC1gscale->Integral();
-            scale_amount_out1g    = (hdata->Integral() - num_bkg_out1g) / hout1gscale->Integral();
+            scale_amount_NCpi1g   = abs(hdata->Integral() - num_bkg_NCpi1g) / hNCpi1gscale->Integral();
+            scale_amount_NCdel    = abs(hdata->Integral() - num_bkg_NCdel) / hNCdelscale->Integral();
+            scale_amount_NCother  = abs(hdata->Integral() - num_bkg_NCother) / hNCotherscale->Integral();
+            scale_amount_numuCC1g = abs(hdata->Integral() - num_bkg_numuCC1g) / hnumuCC1gscale->Integral();
+            scale_amount_out1g    = abs(hdata->Integral() - num_bkg_out1g) / hout1gscale->Integral();
         }
             //cout<< "scale_amount = " << scale_amount << endl;
             h1gscale->Scale(scale_amount);
