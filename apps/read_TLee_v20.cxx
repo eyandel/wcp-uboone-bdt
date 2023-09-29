@@ -1183,7 +1183,7 @@ int main(int argc, char** argv)
 
     ///////////////////////// reject SM
 
-    Lee_test->scaleF_Lee = 1;
+    Lee_test->scaleF_Lee = 2;
     Lee_test->Set_Collapse();
 
     Lee_test->Set_toy_Asimov();// use the Asimov sample as the input data for the fitting
