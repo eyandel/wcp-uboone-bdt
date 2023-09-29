@@ -1178,6 +1178,34 @@ int main(int argc, char** argv)
 
   }
 
+  //Erin
+  if( 1 ) {
+
+    ///////////////////////// reject SM
+
+    Lee_test->scaleF_Lee = 1;
+    Lee_test->Set_Collapse();
+
+    Lee_test->Set_toy_Asimov();// use the Asimov sample as the input data for the fitting
+    Lee_test->Minimization_Lee_strength_FullCov(0, 1);// (initial value, fix or not)
+
+    double sigma_SM = sqrt( Lee_test->minimization_chi2 );
+    cout<<TString::Format(" ---> Excluding  SM: %5.2f sigma", sigma_SM)<<endl;
+
+    ///////////////////////// reject 3*NC Delta (=2x"LEE" since 1xNC Delta is in SM)
+
+    Lee_test->scaleF_Lee = 0;
+    Lee_test->Set_Collapse();
+
+    Lee_test->Set_toy_Asimov();// use the Asimov sample as the input data for the fitting
+    Lee_test->Minimization_Lee_strength_FullCov(2, 1);// (initial value, fix or not)
+
+    double sigma_Lee = sqrt( Lee_test->minimization_chi2 );
+    cout<<TString::Format(" ---> Excluding LEE: %5.2f sigma", sigma_Lee)<<endl<<endl;;
+
+  }
+  //
+
   ////////////////////////////////////////////////  Feldman-Cousins approach --> heavy computation cost
 
   if( 0 ) {
