@@ -92,10 +92,10 @@ namespace config_Lee
 
   ////////// Lee strength fitting -- data
 
-  bool flag_Lee_strength_data = true;
-  bool flag_Lee_scan_data     = true;
+  bool flag_Lee_strength_data = false;
+  bool flag_Lee_scan_data     = false;
 
-  bool flag_GOF = true;
+  bool flag_GOF = false;
 
   ////////// MicroBooNE suggested
 
