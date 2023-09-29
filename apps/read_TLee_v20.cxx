@@ -1190,7 +1190,7 @@ int main(int argc, char** argv)
     Lee_test->Minimization_Lee_strength_FullCov(0, 1);// (initial value, fix or not)
 
     double sigma_SM = sqrt( Lee_test->minimization_chi2 );
-    cout<<TString::Format(" ---> Excluding  SM: %5.2f sigma", sigma_SM)<<endl;
+    cout<<TString::Format(" ---> Excluding  SM: %5.5f sigma", sigma_SM)<<endl;
 
     ///////////////////////// reject 3*NC Delta (=2x"LEE" since 1xNC Delta is in SM)
 
@@ -1201,7 +1201,7 @@ int main(int argc, char** argv)
     Lee_test->Minimization_Lee_strength_FullCov(2, 1);// (initial value, fix or not)
 
     double sigma_Lee = sqrt( Lee_test->minimization_chi2 );
-    cout<<TString::Format(" ---> Excluding LEE: %5.2f sigma", sigma_Lee)<<endl<<endl;;
+    cout<<TString::Format(" ---> Excluding LEE: %5.5f sigma", sigma_Lee)<<endl<<endl;;
 
   }
   //
