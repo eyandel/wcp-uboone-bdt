@@ -2260,6 +2260,7 @@ void TLee::Plotting_systematics()
 	  cout << "bin "<<i_bin<<" flux rel err " << h1_flux_relerr->GetBinContent(i_bin) << "\n";
 	  cout << "bin "<<i_bin<<" XS rel err " << h1_Xs_relerr->GetBinContent(i_bin) << "\n";
 	  cout << "bin "<<i_bin<<" detector rel err " << h1_detector_relerr->GetBinContent(i_bin) << "\n";
+    cout << "bin "<<i_bin<<" ns timing rel err " << h1_time_relerr->GetBinContent(i_bin) << "\n";
 	  cout << "-------------------------"<<"\n";
 	}
 
