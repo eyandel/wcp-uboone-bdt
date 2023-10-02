@@ -52,7 +52,7 @@ int main(int argc, char** argv){
       //std::cout << run << " " << subrun << " " << trigger_no << " " << pot << std::endl;
       //if (run >0)
 	map_bnb_infos[std::make_pair(run,subrun)] = std::make_pair(trigger_no, pot);
-    //}
+    }
     std::cout << "finish initilization bnb pot files" << std::endl;
     TFile *file1 = new TFile(bnb_file);
     TTree *T_pot = (TTree*)file1->Get("wcpselection/T_pot");
