@@ -1183,13 +1183,13 @@ int main(int argc, char** argv)
 
     ///////////////////////// reject SM
 
-    Lee_test->scaleF_Lee = 3;
+    Lee_test->scaleF_Lee = 3.18;
     Lee_test->Set_Collapse();
 
     Lee_test->Set_toy_Asimov();// use the Asimov sample as the input data for the fitting
     Lee_test->Minimization_Lee_strength_FullCov(1, 1);// (initial value, fix or not)
 
-    cout<<TString::Format(" ---> Excluding  SM chi^2: %5.5f", Lee_test->minimization_chi2)<<endl;
+    //cout<<TString::Format(" ---> Excluding  SM chi^2: %5.5f", Lee_test->minimization_chi2)<<endl;
 
     double sigma_SM = sqrt( Lee_test->minimization_chi2 );
     cout<<TString::Format(" ---> Excluding  SM: %5.5f sigma", sigma_SM)<<endl;
@@ -1200,9 +1200,9 @@ int main(int argc, char** argv)
     Lee_test->Set_Collapse();
 
     Lee_test->Set_toy_Asimov();// use the Asimov sample as the input data for the fitting
-    Lee_test->Minimization_Lee_strength_FullCov(3, 1);// (initial value, fix or not)
+    Lee_test->Minimization_Lee_strength_FullCov(3.18, 1);// (initial value, fix or not)
 
-    cout<<TString::Format(" ---> Excluding  LEE: %5.5f", Lee_test->minimization_chi2)<<endl;
+    //cout<<TString::Format(" ---> Excluding  LEE: %5.5f", Lee_test->minimization_chi2)<<endl;
 
     double sigma_Lee = sqrt( Lee_test->minimization_chi2 );
     cout<<TString::Format(" ---> Excluding LEE: %5.5f sigma", sigma_Lee)<<endl;
