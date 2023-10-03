@@ -1183,11 +1183,11 @@ int main(int argc, char** argv)
 
     ///////////////////////// reject SM
 
-    Lee_test->scaleF_Lee = 2;
+    Lee_test->scaleF_Lee = 3;
     Lee_test->Set_Collapse();
 
     Lee_test->Set_toy_Asimov();// use the Asimov sample as the input data for the fitting
-    Lee_test->Minimization_Lee_strength_FullCov(0, 1);// (initial value, fix or not)
+    Lee_test->Minimization_Lee_strength_FullCov(1, 1);// (initial value, fix or not)
 
     cout<<TString::Format(" ---> Excluding  SM chi^2: %5.5f", Lee_test->minimization_chi2)<<endl;
 
@@ -1196,11 +1196,11 @@ int main(int argc, char** argv)
 
     ///////////////////////// reject 3*NC Delta (=2x"LEE" since 1xNC Delta is in SM)
 
-    Lee_test->scaleF_Lee = 0;
+    Lee_test->scaleF_Lee = 1;
     Lee_test->Set_Collapse();
 
     Lee_test->Set_toy_Asimov();// use the Asimov sample as the input data for the fitting
-    Lee_test->Minimization_Lee_strength_FullCov(2, 1);// (initial value, fix or not)
+    Lee_test->Minimization_Lee_strength_FullCov(3, 1);// (initial value, fix or not)
 
     cout<<TString::Format(" ---> Excluding  LEE: %5.5f", Lee_test->minimization_chi2)<<endl;
 
