@@ -20,12 +20,13 @@ namespace config_Lee
   int syst_cov_flux_Xs_end   = 17;//cov_18.root is uncorrelated reweighting and cov_19.root is correlated
 
   int syst_cov_mc_stat_begin = 0;// files in mc_directory above
-  int syst_cov_mc_stat_end   = 99;
+  int syst_cov_mc_stat_end   = 0;
 
 
   ///////////////////////////////
 
-  int array_LEE_ch[3] = {2,4,6}; // for 1d strength. Pay attention to the setting.
+  int array_LEE_ch[1] = {0};
+  //int array_LEE_ch[3] = {2,4,6}; // for 1d strength. Pay attention to the setting.
                              // Confict will happen if both the 1d and 2d(defined below) work.
                              // Three options: 1d works, 2d works, or neither works
 
@@ -62,8 +63,8 @@ namespace config_Lee
   //ns timing error
   bool flag_syst_time = true;
 
-  double Lee_strength_for_outputfile_covariance_matrix = 1;
-  //double Lee_strength_for_outputfile_covariance_matrix = 0.0;
+  //double Lee_strength_for_outputfile_covariance_matrix = 1;
+  double Lee_strength_for_outputfile_covariance_matrix = 0;
 
   double Lee_Np_strength_for_outputfile_covariance_matrix = 0;
   double Lee_0p_strength_for_outputfile_covariance_matrix = 0;
@@ -72,7 +73,7 @@ namespace config_Lee
 
   ////////// goodness of fit
 
-  double Lee_strength_for_GoF         = 1;
+  double Lee_strength_for_GoF         = 0;
 
   double Lee_Np_strength_for_GoF      = 0;
   double Lee_0p_strength_for_GoF      = 0;
@@ -92,15 +93,15 @@ namespace config_Lee
 
   ////////// Lee strength fitting -- data
 
-  bool flag_Lee_strength_data = true;
-  bool flag_Lee_scan_data     = true;
+  bool flag_Lee_strength_data = false;
+  bool flag_Lee_scan_data     = false;
 
-  bool flag_GOF = true;
+  bool flag_GOF = false;
 
   ////////// MicroBooNE suggested
 
-  bool flag_chi2_data_H0 = 1;
-  bool flag_dchi2_H0toH1 = 1;
+  bool flag_chi2_data_H0 = 0;
+  bool flag_dchi2_H0toH1 = 0;
 
   ////////// Advanced tools
 
