@@ -1237,56 +1237,56 @@ int main( int argc, char** argv )
         if(flag_truthlabel==0){
         // truth labels start
         hstack[obschannel-1]->Add(hbadmatch);
-        legend[obschannel-1]->AddEntry(hbadmatch, Form("Cosmic, %.1f", hbadmatch->Integral()), "F");
+      //  legend[obschannel-1]->AddEntry(hbadmatch, Form("Cosmic, %.1f", hbadmatch->Integral()), "F");
         hbadmatch->SetFillStyle(3004);
         hbadmatch->SetFillColorAlpha(kRed+2, 0.5);
         hbadmatch->SetLineColor(kRed+2);
         hbadmatch->SetLineWidth(1);
 
         hstack[obschannel-1]->Add(hext);
-        legend[obschannel-1]->AddEntry(hext, Form("EXT, %.1f", hext->Integral()), "F");
+      //  legend[obschannel-1]->AddEntry(hext, Form("EXT, %.1f", hext->Integral()), "F");
         hext->SetFillStyle(3004);
         hext->SetFillColorAlpha(kOrange+3, 0.5);
         hext->SetLineColor(kOrange+3);
         hext->SetLineWidth(1);
 
         hstack[obschannel-1]->Add(hdirt);
-        legend[obschannel-1]->AddEntry(hdirt, Form("Dirt, %.1f", hdirt->Integral()), "F");
+      //  legend[obschannel-1]->AddEntry(hdirt, Form("Dirt, %.1f", hdirt->Integral()), "F");
         hdirt->SetFillStyle(3224);
         hdirt->SetFillColorAlpha(kGray, 0.5);
         hdirt->SetLineColor(kGray+2);
         hdirt->SetLineWidth(1);
 
         hstack[obschannel-1]->Add(houtFV);
-        legend[obschannel-1]->AddEntry(houtFV, Form("out FV, %.1f", houtFV->Integral()), "F");
+      //  legend[obschannel-1]->AddEntry(houtFV, Form("out FV, %.1f", houtFV->Integral()), "F");
         houtFV->SetFillStyle(3224);
         houtFV->SetFillColorAlpha(kOrange+1, 0.5);
         houtFV->SetLineColor(kOrange+1);
         houtFV->SetLineWidth(1);
 
         hstack[obschannel-1]->Add(hNCpi0inFV);
-        legend[obschannel-1]->AddEntry(hNCpi0inFV, Form("NC #pi^{0} in FV,  %.1f", hNCpi0inFV->Integral()), "F");
+      //  legend[obschannel-1]->AddEntry(hNCpi0inFV, Form("NC #pi^{0} in FV,  %.1f", hNCpi0inFV->Integral()), "F");
         hNCpi0inFV->SetFillStyle(1001);
         hNCpi0inFV->SetFillColorAlpha(38, 0.5);
         hNCpi0inFV->SetLineColor(38);
         hNCpi0inFV->SetLineWidth(1);
 
         hstack[obschannel-1]->Add(hCCpi0inFV);
-        legend[obschannel-1]->AddEntry(hCCpi0inFV, Form("CC #pi^{0} in FV, %.1f", hCCpi0inFV->Integral()), "F");
+      //  legend[obschannel-1]->AddEntry(hCCpi0inFV, Form("CC #pi^{0} in FV, %.1f", hCCpi0inFV->Integral()), "F");
         hCCpi0inFV->SetFillStyle(1001);
         hCCpi0inFV->SetFillColorAlpha(30, 0.5);
         hCCpi0inFV->SetLineColor(30);
         hCCpi0inFV->SetLineWidth(1);
 
         hstack[obschannel-1]->Add(hNCinFV);
-        legend[obschannel-1]->AddEntry(hNCinFV, Form("NC in FV, %.1f", hNCinFV->Integral()), "F");
+       // legend[obschannel-1]->AddEntry(hNCinFV, Form("NC in FV, %.1f", hNCinFV->Integral()), "F");
         hNCinFV->SetFillStyle(1001);
         hNCinFV->SetFillColorAlpha(kOrange+1, 0.5);
         hNCinFV->SetLineColor(kOrange+1);
         hNCinFV->SetLineWidth(1);
 
         hstack[obschannel-1]->Add(hnumuCCinFV);
-        legend[obschannel-1]->AddEntry(hnumuCCinFV, Form("#nu_{#mu} CC in FV, %.1f", hnumuCCinFV->Integral()), "F");
+      //  legend[obschannel-1]->AddEntry(hnumuCCinFV, Form("#nu_{#mu} CC in FV, %.1f", hnumuCCinFV->Integral()), "F");
         hnumuCCinFV->SetFillStyle(1001);
         hnumuCCinFV->SetFillColorAlpha(kAzure+6, 0.5);
         hnumuCCinFV->SetLineColor(kAzure+6);
@@ -1307,7 +1307,7 @@ int main( int argc, char** argv )
         hAnumuCCinFV->SetLineWidth(1);*/
 
         hstack[obschannel-1]->Add(hnueCCinFV);
-        legend[obschannel-1]->AddEntry(hnueCCinFV, Form("#nu_{e} CC in FV, %.1f", hnueCCinFV->Integral()), "F");
+      //  legend[obschannel-1]->AddEntry(hnueCCinFV, Form("#nu_{e} CC in FV, %.1f", hnueCCinFV->Integral()), "F");
         hnueCCinFV->SetFillStyle(1001);
         hnueCCinFV->SetFillColorAlpha(kGreen+1, 0.5);
         hnueCCinFV->SetLineColor(kGreen+1);
@@ -1335,94 +1335,96 @@ int main( int argc, char** argv )
             scale_amount_out1g    = abs(hdata->Integral() - num_bkg_out1g) / hout1gscale->Integral();
         }
             //cout<< "scale_amount = " << scale_amount << endl;
-            h1gscale->Scale(scale_amount);
+            h1gscale->Scale(abs(scale_amount - 1.0));
             signal_amount = h1gscale->Integral();
             //TList *stackHists = hstack[obschannel-1]->GetHists();
-            for (int i=0;i<stackHists->GetSize();++i) {
+            /*for (int i=0;i<stackHists->GetSize();++i) {
                 h1gscale->Add((TH1*)stackHists->At(i));
-            }
+            }*/
             //legend[obschannel-1]->AddEntry(h1gscale, Form("Signal x %.1f, %.1f", scale_amount, signal_amount), "F");
             h1gscale->SetFillStyle(0);
             h1gscale->SetFillColorAlpha(kMagenta, 0.5);
             h1gscale->SetLineColor(kMagenta);
-            h1gscale->SetLineStyle(kDashed);
+            h1gscale->SetLineStyle(2);
             h1gscale->SetLineWidth(2);
 
-            hNCpi1gscale->Scale(scale_amount_NCpi1g);
+            hNCpi1gscale->Scale(abs(scale_amount_NCpi1g - 1.0));
             signal_amount_NCpi1g = hNCpi1gscale->Integral();
-            for (int i=0;i<stackHists->GetSize();++i) {
+            /*for (int i=0;i<stackHists->GetSize();++i) {
                 hNCpi1gscale->Add((TH1*)stackHists->At(i));
             }
             hNCpi1gscale->Add(hNCdel);
             hNCpi1gscale->Add(hNCother);
             hNCpi1gscale->Add(hnumuCC1g);
-            hNCpi1gscale->Add(hout1g);
+            hNCpi1gscale->Add(hout1g);*/
             hNCpi1gscale->SetFillStyle(0);
             hNCpi1gscale->SetFillColorAlpha(kPink+5, 0.5);
             hNCpi1gscale->SetLineColor(kPink+5);
-            hNCpi1gscale->SetLineStyle(kDashed);
+            hNCpi1gscale->SetLineStyle(4);
             hNCpi1gscale->SetLineWidth(2);
 
-            hNCdelscale->Scale(scale_amount_NCdel);
+            hNCdelscale->Scale(abs(scale_amount_NCdel - 1.0));
             signal_amount_NCdel = hNCdelscale->Integral();
-            for (int i=0;i<stackHists->GetSize();++i) {
+           /* for (int i=0;i<stackHists->GetSize();++i) {
                 hNCdelscale->Add((TH1*)stackHists->At(i));
             }
             hNCdelscale->Add(hNCpi1g);
             hNCdelscale->Add(hNCother);
             hNCdelscale->Add(hnumuCC1g);
-            hNCdelscale->Add(hout1g);
+            hNCdelscale->Add(hout1g); */
             hNCdelscale->SetFillStyle(0);
             hNCdelscale->SetFillColorAlpha(kPink-6, 0.5);
             hNCdelscale->SetLineColor(kPink-6);
-            hNCdelscale->SetLineStyle(kDashed);
+            hNCdelscale->SetLineStyle(6);
             hNCdelscale->SetLineWidth(2);
 
-            hNCotherscale->Scale(scale_amount_NCother);
+            hNCotherscale->Scale(abs(scale_amount_NCother - 1.0));
             signal_amount_NCother = hNCotherscale->Integral();
-            for (int i=0;i<stackHists->GetSize();++i) {
+            /*for (int i=0;i<stackHists->GetSize();++i) {
                 hNCotherscale->Add((TH1*)stackHists->At(i));
             }
             hNCotherscale->Add(hNCpi1g);
             hNCotherscale->Add(hNCdel);
             hNCotherscale->Add(hnumuCC1g);
-            hNCotherscale->Add(hout1g);
+            hNCotherscale->Add(hout1g);*/
             hNCotherscale->SetFillStyle(0);
             hNCotherscale->SetFillColorAlpha(kPink-8, 0.5);
             hNCotherscale->SetLineColor(kPink-8);
-            hNCotherscale->SetLineStyle(kDashed);
+            hNCotherscale->SetLineStyle(8);
             hNCotherscale->SetLineWidth(2);
 
-            hnumuCC1gscale->Scale(scale_amount_numuCC1g);
+            hnumuCC1gscale->Scale(abs(scale_amount_numuCC1g - 1.0));
             signal_amount_numuCC1g = hnumuCC1gscale->Integral();
-            for (int i=0;i<stackHists->GetSize();++i) {
+            /*for (int i=0;i<stackHists->GetSize();++i) {
                 hnumuCC1gscale->Add((TH1*)stackHists->At(i));
             }
             hnumuCC1gscale->Add(hNCpi1g);
             hnumuCC1gscale->Add(hNCdel);
             hnumuCC1gscale->Add(hNCother);
-            hnumuCC1gscale->Add(hout1g);
+            hnumuCC1gscale->Add(hout1g);*/
             hnumuCC1gscale->SetFillStyle(0);
             hnumuCC1gscale->SetFillColorAlpha(kPink-7, 0.5);
             hnumuCC1gscale->SetLineColor(kPink-7);
-            hnumuCC1gscale->SetLineStyle(kDashed);
+            hnumuCC1gscale->SetLineStyle(9);
             hnumuCC1gscale->SetLineWidth(2);
 
-            hout1gscale->Scale(scale_amount_out1g);
+            hout1gscale->Scale(abs(scale_amount_out1g - 1.0));
             signal_amount_out1g = hout1gscale->Integral();
-            for (int i=0;i<stackHists->GetSize();++i) {
+            /*for (int i=0;i<stackHists->GetSize();++i) {
                 hout1gscale->Add((TH1*)stackHists->At(i));
             }
             hout1gscale->Add(hNCpi1g);
             hout1gscale->Add(hNCdel);
             hout1gscale->Add(hNCother);
-            hout1gscale->Add(hnumuCC1g);
+            hout1gscale->Add(hnumuCC1g);*/
             hout1gscale->SetFillStyle(0);
             hout1gscale->SetFillColorAlpha(kPink, 0.5);
             hout1gscale->SetLineColor(kPink);
-            hout1gscale->SetLineStyle(kDashed);
+            hout1gscale->SetLineStyle(10);
             hout1gscale->SetLineWidth(2);
         //}
+
+        if (0){
 
         hstack[obschannel-1]->Add(hNCpi1g);
         legend[obschannel-1]->AddEntry(hNCpi1g, Form("NC #pi^{0} 1#gamma, %.1f", hNCpi1g->Integral()), "F");
@@ -1458,6 +1460,8 @@ int main( int argc, char** argv )
         hout1g->SetFillColorAlpha(kPink, 0.5);
         hout1g->SetLineColor(kPink);
         hout1g->SetLineWidth(1);
+
+        }//turn off breakdown
 
         if(flag_leeexist){
         hstack[obschannel-1]->Add(hLEE);
@@ -1627,17 +1631,21 @@ int main( int argc, char** argv )
         hmc->SetLineColor(kBlack);
         hmc->SetLineWidth(5);
 
-
-        hstack[obschannel-1]->Draw("hist same");
+        //Erin, h1gscale comment
+        //hstack[obschannel-1]->Draw("hist same");
         hmcerror->Sumw2();
         hmcerror->Scale(scalePOT);
-        hmcerror->Draw("same E2");
+        //Erin, h1gscale comment
+        //hmcerror->Draw("same E2");
         hmcerror->SetFillColor(kGray+2);
         hmcerror->SetFillStyle(3002);
         hmcerror->SetLineWidth(0);
         hmcerror->SetLineColor(12);
         hmcerror->SetMarkerColor(0);
         hmcerror->SetMarkerSize(0);
+
+        //Erin , plot data as just excess
+        hdata->Add(hmc,-1);
 
         //if (obschannel==1){
             double scalechi2 = hdata->Chi2Test(h1gscale,"CHI2");
