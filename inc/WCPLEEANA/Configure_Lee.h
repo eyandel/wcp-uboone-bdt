@@ -25,8 +25,8 @@ namespace config_Lee
 
   ///////////////////////////////
 
-  int array_LEE_ch[1] = {0};
-  //int array_LEE_ch[3] = {2,4,6}; // for 1d strength. Pay attention to the setting.
+  //int array_LEE_ch[1] = {0};
+  int array_LEE_ch[3] = {4,5,6}; // for 1d strength. Pay attention to the setting.
                              // Confict will happen if both the 1d and 2d(defined below) work.
                              // Three options: 1d works, 2d works, or neither works
 
