@@ -948,7 +948,7 @@ int main( int argc, char** argv )
         pad2->SetRightMargin(0.1);
         pad2->SetBottomMargin(0.20);
         pad1->Draw();
-        pad2->Draw();
+        //pad2->Draw();
         hstack[obschannel-1] = new THStack(Form("hs%d", obschannel),"");
         legend[obschannel-1] = new TLegend(0.3, 0.55, 0.95, 0.92);
         TH1F* hdata = (TH1F*)map_obsch_histos[obschannel].at(0)->Clone("hdata");
@@ -1756,7 +1756,7 @@ int main( int argc, char** argv )
         legend[obschannel-1]->SetHeader(Form("#SigmaDATA/#Sigma(MC+EXT)=%.2f#pm%.2f(data err)#pm%.2f(pred err)", data_pred_ratio, relerr_data*data_pred_ratio, relerr_pred*data_pred_ratio), "C");
         legend[obschannel-1]->Draw();
         pad1->Modified();
-        pad2->cd();
+        /*pad2->cd();
         gratio_mc[obschannel-1]->Draw("a2");
         gratio_mc[obschannel-1]->SetFillColor(kBlue-10);
         //gratio_mc[obschannel-1]->SetFillColor(kRed-10);
@@ -1771,14 +1771,14 @@ int main( int argc, char** argv )
         gratio_mc2[obschannel-1]->SetFillColor(kRed-10);
         gratio_mc2[obschannel-1]->GetYaxis()->SetRangeUser(0,int(1.5*maxratio)<2?int(1.5*maxratio):2);
         gratio_mc2[obschannel-1]->GetXaxis()->SetRangeUser(hmc->GetXaxis()->GetXmin(),hmc->GetXaxis()->GetXmax());
-        }
+        }*/
         /*if(obschannel>=5) //hard coded at this moment
         {
             gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco #pi^{0} energy [MeV]");
         }
         else*/ 
         //Erin 
-        gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reconstructed Shower Energy [MeV]");
+        hdata->GetXaxis()->SetTitle("Reconstructed Shower Energy [MeV]");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reconstructed Shower Cosine Angle");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Number of Tracks");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("#nu_{e}CC BDT Score");
