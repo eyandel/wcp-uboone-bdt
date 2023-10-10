@@ -1653,7 +1653,8 @@ int main( int argc, char** argv )
         hdata->SetMaximum(2.0*excessymax);
         hdata->GetYaxis()->SetRangeUser(-0.02*excessymax, 1.6*excessymax);
 
-        hdata->Draw("P");
+        hdata->SetLineColor(kWhite);
+        hdata->Draw("hist");
 
         //if (obschannel==1){
             double scalechi2 = hdata->Chi2Test(h1gscale,"CHI2");
