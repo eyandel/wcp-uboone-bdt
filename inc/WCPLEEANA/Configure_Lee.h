@@ -12,7 +12,7 @@ namespace config_Lee
 
 
 
-  int channels_observation = 0;// data channels (=hdata_obsch_# in spectra_file above)
+  int channels_observation = 3;// data channels (=hdata_obsch_# in spectra_file above)
                                // which is equal to the channels after collapse
                                // NOTE: This value is not used in the lastest version
 
