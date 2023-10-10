@@ -317,10 +317,19 @@ double LEEana::get_weight(TString weight_name, EvalInfo& eval, PFevalInfo& pfeva
   }else if (weight_name == "unity" || weight_name == "unity_unity"){
     return 1;
   }else if (weight_name == "lee_cv_spline"){
+    if (eval.weight_lee <= 0){
+      eval.weight_lee = 1.0;
+    }
     return (eval.weight_lee * addtl_weight*eval.weight_cv * eval.weight_spline);
   }else if (weight_name == "lee_cv_spline_lee_cv_spline"){
+    if (eval.weight_lee <= 0){
+      eval.weight_lee = 1.0;
+    }
     return pow(eval.weight_lee * addtl_weight*eval.weight_cv * eval.weight_spline,2);
   }else if (weight_name == "lee_cv_spline_cv_spline" || weight_name == "cv_spline_lee_cv_spline"){
+    if (eval.weight_lee <= 0){
+      eval.weight_lee = 1.0;
+    }
     return eval.weight_lee * pow(addtl_weight*eval.weight_cv * eval.weight_spline,2);
   }else if (weight_name == "spline"){
     return eval.weight_spline;
