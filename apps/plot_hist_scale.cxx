@@ -1225,7 +1225,7 @@ int main( int argc, char** argv )
         else legend[obschannel-1]->AddEntry((TObject*)0, Form("Data POT: %.3e", datapot*scalePOT), "");
         //else legend[obschannel-1]->AddEntry((TObject*)0, Form("Scaled to POT: %.3e", datapot*scalePOT), "");
         legend[obschannel-1]->AddEntry((TObject*)0, Form("#chi^{2}/ndf=%.2f/%d", GOF[obschannel-1].first, GOF[obschannel-1].second), "");
-        legend[obschannel-1]->AddEntry(gr[obschannel-1], Form("BNB data, %.1f", hdata->Integral()*scalePOT), "lp");
+      //legend[obschannel-1]->AddEntry(gr[obschannel-1], Form("BNB data, %.1f", hdata->Integral()*scalePOT), "lp");
         //legend[obschannel-1]->AddEntry(gr[obschannel-1], Form("Fake data, %.1f", hdata->Integral()*scalePOT), "lp");
         //legend[obschannel-1]->AddEntry(gr[obschannel-1], Form("Scaled BNB data, %.1f", hdata->Integral()*scalePOT), "lp");
 
@@ -1646,6 +1646,14 @@ int main( int argc, char** argv )
 
         //Erin , plot data as just excess
         hdata->Add(hmc,-1);
+
+        legend[obschannel-1]->AddEntry(gr[obschannel-1], Form("BNB data, %.1f", hdata->Integral()*scalePOT), "lp");
+
+        float excessymax = hdata->GetBinContent(hdata->GetMaximumBin())*scalePOT/normalization;
+        hdata->SetMaximum(2.0*excessymax);
+        hdata->GetYaxis()->SetRangeUser(-0.02*excessymax, 1.6*excessymax);
+
+        hdata->Draw("P");
 
         //if (obschannel==1){
             double scalechi2 = hdata->Chi2Test(h1gscale,"CHI2");
