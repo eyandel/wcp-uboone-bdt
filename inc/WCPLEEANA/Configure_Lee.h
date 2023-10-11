@@ -12,7 +12,7 @@ namespace config_Lee
 
 
 
-  int channels_observation = 3;// data channels (=hdata_obsch_# in spectra_file above)
+  int channels_observation = 0;// data channels (=hdata_obsch_# in spectra_file above)
                                // which is equal to the channels after collapse
                                // NOTE: This value is not used in the lastest version
 
@@ -20,7 +20,7 @@ namespace config_Lee
   int syst_cov_flux_Xs_end   = 17;//cov_18.root is uncorrelated reweighting and cov_19.root is correlated
 
   int syst_cov_mc_stat_begin = 0;// files in mc_directory above
-  int syst_cov_mc_stat_end   = 0;
+  int syst_cov_mc_stat_end   = 99;
 
 
   ///////////////////////////////
