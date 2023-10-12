@@ -1659,7 +1659,7 @@ int main( int argc, char** argv )
         hdata->Draw("hist");
 
         //if (obschannel==1){
-            legend[obschannel-1]->SetTextSize(0.08);
+            legend[obschannel-1]->SetTextSize(0.03);
 
             double scalechi2 = hdata->Chi2Test(h1gscale,"CHI2");
             //legend[obschannel-1]->AddEntry(h1gscale, Form("Signal x %.2f, %.1f, #chi^{2} = %.2f", scale_amount, signal_amount, scalechi2), "F");
