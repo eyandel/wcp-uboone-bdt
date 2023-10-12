@@ -938,7 +938,7 @@ int main( int argc, char** argv )
         int obschannel = it->first;
         std::cout<<"Channel: "<<obschannel<<std::endl;
         canvas[obschannel-1] = new TCanvas(Form("canvas%d", obschannel), Form("channel%d", obschannel), 1200, 900);
-        TPad *pad1 = new TPad("pad1", "", 0.01,0.3,0.99,0.99,0,0,0);
+        TPad *pad1 = new TPad("pad1", "", 0.01,0.01,0.99,0.99,0,0,0);
         TPad *pad2 = new TPad("pad2", "", 0.01,0.01,0.99,0.3,0,0,0);
         pad1->SetBottomMargin(0);
         pad1->SetLeftMargin(0.12);
@@ -1344,9 +1344,9 @@ int main( int argc, char** argv )
             //legend[obschannel-1]->AddEntry(h1gscale, Form("Signal x %.1f, %.1f", scale_amount, signal_amount), "F");
             h1gscale->SetFillStyle(0);
             h1gscale->SetFillColorAlpha(kMagenta, 0.5);
-            h1gscale->SetLineColor(kMagenta);
+            h1gscale->SetLineColor(kRed);
             h1gscale->SetLineStyle(2);
-            h1gscale->SetLineWidth(2);
+            h1gscale->SetLineWidth(3);
 
             hNCpi1gscale->Scale(abs(scale_amount_NCpi1g - 1.0));
             signal_amount_NCpi1g = hNCpi1gscale->Integral();
@@ -1359,9 +1359,9 @@ int main( int argc, char** argv )
             hNCpi1gscale->Add(hout1g);*/
             hNCpi1gscale->SetFillStyle(0);
             hNCpi1gscale->SetFillColorAlpha(kPink+5, 0.5);
-            hNCpi1gscale->SetLineColor(kPink+5);
+            hNCpi1gscale->SetLineColor(kOrange);
             hNCpi1gscale->SetLineStyle(4);
-            hNCpi1gscale->SetLineWidth(2);
+            hNCpi1gscale->SetLineWidth(3);
 
             hNCdelscale->Scale(abs(scale_amount_NCdel - 1.0));
             signal_amount_NCdel = hNCdelscale->Integral();
@@ -1374,9 +1374,9 @@ int main( int argc, char** argv )
             hNCdelscale->Add(hout1g); */
             hNCdelscale->SetFillStyle(0);
             hNCdelscale->SetFillColorAlpha(kPink-6, 0.5);
-            hNCdelscale->SetLineColor(kPink-6);
+            hNCdelscale->SetLineColor(kYellow);
             hNCdelscale->SetLineStyle(6);
-            hNCdelscale->SetLineWidth(2);
+            hNCdelscale->SetLineWidth(3);
 
             hNCotherscale->Scale(abs(scale_amount_NCother - 1.0));
             signal_amount_NCother = hNCotherscale->Integral();
@@ -1389,9 +1389,9 @@ int main( int argc, char** argv )
             hNCotherscale->Add(hout1g);*/
             hNCotherscale->SetFillStyle(0);
             hNCotherscale->SetFillColorAlpha(kPink-8, 0.5);
-            hNCotherscale->SetLineColor(kPink-8);
+            hNCotherscale->SetLineColor(kGreen);
             hNCotherscale->SetLineStyle(8);
-            hNCotherscale->SetLineWidth(2);
+            hNCotherscale->SetLineWidth(3);
 
             hnumuCC1gscale->Scale(abs(scale_amount_numuCC1g - 1.0));
             signal_amount_numuCC1g = hnumuCC1gscale->Integral();
@@ -1404,9 +1404,9 @@ int main( int argc, char** argv )
             hnumuCC1gscale->Add(hout1g);*/
             hnumuCC1gscale->SetFillStyle(0);
             hnumuCC1gscale->SetFillColorAlpha(kPink-7, 0.5);
-            hnumuCC1gscale->SetLineColor(kPink-7);
+            hnumuCC1gscale->SetLineColor(kBlue);
             hnumuCC1gscale->SetLineStyle(9);
-            hnumuCC1gscale->SetLineWidth(2);
+            hnumuCC1gscale->SetLineWidth(3);
 
             hout1gscale->Scale(abs(scale_amount_out1g - 1.0));
             signal_amount_out1g = hout1gscale->Integral();
@@ -1419,9 +1419,9 @@ int main( int argc, char** argv )
             hout1gscale->Add(hnumuCC1g);*/
             hout1gscale->SetFillStyle(0);
             hout1gscale->SetFillColorAlpha(kPink, 0.5);
-            hout1gscale->SetLineColor(kPink);
+            hout1gscale->SetLineColor(kViolet);
             hout1gscale->SetLineStyle(10);
-            hout1gscale->SetLineWidth(2);
+            hout1gscale->SetLineWidth(3);
         //}
 
         if (0){
@@ -1659,27 +1659,27 @@ int main( int argc, char** argv )
         //if (obschannel==1){
             double scalechi2 = hdata->Chi2Test(h1gscale,"CHI2");
             //legend[obschannel-1]->AddEntry(h1gscale, Form("Signal x %.2f, %.1f, #chi^{2} = %.2f", scale_amount, signal_amount, scalechi2), "F");
-            legend[obschannel-1]->AddEntry(h1gscale, Form("Signal x %.2f, #chi^{2} = %.2f", scale_amount, scalechi2), "F");
+            legend[obschannel-1]->AddEntry(h1gscale, Form("Signal x %.2f, #chi^{2} = %.2f", scale_amount - 1.0, scalechi2), "F");
             h1gscale->Draw("hist same");
 
             double scalechi2_NCpi1g = hdata->Chi2Test(hNCpi1gscale,"CHI2");
-            legend[obschannel-1]->AddEntry(hNCpi1gscale, Form("NC #pi^{0} 1#gamma x %.2f, #chi^{2} = %.2f", scale_amount_NCpi1g, scalechi2_NCpi1g), "F");
+            legend[obschannel-1]->AddEntry(hNCpi1gscale, Form("NC #pi^{0} 1#gamma x %.2f, #chi^{2} = %.2f", scale_amount_NCpi1g - 1.0, scalechi2_NCpi1g), "F");
             hNCpi1gscale->Draw("hist same");
 
             double scalechi2_NCdel = hdata->Chi2Test(hNCdelscale,"CHI2");
-            legend[obschannel-1]->AddEntry(hNCdelscale, Form("NC #Delta 1#gamma x %.2f, #chi^{2} = %.2f", scale_amount_NCdel, scalechi2_NCdel), "F");
+            legend[obschannel-1]->AddEntry(hNCdelscale, Form("NC #Delta 1#gamma x %.2f, #chi^{2} = %.2f", scale_amount_NCdel - 1.0, scalechi2_NCdel), "F");
             hNCdelscale->Draw("hist same");     
 
             double scalechi2_NCother = hdata->Chi2Test(hNCotherscale,"CHI2");
-            legend[obschannel-1]->AddEntry(hNCotherscale, Form("NC Other 1#gamma x %.2f, #chi^{2} = %.2f", scale_amount_NCother, scalechi2_NCother), "F");
+            legend[obschannel-1]->AddEntry(hNCotherscale, Form("NC Other 1#gamma x %.2f, #chi^{2} = %.2f", scale_amount_NCother - 1.0, scalechi2_NCother), "F");
             hNCotherscale->Draw("hist same"); 
 
             double scalechi2_numuCC1g = hdata->Chi2Test(hnumuCC1gscale,"CHI2");
-            legend[obschannel-1]->AddEntry(hnumuCC1gscale, Form("#nu_{#mu}CC 1#gamma x %.2f, #chi^{2} = %.2f", scale_amount_numuCC1g, scalechi2_numuCC1g), "F");
+            legend[obschannel-1]->AddEntry(hnumuCC1gscale, Form("#nu_{#mu}CC 1#gamma x %.2f, #chi^{2} = %.2f", scale_amount_numuCC1g - 1.0, scalechi2_numuCC1g), "F");
             hnumuCC1gscale->Draw("hist same");
 
             double scalechi2_out1g = hdata->Chi2Test(hout1gscale,"CHI2");
-            legend[obschannel-1]->AddEntry(hout1gscale, Form("out of FV 1#gamma x %.2f, #chi^{2} = %.2f", scale_amount_out1g, scalechi2_out1g), "F");
+            legend[obschannel-1]->AddEntry(hout1gscale, Form("out of FV 1#gamma x %.2f, #chi^{2} = %.2f", scale_amount_out1g - 1.0, scalechi2_out1g), "F");
             hout1gscale->Draw("hist same");
         //}
 
@@ -1883,7 +1883,8 @@ int main( int argc, char** argv )
         gratio_mc[obschannel-1]->GetYaxis()->SetTitleSize(0.1);
         gratio_mc[obschannel-1]->GetYaxis()->SetTitleOffset(0.35);
         gratio_mc[obschannel-1]->GetYaxis()->SetLabelSize(0.1);
-        gratio_data[obschannel-1]->Draw("P same");
+        //change for no pad 2
+        //gratio_data[obschannel-1]->Draw("P same");
         gratio_data[obschannel-1]->SetLineWidth(2);
         gratio_data[obschannel-1]->SetMarkerStyle(20);
         gratio_data[obschannel-1]->SetMarkerSize(1.5);
@@ -1904,7 +1905,8 @@ int main( int argc, char** argv )
         TLine* line;
         line = new TLine(hmc->GetXaxis()->GetXmin(),1,hmc->GetXaxis()->GetXmax(),1);
         //if(obschannel==5 || obschannel==6) line = new TLine(0,1,1200,1);
-        line->Draw();
+        //change for no pad2
+        //line->Draw();
         line->SetLineWidth(2);
         line->SetLineStyle(kDashed);
         legend2[obschannel-1] = new TLegend(0.2, 0.7, 0.8, 0.95);
@@ -1918,7 +1920,8 @@ int main( int argc, char** argv )
         //legend2[obschannel-1]->AddEntry(gratio_data2[obschannel-1],"Data with stat. uncertainty (normalized)", "lp");
         legend2[obschannel-1]->SetTextSize(0.08);
         legend2[obschannel-1]->SetFillStyle(0);
-        legend2[obschannel-1]->Draw();
+        //change for no pad 2
+       // legend2[obschannel-1]->Draw();
         pad2->Modified();
 
         canvas[obschannel-1]->Print((TString)hdata->GetTitle()+"_scale.png");
