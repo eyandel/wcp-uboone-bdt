@@ -10,7 +10,7 @@ struct KineInfo{
   std::vector<int> *kine_particle_type;
   std::vector<int> *kine_energy_included;
   Float_t kine_pio_mass;
-  Float_t kine_pio_flag;
+  Int_t kine_pio_flag;
   Float_t kine_pio_vtx_dis;
   Float_t kine_pio_energy_1;
   Float_t kine_pio_theta_1;
@@ -111,7 +111,7 @@ void LEEana::put_tree_address(TTree *tree0, KineInfo& tagger_info){
   tree0->Branch("kine_particle_type", &tagger_info.kine_particle_type);
   tree0->Branch("kine_energy_included", &tagger_info.kine_energy_included);
   tree0->Branch("kine_pio_mass", &tagger_info.kine_pio_mass,"data/F");
-  tree0->Branch("kine_pio_flag", &tagger_info.kine_pio_flag,"data/F");
+  tree0->Branch("kine_pio_flag", &tagger_info.kine_pio_flag,"data/I");
   tree0->Branch("kine_pio_vtx_dis", &tagger_info.kine_pio_vtx_dis,"data/F");
   tree0->Branch("kine_pio_energy_1", &tagger_info.kine_pio_energy_1,"data/F");
   tree0->Branch("kine_pio_theta_1", &tagger_info.kine_pio_theta_1,"data/F");

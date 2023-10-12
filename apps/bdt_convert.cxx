@@ -3279,7 +3279,8 @@ int main( int argc, char** argv )
   reader_single_photon_ncpi0.AddVariable("br3_5_score",&tagger.br3_5_score);
   reader_single_photon_ncpi0.AddVariable("br3_3_score",&tagger.br3_3_score);
   reader_single_photon_ncpi0.AddVariable("kine_pio_mass",&kine.kine_pio_mass);
-  reader_single_photon_ncpi0.AddVariable("kine_pio_flag",&kine.kine_pio_flag);
+  reader_single_photon_ncpi0.AddVariable("kine_pio_flag",&temp_kine_pio_flag);
+  //reader_single_photon_ncpi0.AddVariable("kine_pio_flag",&kine.kine_pio_flag);
   reader_single_photon_ncpi0.AddVariable("kine_pio_vtx_dis",&kine.kine_pio_vtx_dis);
   reader_single_photon_ncpi0.AddVariable("kine_pio_energy_1",&kine.kine_pio_energy_1);
   reader_single_photon_ncpi0.AddVariable("kine_pio_theta_1",&kine.kine_pio_theta_1);
