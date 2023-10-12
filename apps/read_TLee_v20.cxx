@@ -1212,7 +1212,7 @@ int main(int argc, char** argv)
 
   ////////////////////////////////////////////////  Feldman-Cousins approach --> heavy computation cost
 
-  if( 1 ) {
+  if( 0 ) {
 
     /////////////// range: [low, hgh] with step
 
