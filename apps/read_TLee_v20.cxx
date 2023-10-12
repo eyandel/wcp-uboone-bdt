@@ -1183,7 +1183,9 @@ int main(int argc, char** argv)
 
     ///////////////////////// reject SM
 
-    Lee_test->scaleF_Lee = 0.4;
+    float lee_scale = 0.4;
+
+    Lee_test->scaleF_Lee = lee_scale;
     Lee_test->Set_Collapse();
 
     Lee_test->Set_toy_Asimov();// use the Asimov sample as the input data for the fitting
@@ -1200,12 +1202,12 @@ int main(int argc, char** argv)
     Lee_test->Set_Collapse();
 
     Lee_test->Set_toy_Asimov();// use the Asimov sample as the input data for the fitting
-    Lee_test->Minimization_Lee_strength_FullCov(0.4, 1);// (initial value, fix or not)
+    Lee_test->Minimization_Lee_strength_FullCov(lee_scale, 1);// (initial value, fix or not)
 
     //cout<<TString::Format(" ---> Excluding  LEE: %5.5f", Lee_test->minimization_chi2)<<endl;
 
     double sigma_Lee = sqrt( Lee_test->minimization_chi2 );
-    cout<<TString::Format(" ---> Excluding LEE: %5.5f sigma", sigma_Lee)<<endl;
+    cout<<TString::Format(" ---> Excluding LEEx%2.2f: %5.5f sigma", lee_scale,  sigma_Lee)<<endl;
 
   }
   //
