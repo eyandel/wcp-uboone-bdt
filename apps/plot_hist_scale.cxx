@@ -938,7 +938,7 @@ int main( int argc, char** argv )
         int obschannel = it->first;
         std::cout<<"Channel: "<<obschannel<<std::endl;
         canvas[obschannel-1] = new TCanvas(Form("canvas%d", obschannel), Form("channel%d", obschannel), 1200, 900);
-        TPad *pad1 = new TPad("pad1", "", 0.01,0.01,0.99,0.99,0,0,0);
+        TPad *pad1 = new TPad("pad1", "", 0.01,0.1,0.99,0.99,0,0,0);
         TPad *pad2 = new TPad("pad2", "", 0.01,0.01,0.99,0.3,0,0,0);
         pad1->SetBottomMargin(0);
         pad1->SetLeftMargin(0.12);
@@ -1753,7 +1753,8 @@ int main( int argc, char** argv )
         double relerr_data = 1./TMath::Sqrt(hdata->Integral());
         double relerr_pred = TMath::Sqrt(sumtotalcov[obschannel])/hmc->Integral();
         double data_pred_ratio = hdata->Integral()/normalization/hmc->Integral();
-        legend[obschannel-1]->SetHeader(Form("#SigmaDATA/#Sigma(MC+EXT)=%.2f#pm%.2f(data err)#pm%.2f(pred err)", data_pred_ratio, relerr_data*data_pred_ratio, relerr_pred*data_pred_ratio), "C");
+        //remove for style
+        //legend[obschannel-1]->SetHeader(Form("#SigmaDATA/#Sigma(MC+EXT)=%.2f#pm%.2f(data err)#pm%.2f(pred err)", data_pred_ratio, relerr_data*data_pred_ratio, relerr_pred*data_pred_ratio), "C");
         legend[obschannel-1]->Draw();
         pad1->Modified();
         /*pad2->cd();
@@ -1779,6 +1780,8 @@ int main( int argc, char** argv )
         else*/ 
         //Erin 
         hdata->GetXaxis()->SetTitle("Reconstructed Shower Energy [MeV]");
+        hdata->GetYaxis()->SetTitle("Excess Events");
+        pad1->Modified();
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reconstructed Shower Cosine Angle");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Number of Tracks");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("#nu_{e}CC BDT Score");
