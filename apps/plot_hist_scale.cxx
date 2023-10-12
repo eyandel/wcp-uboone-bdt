@@ -1374,7 +1374,7 @@ int main( int argc, char** argv )
             hNCdelscale->Add(hout1g); */
             hNCdelscale->SetFillStyle(0);
             hNCdelscale->SetFillColorAlpha(kPink-6, 0.5);
-            hNCdelscale->SetLineColor(kYellow);
+            hNCdelscale->SetLineColor(kYellow+1);
             hNCdelscale->SetLineStyle(6);
             hNCdelscale->SetLineWidth(3);
 
