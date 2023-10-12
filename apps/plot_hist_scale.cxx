@@ -1663,27 +1663,27 @@ int main( int argc, char** argv )
 
             double scalechi2 = hdata->Chi2Test(h1gscale,"CHI2");
             //legend[obschannel-1]->AddEntry(h1gscale, Form("Signal x %.2f, %.1f, #chi^{2} = %.2f", scale_amount, signal_amount, scalechi2), "F");
-            legend[obschannel-1]->AddEntry(h1gscale, Form("Signal x %.2f, #chi^{2} = %.2f", scale_amount - 1.0, scalechi2), "F");
+            legend[obschannel-1]->AddEntry(h1gscale, Form("Signal x %.2f, #chi^{2} = %.2f", scale_amount - 1.0, scalechi2), "l");
             h1gscale->Draw("hist same");
 
             double scalechi2_NCpi1g = hdata->Chi2Test(hNCpi1gscale,"CHI2");
-            legend[obschannel-1]->AddEntry(hNCpi1gscale, Form("NC #pi^{0} 1#gamma x %.2f, #chi^{2} = %.2f", scale_amount_NCpi1g - 1.0, scalechi2_NCpi1g), "F");
+            legend[obschannel-1]->AddEntry(hNCpi1gscale, Form("NC #pi^{0} 1#gamma x %.2f, #chi^{2} = %.2f", scale_amount_NCpi1g - 1.0, scalechi2_NCpi1g), "l");
             hNCpi1gscale->Draw("hist same");
 
             double scalechi2_NCdel = hdata->Chi2Test(hNCdelscale,"CHI2");
-            legend[obschannel-1]->AddEntry(hNCdelscale, Form("NC #Delta 1#gamma x %.2f, #chi^{2} = %.2f", scale_amount_NCdel - 1.0, scalechi2_NCdel), "F");
+            legend[obschannel-1]->AddEntry(hNCdelscale, Form("NC #Delta 1#gamma x %.2f, #chi^{2} = %.2f", scale_amount_NCdel - 1.0, scalechi2_NCdel), "l");
             hNCdelscale->Draw("hist same");     
 
             double scalechi2_NCother = hdata->Chi2Test(hNCotherscale,"CHI2");
-            legend[obschannel-1]->AddEntry(hNCotherscale, Form("NC Other 1#gamma x %.2f, #chi^{2} = %.2f", scale_amount_NCother - 1.0, scalechi2_NCother), "F");
+            legend[obschannel-1]->AddEntry(hNCotherscale, Form("NC Other 1#gamma x %.2f, #chi^{2} = %.2f", scale_amount_NCother - 1.0, scalechi2_NCother), "l");
             hNCotherscale->Draw("hist same"); 
 
             double scalechi2_numuCC1g = hdata->Chi2Test(hnumuCC1gscale,"CHI2");
-            legend[obschannel-1]->AddEntry(hnumuCC1gscale, Form("#nu_{#mu}CC 1#gamma x %.2f, #chi^{2} = %.2f", scale_amount_numuCC1g - 1.0, scalechi2_numuCC1g), "F");
+            legend[obschannel-1]->AddEntry(hnumuCC1gscale, Form("#nu_{#mu}CC 1#gamma x %.2f, #chi^{2} = %.2f", scale_amount_numuCC1g - 1.0, scalechi2_numuCC1g), "l");
             hnumuCC1gscale->Draw("hist same");
 
             double scalechi2_out1g = hdata->Chi2Test(hout1gscale,"CHI2");
-            legend[obschannel-1]->AddEntry(hout1gscale, Form("out of FV 1#gamma x %.2f, #chi^{2} = %.2f", scale_amount_out1g - 1.0, scalechi2_out1g), "F");
+            legend[obschannel-1]->AddEntry(hout1gscale, Form("out of FV 1#gamma x %.2f, #chi^{2} = %.2f", scale_amount_out1g - 1.0, scalechi2_out1g), "l");
             hout1gscale->Draw("hist same");
         //}
 
