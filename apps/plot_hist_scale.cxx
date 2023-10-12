@@ -940,7 +940,7 @@ int main( int argc, char** argv )
         canvas[obschannel-1] = new TCanvas(Form("canvas%d", obschannel), Form("channel%d", obschannel), 1200, 900);
         TPad *pad1 = new TPad("pad1", "", 0.01,0.1,0.99,0.99,0,0,0);
         TPad *pad2 = new TPad("pad2", "", 0.01,0.01,0.99,0.3,0,0,0);
-        pad1->SetBottomMargin(0);
+        pad1->SetBottomMargin(0.20);
         pad1->SetLeftMargin(0.12);
         pad1->SetRightMargin(0.1);
         pad2->SetTopMargin(0.05);
@@ -950,7 +950,7 @@ int main( int argc, char** argv )
         pad1->Draw();
         //pad2->Draw();
         hstack[obschannel-1] = new THStack(Form("hs%d", obschannel),"");
-        legend[obschannel-1] = new TLegend(0.3, 0.55, 0.95, 0.92);
+        legend[obschannel-1] = new TLegend(0.4, 0.55, 0.9, 0.92);
         TH1F* hdata = (TH1F*)map_obsch_histos[obschannel].at(0)->Clone("hdata");
         TH1F* hbadmatch = (TH1F*)hdata->Clone("hbadmatch");
         TH1F* hnumuCCinFV = (TH1F*)hdata->Clone("hnumuCCinFV");
@@ -1224,7 +1224,8 @@ int main( int argc, char** argv )
         if(obschannel==999) legend[obschannel-1]->AddEntry((TObject*)0, Form("NuMI POT: %.3e", datapot_numi*scalePOT), "");
         else legend[obschannel-1]->AddEntry((TObject*)0, Form("Data POT: %.3e", datapot*scalePOT), "");
         //else legend[obschannel-1]->AddEntry((TObject*)0, Form("Scaled to POT: %.3e", datapot*scalePOT), "");
-        legend[obschannel-1]->AddEntry((TObject*)0, Form("#chi^{2}/ndf=%.2f/%d", GOF[obschannel-1].first, GOF[obschannel-1].second), "");
+        //remove for style
+        //legend[obschannel-1]->AddEntry((TObject*)0, Form("#chi^{2}/ndf=%.2f/%d", GOF[obschannel-1].first, GOF[obschannel-1].second), "");
       //legend[obschannel-1]->AddEntry(gr[obschannel-1], Form("BNB data, %.1f", hdata->Integral()*scalePOT), "lp");
         //legend[obschannel-1]->AddEntry(gr[obschannel-1], Form("Fake data, %.1f", hdata->Integral()*scalePOT), "lp");
         //legend[obschannel-1]->AddEntry(gr[obschannel-1], Form("Scaled BNB data, %.1f", hdata->Integral()*scalePOT), "lp");
@@ -1232,7 +1233,8 @@ int main( int argc, char** argv )
         TH1F* hmc = (TH1F*)map_obsch_histos[obschannel].at(1)->Clone("hmc");
         TH1F* hmc2 = (TH1F*)map_obsch_histos[obschannel].at(2)->Clone("hmc2");
         TH1F* hmcerror = (TH1F*)hmc->Clone("hmcerror");
-        legend[obschannel-1]->AddEntry(hmcerror, "Pred. uncertainty", "lf");
+        //remove for style
+        //legend[obschannel-1]->AddEntry(hmcerror, "Pred. uncertainty", "lf");
 
         if(flag_truthlabel==0){
         // truth labels start
@@ -1657,6 +1659,8 @@ int main( int argc, char** argv )
         hdata->Draw("hist");
 
         //if (obschannel==1){
+            legend2[obschannel-1]->SetTextSize(0.08);
+
             double scalechi2 = hdata->Chi2Test(h1gscale,"CHI2");
             //legend[obschannel-1]->AddEntry(h1gscale, Form("Signal x %.2f, %.1f, #chi^{2} = %.2f", scale_amount, signal_amount, scalechi2), "F");
             legend[obschannel-1]->AddEntry(h1gscale, Form("Signal x %.2f, #chi^{2} = %.2f", scale_amount - 1.0, scalechi2), "F");
