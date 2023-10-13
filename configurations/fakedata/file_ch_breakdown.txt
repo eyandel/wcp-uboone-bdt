@@ -52,7 +52,7 @@
 /uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_ncpi0_run1_sp.root                     SPNCpi0Bkg
 /uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_ncpi0_run2_sp.root                     SPNCpi0Bkg
 /uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_ncpi0_run3_sp.root                     SPNCpi0Bkg
-/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_fakedata_10_sp.root                    all
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_fakedata_9_sp.root                    all
 /uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_dirt_run2_sp.root                     none
 /uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_dirt_run3_sp.root                     none
 end                                                                                                     end
