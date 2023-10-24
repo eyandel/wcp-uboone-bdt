@@ -2,7 +2,7 @@ sp_bdt_nue_Xp_spoverlay           N_tracks                      10    0        1
 sp_bdt_nue_Xp_ncpi0overlay        N_tracks                      10    0        10   	 1	   1		      1	    0	        0		      1		      6	      cv_spline		      0
 sp_bdt_nue_Xp_overlay_ncpi0_BG    N_tracks                      10    0        10   	 1	   1		      1	    0	        0		      1		      2	      cv_spline		      0
 sp_bdt_nue_Xp_dirt		            N_tracks                      10    0        10   	 1	   1		      0	    0.5	      0		      1		      4	      cv_spline		      0
-sp_bdt_nue_Xp_ext 		            N_tracks                      10    0        10   	 1	   0		      0	    0 	      0		      3		      3	      unity   		      0
+sp_bdt_nue_Xp_ext 		            N_tracks                      10    0        10   	 1	   0		      0	    0 	      0		      2		      3	      unity   		      0
 sp_bdt_nue_Xp 		                N_tracks                      10    0        10   	 1	   0		      0	    0 	      0		      0		      5	      unity   		      0
 End					                      End		                         -1	   -1	      -1	   -1	      -1		    -1	  -1		    -1		    -1		    -1	    end		                  -1
 
