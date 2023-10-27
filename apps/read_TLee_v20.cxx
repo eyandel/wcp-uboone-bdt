@@ -1183,7 +1183,7 @@ int main(int argc, char** argv)
 
     ///////////////////////// reject SM
 
-    float lee_scale = 0.4;
+    float lee_scale = 0.75;
 
     Lee_test->scaleF_Lee = lee_scale;
     Lee_test->Set_Collapse();
