@@ -97,6 +97,7 @@ namespace LEEana{
   bool is_singlephoton_nue_sel(TaggerInfo& tagger_info, PFevalInfo& pfeval);
   bool is_singlephoton_nue_sel_allshw(TaggerInfo& tagger_info, PFevalInfo& pfeval);
   bool is_nsbeam(PFevalInfo& pfeval, EvalInfo& eval);
+  bool is_nsbeam_photon(PFevalInfo& pfeval, EvalInfo& eval);
   bool is_singlephoton_pre(TaggerInfo& tagger_info, PFevalInfo& pfeval);
   bool is_singlephoton_numu(TaggerInfo& tagger_info, PFevalInfo& pfeval);
   bool is_singlephoton_other(TaggerInfo& tagger_info, PFevalInfo& pfeval);
@@ -2194,6 +2195,7 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
   bool flag_singlephoton_nue_sel = is_singlephoton_nue_sel(tagger, pfeval);
   bool flag_singlephoton_nue_sel_allshw = is_singlephoton_nue_sel_allshw(tagger, pfeval);
   bool flag_nsbeam = is_nsbeam(pfeval, eval);
+  bool flag_nsbeam_photon = is_nsbeam_photon(pfeval, eval);
   bool flag_singlephoton_pre = is_singlephoton_pre(tagger, pfeval);
   bool flag_singlephoton_numu = is_singlephoton_numu(tagger, pfeval);
   bool flag_singlephoton_other = is_singlephoton_other(tagger, pfeval);
@@ -6233,7 +6235,7 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
   }else if (ch_name == "sp_bdt_nc_pi0_Xp_nsbeam" || ch_name == "sp_bdt_nc_pi0_2_Xp_nsbeam" || ch_name == "sp_bdt_nc_pi0_3_Xp_nsbeam" || ch_name == "sp_bdt_nc_pi0_4_Xp_nsbeam"
             || ch_name == "sp_bdt_nc_pi0_5_Xp_nsbeam" || ch_name == "sp_bdt_nc_pi0_6_Xp_nsbeam" || ch_name == "sp_bdt_nc_pi0_7_Xp_nsbeam" || ch_name == "sp_bdt_nc_pi0_8_Xp_nsbeam"
             || ch_name == "sp_bdt_nc_pi0_9_Xp_nsbeam" || ch_name == "sp_bdt_nc_pi0_10_Xp_nsbeam" || ch_name == "sp_bdt_nc_pi0_11_Xp_nsbeam" || ch_name == "sp_bdt_nc_pi0_12_Xp_nsbeam"){
-                if (flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && flag_nsbeam) return true;
+                if (flag_singlephoton_ncpi0_sel && (!flag_singlephoton_sel) && flag_nsbeam_photon) return true;
                 return false;
   }else if (ch_name == "sp_bdt_nc_pi0_0p_ext" || ch_name == "sp_bdt_nc_pi0_2_0p_ext" || ch_name == "sp_bdt_nc_pi0_3_0p_ext" || ch_name == "sp_bdt_nc_pi0_4_0p_ext"
              || ch_name == "sp_bdt_nc_pi0_5_0p_ext" || ch_name == "sp_bdt_nc_pi0_6_0p_ext" || ch_name == "sp_bdt_nc_pi0_7_0p_ext" || ch_name == "sp_bdt_nc_pi0_8_0p_ext"
@@ -7520,6 +7522,34 @@ bool LEEana::is_nsbeam(PFevalInfo& pfeval, EvalInfo& eval){
   delta_time_calc = TT_merged;
 
   if (abs(delta_time_calc) < 5.0) {flag = true;}
+  return flag;
+}
+
+bool LEEana::is_nsbeam_photon(PFevalInfo& pfeval, EvalInfo& eval){
+  bool flag = false;
+
+  double delta_time_calc = -9999.;
+  //Merge Peaks
+  double gap=18.936;
+  double Shift=0;
+  if (pfeval.run >= 17380){ Shift=2916.0; }
+  else if (pfeval.run >= 13697){ Shift = 3166.1;}
+  else if (pfeval.run >= 10812){ Shift = 3568.5; }
+  else if (pfeval.run >= 8321){ Shift = 3610.7;}
+  else if (pfeval.run > 0 ){ Shift = 3166.0;}//3168.9;}
+  //if(run>8000 && run<10812){Shift=3610.7; }
+  //if(run>=10812 && run <12500){Shift=3568.5; }
+  double TThelp=pfeval.evtTimeNS-Shift+gap*0.5;
+  double TT_merged = -9999.;
+
+  //merge peaks
+  if(TThelp>=0 && TThelp<gap*81.0){
+    TT_merged=(TThelp-(int((TThelp)/gap))*gap)-gap*0.5;
+  }
+
+  delta_time_calc = TT_merged;
+
+  if (delta_time_calc > -6.5 && delta_time_calc < 3.5) {flag = true;}
   return flag;
 }
 
