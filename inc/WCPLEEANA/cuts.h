@@ -4545,7 +4545,7 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
                 && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio>0)) return true;
             return false;
   }else if (ch_name == "single_photon_bnb_nsbeam"){
-            if (flag_singlephoton_sel && flag_nsbeam) return true;
+            if (flag_singlephoton_sel && flag_nsbeam_photon) return true;
             return false;
   }else if (ch_name == "single_photon_eff_bnb_nsbeam"){
             if (flag_singlephoton_eff_sel && flag_nsbeam) return true;
