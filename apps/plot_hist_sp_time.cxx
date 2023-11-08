@@ -939,7 +939,7 @@ int main( int argc, char** argv )
         canvas[obschannel-1]->Draw();
         //pad2->Draw();
         hstack[obschannel-1] = new THStack(Form("hs%d", obschannel),"");
-        legend[obschannel-1] = new TLegend(0.32, 0.77, 0.87, 0.95);//0.3, 0.65, 0.5, 0.92);
+        legend[obschannel-1] = new TLegend(0.32, 0.77, 0.57, 0.95);//0.3, 0.65, 0.5, 0.92);
         TH1F* hdata = (TH1F*)map_obsch_histos[obschannel].at(0)->Clone("hdata");
         TH1F* hbeam = (TH1F*)hdata->Clone("hbeam");
         TH1F* hbadmatch = (TH1F*)hdata->Clone("hbadmatch");
@@ -1191,7 +1191,7 @@ int main( int argc, char** argv )
         }else datapot = map_data_period_pot[run];
 
         gr[obschannel-1] = new TGraphAsymmErrors();
-        legend[obschannel-1]->SetNColumns(2);
+      //  legend[obschannel-1]->SetNColumns(2);
         // numi channels
         if(obschannel==999) legend[obschannel-1]->AddEntry((TObject*)0, Form("NuMI POT: %.3e", datapot_numi*scalePOT), "");
         else legend[obschannel-1]->AddEntry((TObject*)0, Form("Data POT: %.3e", datapot*scalePOT), "");
@@ -1613,7 +1613,7 @@ int main( int argc, char** argv )
         double relerr_data = 1./TMath::Sqrt(hdata->Integral());
         double relerr_pred = TMath::Sqrt(sumtotalcov[obschannel])/hmc->Integral();
         double data_pred_ratio = hdata->Integral()/normalization/hmc->Integral();
-        legend[obschannel-1]->SetHeader(Form("#SigmaDATA/#Sigma(MC+EXT)=%.2f#pm%.2f(data err)#pm%.2f(pred err)", data_pred_ratio, relerr_data*data_pred_ratio, relerr_pred*data_pred_ratio), "C");
+      //  legend[obschannel-1]->SetHeader(Form("#SigmaDATA/#Sigma(MC+EXT)=%.2f#pm%.2f(data err)#pm%.2f(pred err)", data_pred_ratio, relerr_data*data_pred_ratio, relerr_pred*data_pred_ratio), "C");
         legend[obschannel-1]->Draw();
         canvas[obschannel-1]->Modified();
         //pad1->Modified();
