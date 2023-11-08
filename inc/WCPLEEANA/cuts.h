@@ -7507,10 +7507,12 @@ bool LEEana::is_nsbeam(PFevalInfo& pfeval, EvalInfo& eval){
   double gap=18.936;
   double Shift=0;
   if (pfeval.run >= 17380){ Shift=2916.0; }
-  else if (pfeval.run >= 13697){ Shift = 3166.1;}
+  else if (pfeval.run >= 13697){ Shift = 3147.3;}//3166.1;}
   else if (pfeval.run >= 10812){ Shift = 3568.5; }
   else if (pfeval.run >= 8321){ Shift = 3610.7;}
-  else if (pfeval.run > 0 ){ Shift = 3166.0;}//3168.9;}
+  else if (pfeval.run >= 5800){ Shift = 3164.4;}
+  else if (pfeval.run >= 0){ Shift = 3168.9;}
+  //else if (pfeval.run > 0 ){ Shift = 3166.0;}//3168.9;}
   //if(run>8000 && run<10812){Shift=3610.7; }
   //if(run>=10812 && run <12500){Shift=3568.5; }
   double TThelp=pfeval.evtTimeNS-Shift+gap*0.5;
@@ -7535,10 +7537,12 @@ bool LEEana::is_nsbeam_photon(PFevalInfo& pfeval, EvalInfo& eval){
   double gap=18.936;
   double Shift=0;
   if (pfeval.run >= 17380){ Shift=2916.0; }
-  else if (pfeval.run >= 13697){ Shift = 3166.1;}
+  else if (pfeval.run >= 13697){ Shift = 3147.3;}//3166.1;}
   else if (pfeval.run >= 10812){ Shift = 3568.5; }
   else if (pfeval.run >= 8321){ Shift = 3610.7;}
-  else if (pfeval.run > 0 ){ Shift = 3166.0;}//3168.9;}
+  else if (pfeval.run >= 5800){ Shift = 3164.4;}
+  else if (pfeval.run >= 0){ Shift = 3168.9;}
+  //else if (pfeval.run > 0 ){ Shift = 3166.0;}//3168.9;}
   //if(run>8000 && run<10812){Shift=3610.7; }
   //if(run>=10812 && run <12500){Shift=3568.5; }
   double TThelp=pfeval.evtTimeNS-Shift+gap*0.5;
@@ -7551,7 +7555,7 @@ bool LEEana::is_nsbeam_photon(PFevalInfo& pfeval, EvalInfo& eval){
 
   delta_time_calc = TT_merged;
 
-  if (delta_time_calc > -6.5 && delta_time_calc < 3.5) {flag = true;}
+  if (delta_time_calc > -6.6 && delta_time_calc < 3.4) {flag = true;}
   return flag;
 }
 
