@@ -1217,7 +1217,7 @@ int main( int argc, char** argv )
 
         hext->Add(hbadmatch);
         hstack[obschannel-1]->Add(hext);
-        legend[obschannel-1]->AddEntry(hext, Form("Cosmic Background, %.1f", hext->Integral()), "F");
+   //     legend[obschannel-1]->AddEntry(hext, Form("Cosmic Background, %.1f", hext->Integral()), "F");
         hext->SetFillStyle(3004);
         hext->SetFillColorAlpha(kOrange+3, 0.5);
         hext->SetLineColor(kOrange+3);
@@ -1323,7 +1323,7 @@ int main( int argc, char** argv )
     //    hout1g->SetLineWidth(1);
 
           hstack[obschannel-1]->Add(hbeam);
-          legend[obschannel-1]->AddEntry(hbeam, Form("Beam Events, %.1f", hbeam->Integral()), "F");
+       //   legend[obschannel-1]->AddEntry(hbeam, Form("Beam Events, %.1f", hbeam->Integral()), "F");
           hbeam->SetFillStyle(1001);
           hbeam->SetFillColorAlpha(kMagenta, 0.5);
           hbeam->SetLineColor(kMagenta);
