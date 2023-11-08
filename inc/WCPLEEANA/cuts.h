@@ -1064,7 +1064,8 @@ double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, 
       else if (pfeval.run >= 13697){ Shift = 3166.1;}
       else if (pfeval.run >= 10812){ Shift = 3568.5; }
       else if (pfeval.run >= 8321){ Shift = 3610.7;}
-      else if (pfeval.run > 0 ){ Shift = 3166.0;}//3168.9;}
+      //else if (pfeval.run > 0 ){ Shift = 3166.0;}//3168.9;}
+      else if (pfeval.run > 0 ){ Shift = 3168.9;}
       /*if (pfeval.run >= 13697){ Shift = 3166.9;}
       else if(pfeval.run>=10812){ Shift = 3568.5; }
       else if (pfeval.run >= 8321){ Shift = 3610.7;}
