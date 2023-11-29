@@ -2196,7 +2196,7 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
   bool flag_singlephoton_ncpi0_sel = is_singlephoton_ncpi0_sel(tagger, pfeval);
   bool flag_singlephoton_nue_sel = is_singlephoton_nue_sel(tagger, pfeval);
   bool flag_singlephoton_nue_sel_allshw = is_singlephoton_nue_sel_allshw(tagger, pfeval);
-  bool flag_nsbeam = is_nsbeam(pfeval, eval);
+  bool flag_nsbeam = is_nsbeam_photon(pfeval, eval); //TEMPORARY - to test photon shift for all
   bool flag_nsbeam_photon = is_nsbeam_photon(pfeval, eval);
   bool flag_singlephoton_pre = is_singlephoton_pre(tagger, pfeval);
   bool flag_singlephoton_numu = is_singlephoton_numu(tagger, pfeval);
