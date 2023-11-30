@@ -1,3 +1,30 @@
+single_photon_spoverlay_lee         shower_energy_sp	             15	   0	      1500   	1	   1		      1	    0	        1		      4		      9	      cv_spline_nsbeam		  1
+single_photon_spoverlay             shower_energy_sp	             15	   0	      1500      1	   1		      1	    0	        1		      1		      9	      cv_spline_nsbeam        0
+single_photon_ncpi0overlay	        shower_energy_sp	             15	   0	      1500      1	   1		      1	    0	        0		      1		      6	      cv_spline_nsbeam        0
+single_photon_overlay_ncpi0_BG      shower_energy_sp	             15	   0	      1500      1	   1		      1	    0	        0		      1		      2	      cv_spline_nsbeam        0
+single_photon_dirt		            shower_energy_sp	             15	   0	      1500 	    1	   1		      0	    0.5	        0		      1		      4	      cv_spline_nsbeam        0
+single_photon_ext 		            shower_energy_sp	             15	   0	      1500 	    1	   0		      0	    0 	        0		      7	          3	      nsbeam_ext   	          0
+single_photon_bnb_nsbeam       		shower_energy_sp	             15	   0	      1500  	1	   0		      0	    0 	        0		      0		      5	      unity		              0
+
+sp_bdt_nc_pi0_2_Xp_spoverlay	    shower_energy_sp	             15	   0	      1500  	2	   1		      1	    0	        2		      5		      9	      cv_spline_nsbeam	      1
+sp_bdt_nc_pi0_Xp_spoverlay	        shower_energy_sp	             15	   0	      1500      2	   1		      1	    0	        2		      2		      9	      cv_spline_nsbeam		  0
+sp_bdt_nc_pi0_Xp_ncpi0overlay	    shower_energy_sp	             15	   0	      1500      2	   1		      1	    0	        0		      2		      6	      cv_spline_nsbeam		  0
+sp_bdt_nc_pi0_Xp_overlay_ncpi0_BG	shower_energy_sp	             15	   0	      1500      2	   1		      1	    0	        0		      2		      2	      cv_spline_nsbeam		  0
+sp_bdt_nc_pi0_Xp_dirt			    shower_energy_sp	             15	   0	      1500      2	   1		      0	    0.5	        0		      2		      4	      cv_spline_nsbeam		  0
+sp_bdt_nc_pi0_Xp_ext 			    shower_energy_sp	             15	   0	      1500      2	   0		      0	    0 	        0		      8	          3	      nsbeam_ext         	  0
+sp_bdt_nc_pi0_Xp_nsbeam            	shower_energy_sp	             15	   0	      1500      2	   0		      0	    0 	        0		      0		      5	      unity		      		  0
+
+sp_bdt_numuCC_2_Xp_spoverlay	    shower_energy_sp	             15	   0	      1500  	3	   1		      1	    0	        3		      6		      9	      cv_spline_nsbeam	      1
+sp_bdt_numuCC_Xp_spoverlay	        shower_energy_sp	             15	   0	      1500      3	   1		      1	    0	        3		      3		      9	      cv_spline_nsbeam		  0
+sp_bdt_numuCC_Xp_ncpi0overlay	    shower_energy_sp	             15	   0	      1500      3	   1		      1	    0	        0		      3		      6	      cv_spline_nsbeam		  0
+sp_bdt_numuCC_Xp_overlay_ncpi0_BG	shower_energy_sp	             15	   0	      1500      3	   1		      1	    0	        0		      3		      2	      cv_spline_nsbeam		  0
+sp_bdt_numuCC_Xp_dirt			    shower_energy_sp	             15	   0	      1500      3	   1		      0	    0.5	        0		      3		      4	      cv_spline_nsbeam		  0
+sp_bdt_numuCC_Xp_ext 			    shower_energy_sp	             15	   0	      1500      3	   0		      0	    0 	        0		      9	          3	      nsbeam_ext         	  0
+sp_bdt_numuCC_Xp_nsbeam            	shower_energy_sp	             15	   0	      1500      3	   0		      0	    0 	        0		      0		      5	      unity		      		  0
+End					                End		                         -1	   -1	      -1	   -1	   -1		      -1	  -1		    -1		    -1		    -1	    end		        -1
+#with beam time, LEE
+
+
 single_shower_spoverlay_lee         median_dEdx_sp	                 20    0          8   	1	   1		      1	    0	        1		      4		      9	      cv_spline_nsbeam		  1
 single_shower_spoverlay             median_dEdx_sp	                 20    0          8      1	   1		      1	    0	        1		      1		      9	      cv_spline_nsbeam        0
 single_shower_ncpi0overlay	        median_dEdx_sp	                 20    0          8      1	   1		      1	    0	        0		      1		      6	      cv_spline_nsbeam        0
@@ -22,7 +49,7 @@ sp_bdt_numuCC_Xp_dirt			    median_dEdx_sp	                 20    0          8  
 sp_bdt_numuCC_Xp_ext 			    median_dEdx_sp	                 20    0          8      3	   0		      0	    0 	        0		      9	          3	      nsbeam_ext         	  0
 sp_bdt_numuCC_Xp_nsbeam            	median_dEdx_sp	                 20    0          8      3	   0		      0	    0 	        0		      0		      5	      unity		      		  0
 End					                End		                         -1	   -1	      -1	   -1	   -1		      -1	  -1		    -1		    -1		    -1	    end		        -1
-
+#single shower with beam time
 
 single_photon_spoverlay_lee         ns_beam_time	                 60    -10      10      1	   1		      1	    0	        1		      4		      9	      cv_spline		  1
 single_photon_spoverlay             ns_beam_time	                 60    -10      10      1	   1		      1	    0	        1		      1		      9	      cv_spline		  0
