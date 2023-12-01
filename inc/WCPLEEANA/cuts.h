@@ -268,20 +268,17 @@ double LEEana::get_weight(TString weight_name, EvalInfo& eval, PFevalInfo& pfeva
     if (pfeval.reco_muonMomentum[3] > 0){has_muon = true;}
 
     if (pfeval.run >= 13697){ 
-      beam_scale=std::get<0>(time_info[3]);
+      beam_scale=std::get<0>(time_info[3]);//0.845;}//0.931503;}//0.913671 - 0.0812331; }
       if (!has_muon){ beam_scale = 0.82;}
     }
-    //0.845;}//0.931503;}//0.913671 - 0.0812331; }
     else if (pfeval.run >= 8321){ 
       beam_scale=std::get<0>( time_info[2]);
       if (!has_muon){ beam_scale = 0.86;}
-    }
-    //0.88;}//0.919618;}//0.900644 - 0.044328;}
+    }//0.88;}//0.919618;}//0.900644 - 0.044328;}
     else if (pfeval.run > 0 ){ 
-      beam_scale=std::get<0>( time_info[1]);
+      beam_scale=std::get<0>( time_info[1]);//0.912832;}//0.885887 - 0.0315298;}
       if (!has_muon){ beam_scale = 0.78;}
     }
-    //0.912832;}//0.885887 - 0.0315298;}
     //beam_scale = beam_scale - 0.03;
     float ext_rej = 0.47;
     if (pfeval.run >= 13697){ ext_rej = std::get<2>( time_info[3]);}/
@@ -316,20 +313,17 @@ double LEEana::get_weight(TString weight_name, EvalInfo& eval, PFevalInfo& pfeva
     if (pfeval.reco_muonMomentum[3] > 0){has_muon = true;}
 
     if (pfeval.run >= 13697){ 
-      beam_scale=std::get<0>(time_info[3]);
+      beam_scale=std::get<0>(time_info[3]);//0.845;}//0.931503;}//0.913671 - 0.0812331; }
       if (!has_muon){ beam_scale = 0.82;}
     }
-    //0.845;}//0.931503;}//0.913671 - 0.0812331; }
     else if (pfeval.run >= 8321){ 
-      beam_scale=std::get<0>( time_info[2]);
+      beam_scale=std::get<0>( time_info[2]);//0.88;}//0.919618;}//0.900644 - 0.044328;}
       if (!has_muon){ beam_scale = 0.86;}
     }
-    //0.88;}//0.919618;}//0.900644 - 0.044328;}
     else if (pfeval.run > 0 ){ 
-      beam_scale=std::get<0>( time_info[1]);
+      beam_scale=std::get<0>( time_info[1]);//0.912832;}//0.885887 - 0.0315298;}
       if (!has_muon){ beam_scale = 0.78;}
     }
-    //0.912832;}//0.885887 - 0.0315298;}
     //beam_scale = beam_scale - 0.03;
     float ext_rej = 0.47;
     if (pfeval.run >= 13697){ ext_rej = std::get<2>( time_info[3]);}//0.68;}//0.535783;}//0.471911 + 0.0812331; }
