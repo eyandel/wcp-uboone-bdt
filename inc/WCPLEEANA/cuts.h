@@ -281,8 +281,8 @@ double LEEana::get_weight(TString weight_name, EvalInfo& eval, PFevalInfo& pfeva
     }
     //beam_scale = beam_scale - 0.03;
     float ext_rej = 0.47;
-    if (pfeval.run >= 13697){ ext_rej = std::get<2>( time_info[3]);}/
-    /0.68;}//0.535783;}//0.471911 + 0.0812331; }
+    if (pfeval.run >= 13697){ ext_rej = std::get<2>( time_info[3]);}
+    //0.68;}//0.535783;}//0.471911 + 0.0812331; }
     else if (pfeval.run >= 8321){ ext_rej = std::get<2>( time_info[2]);}
     //0.66;}//0.532919;}//0.471911 + 0.044328;}
     else if (pfeval.run > 0 ){ ext_rej = std::get<2>( time_info[1]);}
