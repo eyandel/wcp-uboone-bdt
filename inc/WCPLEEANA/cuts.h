@@ -263,6 +263,10 @@ double LEEana::get_weight(TString weight_name, EvalInfo& eval, PFevalInfo& pfeva
   //Erin - ns beam time scaling
   }else if (weight_name == "cv_spline_nsbeam"){
     float beam_scale = 0.86;
+    
+    bool has_muon = false;
+    if (pfeval.reco_muonMomentum[3] > 0){has_muon = true;}
+
     if (pfeval.run >= 13697){ beam_scale=std::get<0>(time_info[3]);}//0.845;}//0.931503;}//0.913671 - 0.0812331; }
     else if (pfeval.run >= 8321){ beam_scale=std::get<0>( time_info[2]);}//0.88;}//0.919618;}//0.900644 - 0.044328;}
     else if (pfeval.run > 0 ){ beam_scale=std::get<0>( time_info[1]);}//0.912832;}//0.885887 - 0.0315298;}
@@ -2196,7 +2200,7 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
   bool flag_singlephoton_ncpi0_sel = is_singlephoton_ncpi0_sel(tagger, pfeval);
   bool flag_singlephoton_nue_sel = is_singlephoton_nue_sel(tagger, pfeval);
   bool flag_singlephoton_nue_sel_allshw = is_singlephoton_nue_sel_allshw(tagger, pfeval);
-  bool flag_nsbeam = is_nsbeam_photon(pfeval, eval); //TEMPORARY - to test photon shift for all
+  bool flag_nsbeam = is_nsbeam(pfeval, eval); 
   bool flag_nsbeam_photon = is_nsbeam_photon(pfeval, eval);
   bool flag_singlephoton_pre = is_singlephoton_pre(tagger, pfeval);
   bool flag_singlephoton_numu = is_singlephoton_numu(tagger, pfeval);
