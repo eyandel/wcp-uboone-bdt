@@ -80,10 +80,10 @@ int main( int argc, char** argv )
   }
 
   //Erin : make the histograms
-    TH1F *h_nuen_tot = new TH1F("h_nuen_tot","All Data", 25, 50., 2500.);
-    TH1F *h_nuen_cut5 = new TH1F("h_nuen_cut5","5ns cut", 25, 50., 2500.);
-    TH1F *h_nuen_cossub_tot = new TH1F("h_nuen_cossub_tot","All Data", 25, 50., 2500.);
-    TH1F *h_nuen_cossub_cut5 = new TH1F("h_nuen_cossub_cut5","5ns cut", 25, 50., 2500.);
+    TH1F *h_nuen_tot;// = new TH1F("h_nuen_tot","All Data", 25, 50., 2500.);
+    TH1F *h_nuen_cut5;// = new TH1F("h_nuen_cut5","5ns cut", 25, 50., 2500.);
+    TH1F *h_nuen_cossub_tot;// = new TH1F("h_nuen_cossub_tot","All Data", 25, 50., 2500.);
+    TH1F *h_nuen_cossub_cut5;// = new TH1F("h_nuen_cossub_cut5","5ns cut", 25, 50., 2500.);
 
   CovMatrix cov;
 
@@ -1530,10 +1530,10 @@ int main( int argc, char** argv )
         hdata->SetLineWidth(5);
 
         //Erin - fill ratio plots
-        if (obschannel-1 == 0){ h_nuen_tot->Add(hdata); }
-        if (obschannel-1 == 1){ h_nuen_cut5->Add(hdata); }
-        if (obschannel-1 == 0){ h_nuen_cossub_tot->Add(hext); }
-        if (obschannel-1 == 1){ h_nuen_cossub_cut5->Add(hext); }
+        if (obschannel-1 == 0){ h_nuen_tot = (TH1F*)hdata->Clone(); }
+        if (obschannel-1 == 1){ h_nuen_cut5 = (TH1F*)hdata->Clone(); }
+        if (obschannel-1 == 0){ h_nuen_cossub_tot = (TH1F*)hext->Clone(); }
+        if (obschannel-1 == 1){ h_nuen_cossub_cut5 = (TH1F*)hext->Clone(); }
 
 
         //Fit to a guassian with an offset
@@ -1817,7 +1817,7 @@ int main( int argc, char** argv )
             h_nuen_tot->Add(h_nuen_cossub_tot, -1);
             TH1F *h_nuen_ratio5 = new TH1F(*h_nuen_cut5);
             h_nuen_ratio5->Divide(h_nuen_cut5, h_nuen_tot,1.0,1.0,"B");
-        
+
             TCanvas *c1 = new TCanvas("c1","Data/Data vs Energy");
             c1->cd();
             h_nuen_ratio5->GetYaxis()->SetRangeUser(0.,1.25);
