@@ -79,6 +79,12 @@ int main( int argc, char** argv )
     }
   }
 
+  //Erin : make the histograms
+    TH1F *h_nuen_tot = new TH1F("h_nuen_tot","All Data", 25, 50., 2500.);
+    TH1F *h_nuen_cut5 = new TH1F("h_nuen_cut5","5ns cut", 25, 50., 2500.);
+    TH1F *h_nuen_cossub_tot = new TH1F("h_nuen_cossub_tot","All Data", 25, 50., 2500.);
+    TH1F *h_nuen_cossub_cut5 = new TH1F("h_nuen_cossub_cut5","5ns cut", 25, 50., 2500.);
+
   CovMatrix cov;
 
   // get data histograms ...
@@ -111,12 +117,6 @@ int main( int argc, char** argv )
     if (filetype==5 || filetype == 15){
       map_data_period_pot[period] = pot;
     }
-
-    //Erin : make the histograms
-    TH1F *h_nuen_tot = new TH1F("h_nuen_tot","All Data", 25, 50., 2500.);
-    TH1F *h_nuen_cut5 = new TH1F("h_nuen_cut5","5ns cut", 25, 50., 2500.);
-    TH1F *h_nuen_cossub_tot = new TH1F("h_nuen_cossub_tot","All Data", 25, 50., 2500.);
-    TH1F *h_nuen_cossub_cut5 = new TH1F("h_nuen_cossub_cut5","5ns cut", 25, 50., 2500.);
 
     // std::cout << pot << std::endl;
 
