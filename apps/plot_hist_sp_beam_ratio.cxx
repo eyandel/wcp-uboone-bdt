@@ -1894,6 +1894,7 @@ int main( int argc, char** argv )
     file3->Close();
   }
 
+    cout<<"make ratio plots"<<endl;
     h_nuen_cut5->Add(h_nuen_cossub_cut5, -1);
     h_nuen_tot->Add(h_nuen_cossub_tot, -1);
     TH1F *h_nuen_ratio5 = new TH1F(*h_nuen_cut5);
@@ -1908,5 +1909,6 @@ int main( int argc, char** argv )
     h_nuen_ratio5->SetTitle("Data/Data Ratio vs Energy");
     h_nuen_ratio5->GetXaxis()->SetTitle("Reco Neutrino Energy (MeV)");
     h_nuen_ratio5->GetYaxis()->SetTitle("data after cut/all data");
+    cout<<"finish make ratio plots"<<endl;
 
 }
