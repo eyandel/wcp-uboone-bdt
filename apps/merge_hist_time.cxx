@@ -79,16 +79,18 @@ int main( int argc, char** argv )
   //maps for timing weights and errors per run period
   std::map<int, double> map_mc_period_time_weight;
   std::map<int, double> map_cos_period_time_weight;
+  std::map<int, double> map_muon_period_time_weight;
   std::map<int, double> map_mc_period_time_weight_err;
   std::map<int, double> map_cos_period_time_weight_err;
+  std::map<int, double> map_muon_period_time_weight_err;
   //arrays for timing errors
   std::vector<std::vector<double>> time_errors_per_bin;
 
 
   //get scaling weights and errors
-  map_mc_period_time_weight[1] = std::get<0>(cov.get_time_info(1));
-  map_mc_period_time_weight[2] = std::get<0>(cov.get_time_info(2));
-  map_mc_period_time_weight[3] = std::get<0>(cov.get_time_info(3));
+  map_mc_period_time_weight[1] = 0.78;//std::get<0>(cov.get_time_info(1));
+  map_mc_period_time_weight[2] = 0.86;//std::get<0>(cov.get_time_info(2));
+  map_mc_period_time_weight[3] = 0.82;//std::get<0>(cov.get_time_info(3));
 
   map_mc_period_time_weight_err[1] = std::get<1>(cov.get_time_info(1));
   map_mc_period_time_weight_err[2] = std::get<1>(cov.get_time_info(2));
@@ -101,6 +103,14 @@ int main( int argc, char** argv )
   map_cos_period_time_weight_err[1] = std::get<3>(cov.get_time_info(1));
   map_cos_period_time_weight_err[2] = std::get<3>(cov.get_time_info(2));
   map_cos_period_time_weight_err[3] = std::get<3>(cov.get_time_info(3));
+
+  map_muon_period_time_weight[1] = std::get<0>(cov.get_time_info(1));
+  map_muon_period_time_weight[2] = std::get<0>(cov.get_time_info(2));
+  map_muon_period_time_weight[3] = std::get<0>(cov.get_time_info(3));
+
+  map_muon_period_time_weight_err[1] = 0.016;
+  map_muon_period_time_weight_err[2] = 0.013;
+  map_muon_period_time_weight_err[3] = 0.014;
   //
 
   // open all the histograms ...
@@ -249,8 +259,10 @@ for (int i_time = 0; i_time<num_runs; i_time++){
     TH1F* hdata = (TH1F*)map_obsch_histos[obschannel].at(0)->Clone("hdata");
     TH1F* hbadmatch = (TH1F*)hdata->Clone("hbadmatch");
     TH1F* hext = (TH1F*)hdata->Clone("hext");
+	TH1F* hmuon = (TH1F*)hdata->Clone("hmuon");
     hbadmatch->Reset();
     hext->Reset();
+	hmuon->Reset();
     for(size_t i=0; i<it->second.size(); i++) {
       TH1F* htemp = map_obsch_subhistos_time[obschannel].at(i);
       std::string histname = htemp->GetName();
@@ -264,6 +276,11 @@ for (int i_time = 0; i_time<num_runs; i_time++){
         if(line == "ext") {
           std::cout<<"ext"<<" "<<histname<<std::endl;
           hext->Add(htemp);
+          break;
+        }
+		if(line == "muon") {
+          std::cout<<"muon"<<" "<<histname<<std::endl;
+          hmuon->Add(htemp);
           break;
         }
       }
@@ -286,10 +303,12 @@ for (int i_time = 0; i_time<num_runs; i_time++){
       //fill time errors per bin
       double ext_err = (hext->GetBinContent(i)/map_cos_period_time_weight[time_period])*map_cos_period_time_weight_err[time_period];
       double cos_err = (hbadmatch->GetBinContent(i)/map_cos_period_time_weight[time_period])*map_cos_period_time_weight_err[time_period];
-      double mc_err = ((hmc->GetBinContent(i)-hext->GetBinContent(i)-hbadmatch->GetBinContent(i))/map_mc_period_time_weight[time_period])*map_mc_period_time_weight_err[time_period];
+      double muon_err = (hmuon->GetBinContent(i)/map_muon_period_time_weight[time_period])*map_muon_period_time_weight_err[time_period];
+      //add in muon scaling separation
+	  double mc_err = ((hmc->GetBinContent(i)-hext->GetBinContent(i)-hbadmatch->GetBinContent(i)-hmuon->GetBinContent(i))/map_mc_period_time_weight[time_period])*map_mc_period_time_weight_err[time_period];
       if (map_channel_nstime[obschannel]){
-        time_errors_temp.push_back(mc_err+ext_err+cos_err);
-        cout<<"Time error: "<<mc_err+ext_err+cos_err<<endl;
+        time_errors_temp.push_back(mc_err+ext_err+cos_err+muon_err);
+        cout<<"Time error: "<<mc_err+ext_err+cos_err+muon_err<<endl;
       }else{
         time_errors_temp.push_back(0.0);
       }

@@ -2124,6 +2124,12 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
   if (eval.match_completeness_energy>0.1*eval.truth_energyInside && pfeval.truth_single_photon==1 && (eval.truth_isCC==0 || (eval.truth_isCC==1 && abs(eval.truth_nuPdg)==14 && pfeval.truth_muonMomentum[3]-0.105658<0.1)) && eval.truth_vtxInside==0) map_cuts_flag["SPOutFVSig"] = true;
   else map_cuts_flag["SPOutFVSig"] = false;
 
+  if (eval.match_completeness_energy>0.1*eval.truth_energyInside &&  pfeval.reco_muonMomentum[3] > 0) map_cuts_flag["muon"] = true;
+  else map_cuts_flag["muon"] = false;
+
+  if (eval.match_completeness_energy>0.1*eval.truth_energyInside &&  !(pfeval.reco_muonMomentum[3] > 0)) map_cuts_flag["nomuon"] = true;
+  else map_cuts_flag["nomuon"] = false;
+
   map_cuts_flag["SPdirtBkg"] = false;
   map_cuts_flag["SPoutFVBkg"] = false;
   map_cuts_flag["SPnumuCCBkg"] = false;
