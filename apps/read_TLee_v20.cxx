@@ -1179,7 +1179,7 @@ int main(int argc, char** argv)
   }
 
   //Erin
-  if( 0 ) {
+  if( 1 ) {
 
     ///////////////////////// reject SM
 
