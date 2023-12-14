@@ -264,7 +264,7 @@ double LEEana::get_weight(TString weight_name, EvalInfo& eval, PFevalInfo& pfeva
   }else if (weight_name == "cv_spline_nsbeam"){
     float beam_scale = 0.86;
 
-    bool has_muon = true; //set to true to turn off
+    bool has_muon = false; //set to true to turn off
     if (pfeval.reco_muonMomentum[3] > 0){has_muon = true;}
 
     if (pfeval.run >= 13697){ 
@@ -309,7 +309,7 @@ double LEEana::get_weight(TString weight_name, EvalInfo& eval, PFevalInfo& pfeva
   }else if (weight_name == "cv_spline_nsbeam_cv_spline_nsbeam"){
     float beam_scale = 0.86;
 
-    bool has_muon = true; //set to true to turn off
+    bool has_muon = false; //set to true to turn off
     if (pfeval.reco_muonMomentum[3] > 0){has_muon = true;}
 
     if (pfeval.run >= 13697){ 
