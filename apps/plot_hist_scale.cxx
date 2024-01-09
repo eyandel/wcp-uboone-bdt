@@ -1339,17 +1339,17 @@ int main( int argc, char** argv )
             float num_bkg_out1g = num_bkg + hNCpi1g->Integral() + hNCdel->Integral() + hNCother->Integral() + hnumuCC1g->Integral();
 
             if (fit_scale == 0){
-              scale_amount_NCpi1g   = abs(hdata->Integral() - num_bkg_NCpi1g) / hNCpi1gscale->Integral();
-              scale_amount_NCdel    = abs(hdata->Integral() - num_bkg_NCdel) / hNCdelscale->Integral();
-              scale_amount_NCother  = abs(hdata->Integral() - num_bkg_NCother) / hNCotherscale->Integral();
+              scale_amount_NCpi1g   = abs(hdata->Integral() - num_bkg_NCpi1g) /   hNCpi1gscale->Integral();
+              scale_amount_NCdel    = abs(hdata->Integral() - num_bkg_NCdel) /    hNCdelscale->Integral();
+              scale_amount_NCother  = abs(hdata->Integral() - num_bkg_NCother) /  hNCotherscale->Integral();
               scale_amount_numuCC1g = abs(hdata->Integral() - num_bkg_numuCC1g) / hnumuCC1gscale->Integral();
-              scale_amount_out1g    = abs(hdata->Integral() - num_bkg_out1g) / hout1gscale->Integral();
+              scale_amount_out1g    = abs(hdata->Integral() - num_bkg_out1g) /    hout1gscale->Integral();
             }else{
-              scale_amount_NCpi1g   = ((num_bkg / num_bkg_NCpi1g) * fit_scale) + 1.0;
-              scale_amount_NCdel    = ((num_bkg / num_bkg_NCdel) * fit_scale) + 1.0;
-              scale_amount_NCother  = ((num_bkg / num_bkg_NCother) * fit_scale) + 1.0;
-              scale_amount_numuCC1g = ((num_bkg / num_bkg_numuCC1g) * fit_scale) + 1.0;
-              scale_amount_out1g    = ((num_bkg / num_bkg_out1g) * fit_scale) + 1.0;
+              scale_amount_NCpi1g   = ((h1gscale->Integral() / hNCpi1gscale->Integral()) * fit_scale) + 1.0;
+              scale_amount_NCdel    = ((h1gscale->Integral() / hNCdelscale->Integral()) * fit_scale) + 1.0;
+              scale_amount_NCother  = ((h1gscale->Integral() / hNCotherscale->Integral()) * fit_scale) + 1.0;
+              scale_amount_numuCC1g = ((h1gscale->Integral() / hnumuCC1gscale->Integral()) * fit_scale) + 1.0;
+              scale_amount_out1g    = ((h1gscale->Integral() / hout1gscale->Integral()) * fit_scale) + 1.0;
             }
         }
             //cout<< "scale_amount = " << scale_amount << endl;
@@ -1668,7 +1668,7 @@ int main( int argc, char** argv )
         legend[obschannel-1]->AddEntry(gr[obschannel-1], Form("BNB data, %.1f", hdata->Integral()*scalePOT), "lp");
 
         float excessymax = hdata->GetBinContent(hdata->GetMaximumBin())*scalePOT/normalization;
-        hdata->SetMaximum(2.0*excessymax);
+        hdata->SetMaximum(3.0*excessymax);
         hdata->GetYaxis()->SetRangeUser(-0.02*excessymax, 1.6*excessymax);
 
         hdata->SetLineColor(kWhite);
