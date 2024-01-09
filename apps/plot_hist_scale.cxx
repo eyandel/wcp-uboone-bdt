@@ -35,7 +35,7 @@ int main( int argc, char** argv )
 {
 
   if (argc < 2){
-    std::cout << "./plot_hist -r[#run, 0 for all] -e[1 for standard, 2 for Bayesian, 3 for total uncertainty] -l[LEE strength, check against total uncertainty config] -s[path-to-external covmatrix file] -c[check MC and DATA spectra against the ones from external file]" << std::endl;
+    std::cout << "./plot_hist -r[#run, 0 for all] -e[1 for standard, 2 for Bayesian, 3 for total uncertainty] -l[LEE strength, check against total uncertainty config] -s[path-to-external covmatrix file] -c[check MC and DATA spectra against the ones from external file] -x[lee strength to scale]" << std::endl;
   }
 
   int run = 1; // run 1 ...
@@ -48,6 +48,7 @@ int main( int argc, char** argv )
   TString cov_inputfile = "";
   int flag_check = 0;
   int flag_truthlabel = 0;
+  float fit_scale = 0;
 
   for (Int_t i=1;i!=argc;i++){
     switch(argv[i][1]){
@@ -76,6 +77,8 @@ int main( int argc, char** argv )
     case 't':{
       flag_truthlabel = atoi(&argv[i][2]);
     }break;
+    case 'x':{
+      fit_scale = atof(&argv[i][2]);
     }
   }
 
@@ -1322,7 +1325,11 @@ int main( int argc, char** argv )
                 num_bkg+=((TH1*)stackHists->At(i))->Integral();
             }
             //cout<< "h1gscale = " << h1gscale->Integral() << endl;
-            scale_amount = abs(hdata->Integral() - num_bkg) / h1gscale->Integral();
+            if (fit_scale == 0){
+              scale_amount = abs(hdata->Integral() - num_bkg) / h1gscale->Integral();
+            }else{
+              scale_amount = fit_scale + 1.0;
+            }
 
             float num_bkg_NCpi1g = num_bkg + hNCdel->Integral() + hNCother->Integral() + hnumuCC1g->Integral() + hout1g->Integral();
             float num_bkg_NCdel = num_bkg + hNCpi1g->Integral() + hNCother->Integral() + hnumuCC1g->Integral() + hout1g->Integral();
@@ -1330,11 +1337,19 @@ int main( int argc, char** argv )
             float num_bkg_numuCC1g = num_bkg + hNCpi1g->Integral() + hNCdel->Integral() + hNCother->Integral() + hout1g->Integral();
             float num_bkg_out1g = num_bkg + hNCpi1g->Integral() + hNCdel->Integral() + hNCother->Integral() + hnumuCC1g->Integral();
 
-            scale_amount_NCpi1g   = abs(hdata->Integral() - num_bkg_NCpi1g) / hNCpi1gscale->Integral();
-            scale_amount_NCdel    = abs(hdata->Integral() - num_bkg_NCdel) / hNCdelscale->Integral();
-            scale_amount_NCother  = abs(hdata->Integral() - num_bkg_NCother) / hNCotherscale->Integral();
-            scale_amount_numuCC1g = abs(hdata->Integral() - num_bkg_numuCC1g) / hnumuCC1gscale->Integral();
-            scale_amount_out1g    = abs(hdata->Integral() - num_bkg_out1g) / hout1gscale->Integral();
+            if (fit_scale == 0){
+              scale_amount_NCpi1g   = abs(hdata->Integral() - num_bkg_NCpi1g) / hNCpi1gscale->Integral();
+              scale_amount_NCdel    = abs(hdata->Integral() - num_bkg_NCdel) / hNCdelscale->Integral();
+              scale_amount_NCother  = abs(hdata->Integral() - num_bkg_NCother) / hNCotherscale->Integral();
+              scale_amount_numuCC1g = abs(hdata->Integral() - num_bkg_numuCC1g) / hnumuCC1gscale->Integral();
+              scale_amount_out1g    = abs(hdata->Integral() - num_bkg_out1g) / hout1gscale->Integral();
+            }else{
+              scale_amount_NCpi1g   = ((num_bkg / num_bkg_NCpi1g) * fit_scale) + 1.0;
+              scale_amount_NCdel    = ((num_bkg / num_bkg_NCdel) * fit_scale) + 1.0;
+              scale_amount_NCother  = ((num_bkg / num_bkg_NCother) * fit_scale) + 1.0;
+              scale_amount_numuCC1g = ((num_bkg / num_bkg_numuCC1g) * fit_scale) + 1.0;
+              scale_amount_out1g    = ((num_bkg / num_bkg_out1g) * fit_scale) + 1.0;
+            }
         }
             //cout<< "scale_amount = " << scale_amount << endl;
             h1gscale->Scale(abs(scale_amount - 1.0));
