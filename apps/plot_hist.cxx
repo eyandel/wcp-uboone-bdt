@@ -1582,11 +1582,12 @@ int main( int argc, char** argv )
         }
         else*/ 
         //Erin 
-        gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Energy [MeV]");
+        //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Energy [MeV]");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Median dE/dx (0-4 cm) [MeV/cm]");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Cosine Angle");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("#nu_{e} CC Background BDT Score");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Number of Tracks");
+        gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Number of Protons");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("#nu_{e}CC BDT Score");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Neutrino Energy [MeV]");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("NC#pi^{0} BDT Score");
