@@ -79,7 +79,8 @@ int main( int argc, char** argv )
     }break;
     case 'x':{
       fit_scale = atof(&argv[i][2]);
-    }
+    }break;
+  }
   }
 
   CovMatrix cov;
