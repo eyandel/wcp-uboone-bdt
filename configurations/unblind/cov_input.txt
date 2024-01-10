@@ -1,26 +1,26 @@
-single_photon_spoverlay_lee         reco_showervtxZ                  36    0          1050     1	   1		      1	    0	        1		      4		      9	      cv_spline		  1
-single_photon_spoverlay             reco_showervtxZ                  36    0          1050     1	   1		      1	    0	        1		      1		      9	      cv_spline		  0
-single_photon_ncpi0overlay	        reco_showervtxZ                  36    0          1050     1	   1		      1	    0	        0		      1		      6	      cv_spline		  0
-single_photon_overlay_ncpi0_BG      reco_showervtxZ                  36    0          1050     1	   1		      1	    0	        0		      1		      2	      cv_spline		  0
-single_photon_dirt		            reco_showervtxZ                  36    0          1050 	   1	   1		      0	    0.5	        0		      1		      4	      cv_spline       0
-single_photon_ext 		            reco_showervtxZ                  36    0          1050 	   1	   0		      0	    0 	        0		      7	          3	      unity   	      0
-single_photon_bnb 		            reco_showervtxZ                  36    0          1050     1	   0		      0	    0 	        0		      0		      5	      unity		      0
+single_photon_spoverlay_lee         shw_backwards_projected_dist	 20	   0	      500     1	   1		      1	    0	        1		      4		      9	      cv_spline		  1
+single_photon_spoverlay             shw_backwards_projected_dist	 20	   0	      500     1	   1		      1	    0	        1		      1		      9	      cv_spline		  0
+single_photon_ncpi0overlay	        shw_backwards_projected_dist	 20	   0	      500     1	   1		      1	    0	        0		      1		      6	      cv_spline		  0
+single_photon_overlay_ncpi0_BG      shw_backwards_projected_dist	 20	   0	      500     1	   1		      1	    0	        0		      1		      2	      cv_spline		  0
+single_photon_dirt		            shw_backwards_projected_dist	 20	   0	      500 	  1	   1		      0	    0.5	        0		      1		      4	      cv_spline       0
+single_photon_ext 		            shw_backwards_projected_dist	 20	   0	      500 	  1	   0		      0	    0 	        0		      7	          3	      unity   	      0
+single_photon_bnb 		            shw_backwards_projected_dist	 20	   0	      500     1	   0		      0	    0 	        0		      0		      5	      unity		      0
 
-sp_bdt_nc_pi0_2_Xp_spoverlay	    reco_showervtxZ                  36    0          1050     2	   1		      1	    0	        2		      5		      9	      cv_spline		  1
-sp_bdt_nc_pi0_Xp_spoverlay	        reco_showervtxZ                  36    0          1050     2	   1		      1	    0	        2		      2		      9	      cv_spline		  0
-sp_bdt_nc_pi0_Xp_ncpi0overlay	    reco_showervtxZ                  36    0          1050     2	   1		      1	    0	        0		      2		      6	      cv_spline		  0
-sp_bdt_nc_pi0_Xp_overlay_ncpi0_BG	reco_showervtxZ                  36    0          1050     2	   1		      1	    0	        0		      2		      2	      cv_spline		  0
-sp_bdt_nc_pi0_Xp_dirt			    reco_showervtxZ                  36    0          1050     2	   1		      0	    0.5	        0		      2		      4	      cv_spline		  0
-sp_bdt_nc_pi0_Xp_ext 			    reco_showervtxZ                  36    0          1050     2	   0		      0	    0 	        0		      8	          3	      unity   	  	  0
-sp_bdt_nc_pi0_Xp     	            reco_showervtxZ                  36    0          1050     2	   0		      0	    0 	        0		      0		      5	      unity		      0
+sp_bdt_nc_pi0_2_Xp_spoverlay	    shw_backwards_projected_dist	 20	   0	      500     2	   1		      1	    0	        2		      5		      9	      cv_spline		  1
+sp_bdt_nc_pi0_Xp_spoverlay	        shw_backwards_projected_dist	 20	   0	      500     2	   1		      1	    0	        2		      2		      9	      cv_spline		  0
+sp_bdt_nc_pi0_Xp_ncpi0overlay	    shw_backwards_projected_dist	 20	   0	      500     2	   1		      1	    0	        0		      2		      6	      cv_spline		  0
+sp_bdt_nc_pi0_Xp_overlay_ncpi0_BG	shw_backwards_projected_dist	 20	   0	      500     2	   1		      1	    0	        0		      2		      2	      cv_spline		  0
+sp_bdt_nc_pi0_Xp_dirt			    shw_backwards_projected_dist	 20	   0	      500     2	   1		      0	    0.5	        0		      2		      4	      cv_spline		  0
+sp_bdt_nc_pi0_Xp_ext 			    shw_backwards_projected_dist	 20	   0	      500     2	   0		      0	    0 	        0		      8	          3	      unity   	  	  0
+sp_bdt_nc_pi0_Xp     	            shw_backwards_projected_dist	 20	   0	      500     2	   0		      0	    0 	        0		      0		      5	      unity		      0
 
-sp_bdt_numuCC_2_Xp_spoverlay	    reco_showervtxZ                  36    0          1050     3	   1		      1	    0	        3		      6		      9	      cv_spline		  1
-sp_bdt_numuCC_Xp_spoverlay	        reco_showervtxZ                  36    0          1050     3	   1		      1	    0	        3		      3		      9	      cv_spline		  0
-sp_bdt_numuCC_Xp_ncpi0overlay	    reco_showervtxZ                  36    0          1050     3	   1		      1	    0	        0		      3		      6	      cv_spline		  0
-sp_bdt_numuCC_Xp_overlay_ncpi0_BG	reco_showervtxZ                  36    0          1050     3	   1		      1	    0	        0		      3		      2	      cv_spline		  0
-sp_bdt_numuCC_Xp_dirt			    reco_showervtxZ                  36    0          1050     3	   1		      0	    0.5	        0		      3		      4	      cv_spline		  0
-sp_bdt_numuCC_Xp_ext 			    reco_showervtxZ                  36    0          1050     3	   0		      0	    0 	        0		      9	          3	      unity   	  	  0
-sp_bdt_numuCC_Xp     	            reco_showervtxZ                  36    0          1050     3	   0		      0	    0 	        0		      0		      5	      unity		      0
+sp_bdt_numuCC_2_Xp_spoverlay	    shw_backwards_projected_dist	 20	   0	      500     3	   1		      1	    0	        3		      6		      9	      cv_spline		  1
+sp_bdt_numuCC_Xp_spoverlay	        shw_backwards_projected_dist	 20	   0	      500     3	   1		      1	    0	        3		      3		      9	      cv_spline		  0
+sp_bdt_numuCC_Xp_ncpi0overlay	    shw_backwards_projected_dist	 20	   0	      500     3	   1		      1	    0	        0		      3		      6	      cv_spline		  0
+sp_bdt_numuCC_Xp_overlay_ncpi0_BG	shw_backwards_projected_dist	 20	   0	      500     3	   1		      1	    0	        0		      3		      2	      cv_spline		  0
+sp_bdt_numuCC_Xp_dirt			    shw_backwards_projected_dist	 20	   0	      500     3	   1		      0	    0.5	        0		      3		      4	      cv_spline		  0
+sp_bdt_numuCC_Xp_ext 			    shw_backwards_projected_dist	 20	   0	      500     3	   0		      0	    0 	        0		      9	          3	      unity   	  	  0
+sp_bdt_numuCC_Xp     	            shw_backwards_projected_dist	 20	   0	      500     3	   0		      0	    0 	        0		      0		      5	      unity		      0
 End					                End		                         -1	   -1	      -1	   -1	   -1		      -1	  -1		    -1		    -1		    -1	    end		        -1
 #current plot
 
@@ -316,6 +316,7 @@ ns_beam_time	                 60    -10        10
 reco_showervtxX                  28    -10        270
 reco_showervtxY                  25    -120       130
 reco_showervtxZ                  36    0          1050
+shw_backwards_projected_dist	 20	   0	      500
 
 numu_score                           60	   -15	    15
 shw_sp_br3_1_n_shower_segments       20    0        100

@@ -1598,7 +1598,8 @@ int main( int argc, char** argv )
         //gratio_mc[obschannel-1]->GetXaxis()->SetBinLabel(2,"0p");
          //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Vertex X [cm]");
          //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Vertex Y [cm]");
-         gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Vertex Z [cm]");
+         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Vertex Z [cm]");
+         gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Backwards Projected Distance [cm]");
 
 
         //else gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco neutrino vtx in X-axis [cm]");
