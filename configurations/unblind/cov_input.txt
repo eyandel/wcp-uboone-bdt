@@ -1,10 +1,10 @@
-single_photon_spoverlay_lee_0p      cos_shower_angle_beam_sp	     9	   -1.0       1.01     1	   1		      1	    0	        1		      4		      9	      cv_spline		  1
-single_photon_spoverlay_0p          cos_shower_angle_beam_sp	     9	   -1.0       1.01     1	   1		      1	    0	        1		      1		      9	      cv_spline		  0
-single_photon_ncpi0overlay_0p	    cos_shower_angle_beam_sp	     9	   -1.0       1.01     1	   1		      1	    0	        0		      1		      6	      cv_spline		  0
-single_photon_overlay_ncpi0_0p_BG   cos_shower_angle_beam_sp	     9	   -1.0       1.01     1	   1		      1	    0	        0		      1		      2	      cv_spline		  0
-single_photon_dirt_0p		        cos_shower_angle_beam_sp	     9	   -1.0       1.01 	   1	   1		      0	    0.5	        0		      1		      4	      cv_spline       0
-single_photon_ext_0p 		        cos_shower_angle_beam_sp	     9	   -1.0       1.01 	   1	   0		      0	    0 	        0		      7	          3	      unity   	      0
-single_photon_bnb_0p 		        cos_shower_angle_beam_sp	     9	   -1.0       1.01     1	   0		      0	    0 	        0		      0		      5	      unity		      0
+single_photon_spoverlay_lee_0p      cos_shower_angle_beam_sp	     9	   -1.0       1.01     1	   1		      1	    0	        1		      4		      9	      cv_spline_nsbeam	   1
+single_photon_spoverlay_0p          cos_shower_angle_beam_sp	     9	   -1.0       1.01     1	   1		      1	    0	        1		      1		      9	      cv_spline_nsbeam	   0
+single_photon_ncpi0overlay_0p	    cos_shower_angle_beam_sp	     9	   -1.0       1.01     1	   1		      1	    0	        0		      1		      6	      cv_spline_nsbeam	   0
+single_photon_overlay_ncpi0_0p_BG   cos_shower_angle_beam_sp	     9	   -1.0       1.01     1	   1		      1	    0	        0		      1		      2	      cv_spline_nsbeam	   0
+single_photon_dirt_0p		        cos_shower_angle_beam_sp	     9	   -1.0       1.01 	   1	   1		      0	    0.5	        0		      1		      4	      cv_spline_nsbeam     0
+single_photon_ext_0p 		        cos_shower_angle_beam_sp	     9	   -1.0       1.01 	   1	   0		      0	    0 	        0		      7	          3	      nsbeam_ext   	  	   0
+single_photon_bnb_0p_nsbeam 		cos_shower_angle_beam_sp	     9	   -1.0       1.01     1	   0		      0	    0 	        0		      0		      5	      unity		           0
 
 sp_bdt_nc_pi0_2_0p_spoverlay	    cos_shower_angle_beam_sp	     9	   -1.0       1.01     2	   1		      1	    0	        2		      5		      9	      cv_spline		  1
 sp_bdt_nc_pi0_0p_spoverlay	        cos_shower_angle_beam_sp	     9	   -1.0       1.01     2	   1		      1	    0	        2		      2		      9	      cv_spline		  0
