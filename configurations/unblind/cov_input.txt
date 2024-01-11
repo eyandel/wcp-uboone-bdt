@@ -1,10 +1,10 @@
-single_photon_spoverlay_lee         shower_energy_sp	             6	   0	      600     1	   1		      1	    0	        1		      4		      9	      cv_spline		  1
-single_photon_spoverlay             shower_energy_sp	             6	   0	      600     1	   1		      1	    0	        1		      1		      9	      cv_spline		  0
-single_photon_ncpi0overlay	        shower_energy_sp	             6	   0	      600     1	   1		      1	    0	        0		      1		      6	      cv_spline		  0
-single_photon_overlay_ncpi0_BG      shower_energy_sp	             6	   0	      600     1	   1		      1	    0	        0		      1		      2	      cv_spline		  0
-single_photon_dirt		            shower_energy_sp	             6	   0	      600 	  1	   1		      0	    0.5	        0		      1		      4	      cv_spline       0
-single_photon_ext 		            shower_energy_sp	             6	   0	      600 	  1	   0		      0	    0 	        0		      7	          3	      unity   	      0
-single_photon_bnb 		            shower_energy_sp	             6	   0	      600     1	   0		      0	    0 	        0		      0		      5	      unity		      0
+single_photon_spoverlay_lee         shower_energy_sp	             6	   0	      600     1	   1		      1	    0	        1		      4		      9	      cv_spline_nsbeam		  1
+single_photon_spoverlay             shower_energy_sp	             6	   0	      600     1	   1		      1	    0	        1		      1		      9	      cv_spline_nsbeam        0
+single_photon_ncpi0overlay	        shower_energy_sp	             6	   0	      600     1	   1		      1	    0	        0		      1		      6	      cv_spline_nsbeam        0
+single_photon_overlay_ncpi0_BG      shower_energy_sp	             6	   0	      600     1	   1		      1	    0	        0		      1		      2	      cv_spline_nsbeam        0
+single_photon_dirt		            shower_energy_sp	             6	   0	      600  	  1	   1		      0	    0.5	        0		      1		      4	      cv_spline_nsbeam        0
+single_photon_ext 		            shower_energy_sp	             6	   0	      600  	  1	   0		      0	    0 	        0		      7	          3	      nsbeam_ext   	          0
+single_photon_bnb_nsbeam       		shower_energy_sp	             6	   0	      600     1	   0		      0	    0 	        0		      0		      5	      unity		              0
 
 sp_bdt_nc_pi0_2_Xp_spoverlay	    shower_energy_sp	             6	   0	      600     2	   1		      1	    0	        2		      5		      9	      cv_spline		  1
 sp_bdt_nc_pi0_Xp_spoverlay	        shower_energy_sp	             6	   0	      600     2	   1		      1	    0	        2		      2		      9	      cv_spline		  0
