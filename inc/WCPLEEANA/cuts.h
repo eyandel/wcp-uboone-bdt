@@ -2145,6 +2145,20 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
       if(eval.match_completeness_energy>0.1*eval.truth_energyInside && eval.truth_isCC==0 && eval.truth_vtxInside==1 && pfeval.truth_Npi0==0) map_cuts_flag["SPNCBkg"] = true;
       if(eval.match_completeness_energy>0.1*eval.truth_energyInside && eval.truth_isCC==0 && eval.truth_vtxInside==1 && pfeval.truth_Npi0>0) map_cuts_flag["SPNCpi0Bkg"] = true;
   }
+
+  if((map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] || map_cuts_flag["SPNumuCCSig"] || map_cuts_flag["SPOutFVSig"])){
+      if (is_true_0p(pfeval)==1) {
+        map_cuts_flag["SP0p"] = true;
+        map_cuts_flag["SPNp"] = false;
+      }
+      else {
+        map_cuts_flag["SPNp"] = true;
+        map_cuts_flag["SP0p"] = false;
+      }
+  }else{
+      map_cuts_flag["SPNp"] = false;
+      map_cuts_flag["SP0p"] = false;
+  }
   // done with single photon breakdown categories
   //
 
