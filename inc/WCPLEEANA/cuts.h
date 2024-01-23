@@ -1126,6 +1126,12 @@ double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, 
     }else{
       return 0;
     }
+  }else if (var_name == "flag_FC"){
+    if (is_FC(eval)){
+      return 1;
+    }else{
+      return 0;
+    }
   //
   }else{
     std::cout << "No such variable: " << var_name << std::endl;
