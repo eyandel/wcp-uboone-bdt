@@ -1132,6 +1132,16 @@ double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, 
     }else{
       return 0;
     }
+  }else if (var_name == "run_period"){
+    if (pfeval.run >= 13697){ 
+      return 3;
+    }
+    else if (pfeval.run >= 8321){ 
+      return 2;
+    }
+    else if (pfeval.run > 0 ){ 
+      return 1;
+    }
   //
   }else{
     std::cout << "No such variable: " << var_name << std::endl;
