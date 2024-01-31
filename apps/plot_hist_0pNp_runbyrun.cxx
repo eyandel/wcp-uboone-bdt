@@ -1798,7 +1798,7 @@ int main( int argc, char** argv )
         else canvas[obschannel-1]->Print("selection.pdf");
 
         if (obschannel == 1){
-            TH1F* hratio = (TH1F*)gratio_mc[obschannel-1]->Clone("hratio");
+            TH1F* hratio = (TH1F*)gratio_data[obschannel-1]->Clone("hratio");
             double chi2_val = 0;
             double all_runs_ratio = data_pred_ratio;
             for(int i=0; i<hdata->GetNbinsX(); i++)
