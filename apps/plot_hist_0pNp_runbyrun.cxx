@@ -1785,7 +1785,7 @@ int main( int argc, char** argv )
                 double val_pred = hmc->GetBinContent(i+1);
                 double ratio = val_dat/val_pred;
                 double ratio_error = sqrt(val_dat)/val_pred;
-                chi2_val += pow(ratio - all_runs_ratio,2) / pow(ratio_errors,2);
+                chi2_val += pow(ratio - all_runs_ratio,2) / pow(ratio_error,2);
             }
             double p_value = TMath::Prob(chi2_val, hdata->GetNbinsX());
             double Sigma = abs(RooStats::PValueToSignificance(p_value / 2.0));
@@ -1798,7 +1798,7 @@ int main( int argc, char** argv )
             hratio->Draw(); 
             line->Draw("same");     
 
-            TLegend lratio = new TLegend(0.2, 0.7, 0.8, 0.95);
+            TLegend *lratio = new TLegend(0.2, 0.7, 0.8, 0.95);
             lratio->AddEntry((TObject*)0, Form("#chi^{2}/ndf=%.2f/%d", chi2_val, hdata->GetNbinsX()), "");
             lratio->AddEntry((TObject*)0, Form("p = %.3f, #sigma = %.3f", p_value, Sigma), "");
             lratio->Draw();
