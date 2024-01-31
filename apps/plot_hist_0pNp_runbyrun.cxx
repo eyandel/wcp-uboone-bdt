@@ -1818,9 +1818,9 @@ int main( int argc, char** argv )
 
             TCanvas *cratio = new TCanvas("cratio", "Ratios", 1200, 900);
             cratio->cd();   
-            hratio->GetYaxis()->SetRangeUser(0.0, 2.0);
             //hratio->Draw(); 
             hratio->Draw("E1");
+            hratio->GetYaxis()->SetRangeUser(0.0, 2.0);
 
             TLine* line2;
             line2 = new TLine(hratio->GetXaxis()->GetXmin(),1,hratio->GetXaxis()->GetXmax(),1);
