@@ -1798,8 +1798,7 @@ int main( int argc, char** argv )
         else canvas[obschannel-1]->Print("selection.pdf");
 
         if (obschannel == 1){
-            TH1F* hratio = (TH1F*)gratio_data[obschannel-1]->Clone("hratio");
-            hratio->Reset();
+            TH1F* hratio = new TH1F("hratio", "hratio", hdata->GetNbinsX(), hdata->GetXaxis()->GetXmin(), hdata->GetXaxis()->GetXmax());
             double chi2_val = 0;
             double all_runs_ratio = data_pred_ratio;
             for(int i=0; i<hdata->GetNbinsX(); i++)
@@ -1822,7 +1821,7 @@ int main( int argc, char** argv )
             cratio->cd();   
             hratio->Draw("P"); 
             //hratio->Draw("E1");
-            //hratio->GetYaxis()->SetRangeUser(0, 2);
+            hratio->GetYaxis()->SetRangeUser(0, 2);
 
             TLine* line2;
             line2 = new TLine(hratio->GetXaxis()->GetXmin(),1,hratio->GetXaxis()->GetXmax(),1);
