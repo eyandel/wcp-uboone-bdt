@@ -1818,7 +1818,7 @@ int main( int argc, char** argv )
 
             TCanvas *cratio = new TCanvas("cratio", "Ratios", 1200, 900);
             cratio->cd();   
-            hratio->Draw("pe"); 
+            hratio->Draw("E2"); 
 
             TLine* line2;
             line2 = new TLine(hratio->GetXaxis()->GetXmin(),1,hratio->GetXaxis()->GetXmax(),1);
