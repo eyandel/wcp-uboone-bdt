@@ -28,8 +28,30 @@
 #include "TF1.h"
 #include "TMatrixD.h"
 
+#include "RooGlobalFunc.h"
+#include "RooMultiVarGaussian.h"
+#include "RooArgList.h"
+#include "RooRealVar.h"
+#include "RooAbsReal.h"
+#include "RooFitResult.h"
+#include "RooStats/MCMCCalculator.h"
+#include "RooStats/MetropolisHastings.h"
+#include "RooStats/MarkovChain.h"
+#include "RooStats/ConfInterval.h"
+#include "RooStats/MCMCInterval.h"
+#include "RooStats/MCMCIntervalPlot.h"
+#include "RooStats/ModelConfig.h"
+#include "RooStats/ProposalHelper.h"
+#include "RooStats/ProposalFunction.h"
+#include "RooStats/PdfProposal.h"
+#include "RooStats/ProfileLikelihoodCalculator.h"
+#include "RooStats/LikelihoodIntervalPlot.h"
+#include "RooStats/LikelihoodInterval.h"
+
+
 using namespace std;
 using namespace LEEana;
+using namespace RooStats;
 
 int main( int argc, char** argv )
 {
