@@ -1818,8 +1818,8 @@ int main( int argc, char** argv )
 
             TCanvas *cratio = new TCanvas("cratio", "Ratios", 1200, 900);
             cratio->cd();   
-            //hratio->Draw(); 
-            hratio->Draw("E1");
+            hratio->Draw(); 
+            //hratio->Draw("E1");
             hratio->GetYaxis()->SetRangeUser(0.0, 2.0);
 
             TLine* line2;
@@ -1831,6 +1831,8 @@ int main( int argc, char** argv )
             TLegend *lratio = new TLegend(0.2, 0.8, 0.8, 0.95);
             lratio->AddEntry((TObject*)0, Form("#chi^{2}/ndf=%.2f/%d, p = %.3f, #sigma = %.3f", chi2_val, hdata->GetNbinsX(), p_value, Sigma), "");
             lratio->Draw("same");
+
+            cratio->Update();
 
             cratio->Print("hratio.png");
          }
