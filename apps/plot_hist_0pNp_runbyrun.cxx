@@ -1799,6 +1799,7 @@ int main( int argc, char** argv )
 
         if (obschannel == 1){
             TH1F* hratio = (TH1F*)gratio_data[obschannel-1]->Clone("hratio");
+            hratio->Reset();
             double chi2_val = 0;
             double all_runs_ratio = data_pred_ratio;
             for(int i=0; i<hdata->GetNbinsX(); i++)
@@ -1807,7 +1808,8 @@ int main( int argc, char** argv )
                 double val_pred = hmc->GetBinContent(i+1);
                 double ratio = val_dat/val_pred;
                 double ratio_error = sqrt(val_dat)/val_pred;
-                cout<< "bin: " << i+1 << " ratio: " << ratio << " ratio_error: " << ratio_error << endl;
+                hratio->SetBinContent(i+1, ratio);
+                hratio->SetBinError(i+1, ratio_error);
                 chi2_val += pow(ratio - all_runs_ratio,2) / pow(ratio_error,2);
             }
             double p_value = TMath::Prob(chi2_val, hdata->GetNbinsX());
