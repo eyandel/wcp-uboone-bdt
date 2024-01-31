@@ -1822,7 +1822,7 @@ int main( int argc, char** argv )
             cratio->cd();   
             hratio->Draw("P"); 
             //hratio->Draw("E1");
-            hratio->GetYaxis()->SetRangeUser(0, 2);
+            //hratio->GetYaxis()->SetRangeUser(0, 2);
 
             TLine* line2;
             line2 = new TLine(hratio->GetXaxis()->GetXmin(),1,hratio->GetXaxis()->GetXmax(),1);
