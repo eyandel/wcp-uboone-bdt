@@ -1803,11 +1803,11 @@ int main( int argc, char** argv )
             double all_runs_ratio = data_pred_ratio;
             for(int i=0; i<hdata->GetNbinsX(); i++)
             {
-                double val_dat = hdata->GetBinCenter(i+1);
+                double val_dat = hdata->GetBinContent(i+1);
                 double val_pred = hmc->GetBinContent(i+1);
                 double ratio = val_dat/val_pred;
                 double ratio_error = sqrt(val_dat)/val_pred;
-                cout<< "bin: " << i << " ratio: " << ratio << " ratio_error: " << ratio_error << endl;
+                cout<< "bin: " << i+1 << " ratio: " << ratio << " ratio_error: " << ratio_error << endl;
                 chi2_val += pow(ratio - all_runs_ratio,2) / pow(ratio_error,2);
             }
             double p_value = TMath::Prob(chi2_val, hdata->GetNbinsX());
@@ -1822,13 +1822,13 @@ int main( int argc, char** argv )
 
             TLine* line2;
             line2 = new TLine(hratio->GetXaxis()->GetXmin(),1,hratio->GetXaxis()->GetXmax(),1);
-            line2->Draw();
+            line2->Draw("same");
             line2->SetLineWidth(2);
             line2->SetLineStyle(kDashed);
 
             TLegend *lratio = new TLegend(0.2, 0.7, 0.8, 0.95);
             lratio->AddEntry((TObject*)0, Form("#chi^{2}/ndf=%.2f/%d, p = %.3f, #sigma = %.3f", chi2_val, hdata->GetNbinsX(), p_value, Sigma), "");
-            lratio->Draw();
+            lratio->Draw("same");
 
             cratio->Print("hratio.png");
          }
