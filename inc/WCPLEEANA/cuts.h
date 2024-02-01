@@ -4327,7 +4327,7 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
               map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
               map_cuts_flag["SPNumuCCSig"])) return true;
             return false;
-  }else if (ch_name == "single_photon_spoverlay_Np"){
+  }else if (ch_name == "single_photon_spoverlay_Np" || ch_name == "single_photon_spoverlay_lee_Np"){
             if (flag_singlephoton_sel && !flag_0p &&
               (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
               map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
