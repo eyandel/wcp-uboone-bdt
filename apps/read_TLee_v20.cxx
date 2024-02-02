@@ -421,7 +421,7 @@ int main(int argc, char** argv)
 
   //Erin
 
-  int make_constrained_sp_plot = 1;
+  int make_constrained_sp_plot = 0;
 
   if (make_constrained_sp_plot) {
 
@@ -435,6 +435,25 @@ int main(int argc, char** argv)
 
     vc_support_chs.push_back(2); //NC Pi0
     vc_support_chs.push_back(3); //Numu CC
+
+    Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 3001 );
+  }
+
+  int make_constrained_sp_plot_morechannels = 1;
+
+  if (make_constrained_sp_plot_morechannels) {
+
+    Lee_test->scaleF_Lee = 0;
+    Lee_test->Set_Collapse();
+
+    //single photon selection, 0p
+    vector<int>vc_target_chs;
+    vc_target_chs.push_back(1);
+    vector<int>vc_support_chs;
+
+    vc_support_chs.push_back(2); //1gNp
+    vc_support_chs.push_back(3); //NC Pi0
+    vc_support_chs.push_back(4); //Numu CC
 
     Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 3001 );
   }

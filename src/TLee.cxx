@@ -2694,10 +2694,24 @@ void TLee::Set_Spectra_MatrixCov()
   // added lhagaman 2023_07_01, must be disabled for systematic plots, must be enabled for 1d LEE fitting
   // 2d LEE fitting is handled in a different set of files
   // Erin: must be on for correct handling of systematics if using separate LEE channel (preferred)
+  //CHANGE for more/less channels
+
+  int three_constraints = 0;
   
-  map_Lee_ch[4] = 1;
-  map_Lee_ch[5] = 1;
-  map_Lee_ch[6] = 1; 
+  if (three_constraints){
+    map_Lee_ch[4] = 1;
+    map_Lee_ch[5] = 1;
+    map_Lee_ch[6] = 1; 
+  }
+
+  int other_constraints = 1;
+
+  if (other_constraints){
+    map_Lee_ch[5] = 1;
+    map_Lee_ch[6] = 1;
+    map_Lee_ch[7] = 1; 
+    map_Lee_ch[8] = 1; 
+  }
 
   /*map_Lee_ch[2] = 1;
   map_Lee_ch[4] = 1;
