@@ -2707,10 +2707,12 @@ void TLee::Set_Spectra_MatrixCov()
   int other_constraints = 1;
 
   if (other_constraints){
-    map_Lee_ch[5] = 1;
-    map_Lee_ch[6] = 1;
-    map_Lee_ch[7] = 1; 
-    map_Lee_ch[8] = 1; 
+    map_Lee_ch[7] = 1;
+    map_Lee_ch[8] = 1;
+    map_Lee_ch[9] = 1; 
+    map_Lee_ch[10] = 1; 
+    map_Lee_ch[11] = 1;
+    map_Lee_ch[12] = 1;
   }
 
   /*map_Lee_ch[2] = 1;

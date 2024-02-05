@@ -452,8 +452,10 @@ int main(int argc, char** argv)
     vector<int>vc_support_chs;
 
     vc_support_chs.push_back(2); //1gNp
-    vc_support_chs.push_back(3); //NC Pi0
-    vc_support_chs.push_back(4); //Numu CC
+    vc_support_chs.push_back(3); //NC Pi0 0p
+    vc_support_chs.push_back(4); //NC Pi0 Np
+    vc_support_chs.push_back(5); //Numu CC 0p
+    vc_support_chs.push_back(6); //Numu CC Np
 
     Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 3001 );
   }
