@@ -3455,6 +3455,8 @@ int main( int argc, char** argv )
     T_BDTvars->GetEntry(i);
     T_eval->GetEntry(i); tagger.match_isFC = eval.match_isFC;
     T_KINEvars->GetEntry(i); tagger.kine_reco_Enu = kine.kine_reco_Enu; temp_kine_pio_flag = kine.kine_pio_flag;
+    //uncomment to match old files
+    //temp_kine_pio_flag = -1;
     T_PFeval->GetEntry(i);
 
     if (remove_set.find(std::make_pair(eval.run, eval.subrun)) != remove_set.end()) continue;
