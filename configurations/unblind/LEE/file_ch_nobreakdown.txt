@@ -1,0 +1,22 @@
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_LEE_1g0p_test.root                     all 
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnboverlay_run1_sp.root                all
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnboverlay_run2_sp.root                all
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnboverlay_run3_sp_1.root              all
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_inclusivephoton_run1_cv.root           all
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_inclusivephoton_run2_cv.root           all
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_inclusivephoton_run3_cv.root           all
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_ncpi0_run1_sp.root                     all
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_ncpi0_run2_sp.root                     all
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_ncpi0_run3_sp.root                     all
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_dirt_run1_sp.root                      all
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_dirt_run2_sp.root                      all
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_dirt_run3_sp.root                      all
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_extbnb_C1_run1_sp.root                 all
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_extbnb_D2_run2_sp.root                 all
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_extbnb_run3_sp.root                    all
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnb_run1_full.root                     all
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnb_run2_full.root                     all
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnb_run3_full.root                     all
+end                                                                                                     end
+
+/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_extbnb_run2_sp.root                    all
