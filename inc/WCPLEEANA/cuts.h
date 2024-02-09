@@ -4113,53 +4113,65 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
               && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0)) return true;
             return false;
   }else if (ch_name == "single_photon_bnb" || ch_name == "single_photon_ext"
-    || ch_name == "single_photon_overlay" || ch_name == "single_photon_dirt"){
+    || ch_name == "single_photon_overlay" || ch_name == "single_photon_dirt" 
+    || ch_name == "single_photon_LEE"){
             if (flag_singlephoton_sel) return true;
             return false;
   }else if (ch_name == "single_photon_eff_bnb" || ch_name == "single_photon_eff_ext"
-    || ch_name == "single_photon_eff_overlay" || ch_name == "single_photon_eff_dirt"){
+    || ch_name == "single_photon_eff_overlay" || ch_name == "single_photon_eff_dirt" 
+    || ch_name == "single_photon_eff_LEE"){
             if (flag_singlephoton_eff_sel) return true;
             return false;
   }else if (ch_name == "single_shower_bnb" || ch_name == "single_shower_ext"
-    || ch_name == "single_shower_overlay" || ch_name == "single_shower_dirt"){
+    || ch_name == "single_shower_overlay" || ch_name == "single_shower_dirt" 
+    || ch_name == "single_shower_LEE"){
             if (flag_singleshower_sel) return true;
             return false;
   }else if (ch_name == "single_shower_eff_bnb" || ch_name == "single_shower_eff_ext"
     || ch_name == "single_shower_eff_overlay" || ch_name == "single_shower_eff_dirt"
     || ch_name == "single_shower_eff_bnb_2" || ch_name == "single_shower_eff_ext_2"
-      || ch_name == "single_shower_eff_overlay_2" || ch_name == "single_shower_eff_dirt_2"){
+      || ch_name == "single_shower_eff_overlay_2" || ch_name == "single_shower_eff_dirt_2" 
+    || ch_name == "single_shower_eff_LEE"){
             if (flag_singleshower_eff_sel) return true;
             return false;
   }else if (ch_name == "single_photon_bnb_0p" || ch_name == "single_photon_ext_0p"
-    || ch_name == "single_photon_overlay_0p" || ch_name == "single_photon_dirt_0p"){
+    || ch_name == "single_photon_overlay_0p" || ch_name == "single_photon_dirt_0p" 
+    || ch_name == "single_photon_LEE_0p"){
             if (flag_singlephoton_sel && flag_0p) return true;
             return false;
   }else if (ch_name == "single_photon_eff_bnb_0p" || ch_name == "single_photon_eff_ext_0p"
-    || ch_name == "single_photon_eff_overlay_0p" || ch_name == "single_photon_eff_dirt_0p"){
+    || ch_name == "single_photon_eff_overlay_0p" || ch_name == "single_photon_eff_dirt_0p" 
+    || ch_name == "single_photon_eff_LEE_0p"){
             if (flag_singlephoton_eff_sel && flag_0p) return true;
             return false;
   }else if (ch_name == "single_shower_bnb_0p" || ch_name == "single_shower_ext_0p"
-    || ch_name == "single_shower_overlay_0p" || ch_name == "single_shower_dirt_0p"){
+    || ch_name == "single_shower_overlay_0p" || ch_name == "single_shower_dirt_0p" 
+    || ch_name == "single_shower_LEE_0p"){
             if (flag_singleshower_sel && flag_0p) return true;
             return false;
   }else if (ch_name == "single_shower_eff_bnb_0p" || ch_name == "single_shower_eff_ext_0p"
-    || ch_name == "single_shower_eff_overlay_0p" || ch_name == "single_shower_eff_dirt_0p"){
+    || ch_name == "single_shower_eff_overlay_0p" || ch_name == "single_shower_eff_dirt_0p" 
+    || ch_name == "single_shower_eff_LEE_0p"){
             if (flag_singleshower_eff_sel && flag_0p) return true;
             return false;
   }else if (ch_name == "single_photon_bnb_Np" || ch_name == "single_photon_ext_Np"
-    || ch_name == "single_photon_overlay_Np" || ch_name == "single_photon_dirt_Np"){
+    || ch_name == "single_photon_overlay_Np" || ch_name == "single_photon_dirt_Np"  
+    || ch_name == "single_photon_LEE_Np"){
             if (flag_singlephoton_sel && !flag_0p) return true;
             return false;
   }else if (ch_name == "single_photon_eff_bnb_Np" || ch_name == "single_photon_eff_ext_Np"
-    || ch_name == "single_photon_eff_overlay_Np" || ch_name == "single_photon_eff_dirt_Np"){
+    || ch_name == "single_photon_eff_overlay_Np" || ch_name == "single_photon_eff_dirt_Np" 
+    || ch_name == "single_photon_eff_LEE_Np"){
             if (flag_singlephoton_eff_sel && !flag_0p) return true;
             return false;
   }else if (ch_name == "single_shower_bnb_Np" || ch_name == "single_shower_ext_Np"
-    || ch_name == "single_shower_overlay_Np" || ch_name == "single_shower_dirt_Np"){
+    || ch_name == "single_shower_overlay_Np" || ch_name == "single_shower_dirt_Np" 
+    || ch_name == "single_shower_LEE_Np"){
             if (flag_singleshower_sel && !flag_0p) return true;
             return false;
   }else if (ch_name == "single_shower_eff_bnb_Np" || ch_name == "single_shower_eff_ext_Np"
-    || ch_name == "single_shower_eff_overlay_Np" || ch_name == "single_shower_eff_dirt_Np"){
+    || ch_name == "single_shower_eff_overlay_Np" || ch_name == "single_shower_eff_dirt_Np" 
+    || ch_name == "single_shower_eff_LEE_Np"){
             if (flag_singleshower_eff_sel && !flag_0p) return true;
             return false;
   }else if (ch_name == "single_photon_overlay_BG"){
