@@ -2207,6 +2207,7 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
   else map_cuts_flag["OTHER"] = false;
 
   map_cuts_flag["none"] = false;
+  map_cuts_flag["LEE"] = true;
 
   // figure out additional cuts and flag_data ...
   bool flag_add = true;
