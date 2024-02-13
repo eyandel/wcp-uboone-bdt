@@ -1343,6 +1343,8 @@ int main( int argc, char** argv )
         hLEE->SetFillColorAlpha(kMagenta, 0.5);
         hLEE->SetLineColor(kMagenta);
         hLEE->SetLineWidth(1);
+
+        hmc->Add(hLEE, -1);
         }
         // truth labels end
         }
