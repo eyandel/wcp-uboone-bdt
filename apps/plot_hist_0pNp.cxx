@@ -1338,7 +1338,8 @@ int main( int argc, char** argv )
         if(flag_leeexist){
         hstack[obschannel-1]->Add(hLEE);
         legend[obschannel-1]->AddEntry(hLEE, Form("LEE, %.1f", hLEE->Integral()), "F");
-        hLEE->SetFillStyle(1001);
+        hLEE->SetFillStyle(0);
+        hLEE->SetLineStyle(kDashed);
         hLEE->SetFillColorAlpha(kMagenta, 0.5);
         hLEE->SetLineColor(kMagenta);
         hLEE->SetLineWidth(1);
