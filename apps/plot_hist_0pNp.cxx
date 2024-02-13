@@ -1342,9 +1342,11 @@ int main( int argc, char** argv )
         hLEE->SetLineStyle(kDashed);
         hLEE->SetFillColorAlpha(kMagenta, 0.5);
         hLEE->SetLineColor(kMagenta);
-        hLEE->SetLineWidth(1);
+        hLEE->SetLineWidth(2);
 
         hmc->Add(hLEE, -1);
+        hmc2->Add(hLEE, -1);
+        hmcerror->Add(hLEE, -1);
         }
         // truth labels end
         }
