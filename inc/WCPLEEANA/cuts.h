@@ -773,6 +773,15 @@ double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, 
           }
       }
       return N_protons;
+  }else if (var_name == "N_true_protons"){
+    int np = 0;
+    for(size_t i=0; i<pfeval.truth_Ntrack; i++){
+      if(pfeval.truth_mother[i] != 0) continue;
+      if(pfeval.truth_pdg[i] != 2212) continue;
+      if(pfeval.truth_startMomentum[i][3] - 0.938272 < 0.035) continue;
+      np++;
+    }
+    return np;
   }else if (var_name == "EhadShwrFrac"){
       double EhadShwr=0, EhadTot=0;
 
