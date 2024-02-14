@@ -774,6 +774,7 @@ double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, 
       }
       return N_protons;
   }else if (var_name == "N_true_protons"){
+    if (flag_data) return -1;
     int np = 0;
     for(size_t i=0; i<pfeval.truth_Ntrack; i++){
       if(pfeval.truth_mother[i] != 0) continue;
