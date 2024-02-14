@@ -4089,10 +4089,10 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
     else return false;
   }else if (ch_name == "nodata_bnb"){
     return false;
-  }else if (ch_name == "all_nu_spoverlay" || ch_name == "all_nu_spoverlay_2" || ch_name == "all_nu_spoverlay_3"){
+  }else if (ch_name == "all_spoverlay" || ch_name == "all_spoverlay_2" || ch_name == "all_spoverlay_3"){
             if ((eval.match_completeness_energy>0.1*eval.truth_energyInside && pfeval.truth_single_photon==1)) return true;
             return false;
-  }else if (ch_name == "all_nu_ncpi0overlay" || ch_name == "all_nu_ncpi0overlay_2" || ch_name == "all_nu_ncpi0overlay_3"){
+  }else if (ch_name == "all_ncpi0overlay" || ch_name == "all_ncpi0overlay_2" || ch_name == "all_ncpi0overlay_3"){
             if (!(map_cuts_flag["SPNCDeltaSig"] ||
               map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
               map_cuts_flag["SPNumuCCSig"])
@@ -4102,7 +4102,7 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
               && (eval.match_completeness_energy>0.1*eval.truth_energyInside
                 && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio==1)) return true;
             return false;
-  }else if (ch_name == "all_nu_overlay_sp_ncpi0_BG" || ch_name == "all_nu_overlay_sp_ncpi0_BG_2" || ch_name == "all_nu_overlay_sp_ncpi0_BG_3"){
+  }else if (ch_name == "all_overlay_sp_ncpi0_BG" || ch_name == "all_overlay_sp_ncpi0_BG_2" || ch_name == "all_overlay_sp_ncpi0_BG_3"){
             if (!(map_cuts_flag["SPNCDeltaSig"] ||
               map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
               map_cuts_flag["SPNumuCCSig"])
@@ -4112,7 +4112,7 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
               && !(eval.match_completeness_energy>0.1*eval.truth_energyInside
                 && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio==1)) return true;
             return false;
-  }else if (ch_name == "all_nu_overlay_sp_BG"){
+  }else if (ch_name == "all_overlay_sp_BG"){
             if (!(map_cuts_flag["SPNCDeltaSig"] ||
               map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
               map_cuts_flag["SPNumuCCSig"])
