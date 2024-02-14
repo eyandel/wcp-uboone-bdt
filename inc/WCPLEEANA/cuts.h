@@ -4082,9 +4082,9 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
     return false;
 
   //Erin
-  }else if (ch_name == "all_nu_bnb" || ch_name == "all_nu_bnb_LEE"){
+  }else if (ch_name == "all_bnb" || ch_name == "all_ext" || ch_name == "all_dirt" || ch_name == "all_bnb_LEE"){
     return true;
-  }else if (ch_name == "all_nu_bnb_nsbeam"){
+  }else if (ch_name == "all_bnb_nsbeam"){
     if (flag_nsbeam) return true;
     else return false;
   }else if (ch_name == "nodata_bnb"){
