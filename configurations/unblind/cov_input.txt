@@ -1,9 +1,35 @@
+single_photon_LEE                   N_true_protons                        10    0          10     1	   0		      0	    0	        0		      4		      10      cv_spline		  1
+single_photon_spoverlay             N_true_protons                        10    0          10     1	   1		      1	    0	        0		      1		      9	      cv_spline		  0
+single_photon_ncpi0overlay   	    N_true_protons                        10    0          10     1	   1		      1	    0	        0		      1		      6	      cv_spline		  0
+single_photon_overlay_ncpi0_BG      N_true_protons                        10    0          10     1	   1		      1	    0	        0		      1		      2	      cv_spline		  0
+single_photon_dirt   		        N_true_protons                        10    0          10 	  1	   1		      0	    0.5	        0		      1		      4	      cv_spline       0
+single_photon_ext   		        N_true_protons                        10    0          10 	  1	   0		      0	    0 	        0		      7	          3	      unity   	      0
+single_photon_bnb    		        N_true_protons                        10    0          10     1	   0		      0	    0 	        0		      0		      5	      unity		      0
+
+all_bnb_LEE	                        N_true_protons                        10    0          10     2	   0		      0	    0	        0		      5		      10      cv_spline		  1
+all_spoverlay	                    N_true_protons                        10    0          10     2	   1		      1	    0	        0		      2		      9	      cv_spline		  0
+all_ncpi0overlay	                N_true_protons                        10    0          10     2	   1		      1	    0	        0		      2		      6	      cv_spline		  0
+all_overlay_sp_ncpi0_BG	            N_true_protons                        10    0          10     2	   1		      1	    0	        0		      2		      2	      cv_spline		  0
+all_dirt			                N_true_protons                        10    0          10     2	   1		      0	    0.5	        0		      2		      4	      cv_spline		  0
+all_ext 			                N_true_protons                        10    0          10     2	   0		      0	    0 	        0		      8	          3	      unity   	  	  0
+all_bnb     	                    N_true_protons                        10    0          10     2	   0		      0	    0 	        0		      0		      5	      unity		      0
+
+generic_nu_bnb_LEE	                N_true_protons                        10    0          10     3	   0		      0	    0	        0		      6		      10      cv_spline		  1
+generic_nu_spoverlay	            N_true_protons                        10    0          10     3	   1		      1	    0	        0		      3		      9	      cv_spline		  0
+generic_nu_ncpi0overlay	            N_true_protons                        10    0          10     3	   1		      1	    0	        0		      3		      6	      cv_spline		  0
+generic_nu_overlay_sp_ncpi0_BG      N_true_protons                        10    0          10     3	   1		      1	    0	        0		      3		      2	      cv_spline		  0
+generic_nu_dirt			            N_true_protons                        10    0          10     3	   1		      0	    0.5	        0		      3		      4	      cv_spline		  0
+generic_nu_ext 			            N_true_protons                        10    0          10     3	   0		      0	    0 	        0		      9	          3	      unity   	  	  0
+generic_nu_bnb     	                N_true_protons                        10    0          10     3	   0		      0	    0 	        0		      0		      5	      unity		      0
+End					                End		                         -1	   -1	      -1	   -1	   -1		      -1	  -1		    -1		    -1		    -1	    end		        -1
+#current plot
+
 single_photon_LEE_0p                N_true_protons                        10    0          10     1	   0		      0	    0	        0		      4		      10      cv_spline		  1
 single_photon_spoverlay_0p          N_true_protons                        10    0          10     1	   1		      1	    0	        0		      1		      9	      cv_spline		  0
 single_photon_ncpi0overlay_0p	    N_true_protons                        10    0          10     1	   1		      1	    0	        0		      1		      6	      cv_spline		  0
 single_photon_overlay_ncpi0_0p_BG   N_true_protons                        10    0          10     1	   1		      1	    0	        0		      1		      2	      cv_spline		  0
-single_photon_dirt_0p		        N_true_protons                        10    0          10 	 1	   1		      0	    0.5	        0		      1		      4	      cv_spline       0
-single_photon_ext_0p 		        N_true_protons                        10    0          10 	 1	   0		      0	    0 	        0		      7	          3	      unity   	      0
+single_photon_dirt_0p		        N_true_protons                        10    0          10 	  1	   1		      0	    0.5	        0		      1		      4	      cv_spline       0
+single_photon_ext_0p 		        N_true_protons                        10    0          10 	  1	   0		      0	    0 	        0		      7	          3	      unity   	      0
 single_photon_bnb_0p 		        N_true_protons                        10    0          10     1	   0		      0	    0 	        0		      0		      5	      unity		      0
 
 sp_bdt_nc_pi0_2_0p	                N_true_protons                        10    0          10     2	   0		      0	    0	        0		      5		      10      cv_spline		  1
@@ -22,7 +48,7 @@ sp_bdt_numuCC_0p_dirt			    N_true_protons                        10    0       
 sp_bdt_numuCC_0p_ext 			    N_true_protons                        10    0          10     3	   0		      0	    0 	        0		      9	          3	      unity   	  	  0
 sp_bdt_numuCC_0p     	            N_true_protons                        10    0          10     3	   0		      0	    0 	        0		      0		      5	      unity		      0
 End					                End		                         -1	   -1	      -1	   -1	   -1		      -1	  -1		    -1		    -1		    -1	    end		        -1
-#current plot
+
 
 single_photon_spoverlay_lee_0p      cos_shower_angle_beam_sp	     9	   -1.0       1.01     1	   1		      1	    0	        1		      7		      9	      cv_spline		  1
 single_photon_spoverlay_0p          cos_shower_angle_beam_sp	     9	   -1.0       1.01     1	   1		      1	    0	        1		      1		      9	      cv_spline		  0

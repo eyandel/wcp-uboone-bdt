@@ -4120,7 +4120,7 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
               && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
               && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0)) return true;
             return false;
-  }else if (ch_name == "generic_nu_bnb_LEE"){
+  }else if (ch_name == "generic_nu_ext" || ch_name == "generic_nu_dirt" ||ch_name == "generic_nu_bnb_LEE"){
     if (flag_generic) return true;
     else return false;
   }else if (ch_name == "generic_nu_bnb_nsbeam"){
