@@ -1816,9 +1816,9 @@ int main( int argc, char** argv )
                 hratio->SetBinError(i+1, ratio_error);
                 chi2_val += pow(ratio - all_runs_ratio,2) / pow(ratio_error,2);
             }
-            double p_value = TMath::Prob(chi2_val, hdata->GetNbinsX());
+            double p_value = TMath::Prob(chi2_val, hdata->GetNbinsX() -1);
             double Sigma = abs(RooStats::PValueToSignificance(p_value / 2.0));
-            cout<<"chi2 (ratio) = "<<chi2_val<<" / "<<hdata->GetNbinsX()<<endl;
+            cout<<"chi2 (ratio) = "<<chi2_val<<" / "<<hdata->GetNbinsX() - 1<<endl;
             cout<<"p-value (ratio) = "<<p_value<<endl;
             cout<<"Sigma (ratio) = "<<Sigma<<endl;
 
@@ -1835,7 +1835,7 @@ int main( int argc, char** argv )
             line2->SetLineStyle(kDashed);
 
             TLegend *lratio = new TLegend(0.2, 0.8, 0.8, 0.95);
-            lratio->AddEntry((TObject*)0, Form("#chi^{2}/ndf=%.2f/%d, p = %.3f, #sigma = %.3f", chi2_val, hdata->GetNbinsX(), p_value, Sigma), "");
+            lratio->AddEntry((TObject*)0, Form("#chi^{2}/ndf=%.2f/%d, p = %.3f, #sigma = %.3f", chi2_val, hdata->GetNbinsX() - 1, p_value, Sigma), "");
             lratio->Draw("same");
 
             cratio->Update();
