@@ -81,7 +81,7 @@ namespace config_Lee
 
   bool flag_GoF_output2file_default_0 = true;
 
-  bool flag_lookelsewhere             = false;
+  bool flag_lookelsewhere             = true;
 
   bool flag_both_numuCC            = false;// 1
   bool flag_CCpi0_FC_by_numuCC     = false;// 2
