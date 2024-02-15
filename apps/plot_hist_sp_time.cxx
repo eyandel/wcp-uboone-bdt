@@ -1525,7 +1525,7 @@ int main( int argc, char** argv )
 
 
         //Fit to a guassian with an offset
-        TF1 *fitFunc = new TF1("fitFunc", "[0] * exp(-0.5 * pow((x - [1]) / [2], 2)) + [3]", -10, 10);
+        TF1 *fitFunc = new TF1("fitFunc", "[0] * exp(-0.5 * pow((x - [1]) / [2], 2)) + [3]", -9, 9);
         fitFunc->SetParameters(100, 0, 1, 10);  // Set initial parameter values
         fitFunc->SetParNames("Amplitude", "Mean", "Sigma", "Offset");
         hdata->Fit("fitFunc","M");
