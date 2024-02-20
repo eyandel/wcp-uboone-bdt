@@ -1620,6 +1620,7 @@ int main( int argc, char** argv )
         //if(obschannel==2) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco #pi^{0} energy [MeV]");
         //if(obschannel==3) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Neutrino Energy [MeV]");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Median dE/dx (0-4 cm) [MeV/cm]");
+        gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Median dE/dx (1-5 cm) [MeV/cm]");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Angle [degrees]");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("#nu_{e} CC Background BDT Score");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Number of Tracks");
