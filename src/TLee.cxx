@@ -1904,6 +1904,10 @@ int TLee::Exe_Goodness_of_fit(int num_Y, int num_X, TMatrixD matrix_pred, TMatri
    */
 
   TLegend *lg_top_total = new TLegend(0.5, 0.45, 0.85, 0.85);
+  if (moveleg){
+    //lg_top_total->SetX1(0.25); lg_top_total->SetX2(0.6);
+    lg_top_total->SetX1(0.2); lg_top_total->SetX2(0.55);
+  }
   // h1_pred_Y_wiConstraint->SetMaximum(40);
   // lg_top_total->SetX1(0.55); lg_top_total->SetX2(0.95);
   // lg_top_total->SetX1(0.2); lg_top_total->SetX2(0.4);
@@ -2696,7 +2700,7 @@ void TLee::Set_Spectra_MatrixCov()
   // Erin: must be on for correct handling of systematics if using separate LEE channel (preferred)
   //CHANGE for more/less channels
 
-  int three_constraints = 0;
+  int three_constraints = 1;
   
   if (three_constraints){
     map_Lee_ch[4] = 1;
@@ -2704,7 +2708,7 @@ void TLee::Set_Spectra_MatrixCov()
     map_Lee_ch[6] = 1; 
   }
 
-  int other_constraints = 1;
+  int other_constraints = 0;
 
   if (other_constraints){
     map_Lee_ch[7] = 1;

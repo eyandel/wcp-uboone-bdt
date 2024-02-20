@@ -22,7 +22,7 @@ using namespace std;
 
   make clean
   make
-  ./read_TLee_v20 -f 1 -p 1
+  ./read_TLee_v20 -f 1 -p 1 -l 0
 
   ---> README:
   ---> Makefile: comment the line "ROOTSYS=/home/xji/data0/software/root_build", if you have your own "ROOTSYS"
@@ -35,6 +35,7 @@ int main(int argc, char** argv)
 
   double scaleF_POT = 1;
   int ifile = 1;
+  int moveleg = 0;
 
   for(int i=1; i<argc; i++) {
     if( strcmp(argv[i],"-p")==0 ) {
@@ -46,9 +47,14 @@ int main(int argc, char** argv)
       stringstream convert( argv[i+1] );
       if(  !( convert>>ifile ) ) { cerr<<" ---> Error ifile !"<<endl; exit(1); }
     }
+
+    if( strcmp(argv[i],"-l")==0 ) {
+      stringstream convert( argv[i+1] );
+      if(  !( convert>>moveleg ) ) { cerr<<" ---> Error moveleg !"<<endl; exit(1); }
+    }
   }
 
-  cout<<endl<<" ---> check, scaleF_POT "<<scaleF_POT<<", ifile "<<ifile<<endl<<endl;
+  cout<<endl<<" ---> check, scaleF_POT "<<scaleF_POT<<", ifile "<<ifile<<", moveleg "<<moveleg<<endl<<endl;
 
   //////////////////////////////////////////////////////////////////////////////////////// Draw style
 
@@ -421,7 +427,7 @@ int main(int argc, char** argv)
 
   //Erin
 
-  int make_constrained_sp_plot = 0;
+  int make_constrained_sp_plot = 1;
 
   if (make_constrained_sp_plot) {
 
@@ -439,7 +445,7 @@ int main(int argc, char** argv)
     Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 3001 );
   }
 
-  int make_constrained_sp_plot_morechannels = 1;
+  int make_constrained_sp_plot_morechannels = 0;
 
   if (make_constrained_sp_plot_morechannels) {
 
