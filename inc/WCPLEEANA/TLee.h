@@ -74,6 +74,7 @@ public:
 
   double scaleF_POT;
   double scaleF_Lee;
+  int moveleg;
 
   bool flag_syst_flux_Xs;
   bool flag_syst_detector;
