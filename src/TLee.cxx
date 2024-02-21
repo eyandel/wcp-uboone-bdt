@@ -2871,11 +2871,12 @@ void TLee::Set_Spectra_MatrixCov()
 
   ////////////////////////////////////////// detector
 
-  cout<<" Detector systematics"<<endl;
+  
 
   map<int, TString>map_detectorfile_str;
 
   if( flag_syst_detector ){
+    cout<<" Detector systematics"<<endl;
    map_detectorfile_str[1] = detector_directory+"cov_LYDown.root";
    map_detectorfile_str[2] = detector_directory+"cov_LYRayleigh.root";
    map_detectorfile_str[3] = detector_directory+"cov_Recomb2.root";
