@@ -90,6 +90,7 @@ int main(int argc, char** argv)
   Lee_test->flag_syst_reweight_cor    = config_Lee::flag_syst_reweight_cor;
   //Erin
   Lee_test->flag_syst_time    = config_Lee::flag_syst_time;
+  Lee_test->flag_syst_detector   = config_Lee::flag_syst_detector;
   //
 
   ////////// just do it one time in the whole procedure
