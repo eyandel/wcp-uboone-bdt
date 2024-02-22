@@ -105,7 +105,7 @@ std::cout << "n, type, dim_edges.count = " << n << ",   " << type << ",   " << d
     }
 
 /*
-    TFile *file = new TFile("/uboone/data/users/lcoopert/LEE/LEEana_xs_3D_feb24/wiener_svd/debug_wienerSVD.root","RECREATE");
+    TFile *file = new TFile("/exp/uboone/data/users/lcoopert/LEE/LEEana_xs_3D_feb24/wiener_svd/debug_wienerSVD.root","RECREATE");
     file->cd();
     C.Write("C");
     file->Write();
