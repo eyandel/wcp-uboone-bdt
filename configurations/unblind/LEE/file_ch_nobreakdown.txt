@@ -1,4 +1,4 @@
-/exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_LEE_1g0p_test.root                     all 
+/exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_LEE_1g0p_run1_half.root                     all 
 /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnboverlay_run1_sp.root                all
 /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnboverlay_run2_sp.root                all
 /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnboverlay_run3_sp_1.root              all
