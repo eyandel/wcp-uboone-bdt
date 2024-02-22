@@ -429,7 +429,7 @@ int main(int argc, char** argv)
 
   //Erin
 
-  int make_constrained_sp_plot = 1;
+  int make_constrained_sp_plot = 0;
 
   if (make_constrained_sp_plot) {
 
@@ -468,7 +468,7 @@ int main(int argc, char** argv)
     Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 3001 );
   }
 
-  int make_constrained_sp_Np0p_plot = 0;
+  int make_constrained_sp_Np0p_plot = 1;
 
   if (make_constrained_sp_Np0p_plot) {
 
@@ -477,11 +477,11 @@ int main(int argc, char** argv)
 
     //single photon Np selection, no overflow bins
     vector<int>vc_target_chs;
-    vc_target_chs.push_back(1);
+    vc_target_chs.push_back(1); //1g0p
     vector<int>vc_support_chs;
 
-    vc_support_chs.push_back(3);
-    vc_support_chs.push_back(5);
+    vc_support_chs.push_back(3); //NC Pi0 0p
+    vc_support_chs.push_back(5); //Numu CC 0p
 
     Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 3002 );
 
@@ -492,11 +492,11 @@ int main(int argc, char** argv)
 
     //single photon 0p selection, no overflow bins
     vector<int>vc_target_chs;
-    vc_target_chs.push_back(2);
+    vc_target_chs.push_back(2); //1gNp
     vector<int>vc_support_chs;
 
-    vc_support_chs.push_back(4);
-    vc_support_chs.push_back(6);
+    vc_support_chs.push_back(4); //NC Pi0 Np
+    vc_support_chs.push_back(6); //Numu CC Np
 
     Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 3003 );
   }
