@@ -1152,6 +1152,25 @@ double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, 
     else if (pfeval.run > 0 ){ 
       return 1;
     }
+  }else if (var_name == "run_period_100_300"){
+    shwen = -1;
+    if(flag_data)
+      shwen = tagger.shw_sp_energy*em_charge_scale;
+    else
+      shwen = tagger.shw_sp_energy;
+    if (shwen >= 100.0 && shwen < 300){
+      if (pfeval.run >= 13697){ 
+        return 3;
+      }
+      else if (pfeval.run >= 8321){ 
+        return 2;
+      }
+      else if (pfeval.run > 0 ){ 
+        return 1;
+      }
+    }
+    return -1;
+    
   //
   }else{
     std::cout << "No such variable: " << var_name << std::endl;
