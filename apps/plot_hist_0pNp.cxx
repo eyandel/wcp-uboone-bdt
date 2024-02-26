@@ -1636,7 +1636,7 @@ int main( int argc, char** argv )
          //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Vertex X [cm]");
          //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Vertex Y [cm]");
          //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Vertex Z [cm]");
-         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Backwards Projected Distance [cm]");
+         gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Backwards Projected Distance [cm]");
          //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("isFC");
          //gratio_mc[obschannel-1]->GetXaxis()->SetBinLabel(1,"PC");
          //gratio_mc[obschannel-1]->GetXaxis()->SetBinLabel(2,"FC");
