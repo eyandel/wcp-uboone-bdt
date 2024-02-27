@@ -1804,6 +1804,8 @@ int main( int argc, char** argv )
         hdata->GetXaxis()->SetTitle("Reco Shower Backwards Projected Distance [cm]");
         hdata->GetXaxis()->SetTitle("Reco Shower Forwards Projected Distance [cm]");
         hdata->GetXaxis()->SetTitle("Reco Shower Minumum Distance to Wall [cm]");
+        hdata->GetXaxis()->SetTitle("Reco Shower Minimum Projected Distance [cm]");
+
         hdata->GetYaxis()->SetTitle("Excess Events");
         pad1->Modified();
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reconstructed Shower Cosine Angle");

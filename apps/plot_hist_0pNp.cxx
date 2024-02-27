@@ -1639,6 +1639,7 @@ int main( int argc, char** argv )
          gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Backwards Projected Distance [cm]");
          gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Forwards Projected Distance [cm]");
          gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Minumum Distance to Wall [cm]");
+         gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Minimum Projected Distance [cm]");
          //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("isFC");
          //gratio_mc[obschannel-1]->GetXaxis()->SetBinLabel(1,"PC");
          //gratio_mc[obschannel-1]->GetXaxis()->SetBinLabel(2,"FC");
