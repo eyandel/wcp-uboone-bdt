@@ -1637,7 +1637,7 @@ int main( int argc, char** argv )
          //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Vertex Y [cm]");
          //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Vertex Z [cm]");
          gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Backwards Projected Distance [cm]");
-         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Forwards Projected Distance [cm]");
+         gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Forwards Projected Distance [cm]");
          //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("isFC");
          //gratio_mc[obschannel-1]->GetXaxis()->SetBinLabel(1,"PC");
          //gratio_mc[obschannel-1]->GetXaxis()->SetBinLabel(2,"FC");
@@ -1774,7 +1774,7 @@ int main( int argc, char** argv )
         pad2->Modified();
 
         canvas[obschannel-1]->Print((TString)hdata->GetTitle()+"_0pNp.png");
-        canvas[obschannel-1]->Print(Form("canvas%d.pdf", obschannel));
+        canvas[obschannel-1]->Print(Form("canvas%d_0pNp.pdf", obschannel));
 
         if(obschannel==1) canvas[obschannel-1]->Print("selection_0pNp.pdf(");
         else if(obschannel==nchannels) canvas[obschannel-1]->Print("selection_0pNp.pdf)");
