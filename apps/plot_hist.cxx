@@ -1067,22 +1067,22 @@ int main( int argc, char** argv )
                     hdirt->Add(htemp);
                     break;
                 }
-                if(line == "SPNCPi0Sig") {
+                if(line == "SPNCPi0Sig" || line == "SPNCPi0SigNoFV") {
                     std::cout<<"SPNCPi0Sig"<<" "<<histname<<std::endl;
                     hNCpi1g->Add(htemp);
                     break;
                 }
-                if(line == "SPNCDeltaSig") {
+                if(line == "SPNCDeltaSig" || line == "SPNCDeltaSigNoFV") {
                     std::cout<<"SPNCDeltaSig"<<" "<<histname<<std::endl;
                     hNCdel->Add(htemp);
                     break;
                 }
-                if(line == "SPNCOtherSig") {
+                if(line == "SPNCOtherSig" || line == "SPNCOtherNoFV") {
                     std::cout<<"SPNCOtherSig"<<" "<<histname<<std::endl;
                     hNCother->Add(htemp);
                     break;
                 }
-                if(line == "SPNumuCCSig") {
+                if(line == "SPNumuCCSig" || line == "SPNumuCCSigNoFV") {
                     std::cout<<"SPNumuCCSig"<<" "<<histname<<std::endl;
                     hnumuCC1g->Add(htemp);
                     break;
