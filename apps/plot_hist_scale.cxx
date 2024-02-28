@@ -931,12 +931,14 @@ int main( int argc, char** argv )
     float scale_amount_NCother  = 1.0;
     float scale_amount_numuCC1g = 1.0;
     float scale_amount_out1g    = 1.0;
+    float scale_amount_ext      = 1.0;
 
     float signal_amount_NCpi1g   = 0.0;
     float signal_amount_NCdel    = 0.0;
     float signal_amount_NCother  = 0.0;
     float signal_amount_numuCC1g = 0.0;
     float signal_amount_out1g    = 0.0;
+    float signal_amount_ext      = 0.0;
 
     for(auto it = map_obsch_subhistos.begin(); it!= map_obsch_subhistos.end(); it++){
         int obschannel = it->first;
@@ -979,6 +981,7 @@ int main( int argc, char** argv )
         TH1F* hNCotherscale    = (TH1F*)hdata->Clone("hNCotherscale");
         TH1F* hnumuCC1gscale    = (TH1F*)hdata->Clone("hnumuCC1gscale");
         TH1F* hout1gscale    = (TH1F*)hdata->Clone("hout1gscale");
+        TH1F* hextscale    = (TH1F*)hdata->Clone("hextscale");
         //
         TH1F* hLEE = (TH1F*)hdata->Clone("hLEE");
         TH1F* hCCQE = (TH1F*)hdata->Clone("hCCQE");
@@ -1016,6 +1019,7 @@ int main( int argc, char** argv )
         hNCotherscale->Reset();
         hnumuCC1gscale->Reset();
         hout1gscale->Reset();
+        hextscale->Reset();
         hLEE->Reset();
         hCCQE->Reset();
         hNCQE->Reset();
@@ -1094,6 +1098,7 @@ int main( int argc, char** argv )
                 if(line == "ext") {
                     std::cout<<"ext"<<" "<<histname<<std::endl;
                     hext->Add(htemp);
+                    hextscale->Add(htemp);
                     break;
                 }
                 if(line == "SPdirtBkg") {
@@ -1337,6 +1342,7 @@ int main( int argc, char** argv )
             float num_bkg_NCother = num_bkg + hNCpi1g->Integral() + hNCdel->Integral() + hnumuCC1g->Integral() + hout1g->Integral();
             float num_bkg_numuCC1g = num_bkg + hNCpi1g->Integral() + hNCdel->Integral() + hNCother->Integral() + hout1g->Integral();
             float num_bkg_out1g = num_bkg + hNCpi1g->Integral() + hNCdel->Integral() + hNCother->Integral() + hnumuCC1g->Integral();
+            float num_bkg_ext = num_bkg - hext->Integral() + hNCpi1g->Integral() + hNCdel->Integral() + hNCother->Integral() + hnumuCC1g->Integral() + hout1g->Integral();
 
             if (fit_scale == 0){
               scale_amount_NCpi1g   = abs(hdata->Integral() - num_bkg_NCpi1g) /   hNCpi1gscale->Integral();
@@ -1344,12 +1350,14 @@ int main( int argc, char** argv )
               scale_amount_NCother  = abs(hdata->Integral() - num_bkg_NCother) /  hNCotherscale->Integral();
               scale_amount_numuCC1g = abs(hdata->Integral() - num_bkg_numuCC1g) / hnumuCC1gscale->Integral();
               scale_amount_out1g    = abs(hdata->Integral() - num_bkg_out1g) /    hout1gscale->Integral();
+              scale_amount_ext      = abs(hdata->Integral() - num_bkg_ext) /      hextscale->Integral();
             }else{
               scale_amount_NCpi1g   = ((h1gscale->Integral() / hNCpi1gscale->Integral()) * fit_scale) + 1.0;
               scale_amount_NCdel    = ((h1gscale->Integral() / hNCdelscale->Integral()) * fit_scale) + 1.0;
               scale_amount_NCother  = ((h1gscale->Integral() / hNCotherscale->Integral()) * fit_scale) + 1.0;
               scale_amount_numuCC1g = ((h1gscale->Integral() / hnumuCC1gscale->Integral()) * fit_scale) + 1.0;
               scale_amount_out1g    = ((h1gscale->Integral() / hout1gscale->Integral()) * fit_scale) + 1.0;
+              scale_amount_ext      = ((h1gscale->Integral() / hextscale->Integral()) * fit_scale) + 1.0;
             }
         }
             //cout<< "scale_amount = " << scale_amount << endl;
@@ -1440,6 +1448,14 @@ int main( int argc, char** argv )
             hout1gscale->SetLineColor(kViolet);
             hout1gscale->SetLineStyle(10);
             hout1gscale->SetLineWidth(3);
+
+            //EXT scale
+            hextscale->Scale(abs(scale_amount_ext - 1.0));
+            signal_amount_ext = hextscale->Integral();
+            hextscale->SetFillStyle(0);
+            hextscale->SetLineColor(kGray+2);
+            hextscale->SetLineStyle(1);
+            hextscale->SetLineWidth(3);
         //}
 
         if (0){
@@ -1669,7 +1685,7 @@ int main( int argc, char** argv )
 
         float excessymax = hdata->GetBinContent(hdata->GetMaximumBin())*scalePOT/normalization;
         hdata->SetMaximum(3.0*excessymax);
-        hdata->GetYaxis()->SetRangeUser(-0.02*excessymax, 5.0*excessymax);
+        hdata->GetYaxis()->SetRangeUser(-0.02*excessymax, 4.0*excessymax);
 
         hdata->SetLineColor(kWhite);
         hdata->Draw("hist");
@@ -1701,6 +1717,10 @@ int main( int argc, char** argv )
             double scalechi2_out1g = hdata->Chi2Test(hout1gscale,"CHI2");
             legend[obschannel-1]->AddEntry(hout1gscale, Form("out of FV 1#gamma x %.2f, #chi^{2} = %.2f", scale_amount_out1g - 1.0, scalechi2_out1g), "l");
             hout1gscale->Draw("hist same");
+
+            double scalechi2_ext = hdata->Chi2Test(hextscale,"CHI2");
+            legend[obschannel-1]->AddEntry(hextscale, Form("EXT x %.2f, #chi^{2} = %.2f", scale_amount_ext - 1.0, scalechi2_ext), "l");
+            hextscale->Draw("hist same");
         //}
 
         gratio_mc[obschannel-1] = new TGraphAsymmErrors();
