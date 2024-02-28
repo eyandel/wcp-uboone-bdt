@@ -1077,7 +1077,7 @@ int main( int argc, char** argv )
                     hNCdel->Add(htemp);
                     break;
                 }
-                if(line == "SPNCOtherSig" || line == "SPNCOtherNoFV") {
+                if(line == "SPNCOtherSig" || line == "SPNCOtherSigNoFV") {
                     std::cout<<"SPNCOtherSig"<<" "<<histname<<std::endl;
                     hNCother->Add(htemp);
                     break;
