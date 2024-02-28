@@ -1821,10 +1821,10 @@ int main( int argc, char** argv )
         //Erin 
         hdata->GetXaxis()->SetTitle("Reconstructed Shower Energy [MeV]");
         //hdata->GetXaxis()->SetTitle("Reconstructed Shower Cosine Angle");
-        hdata->GetXaxis()->SetTitle("Reco Shower Backwards Projected Distance [cm]");
-        hdata->GetXaxis()->SetTitle("Reco Shower Forwards Projected Distance [cm]");
-        hdata->GetXaxis()->SetTitle("Reco Shower Minumum Distance to Wall [cm]");
-        hdata->GetXaxis()->SetTitle("Reco Shower Minimum Projected Distance [cm]");
+        //hdata->GetXaxis()->SetTitle("Reco Shower Backwards Projected Distance [cm]");
+        //hdata->GetXaxis()->SetTitle("Reco Shower Forwards Projected Distance [cm]");
+        //hdata->GetXaxis()->SetTitle("Reco Shower Minumum Distance to Wall [cm]");
+        //hdata->GetXaxis()->SetTitle("Reco Shower Minimum Projected Distance [cm]");
 
         hdata->GetYaxis()->SetTitle("Excess Events");
         pad1->Modified();
