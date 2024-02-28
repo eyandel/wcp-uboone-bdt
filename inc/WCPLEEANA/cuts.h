@@ -2428,6 +2428,20 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
   if (eval.match_completeness_energy>0.1*eval.truth_energyInside &&  !(pfeval.reco_muonMomentum[3] > 0)) map_cuts_flag["nomuon"] = true;
   else map_cuts_flag["nomuon"] = false;
 
+  //for testing, no FV check
+  if (eval.match_completeness_energy>0.1*eval.truth_energyInside && pfeval.truth_single_photon==1 && eval.truth_isCC==0 && pfeval.truth_NCDelta==1) map_cuts_flag["SPNCDeltaSigNoFV"] = true;
+  else map_cuts_flag["SPNCDeltaSigNoFV"] = false;
+
+  if (eval.match_completeness_energy>0.1*eval.truth_energyInside && pfeval.truth_single_photon==1 && eval.truth_isCC==0 && (pfeval.truth_showerMother==111)) map_cuts_flag["SPNCPi0SigNoFV"] = true;
+  else map_cuts_flag["SPNCPi0SigNoFV"] = false;
+
+  if (eval.match_completeness_energy>0.1*eval.truth_energyInside && pfeval.truth_single_photon==1 && eval.truth_isCC==0 && pfeval.truth_showerMother!=111 && pfeval.truth_NCDelta==0) map_cuts_flag["SPNCOtherSigNoFV"] = true;
+  else map_cuts_flag["SPNCOtherSigNoFV"] = false;
+
+  if (eval.match_completeness_energy>0.1*eval.truth_energyInside && pfeval.truth_single_photon==1 && eval.truth_isCC==1 && abs(eval.truth_nuPdg)==14 && pfeval.truth_muonMomentum[3]-0.105658<0.1) map_cuts_flag["SPNumuCCSigNoFV"] = true;
+  else map_cuts_flag["SPNumuCCSigNoFV"] = false;
+  //
+
   map_cuts_flag["SPdirtBkg"] = false;
   map_cuts_flag["SPoutFVBkg"] = false;
   map_cuts_flag["SPnumuCCBkg"] = false;
