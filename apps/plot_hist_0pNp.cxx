@@ -1615,7 +1615,7 @@ int main( int argc, char** argv )
         }
         else*/ 
         //Erin 
-        gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Energy [MeV]");
+        //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Energy [MeV]");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Number of True Protons");
         //if(obschannel==2) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco #pi^{0} energy [MeV]");
         //if(obschannel==3) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Neutrino Energy [MeV]");
