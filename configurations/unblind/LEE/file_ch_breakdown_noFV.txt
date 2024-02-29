@@ -1,4 +1,6 @@
 /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_LEE_1g0p_run1_half.root                LEE 
+/exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_LEE_1g0p_run2.root                     LEE 
+/exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_LEE_1g0p_run3.root                     LEE 
 /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnboverlay_run1_sp.root                badmatch
 /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnboverlay_run1_sp.root                SPoutFVBkg
 /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnboverlay_run1_sp.root                SPnumuCCBkg
