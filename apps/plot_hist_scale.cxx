@@ -1719,8 +1719,8 @@ int main( int argc, char** argv )
             hout1gscale->Draw("hist same");
 
             double scalechi2_ext = hdata->Chi2Test(hextscale,"CHI2");
-            legend[obschannel-1]->AddEntry(hextscale, Form("EXT x %.2f, #chi^{2} = %.2f", scale_amount_ext - 1.0, scalechi2_ext), "l");
-            hextscale->Draw("hist same");
+            //legend[obschannel-1]->AddEntry(hextscale, Form("EXT x %.2f, #chi^{2} = %.2f", scale_amount_ext - 1.0, scalechi2_ext), "l");
+            //hextscale->Draw("hist same");
         //}
 
         gratio_mc[obschannel-1] = new TGraphAsymmErrors();
