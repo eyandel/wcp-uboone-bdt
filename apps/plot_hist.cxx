@@ -1588,6 +1588,7 @@ int main( int argc, char** argv )
         else*/ 
         //Erin 
         gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Energy [MeV]");
+        gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Angle [degrees]");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Median dE/dx (0-4 cm) [MeV/cm]");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Cosine Angle");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("#nu_{e} CC Background BDT Score");
