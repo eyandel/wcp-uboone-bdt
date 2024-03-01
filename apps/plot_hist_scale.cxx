@@ -1365,7 +1365,7 @@ int main( int argc, char** argv )
               scale_amount_numuCC1g = ((h1gscale->Integral() / hnumuCC1gscale->Integral()) * fit_scale) + 1.0;
               scale_amount_out1g    = ((h1gscale->Integral() / hout1gscale->Integral()) * fit_scale) + 1.0;
               scale_amount_ext      = ((h1gscale->Integral() / hextscale->Integral()) * fit_scale) + 1.0;
-              scale_amount_LEE      = fit_scale + 1.0;
+              scale_amount_LEE      = fit_scale;
             }
         }
             //cout<< "scale_amount = " << scale_amount << endl;
@@ -1466,7 +1466,7 @@ int main( int argc, char** argv )
             hextscale->SetLineWidth(3);
 
             if (flag_leeexist){
-              hLEEscale->Scale(abs(scale_amount_LEE - 1.0));
+              hLEEscale->Scale(abs(scale_amount_LEE));
               signal_amount_LEE = hLEEscale->Integral();
               hLEEscale->SetFillStyle(0);
               hLEEscale->SetFillColorAlpha(kMagenta, 0.5);
@@ -1513,7 +1513,7 @@ int main( int argc, char** argv )
         hout1g->SetLineColor(kPink);
         hout1g->SetLineWidth(1);
 
-        }//turn off breakdown
+        
 
         if(flag_leeexist){
         hstack[obschannel-1]->Add(hLEE);
@@ -1524,6 +1524,7 @@ int main( int argc, char** argv )
         hLEE->SetLineWidth(1);
         }
         // truth labels end
+        }//turn off breakdown
         }
         if(flag_truthlabel==1){
         hstack[obschannel-1]->Add(hbadmatch);
@@ -1745,7 +1746,7 @@ int main( int argc, char** argv )
 
             if (flag_leeexist){
               double scalechi2_LEE = hdata->Chi2Test(hLEEscale,"CHI2");
-              legend[obschannel-1]->AddEntry(hLEEscale, Form("LEE x %.2f, #chi^{2} = %.2f", scale_amount_LEE - 1.0, scalechi2_LEE), "l");
+              legend[obschannel-1]->AddEntry(hLEEscale, Form("LEE x %.2f, #chi^{2} = %.2f", scale_amount_LEE, scalechi2_LEE), "l");
               hLEEscale->Draw("hist same");
             }
         //}
