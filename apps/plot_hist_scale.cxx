@@ -932,6 +932,7 @@ int main( int argc, char** argv )
     float scale_amount_numuCC1g = 1.0;
     float scale_amount_out1g    = 1.0;
     float scale_amount_ext      = 1.0;
+    float scale_amount_LEE      = 1.0;
 
     float signal_amount_NCpi1g   = 0.0;
     float signal_amount_NCdel    = 0.0;
@@ -939,6 +940,7 @@ int main( int argc, char** argv )
     float signal_amount_numuCC1g = 0.0;
     float signal_amount_out1g    = 0.0;
     float signal_amount_ext      = 0.0;
+    float signal_amount_LEE      = 0.0;
 
     for(auto it = map_obsch_subhistos.begin(); it!= map_obsch_subhistos.end(); it++){
         int obschannel = it->first;
@@ -982,6 +984,7 @@ int main( int argc, char** argv )
         TH1F* hnumuCC1gscale    = (TH1F*)hdata->Clone("hnumuCC1gscale");
         TH1F* hout1gscale    = (TH1F*)hdata->Clone("hout1gscale");
         TH1F* hextscale    = (TH1F*)hdata->Clone("hextscale");
+        TH1F* hLEEscale = (TH1F*)hdata->Clone("hLEEscale");
         //
         TH1F* hLEE = (TH1F*)hdata->Clone("hLEE");
         TH1F* hCCQE = (TH1F*)hdata->Clone("hCCQE");
@@ -1020,6 +1023,7 @@ int main( int argc, char** argv )
         hnumuCC1gscale->Reset();
         hout1gscale->Reset();
         hextscale->Reset();
+        hLEEscale->Reset();
         hLEE->Reset();
         hCCQE->Reset();
         hNCQE->Reset();
@@ -1146,6 +1150,7 @@ int main( int argc, char** argv )
                     std::cout<<"LEE"<<" "<<histname<<std::endl;
                     flag_leeexist = true;
                     hLEE->Add(htemp);
+                    hLEEscale->Add(htemp);
                     break;
                 }
                 if(line == "CCQE") {
@@ -1343,6 +1348,7 @@ int main( int argc, char** argv )
             float num_bkg_numuCC1g = num_bkg + hNCpi1g->Integral() + hNCdel->Integral() + hNCother->Integral() + hout1g->Integral();
             float num_bkg_out1g = num_bkg + hNCpi1g->Integral() + hNCdel->Integral() + hNCother->Integral() + hnumuCC1g->Integral();
             float num_bkg_ext = num_bkg - hext->Integral() + hNCpi1g->Integral() + hNCdel->Integral() + hNCother->Integral() + hnumuCC1g->Integral() + hout1g->Integral();
+            float num_bkg_LEE = num_bkg + h1gscale->Integral();
 
             if (fit_scale == 0){
               scale_amount_NCpi1g   = abs(hdata->Integral() - num_bkg_NCpi1g) /   hNCpi1gscale->Integral();
@@ -1351,6 +1357,7 @@ int main( int argc, char** argv )
               scale_amount_numuCC1g = abs(hdata->Integral() - num_bkg_numuCC1g) / hnumuCC1gscale->Integral();
               scale_amount_out1g    = abs(hdata->Integral() - num_bkg_out1g) /    hout1gscale->Integral();
               scale_amount_ext      = abs(hdata->Integral() - num_bkg_ext) /      hextscale->Integral();
+              scale_amount_LEE      = abs(hdata->Integral() - num_bkg_LEE) /      hLEEscale->Integral();
             }else{
               scale_amount_NCpi1g   = ((h1gscale->Integral() / hNCpi1gscale->Integral()) * fit_scale) + 1.0;
               scale_amount_NCdel    = ((h1gscale->Integral() / hNCdelscale->Integral()) * fit_scale) + 1.0;
@@ -1358,6 +1365,7 @@ int main( int argc, char** argv )
               scale_amount_numuCC1g = ((h1gscale->Integral() / hnumuCC1gscale->Integral()) * fit_scale) + 1.0;
               scale_amount_out1g    = ((h1gscale->Integral() / hout1gscale->Integral()) * fit_scale) + 1.0;
               scale_amount_ext      = ((h1gscale->Integral() / hextscale->Integral()) * fit_scale) + 1.0;
+              scale_amount_LEE      = fit_scale + 1.0;
             }
         }
             //cout<< "scale_amount = " << scale_amount << endl;
@@ -1456,6 +1464,16 @@ int main( int argc, char** argv )
             hextscale->SetLineColor(kGray+2);
             hextscale->SetLineStyle(1);
             hextscale->SetLineWidth(3);
+
+            if (flag_leeexist){
+              hLEEscale->Scale(abs(scale_amount_LEE - 1.0));
+              signal_amount_LEE = hLEEscale->Integral();
+              hLEEscale->SetFillStyle(0);
+              hLEEscale->SetFillColorAlpha(kMagenta, 0.5);
+              hLEEscale->SetLineColor(kMagenta);
+              hLEEscale->SetLineStyle(1);
+              hLEEscale->SetLineWidth(4);
+            }
         //}
 
         if (0){
@@ -1721,6 +1739,12 @@ int main( int argc, char** argv )
             double scalechi2_ext = hdata->Chi2Test(hextscale,"CHI2");
             //legend[obschannel-1]->AddEntry(hextscale, Form("EXT x %.2f, #chi^{2} = %.2f", scale_amount_ext - 1.0, scalechi2_ext), "l");
             //hextscale->Draw("hist same");
+
+            if (flag_leeexist){
+              double scalechi2_LEE = hdata->Chi2Test(hLEEscale,"CHI2");
+              legend[obschannel-1]->AddEntry(hLEEscale, Form("LEE x %.2f, #chi^{2} = %.2f", scale_amount_LEE - 1.0, scalechi2_LEE), "l");
+              hLEEscale->Draw("hist same");
+            }
         //}
 
         gratio_mc[obschannel-1] = new TGraphAsymmErrors();
