@@ -1697,6 +1697,9 @@ int main( int argc, char** argv )
         hmcerror->SetMarkerSize(0);
 
         //Erin , plot data as just excess
+        if (flag_leeexist){
+          hmc->Add(hLEE,-1);
+        }
         hdata->Add(hmc,-1);
 
         legend[obschannel-1]->AddEntry(gr[obschannel-1], Form("BNB data, %.1f", hdata->Integral()*scalePOT), "lp");
