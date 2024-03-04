@@ -402,6 +402,17 @@ double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, 
     return get_reco_showerKE_corr(pfeval, flag_data) * 1000.;
   }else if (var_name == "kine_reco_Eproton"){
     return get_reco_Eproton(kine);
+  }else if (var_name == "kine_reco_Eproton_nothreshold"){
+    double reco_Eproton=0;
+    for(size_t i=0; i<kine.kine_energy_particle->size(); i++)
+      {
+        int pdgcode = kine.kine_particle_type->at(i);
+        //if(abs(pdgcode)==2212 && kine.kine_energy_particle->at(i)>35) // proton threshold of 35 MeV
+        if(abs(pdgcode)==2212) // no proton threshold
+          reco_Eproton+=kine.kine_energy_particle->at(i);
+
+      }
+    return reco_Eproton;
   }else if (var_name == "kine_reco_Epion"){
     return get_reco_Epion(kine);
   }else if (var_name == "kine_pio_energy_1"){
