@@ -186,7 +186,7 @@ bool LEEana::is_true_0p(PFevalInfo& pfeval){
     for(size_t i=0; i<pfeval.truth_Ntrack; i++){
       if(pfeval.truth_mother[i] != 0) continue;
       if(pfeval.truth_pdg[i] != 2212) continue;
-      if(pfeval.truth_startMomentum[i][3] - 0.938272 < 0.035) continue;
+      //if(pfeval.truth_startMomentum[i][3] - 0.938272 < 0.035) continue; //Erin: CHANGE, no proton threshold
       return false;
     }
   return true;
