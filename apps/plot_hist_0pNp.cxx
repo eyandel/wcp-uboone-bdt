@@ -1621,7 +1621,7 @@ int main( int argc, char** argv )
         //if(obschannel==3) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Neutrino Energy [MeV]");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Median dE/dx (0-4 cm) [MeV/cm]");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Median dE/dx (1-5 cm) [MeV/cm]");
-        gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Angle [degrees]");
+        //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Angle [degrees]");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("#nu_{e} CC Background BDT Score");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Number of Tracks");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Number of Protons");
@@ -1636,7 +1636,7 @@ int main( int argc, char** argv )
          //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Vertex X [cm]");
          //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Vertex Y [cm]");
          //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Vertex Z [cm]");
-         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Backwards Projected Distance [cm]");
+         gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Backwards Projected Distance [cm]");
          //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Forwards Projected Distance [cm]");
          //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Minumum Distance to Wall [cm]");
          //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Minimum Projected Distance [cm]");
