@@ -585,6 +585,7 @@ int main( int argc, char** argv )
   T_PFeval_cv->SetBranchStatus("*",1);
   T_BDTvars_cv->SetBranchStatus("*",1);
   T_KINEvars_cv->SetBranchStatus("*",1);
+  T_pot_cv->SetBranchStatus("*",1);
 
 
   std::set<int> read_list;
