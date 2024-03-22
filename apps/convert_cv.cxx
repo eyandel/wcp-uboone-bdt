@@ -530,7 +530,7 @@ int main( int argc, char** argv )
   std::map<std::pair<int, int>, std::pair<int, double> > map_rs_entry_pot_cv;
   for (Int_t i=0;i!=T_pot_cv->GetEntries();i++){
     T_pot_cv->GetEntry(i);
-    if(pot_cv.pot_tor875 == 0.) continue;
+    if(pot_cv.pot_tor875 == 0. && !flag_data) continue;
     map_rs_entry_pot_cv[std::make_pair(pot_cv.runNo,pot_cv.subRunNo)] = std::make_pair(i, pot_cv.pot_tor875);
   }
 
@@ -585,7 +585,7 @@ int main( int argc, char** argv )
   T_PFeval_cv->SetBranchStatus("*",1);
   T_BDTvars_cv->SetBranchStatus("*",1);
   T_KINEvars_cv->SetBranchStatus("*",1);
-  T_pot_cv->SetBranchStatus("*",1);
+  //T_pot_cv->SetBranchStatus("*",1);
 
 
   std::set<int> read_list;
