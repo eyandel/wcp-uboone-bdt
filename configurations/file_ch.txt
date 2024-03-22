@@ -36,7 +36,7 @@
 /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_dirt_run1_sp.root                      SPOutFVSig
 /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_dirt_run3_sp.root                      SPdirtBkg
 /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_dirt_run3_sp.root                      SPOutFVSig
-/exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_extbnb_C1_run1_sp.root                 all
+/exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_extbnb_run1_sp.root                 all
 /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_extbnb_run3_sp.root                    all
 /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnb_5e19_run1_sp.root                  all
 /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnb_run3_beamtime_final.root           all
@@ -47,7 +47,7 @@ end                                                                             
 /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnboverlay_run3_sp_1.root        all
 /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_dirt_run1_sp.root                all
 /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_dirt_run3_sp.root                all
-/exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_extbnb_C1_run1_sp.root           all
+/exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_extbnb_run1_sp.root           all
 /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_extbnb_run3F_sp.root             all
 /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnb_5e19_run1_sp.root            all
 /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnb_run3_beamtime_final.root     all
@@ -86,7 +86,7 @@ end                                                                             
 /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnboverlay_run3_sp_1.root       all
 /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_dirt_run1_sp.root               all
 /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_dirt_run3_sp.root               all
-/exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_extbnb_C1_run1_sp.root          all
+/exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_extbnb_run1_sp.root          all
 /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_extbnb_run3F_sp.root            all
 /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnb_5e19_run1_sp.root           all
 /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnb_run3_beamtime_final.root    all
@@ -119,7 +119,7 @@ end                                                                             
 /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_dirt_run1_sp.root               SPOutFVSig
 /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_dirt_run3_sp.root               SPdirtBkg
 /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_dirt_run3_sp.root               SPOutFVSig
-/exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_extbnb_C1_run1_sp.root          all
+/exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_extbnb_run1_sp.root          all
 /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_extbnb_run3F_sp.root            all
 /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnb_5e19_run1_sp.root           all
 /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnb_run3_beamtime_sat.root      all

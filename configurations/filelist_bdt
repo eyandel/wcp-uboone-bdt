@@ -13,5 +13,5 @@
 end                                                     end                                     end     end    -1       -1
 /exp/uboone/data/users/eyandel/single_photon_checkout/      checkout_bnboverlay_run1_sp.root      /exp/uboone/data/users/eyandel/checkout_rootfiles_correct_bdt/ /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/ 2 prodgenie_bnb_nu_overlay_run1
 /exp/uboone/data/users/eyandel/single_photon_checkout/      checkout_dirt_run1_sp.root            /exp/uboone/data/users/eyandel/checkout_rootfiles_correct_bdt/ /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/ 2 prodgenie_bnb_dirt_overlay_run1
-/exp/uboone/data/users/eyandel/single_photon_checkout/      checkout_extbnb_C1_run1_sp.root       /exp/uboone/data/users/eyandel/checkout_rootfiles_correct_bdt/ /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/ 2 data_extbnb_run1
+/exp/uboone/data/users/eyandel/single_photon_checkout/      checkout_extbnb_run1_sp.root       /exp/uboone/data/users/eyandel/checkout_rootfiles_correct_bdt/ /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/ 2 data_extbnb_run1
 /exp/uboone/data/users/eyandel/single_photon_checkout/      checkout_bnb_5e19_run1_sp.root        /exp/uboone/data/users/eyandel/checkout_rootfiles_correct_bdt/ /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/ 3 0

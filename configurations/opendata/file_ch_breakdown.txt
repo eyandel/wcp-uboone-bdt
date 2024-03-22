@@ -58,7 +58,7 @@
 /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_dirt_run2_sp.root                      SPOutFVSig
 /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_dirt_run3_sp.root                      SPdirtBkg
 /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_dirt_run3_sp.root                      SPOutFVSig
-/exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_extbnb_C1_run1_sp.root                 all
+/exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_extbnb_run1_sp.root                 all
 /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_extbnb_D2_run2_sp.root                 all
 /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_extbnb_run3_sp.root                    all
 /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnb_5e19_run1_sp.root                  all

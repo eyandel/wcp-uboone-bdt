@@ -28,7 +28,7 @@
 /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_dirt_run3_sp.root                      muon
 /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_dirt_run3_sp.root                      nomuon
 /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_dirt_run3_sp.root                      badmatch
-/exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_extbnb_C1_run1_sp.root                 all
+/exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_extbnb_run1_sp.root                 all
 /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_extbnb_D2_run2_sp.root                 all
 /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_extbnb_run3_sp.root                    all
 /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_bnb_run1_full.root                     all
