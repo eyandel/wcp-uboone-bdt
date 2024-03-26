@@ -52,6 +52,10 @@ using namespace std;
 #include "Math/Functor.h"
 #include "Minuit2/Minuit2Minimizer.h"
 
+///Roostats
+#include "RooStats/RooStatsUtils.h"
+using namespace RooStats;
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //#include "draw.icc"
