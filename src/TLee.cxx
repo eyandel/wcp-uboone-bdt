@@ -1741,6 +1741,8 @@ int TLee::Exe_Goodness_of_fit(int num_Y, int num_X, TMatrixD matrix_pred, TMatri
   lg_top_wi->AddEntry(gh_data, "Data", "lep");
   lg_top_wi->AddEntry(h1_pred_Y_wiConstraint, TString::Format("#color[%d]{Pred wi constraint}", color_wi), "lf");
   lg_top_wi->AddEntry("", TString::Format("#color[%d]{#chi^{2}/ndf: %3.2f/%d}", color_wi, val_chi2_wiConstraint, num_Y), "");
+  lg_top_wi->AddEntry("", TString::Format("#color[%d]{p-value: %3.2f}", color_wi, TMath::Prob(val_chi2_wiConstraint, num_Y)), "");
+  lg_top_wi->AddEntry("", TString::Format("#color[%d]{%3.2f}", color_wi, RooStats::PValueToSignificance(TMath::Prob(val_chi2_wiConstraint, num_Y) / 2.0)), "");
   lg_top_wi->Draw();
   lg_top_wi->SetBorderSize(0); lg_top_wi->SetFillStyle(0); lg_top_wi->SetTextSize(0.065);
 
