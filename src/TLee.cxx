@@ -2702,7 +2702,7 @@ void TLee::Set_Spectra_MatrixCov()
   // Erin: must be on for correct handling of systematics if using separate LEE channel (preferred)
   //CHANGE for more/less channels
 
-  int three_constraints = 1;
+  int three_constraints = 0;
   
   if (three_constraints){
     map_Lee_ch[4] = 1;
