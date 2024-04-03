@@ -2,29 +2,6 @@ sp_bdt_nc_pi0_Xp_spoverlay            kine_reco_Enu	                 25	   0	   
 sp_bdt_nc_pi0_Xp_ncpi0overlay         kine_reco_Enu	                 25	   0	      2500	 1	   1		      1	    0	        0		      1		      6	      cv_spline		      0
 sp_bdt_nc_pi0_Xp_overlay_ncpi0_BG	    kine_reco_Enu	                 25	   0	      2500	 1	   1		      1	    0	        0		      1		      2	      cv_spline		      0
 sp_bdt_nc_pi0_Xp_dirt		              kine_reco_Enu	                 25	   0	      2500 	 1	   1		      0	    0.5	      0		      1		      4	      cv_spline		      0
-sp_bdt_nc_pi0_Xp_ext 		              kine_reco_Enu	                 25	   0	      2500 	 1	   0		      0	    0 	      0		      4 	      3	      unity   		      0
-sp_bdt_nc_pi0_Xp 		                  kine_reco_Enu	                 25	   0	      2500 	 1	   0		      0	    0 	      0		      0		      5	      unity   		      0
-
-sp_bdt_nc_pi0_2_Xp_spoverlay	        kine_reco_Enu	                 25	   0	      2500	 2	   1		      1	    0	        0		      2		      9	      cv_spline_nsbeam	0
-sp_bdt_nc_pi0_2_Xp_ncpi0overlay	      kine_reco_Enu	                 25	   0	      2500	 2	   1		      1	    0	        0		      2		      6	      cv_spline_nsbeam	0
-sp_bdt_nc_pi0_2_Xp_overlay_ncpi0_BG	  kine_reco_Enu	                 25	   0	      2500	 2	   1		      1	    0	        0		      2		      2	      cv_spline_nsbeam	0
-sp_bdt_nc_pi0_2_Xp_dirt		            kine_reco_Enu	                 25	   0	      2500 	 2	   1		      0	    0.5	      0		      2		      4	      cv_spline_nsbeam	0
-sp_bdt_nc_pi0_2_Xp_ext 		            kine_reco_Enu	                 25	   0	      2500 	 2	   0		      0	    0 	      0		      5 	      3	      nsbeam_ext   		  0
-sp_bdt_nc_pi0_Xp_nsbeam               kine_reco_Enu	                 25	   0	      2500 	 2	   0		      0	    0 	      0		      0		      5	      unity   		      0
-
-sp_bdt_nc_pi0_3_Xp_spoverlay	        shower_energy_sp	             15	   0	      1500   3	   1		      1	    0	        0		      3		      9	      cv_spline		  0
-sp_bdt_nc_pi0_3_Xp_ncpi0overlay	      shower_energy_sp	             15	   0	      1500   3	   1		      1	    0	        0		      3		      6	      cv_spline		  0
-sp_bdt_nc_pi0_3_Xp_overlay_ncpi0_BG	  shower_energy_sp	             15	   0	      1500   3	   1		      1	    0	        0		      3		      2	      cv_spline		  0
-sp_bdt_nc_pi0_3_Xp_dirt			          shower_energy_sp	             15	   0	      1500   3	   1		      0	    0.5	      0		      3		      4	      cv_spline		  0
-sp_bdt_nc_pi0_3_Xp_ext 			          shower_energy_sp	             15	   0	      1500   3	   0		      0	    0 	      0		      6 	      3	      unity   		  0
-sp_bdt_nc_pi0_3_Xp 		    	          shower_energy_sp	             15	   0	      1500   3	   0		      0	    0 	      0		      0		      5	      unity   		  0
-End					                      End		                         -1	   -1	      -1	   -1	   -1		      -1	  -1		    -1		    -1		    -1	    end		        -1
-
-
-sp_bdt_nc_pi0_Xp_spoverlay            kine_reco_Enu	                 25	   0	      2500	 1	   1		      1	    0	        0		      1		      9	      cv_spline		      0
-sp_bdt_nc_pi0_Xp_ncpi0overlay         kine_reco_Enu	                 25	   0	      2500	 1	   1		      1	    0	        0		      1		      6	      cv_spline		      0
-sp_bdt_nc_pi0_Xp_overlay_ncpi0_BG	    kine_reco_Enu	                 25	   0	      2500	 1	   1		      1	    0	        0		      1		      2	      cv_spline		      0
-sp_bdt_nc_pi0_Xp_dirt		              kine_reco_Enu	                 25	   0	      2500 	 1	   1		      0	    0.5	      0		      1		      4	      cv_spline		      0
 sp_bdt_nc_pi0_Xp_ext 		              kine_reco_Enu	                 25	   0	      2500 	 1	   0		      0	    0 	      0		      13	      3	      unity   		      0
 sp_bdt_nc_pi0_Xp 		                  kine_reco_Enu	                 25	   0	      2500 	 1	   0		      0	    0 	      0		      0		      5	      unity   		      0
 
@@ -106,6 +83,33 @@ sp_bdt_nc_pi0_12_Xp_ext 			        single_photon_ncpi0_score      60	   -15	    
 sp_bdt_nc_pi0_12_Xp 		              single_photon_ncpi0_score      60	   -15	    15  	 12	   0		      0	    0 	      0		      0		      5	      unity   		  0
 End					                      End		                         -1	   -1	      -1	   -1	   -1		      -1	  -1		    -1		    -1		    -1	    end		        -1
 #with nc pi0 overlay
+
+
+
+sp_bdt_nc_pi0_Xp_spoverlay            kine_reco_Enu	                 25	   0	      2500	 1	   1		      1	    0	        0		      1		      9	      cv_spline		      0
+sp_bdt_nc_pi0_Xp_ncpi0overlay         kine_reco_Enu	                 25	   0	      2500	 1	   1		      1	    0	        0		      1		      6	      cv_spline		      0
+sp_bdt_nc_pi0_Xp_overlay_ncpi0_BG	    kine_reco_Enu	                 25	   0	      2500	 1	   1		      1	    0	        0		      1		      2	      cv_spline		      0
+sp_bdt_nc_pi0_Xp_dirt		              kine_reco_Enu	                 25	   0	      2500 	 1	   1		      0	    0.5	      0		      1		      4	      cv_spline		      0
+sp_bdt_nc_pi0_Xp_ext 		              kine_reco_Enu	                 25	   0	      2500 	 1	   0		      0	    0 	      0		      4 	      3	      unity   		      0
+sp_bdt_nc_pi0_Xp 		                  kine_reco_Enu	                 25	   0	      2500 	 1	   0		      0	    0 	      0		      0		      5	      unity   		      0
+
+sp_bdt_nc_pi0_2_Xp_spoverlay	        kine_reco_Enu	                 25	   0	      2500	 2	   1		      1	    0	        0		      2		      9	      cv_spline_nsbeam	0
+sp_bdt_nc_pi0_2_Xp_ncpi0overlay	      kine_reco_Enu	                 25	   0	      2500	 2	   1		      1	    0	        0		      2		      6	      cv_spline_nsbeam	0
+sp_bdt_nc_pi0_2_Xp_overlay_ncpi0_BG	  kine_reco_Enu	                 25	   0	      2500	 2	   1		      1	    0	        0		      2		      2	      cv_spline_nsbeam	0
+sp_bdt_nc_pi0_2_Xp_dirt		            kine_reco_Enu	                 25	   0	      2500 	 2	   1		      0	    0.5	      0		      2		      4	      cv_spline_nsbeam	0
+sp_bdt_nc_pi0_2_Xp_ext 		            kine_reco_Enu	                 25	   0	      2500 	 2	   0		      0	    0 	      0		      5 	      3	      nsbeam_ext   		  0
+sp_bdt_nc_pi0_Xp_nsbeam               kine_reco_Enu	                 25	   0	      2500 	 2	   0		      0	    0 	      0		      0		      5	      unity   		      0
+
+sp_bdt_nc_pi0_3_Xp_spoverlay	        shower_energy_sp	             15	   0	      1500   3	   1		      1	    0	        0		      3		      9	      cv_spline		  0
+sp_bdt_nc_pi0_3_Xp_ncpi0overlay	      shower_energy_sp	             15	   0	      1500   3	   1		      1	    0	        0		      3		      6	      cv_spline		  0
+sp_bdt_nc_pi0_3_Xp_overlay_ncpi0_BG	  shower_energy_sp	             15	   0	      1500   3	   1		      1	    0	        0		      3		      2	      cv_spline		  0
+sp_bdt_nc_pi0_3_Xp_dirt			          shower_energy_sp	             15	   0	      1500   3	   1		      0	    0.5	      0		      3		      4	      cv_spline		  0
+sp_bdt_nc_pi0_3_Xp_ext 			          shower_energy_sp	             15	   0	      1500   3	   0		      0	    0 	      0		      6 	      3	      unity   		  0
+sp_bdt_nc_pi0_3_Xp 		    	          shower_energy_sp	             15	   0	      1500   3	   0		      0	    0 	      0		      0		      5	      unity   		  0
+End					                      End		                         -1	   -1	      -1	   -1	   -1		      -1	  -1		    -1		    -1		    -1	    end		        -1
+
+
+
 
 sp_bdt_nc_pi0_Xp_spoverlay           median_dEdx_sp	               40    0        8   	 1	   1		      1	    0	        0		      1		      9	      cv_spline		      0
 sp_bdt_nc_pi0_Xp_ncpi0overlay        median_dEdx_sp	               40    0        8   	 1	   1		      1	    0	        0		      1		      6	      cv_spline		      0
