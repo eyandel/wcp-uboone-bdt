@@ -1,4 +1,4 @@
-#include "/exp/uboone/app/users/eyandel/wcp-uboone-bdt/src/draw.icc"
+#include "../src/draw.icc"
 
 void plot_systematics()
 {  
@@ -21,6 +21,7 @@ void plot_systematics()
   gStyle->SetEndErrorSize(4);
   gStyle->SetEndErrorSize(0);
 
+
   ///////////////////////////////////////////////////////////////////////////////////////////////////////
   
   TString roostr = "";
@@ -34,6 +35,7 @@ void plot_systematics()
   TMatrixD* matrix_absolute_detector_cov_newworld = (TMatrixD*)roofile_syst->Get("matrix_absolute_detector_cov_newworld");
   TMatrixD* matrix_absolute_mc_stat_cov_newworld = (TMatrixD*)roofile_syst->Get("matrix_absolute_mc_stat_cov_newworld");
   TMatrixD* matrix_absolute_additional_cov_newworld = (TMatrixD*)roofile_syst->Get("matrix_absolute_additional_cov_newworld");
+  TMatrixD* matrix_absolute_time_cov_newworld = (TMatrixD*)roofile_syst->Get("matrix_absolute_time_cov_newworld");
   TMatrixD* matrix_absolute_total_cov_newworld = (TMatrixD*)roofile_syst->Get("matrix_absolute_cov_newworld");
 
   TMatrixD* matrix_pred_newworld = (TMatrixD*)roofile_syst->Get("matrix_pred_newworld");
@@ -55,6 +57,7 @@ void plot_systematics()
     double val_detector = (*matrix_absolute_detector_cov_newworld)(ibin, ibin);
     double val_mc_stat = (*matrix_absolute_mc_stat_cov_newworld)(ibin, ibin);
     double val_additional = (*matrix_absolute_additional_cov_newworld)(ibin, ibin);
+    double val_time = (*matrix_absolute_time_cov_newworld)(ibin, ibin);
     double val_total = (*matrix_absolute_total_cov_newworld)(ibin, ibin);
     // cout<<Form(" ---> %3d, total %12.4f, check %12.4f", ibin+1, val_total,
     // 	       val_flux + val_Xs + val_detector + val_mc_stat + val_additional
@@ -68,10 +71,11 @@ void plot_systematics()
   int color_detector = kMagenta;
   int color_additional = kOrange-3;
   int color_mc_stat = kGreen+1;
+  int color_time = kPink+1;
   int color_total = kBlack;
   
-  const int num_ch = 7;
-  int nbins_ch[num_ch] = {26, 26, 26, 26, 11, 11, 11};
+  const int num_ch = 3;//6; //7;
+  int nbins_ch[num_ch] = {7,7,7};//{7,7,7,7,7,7}; //{26, 26, 26, 26, 11, 11, 11};
   
   double *axis_label = new double[rows+1];
   int line_axis = 0;
@@ -83,27 +87,28 @@ void plot_systematics()
 
     if( ich==0 ) {
       for(int ibin=0; ibin<=nbins_ch[ich]; ibin++) {
-	line_axis++;
-	axis_label[line_axis-1] = ibin;
+	      line_axis++;
+	      axis_label[line_axis-1] = ibin;
       }
     }
     else {
       line_axis--;
       for(int ibin=0; ibin<=nbins_ch[ich]; ibin++) {
-	line_axis++;
-	axis_label[line_axis-1] = ibin;
-	if( ich==num_ch-1 && ibin==nbins_ch[ich] ) axis_label[line_axis-1] = 1./0;
+	      line_axis++;
+	      axis_label[line_axis-1] = ibin;
+	      if( ich==num_ch-1 && ibin==nbins_ch[ich] ) axis_label[line_axis-1] = 1./0;
       }
     }
 
     for(int ibin=1; ibin<=nbins_ch[ich]; ibin++) {
       line_str++;
-      if(ibin==5 || ibin==10 || ibin==15 || ibin==20 || ibin==25) {
-	axis_label_str[line_str-1] = TString::Format("%d", ibin*100);
-      }
-      else {
-	axis_label_str[line_str-1] ="";
-      }
+      //if(ibin==2|| ibin==4 || ibin==6 || ibin==20 || ibin==25) {
+	      axis_label_str[line_str-1] = TString::Format("%d", ibin*100);
+      //}
+      //else {
+	     // axis_label_str[line_str-1] ="";
+      //}
+      if(ibin==nbins_ch[ich]){ axis_label_str[line_str-1] = "over"; }
     }
     
   }// ich
@@ -159,7 +164,7 @@ void plot_systematics()
     for(int ibin=1; ibin<=nbins_ch[ich]; ibin++) {
       line_axis_xy++;
       if(ibin%5==0) {
-	map_line_axis_xy[line_axis_xy] = line_axis_xy;
+	//map_line_axis_xy[line_axis_xy] = line_axis_xy;
       }
     }    
   }// ich
@@ -181,8 +186,8 @@ void plot_systematics()
   //////////////////
   
   map<int, TPaveText*>pt_text_ch;
-  TString pt_str_ch[num_ch] = {"FC #nu_{e}CC", "PC #nu_{e}CC", "FC #nu_{#mu}CC", "PC #nu_{#mu}CC", "FC CC#pi^{0}", "PC CC#pi^{0}", "NC#pi^{0}"};
-  double pt_str_angle[num_ch] = {0,0,0,0,30,30,30};
+  TString pt_str_ch[num_ch] = {"1#gamma", "NC#pi^{0}", "#nu_{#mu}CC"};//{"1#gamma 0p", "1#gamma Np", "NC#pi^{0} 0p", "NC#pi^{0} Np", "#nu_{#mu}CC 0p", "#nu_{#mu}CC Np"};//{"FC #nu_{e}CC", "PC #nu_{e}CC", "FC #nu_{#mu}CC", "PC #nu_{#mu}CC", "FC CC#pi^{0}", "PC CC#pi^{0}", "NC#pi^{0}"};
+  double pt_str_angle[num_ch] = {0,0,0}; //{30,30,30,30,30,30};//,0,30,30,30};
   for(int idx=0; idx<num_ch; idx++) {
     int line_eff = 0;
     for(int jdx=0; jdx<idx; jdx++) line_eff += nbins_ch[jdx];
@@ -191,7 +196,12 @@ void plot_systematics()
     pt_text_ch[idx]->SetTextFont(42); pt_text_ch[idx]->SetTextAlign(11);
     pt_text_ch[idx]->SetBorderSize(0); pt_text_ch[idx]->SetFillStyle(0);
     pt_text_ch[idx]->AddText( pt_str_ch[idx] );
-    ((TText*)pt_text_ch[idx]->GetListOfLines()->Last())->SetTextAngle( pt_str_angle[idx] );        
+    ((TText*)pt_text_ch[idx]->GetListOfLines()->Last())->SetTextAngle( pt_str_angle[idx] );  
+
+    pt_text_ch[idx]->SetX1(line_eff+4);
+    pt_text_ch[idx]->SetX2(line_eff+4+1); 
+    pt_text_ch[idx]->SetY1(rows+1);
+    pt_text_ch[idx]->SetY2(rows+1);     
   }
   
   /////////////////////////////////////////////////////////////////////////////////////////////////////// flux
@@ -249,7 +259,7 @@ void plot_systematics()
   h2_correlation_flux->GetXaxis()->LabelsOption("v R");
   h2_correlation_flux->GetXaxis()->SetTickLength(0);
   h2_correlation_flux->GetYaxis()->SetTickLength(0);
-  func_xy_title(h2_correlation_flux, "Reco energy [MeV]", "Reco energy [MeV]");
+  func_xy_title(h2_correlation_flux, "Reco Shower Energy [MeV]", "Reco Shower Energy [MeV]");
   h2_correlation_flux->GetXaxis()->CenterTitle(); h2_correlation_flux->GetYaxis()->CenterTitle();
   h2_correlation_flux->GetXaxis()->SetTitleOffset(2.2); h2_correlation_flux->GetYaxis()->SetTitleOffset(1.9);
   
@@ -327,7 +337,7 @@ void plot_systematics()
   h2_correlation_Xs->GetXaxis()->LabelsOption("v R");
   h2_correlation_Xs->GetXaxis()->SetTickLength(0);
   h2_correlation_Xs->GetYaxis()->SetTickLength(0);
-  func_xy_title(h2_correlation_Xs, "Reco energy [MeV]", "Reco energy [MeV]");
+  func_xy_title(h2_correlation_Xs, "Reco Shower Energy [MeV]", "Reco Shower Energy [MeV]");
   h2_correlation_Xs->GetXaxis()->CenterTitle(); h2_correlation_Xs->GetYaxis()->CenterTitle();
   h2_correlation_Xs->GetXaxis()->SetTitleOffset(2.2); h2_correlation_Xs->GetYaxis()->SetTitleOffset(1.9);
   
@@ -409,7 +419,7 @@ void plot_systematics()
   h2_correlation_detector->GetXaxis()->LabelsOption("v R");
   h2_correlation_detector->GetXaxis()->SetTickLength(0);
   h2_correlation_detector->GetYaxis()->SetTickLength(0);
-  func_xy_title(h2_correlation_detector, "Reco energy [MeV]", "Reco energy [MeV]");
+  func_xy_title(h2_correlation_detector, "Reco Shower Energy [MeV]", "Reco Shower Energy [MeV]");
   h2_correlation_detector->GetXaxis()->CenterTitle(); h2_correlation_detector->GetYaxis()->CenterTitle();
   h2_correlation_detector->GetXaxis()->SetTitleOffset(2.2); h2_correlation_detector->GetYaxis()->SetTitleOffset(1.9);
   
@@ -507,7 +517,7 @@ void plot_systematics()
     h2_correlation_detector_sub[idx]->GetXaxis()->LabelsOption("v R");
     h2_correlation_detector_sub[idx]->GetXaxis()->SetTickLength(0);
     h2_correlation_detector_sub[idx]->GetYaxis()->SetTickLength(0);
-    func_xy_title(h2_correlation_detector_sub[idx], "Reco energy [MeV]", "Reco energy [MeV]");
+    func_xy_title(h2_correlation_detector_sub[idx], "Reco Shower Energy [MeV]", "Reco Shower Energy [MeV]");
     h2_correlation_detector_sub[idx]->GetXaxis()->CenterTitle(); h2_correlation_detector_sub[idx]->GetYaxis()->CenterTitle();
     h2_correlation_detector_sub[idx]->GetXaxis()->SetTitleOffset(2.2); h2_correlation_detector_sub[idx]->GetYaxis()->SetTitleOffset(1.9);
   
@@ -591,7 +601,7 @@ void plot_systematics()
   h2_correlation_mc_stat->GetXaxis()->LabelsOption("v R");
   h2_correlation_mc_stat->GetXaxis()->SetTickLength(0);
   h2_correlation_mc_stat->GetYaxis()->SetTickLength(0);
-  func_xy_title(h2_correlation_mc_stat, "Reco energy [MeV]", "Reco energy [MeV]");
+  func_xy_title(h2_correlation_mc_stat, "Reco Shower Energy [MeV]", "Reco Shower Energy [MeV]");
   h2_correlation_mc_stat->GetXaxis()->CenterTitle(); h2_correlation_mc_stat->GetYaxis()->CenterTitle();
   h2_correlation_mc_stat->GetXaxis()->SetTitleOffset(2.2); h2_correlation_mc_stat->GetYaxis()->SetTitleOffset(1.9);
   
@@ -671,7 +681,7 @@ void plot_systematics()
   h2_correlation_additional->GetXaxis()->LabelsOption("v R");
   h2_correlation_additional->GetXaxis()->SetTickLength(0);
   h2_correlation_additional->GetYaxis()->SetTickLength(0);
-  func_xy_title(h2_correlation_additional, "Reco energy [MeV]", "Reco energy [MeV]");
+  func_xy_title(h2_correlation_additional, "Reco Shower Energy [MeV]", "Reco Shower Energy [MeV]");
   h2_correlation_additional->GetXaxis()->CenterTitle(); h2_correlation_additional->GetYaxis()->CenterTitle();
   h2_correlation_additional->GetXaxis()->SetTitleOffset(2.2); h2_correlation_additional->GetYaxis()->SetTitleOffset(1.9);
   
@@ -693,6 +703,86 @@ void plot_systematics()
   }
 
   canv_h2_correlation_additional->SaveAs("canv_h2_correlation_additional.png");
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////// time
+
+  roostr = "h2_covariance_time";
+  TH2D *h2_covariance_time = new TH2D(roostr, "", rows, 0, rows, rows, 0, rows);
+  for(int ibin=1; ibin<=rows; ibin++) {
+    h2_covariance_time->GetXaxis()->SetBinLabel(ibin, axis_label_str[ibin-1]);
+    h2_covariance_time->GetYaxis()->SetBinLabel(ibin, axis_label_str[ibin-1]);
+  }
+
+  roostr = "h2_correlation_time";
+  TH2D *h2_correlation_time = new TH2D(roostr, "", rows, 0, rows, rows, 0, rows);
+  for(int ibin=1; ibin<=rows; ibin++) {
+    h2_correlation_time->GetXaxis()->SetBinLabel(ibin, axis_label_str[ibin-1]);
+    h2_correlation_time->GetYaxis()->SetBinLabel(ibin, axis_label_str[ibin-1]);
+  }
+
+  TH1D *h1_time_relerr = new TH1D("h1_time_relerr", "", rows, 0, rows);
+  for(int ibin=1; ibin<=rows; ibin++) {
+    h1_time_relerr->GetXaxis()->SetBinLabel(ibin, axis_label_str[ibin-1]);
+  }
+  
+  for(int ibin=1; ibin<=rows; ibin++) {
+    for(int jbin=1; jbin<=rows; jbin++) {
+      double cov_ij = (*matrix_absolute_time_cov_newworld)(ibin-1,jbin-1);      
+      double cov_i = (*matrix_absolute_time_cov_newworld)(ibin-1,ibin-1);
+      double cov_j = (*matrix_absolute_time_cov_newworld)(jbin-1,jbin-1);      
+
+      double val_correlation = cov_ij/sqrt(cov_i*cov_j);
+      if( cov_i==0 || cov_j==0 ) val_correlation = 0;
+   
+      h2_covariance_time->SetBinContent(ibin, jbin, cov_ij);
+      h2_correlation_time->SetBinContent(ibin, jbin, val_correlation);
+
+      if( ibin==jbin ) {
+        h2_correlation_time->SetBinContent(ibin, jbin, 1);
+        
+        double val_cv = (*matrix_pred_newworld)(0, ibin-1);
+        double val_relerr = sqrt(cov_ij)/val_cv;
+        h1_time_relerr->SetBinContent(ibin, val_relerr);
+
+        if( val_cv==0 ) h1_time_relerr->SetBinContent(ibin, 0);
+      }
+      
+    }// jbin
+  }// ibin
+  
+  TCanvas *canv_h2_correlation_time = new TCanvas("canv_h2_correlation_time", "canv_h2_correlation_time", 800, 700);
+  func_canv_margin(canv_h2_correlation_time, 0.15, 0.15, 0.1, 0.15);
+  h2_correlation_time->Draw("colz");
+  func_title_size(h2_correlation_time, 0.05, 0.033, 0.05, 0.033);
+  h2_correlation_time->GetZaxis()->SetLabelSize(0.033);
+  h2_correlation_time->GetZaxis()->SetRangeUser(-1, 1);
+  h2_correlation_time->GetXaxis()->LabelsOption("v R");
+  h2_correlation_time->GetXaxis()->SetTickLength(0);
+  h2_correlation_time->GetYaxis()->SetTickLength(0);
+  func_xy_title(h2_correlation_mc_stat, "Reco Shower Energy [MeV]", "Reco Shower Energy [MeV]");
+  h2_correlation_time->GetXaxis()->CenterTitle(); h2_correlation_time->GetYaxis()->CenterTitle();
+  h2_correlation_time->GetXaxis()->SetTitleOffset(2.2); h2_correlation_time->GetYaxis()->SetTitleOffset(1.9);
+  
+  for(int idx=0; idx<num_ch-1; idx++) {
+    line_root_xx[idx]->Draw("same");
+    line_root_yy[idx]->Draw("same");
+    line_root_xx[idx]->SetLineColor(kBlack);
+    line_root_yy[idx]->SetLineColor(kBlack);
+  }
+
+  for(auto it=map_line_axis_xy.begin(); it!=map_line_axis_xy.end(); it++) {
+    int line_eff = it->first;    
+    map_root_line_axis_xx[line_eff]->Draw("same");
+    map_root_line_axis_yy[line_eff]->Draw("same");
+    map_root_line_axis_xx[line_eff]->SetLineColor(kBlack);
+    map_root_line_axis_yy[line_eff]->SetLineColor(kBlack);
+  }
+
+  for(int idx=0; idx<num_ch; idx++) {
+    pt_text_ch[idx]->Draw();
+  }
+
+  canv_h2_correlation_time->SaveAs("canv_h2_correlation_time.png");
     
   /////////////////////////////////////////////////////////////////////////////////////////////////////// total
 
@@ -749,7 +839,7 @@ void plot_systematics()
   h2_correlation_total->GetXaxis()->LabelsOption("v R");
   h2_correlation_total->GetXaxis()->SetTickLength(0);
   h2_correlation_total->GetYaxis()->SetTickLength(0);
-  func_xy_title(h2_correlation_total, "Reco energy [MeV]", "Reco energy [MeV]");
+  func_xy_title(h2_correlation_total, "Reco Shower Energy [MeV]", "Reco Shower Energy [MeV]");
   h2_correlation_total->GetXaxis()->CenterTitle(); h2_correlation_total->GetYaxis()->CenterTitle();
   h2_correlation_total->GetXaxis()->SetTitleOffset(2.2); h2_correlation_total->GetYaxis()->SetTitleOffset(1.9);
   
@@ -773,7 +863,7 @@ void plot_systematics()
   /////////////////////////////////////////////////////////////////////////////////////////////////////// flux_Xs
   
   roostr = "h2_relerr_flux_Xs";
-  TH2D *h2_relerr_flux_Xs = new TH2D(roostr, "", rows, 0, rows, 100, 0, 1.5);
+  TH2D *h2_relerr_flux_Xs = new TH2D(roostr, "", rows, 0, rows, 100, 0, 1.1);
   for(int ibin=1; ibin<=rows; ibin++) {
     h2_relerr_flux_Xs->GetXaxis()->SetBinLabel(ibin, axis_label_str[ibin-1]);
   }
@@ -784,7 +874,7 @@ void plot_systematics()
   func_title_size(h2_relerr_flux_Xs, 0.06, 0.042, 0.04, 0.04);
   h2_relerr_flux_Xs->GetXaxis()->LabelsOption("v R");
   h2_relerr_flux_Xs->GetXaxis()->SetTickLength(0);
-  func_xy_title(h2_relerr_flux_Xs, "Reco energy [MeV]", "Relative uncertainty");
+  func_xy_title(h2_relerr_flux_Xs, "Reco Shower Energy [MeV]", "Relative uncertainty");
   h2_relerr_flux_Xs->GetXaxis()->CenterTitle(); h2_relerr_flux_Xs->GetYaxis()->CenterTitle();
   h2_relerr_flux_Xs->GetXaxis()->SetTitleOffset(1.9); h2_relerr_flux_Xs->GetYaxis()->SetTitleOffset(1.);
    
@@ -803,7 +893,7 @@ void plot_systematics()
   for(int idx=0; idx<num_ch-1; idx++) {
     line_root_xx[idx]->Draw();
     line_root_xx[idx]->SetLineStyle(7);
-    line_root_xx[idx]->SetY2(1.5);
+    line_root_xx[idx]->SetY2(1.1);
   }
 
   canv_h2_relerr_flux_Xs->cd();
@@ -831,7 +921,7 @@ void plot_systematics()
   /////////////////////////////////////////////////////////////////////////////////////////////////////// detector
   
   roostr = "h2_relerr_detector";
-  TH2D *h2_relerr_detector = new TH2D(roostr, "", rows, 0, rows, 100, 0, 2.5);
+  TH2D *h2_relerr_detector = new TH2D(roostr, "", rows, 0, rows, 100, 0, 1.1);
   for(int ibin=1; ibin<=rows; ibin++) {
     h2_relerr_detector->GetXaxis()->SetBinLabel(ibin, axis_label_str[ibin-1]);
   }
@@ -842,7 +932,7 @@ void plot_systematics()
   func_title_size(h2_relerr_detector, 0.06, 0.042, 0.04, 0.04);
   h2_relerr_detector->GetXaxis()->LabelsOption("v R");
   h2_relerr_detector->GetXaxis()->SetTickLength(0);
-  func_xy_title(h2_relerr_detector, "Reco energy [MeV]", "Relative error");
+  func_xy_title(h2_relerr_detector, "Reco Shower Energy [MeV]", "Relative error");
   h2_relerr_detector->GetXaxis()->CenterTitle(); h2_relerr_detector->GetYaxis()->CenterTitle();
   h2_relerr_detector->GetXaxis()->SetTitleOffset(1.9); h2_relerr_detector->GetYaxis()->SetTitleOffset(1.);
    
@@ -858,7 +948,7 @@ void plot_systematics()
   for(int idx=0; idx<num_ch-1; idx++) {
     line_root_xx[idx]->Draw();
     line_root_xx[idx]->SetLineStyle(7);
-    line_root_xx[idx]->SetY2(2.5);
+    line_root_xx[idx]->SetY2(1.1);
   }
 
   canv_h2_relerr_detector->cd();
@@ -886,7 +976,7 @@ void plot_systematics()
   /////////////////////////////////////////////////////////////////////////////////////////////////////// total
   
   roostr = "h2_relerr_total";
-  TH2D *h2_relerr_total = new TH2D(roostr, "", rows, 0, rows, 100, 0, 2.5);
+  TH2D *h2_relerr_total = new TH2D(roostr, "", rows, 0, rows, 100, 0, 1.1);
   for(int ibin=1; ibin<=rows; ibin++) {
     h2_relerr_total->GetXaxis()->SetBinLabel(ibin, axis_label_str[ibin-1]);
   }
@@ -897,7 +987,7 @@ void plot_systematics()
   func_title_size(h2_relerr_total, 0.06, 0.042, 0.04, 0.04);
   h2_relerr_total->GetXaxis()->LabelsOption("v R");
   h2_relerr_total->GetXaxis()->SetTickLength(0);
-  func_xy_title(h2_relerr_total, "Reco energy [MeV]", "Relative error");
+  func_xy_title(h2_relerr_total, "Reco Shower Energy [MeV]", "Relative error");
   h2_relerr_total->GetXaxis()->CenterTitle(); h2_relerr_total->GetYaxis()->CenterTitle();
   h2_relerr_total->GetXaxis()->SetTitleOffset(1.9); h2_relerr_total->GetYaxis()->SetTitleOffset(1.);
    
@@ -911,6 +1001,9 @@ void plot_systematics()
   h1_total_relerr->SetLineColor(color_total);
   h1_total_relerr->SetLineWidth(4);
   
+  h1_time_relerr->Draw("same hist");
+  h1_time_relerr->SetLineColor(color_time);
+
   h1_additional_relerr->Draw("same hist");
   h1_additional_relerr->SetLineColor(color_additional);
   
@@ -929,7 +1022,7 @@ void plot_systematics()
   for(int idx=0; idx<num_ch-1; idx++) {
     line_root_xx[idx]->Draw();
     line_root_xx[idx]->SetLineStyle(7);
-    line_root_xx[idx]->SetY2(2.5);
+    line_root_xx[idx]->SetY2(1.1);
   }
 
   canv_h2_relerr_total->cd();
@@ -951,6 +1044,7 @@ void plot_systematics()
   lg_relerr_total->AddEntry(h1_detector_relerr, "Detector", "l");
   lg_relerr_total->AddEntry(h1_mc_stat_relerr, "MC stat", "l");
   lg_relerr_total->AddEntry(h1_additional_relerr, "Dirt", "l");
+  lg_relerr_total->AddEntry(h1_time_relerr, "ns time", "l");
   lg_relerr_total->Draw();
   lg_relerr_total->SetTextSize(0.04);
     
@@ -1026,6 +1120,19 @@ void plot_systematics()
   h1_fraction_additional->SetLineColor(kBlack);
   h1_stack_fraction->Add(h1_fraction_additional);
 
+  TH1D *h1_fraction_time = new TH1D("h1_fraction_time", "", rows, 0, rows);
+  for(int ibin=1; ibin<=rows; ibin++) {
+    h1_fraction_time->GetXaxis()->SetBinLabel(ibin, axis_label_str[ibin-1]);
+    double val_time = h1_time_relerr->GetBinContent(ibin);
+    double val_total = h1_total_relerr->GetBinContent(ibin);
+    double val_frac = val_time*val_time*100./val_total/val_total;
+    if( val_total==0 ) val_frac = 0;
+    h1_fraction_time->SetBinContent( ibin, val_frac );
+  }
+  h1_fraction_time->SetFillColor(color_time);
+  h1_fraction_time->SetLineColor(kBlack);
+  h1_stack_fraction->Add(h1_fraction_time);
+
   ///////////////////////////////
    
   roostr = "h2_basic_fraction";
@@ -1039,7 +1146,7 @@ void plot_systematics()
   func_title_size(h2_basic_fraction, 0.06, 0.042, 0.04, 0.04);
   h2_basic_fraction->GetXaxis()->LabelsOption("v R");
   h2_basic_fraction->GetXaxis()->SetTickLength(0);
-  func_xy_title(h2_basic_fraction, "Reco energy [MeV]", "Syst. percentage");
+  func_xy_title(h2_basic_fraction, "Reco Shower Energy [MeV]", "Syst. percentage");
   h2_basic_fraction->GetXaxis()->CenterTitle(); h2_basic_fraction->GetYaxis()->CenterTitle();
   h2_basic_fraction->GetXaxis()->SetTitleOffset(1.9); h2_basic_fraction->GetYaxis()->SetTitleOffset(1.);
    
@@ -1070,6 +1177,7 @@ void plot_systematics()
   lg_fraction_total->AddEntry(h1_fraction_detector, "Detector", "f");
   lg_fraction_total->AddEntry(h1_fraction_mc_stat, "MC stat", "f");
   lg_fraction_total->AddEntry(h1_fraction_additional, "Dirt", "f");
+  lg_fraction_total->AddEntry(h1_fraction_time, "ns time", "f");
   lg_fraction_total->Draw();
   lg_fraction_total->SetTextSize(0.04);
       
@@ -1146,7 +1254,7 @@ void plot_systematics()
   func_title_size(h2_basic_fraction_detector, 0.06, 0.042, 0.04, 0.04);
   h2_basic_fraction_detector->GetXaxis()->LabelsOption("v R");
   h2_basic_fraction_detector->GetXaxis()->SetTickLength(0);
-  func_xy_title(h2_basic_fraction_detector, "Reco energy [MeV]", "Syst. percentage");
+  func_xy_title(h2_basic_fraction_detector, "Reco Shower Energy [MeV]", "Syst. percentage");
   h2_basic_fraction_detector->GetXaxis()->CenterTitle(); h2_basic_fraction_detector->GetYaxis()->CenterTitle();
   h2_basic_fraction_detector->GetXaxis()->SetTitleOffset(1.9); h2_basic_fraction_detector->GetYaxis()->SetTitleOffset(1.);
    
