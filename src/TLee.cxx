@@ -1487,6 +1487,10 @@ int TLee::Exe_Goodness_of_fit(int num_Y, int num_X, TMatrixD matrix_pred, TMatri
   h1_pred_Y_noConstraint->Draw("same axis");
 
   TLegend *lg_top_no = new TLegend((index==1) ? 0.2 : 0.5, 0.60, (index==1) ? 0.4 : 0.85, 0.85);
+  if (moveleg){
+    //lg_top_total->SetX1(0.25); lg_top_total->SetX2(0.6);
+    lg_top_no->SetX1(0.2); lg_top_no->SetX2(0.55);
+  }
   if( index==1 || index==7 ) { lg_top_no->SetX1(0.2); lg_top_no->SetX2(0.4);}
   lg_top_no->AddEntry(gh_data, "Data", "lep");
   lg_top_no->AddEntry(h1_pred_Y_noConstraint, TString::Format("#color[%d]{Pred no constraint}", color_no), "lf");
@@ -1737,6 +1741,10 @@ int TLee::Exe_Goodness_of_fit(int num_Y, int num_X, TMatrixD matrix_pred, TMatri
   h1_pred_Y_wiConstraint->Draw("same axis");
 
   TLegend *lg_top_wi = new TLegend(0.5, 0.57, 0.85, 0.87);
+  if (moveleg){
+    //lg_top_total->SetX1(0.25); lg_top_total->SetX2(0.6);
+    lg_top_wi->SetX1(0.2); lg_top_wi->SetX2(0.55);
+  }
   if( index==1 || index==7 ) { lg_top_wi->SetX1(0.2); lg_top_wi->SetX2(0.4);}
   lg_top_wi->AddEntry(gh_data, "Data", "lep");
   lg_top_wi->AddEntry(h1_pred_Y_wiConstraint, TString::Format("#color[%d]{Pred wi constraint}", color_wi), "lf");
