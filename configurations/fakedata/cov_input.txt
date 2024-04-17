@@ -1,20 +1,20 @@
-single_photon_spoverlay_lee         shower_energy_sp	             15	   0	    1500   	1	   1		      1	    0	        1		      4		      9	      lee_cv_spline	  1
-single_photon_spoverlay             shower_energy_sp	             15	   0	    1500   	1	   1		      1	    0	        1		      1		      9	      cv_spline		  0
-single_photon_ncpi0overlay	        shower_energy_sp	             15	   0	    1500    1	   1		      1	    0	        0		      1		      6	      cv_spline		  0
-single_photon_overlay_ncpi0_BG      shower_energy_sp	             15	   0	    1500   	1	   1		      1	    0	        0		      1		      2	      cv_spline		  0
-single_photon_bnb 		            shower_energy_sp	             15	   0	    1500  	1	   0		      0	    0 	        0		      0		      5	      cv_spline		  0
+single_photon_spoverlay_lee         cos_shower_angle_beam_sp	     9	   -1.0     1.01   	1	   1		      1	    0	        1		      4		      9	      lee_cv_spline	  1
+single_photon_spoverlay             cos_shower_angle_beam_sp	     9	   -1.0     1.01   	1	   1		      1	    0	        1		      1		      9	      cv_spline		  0
+single_photon_ncpi0overlay	        cos_shower_angle_beam_sp	     9	   -1.0     1.01    1	   1		      1	    0	        0		      1		      6	      cv_spline		  0
+single_photon_overlay_ncpi0_BG      cos_shower_angle_beam_sp	     9	   -1.0     1.01   	1	   1		      1	    0	        0		      1		      2	      cv_spline		  0
+single_photon_bnb 		            cos_shower_angle_beam_sp	     9	   -1.0     1.01  	1	   0		      0	    0 	        0		      0		      5	      cv_spline		  0
 
-sp_bdt_nc_pi0_2_Xp_spoverlay	    shower_energy_sp	             15	   0	    1500  	2	   1		      1	    0	        2		      5		      9	      lee_cv_spline	  1
-sp_bdt_nc_pi0_Xp_spoverlay	        shower_energy_sp	             15	   0	    1500  	2	   1		      1	    0	        2		      2		      9	      cv_spline		  0
-sp_bdt_nc_pi0_Xp_ncpi0overlay	    shower_energy_sp	             15	   0	    1500    2	   1		      1	    0	        0		      2		      6	      cv_spline		  0
-sp_bdt_nc_pi0_Xp_overlay_ncpi0_BG	shower_energy_sp	             15	   0	    1500    2	   1		      1	    0	        0		      2		      2	      cv_spline		  0
-sp_bdt_nc_pi0_Xp 		            shower_energy_sp	             15	   0	    1500   	2	   0		      0	    0 	        0		      0		      5	      cv_spline		  0
+sp_bdt_nc_pi0_2_Xp_spoverlay	    cos_shower_angle_beam_sp	     9	   -1.0     1.01  	2	   1		      1	    0	        2		      5		      9	      lee_cv_spline	  1
+sp_bdt_nc_pi0_Xp_spoverlay	        cos_shower_angle_beam_sp	     9	   -1.0     1.01  	2	   1		      1	    0	        2		      2		      9	      cv_spline		  0
+sp_bdt_nc_pi0_Xp_ncpi0overlay	    cos_shower_angle_beam_sp	     9	   -1.0     1.01    2	   1		      1	    0	        0		      2		      6	      cv_spline		  0
+sp_bdt_nc_pi0_Xp_overlay_ncpi0_BG	cos_shower_angle_beam_sp	     9	   -1.0     1.01    2	   1		      1	    0	        0		      2		      2	      cv_spline		  0
+sp_bdt_nc_pi0_Xp 		            cos_shower_angle_beam_sp	     9	   -1.0     1.01   	2	   0		      0	    0 	        0		      0		      5	      cv_spline		  0
 
-sp_bdt_numuCC_2_Xp_spoverlay	    shower_energy_sp	             15	   0	    1500  	3	   1		      1	    0	        3		      6		      9	      lee_cv_spline	  1
-sp_bdt_numuCC_Xp_spoverlay	        shower_energy_sp	             15	   0	    1500  	3	   1		      1	    0	        3		      3		      9	      cv_spline		  0
-sp_bdt_numuCC_Xp_ncpi0overlay	    shower_energy_sp	             15	   0	    1500    3	   1		      1	    0	        0		      3		      6	      cv_spline		  0
-sp_bdt_numuCC_Xp_overlay_ncpi0_BG	shower_energy_sp	             15	   0	    1500    3	   1		      1	    0	        0		      3		      2	      cv_spline		  0
-sp_bdt_numuCC_Xp 		            shower_energy_sp	             15	   0	    1500   	3	   0		      0	    0 	        0		      0		      5	      cv_spline		  0
+sp_bdt_numuCC_2_Xp_spoverlay	    cos_shower_angle_beam_sp	     9	   -1.0     1.01  	3	   1		      1	    0	        3		      6		      9	      lee_cv_spline	  1
+sp_bdt_numuCC_Xp_spoverlay	        cos_shower_angle_beam_sp	     9	   -1.0     1.01  	3	   1		      1	    0	        3		      3		      9	      cv_spline		  0
+sp_bdt_numuCC_Xp_ncpi0overlay	    cos_shower_angle_beam_sp	     9	   -1.0     1.01    3	   1		      1	    0	        0		      3		      6	      cv_spline		  0
+sp_bdt_numuCC_Xp_overlay_ncpi0_BG	cos_shower_angle_beam_sp	     9	   -1.0     1.01    3	   1		      1	    0	        0		      3		      2	      cv_spline		  0
+sp_bdt_numuCC_Xp 		            cos_shower_angle_beam_sp	     9	   -1.0     1.01   	3	   0		      0	    0 	        0		      0		      5	      cv_spline		  0
 End					                      End		                         -1	   -1	      -1	   -1	   -1		      -1	  -1		    -1		    -1		    -1	    end		        -1
 
 
