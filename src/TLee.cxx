@@ -1463,7 +1463,7 @@ int TLee::Exe_Goodness_of_fit(int num_Y, int num_X, TMatrixD matrix_pred, TMatri
   h1_pred_Y_noConstraint->Draw("e2");
   h1_pred_Y_noConstraint->SetMinimum(0.);
   //h1_pred_Y_noConstraint->SetMaximum(4.6);
-  if( ymax_data>ymax_pred*1.05 ) h1_pred_Y_noConstraint->SetMaximum(ymax_data*1.1);
+  if( ymax_data>ymax_pred/**1.05*/ ) h1_pred_Y_noConstraint->SetMaximum(ymax_data*1.1);
   h1_pred_Y_noConstraint->SetMarkerSize(0.);
   h1_pred_Y_noConstraint->SetFillColor(color_no); h1_pred_Y_noConstraint->SetFillStyle(3005);
   h1_pred_Y_noConstraint->SetLineColor(color_no);
