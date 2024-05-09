@@ -35,7 +35,7 @@ void plot_systematics()
   TMatrixD* matrix_absolute_detector_cov_newworld = (TMatrixD*)roofile_syst->Get("matrix_absolute_detector_cov_newworld");
   TMatrixD* matrix_absolute_mc_stat_cov_newworld = (TMatrixD*)roofile_syst->Get("matrix_absolute_mc_stat_cov_newworld");
   TMatrixD* matrix_absolute_additional_cov_newworld = (TMatrixD*)roofile_syst->Get("matrix_absolute_additional_cov_newworld");
-  TMatrixD* matrix_absolute_time_cov_newworld = (TMatrixD*)roofile_syst->Get("matrix_absolute_time_cov_newworld");
+  //TMatrixD* matrix_absolute_time_cov_newworld = (TMatrixD*)roofile_syst->Get("matrix_absolute_time_cov_newworld");
   TMatrixD* matrix_absolute_total_cov_newworld = (TMatrixD*)roofile_syst->Get("matrix_absolute_cov_newworld");
 
   TMatrixD* matrix_pred_newworld = (TMatrixD*)roofile_syst->Get("matrix_pred_newworld");
@@ -57,7 +57,7 @@ void plot_systematics()
     double val_detector = (*matrix_absolute_detector_cov_newworld)(ibin, ibin);
     double val_mc_stat = (*matrix_absolute_mc_stat_cov_newworld)(ibin, ibin);
     double val_additional = (*matrix_absolute_additional_cov_newworld)(ibin, ibin);
-    double val_time = (*matrix_absolute_time_cov_newworld)(ibin, ibin);
+    //double val_time = (*matrix_absolute_time_cov_newworld)(ibin, ibin);
     double val_total = (*matrix_absolute_total_cov_newworld)(ibin, ibin);
     // cout<<Form(" ---> %3d, total %12.4f, check %12.4f", ibin+1, val_total,
     // 	       val_flux + val_Xs + val_detector + val_mc_stat + val_additional
@@ -75,7 +75,7 @@ void plot_systematics()
   int color_total = kBlack;
   
   const int num_ch = 3;//6; //7;
-  int nbins_ch[num_ch] = {7,7,7};//{7,7,7,7,7,7}; //{26, 26, 26, 26, 11, 11, 11};
+  int nbins_ch[num_ch] = {16,16,16};//{7,7,7,7,7,7}; //{26, 26, 26, 26, 11, 11, 11};
   
   double *axis_label = new double[rows+1];
   int line_axis = 0;
@@ -102,12 +102,12 @@ void plot_systematics()
 
     for(int ibin=1; ibin<=nbins_ch[ich]; ibin++) {
       line_str++;
-      //if(ibin==2|| ibin==4 || ibin==6 || ibin==20 || ibin==25) {
+      if(ibin==2|| ibin==4 || ibin==6 || ibin==8 || ibin==10 || ibin==12 || ibin==14 || ibin==20 || ibin==25) {
 	      axis_label_str[line_str-1] = TString::Format("%d", ibin*100);
-      //}
-      //else {
-	     // axis_label_str[line_str-1] ="";
-      //}
+      }
+      else {
+	      axis_label_str[line_str-1] ="";
+      }
       if(ibin==nbins_ch[ich]){ axis_label_str[line_str-1] = "over"; }
     }
     
@@ -705,7 +705,7 @@ void plot_systematics()
   canv_h2_correlation_additional->SaveAs("canv_h2_correlation_additional.png");
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////// time
-
+/*
   roostr = "h2_covariance_time";
   TH2D *h2_covariance_time = new TH2D(roostr, "", rows, 0, rows, rows, 0, rows);
   for(int ibin=1; ibin<=rows; ibin++) {
@@ -783,7 +783,7 @@ void plot_systematics()
   }
 
   canv_h2_correlation_time->SaveAs("canv_h2_correlation_time.png");
-    
+    */
   /////////////////////////////////////////////////////////////////////////////////////////////////////// total
 
   roostr = "h2_covariance_total";
@@ -1001,8 +1001,8 @@ void plot_systematics()
   h1_total_relerr->SetLineColor(color_total);
   h1_total_relerr->SetLineWidth(4);
   
-  h1_time_relerr->Draw("same hist");
-  h1_time_relerr->SetLineColor(color_time);
+  //h1_time_relerr->Draw("same hist");
+  //h1_time_relerr->SetLineColor(color_time);
 
   h1_additional_relerr->Draw("same hist");
   h1_additional_relerr->SetLineColor(color_additional);
@@ -1044,7 +1044,7 @@ void plot_systematics()
   lg_relerr_total->AddEntry(h1_detector_relerr, "Detector", "l");
   lg_relerr_total->AddEntry(h1_mc_stat_relerr, "MC stat", "l");
   lg_relerr_total->AddEntry(h1_additional_relerr, "Dirt", "l");
-  lg_relerr_total->AddEntry(h1_time_relerr, "ns time", "l");
+  //lg_relerr_total->AddEntry(h1_time_relerr, "ns time", "l");
   lg_relerr_total->Draw();
   lg_relerr_total->SetTextSize(0.04);
     
@@ -1120,7 +1120,7 @@ void plot_systematics()
   h1_fraction_additional->SetLineColor(kBlack);
   h1_stack_fraction->Add(h1_fraction_additional);
 
-  TH1D *h1_fraction_time = new TH1D("h1_fraction_time", "", rows, 0, rows);
+  /*TH1D *h1_fraction_time = new TH1D("h1_fraction_time", "", rows, 0, rows);
   for(int ibin=1; ibin<=rows; ibin++) {
     h1_fraction_time->GetXaxis()->SetBinLabel(ibin, axis_label_str[ibin-1]);
     double val_time = h1_time_relerr->GetBinContent(ibin);
@@ -1131,7 +1131,7 @@ void plot_systematics()
   }
   h1_fraction_time->SetFillColor(color_time);
   h1_fraction_time->SetLineColor(kBlack);
-  h1_stack_fraction->Add(h1_fraction_time);
+  h1_stack_fraction->Add(h1_fraction_time);*/
 
   ///////////////////////////////
    
@@ -1177,7 +1177,7 @@ void plot_systematics()
   lg_fraction_total->AddEntry(h1_fraction_detector, "Detector", "f");
   lg_fraction_total->AddEntry(h1_fraction_mc_stat, "MC stat", "f");
   lg_fraction_total->AddEntry(h1_fraction_additional, "Dirt", "f");
-  lg_fraction_total->AddEntry(h1_fraction_time, "ns time", "f");
+  //lg_fraction_total->AddEntry(h1_fraction_time, "ns time", "f");
   lg_fraction_total->Draw();
   lg_fraction_total->SetTextSize(0.04);
       
