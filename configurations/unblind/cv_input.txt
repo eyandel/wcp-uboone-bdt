@@ -16,11 +16,16 @@
 6       pio_overlay 1         /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_ncpi0_run1_sp.root                   /exp/uboone/data/users/eyandel/hist_rootfiles/checkout_ncpi0_run1_sp.root                0                16        0        1
 6       pio_overlay 2         /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_ncpi0_run2_sp.root                   /exp/uboone/data/users/eyandel/hist_rootfiles/checkout_ncpi0_run2_sp.root                0                17        0        2
 6       pio_overlay 3         /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_ncpi0_run3_sp.root                   /exp/uboone/data/users/eyandel/hist_rootfiles/checkout_ncpi0_run3_sp.root                0                18        0        3
-10      sp_LEE      1         /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_LEE_1g0p_run1_half.root              /exp/uboone/data/users/eyandel/hist_rootfiles/checkout_LEE_1g0p_run1_half.root           1.27889e+21      19        0        1
-10      sp_LEE      2         /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_LEE_1g0p_run2.root                   /exp/uboone/data/users/eyandel/hist_rootfiles/checkout_LEE_1g0p_run2.root                3.96638e+22      20        0        2
-10      sp_LEE      3         /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_LEE_1g0p_run3.root                   /exp/uboone/data/users/eyandel/hist_rootfiles/checkout_LEE_1g0p_run3.root                2.59743e+22      21        0        3
+10      sp_LEE      1         /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_LEE_1g0p_run1_half.root              /exp/uboone/data/users/eyandel/hist_rootfiles/checkout_LEE_1g0p_run1_half.root           3.62921e+21      19        0        1
+10      sp_LEE      2         /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_LEE_1g0p_run2.root                   /exp/uboone/data/users/eyandel/hist_rootfiles/checkout_LEE_1g0p_run2.root                2.15562e+22      20        0        2
+10      sp_LEE      3         /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_LEE_1g0p_run3.root                   /exp/uboone/data/users/eyandel/hist_rootfiles/checkout_LEE_1g0p_run3.root                2.27242e+22      21        0        3
 -1      end         -1        end                                                                                                       end                                                                                      -1               -1        -1       -1
 #file	  #type			  #period		#filename											                                                                    #outfile_name									                                                       #ext_pot	       #file_no  #norm		#norm_period
+
+#LEE old POTs:
+#1.27889e+21
+#3.96638e+22
+#2.59743e+22
 
 3.10927e+19
 3       EXTBNB      2         /exp/uboone/data/users/eyandel/processed_checkout_rootfiles/checkout_extbnb_run2_sp.root                  /exp/uboone/data/users/eyandel/hist_rootfiles/checkout_extbnb_run2_sp.root               1                8         0        2
