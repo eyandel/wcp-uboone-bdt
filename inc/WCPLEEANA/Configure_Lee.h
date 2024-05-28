@@ -63,8 +63,8 @@ namespace config_Lee
   //ns timing error
   bool flag_syst_time = false;
 
-  //double Lee_strength_for_outputfile_covariance_matrix = 0;
-  double Lee_strength_for_outputfile_covariance_matrix = 1.0;
+  double Lee_strength_for_outputfile_covariance_matrix = 0;
+  //double Lee_strength_for_outputfile_covariance_matrix = 1.0;
   //double Lee_strength_for_outputfile_covariance_matrix = 0.2123;
   //double Lee_strength_for_outputfile_covariance_matrix = 0.1328;
 
@@ -75,8 +75,8 @@ namespace config_Lee
 
   ////////// goodness of fit
 
-  //double Lee_strength_for_GoF         = 0;
-  double Lee_strength_for_GoF         = 1.0;
+  double Lee_strength_for_GoF         = 0;
+  //double Lee_strength_for_GoF         = 1.0;
   //double Lee_strength_for_GoF         = 0.2123;
   //double Lee_strength_for_GoF         = 0.1328;
 
