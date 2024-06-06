@@ -1294,7 +1294,7 @@ int main( int argc, char** argv )
         hNCother->SetLineWidth(1);
 
         hstack[obschannel-1]->Add(hnumuCC1g);
-        legend[obschannel-1]->AddEntry(hnumuCC1g, Form("#nu_{#mu}CC 1#gamma #mu<100MeV, %.1f", hnumuCC1g->Integral()), "F");
+        legend[obschannel-1]->AddEntry(hnumuCC1g, Form("#nu_{#mu}CC 1#gamma, %.1f", hnumuCC1g->Integral()), "F");
         hnumuCC1g->SetFillStyle(1001);
         hnumuCC1g->SetFillColorAlpha(kPink-7, 0.5);
         hnumuCC1g->SetLineColor(kPink-7);
@@ -1469,7 +1469,7 @@ int main( int argc, char** argv )
         hmc->GetYaxis()->SetTitle("Event counts");
         hmc->GetYaxis()->SetTitleSize(0.05);
         hmc->GetYaxis()->SetTitleFont(132);
-        hmc->GetYaxis()->SetTitleOffset(0.73);
+        hmc->GetYaxis()->SetTitleOffset(0.77);
         hmc->GetYaxis()->SetLabelFont(132);
         hmc->GetYaxis()->SetLabelSize(0.04);
         //if(obschannel==9) hmc->GetXaxis()->SetRangeUser(0.5,1);
@@ -1701,9 +1701,9 @@ int main( int argc, char** argv )
 
         //hack end
 
-        gratio_mc[obschannel-1]->GetXaxis()->SetTitleSize(0.2);
+        gratio_mc[obschannel-1]->GetXaxis()->SetTitleSize(0.12);
         gratio_mc[obschannel-1]->GetXaxis()->SetLabelSize(0.1);
-        gratio_mc[obschannel-1]->GetYaxis()->SetTitleSize(0.2);
+        gratio_mc[obschannel-1]->GetYaxis()->SetTitleSize(0.12);
         gratio_mc[obschannel-1]->GetYaxis()->SetTitleOffset(0.35);
         gratio_mc[obschannel-1]->GetYaxis()->SetLabelSize(0.1);
         gratio_data[obschannel-1]->Draw("P same");
