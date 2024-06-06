@@ -924,7 +924,7 @@ int main( int argc, char** argv )
         canvas[obschannel-1] = new TCanvas(Form("canvas%d", obschannel), Form("channel%d", obschannel), 1200, 900);
         TPad *pad1 = new TPad("pad1", "", 0.01,0.3,0.99,0.99,0,0,0);
         TPad *pad2 = new TPad("pad2", "", 0.01,0.01,0.99,0.3,0,0,0);
-        //pad1->SetBottomMargin(0);
+        pad1->SetBottomMargin(0.001);
         pad1->SetLeftMargin(0.12);
         pad1->SetRightMargin(0.1);
         pad2->SetTopMargin(0.05);
