@@ -1744,12 +1744,12 @@ int main( int argc, char** argv )
         legend2[obschannel-1]->Draw();
         pad2->Modified();
 
-        canvas[obschannel-1]->Print((TString)hdata->GetTitle()+".png");
-        canvas[obschannel-1]->Print(Form("canvas%d.pdf", obschannel));
+        canvas[obschannel-1]->Print((TString)hdata->GetTitle()+"_paper.png");
+        canvas[obschannel-1]->Print(Form("canvas%d_paper.pdf", obschannel));
 
-        if(obschannel==1) canvas[obschannel-1]->Print("selection.pdf(");
-        else if(obschannel==nchannels) canvas[obschannel-1]->Print("selection.pdf)");
-        else canvas[obschannel-1]->Print("selection.pdf");
+        if(obschannel==1) canvas[obschannel-1]->Print("selection_paper.pdf(");
+        else if(obschannel==nchannels) canvas[obschannel-1]->Print("selection_paper.pdf)");
+        else canvas[obschannel-1]->Print("selection_paper.pdf");
 
     }
     theApp.Run();
