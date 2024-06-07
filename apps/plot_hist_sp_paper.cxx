@@ -940,10 +940,10 @@ int main( int argc, char** argv )
         hstack[obschannel-1] = new THStack(Form("hs%d", obschannel),"");
         legend[obschannel-1] = new TLegend(0.3, 0.55, 0.85, 0.92);
         if (flag_move == 1){
-            legend->SetX1NDC(0.15); // New x1 position
-            legend->SetX2NDC(0.65); // New x2 position
-            legend->SetY1NDC(0.7); // New y1 position
-            legend->SetY2NDC(0.92); // New y2 position
+            legend[obschannel-1]->SetX1NDC(0.15); // New x1 position
+            legend[obschannel-1]->SetX2NDC(0.65); // New x2 position
+            legend[obschannel-1]->SetY1NDC(0.7); // New y1 position
+            legend[obschannel-1]->SetY2NDC(0.92); // New y2 position
         }
         TH1F* hdata = (TH1F*)map_obsch_histos[obschannel].at(0)->Clone("hdata");
         TH1F* hbadmatch = (TH1F*)hdata->Clone("hbadmatch");
