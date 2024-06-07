@@ -79,6 +79,7 @@ int main( int argc, char** argv )
     }break;
     case 'm':{
       flag_move = atoi(&argv[i][2]);
+    }break;
     }
   }
 
