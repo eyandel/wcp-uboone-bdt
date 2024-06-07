@@ -35,7 +35,7 @@ int main( int argc, char** argv )
 {
 
   if (argc < 2){
-    std::cout << "./plot_hist -r[#run, 0 for all] -e[1 for standard, 2 for Bayesian, 3 for total uncertainty] -l[LEE strength, check against total uncertainty config] -s[path-to-external covmatrix file] -c[check MC and DATA spectra against the ones from external file]" << std::endl;
+    std::cout << "./plot_hist_sp_paper -r[#run, 0 for all] -e[1 for standard, 2 for Bayesian, 3 for total uncertainty] -l[LEE strength, check against total uncertainty config] -s[path-to-external covmatrix file] -c[check MC and DATA spectra against the ones from external file] -m[move legend]" << std::endl;
   }
 
   int run = 1; // run 1 ...
@@ -48,6 +48,7 @@ int main( int argc, char** argv )
   TString cov_inputfile = "";
   int flag_check = 0;
   int flag_truthlabel = 0;
+  int flag_move = 0;
 
   for (Int_t i=1;i!=argc;i++){
     switch(argv[i][1]){
@@ -76,6 +77,8 @@ int main( int argc, char** argv )
     case 't':{
       flag_truthlabel = atoi(&argv[i][2]);
     }break;
+    case 'm':{
+      flag_move = atoi(&argv[i][2]);
     }
   }
 
@@ -935,6 +938,12 @@ int main( int argc, char** argv )
         pad2->Draw();
         hstack[obschannel-1] = new THStack(Form("hs%d", obschannel),"");
         legend[obschannel-1] = new TLegend(0.3, 0.55, 0.85, 0.92);
+        if (flag_move == 1){
+            legend->SetX1NDC(0.15); // New x1 position
+            legend->SetX2NDC(0.65); // New x2 position
+            legend->SetY1NDC(0.7); // New y1 position
+            legend->SetY2NDC(0.92); // New y2 position
+        }
         TH1F* hdata = (TH1F*)map_obsch_histos[obschannel].at(0)->Clone("hdata");
         TH1F* hbadmatch = (TH1F*)hdata->Clone("hbadmatch");
         TH1F* hnumuCCinFV = (TH1F*)hdata->Clone("hnumuCCinFV");
@@ -1592,7 +1601,7 @@ int main( int argc, char** argv )
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Angle [degrees]");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Median dE/dx (0-4 cm) [MeV/cm]");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Median dE/dx (1-5 cm) [MeV/cm]");
-        //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Cosine Angle");
+        gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reconstructed Shower Cos#theta");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("#nu_{e} CC Background BDT Score");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Number of Tracks");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Number of Protons");
