@@ -1563,7 +1563,7 @@ int main( int argc, char** argv )
         double relerr_data = 1./TMath::Sqrt(hdata->Integral());
         double relerr_pred = TMath::Sqrt(sumtotalcov[obschannel])/hmc->Integral();
         double data_pred_ratio = hdata->Integral()/normalization/hmc->Integral();
-        legend[obschannel-1]->SetHeader(Form("#SigmaDATA/#Sigma(MC+EXT)=%.2f#pm%.2f(data err)#pm%.2f(pred err)", data_pred_ratio, relerr_data*data_pred_ratio, relerr_pred*data_pred_ratio), "C");
+        legend[obschannel-1]->SetHeader(Form("#SigmaDATA/#Sigma(Pred)=%.2f#pm%.2f(data err)#pm%.2f(pred err)", data_pred_ratio, relerr_data*data_pred_ratio, relerr_pred*data_pred_ratio), "C");
         legend[obschannel-1]->Draw();
         pad1->Modified();
         pad2->cd();
