@@ -1487,7 +1487,7 @@ int main( int argc, char** argv )
         float dataymax = hdata->GetBinContent(hdata->GetMaximumBin())*scalePOT/normalization;
         if(dataymax>mcymax) mcymax = dataymax;
         hmc->SetMaximum(2.0*mcymax);
-        hmc->GetYaxis()->SetRangeUser(-0.02*mcymax, 1.85*mcymax);
+        hmc->GetYaxis()->SetRangeUser(-0.02*mcymax, 1.9*mcymax);
         hmc->SetLineColor(kBlack);
         hmc->SetLineWidth(5);
 
