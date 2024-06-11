@@ -1707,7 +1707,7 @@ int main( int argc, char** argv )
 
         float excessymax = hdata->GetBinContent(hdata->GetMaximumBin())*scalePOT/normalization;
         hdata->SetMaximum(3.0*excessymax);
-        hdata->GetYaxis()->SetRangeUser(-0.02*excessymax, 5.0*excessymax);
+        hdata->GetYaxis()->SetRangeUser(-0.02*excessymax, 3.0*excessymax);
 
         hdata->SetLineColor(kWhite);
         hdata->Draw("hist");
@@ -1717,8 +1717,8 @@ int main( int argc, char** argv )
 
             double scalechi2 = hdata->Chi2Test(h1gscale,"CHI2");
             //legend[obschannel-1]->AddEntry(h1gscale, Form("Signal x %.2f, %.1f, #chi^{2} = %.2f", scale_amount, signal_amount, scalechi2), "F");
-            legend[obschannel-1]->AddEntry(h1gscale, Form("Signal x %.2f, #chi^{2} = %.2f", scale_amount - 1.0, scalechi2), "l");
-            h1gscale->Draw("hist same");
+            //legend[obschannel-1]->AddEntry(h1gscale, Form("Signal x %.2f, #chi^{2} = %.2f", scale_amount - 1.0, scalechi2), "l");
+            //h1gscale->Draw("hist same");
 
             double scalechi2_NCpi1g = hdata->Chi2Test(hNCpi1gscale,"CHI2");
             legend[obschannel-1]->AddEntry(hNCpi1gscale, Form("NC #pi^{0} 1#gamma x %.2f, #chi^{2} = %.2f", scale_amount_NCpi1g - 1.0, scalechi2_NCpi1g), "l");
