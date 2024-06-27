@@ -2718,15 +2718,28 @@ void TLee::Set_Spectra_MatrixCov()
     map_Lee_ch[6] = 1; 
   }
 
-  int other_constraints = 1;
+  int Np0p_constraints = 0;
 
-  if (other_constraints){
+  if (Np0p_constraints){
     map_Lee_ch[7] = 1;
     map_Lee_ch[8] = 1;
     map_Lee_ch[9] = 1; 
     map_Lee_ch[10] = 1; 
     map_Lee_ch[11] = 1;
     map_Lee_ch[12] = 1;
+  }
+
+  int other_constraints = 1;
+
+  if (other_constraints){
+    map_Lee_ch[9] = 1; 
+    map_Lee_ch[10] = 1; 
+    map_Lee_ch[11] = 1;
+    map_Lee_ch[12] = 1;
+    map_Lee_ch[13] = 1;
+    map_Lee_ch[14] = 1;
+    map_Lee_ch[15] = 1;
+    map_Lee_ch[16] = 1;
   }
 
   /*map_Lee_ch[2] = 1;
