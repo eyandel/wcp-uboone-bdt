@@ -1747,7 +1747,7 @@ int TLee::Exe_Goodness_of_fit(int num_Y, int num_X, TMatrixD matrix_pred, TMatri
   }
   if( index==1 || index==7 ) { lg_top_wi->SetX1(0.2); lg_top_wi->SetX2(0.4);}
   lg_top_wi->AddEntry(gh_data, "Data", "lep");
-  lg_top_wi->AddEntry(h1_pred_Y_wiConstraint, TString::Format("#color[%d]{Pred wi constraint}", color_wi), "lf");
+  lg_top_wi->AddEntry(h1_pred_Y_wiConstraint, TString::Format("#color[%d]{Pred with constraint}", color_wi), "lf");
   lg_top_wi->AddEntry("", TString::Format("#color[%d]{#chi^{2}/ndf: %3.2f/%d}", color_wi, val_chi2_wiConstraint, num_Y), "");
   lg_top_wi->AddEntry("", TString::Format("#color[%d]{p-value: %3.2f}", color_wi, TMath::Prob(val_chi2_wiConstraint, num_Y)), "");
   lg_top_wi->AddEntry("", TString::Format("#color[%d]{%3.2f#sigma}", color_wi, RooStats::PValueToSignificance(TMath::Prob(val_chi2_wiConstraint, num_Y) / 2.0)), "");
@@ -1935,7 +1935,7 @@ int TLee::Exe_Goodness_of_fit(int num_Y, int num_X, TMatrixD matrix_pred, TMatri
   lg_top_total->AddEntry(gh_data, "Data", "lep");
   lg_top_total->AddEntry(h1_pred_Y_noConstraint, TString::Format("#color[%d]{Pred no constraint}", color_no), "lf");
   lg_top_total->AddEntry("", TString::Format("#color[%d]{#chi^{2}/ndf: %3.2f/%d}", color_no, val_chi2_noConstraint, num_Y), "");
-  lg_top_total->AddEntry(h1_pred_Y_wiConstraint, TString::Format("#color[%d]{Pred wi constraint}", color_wi), "lf");
+  lg_top_total->AddEntry(h1_pred_Y_wiConstraint, TString::Format("#color[%d]{Pred with constraint}", color_wi), "lf");
   lg_top_total->AddEntry("", TString::Format("#color[%d]{#chi^{2}/ndf: %3.2f/%d}", color_wi, val_chi2_wiConstraint, num_Y), "");
   lg_top_total->Draw();
   lg_top_total->SetBorderSize(0); lg_top_total->SetFillStyle(0); lg_top_total->SetTextSize(0.065);
