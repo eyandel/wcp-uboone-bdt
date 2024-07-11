@@ -4728,6 +4728,14 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
               map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
               map_cuts_flag["SPNumuCCSig"])) return true;
             return false;
+  }else if (ch_name == "single_photon_spoverlay_otpc" || ch_name == "single_photon_spoverlay_otpc_lee"){
+            if (flag_singlephoton_sel &&
+              (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio==1)) return true;
+            return false;
   }else if (ch_name == "single_photon_eff_spoverlay"){
             if (flag_singlephoton_eff_sel &&
               (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
@@ -4803,6 +4811,18 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
               && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
               && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
               && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && (eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio==1)) return true;
+            return false;
+  }else if (ch_name == "single_photon_ncpi0overlay_otpc"){
+            if (flag_singlephoton_sel &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              //map_cuts_flag["SPNCPi0Sig"] || 
+              map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              //&& !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              //&& pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              //&& pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
               && (eval.match_completeness_energy>0.1*eval.truth_energyInside
                 && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio==1)) return true;
             return false;
