@@ -32,7 +32,6 @@ int main( int argc, char** argv )
 
   bool flag_data = true;
 
-
   TFile *file1 = new TFile(input_file);
 
   TTree *T_BDTvars = (TTree*)file1->Get("wcpselection/T_BDTvars");
@@ -43,6 +42,10 @@ int main( int argc, char** argv )
 
 
   if (T_eval->GetBranch("weight_cv")) flag_data =false;
+
+  if(flag_data)
+    std::cout << "Recognized input file as data! Filtering.." << std::endl;
+
 
   int run = 0;
   int runNo = 0;
@@ -595,6 +598,8 @@ int main( int argc, char** argv )
 
   T_eval->SetBranchStatus("*",1);
   T_pot->SetBranchStatus("*",1);
+
+  std::cout << "Filtering from Saved goodruns list for Runs 1-5" << std::endl;
 
   for (int i=0;i!=T_BDTvars->GetEntries();i++){
     T_BDTvars->GetEntry(i);
