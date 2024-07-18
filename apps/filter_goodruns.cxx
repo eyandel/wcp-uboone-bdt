@@ -45,6 +45,10 @@ int main( int argc, char** argv )
 
   if(flag_data)
     std::cout << "Recognized input file as data! Filtering.." << std::endl;
+  else{
+    std::cout << "Not a data file! Exiting..." << std::endl;
+    return 0;
+  }
 
 
   int run = 0;
@@ -599,7 +603,7 @@ int main( int argc, char** argv )
   T_eval->SetBranchStatus("*",1);
   T_pot->SetBranchStatus("*",1);
 
-  std::cout << "Filtering from Saved goodruns list for Runs 1-5" << std::endl;
+  std::cout << "Filtering from saved goodruns list for Runs 1-5" << std::endl;
 
   for (int i=0;i!=T_BDTvars->GetEntries();i++){
     T_BDTvars->GetEntry(i);
