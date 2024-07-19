@@ -429,7 +429,7 @@ int main(int argc, char** argv)
 
   //Erin
 
-  int make_constrained_sp_plot = 0;
+  int make_constrained_sp_plot = 1;
 
   if (make_constrained_sp_plot) {
 
@@ -502,7 +502,7 @@ int main(int argc, char** argv)
   }
 
   //test 0p/Np with other sideband
-  int make_constrained_sp_Np0p_other_plot = 1;
+  int make_constrained_sp_Np0p_other_plot = 0;
 
   if (make_constrained_sp_Np0p_other_plot) {
 
