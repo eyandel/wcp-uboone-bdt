@@ -23,7 +23,7 @@ using namespace std;
 int main( int argc, char** argv )
 {
   if (argc < 3) {
-    std::cout << "filter_goodruns #input_file #output_file" << std::endl;
+    std::cout << "filter_goodruns #input_file #output_file -n[flag_numi]" << std::endl;
     return -1;
   }
 
@@ -31,6 +31,15 @@ int main( int argc, char** argv )
   TString out_file = argv[2];
 
   bool flag_data = true;
+  int flag_numi = 0;
+
+  for (Int_t i=1;i!=argc;i++){
+    switch(argv[i][1]){
+      case 'n':
+        flag_numi = atoi(&argv[i][2]);
+        break;
+    }
+  }
 
   TFile *file1 = new TFile(input_file);
 
@@ -591,6 +600,18 @@ int main( int argc, char** argv )
 
   std::set<int> good_runlist_set(good_run_list_vec.begin(), good_run_list_vec.end());
 
+  std::vector<int> low_lifetime_runs{5262, 5263, 5264, 5265, 5266, 5267, 5269, 5270, 5271, 5272, 5273, 5274, 5275, 5277, 5278, 5279, 5280, 5281,
+5315, 5320, 5321, 5632, 5634, 5635, 5636, 5637, 5638, 5639, 5643, 5646, 5647, 5650, 5652, 5653, 5654, 5656, 5657, 5659, 5661, 5680, 5684, 5685, 5686,
+5691, 5693, 5694, 5695, 5697, 5698, 5699, 5702, 5703, 5704, 5705, 5706, 5707, 5708, 5709, 5710, 5712, 5713, 5715, 5718, 5719, 5720, 5721, 5722, 5723,
+5724, 5725, 5726, 5727, 5728, 5729, 5730, 5731, 5733, 5735, 5739, 5740, 5741, 5743, 5745, 5746, 5748, 5749, 5752, 5753, 5754, 5755, 5756, 5758, 5760,
+      5761, 5762, 5765, 5766, 5767, // run 1 low electron lifetime runs
+      14643, 14644, 14645, 14646, 14647, 14648, 14649, 14650, 14651, 14652, 14653, 14654, 14655, 14656, 14657, 14658, 14659, 14660, 14661, 14662, 14663, 14664, 14665, 14666, 14667, 14668, 14669, 14670, 14671, 14672, 14673, 14674, 14675, 14676, 14677, 14678, 14679, 14680, 14681, 14682, 14683, 14684, 14685, 14686, 14687, 14688, 14689, 14690, 14691, 14692, 14693, 14694, 14695, 14696, 14697, 14698, 14699, 14700, 14701, 14702, 14703, 14704, 14705, 14706, 14707, 14708, 14709, 14710, 14711, 14712, 14713, 14714, 14715, 14716, 14717, 14718, 14719, 14720, 14721, 14722, 14723, 14724, 14725, 14726, 14727, 14728, 14729, 14730, 14731, 14732, 14733, 14734, 14735, 14736, 16724, 16725, 16726, 16727, 16728, 16729, 16730, 16731, 16732, 16733, 16734, 16735, 16736, 16737, 16738, 16739, 16740, 16741, 16742, 16743, 16744, 16745, 16746, 16747, 16748, 16749, 16750, 16751, 16752, 16753, 16754, 16755, 16756, 16757, 16758, 16759, 16760, 16761, 16762, 16763, 16764, 16765, 16766, 16767, 16768, 16769, 16770, 16771, 16772, 16773, 16774, 16775, 16776, 16777, 16778, 16779, 16780, 16781, 16782, 16783 // run 3 low electron lifetime runs
+      };
+  std::set<int> low_lifetime_set(low_lifetime_runs.begin(), low_lifetime_runs.end());
+
+  std::vector<int> low_neutrino_count_numi_run2RHC{11858,11875,11876,11878,11879,11880,11881,11882,11884,11885,11886,11887,11888,11889,11891,11892,11893,11894,11895,11896,11897,11898,11900,11901,11904,11905,11906,11907,11909,11911,11912,11913,11914,11915,11917,11919,11920,11921,11922,11923,11924,11925,11926,11927,11928,11929,11930,11931,11933,11934,11935,11936,11937,11938,11939,11940,11943};
+  std::set<int> low_neutrino_count_numi_run2RHC_set(low_neutrino_count_numi_run2RHC.begin(), low_neutrino_count_numi_run2RHC.end());
+
   TFile *file2 = new TFile(out_file,"RECREATE");
   file2->mkdir("wcpselection");
   file2->cd("wcpselection");
@@ -613,6 +634,8 @@ int main( int argc, char** argv )
 
     if (flag_data){
       if (good_runlist_set.find(run) == good_runlist_set.end()) continue;
+      if (low_lifetime_set.find(run) != low_lifetime_set.end()) continue;
+      if (flag_numi && low_neutrino_count_numi_run2RHC_set.find(run) != low_neutrino_count_numi_run2RHC_set.end()) continue;
       // bad run in run 1 due to beam filter bnb
       // if (run <= 5367 && run >= 5320) continue;
       // ext bnb in run 1, high rate
@@ -638,7 +661,8 @@ int main( int argc, char** argv )
 
     if (flag_data){
       if (good_runlist_set.find(runNo) == good_runlist_set.end()) continue;
-
+      if (low_lifetime_set.find(runNo) != low_lifetime_set.end()) continue;
+      if (flag_numi && low_neutrino_count_numi_run2RHC_set.find(runNo) != low_neutrino_count_numi_run2RHC_set.end()) continue;
       //bad run in run 1 due to beam filter bnb
       //if (runNo <= 5367 && runNo >= 5320) continue;
       // ext bnb in run 1, high rate
