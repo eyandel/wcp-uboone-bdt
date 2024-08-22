@@ -909,8 +909,8 @@ int main( int argc, char** argv )
     gROOT->ProcessLine(".x DrawOption.cc");
     gStyle->SetLegendBorderSize(0);
     gStyle->SetLegendFillColor(0);
-    gStyle->SetLegendFont(132);
-    gStyle->SetLegendTextSize(0.05);
+    gStyle->SetLegendFont(22); //132);
+    gStyle->SetLegendTextSize(0.07);
 
     int nchannels = map_obsch_subhistos.size();
     TCanvas *canvas[nchannels];
@@ -1620,7 +1620,7 @@ int main( int argc, char** argv )
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("#nu_{e} CC Background BDT Score");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Number of Tracks");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Number of Protons");
-        //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("#nu_{e}CC BDT Score");
+        gratio_mc[obschannel-1]->GetXaxis()->SetTitle("#nu_{e}CC BDT Score");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Neutrino Energy [MeV]");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("NC#pi^{0} BDT Score");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco #pi^{0} Mass [MeV]");
@@ -1631,7 +1631,7 @@ int main( int argc, char** argv )
          //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Vertex X [cm]");
          //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Vertex Y [cm]");
          //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Vertex Z [cm]");
-         gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reconstructed Shower Backwards Projected Distance (cm)");
+         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reconstructed Shower Backwards Projected Distance (cm)");
          //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Forwards Projected Distance [cm]");
          //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Minumum Distance to Wall [cm]");
          //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Minimum Projected Distance [cm]");
@@ -1763,7 +1763,7 @@ int main( int argc, char** argv )
         //if(flag_err==3) legend2[obschannel-1]->AddEntry(gratio_mc2[obschannel-1],"Pred stat+xsec+flux uncertainty", "F");
         //legend2[obschannel-1]->AddEntry(gratio_data[obschannel-1],"Data with stat. uncertainty", "lp");
         //legend2[obschannel-1]->AddEntry(gratio_data2[obschannel-1],"Data with stat. uncertainty (normalized)", "lp");
-        legend2[obschannel-1]->SetTextSize(0.08);
+        legend2[obschannel-1]->SetTextSize(0.1);//0.08);
         legend2[obschannel-1]->SetFillStyle(0);
         legend2[obschannel-1]->Draw();
         pad2->Modified();
