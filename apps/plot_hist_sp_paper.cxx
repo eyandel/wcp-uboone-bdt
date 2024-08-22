@@ -910,7 +910,9 @@ int main( int argc, char** argv )
     gStyle->SetLegendBorderSize(0);
     gStyle->SetLegendFillColor(0);
     gStyle->SetLegendFont(22); //132);
-    gStyle->SetLegendTextSize(0.07);
+    gStyle->SetLegendTextSize(0.06);
+    gStyle->SetLabelFont(22); //132);
+    gStyle->SetLabelSize(0.05);
 
     int nchannels = map_obsch_subhistos.size();
     TCanvas *canvas[nchannels];
