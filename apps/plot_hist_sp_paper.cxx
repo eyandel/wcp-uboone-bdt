@@ -910,7 +910,7 @@ int main( int argc, char** argv )
     gStyle->SetLegendBorderSize(0);
     gStyle->SetLegendFillColor(0);
     gStyle->SetLegendFont(22); //132);
-    gStyle->SetLegendTextSize(0.06);
+    gStyle->SetLegendTextSize(0.055);
     gStyle->SetLabelFont(22); //132);
     gStyle->SetLabelSize(0.05);
 
@@ -933,7 +933,7 @@ int main( int argc, char** argv )
         pad1->SetBottomMargin(0.001);
         pad1->SetLeftMargin(0.12);
         pad1->SetRightMargin(0.1);
-        pad2->SetTopMargin(0.05);
+        pad2->SetTopMargin(0.047);
         pad2->SetLeftMargin(0.12);
         pad2->SetRightMargin(0.1);
         pad2->SetBottomMargin(0.25);
@@ -942,10 +942,10 @@ int main( int argc, char** argv )
         hstack[obschannel-1] = new THStack(Form("hs%d", obschannel),"");
         legend[obschannel-1] = new TLegend(0.3, 0.5, 0.85, 0.92);
         if (flag_move == 1){
-            legend[obschannel-1]->SetX1(0.15); // New x1 position
-            legend[obschannel-1]->SetX2(0.7); // New x2 position
+            legend[obschannel-1]->SetX1(0.17); // New x1 position
+            legend[obschannel-1]->SetX2(0.77); // New x2 position
             //legend[obschannel-1]->SetY1(0.7); // New y1 position
-            //legend[obschannel-1]->SetY2(0.92); // New y2 position
+            legend[obschannel-1]->SetY2(0.95); // New y2 position
         }
         TH1F* hdata = (TH1F*)map_obsch_histos[obschannel].at(0)->Clone("hdata");
         TH1F* hbadmatch = (TH1F*)hdata->Clone("hbadmatch");
