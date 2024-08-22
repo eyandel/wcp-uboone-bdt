@@ -1602,7 +1602,7 @@ int main( int argc, char** argv )
         gratio_mc[obschannel-1]->GetXaxis()->SetRangeUser(hmc->GetXaxis()->GetXmin(),hmc->GetXaxis()->GetXmax());
         gratio_mc[obschannel-1]->GetYaxis()->SetNdivisions(405);//210);
         //if(obschannel==5 || obschannel==6) gratio_mc[obschannel-1]->GetXaxis()->SetRangeUser(0,1200);
-        gratio_mc[obschannel-1]->GetYaxis()->SetTitle("Data/Pred");
+        gratio_mc[obschannel-1]->GetYaxis()->SetTitle("Data/Prediction");
         gratio_mc[obschannel-1]->GetYaxis()->SetTitleOffset(1.0);
         if(flag_err==3){
         //gratio_mc2[obschannel-1]->Draw("2 same");
@@ -1739,7 +1739,7 @@ int main( int argc, char** argv )
         //gratio_data[obschannel-1]->GetYaxis()->SetNdivisions(-210);
         //gratio_mc[obschannel-1]->GetYaxis()->SetTitleSize(0.12);
         gratio_mc[obschannel-1]->GetYaxis()->SetTitleOffset(0.35);
-        gratio_mc[obschannel-1]->GetYaxis()->SetLabelSize(0.1);
+        gratio_mc[obschannel-1]->GetYaxis()->SetLabelSize(0.07);//0.1);
         gratio_data[obschannel-1]->Draw("P same");
         gratio_data[obschannel-1]->SetLineWidth(2);
         gratio_data[obschannel-1]->SetMarkerStyle(20);
