@@ -947,6 +947,8 @@ int main( int argc, char** argv )
             //legend[obschannel-1]->SetY1(0.7); // New y1 position
             legend[obschannel-1]->SetY2(0.94); // New y2 position
         }
+        legend[obschannel-1]->SetFillStyle(0);
+
         TH1F* hdata = (TH1F*)map_obsch_histos[obschannel].at(0)->Clone("hdata");
         TH1F* hbadmatch = (TH1F*)hdata->Clone("hbadmatch");
         TH1F* hnumuCCinFV = (TH1F*)hdata->Clone("hnumuCCinFV");
