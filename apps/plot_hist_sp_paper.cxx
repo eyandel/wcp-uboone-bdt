@@ -1739,7 +1739,7 @@ int main( int argc, char** argv )
         //gratio_data[obschannel-1]->GetYaxis()->SetNdivisions(-210);
         //gratio_mc[obschannel-1]->GetYaxis()->SetTitleSize(0.12);
         gratio_mc[obschannel-1]->GetYaxis()->SetTitleOffset(0.35);
-        gratio_mc[obschannel-1]->GetYaxis()->SetLabelSize(0.07);//0.1);
+        gratio_mc[obschannel-1]->GetYaxis()->SetLabelSize(0.2);//0.1);
         gratio_data[obschannel-1]->Draw("P same");
         gratio_data[obschannel-1]->SetLineWidth(2);
         gratio_data[obschannel-1]->SetMarkerStyle(20);
