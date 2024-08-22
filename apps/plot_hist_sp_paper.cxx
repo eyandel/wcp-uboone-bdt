@@ -1495,7 +1495,7 @@ int main( int argc, char** argv )
         hmc->SetTitle("");
         hmc->Draw("hist");
         hmc->GetYaxis()->SetTitle("Event counts");
-        hmc->GetYaxis()->SetTitleSize(0.05);
+        hmc->GetYaxis()->SetTitleSize(0.07);
         hmc->GetYaxis()->SetTitleFont(22);//132);
         hmc->GetYaxis()->SetTitleOffset(0.77);
         hmc->GetYaxis()->SetLabelFont(22);//132);
@@ -1739,8 +1739,8 @@ int main( int argc, char** argv )
         //gratio_data[obschannel-1]->GetYaxis()->SetNdivisions(-210);
         //gratio_mc[obschannel-1]->GetYaxis()->SetTitleSize(0.12);
         gratio_mc[obschannel-1]->GetYaxis()->SetTitleOffset(0.35);
-        gratio_mc[obschannel-1]->GetYaxis()->SetLabelSize(0.15);//0.1);
-        gratio_mc[obschannel-1]->GetYaxis()->SetTitleSize(0.15);
+        gratio_mc[obschannel-1]->GetYaxis()->SetLabelSize(0.1);//0.1);
+        gratio_mc[obschannel-1]->GetYaxis()->SetTitleSize(0.12);
         gratio_data[obschannel-1]->Draw("P same");
         gratio_data[obschannel-1]->SetLineWidth(2);
         gratio_data[obschannel-1]->SetMarkerStyle(20);
