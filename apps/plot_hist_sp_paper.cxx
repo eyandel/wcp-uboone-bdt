@@ -1600,7 +1600,7 @@ int main( int argc, char** argv )
         //gratio_mc[obschannel-1]->SetFillColor(kRed-10);
         gratio_mc[obschannel-1]->GetYaxis()->SetRangeUser(0,int(1.5*maxratio)<2?int(1.5*maxratio):2);
         gratio_mc[obschannel-1]->GetXaxis()->SetRangeUser(hmc->GetXaxis()->GetXmin(),hmc->GetXaxis()->GetXmax());
-        gratio_mc[obschannel-1]->GetYaxis()->SetNdivisions(210);
+        gratio_mc[obschannel-1]->GetYaxis()->SetNdivisions(405);//210);
         //if(obschannel==5 || obschannel==6) gratio_mc[obschannel-1]->GetXaxis()->SetRangeUser(0,1200);
         gratio_mc[obschannel-1]->GetYaxis()->SetTitle("Data/Pred");
         gratio_mc[obschannel-1]->GetYaxis()->SetTitleOffset(1.0);
@@ -1733,9 +1733,11 @@ int main( int argc, char** argv )
         gratio_mc[obschannel-1]->GetXaxis()->SetLabelSize(0.1);
         gratio_mc[obschannel-1]->GetXaxis()->SetTitleFont(22);//132);
         gratio_mc[obschannel-1]->GetXaxis()->SetLabelFont(22);//132);
-        gratio_mc[obschannel-1]->GetYaxis()->SetNdivisions(-210);
-        gratio_data[obschannel-1]->GetYaxis()->SetNdivisions(-210);
-        gratio_mc[obschannel-1]->GetYaxis()->SetTitleSize(0.12);
+        gratio_mc[obschannel-1]->GetYaxis()->SetTitleFont(22);//132);
+        gratio_mc[obschannel-1]->GetYaxis()->SetLabelFont(22);//132);
+        //gratio_mc[obschannel-1]->GetYaxis()->SetNdivisions(-210);
+        //gratio_data[obschannel-1]->GetYaxis()->SetNdivisions(-210);
+        //gratio_mc[obschannel-1]->GetYaxis()->SetTitleSize(0.12);
         gratio_mc[obschannel-1]->GetYaxis()->SetTitleOffset(0.35);
         gratio_mc[obschannel-1]->GetYaxis()->SetLabelSize(0.1);
         gratio_data[obschannel-1]->Draw("P same");
