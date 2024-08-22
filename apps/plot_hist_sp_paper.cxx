@@ -930,7 +930,7 @@ int main( int argc, char** argv )
         canvas[obschannel-1] = new TCanvas(Form("canvas%d", obschannel), Form("channel%d", obschannel), 1200, 900);
         TPad *pad1 = new TPad("pad1", "", 0.01,0.3,0.99,0.99,0,0,0);
         TPad *pad2 = new TPad("pad2", "", 0.01,0.01,0.99,0.3,0,0,0);
-        pad1->SetBottomMargin(0.001);
+        pad1->SetBottomMargin(0.003);
         pad1->SetLeftMargin(0.12);
         pad1->SetRightMargin(0.1);
         pad2->SetTopMargin(0.047);
@@ -943,9 +943,9 @@ int main( int argc, char** argv )
         legend[obschannel-1] = new TLegend(0.3, 0.5, 0.85, 0.92);
         if (flag_move == 1){
             legend[obschannel-1]->SetX1(0.17); // New x1 position
-            legend[obschannel-1]->SetX2(0.77); // New x2 position
+            legend[obschannel-1]->SetX2(0.72); // New x2 position
             //legend[obschannel-1]->SetY1(0.7); // New y1 position
-            legend[obschannel-1]->SetY2(0.95); // New y2 position
+            legend[obschannel-1]->SetY2(0.94); // New y2 position
         }
         TH1F* hdata = (TH1F*)map_obsch_histos[obschannel].at(0)->Clone("hdata");
         TH1F* hbadmatch = (TH1F*)hdata->Clone("hbadmatch");
@@ -1503,7 +1503,7 @@ int main( int argc, char** argv )
         float dataymax = hdata->GetBinContent(hdata->GetMaximumBin())*scalePOT/normalization;
         if(dataymax>mcymax) mcymax = dataymax;
         hmc->SetMaximum(2.0*mcymax);
-        hmc->GetYaxis()->SetRangeUser(-0.02*mcymax, 1.9*mcymax);
+        hmc->GetYaxis()->SetRangeUser(-0.02*mcymax, 2.0*mcymax);
         hmc->SetLineColor(kBlack);
         hmc->SetLineWidth(5);
 
