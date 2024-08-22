@@ -930,7 +930,7 @@ int main( int argc, char** argv )
         canvas[obschannel-1] = new TCanvas(Form("canvas%d", obschannel), Form("channel%d", obschannel), 1200, 900);
         TPad *pad1 = new TPad("pad1", "", 0.01,0.3,0.99,0.99,0,0,0);
         TPad *pad2 = new TPad("pad2", "", 0.01,0.01,0.99,0.3,0,0,0);
-        pad1->SetBottomMargin(0.003);
+        pad1->SetBottomMargin(0.01);
         pad1->SetLeftMargin(0.12);
         pad1->SetRightMargin(0.1);
         pad2->SetTopMargin(0.047);
@@ -1494,10 +1494,10 @@ int main( int argc, char** argv )
         hmc->Draw("hist");
         hmc->GetYaxis()->SetTitle("Event counts");
         hmc->GetYaxis()->SetTitleSize(0.05);
-        hmc->GetYaxis()->SetTitleFont(132);
+        hmc->GetYaxis()->SetTitleFont(22);//132);
         hmc->GetYaxis()->SetTitleOffset(0.77);
-        hmc->GetYaxis()->SetLabelFont(132);
-        hmc->GetYaxis()->SetLabelSize(0.04);
+        //hmc->GetYaxis()->SetLabelFont(132);
+        //hmc->GetYaxis()->SetLabelSize(0.04);
         //if(obschannel==9) hmc->GetXaxis()->SetRangeUser(0.5,1);
         float mcymax = hmc->GetBinContent(hmc->GetMaximumBin())*scalePOT;
         float dataymax = hdata->GetBinContent(hdata->GetMaximumBin())*scalePOT/normalization;
