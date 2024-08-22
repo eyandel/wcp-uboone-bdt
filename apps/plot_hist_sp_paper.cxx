@@ -1733,6 +1733,7 @@ int main( int argc, char** argv )
         gratio_mc[obschannel-1]->GetXaxis()->SetLabelSize(0.1);
         gratio_mc[obschannel-1]->GetXaxis()->SetTitleFont(22);//132);
         gratio_mc[obschannel-1]->GetXaxis()->SetLabelFont(22);//132);
+        gratio_mc[obschannel-1]->GetYaxis()->SetNdivisions(-210);
 
         gratio_mc[obschannel-1]->GetYaxis()->SetTitleSize(0.12);
         gratio_mc[obschannel-1]->GetYaxis()->SetTitleOffset(0.35);
