@@ -1729,7 +1729,7 @@ int main( int argc, char** argv )
 
         //hack end
 
-        gratio_mc[obschannel-1]->GetXaxis()->SetTitleSize(0.13);
+        gratio_mc[obschannel-1]->GetXaxis()->SetTitleSize(0.12);
         gratio_mc[obschannel-1]->GetXaxis()->SetLabelSize(0.12);
         gratio_mc[obschannel-1]->GetXaxis()->SetTitleFont(22);//132);
         gratio_mc[obschannel-1]->GetXaxis()->SetLabelFont(22);//132);
