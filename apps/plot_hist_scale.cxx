@@ -365,6 +365,7 @@ int main( int argc, char** argv )
     TApplication theApp("theApp",&argc,argv);
     theApp.SetReturnFromRun(true);
     gStyle->SetOptStat(0);
+    gStyle->SetOptTitle(0);
 
     if(flag_breakdown == 0){
     gROOT->ProcessLine(".x DrawOption.cc");
@@ -919,6 +920,7 @@ int main( int argc, char** argv )
     gStyle->SetLabelFont(22); //132);
     gStyle->SetLabelSize(0.06);
     gStyle->SetPalette(kCubehelix);
+    
 
     auto colors = TColor::GetPalette();
 
@@ -1868,7 +1870,7 @@ int main( int argc, char** argv )
 
         hdata->GetYaxis()->SetTitle("Excess Events");
 
-        hdata->SetTitle("");
+        //hdata->SetTitle("");
 
         hdata->GetXaxis()->SetTitleSize(0.055);
         hdata->GetXaxis()->SetLabelSize(0.055);
