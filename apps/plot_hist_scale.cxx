@@ -1234,7 +1234,7 @@ int main( int argc, char** argv )
             }
         }
         pad1->cd();
-        //gStyle->SetOptTitle(kFALSE);
+        gStyle->SetOptTitle(kFALSE);
         float datapot = 0;
         float datapot_numi = 0;
         if(run == 0){
