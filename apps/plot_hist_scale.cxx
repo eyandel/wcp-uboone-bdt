@@ -952,6 +952,7 @@ int main( int argc, char** argv )
     for(auto it = map_obsch_subhistos.begin(); it!= map_obsch_subhistos.end(); it++){
         int obschannel = it->first;
         std::cout<<"Channel: "<<obschannel<<std::endl;
+        if (obschannel != 1) continue;
         canvas[obschannel-1] = new TCanvas(Form("canvas%d", obschannel), Form("channel%d", obschannel), 1200, 900);
         TPad *pad1 = new TPad("pad1", "", 0.01,0.01,0.99,0.99,0,0,0);
         TPad *pad2 = new TPad("pad2", "", 0.01,0.01,0.99,0.3,0,0,0);
@@ -1864,8 +1865,8 @@ int main( int argc, char** argv )
 
         hdata->GetYaxis()->SetTitle("Excess Events");
 
-        hdata->GetXaxis()->SetTitleSize(0.12);
-        hdata->GetXaxis()->SetLabelSize(0.12);
+        hdata->GetXaxis()->SetTitleSize(0.06);
+        hdata->GetXaxis()->SetLabelSize(0.06);
         hdata->GetXaxis()->SetTitleFont(22);//132);
         hdata->GetXaxis()->SetLabelFont(22);//132);
 
