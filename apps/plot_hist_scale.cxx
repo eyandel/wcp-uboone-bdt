@@ -918,6 +918,7 @@ int main( int argc, char** argv )
     gStyle->SetLegendTextSize(0.035);
     gStyle->SetLabelFont(22); //132);
     gStyle->SetLabelSize(0.06);
+    gStyle->SetPalette(kViridis);
 
     int nchannels = map_obsch_subhistos.size();
     TCanvas *canvas[nchannels];
@@ -1385,10 +1386,10 @@ int main( int argc, char** argv )
             }*/
             //legend[obschannel-1]->AddEntry(h1gscale, Form("Signal x %.1f, %.1f", scale_amount, signal_amount), "F");
             h1gscale->SetFillStyle(0);
-            h1gscale->SetFillColorAlpha(kMagenta, 0.5);
-            h1gscale->SetLineColor(kRed);
+            //h1gscale->SetFillColorAlpha(kMagenta, 0.5);
+            //h1gscale->SetLineColor(kRed);
             h1gscale->SetLineStyle(2);
-            h1gscale->SetLineWidth(3);
+            h1gscale->SetLineWidth(4);
 
             hNCpi1gscale->Scale(abs(scale_amount_NCpi1g - 1.0));
             signal_amount_NCpi1g = hNCpi1gscale->Integral();
@@ -1400,10 +1401,10 @@ int main( int argc, char** argv )
             hNCpi1gscale->Add(hnumuCC1g);
             hNCpi1gscale->Add(hout1g);*/
             hNCpi1gscale->SetFillStyle(0);
-            hNCpi1gscale->SetFillColorAlpha(kPink+5, 0.5);
-            hNCpi1gscale->SetLineColor(kOrange);
+            //hNCpi1gscale->SetFillColorAlpha(kPink+5, 0.5);
+            //hNCpi1gscale->SetLineColor(kOrange);
             hNCpi1gscale->SetLineStyle(4);
-            hNCpi1gscale->SetLineWidth(3);
+            hNCpi1gscale->SetLineWidth(4);
 
             hNCdelscale->Scale(abs(scale_amount_NCdel - 1.0));
             signal_amount_NCdel = hNCdelscale->Integral();
@@ -1415,10 +1416,10 @@ int main( int argc, char** argv )
             hNCdelscale->Add(hnumuCC1g);
             hNCdelscale->Add(hout1g); */
             hNCdelscale->SetFillStyle(0);
-            hNCdelscale->SetFillColorAlpha(kPink-6, 0.5);
-            hNCdelscale->SetLineColor(kYellow+1);
+            //hNCdelscale->SetFillColorAlpha(kPink-6, 0.5);
+            //hNCdelscale->SetLineColor(kYellow+1);
             hNCdelscale->SetLineStyle(6);
-            hNCdelscale->SetLineWidth(3);
+            hNCdelscale->SetLineWidth(4);
 
             hNCotherscale->Scale(abs(scale_amount_NCother - 1.0));
             signal_amount_NCother = hNCotherscale->Integral();
@@ -1430,10 +1431,10 @@ int main( int argc, char** argv )
             hNCotherscale->Add(hnumuCC1g);
             hNCotherscale->Add(hout1g);*/
             hNCotherscale->SetFillStyle(0);
-            hNCotherscale->SetFillColorAlpha(kPink-8, 0.5);
-            hNCotherscale->SetLineColor(kGreen);
+            //hNCotherscale->SetFillColorAlpha(kPink-8, 0.5);
+            //hNCotherscale->SetLineColor(kGreen);
             hNCotherscale->SetLineStyle(8);
-            hNCotherscale->SetLineWidth(3);
+            hNCotherscale->SetLineWidth(4);
 
             hnumuCC1gscale->Scale(abs(scale_amount_numuCC1g - 1.0));
             signal_amount_numuCC1g = hnumuCC1gscale->Integral();
@@ -1445,10 +1446,10 @@ int main( int argc, char** argv )
             hnumuCC1gscale->Add(hNCother);
             hnumuCC1gscale->Add(hout1g);*/
             hnumuCC1gscale->SetFillStyle(0);
-            hnumuCC1gscale->SetFillColorAlpha(kPink-7, 0.5);
-            hnumuCC1gscale->SetLineColor(kBlue);
+            //hnumuCC1gscale->SetFillColorAlpha(kPink-7, 0.5);
+            //hnumuCC1gscale->SetLineColor(kBlue);
             hnumuCC1gscale->SetLineStyle(9);
-            hnumuCC1gscale->SetLineWidth(3);
+            hnumuCC1gscale->SetLineWidth(4);
 
             hout1gscale->Scale(abs(scale_amount_out1g - 1.0));
             signal_amount_out1g = hout1gscale->Integral();
@@ -1460,10 +1461,10 @@ int main( int argc, char** argv )
             hout1gscale->Add(hNCother);
             hout1gscale->Add(hnumuCC1g);*/
             hout1gscale->SetFillStyle(0);
-            hout1gscale->SetFillColorAlpha(kPink, 0.5);
-            hout1gscale->SetLineColor(kViolet);
+            //hout1gscale->SetFillColorAlpha(kPink, 0.5);
+            //hout1gscale->SetLineColor(kViolet);
             hout1gscale->SetLineStyle(10);
-            hout1gscale->SetLineWidth(3);
+            hout1gscale->SetLineWidth(4);
 
             //EXT scale
             hextscale->Scale(abs(scale_amount_ext - 1.0));
@@ -1471,14 +1472,14 @@ int main( int argc, char** argv )
             hextscale->SetFillStyle(0);
             hextscale->SetLineColor(kGray+2);
             hextscale->SetLineStyle(1);
-            hextscale->SetLineWidth(3);
+            hextscale->SetLineWidth(4);
 
             if (flag_leeexist){
               hLEEscale->Scale(abs(scale_amount_LEE));
               signal_amount_LEE = hLEEscale->Integral();
               hLEEscale->SetFillStyle(0);
-              hLEEscale->SetFillColorAlpha(kMagenta, 0.5);
-              hLEEscale->SetLineColor(kMagenta);
+              //hLEEscale->SetFillColorAlpha(kMagenta, 0.5);
+              //hLEEscale->SetLineColor(kMagenta);
               hLEEscale->SetLineStyle(1);
               hLEEscale->SetLineWidth(4);
             }
