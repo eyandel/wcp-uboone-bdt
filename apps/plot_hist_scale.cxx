@@ -1390,8 +1390,8 @@ int main( int argc, char** argv )
             h1gscale->SetFillStyle(0);
             //h1gscale->SetFillColorAlpha(kMagenta, 0.5);
             h1gscale->SetLineColor(colors.At(0));
-            h1gscale->SetLineStyle(1);//2);
-            h1gscale->SetLineWidth(7);
+            h1gscale->SetLineStyle(4);//2);
+            h1gscale->SetLineWidth(8);
 
             hNCpi1gscale->Scale(abs(scale_amount_NCpi1g - 1.0));
             signal_amount_NCpi1g = hNCpi1gscale->Integral();
@@ -1405,8 +1405,8 @@ int main( int argc, char** argv )
             hNCpi1gscale->SetFillStyle(0);
             //hNCpi1gscale->SetFillColorAlpha(kPink+5, 0.5);
             hNCpi1gscale->SetLineColor(colors.At(42));
-            hNCpi1gscale->SetLineStyle(4);
-            hNCpi1gscale->SetLineWidth(7);
+            hNCpi1gscale->SetLineStyle(1);//4);
+            hNCpi1gscale->SetLineWidth(8);
 
             hNCdelscale->Scale(abs(scale_amount_NCdel - 1.0));
             signal_amount_NCdel = hNCdelscale->Integral();
@@ -1421,7 +1421,7 @@ int main( int argc, char** argv )
             //hNCdelscale->SetFillColorAlpha(kPink-6, 0.5);
             hNCdelscale->SetLineColor(colors.At(84));
             hNCdelscale->SetLineStyle(6);
-            hNCdelscale->SetLineWidth(7);
+            hNCdelscale->SetLineWidth(8);
 
             hNCotherscale->Scale(abs(scale_amount_NCother - 1.0));
             signal_amount_NCother = hNCotherscale->Integral();
@@ -1436,7 +1436,7 @@ int main( int argc, char** argv )
             //hNCotherscale->SetFillColorAlpha(kPink-8, 0.5);
             hNCotherscale->SetLineColor(colors.At(126));
             hNCotherscale->SetLineStyle(8);
-            hNCotherscale->SetLineWidth(7);
+            hNCotherscale->SetLineWidth(8);
 
             hnumuCC1gscale->Scale(abs(scale_amount_numuCC1g - 1.0));
             signal_amount_numuCC1g = hnumuCC1gscale->Integral();
@@ -1451,7 +1451,7 @@ int main( int argc, char** argv )
             //hnumuCC1gscale->SetFillColorAlpha(kPink-7, 0.5);
             hnumuCC1gscale->SetLineColor(colors.At(168));
             hnumuCC1gscale->SetLineStyle(9);
-            hnumuCC1gscale->SetLineWidth(7);
+            hnumuCC1gscale->SetLineWidth(8);
 
             hout1gscale->Scale(abs(scale_amount_out1g - 1.0));
             signal_amount_out1g = hout1gscale->Integral();
@@ -1466,7 +1466,7 @@ int main( int argc, char** argv )
             //hout1gscale->SetFillColorAlpha(kPink, 0.5);
             hout1gscale->SetLineColor(colors.At(210));
             hout1gscale->SetLineStyle(10);
-            hout1gscale->SetLineWidth(7);
+            hout1gscale->SetLineWidth(8);
 
             //EXT scale
             /*hextscale->Scale(abs(scale_amount_ext - 1.0));
@@ -1483,7 +1483,7 @@ int main( int argc, char** argv )
               //hLEEscale->SetFillColorAlpha(kMagenta, 0.5);
               hLEEscale->SetLineColor(kViolet);//colors.At(252));
               hLEEscale->SetLineStyle(2);//1);
-              hLEEscale->SetLineWidth(7);
+              hLEEscale->SetLineWidth(8);
             }
         //}
 
