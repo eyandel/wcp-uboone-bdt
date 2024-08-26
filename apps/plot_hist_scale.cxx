@@ -915,9 +915,9 @@ int main( int argc, char** argv )
     gStyle->SetLegendBorderSize(0);
     gStyle->SetLegendFillColor(0);
     gStyle->SetLegendFont(22); //132);
-    gStyle->SetLegendTextSize(0.055);
+    gStyle->SetLegendTextSize(0.06);
     gStyle->SetLabelFont(22); //132);
-    gStyle->SetLabelSize(0.05);
+    gStyle->SetLabelSize(0.06);
 
     int nchannels = map_obsch_subhistos.size();
     TCanvas *canvas[nchannels];
@@ -1721,7 +1721,7 @@ int main( int argc, char** argv )
         hdata->Draw("hist");
 
         //if (obschannel==1){
-            legend[obschannel-1]->SetTextSize(0.03);
+            //legend[obschannel-1]->SetTextSize(0.03);
 
             double scalechi2 = hdata->Chi2Test(h1gscale,"CHI2");
             //legend[obschannel-1]->AddEntry(h1gscale, Form("Signal x %.2f, %.1f, #chi^{2} = %.2f", scale_amount, signal_amount, scalechi2), "F");
@@ -1865,8 +1865,8 @@ int main( int argc, char** argv )
 
         hdata->GetYaxis()->SetTitle("Excess Events");
 
-        hdata->GetXaxis()->SetTitleSize(0.06);
-        hdata->GetXaxis()->SetLabelSize(0.06);
+        //hdata->GetXaxis()->SetTitleSize(0.06);
+        //hdata->GetXaxis()->SetLabelSize(0.06);
         hdata->GetXaxis()->SetTitleFont(22);//132);
         hdata->GetXaxis()->SetLabelFont(22);//132);
 
@@ -2019,9 +2019,12 @@ int main( int argc, char** argv )
         canvas[obschannel-1]->Print((TString)hdata->GetTitle()+"_scale.png");
         canvas[obschannel-1]->Print(Form("scale_canvas%d.pdf", obschannel));
 
-        if(obschannel==1) canvas[obschannel-1]->Print("scale_selection.pdf(");
+       /* if(obschannel==1) canvas[obschannel-1]->Print("scale_selection.pdf(");
         else if(obschannel==nchannels) canvas[obschannel-1]->Print("scale_selection.pdf)");
-        else canvas[obschannel-1]->Print("scale_selection.pdf");
+        else canvas[obschannel-1]->Print("scale_selection.pdf");*/
+
+        canvas[obschannel-1]->Print("scale_selection.pdf");
+
 
     }
     theApp.Run();
