@@ -918,7 +918,7 @@ int main( int argc, char** argv )
     gStyle->SetLegendTextSize(0.035);
     gStyle->SetLabelFont(22); //132);
     gStyle->SetLabelSize(0.06);
-    gStyle->SetPalette(kCandy);
+    gStyle->SetPalette(kCubehelix);
 
     auto colors = TColor::GetPalette();
 
