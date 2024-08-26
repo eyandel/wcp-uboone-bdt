@@ -915,7 +915,7 @@ int main( int argc, char** argv )
     gStyle->SetLegendBorderSize(0);
     gStyle->SetLegendFillColor(0);
     gStyle->SetLegendFont(22); //132);
-    gStyle->SetLegendTextSize(0.04);
+    gStyle->SetLegendTextSize(0.035);
     gStyle->SetLabelFont(22); //132);
     gStyle->SetLabelSize(0.06);
 
@@ -966,7 +966,7 @@ int main( int argc, char** argv )
         pad1->Draw();
         //pad2->Draw();
         hstack[obschannel-1] = new THStack(Form("hs%d", obschannel),"");
-        legend[obschannel-1] = new TLegend(0.18, 0.60, 0.88, 0.92);
+        legend[obschannel-1] = new TLegend(0.15, 0.60, 0.88, 0.92);
         TH1F* hdata = (TH1F*)map_obsch_histos[obschannel].at(0)->Clone("hdata");
         TH1F* hbadmatch = (TH1F*)hdata->Clone("hbadmatch");
         TH1F* hnumuCCinFV = (TH1F*)hdata->Clone("hnumuCCinFV");
@@ -1865,10 +1865,10 @@ int main( int argc, char** argv )
 
         hdata->GetYaxis()->SetTitle("Excess Events");
 
-        hdata->GetXaxis()->SetTitleSize(0.06);
-        hdata->GetXaxis()->SetLabelSize(0.06);
-        hdata->GetYaxis()->SetTitleSize(0.06);
-        hdata->GetYaxis()->SetLabelSize(0.06);
+        hdata->GetXaxis()->SetTitleSize(0.055);
+        hdata->GetXaxis()->SetLabelSize(0.055);
+        hdata->GetYaxis()->SetTitleSize(0.055);
+        hdata->GetYaxis()->SetLabelSize(0.055);
         hdata->GetXaxis()->SetTitleFont(22);//132);
         hdata->GetXaxis()->SetLabelFont(22);//132);
         hdata->GetYaxis()->SetTitleFont(22);//132);
