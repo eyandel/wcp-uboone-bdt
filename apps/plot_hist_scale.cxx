@@ -907,10 +907,17 @@ int main( int argc, char** argv )
   else // flag_breakdown == true
   {
     gROOT->ProcessLine(".x DrawOption.cc");
-    gStyle->SetLegendBorderSize(0);
+    /*gStyle->SetLegendBorderSize(0);
     gStyle->SetLegendFillColor(0);
     gStyle->SetLegendFont(132);
-    gStyle->SetLegendTextSize(0.04);
+    gStyle->SetLegendTextSize(0.04);*/
+
+    gStyle->SetLegendBorderSize(0);
+    gStyle->SetLegendFillColor(0);
+    gStyle->SetLegendFont(22); //132);
+    gStyle->SetLegendTextSize(0.055);
+    gStyle->SetLabelFont(22); //132);
+    gStyle->SetLabelSize(0.05);
 
     int nchannels = map_obsch_subhistos.size();
     TCanvas *canvas[nchannels];
@@ -1257,77 +1264,77 @@ int main( int argc, char** argv )
         hbadmatch->SetFillStyle(3004);
         hbadmatch->SetFillColorAlpha(kRed+2, 0.5);
         hbadmatch->SetLineColor(kRed+2);
-        hbadmatch->SetLineWidth(1);
+        hbadmatch->SetLineWidth(4);
 
         hstack[obschannel-1]->Add(hext);
       //  legend[obschannel-1]->AddEntry(hext, Form("EXT, %.1f", hext->Integral()), "F");
         hext->SetFillStyle(3004);
         hext->SetFillColorAlpha(kOrange+3, 0.5);
         hext->SetLineColor(kOrange+3);
-        hext->SetLineWidth(1);
+        hext->SetLineWidth(4);
 
         hstack[obschannel-1]->Add(hdirt);
       //  legend[obschannel-1]->AddEntry(hdirt, Form("Dirt, %.1f", hdirt->Integral()), "F");
         hdirt->SetFillStyle(3224);
         hdirt->SetFillColorAlpha(kGray, 0.5);
         hdirt->SetLineColor(kGray+2);
-        hdirt->SetLineWidth(1);
+        hdirt->SetLineWidth(4);
 
         hstack[obschannel-1]->Add(houtFV);
       //  legend[obschannel-1]->AddEntry(houtFV, Form("out FV, %.1f", houtFV->Integral()), "F");
         houtFV->SetFillStyle(3224);
         houtFV->SetFillColorAlpha(kOrange+1, 0.5);
         houtFV->SetLineColor(kOrange+1);
-        houtFV->SetLineWidth(1);
+        houtFV->SetLineWidth(4);
 
         hstack[obschannel-1]->Add(hNCpi0inFV);
       //  legend[obschannel-1]->AddEntry(hNCpi0inFV, Form("NC #pi^{0} in FV,  %.1f", hNCpi0inFV->Integral()), "F");
         hNCpi0inFV->SetFillStyle(1001);
         hNCpi0inFV->SetFillColorAlpha(38, 0.5);
         hNCpi0inFV->SetLineColor(38);
-        hNCpi0inFV->SetLineWidth(1);
+        hNCpi0inFV->SetLineWidth(4);
 
         hstack[obschannel-1]->Add(hCCpi0inFV);
       //  legend[obschannel-1]->AddEntry(hCCpi0inFV, Form("CC #pi^{0} in FV, %.1f", hCCpi0inFV->Integral()), "F");
         hCCpi0inFV->SetFillStyle(1001);
         hCCpi0inFV->SetFillColorAlpha(30, 0.5);
         hCCpi0inFV->SetLineColor(30);
-        hCCpi0inFV->SetLineWidth(1);
+        hCCpi0inFV->SetLineWidth(4);
 
         hstack[obschannel-1]->Add(hNCinFV);
        // legend[obschannel-1]->AddEntry(hNCinFV, Form("NC in FV, %.1f", hNCinFV->Integral()), "F");
         hNCinFV->SetFillStyle(1001);
         hNCinFV->SetFillColorAlpha(kOrange+1, 0.5);
         hNCinFV->SetLineColor(kOrange+1);
-        hNCinFV->SetLineWidth(1);
+        hNCinFV->SetLineWidth(4);
 
         hstack[obschannel-1]->Add(hnumuCCinFV);
       //  legend[obschannel-1]->AddEntry(hnumuCCinFV, Form("#nu_{#mu} CC in FV, %.1f", hnumuCCinFV->Integral()), "F");
         hnumuCCinFV->SetFillStyle(1001);
         hnumuCCinFV->SetFillColorAlpha(kAzure+6, 0.5);
         hnumuCCinFV->SetLineColor(kAzure+6);
-        hnumuCCinFV->SetLineWidth(1);
+        hnumuCCinFV->SetLineWidth(4);
 
       /*  hstack[obschannel-1]->Add(hRnumuCCinFV);
         legend[obschannel-1]->AddEntry(hRnumuCCinFV, Form("#nu_{#mu} CC in FV, %.1f", hRnumuCCinFV->Integral()), "F");
         hRnumuCCinFV->SetFillStyle(1001);
         hRnumuCCinFV->SetFillColorAlpha(kAzure+6, 0.5);
         hRnumuCCinFV->SetLineColor(kAzure+6);
-        hRnumuCCinFV->SetLineWidth(1);
+        hRnumuCCinFV->SetLineWidth(4);
 
         hstack[obschannel-1]->Add(hAnumuCCinFV);
         legend[obschannel-1]->AddEntry(hAnumuCCinFV, Form("Anti #nu_{#mu} CC in FV, %.1f", hAnumuCCinFV->Integral()), "F");
         hAnumuCCinFV->SetFillStyle(1001);
         hAnumuCCinFV->SetFillColorAlpha(kAzure-6, 0.5);
         hAnumuCCinFV->SetLineColor(kAzure+6);
-        hAnumuCCinFV->SetLineWidth(1);*/
+        hAnumuCCinFV->SetLineWidth(4);*/
 
         hstack[obschannel-1]->Add(hnueCCinFV);
       //  legend[obschannel-1]->AddEntry(hnueCCinFV, Form("#nu_{e} CC in FV, %.1f", hnueCCinFV->Integral()), "F");
         hnueCCinFV->SetFillStyle(1001);
         hnueCCinFV->SetFillColorAlpha(kGreen+1, 0.5);
         hnueCCinFV->SetLineColor(kGreen+1);
-        hnueCCinFV->SetLineWidth(1);
+        hnueCCinFV->SetLineWidth(4);
 
         TList *stackHists = hstack[obschannel-1]->GetHists();
         if (obschannel == 1){
@@ -1483,35 +1490,35 @@ int main( int argc, char** argv )
         hNCpi1g->SetFillStyle(1001);
         hNCpi1g->SetFillColorAlpha(kPink+5, 0.5);
         hNCpi1g->SetLineColor(kPink+5);
-        hNCpi1g->SetLineWidth(1);
+        hNCpi1g->SetLineWidth(4);
 
         hstack[obschannel-1]->Add(hNCdel);
         legend[obschannel-1]->AddEntry(hNCdel, Form("NC #Delta 1#gamma, %.1f", hNCdel->Integral()), "F");
         hNCdel->SetFillStyle(1001);
         hNCdel->SetFillColorAlpha(kPink-6, 0.5);
         hNCdel->SetLineColor(kPink-6);
-        hNCdel->SetLineWidth(1);
+        hNCdel->SetLineWidth(4);
 
         hstack[obschannel-1]->Add(hNCother);
         legend[obschannel-1]->AddEntry(hNCother, Form("NC Other 1#gamma, %.1f", hNCother->Integral()), "F");
         hNCother->SetFillStyle(1001);
         hNCother->SetFillColorAlpha(kPink-8, 0.5);
         hNCother->SetLineColor(kPink-8);
-        hNCother->SetLineWidth(1);
+        hNCother->SetLineWidth(4);
 
         hstack[obschannel-1]->Add(hnumuCC1g);
         legend[obschannel-1]->AddEntry(hnumuCC1g, Form("#nu_{#mu}CC 1#gamma #mu<100MeV, %.1f", hnumuCC1g->Integral()), "F");
         hnumuCC1g->SetFillStyle(1001);
         hnumuCC1g->SetFillColorAlpha(kPink-7, 0.5);
         hnumuCC1g->SetLineColor(kPink-7);
-        hnumuCC1g->SetLineWidth(1);
+        hnumuCC1g->SetLineWidth(4);
 
         hstack[obschannel-1]->Add(hout1g);
         legend[obschannel-1]->AddEntry(hout1g, Form("out of FV 1#gamma, %.1f", hout1g->Integral()), "F");
         hout1g->SetFillStyle(1001);
         hout1g->SetFillColorAlpha(kPink, 0.5);
         hout1g->SetLineColor(kPink);
-        hout1g->SetLineWidth(1);
+        hout1g->SetLineWidth(4);
 
         
 
@@ -1521,7 +1528,7 @@ int main( int argc, char** argv )
         hLEE->SetFillStyle(1001);
         hLEE->SetFillColorAlpha(kMagenta, 0.5);
         hLEE->SetLineColor(kMagenta);
-        hLEE->SetLineWidth(1);
+        hLEE->SetLineWidth(4);
         }
         // truth labels end
         }//turn off breakdown
@@ -1532,84 +1539,84 @@ int main( int argc, char** argv )
         hbadmatch->SetFillStyle(3004);
         hbadmatch->SetFillColorAlpha(kRed+2, 0.5);
         hbadmatch->SetLineColor(kRed+2);
-        hbadmatch->SetLineWidth(1);
+        hbadmatch->SetLineWidth(4);
 
         hstack[obschannel-1]->Add(hext);
         legend[obschannel-1]->AddEntry(hext, Form("EXT, %.1f", hext->Integral()), "F");
         hext->SetFillStyle(3004);
         hext->SetFillColorAlpha(kOrange+3, 0.5);
         hext->SetLineColor(kOrange+3);
-        hext->SetLineWidth(1);
+        hext->SetLineWidth(4);
 
         hstack[obschannel-1]->Add(hdirt);
         legend[obschannel-1]->AddEntry(hdirt, Form("Dirt, %.1f", hdirt->Integral()), "F");
         hdirt->SetFillStyle(3224);
         hdirt->SetFillColorAlpha(kGray, 0.5);
         hdirt->SetLineColor(kGray+2);
-        hdirt->SetLineWidth(1);
+        hdirt->SetLineWidth(4);
 
         hstack[obschannel-1]->Add(hOTHER);
         legend[obschannel-1]->AddEntry(hOTHER, Form("OTHER, %.1f", hOTHER->Integral()), "F");
         hOTHER->SetFillStyle(3224);
         hOTHER->SetFillColorAlpha(kOrange+1, 0.5);
         hOTHER->SetLineColor(kOrange+1);
-        hOTHER->SetLineWidth(1);
+        hOTHER->SetLineWidth(4);
 
         hstack[obschannel-1]->Add(hNCDIS);
         legend[obschannel-1]->AddEntry(hNCDIS, Form("NCDIS,  %.1f", hNCDIS->Integral()), "F");
         hNCDIS->SetFillStyle(1001);
         hNCDIS->SetFillColorAlpha(38, 0.5);
         hNCDIS->SetLineColor(38);
-        hNCDIS->SetLineWidth(1);
+        hNCDIS->SetLineWidth(4);
 
         hstack[obschannel-1]->Add(hNCMEC);
         legend[obschannel-1]->AddEntry(hNCMEC, Form("NCMEC,  %.1f", hNCMEC->Integral()), "F");
         hNCMEC->SetFillStyle(1001);
         hNCMEC->SetFillColorAlpha(30, 0.5);
         hNCMEC->SetLineColor(30);
-        hNCMEC->SetLineWidth(1);
+        hNCMEC->SetLineWidth(4);
 
         hstack[obschannel-1]->Add(hNCRES);
         legend[obschannel-1]->AddEntry(hNCRES, Form("NCRES, %.1f", hNCRES->Integral()), "F");
         hNCRES->SetFillStyle(1001);
         hNCRES->SetFillColorAlpha(kOrange+1, 0.5);
         hNCRES->SetLineColor(kOrange+1);
-        hNCRES->SetLineWidth(1);
+        hNCRES->SetLineWidth(4);
 
         hstack[obschannel-1]->Add(hNCQE);
         legend[obschannel-1]->AddEntry(hNCQE, Form("NCQE, %.1f", hNCQE->Integral()), "F");
         hNCQE->SetFillStyle(1001);
         hNCQE->SetFillColorAlpha(kAzure+6, 0.5);
         hNCQE->SetLineColor(kAzure+6);
-        hNCQE->SetLineWidth(1);
+        hNCQE->SetLineWidth(4);
 
         hstack[obschannel-1]->Add(hCCDIS);
         legend[obschannel-1]->AddEntry(hCCDIS, Form("CCDIS,  %.1f", hCCDIS->Integral()), "F");
         hCCDIS->SetFillStyle(1001);
         hCCDIS->SetFillColorAlpha(kGray+5, 0.5);
         hCCDIS->SetLineColor(kGray+5);
-        hCCDIS->SetLineWidth(1);
+        hCCDIS->SetLineWidth(4);
 
         hstack[obschannel-1]->Add(hCCMEC);
         legend[obschannel-1]->AddEntry(hCCMEC, Form("CCMEC,  %.1f", hCCMEC->Integral()), "F");
         hCCMEC->SetFillStyle(1001);
         hCCMEC->SetFillColorAlpha(kAzure, 0.5);
         hCCMEC->SetLineColor(kAzure);
-        hCCMEC->SetLineWidth(1);
+        hCCMEC->SetLineWidth(4);
 
         hstack[obschannel-1]->Add(hCCRES);
         legend[obschannel-1]->AddEntry(hCCRES, Form("CCRES, %.1f", hCCRES->Integral()), "F");
         hCCRES->SetFillStyle(1001);
         hCCRES->SetFillColorAlpha(kMagenta-5, 0.5);
         hCCRES->SetLineColor(kMagenta-5);
-        hCCRES->SetLineWidth(1);
+        hCCRES->SetLineWidth(4);
 
         hstack[obschannel-1]->Add(hCCQE);
         legend[obschannel-1]->AddEntry(hCCQE, Form("CCQE, %.1f", hCCQE->Integral()), "F");
         hCCQE->SetFillStyle(1001);
         hCCQE->SetFillColorAlpha(kGreen+1, 0.5);
         hCCQE->SetLineColor(kGreen+1);
-        hCCQE->SetLineWidth(1);
+        hCCQE->SetLineWidth(4);
 
         if(flag_leeexist){
         hstack[obschannel-1]->Add(hLEE);
@@ -1617,7 +1624,7 @@ int main( int argc, char** argv )
         hLEE->SetFillStyle(1001);
         hLEE->SetFillColorAlpha(kMagenta, 0.5);
         hLEE->SetLineColor(kMagenta);
-        hLEE->SetLineWidth(1);
+        hLEE->SetLineWidth(4);
         }
         }
         if(flag_truthlabel==2){ // xsec style
@@ -1627,42 +1634,42 @@ int main( int argc, char** argv )
         hext->SetFillStyle(3004);
         hext->SetFillColorAlpha(kOrange+3, 0.5);
         hext->SetLineColor(kOrange+3);
-        hext->SetLineWidth(1);
+        hext->SetLineWidth(4);
 
         hstack[obschannel-1]->Add(hdirt);
         legend[obschannel-1]->AddEntry(hdirt, Form("Dirt, %.1f", hdirt->Integral()), "F");
         hdirt->SetFillStyle(3224);
         hdirt->SetFillColorAlpha(kGray, 0.5);
         hdirt->SetLineColor(kGray+2);
-        hdirt->SetLineWidth(1);
+        hdirt->SetLineWidth(4);
 
         hstack[obschannel-1]->Add(hXsecCosmic);
         legend[obschannel-1]->AddEntry(hXsecCosmic, Form("Cosmic, %.1f", hXsecCosmic->Integral()), "F");
         hXsecCosmic->SetFillStyle(3224);
         hXsecCosmic->SetFillColorAlpha(kRed+2, 0.5);
         hXsecCosmic->SetLineColor(kRed+2);
-        hXsecCosmic->SetLineWidth(1);
+        hXsecCosmic->SetLineWidth(4);
 
         hstack[obschannel-1]->Add(hXsecNC);
         legend[obschannel-1]->AddEntry(hXsecNC, Form("NC,  %.1f", hXsecNC->Integral()), "F");
         hXsecNC->SetFillStyle(1001);
         hXsecNC->SetFillColorAlpha(kOrange+1, 0.5);
         hXsecNC->SetLineColor(38);
-        hXsecNC->SetLineWidth(1);
+        hXsecNC->SetLineWidth(4);
 
         hstack[obschannel-1]->Add(hXsecBkgCC);
         legend[obschannel-1]->AddEntry(hXsecBkgCC, Form("Other CC, %.1f", hXsecBkgCC->Integral()), "F");
         hXsecBkgCC->SetFillStyle(1001);
         hXsecBkgCC->SetFillColorAlpha(kGreen+1, 0.5);
         hXsecBkgCC->SetLineColor(30);
-        hXsecBkgCC->SetLineWidth(1);
+        hXsecBkgCC->SetLineWidth(4);
 
         hstack[obschannel-1]->Add(hXsecNumuCCinFV);
         legend[obschannel-1]->AddEntry(hXsecNumuCCinFV, Form("#nu_{#mu} CC in FV, %.1f", hXsecNumuCCinFV->Integral()), "F");
         hXsecNumuCCinFV->SetFillStyle(1001);
         hXsecNumuCCinFV->SetFillColorAlpha(kAzure+6, 0.5);
         hXsecNumuCCinFV->SetLineColor(kAzure+6);
-        hXsecNumuCCinFV->SetLineWidth(1);
+        hXsecNumuCCinFV->SetLineWidth(4);
         // truth labels end
         }
 
@@ -1671,9 +1678,9 @@ int main( int argc, char** argv )
         //hmc->Draw("hist");
         hmc->GetYaxis()->SetTitle("Event counts");
         hmc->GetYaxis()->SetTitleSize(0.05);
-        hmc->GetYaxis()->SetTitleFont(132);
+        hmc->GetYaxis()->SetTitleFont(22);//132);
         hmc->GetYaxis()->SetTitleOffset(0.73);
-        hmc->GetYaxis()->SetLabelFont(132);
+        hmc->GetYaxis()->SetLabelFont(22);//132);
         hmc->GetYaxis()->SetLabelSize(0.04);
         //if(obschannel==9) hmc->GetXaxis()->SetRangeUser(0.5,1);
         float mcymax = hmc->GetBinContent(hmc->GetMaximumBin())*scalePOT;
@@ -1856,6 +1863,12 @@ int main( int argc, char** argv )
         //hdata->GetXaxis()->SetTitle("Reco Shower Minimum Projected Distance [cm]");
 
         hdata->GetYaxis()->SetTitle("Excess Events");
+
+        hdata->GetXaxis()->SetTitleSize(0.12);
+        hdata->GetXaxis()->SetLabelSize(0.12);
+        hdata->GetXaxis()->SetTitleFont(22);//132);
+        hdata->GetXaxis()->SetLabelFont(22);//132);
+
         pad1->Modified();
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reconstructed Shower Cosine Angle");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Number of Tracks");
