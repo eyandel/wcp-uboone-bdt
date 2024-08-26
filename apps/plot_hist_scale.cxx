@@ -1718,7 +1718,7 @@ int main( int argc, char** argv )
 
         float excessymax = hdata->GetBinContent(hdata->GetMaximumBin())*scalePOT/normalization;
         hdata->SetMaximum(3.0*excessymax);
-        hdata->GetYaxis()->SetRangeUser(-0.02*excessymax, 3.0*excessymax);
+        hdata->GetYaxis()->SetRangeUser(-0.02*excessymax, 2.7*excessymax);
 
         hdata->SetLineColor(kWhite);
         hdata->Draw("hist");
