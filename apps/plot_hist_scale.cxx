@@ -918,7 +918,9 @@ int main( int argc, char** argv )
     gStyle->SetLegendTextSize(0.035);
     gStyle->SetLabelFont(22); //132);
     gStyle->SetLabelSize(0.06);
-    gStyle->SetPalette(kViridis);
+    gStyle->SetPalette(kCandy);
+
+    auto colors = TColor::GetPalette();
 
     int nchannels = map_obsch_subhistos.size();
     TCanvas *canvas[nchannels];
@@ -1387,7 +1389,7 @@ int main( int argc, char** argv )
             //legend[obschannel-1]->AddEntry(h1gscale, Form("Signal x %.1f, %.1f", scale_amount, signal_amount), "F");
             h1gscale->SetFillStyle(0);
             //h1gscale->SetFillColorAlpha(kMagenta, 0.5);
-            //h1gscale->SetLineColor(kRed);
+            h1gscale->SetLineColor(colors.At(0));
             h1gscale->SetLineStyle(2);
             h1gscale->SetLineWidth(4);
 
@@ -1402,7 +1404,7 @@ int main( int argc, char** argv )
             hNCpi1gscale->Add(hout1g);*/
             hNCpi1gscale->SetFillStyle(0);
             //hNCpi1gscale->SetFillColorAlpha(kPink+5, 0.5);
-            //hNCpi1gscale->SetLineColor(kOrange);
+            hNCpi1gscale->SetLineColor(colors.At(1));
             hNCpi1gscale->SetLineStyle(4);
             hNCpi1gscale->SetLineWidth(4);
 
@@ -1417,7 +1419,7 @@ int main( int argc, char** argv )
             hNCdelscale->Add(hout1g); */
             hNCdelscale->SetFillStyle(0);
             //hNCdelscale->SetFillColorAlpha(kPink-6, 0.5);
-            //hNCdelscale->SetLineColor(kYellow+1);
+            hNCdelscale->SetLineColor(colors.At(2));
             hNCdelscale->SetLineStyle(6);
             hNCdelscale->SetLineWidth(4);
 
@@ -1432,7 +1434,7 @@ int main( int argc, char** argv )
             hNCotherscale->Add(hout1g);*/
             hNCotherscale->SetFillStyle(0);
             //hNCotherscale->SetFillColorAlpha(kPink-8, 0.5);
-            //hNCotherscale->SetLineColor(kGreen);
+            hNCotherscale->SetLineColor(colors.At(3));
             hNCotherscale->SetLineStyle(8);
             hNCotherscale->SetLineWidth(4);
 
@@ -1447,7 +1449,7 @@ int main( int argc, char** argv )
             hnumuCC1gscale->Add(hout1g);*/
             hnumuCC1gscale->SetFillStyle(0);
             //hnumuCC1gscale->SetFillColorAlpha(kPink-7, 0.5);
-            //hnumuCC1gscale->SetLineColor(kBlue);
+            hnumuCC1gscale->SetLineColor(colors.At(4));
             hnumuCC1gscale->SetLineStyle(9);
             hnumuCC1gscale->SetLineWidth(4);
 
@@ -1462,7 +1464,7 @@ int main( int argc, char** argv )
             hout1gscale->Add(hnumuCC1g);*/
             hout1gscale->SetFillStyle(0);
             //hout1gscale->SetFillColorAlpha(kPink, 0.5);
-            //hout1gscale->SetLineColor(kViolet);
+            hout1gscale->SetLineColor(colors.At(5));
             hout1gscale->SetLineStyle(10);
             hout1gscale->SetLineWidth(4);
 
@@ -1479,7 +1481,7 @@ int main( int argc, char** argv )
               signal_amount_LEE = hLEEscale->Integral();
               hLEEscale->SetFillStyle(0);
               //hLEEscale->SetFillColorAlpha(kMagenta, 0.5);
-              //hLEEscale->SetLineColor(kMagenta);
+              hLEEscale->SetLineColor(colors.At(6));
               hLEEscale->SetLineStyle(1);
               hLEEscale->SetLineWidth(4);
             }
