@@ -915,7 +915,7 @@ int main( int argc, char** argv )
     gStyle->SetLegendBorderSize(0);
     gStyle->SetLegendFillColor(0);
     gStyle->SetLegendFont(22); //132);
-    gStyle->SetLegendTextSize(0.06);
+    gStyle->SetLegendTextSize(0.04);
     gStyle->SetLabelFont(22); //132);
     gStyle->SetLabelSize(0.06);
 
@@ -1865,10 +1865,14 @@ int main( int argc, char** argv )
 
         hdata->GetYaxis()->SetTitle("Excess Events");
 
-        //hdata->GetXaxis()->SetTitleSize(0.06);
-        //hdata->GetXaxis()->SetLabelSize(0.06);
+        hdata->GetXaxis()->SetTitleSize(0.06);
+        hdata->GetXaxis()->SetLabelSize(0.06);
+        hdata->GetYaxis()->SetTitleSize(0.06);
+        hdata->GetYaxis()->SetLabelSize(0.06);
         hdata->GetXaxis()->SetTitleFont(22);//132);
         hdata->GetXaxis()->SetLabelFont(22);//132);
+        hdata->GetYaxis()->SetTitleFont(22);//132);
+        hdata->GetYaxis()->SetLabelFont(22);//132);
 
         pad1->Modified();
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reconstructed Shower Cosine Angle");
