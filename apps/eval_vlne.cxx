@@ -6,15 +6,17 @@
 #include "config.h"
 #if (HAVE_VLNEVAL_INC == 1) && (HAVE_VLNEVAL_LIB == 1)
 
+#include <cmath>
+#include <chrono>
 #include <iostream>
-#include <unordered_map>
 #include <string>
 #include <stdexcept>
+#include <unordered_map>
 
 #include "TFile.h"
 #include "TTree.h"
 
-#include <boost/timer/progress_display.hpp>
+#include <boost/format.hpp>
 #include <boost/program_options.hpp>
 namespace po = boost::program_options;
 
@@ -27,6 +29,7 @@ namespace po = boost::program_options;
  *      need to double check that this value is correct
  */
 constexpr size_t MAX_TRACKS = 30000;
+constexpr double MASK_VALUE = 0.;       // Value to replace NaNs with
 
 struct Config
 {
@@ -63,6 +66,108 @@ struct RootVars
     float reco_startMomentum[MAX_TRACKS][4];
 
     void setup(Trees &trees);
+};
+
+class ProgressBar
+{
+private:
+    size_t total;
+    size_t current;
+    size_t redraw;
+
+    float  momentum;
+    float  speed;
+
+    std::chrono::time_point<std::chrono::system_clock> start_time;
+
+    void update_speed(int time_taken)
+    {
+        if ((current == 0) || (time_taken == 0)) {
+            return;
+        }
+
+        const float curr_speed = static_cast<float>(current) / time_taken;
+        speed = (1 - momentum) * curr_speed + momentum * speed;
+    }
+
+public:
+    ProgressBar(size_t total, size_t redraw = 100, float momentum = 0.999)
+      : total(total), current(0), redraw(redraw), momentum(momentum),
+        speed(0), start_time(std::chrono::system_clock::now())
+    {
+        update(0);
+    }
+
+    ~ProgressBar()
+    {
+        std::cerr << std::endl;
+    }
+
+    static void pprintDuration(int seconds)
+    {
+        if (seconds < 0) {
+            return;
+        }
+
+        static boost::format fmt_short("%1$02d:%2$02d");
+        static boost::format fmt_long ("%1$02d:%2$02d:%3$02d");
+
+        int minutes = seconds / 60;
+        seconds     = seconds % 60;
+
+        int hours = minutes / 60;
+        minutes   = minutes % 60;
+
+        if (hours == 0) {
+            std::cerr << fmt_short % minutes % seconds;
+        }
+        else {
+            std::cerr << fmt_long % hours % minutes % seconds;
+        }
+    }
+
+    int get_elapsed_time_in_seconds()
+    {
+        const auto curr_time = std::chrono::system_clock::now();
+
+        return std::chrono::duration_cast<std::chrono::seconds>(
+            curr_time - start_time
+        ).count();
+    }
+
+    int estimate_remaining_time_in_seconds(int time_taken)
+    {
+        if (speed <= 0) {
+            return -1;
+        }
+
+        return static_cast<float>(total - current) / speed;
+    }
+
+    void update(size_t step = 1)
+    {
+        current += step;
+
+        const int time_taken = get_elapsed_time_in_seconds();
+        update_speed(time_taken);
+
+        if ((current % redraw != 0) && (current != total)) {
+            return;
+        }
+
+        const int time_remain = estimate_remaining_time_in_seconds(time_taken);
+
+        std::cerr << boost::format("Progress: %1% / %2% [%3$.1f %%]")
+            % current % total % (100. * current / total);;
+
+        std::cerr << ". Time: ";
+        ProgressBar::pprintDuration(time_taken);
+
+        std::cerr << ". ETA: ";
+        ProgressBar::pprintDuration(time_remain);
+
+        std::cerr << "    " << '\r';
+    }
 };
 
 void RootVars::setup(Trees &trees)
@@ -204,6 +309,24 @@ void extractVars(const RootVars &rootVars, VarDict &vars)
     extractPFVars(rootVars, vars);
 }
 
+void maskNans(VarDict &vars, double mask)
+{
+    for (auto &item : vars.scalar) {
+        if (! std::isfinite(item.second)) {
+            item.second = mask;
+        }
+    }
+
+    for (auto &item : vars.vector) {
+        for (auto &value : item.second) {
+            if (! std::isfinite(value)) {
+                value = mask;
+            }
+        }
+    }
+
+}
+
 void usage(const char *name, const po::options_description &options)
 {
     std::cout << "USAGE: " << name << " [OPTION..] INPUT" << std::endl;
@@ -281,8 +404,8 @@ Config parseArgs(int argc, char** argv)
             po::value<std::string>()->default_value("numu"),
             "flavor of inputs [numu|nue]"
         )
-        ("input,i",  po::value<std::string>(), "Input File")
-        ("model,m",  po::value<std::string>()->required(), "Model Directory")
+        ("input,i",  po::value<std::string>(), "input file")
+        ("model,m",  po::value<std::string>()->required(), "model directory")
         ;
 
     po::positional_options_description positional_args;
@@ -359,18 +482,20 @@ void processFile(TFile &file, const Config &config, VLN::VLNEnergyModel &model)
     );
 
     VarDict vars = setupVarDict(config);
-    boost::timer::progress_display pbar(trees.pf->GetEntries());
+    ProgressBar pbar(trees.pf->GetEntries());
 
     for (int idx = 0; idx < trees.pf->GetEntries(); idx++) {
         trees.pf->GetEntry(idx);
 
         extractVars(rootVars, vars);
+        maskNans(vars, MASK_VALUE);
+
         energy = model.predict(vars);
 
         primaryEBranch->Fill();
         totalEBranch->Fill();
 
-        ++pbar;
+        pbar.update();
     }
 
     trees.ke->Write("wcpselection/T_KINEvars", TObject::kOverwrite);
@@ -378,18 +503,21 @@ void processFile(TFile &file, const Config &config, VLN::VLNEnergyModel &model)
 
 int main(int argc, char** argv)
 {
-    std::cout << "Starting..." << std::endl;
-
     const Config config = parseArgs(argc, argv);
     TFile file(config.input.c_str(), "update");
 
     VLN::VLNEnergyModel model(config.model);
 
-    std::cout << "Evaluating energy for file " << config.input << std::endl;
+    std::cout
+        << "Starting energy evaluation"             << std::endl
+        << "  - File: "         << config.input     << std::endl
+        << "  - Model: "        << config.model     << std::endl
+        << "  - Save Branch: "  << config.branch    << std::endl;
+
     processFile(file, config, model);
     file.Write();
 
-    std::cout << "Done" << std::endl;
+    std::cout << "Finished energy evaluation" << std::endl;
 }
 
 #else  /* HAVE_VLNEVAL != 1 */
