@@ -29,7 +29,7 @@ void LEEana::CovMatrix::gen_xf_cov_matrix(int run, std::map<int, TH1F*>& map_cov
       map_no_histoname[ncount] = histoname;
       ncount ++;
 
-      // std::cout << histoname << " " << obsch << " " << covch << " " << flag_lee << std::endl;
+       //std::cout << histoname << " " << obsch << " " << covch << " " << flag_lee << std::endl;
     }
   }
 
@@ -61,7 +61,7 @@ void LEEana::CovMatrix::gen_xf_cov_matrix(int run, std::map<int, TH1F*>& map_cov
       if (sup_lengths.at(i) > max_sup_lengths.at(i)) max_sup_lengths.at(i) = sup_lengths.at(i);
     }
     
-    //std::cout << input_filename << " " << lengths.size() << std::endl;
+    // std::cout << input_filename << " " << lengths.size() << " " << max_lengths.size() << std::endl;
   }
   
   double data_pot = 5e19;
@@ -77,7 +77,7 @@ void LEEana::CovMatrix::gen_xf_cov_matrix(int run, std::map<int, TH1F*>& map_cov
     int nsize = max_lengths.at(j);
     int sup_nsize = max_sup_lengths.at(j);
 
-    //    std::cout << j << " " << nsize << " " << sup_nsize << std::endl;
+    // std::cout << j << " " << nsize << " " << sup_nsize << std::endl;
     
     TMatrixD temp_mat(rows, rows);
     temp_mat.Zero(); 

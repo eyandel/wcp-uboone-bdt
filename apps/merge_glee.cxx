@@ -48,11 +48,11 @@ int main( int argc, char** argv )
   TString outfile_name = argv[3];
 
   Int_t gl_run, gl_sub, gl_evt, gl_sel_type, gl_file_type;  
-  Float_t gl_true_Enu, gl_true_Elep, gl_reco_Eshower, gl_reco_shower_dirz, gl_reco_shower_implied_dirz, gl_simple_pot_weight, gl_rem_orig_wc_pot_weight, gl_new_pot_weight,gl_overlap_weight, gl_wc_total_overlapped_weight;
+  Float_t gl_true_Enu, gl_true_Elep, gl_reco_Eshower, gl_reco_shower_dirz, gl_reco_shower_implied_dirz, gl_simple_pot_weight, gl_rem_orig_wc_pot_weight, gl_new_pot_weight,gl_overlap_weight, gl_overlap_weight_tweaked, gl_wc_total_overlapped_weight;
 
 
   
-  std::map<std::pair<int, int>, std::tuple<Int_t, Int_t, Float_t, Float_t, Float_t, Float_t, Float_t, Float_t, Float_t, Float_t, Float_t, Float_t> > map_gl_info;
+  std::map<std::pair<int, int>, std::tuple<Int_t, Int_t, Float_t, Float_t, Float_t, Float_t, Float_t, Float_t, Float_t, Float_t, Float_t, Float_t, Float_t> > map_gl_info;
   std::set<std::pair<int, int> > set_gl_rs;
   
   // read in PeLEE Np
@@ -63,11 +63,11 @@ int main( int argc, char** argv )
     while(!infile.eof()){
       
       infile >> gl_run >> gl_sub >> gl_evt >> gl_sel_type >> gl_file_type >> 
-	gl_true_Enu >> gl_true_Elep >> gl_reco_Eshower >> gl_reco_shower_dirz >> gl_reco_shower_implied_dirz >> gl_simple_pot_weight  >> gl_rem_orig_wc_pot_weight >> gl_new_pot_weight >> gl_overlap_weight >> gl_wc_total_overlapped_weight;
+	gl_true_Enu >> gl_true_Elep >> gl_reco_Eshower >> gl_reco_shower_dirz >> gl_reco_shower_implied_dirz >> gl_simple_pot_weight  >> gl_rem_orig_wc_pot_weight >> gl_new_pot_weight >> gl_overlap_weight >> gl_overlap_weight_tweaked >> gl_wc_total_overlapped_weight;
 
       // std::cout << gl_run << " " << gl_true_Elep << std::endl;
       
-      map_gl_info[std::make_pair(gl_run, gl_evt)] = std::make_tuple(gl_sel_type, gl_file_type, gl_true_Enu, gl_true_Elep, gl_reco_Eshower, gl_reco_shower_dirz, gl_reco_shower_implied_dirz, gl_simple_pot_weight, gl_rem_orig_wc_pot_weight, gl_new_pot_weight, gl_overlap_weight,  gl_wc_total_overlapped_weight);
+      map_gl_info[std::make_pair(gl_run, gl_evt)] = std::make_tuple(gl_sel_type, gl_file_type, gl_true_Enu, gl_true_Elep, gl_reco_Eshower, gl_reco_shower_dirz, gl_reco_shower_implied_dirz, gl_simple_pot_weight, gl_rem_orig_wc_pot_weight, gl_new_pot_weight, gl_overlap_weight, gl_overlap_weight_tweaked, gl_wc_total_overlapped_weight);
       set_gl_rs.insert(std::make_pair(gl_run, gl_sub));
     }
     
@@ -408,6 +408,7 @@ int main( int argc, char** argv )
   t1->Branch("gl_rem_orig_wc_pot_weight",&gl_rem_orig_wc_pot_weight,"gl_rem_orig_wc_pot_weight/F");
   t1->Branch("gl_new_pot_weight",&gl_new_pot_weight,"gl_new_pot_weight/F");
   t1->Branch("gl_overlap_weight",&gl_overlap_weight,"gl_overlap_weight/F");
+  t1->Branch("gl_overlap_weight_tweaked",&gl_overlap_weight_tweaked,"gl_overlap_weight_tweaked/F");
   t1->Branch("gl_wc_total_overlapped_weight",&gl_wc_total_overlapped_weight,"gl_wc_total_overlapped_weight/F");
 
   
@@ -433,6 +434,7 @@ int main( int argc, char** argv )
     gl_rem_orig_wc_pot_weight = 0;
     gl_new_pot_weight = 0;
     gl_overlap_weight = 0;
+    gl_overlap_weight_tweaked = 0;
     gl_wc_total_overlapped_weight = 0;
     
 
@@ -449,7 +451,8 @@ int main( int argc, char** argv )
       gl_rem_orig_wc_pot_weight = std::get<8>(it1->second);
       gl_new_pot_weight = std::get<9>(it1->second);
       gl_overlap_weight = std::get<10>(it1->second);
-      gl_wc_total_overlapped_weight = std::get<11>(it1->second);
+      gl_overlap_weight_tweaked = std::get<11>(it1->second);
+      gl_wc_total_overlapped_weight = std::get<12>(it1->second);
     }
     
                 
