@@ -368,542 +368,7 @@ int main( int argc, char** argv )
     gStyle->SetOptTitle(0);
 
     if(flag_breakdown == 0){
-    gROOT->ProcessLine(".x DrawOption.cc");
-    TCanvas c1("ToyMC","ToyMC",2000,800);
-    c1.Divide(4,2);
-    c1.Draw();
-
-    if (flag_err==1){
-
-      for (auto it = map_obsch_histos.begin(); it!= map_obsch_histos.end(); it++){
-	TH1F *h1 = it->second.at(1);
-	TH1F *h2 = it->second.at(2);
-	for (int i=0;i!=h1->GetNbinsX()+1;i++){
-	  h1->SetBinError(i+1,sqrt(h2->GetBinContent(i+1)));
-	}
-      }
-
-
-      c1.cd(1);
-      TGraphErrors *g10 = new TGraphErrors();
-      TGraphErrors *g11 = new TGraphErrors();
-      for (int i=0;i!=map_obsch_histos[1].at(0)->GetNbinsX()+1;i++){
-	double x = map_obsch_histos[1].at(0)->GetBinCenter(i+1);
-	double y = map_obsch_histos[1].at(0)->GetBinContent(i+1);
-	double x_err = 0;
-	double y_err = map_obsch_histos[1].at(0)->GetBinError(i+1);
-	g10->SetPoint(i,x,y);
-	g10->SetPointError(i,x_err,y_err);
-
-	y = map_obsch_histos[1].at(1)->GetBinContent(i+1);
-	y_err = map_obsch_histos[1].at(1)->GetBinError(i+1);
-
-	g11->SetPoint(i,x,y);
-	g11->SetPointError(i,x_err,y_err);
-
-	//map_obsch_histos[1].at(0)->Draw();
-	//map_obsch_histos[1].at(1)->Draw("same");
-	//map_obsch_histos[1].at(1)->SetLineColor(2);
-      }
-
-      g10->Draw("A*"); g10->SetTitle("nueCC FC");
-      g10->SetMarkerStyle(20);
-      g11->Draw("*same");
-      g11->SetMarkerStyle(21);
-      g11->SetMarkerColor(2);
-      g11->SetLineColor(2);
-
-      // for (Int_t i=0;i!=map_obsch_histos[1].at(1)->GetNbinsX()+1;i++){
-      //   std::cout << i << " " << map_obsch_histos[1].at(1)->GetBinContent(i+1) << " " << map_obsch_histos[1].at(1)->GetBinError(i+1) << std::endl;
-      // }
-
-      c1.cd(2);
-      // map_obsch_histos[3].at(0)->Draw();
-      // map_obsch_histos[3].at(1)->Draw("same");
-      // map_obsch_histos[3].at(1)->SetLineColor(2);
-
-      // for (Int_t i=0;i!=map_obsch_histos[3].at(1)->GetNbinsX()+1;i++){
-      //   std::cout << i << " " << map_obsch_histos[3].at(1)->GetBinContent(i+1) << " " << map_obsch_histos[3].at(1)->GetBinError(i+1) << std::endl;
-    // }
-
-    TGraphErrors *g30 = new TGraphErrors();
-    TGraphErrors *g31 = new TGraphErrors();
-    for (int i=0;i!=map_obsch_histos[3].at(0)->GetNbinsX()+1;i++){
-      double x = map_obsch_histos[3].at(0)->GetBinCenter(i+1);
-      double y = map_obsch_histos[3].at(0)->GetBinContent(i+1);
-      double x_err = 0;
-      double y_err = map_obsch_histos[3].at(0)->GetBinError(i+1);
-      g30->SetPoint(i,x,y);
-      g30->SetPointError(i,x_err,y_err);
-
-      y = map_obsch_histos[3].at(1)->GetBinContent(i+1);
-      y_err = map_obsch_histos[3].at(1)->GetBinError(i+1);
-
-      g31->SetPoint(i,x,y);
-      g31->SetPointError(i,x_err,y_err);
-
-      //map_obsch_histos[3].at(0)->Draw();
-      //map_obsch_histos[3].at(1)->Draw("same");
-      //map_obsch_histos[3].at(1)->SetLineColor(2);
-    }
-
-    g30->Draw("A*");  g30->SetTitle("numuCC FC");
-    g30->SetMarkerStyle(20);
-    g31->Draw("*same");
-    g31->SetMarkerStyle(21);
-    g31->SetMarkerColor(2);
-    g31->SetLineColor(2);
-
-
-    c1.cd(3);
-    // map_obsch_histos[5].at(0)->Draw();
-    // map_obsch_histos[5].at(1)->Draw("same");
-    // map_obsch_histos[5].at(1)->SetLineColor(2);
-
-    // for (Int_t i=0;i!=map_obsch_histos[5].at(1)->GetNbinsX()+1;i++){
-    //   std::cout << i << " " << map_obsch_histos[5].at(1)->GetBinContent(i+1) << " " << map_obsch_histos[5].at(1)->GetBinError(i+1) << std::endl;
-    // }
-
-    TGraphErrors *g50 = new TGraphErrors();
-    TGraphErrors *g51 = new TGraphErrors();
-    for (int i=0;i!=map_obsch_histos[5].at(0)->GetNbinsX()+1;i++){
-      double x = map_obsch_histos[5].at(0)->GetBinCenter(i+1);
-      double y = map_obsch_histos[5].at(0)->GetBinContent(i+1);
-      double x_err = 0;
-      double y_err = map_obsch_histos[5].at(0)->GetBinError(i+1);
-      g50->SetPoint(i,x,y);
-      g50->SetPointError(i,x_err,y_err);
-
-      y = map_obsch_histos[5].at(1)->GetBinContent(i+1);
-      y_err = map_obsch_histos[5].at(1)->GetBinError(i+1);
-
-      g51->SetPoint(i,x,y);
-      g51->SetPointError(i,x_err,y_err);
-
-      //map_obsch_histos[5].at(0)->Draw();
-      //map_obsch_histos[5].at(1)->Draw("same");
-      //map_obsch_histos[5].at(1)->SetLineColor(2);
-    }
-
-    g50->Draw("A*");  g50->SetTitle("CCpio FC");
-    g50->SetMarkerStyle(20);
-    g51->Draw("*same");
-    g51->SetMarkerStyle(21);
-    g51->SetMarkerColor(2);
-    g51->SetLineColor(2);
-
-
-    c1.cd(5);
-    // map_obsch_histos[2].at(0)->Draw();
-    // map_obsch_histos[2].at(1)->Draw("same");
-    // map_obsch_histos[2].at(1)->SetLineColor(2);
-
-    TGraphErrors *g20 = new TGraphErrors();
-    TGraphErrors *g21 = new TGraphErrors();
-    for (int i=0;i!=map_obsch_histos[2].at(0)->GetNbinsX()+1;i++){
-      double x = map_obsch_histos[2].at(0)->GetBinCenter(i+1);
-      double y = map_obsch_histos[2].at(0)->GetBinContent(i+1);
-      double x_err = 0;
-      double y_err = map_obsch_histos[2].at(0)->GetBinError(i+1);
-      g20->SetPoint(i,x,y);
-      g20->SetPointError(i,x_err,y_err);
-
-      y = map_obsch_histos[2].at(1)->GetBinContent(i+1);
-      y_err = map_obsch_histos[2].at(1)->GetBinError(i+1);
-
-      g21->SetPoint(i,x,y);
-      g21->SetPointError(i,x_err,y_err);
-
-      //map_obsch_histos[2].at(0)->Draw();
-      //map_obsch_histos[2].at(1)->Draw("same");
-      //map_obsch_histos[2].at(1)->SetLineColor(2);
-    }
-
-    g20->Draw("A*");g20->SetTitle("nueCC PC");
-    g20->SetMarkerStyle(20);
-    g21->Draw("*same");
-    g21->SetMarkerStyle(21);
-    g21->SetMarkerColor(2);
-    g21->SetLineColor(2);
-
-
-
-    c1.cd(6);
-    // map_obsch_histos[4].at(0)->Draw();
-    // map_obsch_histos[4].at(1)->Draw("same");
-    // map_obsch_histos[4].at(1)->SetLineColor(2);
-
-    TGraphErrors *g40 = new TGraphErrors();
-    TGraphErrors *g41 = new TGraphErrors();
-    for (int i=0;i!=map_obsch_histos[4].at(0)->GetNbinsX()+1;i++){
-      double x = map_obsch_histos[4].at(0)->GetBinCenter(i+1);
-      double y = map_obsch_histos[4].at(0)->GetBinContent(i+1);
-      double x_err = 0;
-      double y_err = map_obsch_histos[4].at(0)->GetBinError(i+1);
-      g40->SetPoint(i,x,y);
-      g40->SetPointError(i,x_err,y_err);
-
-      y = map_obsch_histos[4].at(1)->GetBinContent(i+1);
-      y_err = map_obsch_histos[4].at(1)->GetBinError(i+1);
-
-      g41->SetPoint(i,x,y);
-      g41->SetPointError(i,x_err,y_err);
-
-      //map_obsch_histos[4].at(0)->Draw();
-      //map_obsch_histos[4].at(1)->Draw("same");
-      //map_obsch_histos[4].at(1)->SetLineColor(2);
-    }
-
-    g40->Draw("A*"); g40->SetTitle("numuCC PC");
-    g40->SetMarkerStyle(20);
-    g41->Draw("*same");
-    g41->SetMarkerStyle(21);
-    g41->SetMarkerColor(2);
-    g41->SetLineColor(2);
-
-    c1.cd(7);
-    // map_obsch_histos[6].at(0)->Draw();
-    // map_obsch_histos[6].at(1)->Draw("same");
-    // map_obsch_histos[6].at(1)->SetLineColor(2);
-
-    TGraphErrors *g60 = new TGraphErrors();
-    TGraphErrors *g61 = new TGraphErrors();
-    for (int i=0;i!=map_obsch_histos[6].at(0)->GetNbinsX()+1;i++){
-      double x = map_obsch_histos[6].at(0)->GetBinCenter(i+1);
-      double y = map_obsch_histos[6].at(0)->GetBinContent(i+1);
-      double x_err = 0;
-      double y_err = map_obsch_histos[6].at(0)->GetBinError(i+1);
-      g60->SetPoint(i,x,y);
-      g60->SetPointError(i,x_err,y_err);
-
-      y = map_obsch_histos[6].at(1)->GetBinContent(i+1);
-      y_err = map_obsch_histos[6].at(1)->GetBinError(i+1);
-
-      g61->SetPoint(i,x,y);
-      g61->SetPointError(i,x_err,y_err);
-
-      //map_obsch_histos[6].at(0)->Draw();
-      //map_obsch_histos[6].at(1)->Draw("same");
-      //map_obsch_histos[6].at(1)->SetLineColor(2);
-    }
-
-    g60->Draw("A*");  g60->SetTitle("CCpio PC");
-    g60->SetMarkerStyle(20);
-    g61->Draw("*same");
-    g61->SetMarkerStyle(21);
-    g61->SetMarkerColor(2);
-    g61->SetLineColor(2);
-
-
-    c1.cd(4);
-    // map_obsch_histos[7].at(0)->Draw();
-    // map_obsch_histos[7].at(1)->Draw("same");
-    // map_obsch_histos[7].at(1)->SetLineColor(2);
-
-    TGraphErrors *g70 = new TGraphErrors();
-    TGraphErrors *g71 = new TGraphErrors();
-    for (int i=0;i!=map_obsch_histos[7].at(0)->GetNbinsX()+1;i++){
-      double x = map_obsch_histos[7].at(0)->GetBinCenter(i+1);
-      double y = map_obsch_histos[7].at(0)->GetBinContent(i+1);
-      double x_err = 0;
-      double y_err = map_obsch_histos[7].at(0)->GetBinError(i+1);
-      g70->SetPoint(i,x,y);
-      g70->SetPointError(i,x_err,y_err);
-
-      y = map_obsch_histos[7].at(1)->GetBinContent(i+1);
-      y_err = map_obsch_histos[7].at(1)->GetBinError(i+1);
-
-      g71->SetPoint(i,x,y);
-      g71->SetPointError(i,x_err,y_err);
-
-      //map_obsch_histos[7].at(0)->Draw();
-      //map_obsch_histos[7].at(1)->Draw("same");
-      //map_obsch_histos[7].at(1)->SetLineColor(2);
-    }
-
-    g70->Draw("A*");  g70->SetTitle("NC pio");
-    g70->SetMarkerStyle(20);
-    g71->Draw("*same");
-    g71->SetMarkerStyle(21);
-    g71->SetMarkerColor(2);
-    g71->SetLineColor(2);
-
-  }else if (flag_err == 2 || flag_err ==3){
-    c1.cd(1);
-    TGraphAsymmErrors *g10 = new TGraphAsymmErrors();
-    TGraphErrors *g11 = new TGraphErrors();
-    TGraph *g12 = new TGraph();
-    TGraph *g13 = new TGraph();
-    for (int i=0;i!=map_obsch_histos[1].at(0)->GetNbinsX()+1;i++){
-      double x = map_obsch_histos[1].at(0)->GetBinCenter(i+1);
-      double y = map_obsch_histos[1].at(0)->GetBinContent(i+1);
-      double x_err = 0;
-      auto result = cov.get_bayes_errors(y);
-      double y_err = 0;
-      g10->SetPoint(i,x,y);
-      g10->SetPointError(i,0,0,result.first, result.second);
-      y = map_obsch_histos[1].at(1)->GetBinContent(i+1);
-      y_err = map_obsch_histos[1].at(1)->GetBinError(i+1);
-      g11->SetPoint(i,x,y);
-      g11->SetPointError(i,x_err,y_err);
-      if(flag_check == 1){
-        y = map_obsch_histos[1].at(3)->GetBinContent(i+1);
-        g12->SetPoint(i,x,y);
-        y = map_obsch_histos[1].at(4)->GetBinContent(i+1);
-        g13->SetPoint(i,x,y);
-      }
-    }
-    g10->Draw("A*"); g10->SetTitle("nueCC FC");
-    g10->SetMarkerStyle(20);
-    g11->Draw("*same");
-    g11->SetMarkerStyle(21);
-    g11->SetMarkerColor(2);
-    g11->SetLineColor(2);
-    if(flag_check == 1){
-        g12->Draw("L same");
-        g12->SetLineStyle(kDashed);
-        g12->SetLineColor(kBlack);
-        g13->Draw("L same");
-        g13->SetLineStyle(kDashed);
-        g13->SetLineColor(kRed);
-    }
-
-    c1.cd(5);
-    TGraphAsymmErrors *g20 = new TGraphAsymmErrors();
-    TGraphErrors *g21 = new TGraphErrors();
-    TGraph *g22 = new TGraph();
-    TGraph *g23 = new TGraph();
-    for (int i=0;i!=map_obsch_histos[2].at(0)->GetNbinsX()+1;i++){
-      double x = map_obsch_histos[2].at(0)->GetBinCenter(i+1);
-      double y = map_obsch_histos[2].at(0)->GetBinContent(i+1);
-      double x_err = 0;
-      auto result = cov.get_bayes_errors(y);
-      double y_err = 0;
-      g20->SetPoint(i,x,y);
-      g20->SetPointError(i,0,0,result.first, result.second);
-      y = map_obsch_histos[2].at(1)->GetBinContent(i+1);
-      y_err = map_obsch_histos[2].at(1)->GetBinError(i+1);
-      g21->SetPoint(i,x,y);
-      g21->SetPointError(i,x_err,y_err);
-      if(flag_check == 1){
-        y = map_obsch_histos[2].at(3)->GetBinContent(i+1);
-        g22->SetPoint(i,x,y);
-        y = map_obsch_histos[2].at(4)->GetBinContent(i+1);
-        g23->SetPoint(i,x,y);
-      }
-    }
-    g20->Draw("A*");  g20->SetTitle("nueCC PC");
-    g20->SetMarkerStyle(20);
-    g21->Draw("*same");
-    g21->SetMarkerStyle(21);
-    g21->SetMarkerColor(2);
-    g21->SetLineColor(2);
-    if(flag_check == 1){
-        g22->Draw("L same");
-        g22->SetLineStyle(kDashed);
-        g22->SetLineColor(kBlack);
-        g23->Draw("L same");
-        g23->SetLineStyle(kDashed);
-        g23->SetLineColor(kRed);
-    }
-
-    c1.cd(2);
-    TGraphAsymmErrors *g30 = new TGraphAsymmErrors();
-    TGraphErrors *g31 = new TGraphErrors();
-    TGraph *g32 = new TGraph();
-    TGraph *g33 = new TGraph();
-    for (int i=0;i!=map_obsch_histos[3].at(0)->GetNbinsX()+1;i++){
-      double x = map_obsch_histos[3].at(0)->GetBinCenter(i+1);
-      double y = map_obsch_histos[3].at(0)->GetBinContent(i+1);
-      double x_err = 0;
-      auto result = cov.get_bayes_errors(y);
-      double y_err = 0;
-      g30->SetPoint(i,x,y);
-      g30->SetPointError(i,0,0,result.first, result.second);
-      y = map_obsch_histos[3].at(1)->GetBinContent(i+1);
-      y_err = map_obsch_histos[3].at(1)->GetBinError(i+1);
-      g31->SetPoint(i,x,y);
-      g31->SetPointError(i,x_err,y_err);
-      if(flag_check == 1){
-        y = map_obsch_histos[3].at(3)->GetBinContent(i+1);
-        g32->SetPoint(i,x,y);
-        y = map_obsch_histos[3].at(4)->GetBinContent(i+1);
-        g33->SetPoint(i,x,y);
-      }
-    }
-    g30->Draw("A*"); g30->SetTitle("numuCC FC");
-    g30->SetMarkerStyle(20);
-    g31->Draw("*same");
-    g31->SetMarkerStyle(21);
-    g31->SetMarkerColor(2);
-    g31->SetLineColor(2);
-    if(flag_check == 1){
-        g32->Draw("L same");
-        g32->SetLineStyle(kDashed);
-        g32->SetLineColor(kBlack);
-        g33->Draw("L same");
-        g33->SetLineStyle(kDashed);
-        g33->SetLineColor(kRed);
-    }
-
-    c1.cd(6);
-    TGraphAsymmErrors *g40 = new TGraphAsymmErrors();
-    TGraphErrors *g41 = new TGraphErrors();
-    TGraph *g42 = new TGraph();
-    TGraph *g43 = new TGraph();
-    for (int i=0;i!=map_obsch_histos[4].at(0)->GetNbinsX()+1;i++){
-      double x = map_obsch_histos[4].at(0)->GetBinCenter(i+1);
-      double y = map_obsch_histos[4].at(0)->GetBinContent(i+1);
-      double x_err = 0;
-      auto result = cov.get_bayes_errors(y);
-      double y_err = 0;
-      g40->SetPoint(i,x,y);
-      g40->SetPointError(i,0,0,result.first, result.second);
-      y = map_obsch_histos[4].at(1)->GetBinContent(i+1);
-      y_err = map_obsch_histos[4].at(1)->GetBinError(i+1);
-      g41->SetPoint(i,x,y);
-      g41->SetPointError(i,x_err,y_err);
-      if(flag_check == 1){
-        y = map_obsch_histos[4].at(3)->GetBinContent(i+1);
-        g42->SetPoint(i,x,y);
-        y = map_obsch_histos[4].at(4)->GetBinContent(i+1);
-        g43->SetPoint(i,x,y);
-      }
-    }
-    g40->Draw("A*");  g40->SetTitle("numuCC PC");
-    g40->SetMarkerStyle(20);
-    g41->Draw("*same");
-    g41->SetMarkerStyle(21);
-    g41->SetMarkerColor(2);
-    g41->SetLineColor(2);
-    if(flag_check == 1){
-        g42->Draw("L same");
-        g42->SetLineStyle(kDashed);
-        g42->SetLineColor(kBlack);
-        g43->Draw("L same");
-        g43->SetLineStyle(kDashed);
-        g43->SetLineColor(kRed);
-    }
-
-    c1.cd(3);
-    TGraphAsymmErrors *g50 = new TGraphAsymmErrors();
-    TGraphErrors *g51 = new TGraphErrors();
-    TGraph *g52 = new TGraph();
-    TGraph *g53 = new TGraph();
-    for (int i=0;i!=map_obsch_histos[5].at(0)->GetNbinsX()+1;i++){
-      double x = map_obsch_histos[5].at(0)->GetBinCenter(i+1);
-      double y = map_obsch_histos[5].at(0)->GetBinContent(i+1);
-      double x_err = 0;
-      auto result = cov.get_bayes_errors(y);
-      double y_err = 0;
-      g50->SetPoint(i,x,y);
-      g50->SetPointError(i,0,0,result.first, result.second);
-      y = map_obsch_histos[5].at(1)->GetBinContent(i+1);
-      y_err = map_obsch_histos[5].at(1)->GetBinError(i+1);
-      g51->SetPoint(i,x,y);
-      g51->SetPointError(i,x_err,y_err);
-      if(flag_check == 1){
-        y = map_obsch_histos[5].at(3)->GetBinContent(i+1);
-        g52->SetPoint(i,x,y);
-        y = map_obsch_histos[5].at(4)->GetBinContent(i+1);
-        g53->SetPoint(i,x,y);
-      }
-    }
-    g50->Draw("A*");  g50->SetTitle("CC pio FC");
-    g50->SetMarkerStyle(20);
-    g51->Draw("*same");
-    g51->SetMarkerStyle(21);
-    g51->SetMarkerColor(2);
-    g51->SetLineColor(2);
-    if(flag_check == 1){
-        g52->Draw("L same");
-        g52->SetLineStyle(kDashed);
-        g52->SetLineColor(kBlack);
-        g53->Draw("L same");
-        g53->SetLineStyle(kDashed);
-        g53->SetLineColor(kRed);
-    }
-
-    c1.cd(7);
-    TGraphAsymmErrors *g60 = new TGraphAsymmErrors();
-    TGraphErrors *g61 = new TGraphErrors();
-    TGraph *g62 = new TGraph();
-    TGraph *g63 = new TGraph();
-    for (int i=0;i!=map_obsch_histos[6].at(0)->GetNbinsX()+1;i++){
-      double x = map_obsch_histos[6].at(0)->GetBinCenter(i+1);
-      double y = map_obsch_histos[6].at(0)->GetBinContent(i+1);
-      double x_err = 0;
-      auto result = cov.get_bayes_errors(y);
-      double y_err = 0;
-      g60->SetPoint(i,x,y);
-      g60->SetPointError(i,0,0,result.first, result.second);
-      y = map_obsch_histos[6].at(1)->GetBinContent(i+1);
-      y_err = map_obsch_histos[6].at(1)->GetBinError(i+1);
-      g61->SetPoint(i,x,y);
-      g61->SetPointError(i,x_err,y_err);
-      if(flag_check == 1){
-        y = map_obsch_histos[6].at(3)->GetBinContent(i+1);
-        g62->SetPoint(i,x,y);
-        y = map_obsch_histos[6].at(4)->GetBinContent(i+1);
-        g63->SetPoint(i,x,y);
-      }
-    }
-    g60->Draw("A*"); g60->SetTitle("CCpio PC");
-    g60->SetMarkerStyle(20);
-    g61->Draw("*same");
-    g61->SetMarkerStyle(21);
-    g61->SetMarkerColor(2);
-    g61->SetLineColor(2);
-    if(flag_check == 1){
-        g62->Draw("L same");
-        g62->SetLineStyle(kDashed);
-        g62->SetLineColor(kBlack);
-        g63->Draw("L same");
-        g63->SetLineStyle(kDashed);
-        g63->SetLineColor(kRed);
-    }
-
-    c1.cd(4);
-    TGraphAsymmErrors *g70 = new TGraphAsymmErrors();
-    TGraphErrors *g71 = new TGraphErrors();
-    TGraph *g72 = new TGraph();
-    TGraph *g73 = new TGraph();
-    for (int i=0;i!=map_obsch_histos[7].at(0)->GetNbinsX()+1;i++){
-      double x = map_obsch_histos[7].at(0)->GetBinCenter(i+1);
-      double y = map_obsch_histos[7].at(0)->GetBinContent(i+1);
-      double x_err = 0;
-      auto result = cov.get_bayes_errors(y);
-      double y_err = 0;
-      g70->SetPoint(i,x,y);
-      g70->SetPointError(i,0,0,result.first, result.second);
-      y = map_obsch_histos[7].at(1)->GetBinContent(i+1);
-      y_err = map_obsch_histos[7].at(1)->GetBinError(i+1);
-      g71->SetPoint(i,x,y);
-      g71->SetPointError(i,x_err,y_err);
-      if(flag_check == 1){
-        y = map_obsch_histos[7].at(3)->GetBinContent(i+1);
-        g72->SetPoint(i,x,y);
-        y = map_obsch_histos[7].at(4)->GetBinContent(i+1);
-        g73->SetPoint(i,x,y);
-      }
-    }
-    g70->Draw("A*");g70->SetTitle("NCpio " );
-    g70->SetMarkerStyle(20);
-    g71->Draw("*same");
-    g71->SetMarkerStyle(21);
-    g71->SetMarkerColor(2);
-    g71->SetLineColor(2);
-    if(flag_check == 1){
-        g72->Draw("L same");
-        g72->SetLineStyle(kDashed);
-        g72->SetLineColor(kBlack);
-        g73->Draw("L same");
-        g73->SetLineStyle(kDashed);
-        g73->SetLineColor(kRed);
-    }
-
-  }
-  theApp.Run();
+      cout<<"flag_breakdown = 0!"<<endl;
   }
   else // flag_breakdown == true
   {
@@ -926,6 +391,7 @@ int main( int argc, char** argv )
 
     int nchannels = map_obsch_subhistos.size();
     TCanvas *canvas[nchannels];
+    TCanvas *canvas3[nchannels];
     TGraphAsymmErrors *gr[nchannels];
     TGraphAsymmErrors *gratio_mc[nchannels];
     TGraphAsymmErrors *gratio_mc2[nchannels]; // to plot uncertainty
@@ -934,6 +400,7 @@ int main( int argc, char** argv )
     THStack *hstack[nchannels];
     TLegend *legend[nchannels];
     TLegend *legend2[nchannels];
+    TLegend *legend3[nchannels];
 
     float scale_amount = 1.0;
     float signal_amount = 0.0;
@@ -959,6 +426,8 @@ int main( int argc, char** argv )
         std::cout<<"Channel: "<<obschannel<<std::endl;
         if (obschannel != 1) continue;
         canvas[obschannel-1] = new TCanvas(Form("canvas%d", obschannel), Form("channel%d", obschannel), 1200, 900);
+        canvas3[obschannel-1] = new TCanvas(Form("canvas3%d", obschannel), Form("channel3%d", obschannel), 1200, 900);
+        canvas[obschannel-1]->cd();
         TPad *pad1 = new TPad("pad1", "", 0.01,0.01,0.99,0.99,0,0,0);
         TPad *pad2 = new TPad("pad2", "", 0.01,0.01,0.99,0.3,0,0,0);
         pad1->SetBottomMargin(0.20);
@@ -968,10 +437,11 @@ int main( int argc, char** argv )
         pad2->SetLeftMargin(0.12);
         pad2->SetRightMargin(0.1);
         pad2->SetBottomMargin(0.20);
-        pad1->Draw();
+        //pad1->Draw();
         //pad2->Draw();
         hstack[obschannel-1] = new THStack(Form("hs%d", obschannel),"");
         legend[obschannel-1] = new TLegend(0.15, 0.60, 0.88, 0.92);
+        legend3[obschannel-1] = new TLegend(0.15, 0.60, 0.88, 0.92);
         TH1F* hdata = (TH1F*)map_obsch_histos[obschannel].at(0)->Clone("hdata");
         TH1F* hbadmatch = (TH1F*)hdata->Clone("hbadmatch");
         TH1F* hnumuCCinFV = (TH1F*)hdata->Clone("hnumuCCinFV");
@@ -1233,7 +703,8 @@ int main( int argc, char** argv )
                 }
             }
         }
-        pad1->cd();
+        //pad1->cd();
+        canvas[obschannel-1]->cd();
         gStyle->SetOptTitle(kFALSE);
         float datapot = 0;
         float datapot_numi = 0;
@@ -1247,9 +718,13 @@ int main( int argc, char** argv )
 
         gr[obschannel-1] = new TGraphAsymmErrors();
         legend[obschannel-1]->SetNColumns(2);
+        legend3[obschannel-1]->SetNColumns(2);
         // numi channels
         if(obschannel==999) legend[obschannel-1]->AddEntry((TObject*)0, Form("NuMI POT: %.3e", datapot_numi*scalePOT), "");
-        else legend[obschannel-1]->AddEntry((TObject*)0, Form("Data POT: %.3e", datapot*scalePOT), "");
+        else {
+          legend[obschannel-1]->AddEntry((TObject*)0, Form("Data POT: %.3e", datapot*scalePOT), "");
+          legend3[obschannel-1]->AddEntry((TObject*)0, Form("Data POT: %.3e", datapot*scalePOT), "");
+        }
         //else legend[obschannel-1]->AddEntry((TObject*)0, Form("Scaled to POT: %.3e", datapot*scalePOT), "");
         //remove for style
         //legend[obschannel-1]->AddEntry((TObject*)0, Form("#chi^{2}/ndf=%.2f/%d", GOF[obschannel-1].first, GOF[obschannel-1].second), "");
@@ -1717,41 +1192,72 @@ int main( int argc, char** argv )
         hdata->Add(hmc,-1);
 
         legend[obschannel-1]->AddEntry(gr[obschannel-1], Form("BNB data, %.1f", hdata->Integral()*scalePOT), "lp");
+        legend3[obschannel-1]->AddEntry(gr[obschannel-1], Form("BNB data, %.1f", hdata->Integral()*scalePOT), "lp");
 
         float excessymax = hdata->GetBinContent(hdata->GetMaximumBin())*scalePOT/normalization;
+        float excessymin = hdata->GetBinContent(hdata->GetMinimumBin())*scalePOT/normalization;
         hdata->SetMaximum(3.0*excessymax);
-        hdata->GetYaxis()->SetRangeUser(-0.02*excessymax, 2.7*excessymax);
+        //hdata->GetYaxis()->SetRangeUser(-0.02*excessymax, 2.7*excessymax);
+        if (excessymin > 0.0) excessymin = 0.0;
+        hdata->GetYaxis()->SetRangeUser(excessymin - 0.02*excessymax, 2.7*excessymax);
 
         hdata->SetLineColor(kWhite);
         hdata->Draw("hist");
+
+        canvas3[obschannel-1]->cd();
+        hdata->Draw("hist");
+        canvas[obschannel-1]->cd();
 
         //if (obschannel==1){
             //legend[obschannel-1]->SetTextSize(0.03);
 
             double scalechi2 = hdata->Chi2Test(h1gscale,"CHI2");
+            double scaleKS = hdata->KolmogorovTest(h1gscale, "O");
             //legend[obschannel-1]->AddEntry(h1gscale, Form("Signal x %.2f, %.1f, #chi^{2} = %.2f", scale_amount, signal_amount, scalechi2), "F");
             //legend[obschannel-1]->AddEntry(h1gscale, Form("Signal x %.2f, #chi^{2} = %.2f", scale_amount - 1.0, scalechi2), "l");
             //h1gscale->Draw("hist same");
 
             double scalechi2_NCpi1g = hdata->Chi2Test(hNCpi1gscale,"CHI2");
-            legend[obschannel-1]->AddEntry(hNCpi1gscale, Form("NC #pi^{0} 1#gamma x %.2f, #chi^{2} = %.2f", scale_amount_NCpi1g - 1.0, scalechi2_NCpi1g), "l");
+            double scaleKS_NCpi1g = hdata->KolmogorovTest(hNCpi1gscale,"O");
+            //legend[obschannel-1]->AddEntry(hNCpi1gscale, Form("NC #pi^{0} 1#gamma x %.2f, #chi^{2} = %.2f", scale_amount_NCpi1g - 1.0, scalechi2_NCpi1g), "l");
+            legend[obschannel-1]->AddEntry(hNCpi1gscale, Form("NC #pi^{0} 1#gamma x %.2f, KS = %.2f", scale_amount_NCpi1g - 1.0, scaleKS_NCpi1g), "l");
+            legend3[obschannel-1]->AddEntry(hNCpi1gscale, Form("NC #pi^{0} 1#gamma x %.2f, KS = %.2f", scale_amount_NCpi1g - 1.0, scaleKS_NCpi1g), "l");
             hNCpi1gscale->Draw("hist same");
+            canvas3[obschannel-1]->cd();
+            hNCpi1gscale->Draw("hist same");
+            canvas[obschannel-1]->cd();
 
             double scalechi2_NCdel = hdata->Chi2Test(hNCdelscale,"CHI2");
-            legend[obschannel-1]->AddEntry(hNCdelscale, Form("NC #Delta 1#gamma x %.2f, #chi^{2} = %.2f", scale_amount_NCdel - 1.0, scalechi2_NCdel), "l");
-            hNCdelscale->Draw("hist same");     
+            double scaleKS_NCdel = hdata->KolmogorovTest(hNCdelscale,"O");
+            //legend[obschannel-1]->AddEntry(hNCdelscale, Form("NC #Delta 1#gamma x %.2f, #chi^{2} = %.2f", scale_amount_NCdel - 1.0, scalechi2_NCdel), "l");
+            legend[obschannel-1]->AddEntry(hNCdelscale, Form("NC #Delta 1#gamma x %.2f, KS = %.2f", scale_amount_NCdel - 1.0, scaleKS_NCdel), "l");
+            legend3[obschannel-1]->AddEntry(hNCdelscale, Form("NC #Delta 1#gamma x %.2f, KS = %.2f", scale_amount_NCdel - 1.0, scaleKS_NCdel), "l");
+            hNCdelscale->Draw("hist same");    
+            canvas3[obschannel-1]->cd();
+            hNCdelscale->Draw("hist same"); 
+            canvas[obschannel-1]->cd(); 
 
             double scalechi2_NCother = hdata->Chi2Test(hNCotherscale,"CHI2");
-            legend[obschannel-1]->AddEntry(hNCotherscale, Form("NC Other 1#gamma x %.2f, #chi^{2} = %.2f", scale_amount_NCother - 1.0, scalechi2_NCother), "l");
+            double scaleKS_NCother = hdata->KolmogorovTest(hNCotherscale,"O");
+            //legend[obschannel-1]->AddEntry(hNCotherscale, Form("NC Other 1#gamma x %.2f, #chi^{2} = %.2f", scale_amount_NCother - 1.0, scalechi2_NCother), "l");
+            legend[obschannel-1]->AddEntry(hNCotherscale, Form("NC Other 1#gamma x %.2f, KS = %.2f", scale_amount_NCother - 1.0, scaleKS_NCother), "l");
             hNCotherscale->Draw("hist same"); 
 
             double scalechi2_numuCC1g = hdata->Chi2Test(hnumuCC1gscale,"CHI2");
-            legend[obschannel-1]->AddEntry(hnumuCC1gscale, Form("#nu_{#mu}CC 1#gamma x %.2f, #chi^{2} = %.2f", scale_amount_numuCC1g - 1.0, scalechi2_numuCC1g), "l");
+            double scaleKS_numuCC1g = hdata->KolmogorovTest(hnumuCC1gscale,"O");
+            //legend[obschannel-1]->AddEntry(hnumuCC1gscale, Form("#nu_{#mu}CC 1#gamma x %.2f, #chi^{2} = %.2f", scale_amount_numuCC1g - 1.0, scalechi2_numuCC1g), "l");
+            legend[obschannel-1]->AddEntry(hnumuCC1gscale, Form("#nu_{#mu}CC 1#gamma x %.2f, KS = %.2f", scale_amount_numuCC1g - 1.0, scaleKS_numuCC1g), "l");
             hnumuCC1gscale->Draw("hist same");
 
             double scalechi2_out1g = hdata->Chi2Test(hout1gscale,"CHI2");
-            legend[obschannel-1]->AddEntry(hout1gscale, Form("out of FV 1#gamma x %.2f, #chi^{2} = %.2f", scale_amount_out1g - 1.0, scalechi2_out1g), "l");
+            double scaleKS_out1g = hdata->KolmogorovTest(hout1gscale,"O");
+            //legend[obschannel-1]->AddEntry(hout1gscale, Form("out of FV 1#gamma x %.2f, #chi^{2} = %.2f", scale_amount_out1g - 1.0, scalechi2_out1g), "l");
+            legend[obschannel-1]->AddEntry(hout1gscale, Form("out of FV 1#gamma x %.2f, KS = %.2f", scale_amount_out1g - 1.0, scaleKS_out1g), "l");
+            legend3[obschannel-1]->AddEntry(hout1gscale, Form("out of FV 1#gamma x %.2f, KS = %.2f", scale_amount_out1g - 1.0, scaleKS_out1g), "l");
             hout1gscale->Draw("hist same");
+            canvas3[obschannel-1]->cd();
+            hout1gscale->Draw("hist same");
+            canvas[obschannel-1]->cd(); 
 
             double scalechi2_ext = hdata->Chi2Test(hextscale,"CHI2");
             //legend[obschannel-1]->AddEntry(hextscale, Form("EXT x %.2f, #chi^{2} = %.2f", scale_amount_ext - 1.0, scalechi2_ext), "l");
@@ -1759,7 +1265,9 @@ int main( int argc, char** argv )
 
             if (flag_leeexist){
               double scalechi2_LEE = hdata->Chi2Test(hLEEscale,"CHI2");
-              legend[obschannel-1]->AddEntry(hLEEscale, Form("LEE x %.2f, #chi^{2} = %.2f", scale_amount_LEE, scalechi2_LEE), "l");
+              double scaleKS_LEE = hdata->KolmogorovTest(hLEEscale,"O");
+              //legend[obschannel-1]->AddEntry(hLEEscale, Form("LEE x %.2f, #chi^{2} = %.2f", scale_amount_LEE, scalechi2_LEE), "l");
+              legend[obschannel-1]->AddEntry(hLEEscale, Form("LEE x %.2f, KS = %.2f", scale_amount_LEE, scaleKS_LEE), "l");
               hLEEscale->Draw("hist same");
             }
         //}
@@ -1837,7 +1345,13 @@ int main( int argc, char** argv )
         //remove for style
         //legend[obschannel-1]->SetHeader(Form("#SigmaDATA/#Sigma(MC+EXT)=%.2f#pm%.2f(data err)#pm%.2f(pred err)", data_pred_ratio, relerr_data*data_pred_ratio, relerr_pred*data_pred_ratio), "C");
         legend[obschannel-1]->Draw();
-        pad1->Modified();
+        canvas[obschannel-1]->Modified();
+        canvas3[obschannel-1]->cd();
+        legend3[obschannel-1]->Draw();
+        canvas3[obschannel-1]->Modified();
+        canvas[obschannel-1]->cd();         
+
+        //pad1->Modified();
         /*pad2->cd();
         gratio_mc[obschannel-1]->Draw("a2");
         gratio_mc[obschannel-1]->SetFillColor(kBlue-10);
@@ -1881,106 +1395,12 @@ int main( int argc, char** argv )
         hdata->GetYaxis()->SetTitleFont(22);//132);
         hdata->GetYaxis()->SetLabelFont(22);//132);
 
-        pad1->Modified();
-        //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reconstructed Shower Cosine Angle");
-        //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Number of Tracks");
-        //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("#nu_{e}CC BDT Score");
-        //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Neutrino Energy [MeV]");
-        //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("NC#pi^{0} BDT Score");
-        //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco #pi^{0} Mass [MeV]");
-        //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Number of Showers");
-        //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("");
-        //gratio_mc[obschannel-1]->GetXaxis()->SetBinLabel(1,"Np");
-        //gratio_mc[obschannel-1]->GetXaxis()->SetBinLabel(2,"0p");
-
-
-        //else gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco neutrino vtx in X-axis [cm]");
-        /* if(obschannel <=26) */
-        /*     gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco neutrino energy [MeV]"); */
-        /* else */
-        //    gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco muon kinetic energy [MeV]");
-        ///hack
-        /* if(obschannel<=2) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco electron shower energy [MeV]"); */
-        /* else if(obschannel==3) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("nue BDT score"); */
-        /* if(obschannel==1) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Median dQ/dx (1-5 cm) [43k e-/cm]"); */
-        /* if(obschannel==2) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Shower angle to beam (Z-axis) [degree]"); */
-        /* if(obschannel==3) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Shower angle to vertical-up (Y-axis) [degree]"); */
-        /* if(obschannel==4) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Shower vertex in X-axis [cm]"); */
-         /* if(obschannel==1) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco neutrino vtx in X-axis [cm]"); */
-         /* if(obschannel==2) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco neutrino vtx in X-axis [cm]"); */
-         /* if(obschannel==3) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco neutrino vtx in Y-axis [cm]"); */
-         /* if(obschannel==4) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco neutrino vtx in Y-axis [cm]"); */
-         /* if(obschannel==5) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco neutrino vtx in Z-axis [cm]"); */
-         /* if(obschannel==6) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco neutrino vtx in Z-axis [cm]"); */
-         /* if(obschannel==7) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco neutrino energy [MeV]"); */
-         /* if(obschannel==8) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco neutrino energy [MeV]"); */
-         /* if(obschannel==9) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco neutrino energy [MeV]"); */
-        /* if(obschannel==7) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Number of gaps in reco shower"); */
-        /* if(obschannel==8) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Number of gaps in reco shower"); */
-        /* if(obschannel==1) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco muon kinetic energy [MeV]"); */
-        /* if(obschannel==2) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco muon kinetic energy [MeV]"); */
-        /* if(obschannel==3) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco muon cos#theta (relative to Z/beam) [degree]"); */
-        /* if(obschannel==4) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco muon cos#theta (relative to Z/beam) [degree]"); */
-        /* if(obschannel==5) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco muon #phi (X-Y plane) [degree]"); */
-        /* if(obschannel==6) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco muon #phi (X-Y plane) [degree]"); */
-        /*  if(obschannel==7) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco neutrino vtx in X-axis [cm]"); */
-        /*  if(obschannel==8) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco neutrino vtx in X-axis [cm]"); */
-        /*  if(obschannel==9) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco neutrino vtx in Y-axis [cm]"); */
-        /*  if(obschannel==10) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco neutrino vtx in Y-axis [cm]"); */
-        /*  if(obschannel==11) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco neutrino vtx in Z-axis [cm]"); */
-        /*  if(obschannel==12) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco neutrino vtx in Z-axis [cm]"); */
-        /* if(obschannel==7) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco muon kinetic energy [MeV]"); */
-        /* if(obschannel==8) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco muon kinetic energy [MeV]"); */
-        /* if(obschannel==9) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco muon cos#theta (relative to Z/beam) [degree]"); */
-        /* if(obschannel==10) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco muon cos#theta (relative to Z/beam) [degree]"); */
-        /* if(obschannel==11) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco muon #phi (X-Y plane) [degree]"); */
-        /* if(obschannel==12) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco muon #phi (X-Y plane) [degree]"); */
-        /* if(obschannel==13) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Median dEdx (1-5 cm) [MeV/cm]"); */
-        /* if(obschannel==7) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco hadronic energy [MeV]"); */
-        /* if(obschannel==8) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco hadronic energy [MeV]"); */
-        /* if(obschannel==9) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco neutrino energy [MeV]"); */
-        /* if(obschannel==10) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco neutrino energy [MeV]"); */
-        /* if(obschannel==11) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco neutrino energy [MeV]"); */
-        /* if(obschannel==12) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco neutrino energy [MeV]"); */
-        /* if(obschannel==1) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco neutrino energy [MeV]"); */
-        /* if(obschannel==2) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco neutrino energy [MeV]"); */
-        /* if(obschannel==3) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Q^{2} (4 momentum transfer) [GeV^{2}]"); */
-        /* if(obschannel==4) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Q^{2} (4 momentum transfer) [GeV^{2}]"); */
-        /* if(obschannel==5) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco x_{bj} (Bjorken variable)"); */
-        /* if(obschannel==6) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco x_{bj} (Bjorken variable)"); */
-        /* if(obschannel==7) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco neutrino energy [MeV]"); */
-        /* if(obschannel==8) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco neutrino energy [MeV]"); */
-        /* if(obschannel==9) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Q^{2} (4 momentum transfer) [GeV^{2}]"); */
-        /* if(obschannel==10) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Q^{2} (4 momentum transfer) [GeV^{2}]"); */
-        /* if(obschannel==11) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco x_{bj} (Bjorken variable)"); */
-        /* if(obschannel==12) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco x_{bj} (Bjorken variable)"); */
-        /* if(obschannel==13) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco hadronic energy [MeV]"); */
-        /* if(obschannel==14) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco hadronic energy [MeV]"); */
-        /* if(obschannel==15) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco hadronic energy [MeV]"); */
-        /* if(obschannel==16) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco hadronic energy [MeV]"); */
-        /* if(obschannel==1 || obschannel==2) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Number of reco tracks"); */
-        /* if(obschannel==3 || obschannel==4) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Number of reco showers"); */
-        /* if(obschannel==5 || obschannel==6) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Ehadron [MeV]"); */
-        /* if(obschannel==1) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("br3_8_max_dQ_dx [43k e-/cm]"); */
-        /* if(obschannel==2) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("tro_1_score"); */
-        /* if(obschannel==3) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("tro_4_score"); */
-        /* if(obschannel==4) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("sig_2_score"); */
-        /* if(obschannel==5) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("stem_dir_angle3 [degree]"); */
-        /* if(obschannel==6) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("br3_3_score"); */
-        /* if(obschannel==7) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("pio_2_score"); */
-        /* if(obschannel==8) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("spt_angle_vertical [degree]"); */
-        /* if(obschannel==9) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("br1_2_max_length_ratio"); */
-        /* if(obschannel==1) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Emuon [MeV]"); */
-        /* if(obschannel==2) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Emuon [MeV]"); */
-        /* if(obschannel==3) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Muon cos#theta"); */
-        /* if(obschannel==4) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Muon cos#theta"); */
-        /* if(obschannel==5) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Ehadron [MeV]"); */
-        /* if(obschannel==6) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Ehadron [MeV]"); */
-        /* if(obschannel==7) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Neutrino energy [MeV]"); */
-        /* if(obschannel==8) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Neutrino energy [MeV]"); */
-
-        //hack end
-
+        canvas[obschannel-1]->Modified();
+        canvas3[obschannel-1]->Modified();
+        canvas[obschannel-1]->cd();
+        //pad1->Modified();
+      
+        
         gratio_mc[obschannel-1]->GetXaxis()->SetTitleSize(0.1);
         gratio_mc[obschannel-1]->GetXaxis()->SetLabelSize(0.1);
         gratio_mc[obschannel-1]->GetYaxis()->SetTitleSize(0.1);
@@ -2005,13 +1425,25 @@ int main( int argc, char** argv )
         hist->Draw("axis same");
         hist->GetYaxis()->SetNdivisions(405);
 
+        canvas3[obschannel-1]->cd();
+        hist->Draw("axis same");
+        hist->GetYaxis()->SetNdivisions(405);
+        canvas[obschannel-1]->cd();
+
+        
+
         TLine* line;
-        line = new TLine(hmc->GetXaxis()->GetXmin(),1,hmc->GetXaxis()->GetXmax(),1);
+        line = new TLine(hmc->GetXaxis()->GetXmin(),1,hmc->GetXaxis()->GetXmax(),0);
         //if(obschannel==5 || obschannel==6) line = new TLine(0,1,1200,1);
         //change for no pad2
         //line->Draw();
         line->SetLineWidth(2);
         line->SetLineStyle(kDashed);
+        line->Draw("same");
+        canvas3[obschannel-1]->cd();
+        line->Draw("same");
+        canvas[obschannel-1]->cd();
+
         legend2[obschannel-1] = new TLegend(0.2, 0.7, 0.8, 0.95);
         legend2[obschannel-1]->SetNColumns(2);
         if(flag_err==1) legend2[obschannel-1]->AddEntry(gratio_mc[obschannel-1],"Pred stat uncertainty", "F");
@@ -2025,7 +1457,7 @@ int main( int argc, char** argv )
         legend2[obschannel-1]->SetFillStyle(0);
         //change for no pad 2
        // legend2[obschannel-1]->Draw();
-        pad2->Modified();
+       // pad2->Modified();
 
         canvas[obschannel-1]->Print((TString)hdata->GetTitle()+"_scale.png");
         canvas[obschannel-1]->Print(Form("scale_canvas%d.pdf", obschannel));
@@ -2034,7 +1466,12 @@ int main( int argc, char** argv )
         else if(obschannel==nchannels) canvas[obschannel-1]->Print("scale_selection.pdf)");
         else canvas[obschannel-1]->Print("scale_selection.pdf");*/
 
-        canvas[obschannel-1]->Print("scale_selection.pdf");
+        canvas3[obschannel-1]->Print("scale_selection_3.pdf");
+
+        canvas3[obschannel-1]->Print((TString)hdata->GetTitle()+"_scale_3.png");
+        canvas3[obschannel-1]->Print(Form("scale_canvas%d_3.pdf", obschannel));
+
+        canvas3[obschannel-1]->Print("scale_selection_3.pdf");
 
 
     }
