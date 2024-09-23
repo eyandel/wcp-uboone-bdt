@@ -1199,7 +1199,7 @@ int main( int argc, char** argv )
         hdata->SetMaximum(3.0*excessymax);
         //hdata->GetYaxis()->SetRangeUser(-0.02*excessymax, 2.7*excessymax);
         if (excessymin > 0.0) excessymin = 0.0;
-        hdata->GetYaxis()->SetRangeUser(2.0*excessymin - 0.02*excessymax, 2.7*excessymax);
+        hdata->GetYaxis()->SetRangeUser(10.0*excessymin - 0.02*excessymax, 2.7*excessymax);
 
         hdata->SetLineColor(kWhite);
         hdata->Draw("hist");
@@ -1325,6 +1325,9 @@ int main( int argc, char** argv )
         gr[obschannel-1]->SetMarkerStyle(20);
         gr[obschannel-1]->SetMarkerSize(1.5);
         gr[obschannel-1]->SetLineColor(kBlack);
+        canvas3[obschannel-1]->cd();
+        gr[obschannel-1]->Draw("P same");
+        canvas[obschannel-1]->cd();
         if(flag_check == 1){
             TH1F* hcheck_data = (TH1F*)map_obsch_histos[obschannel].at(3);
             TH1F* hcheck_pred = (TH1F*)map_obsch_histos[obschannel].at(4);
