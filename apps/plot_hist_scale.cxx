@@ -1433,7 +1433,7 @@ int main( int argc, char** argv )
         
 
         TLine* line;
-        line = new TLine(hmc->GetXaxis()->GetXmin(),1,hmc->GetXaxis()->GetXmax(),0);
+        line = new TLine(hmc->GetXaxis()->GetXmin(),0,hmc->GetXaxis()->GetXmax(),0);
         //if(obschannel==5 || obschannel==6) line = new TLine(0,1,1200,1);
         //change for no pad2
         //line->Draw();
