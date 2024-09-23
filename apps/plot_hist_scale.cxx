@@ -718,7 +718,7 @@ int main( int argc, char** argv )
 
         gr[obschannel-1] = new TGraphAsymmErrors();
         legend[obschannel-1]->SetNColumns(2);
-        legend3[obschannel-1]->SetNColumns(2);
+        //legend3[obschannel-1]->SetNColumns(2);
         // numi channels
         if(obschannel==999) legend[obschannel-1]->AddEntry((TObject*)0, Form("NuMI POT: %.3e", datapot_numi*scalePOT), "");
         else {
@@ -1199,7 +1199,7 @@ int main( int argc, char** argv )
         hdata->SetMaximum(3.0*excessymax);
         //hdata->GetYaxis()->SetRangeUser(-0.02*excessymax, 2.7*excessymax);
         if (excessymin > 0.0) excessymin = 0.0;
-        hdata->GetYaxis()->SetRangeUser(excessymin - 0.02*excessymax, 2.7*excessymax);
+        hdata->GetYaxis()->SetRangeUser(2.0*excessymin - 0.02*excessymax, 2.7*excessymax);
 
         hdata->SetLineColor(kWhite);
         hdata->Draw("hist");
