@@ -1200,7 +1200,7 @@ int main( int argc, char** argv )
         //hdata->GetYaxis()->SetRangeUser(-0.02*excessymax, 2.7*excessymax);
         if (excessymin > 0.0) excessymin = 0.0;
         hdata->GetYaxis()->SetRangeUser(10.0*excessymin - 0.02*excessymax, 2.7*excessymax);
-        hdata->GetXaxis()->SetRange(0, hdata->GetNbinsX() + 1);
+        hdata->GetXaxis()->SetRange(1, hdata->GetNbinsX() + 1);
 
         hdata->SetLineColor(kWhite);
         hdata->Draw("hist");
@@ -1223,6 +1223,7 @@ int main( int argc, char** argv )
             //legend[obschannel-1]->AddEntry(hNCpi1gscale, Form("NC #pi^{0} 1#gamma x %.2f, #chi^{2} = %.2f", scale_amount_NCpi1g - 1.0, scalechi2_NCpi1g), "l");
             legend[obschannel-1]->AddEntry(hNCpi1gscale, Form("#splitline{NC #pi^{0} 1#gamma x %.2f, }{KS = %.2f}", scale_amount_NCpi1g - 1.0, scaleKS_NCpi1g), "l");
             legend3[obschannel-1]->AddEntry(hNCpi1gscale, Form("NC #pi^{0} 1#gamma x %.2f, KS = %.2f", scale_amount_NCpi1g - 1.0, scaleKS_NCpi1g), "l");
+            hNCpi1gscale->GetXaxis()->SetRange(1, hNCpi1gscale->GetNbinsX() + 1);
             hNCpi1gscale->Draw("hist same");
             canvas3[obschannel-1]->cd();
             hNCpi1gscale->Draw("hist same");
@@ -1233,6 +1234,7 @@ int main( int argc, char** argv )
             //legend[obschannel-1]->AddEntry(hNCdelscale, Form("NC #Delta 1#gamma x %.2f, #chi^{2} = %.2f", scale_amount_NCdel - 1.0, scalechi2_NCdel), "l");
             legend[obschannel-1]->AddEntry(hNCdelscale, Form("#splitline{NC #Delta 1#gamma x %.2f, }{KS = %.2f}", scale_amount_NCdel - 1.0, scaleKS_NCdel), "l");
             legend3[obschannel-1]->AddEntry(hNCdelscale, Form("NC #Delta 1#gamma x %.2f, KS = %.2f", scale_amount_NCdel - 1.0, scaleKS_NCdel), "l");
+            hNCdelscale->GetXaxis()->SetRange(1, hNCdelscale->GetNbinsX() + 1);
             hNCdelscale->Draw("hist same");    
             canvas3[obschannel-1]->cd();
             hNCdelscale->Draw("hist same"); 
@@ -1242,12 +1244,14 @@ int main( int argc, char** argv )
             double scaleKS_NCother = hdata->KolmogorovTest(hNCotherscale,"O");
             //legend[obschannel-1]->AddEntry(hNCotherscale, Form("NC Other 1#gamma x %.2f, #chi^{2} = %.2f", scale_amount_NCother - 1.0, scalechi2_NCother), "l");
             legend[obschannel-1]->AddEntry(hNCotherscale, Form("#splitline{NC Other 1#gamma x %.2f, }{KS = %.2f}", scale_amount_NCother - 1.0, scaleKS_NCother), "l");
+            hNCotherscale->GetXaxis()->SetRange(1, hNCotherscale->GetNbinsX() + 1);
             hNCotherscale->Draw("hist same"); 
 
             double scalechi2_numuCC1g = hdata->Chi2Test(hnumuCC1gscale,"CHI2");
             double scaleKS_numuCC1g = hdata->KolmogorovTest(hnumuCC1gscale,"O");
             //legend[obschannel-1]->AddEntry(hnumuCC1gscale, Form("#nu_{#mu}CC 1#gamma x %.2f, #chi^{2} = %.2f", scale_amount_numuCC1g - 1.0, scalechi2_numuCC1g), "l");
             legend[obschannel-1]->AddEntry(hnumuCC1gscale, Form("#splitline{#nu_{#mu}CC 1#gamma x %.2f, }{KS = %.2f}", scale_amount_numuCC1g - 1.0, scaleKS_numuCC1g), "l");
+            hnumuCC1gscale->GetXaxis()->SetRange(1, hnumuCC1gscale->GetNbinsX() + 1);
             hnumuCC1gscale->Draw("hist same");
 
             double scalechi2_out1g = hdata->Chi2Test(hout1gscale,"CHI2");
@@ -1255,6 +1259,7 @@ int main( int argc, char** argv )
             //legend[obschannel-1]->AddEntry(hout1gscale, Form("out of FV 1#gamma x %.2f, #chi^{2} = %.2f", scale_amount_out1g - 1.0, scalechi2_out1g), "l");
             legend[obschannel-1]->AddEntry(hout1gscale, Form("#splitline{out of FV 1#gamma x %.2f, }{KS = %.2f}", scale_amount_out1g - 1.0, scaleKS_out1g), "l");
             legend3[obschannel-1]->AddEntry(hout1gscale, Form("out of FV 1#gamma x %.2f, KS = %.2f", scale_amount_out1g - 1.0, scaleKS_out1g), "l");
+            hout1gscale->GetXaxis()->SetRange(1, hout1gscale->GetNbinsX() + 1);
             hout1gscale->Draw("hist same");
             canvas3[obschannel-1]->cd();
             hout1gscale->Draw("hist same");
@@ -1269,6 +1274,7 @@ int main( int argc, char** argv )
               double scaleKS_LEE = hdata->KolmogorovTest(hLEEscale,"O");
               //legend[obschannel-1]->AddEntry(hLEEscale, Form("LEE x %.2f, #chi^{2} = %.2f", scale_amount_LEE, scalechi2_LEE), "l");
               legend[obschannel-1]->AddEntry(hLEEscale, Form("#splitline{LEE x %.2f, }{KS = %.2f}", scale_amount_LEE, scaleKS_LEE), "l");
+              hLEEscale->GetXaxis()->SetRange(1, hLEEscale->GetNbinsX() + 1);
               hLEEscale->Draw("hist same");
             }
         //}
