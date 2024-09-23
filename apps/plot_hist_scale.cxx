@@ -1284,7 +1284,7 @@ int main( int argc, char** argv )
         gratio_data[obschannel-1] = new TGraphAsymmErrors();
         gratio_data2[obschannel-1] = new TGraphAsymmErrors();
         float maxratio = 1.5;
-        for(int i=0; i<hdata->GetNbinsX(); i++)
+        for(int i=0; i<hdata->GetNbinsX()+1; i++)
         {
             double x = hdata->GetBinCenter(i+1);
             double x_err = hdata->GetBinWidth(1)*0.5;
@@ -1327,6 +1327,7 @@ int main( int argc, char** argv )
                 else gratio_data2[obschannel-1]->SetPointError(i, x_err, x_err, 0, 0);
             }
         }
+        //gr[obschannel-1]->GetXaxis()->SetRange(1, gr[obschannel-1]->GetNbinsX() + 1);
         gr[obschannel-1]->Draw("P same");
         gr[obschannel-1]->SetLineWidth(2);
         gr[obschannel-1]->SetMarkerStyle(20);
