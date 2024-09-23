@@ -1220,7 +1220,7 @@ int main( int argc, char** argv )
             double scalechi2_NCpi1g = hdata->Chi2Test(hNCpi1gscale,"CHI2");
             double scaleKS_NCpi1g = hdata->KolmogorovTest(hNCpi1gscale,"O");
             //legend[obschannel-1]->AddEntry(hNCpi1gscale, Form("NC #pi^{0} 1#gamma x %.2f, #chi^{2} = %.2f", scale_amount_NCpi1g - 1.0, scalechi2_NCpi1g), "l");
-            legend[obschannel-1]->AddEntry(hNCpi1gscale, Form("NC #pi^{0} 1#gamma x %.2f, \nKS = %.2f", scale_amount_NCpi1g - 1.0, scaleKS_NCpi1g), "l");
+            legend[obschannel-1]->AddEntry(hNCpi1gscale, Form("#splitline{NC #pi^{0} 1#gamma x %.2f, }{KS = %.2f}", scale_amount_NCpi1g - 1.0, scaleKS_NCpi1g), "l");
             legend3[obschannel-1]->AddEntry(hNCpi1gscale, Form("NC #pi^{0} 1#gamma x %.2f, KS = %.2f", scale_amount_NCpi1g - 1.0, scaleKS_NCpi1g), "l");
             hNCpi1gscale->Draw("hist same");
             canvas3[obschannel-1]->cd();
