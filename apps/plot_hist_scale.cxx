@@ -443,6 +443,7 @@ int main( int argc, char** argv )
         legend[obschannel-1] = new TLegend(0.15, 0.55, 0.8, 0.92);
         legend3[obschannel-1] = new TLegend(0.25, 0.55, 0.8, 0.92);
         TH1F* hdata = (TH1F*)map_obsch_histos[obschannel].at(0)->Clone("hdata");
+        TH1F* hdata_orignal = (TH1F*)map_obsch_histos[obschannel].at(0)->Clone("hdata_original");
         TH1F* hbadmatch = (TH1F*)hdata->Clone("hbadmatch");
         TH1F* hnumuCCinFV = (TH1F*)hdata->Clone("hnumuCCinFV");
         TH1F* hRnumuCCinFV = (TH1F*)hdata->Clone("hRnumuCCinFV");
@@ -1289,8 +1290,9 @@ int main( int argc, char** argv )
             double x = hdata->GetBinCenter(i+1);
             double x_err = hdata->GetBinWidth(1)*0.5;
             double y = hdata->GetBinContent(i+1);
+            double y_original = hdata_orignal->GetBinContent(i+1);
             double y_err = hdata->GetBinError(i+1);
-            auto bayesError = cov.get_bayes_errors(y);
+            auto bayesError = cov.get_bayes_errors(y_original);//cov.get_bayes_errors(y);
             double bayesError_low = bayesError.first;
             double bayesError_up = bayesError.second;
             double ymc = hmc->GetBinContent(i+1);
