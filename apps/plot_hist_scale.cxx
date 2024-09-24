@@ -427,9 +427,9 @@ int main( int argc, char** argv )
         if (obschannel != 1) continue;
         canvas[obschannel-1] = new TCanvas(Form("canvas%d", obschannel), Form("channel%d", obschannel), 1200, 900);
         canvas3[obschannel-1] = new TCanvas(Form("canvas3%d", obschannel), Form("channel3%d", obschannel), 1200, 900);
-        canvas[obschannel-1]->SetLeftMargin(0.12);
+        canvas[obschannel-1]->SetLeftMargin(0.2);
         canvas[obschannel-1]->SetRightMargin(0.1);
-        canvas3[obschannel-1]->SetLeftMargin(0.12);
+        canvas3[obschannel-1]->SetLeftMargin(0.2);
         canvas3[obschannel-1]->SetRightMargin(0.1);
         canvas[obschannel-1]->cd(); 
         
@@ -445,8 +445,8 @@ int main( int argc, char** argv )
         //pad1->Draw();
         //pad2->Draw();
         hstack[obschannel-1] = new THStack(Form("hs%d", obschannel),"");
-        legend[obschannel-1] = new TLegend(0.15, 0.6, 0.8, 0.95);
-        legend3[obschannel-1] = new TLegend(0.35, 0.6, 0.8, 0.95);
+        legend[obschannel-1] = new TLegend(0.2, 0.58, 0.8, 0.94);
+        legend3[obschannel-1] = new TLegend(0.35, 0.58, 0.8, 0.94);
         TH1F* hdata = (TH1F*)map_obsch_histos[obschannel].at(0)->Clone("hdata");
         TH1F* hdata_orignal = (TH1F*)map_obsch_histos[obschannel].at(0)->Clone("hdata_original");
         TH1F* hbadmatch = (TH1F*)hdata->Clone("hbadmatch");
