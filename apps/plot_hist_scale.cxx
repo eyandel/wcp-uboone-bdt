@@ -427,9 +427,9 @@ int main( int argc, char** argv )
         if (obschannel != 1) continue;
         canvas[obschannel-1] = new TCanvas(Form("canvas%d", obschannel), Form("channel%d", obschannel), 1200, 900);
         canvas3[obschannel-1] = new TCanvas(Form("canvas3%d", obschannel), Form("channel3%d", obschannel), 1200, 900);
-        canvas[obschannel-1]->SetLeftMargin(0.2);
+        canvas[obschannel-1]->SetLeftMargin(0.15);
         canvas[obschannel-1]->SetRightMargin(0.1);
-        canvas3[obschannel-1]->SetLeftMargin(0.2);
+        canvas3[obschannel-1]->SetLeftMargin(0.15);
         canvas3[obschannel-1]->SetRightMargin(0.1);
         canvas[obschannel-1]->cd(); 
         
@@ -1205,7 +1205,7 @@ int main( int argc, char** argv )
         hdata->SetMaximum(3.0*excessymax);
         //hdata->GetYaxis()->SetRangeUser(-0.02*excessymax, 2.7*excessymax);
         if (excessymin > 0.0) excessymin = 0.0;
-        hdata->GetYaxis()->SetRangeUser(15.0*excessymin - 0.02*excessymax, 2.7*excessymax);
+        hdata->GetYaxis()->SetRangeUser(20.0*excessymin - 0.02*excessymax, 2.7*excessymax);
         hdata->GetXaxis()->SetRange(1, hdata->GetNbinsX() + 1);
 
         hdata->SetLineColor(kWhite);
