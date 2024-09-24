@@ -427,7 +427,12 @@ int main( int argc, char** argv )
         if (obschannel != 1) continue;
         canvas[obschannel-1] = new TCanvas(Form("canvas%d", obschannel), Form("channel%d", obschannel), 1200, 900);
         canvas3[obschannel-1] = new TCanvas(Form("canvas3%d", obschannel), Form("channel3%d", obschannel), 1200, 900);
-        canvas[obschannel-1]->cd();
+        canvas[obschannel-1]->SetLeftMargin(0.12);
+        canvas[obschannel-1]->SetRightMargin(0.1);
+        canvas3[obschannel-1]->SetLeftMargin(0.12);
+        canvas3[obschannel-1]->SetRightMargin(0.1);
+        canvas[obschannel-1]->cd(); 
+        
         TPad *pad1 = new TPad("pad1", "", 0.01,0.01,0.99,0.99,0,0,0);
         TPad *pad2 = new TPad("pad2", "", 0.01,0.01,0.99,0.3,0,0,0);
         pad1->SetBottomMargin(0.20);
