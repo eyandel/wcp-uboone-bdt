@@ -440,8 +440,8 @@ int main( int argc, char** argv )
         //pad1->Draw();
         //pad2->Draw();
         hstack[obschannel-1] = new THStack(Form("hs%d", obschannel),"");
-        legend[obschannel-1] = new TLegend(0.15, 0.55, 0.8, 0.92);
-        legend3[obschannel-1] = new TLegend(0.25, 0.55, 0.8, 0.92);
+        legend[obschannel-1] = new TLegend(0.15, 0.6, 0.8, 0.95);
+        legend3[obschannel-1] = new TLegend(0.35, 0.6, 0.8, 0.95);
         TH1F* hdata = (TH1F*)map_obsch_histos[obschannel].at(0)->Clone("hdata");
         TH1F* hdata_orignal = (TH1F*)map_obsch_histos[obschannel].at(0)->Clone("hdata_original");
         TH1F* hbadmatch = (TH1F*)hdata->Clone("hbadmatch");
@@ -1200,7 +1200,7 @@ int main( int argc, char** argv )
         hdata->SetMaximum(3.0*excessymax);
         //hdata->GetYaxis()->SetRangeUser(-0.02*excessymax, 2.7*excessymax);
         if (excessymin > 0.0) excessymin = 0.0;
-        hdata->GetYaxis()->SetRangeUser(10.0*excessymin - 0.02*excessymax, 2.7*excessymax);
+        hdata->GetYaxis()->SetRangeUser(15.0*excessymin - 0.02*excessymax, 2.7*excessymax);
         hdata->GetXaxis()->SetRange(1, hdata->GetNbinsX() + 1);
 
         hdata->SetLineColor(kWhite);
