@@ -1451,7 +1451,7 @@ int main( int argc, char** argv )
         
 
         TLine* line;
-        line = new TLine(hdata->GetXaxis()->GetXmin(),0,hdata->GetXaxis()->GetXmax() + hdata->GetBinWidth(),0);
+        line = new TLine(hdata->GetXaxis()->GetXmin(),0,hdata->GetXaxis()->GetXmax() + hdata->GetBinWidth(1),0);
         //if(obschannel==5 || obschannel==6) line = new TLine(0,1,1200,1);
         //change for no pad2
         //line->Draw();
