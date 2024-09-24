@@ -445,8 +445,8 @@ int main( int argc, char** argv )
         //pad1->Draw();
         //pad2->Draw();
         hstack[obschannel-1] = new THStack(Form("hs%d", obschannel),"");
-        legend[obschannel-1] = new TLegend(0.25, 0.58, 0.85, 0.94);
-        legend3[obschannel-1] = new TLegend(0.4, 0.58, 0.85, 0.94);
+        legend[obschannel-1] = new TLegend(0.25, 0.59, 0.85, 0.94);
+        legend3[obschannel-1] = new TLegend(0.4, 0.59, 0.85, 0.94);
         TH1F* hdata = (TH1F*)map_obsch_histos[obschannel].at(0)->Clone("hdata");
         TH1F* hdata_orignal = (TH1F*)map_obsch_histos[obschannel].at(0)->Clone("hdata_original");
         TH1F* hbadmatch = (TH1F*)hdata->Clone("hbadmatch");
