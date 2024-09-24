@@ -887,7 +887,7 @@ int main( int argc, char** argv )
             hNCpi1gscale->Add(hout1g);*/
             hNCpi1gscale->SetFillStyle(0);
             //hNCpi1gscale->SetFillColorAlpha(kPink+5, 0.5);
-            hNCpi1gscale->SetLineColor(colors.At(42));
+            hNCpi1gscale->SetLineColor(colors.At(52));
             hNCpi1gscale->SetLineStyle(1);//4);
             hNCpi1gscale->SetLineWidth(8);
 
