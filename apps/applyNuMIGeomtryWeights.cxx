@@ -66,7 +66,6 @@ int main( int argc, char** argv )
   auto T_PFeval_copy = (TTree*)CVfile->Get("wcpselection/T_PFeval");//truth_nuPdg, truth_nuEnergy,run,subrun,event
   auto T_BDTvars_copy = (TTree*)CVfile->Get("wcpselection/T_BDTvars");//truth_nuPdg, truth_nuEnergy,run,subrun,event
 
-
   auto h_nue_FHC_variation1=(TH1D*)weightHistosFile->Get("EnergyVarBin/ratio_run1_FHC_nue_CV_AV_TPC");
   auto h_nue_FHC_variation2=(TH1D*)weightHistosFile->Get("EnergyVarBin/ratio_run2_FHC_nue_CV_AV_TPC");
   auto h_nue_FHC_variation3=(TH1D*)weightHistosFile->Get("EnergyVarBin/ratio_run3_FHC_nue_CV_AV_TPC");
