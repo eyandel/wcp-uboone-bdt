@@ -446,7 +446,7 @@ int main( int argc, char** argv )
         //pad2->Draw();
         hstack[obschannel-1] = new THStack(Form("hs%d", obschannel),"");
         legend[obschannel-1] = new TLegend(0.25, 0.59, 0.85, 0.94);
-        legend3[obschannel-1] = new TLegend(0.4, 0.59, 0.85, 0.94);
+        legend3[obschannel-1] = new TLegend(0.55, 0.59, 0.85, 0.94);
         TH1F* hdata = (TH1F*)map_obsch_histos[obschannel].at(0)->Clone("hdata");
         TH1F* hdata_orignal = (TH1F*)map_obsch_histos[obschannel].at(0)->Clone("hdata_original");
         TH1F* hbadmatch = (TH1F*)hdata->Clone("hbadmatch");
@@ -1230,7 +1230,7 @@ int main( int argc, char** argv )
             legend[obschannel-1]->AddEntry(hNCpi1gscale, Form("#splitline{NC #pi^{0} 1#gamma x %.2f, }{KS = %.2f}", scale_amount_NCpi1g - 1.0, scaleKS_NCpi1g), "l");
             //legend3[obschannel-1]->AddEntry(hNCpi1gscale, Form("NC #pi^{0} 1#gamma x %.2f, KS = %.2f", scale_amount_NCpi1g - 1.0, scaleKS_NCpi1g), "l");
             legend3[obschannel-1]->AddEntry(hNCpi1gscale, Form("NC #pi^{0} 1#gamma x %.2f", scale_amount_NCpi1g - 1.0), "l");
-            hNCpi1gscale->GetXaxis()->SetRange(1, hNCpi1gscale->GetNbinsX() + 1);
+            //hNCpi1gscale->GetXaxis()->SetRange(1, hNCpi1gscale->GetNbinsX() + 1);
             hNCpi1gscale->Draw("hist same");
             canvas3[obschannel-1]->cd();
             hNCpi1gscale->Draw("hist same");
@@ -1242,7 +1242,7 @@ int main( int argc, char** argv )
             legend[obschannel-1]->AddEntry(hNCdelscale, Form("#splitline{NC #Delta 1#gamma x %.2f, }{KS = %.2f}", scale_amount_NCdel - 1.0, scaleKS_NCdel), "l");
             //legend3[obschannel-1]->AddEntry(hNCdelscale, Form("NC #Delta 1#gamma x %.2f, KS = %.2f", scale_amount_NCdel - 1.0, scaleKS_NCdel), "l");
             legend3[obschannel-1]->AddEntry(hNCdelscale, Form("NC #Delta 1#gamma x %.2f", scale_amount_NCdel - 1.0), "l");
-            hNCdelscale->GetXaxis()->SetRange(1, hNCdelscale->GetNbinsX() + 1);
+            //hNCdelscale->GetXaxis()->SetRange(1, hNCdelscale->GetNbinsX() + 1);
             hNCdelscale->Draw("hist same");    
             canvas3[obschannel-1]->cd();
             hNCdelscale->Draw("hist same"); 
@@ -1252,14 +1252,14 @@ int main( int argc, char** argv )
             double scaleKS_NCother = hdata->KolmogorovTest(hNCotherscale);
             //legend[obschannel-1]->AddEntry(hNCotherscale, Form("NC Other 1#gamma x %.2f, #chi^{2} = %.2f", scale_amount_NCother - 1.0, scalechi2_NCother), "l");
             legend[obschannel-1]->AddEntry(hNCotherscale, Form("#splitline{NC Other 1#gamma x %.2f, }{KS = %.2f}", scale_amount_NCother - 1.0, scaleKS_NCother), "l");
-            hNCotherscale->GetXaxis()->SetRange(1, hNCotherscale->GetNbinsX() + 1);
+            //hNCotherscale->GetXaxis()->SetRange(1, hNCotherscale->GetNbinsX() + 1);
             hNCotherscale->Draw("hist same"); 
 
             double scalechi2_numuCC1g = hdata->Chi2Test(hnumuCC1gscale,"CHI2");
             double scaleKS_numuCC1g = hdata->KolmogorovTest(hnumuCC1gscale);
             //legend[obschannel-1]->AddEntry(hnumuCC1gscale, Form("#nu_{#mu}CC 1#gamma x %.2f, #chi^{2} = %.2f", scale_amount_numuCC1g - 1.0, scalechi2_numuCC1g), "l");
             legend[obschannel-1]->AddEntry(hnumuCC1gscale, Form("#splitline{#nu_{#mu}CC 1#gamma x %.2f, }{KS = %.2f}", scale_amount_numuCC1g - 1.0, scaleKS_numuCC1g), "l");
-            hnumuCC1gscale->GetXaxis()->SetRange(1, hnumuCC1gscale->GetNbinsX() + 1);
+            //hnumuCC1gscale->GetXaxis()->SetRange(1, hnumuCC1gscale->GetNbinsX() + 1);
             hnumuCC1gscale->Draw("hist same");
 
             double scalechi2_out1g = hdata->Chi2Test(hout1gscale,"CHI2");
@@ -1268,7 +1268,7 @@ int main( int argc, char** argv )
             legend[obschannel-1]->AddEntry(hout1gscale, Form("#splitline{out of FV 1#gamma x %.2f, }{KS = %.2f}", scale_amount_out1g - 1.0, scaleKS_out1g), "l");
             //legend3[obschannel-1]->AddEntry(hout1gscale, Form("out of FV 1#gamma x %.2f, KS = %.2f", scale_amount_out1g - 1.0, scaleKS_out1g), "l");
             legend3[obschannel-1]->AddEntry(hout1gscale, Form("out of FV 1#gamma x %.2f", scale_amount_out1g - 1.0), "l");
-            hout1gscale->GetXaxis()->SetRange(1, hout1gscale->GetNbinsX() + 1);
+            //hout1gscale->GetXaxis()->SetRange(1, hout1gscale->GetNbinsX() + 1);
             hout1gscale->Draw("hist same");
             canvas3[obschannel-1]->cd();
             hout1gscale->Draw("hist same");
@@ -1284,7 +1284,7 @@ int main( int argc, char** argv )
               //legend[obschannel-1]->AddEntry(hLEEscale, Form("LEE x %.2f, #chi^{2} = %.2f", scale_amount_LEE, scalechi2_LEE), "l");
               legend[obschannel-1]->AddEntry(hLEEscale, Form("#splitline{LEE x %.2f, }{KS = %.2f}", scale_amount_LEE, scaleKS_LEE), "l");
               //legend[obschannel-1]->AddEntry(hLEEscale, Form("LEE x %.2f", scale_amount_LEE), "l");
-              hLEEscale->GetXaxis()->SetRange(1, hLEEscale->GetNbinsX() + 1);
+              //hLEEscale->GetXaxis()->SetRange(1, hLEEscale->GetNbinsX() + 1);
               hLEEscale->Draw("hist same");
             }
         //}
@@ -1331,8 +1331,8 @@ int main( int argc, char** argv )
             double ymc_err = hmc->GetBinError(i+1);
             double ymc2_err = hmc2->GetBinError(i+1);
             double ymc_err_const = cov_con(i,i);
-            double total_error_const_low = sqrt( pow(bayesError_low*scalePOT/normalization, 2) + pow(ymc_err_const/2, 2)  );
-            double total_error_const_up = sqrt( pow(bayesError_up*scalePOT/normalization, 2) + pow(ymc_err_const/2, 2)  );
+            double total_error_const_low = sqrt( pow(bayesError_low*scalePOT/normalization, 2) + pow(ymc_err_const/2., 2)  );
+            double total_error_const_up = sqrt( pow(bayesError_up*scalePOT/normalization, 2) + pow(ymc_err_const/2., 2)  );
             gr[obschannel-1]->SetPoint(i,x,y*scalePOT/normalization);
             gratio_mc[obschannel-1]->SetPoint(i,x,1);
             gratio_mc2[obschannel-1]->SetPoint(i,x,1);
@@ -1482,7 +1482,7 @@ int main( int argc, char** argv )
         
 
         TLine* line;
-        line = new TLine(hdata->GetXaxis()->GetXmin(),0,hdata->GetXaxis()->GetXmax() + hdata->GetBinWidth(1),0);
+        line = new TLine(hdata->GetXaxis()->GetXmin(),0,hdata->GetXaxis()->GetXmax(), 0);// + hdata->GetBinWidth(1),0);
         //if(obschannel==5 || obschannel==6) line = new TLine(0,1,1200,1);
         //change for no pad2
         //line->Draw();
