@@ -1641,7 +1641,7 @@ int main( int argc, char** argv )
          //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Minimum Projected Distance [cm]");
 
          //labels bdt scores
-        //if(obschannel==1) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco neutrino energy [MeV");
+        if(obschannel==1) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reconstructed Neutrino Energy (MeV)");
         //if(obschannel==1) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("shw_sp_length_total");
         //if(obschannel==2) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("shw_sp_n_vertex");
         if(obschannel==2) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("#nu_{#mu} CC Background BDT Score");
