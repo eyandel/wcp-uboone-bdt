@@ -1206,7 +1206,7 @@ int main( int argc, char** argv )
         //hdata->GetYaxis()->SetRangeUser(-0.02*excessymax, 2.7*excessymax);
         if (excessymin > 0.0) excessymin = 0.0;
         hdata->GetYaxis()->SetRangeUser(17.0*excessymin - 0.02*excessymax, 2.7*excessymax);
-        hdata->GetXaxis()->SetRange(1, hdata->GetNbinsX() + 1);
+        //hdata->GetXaxis()->SetRange(1, hdata->GetNbinsX() + 1);
 
         hdata->SetLineColor(kWhite);
         hdata->Draw("hist");
@@ -1219,16 +1219,17 @@ int main( int argc, char** argv )
             //legend[obschannel-1]->SetTextSize(0.03);
 
             double scalechi2 = hdata->Chi2Test(h1gscale,"CHI2");
-            double scaleKS = hdata->KolmogorovTest(h1gscale, "O");
+            double scaleKS = hdata->KolmogorovTest(h1gscale);
             //legend[obschannel-1]->AddEntry(h1gscale, Form("Signal x %.2f, %.1f, #chi^{2} = %.2f", scale_amount, signal_amount, scalechi2), "F");
             //legend[obschannel-1]->AddEntry(h1gscale, Form("Signal x %.2f, #chi^{2} = %.2f", scale_amount - 1.0, scalechi2), "l");
             //h1gscale->Draw("hist same");
 
             double scalechi2_NCpi1g = hdata->Chi2Test(hNCpi1gscale,"CHI2");
-            double scaleKS_NCpi1g = hdata->KolmogorovTest(hNCpi1gscale,"O");
+            double scaleKS_NCpi1g = hdata->KolmogorovTest(hNCpi1gscale);
             //legend[obschannel-1]->AddEntry(hNCpi1gscale, Form("NC #pi^{0} 1#gamma x %.2f, #chi^{2} = %.2f", scale_amount_NCpi1g - 1.0, scalechi2_NCpi1g), "l");
             legend[obschannel-1]->AddEntry(hNCpi1gscale, Form("#splitline{NC #pi^{0} 1#gamma x %.2f, }{KS = %.2f}", scale_amount_NCpi1g - 1.0, scaleKS_NCpi1g), "l");
-            legend3[obschannel-1]->AddEntry(hNCpi1gscale, Form("NC #pi^{0} 1#gamma x %.2f, KS = %.2f", scale_amount_NCpi1g - 1.0, scaleKS_NCpi1g), "l");
+            //legend3[obschannel-1]->AddEntry(hNCpi1gscale, Form("NC #pi^{0} 1#gamma x %.2f, KS = %.2f", scale_amount_NCpi1g - 1.0, scaleKS_NCpi1g), "l");
+            legend3[obschannel-1]->AddEntry(hNCpi1gscale, Form("NC #pi^{0} 1#gamma x %.2f", scale_amount_NCpi1g - 1.0), "l");
             hNCpi1gscale->GetXaxis()->SetRange(1, hNCpi1gscale->GetNbinsX() + 1);
             hNCpi1gscale->Draw("hist same");
             canvas3[obschannel-1]->cd();
@@ -1236,10 +1237,11 @@ int main( int argc, char** argv )
             canvas[obschannel-1]->cd();
 
             double scalechi2_NCdel = hdata->Chi2Test(hNCdelscale,"CHI2");
-            double scaleKS_NCdel = hdata->KolmogorovTest(hNCdelscale,"O");
+            double scaleKS_NCdel = hdata->KolmogorovTest(hNCdelscale);
             //legend[obschannel-1]->AddEntry(hNCdelscale, Form("NC #Delta 1#gamma x %.2f, #chi^{2} = %.2f", scale_amount_NCdel - 1.0, scalechi2_NCdel), "l");
             legend[obschannel-1]->AddEntry(hNCdelscale, Form("#splitline{NC #Delta 1#gamma x %.2f, }{KS = %.2f}", scale_amount_NCdel - 1.0, scaleKS_NCdel), "l");
-            legend3[obschannel-1]->AddEntry(hNCdelscale, Form("NC #Delta 1#gamma x %.2f, KS = %.2f", scale_amount_NCdel - 1.0, scaleKS_NCdel), "l");
+            //legend3[obschannel-1]->AddEntry(hNCdelscale, Form("NC #Delta 1#gamma x %.2f, KS = %.2f", scale_amount_NCdel - 1.0, scaleKS_NCdel), "l");
+            legend3[obschannel-1]->AddEntry(hNCdelscale, Form("NC #Delta 1#gamma x %.2f", scale_amount_NCdel - 1.0), "l");
             hNCdelscale->GetXaxis()->SetRange(1, hNCdelscale->GetNbinsX() + 1);
             hNCdelscale->Draw("hist same");    
             canvas3[obschannel-1]->cd();
@@ -1247,24 +1249,25 @@ int main( int argc, char** argv )
             canvas[obschannel-1]->cd(); 
 
             double scalechi2_NCother = hdata->Chi2Test(hNCotherscale,"CHI2");
-            double scaleKS_NCother = hdata->KolmogorovTest(hNCotherscale,"O");
+            double scaleKS_NCother = hdata->KolmogorovTest(hNCotherscale);
             //legend[obschannel-1]->AddEntry(hNCotherscale, Form("NC Other 1#gamma x %.2f, #chi^{2} = %.2f", scale_amount_NCother - 1.0, scalechi2_NCother), "l");
             legend[obschannel-1]->AddEntry(hNCotherscale, Form("#splitline{NC Other 1#gamma x %.2f, }{KS = %.2f}", scale_amount_NCother - 1.0, scaleKS_NCother), "l");
             hNCotherscale->GetXaxis()->SetRange(1, hNCotherscale->GetNbinsX() + 1);
             hNCotherscale->Draw("hist same"); 
 
             double scalechi2_numuCC1g = hdata->Chi2Test(hnumuCC1gscale,"CHI2");
-            double scaleKS_numuCC1g = hdata->KolmogorovTest(hnumuCC1gscale,"O");
+            double scaleKS_numuCC1g = hdata->KolmogorovTest(hnumuCC1gscale);
             //legend[obschannel-1]->AddEntry(hnumuCC1gscale, Form("#nu_{#mu}CC 1#gamma x %.2f, #chi^{2} = %.2f", scale_amount_numuCC1g - 1.0, scalechi2_numuCC1g), "l");
             legend[obschannel-1]->AddEntry(hnumuCC1gscale, Form("#splitline{#nu_{#mu}CC 1#gamma x %.2f, }{KS = %.2f}", scale_amount_numuCC1g - 1.0, scaleKS_numuCC1g), "l");
             hnumuCC1gscale->GetXaxis()->SetRange(1, hnumuCC1gscale->GetNbinsX() + 1);
             hnumuCC1gscale->Draw("hist same");
 
             double scalechi2_out1g = hdata->Chi2Test(hout1gscale,"CHI2");
-            double scaleKS_out1g = hdata->KolmogorovTest(hout1gscale,"O");
+            double scaleKS_out1g = hdata->KolmogorovTest(hout1gscale);
             //legend[obschannel-1]->AddEntry(hout1gscale, Form("out of FV 1#gamma x %.2f, #chi^{2} = %.2f", scale_amount_out1g - 1.0, scalechi2_out1g), "l");
             legend[obschannel-1]->AddEntry(hout1gscale, Form("#splitline{out of FV 1#gamma x %.2f, }{KS = %.2f}", scale_amount_out1g - 1.0, scaleKS_out1g), "l");
-            legend3[obschannel-1]->AddEntry(hout1gscale, Form("out of FV 1#gamma x %.2f, KS = %.2f", scale_amount_out1g - 1.0, scaleKS_out1g), "l");
+            //legend3[obschannel-1]->AddEntry(hout1gscale, Form("out of FV 1#gamma x %.2f, KS = %.2f", scale_amount_out1g - 1.0, scaleKS_out1g), "l");
+            legend3[obschannel-1]->AddEntry(hout1gscale, Form("out of FV 1#gamma x %.2f", scale_amount_out1g - 1.0), "l");
             hout1gscale->GetXaxis()->SetRange(1, hout1gscale->GetNbinsX() + 1);
             hout1gscale->Draw("hist same");
             canvas3[obschannel-1]->cd();
@@ -1277,14 +1280,38 @@ int main( int argc, char** argv )
 
             if (flag_leeexist){
               double scalechi2_LEE = hdata->Chi2Test(hLEEscale,"CHI2");
-              double scaleKS_LEE = hdata->KolmogorovTest(hLEEscale,"O");
+              double scaleKS_LEE = hdata->KolmogorovTest(hLEEscale);
               //legend[obschannel-1]->AddEntry(hLEEscale, Form("LEE x %.2f, #chi^{2} = %.2f", scale_amount_LEE, scalechi2_LEE), "l");
               legend[obschannel-1]->AddEntry(hLEEscale, Form("#splitline{LEE x %.2f, }{KS = %.2f}", scale_amount_LEE, scaleKS_LEE), "l");
+              //legend[obschannel-1]->AddEntry(hLEEscale, Form("LEE x %.2f", scale_amount_LEE), "l");
               hLEEscale->GetXaxis()->SetRange(1, hLEEscale->GetNbinsX() + 1);
               hLEEscale->Draw("hist same");
             }
         //}
 
+        //get the constrained error
+        TFile fileconstr("file_hists_3002.root");
+        
+        if (!fileconstr.IsOpen()){
+            std::cout << "Error opening the constained ROOT file." << std::endl;
+            return;
+        }
+
+        TMatrixD* pred_ptr = (TMatrixD*)fileconstr.Get("matrix_Y_under_X");
+        TMatrixD* data_ptr = (TMatrixD*)fileconstr.Get("matrix_data_Y");
+        TMatrixD* cov_ptr = (TMatrixD*)fileconstr.Get("matrix_YY_under_XX");
+
+        TMatrixD pred = *pred_ptr;
+        TMatrixD data = *data_ptr;
+        TMatrixD cov = *cov_ptr;
+
+        pred.T();
+        data.T();
+        cov.T();
+
+        fileconstr.Close();
+
+        //assign error to the data (excess) points
         gratio_mc[obschannel-1] = new TGraphAsymmErrors();
         gratio_mc2[obschannel-1] = new TGraphAsymmErrors();
         gratio_data[obschannel-1] = new TGraphAsymmErrors();
@@ -1303,6 +1330,9 @@ int main( int argc, char** argv )
             double ymc = hmc->GetBinContent(i+1);
             double ymc_err = hmc->GetBinError(i+1);
             double ymc2_err = hmc2->GetBinError(i+1);
+            double ymc_err_const = cov(i,i);
+            double total_error_const_low = sqrt( pow(bayesError_low*scalePOT/normalization, 2) + pow(ymc_err_const/2, 2)  );
+            double total_error_const_up = sqrt( pow(bayesError_up*scalePOT/normalization, 2) + pow(ymc_err_const/2, 2)  );
             gr[obschannel-1]->SetPoint(i,x,y*scalePOT/normalization);
             gratio_mc[obschannel-1]->SetPoint(i,x,1);
             gratio_mc2[obschannel-1]->SetPoint(i,x,1);
@@ -1320,7 +1350,8 @@ int main( int argc, char** argv )
                 gratio_mc2[obschannel-1]->SetPointError(i, x_err, x_err, 0, 0);
             }
             if(flag_err==2 || flag_err==3){ //update data point errors
-                gr[obschannel-1]->SetPointError(i, x_err, x_err, bayesError_low*scalePOT/normalization, bayesError_up*scalePOT/normalization);
+                //gr[obschannel-1]->SetPointError(i, x_err, x_err, bayesError_low*scalePOT/normalization, bayesError_up*scalePOT/normalization);
+                gr[obschannel-1]->SetPointError(i, x_err, x_err, total_error_const_low, total_error_const_up);
                 if(ymc!=0) gratio_data[obschannel-1]->SetPointError(i, x_err, x_err, bayesError_low/ymc, bayesError_up/ymc);
                 else gratio_data[obschannel-1]->SetPointError(i, x_err, x_err, 0, 0);
                 if(ymc!=0) gratio_data2[obschannel-1]->SetPointError(i, x_err, x_err, bayesError_low/ymc/normalization, bayesError_up/ymc/normalization);
