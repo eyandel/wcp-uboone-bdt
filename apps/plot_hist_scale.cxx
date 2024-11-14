@@ -1205,7 +1205,8 @@ int main( int argc, char** argv )
         hdata->SetMaximum(3.0*excessymax);
         //hdata->GetYaxis()->SetRangeUser(-0.02*excessymax, 2.7*excessymax);
         if (excessymin > 0.0) excessymin = 0.0;
-        hdata->GetYaxis()->SetRangeUser(17.0*excessymin - 0.02*excessymax, 2.7*excessymax);
+        //hdata->GetYaxis()->SetRangeUser(17.0*excessymin - 0.02*excessymax, 2.7*excessymax);
+        hdata->GetYaxis()->SetRangeUser(20.0*excessymin - 0.02*excessymax, 5.0*excessymax);
         //hdata->GetXaxis()->SetRange(1, hdata->GetNbinsX() + 1);
 
         hdata->SetLineColor(kWhite);
