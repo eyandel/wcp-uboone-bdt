@@ -117,6 +117,8 @@ int main( int argc, char** argv )
   cov.add_disabled_ch_name("sp_bdt_nc_pi0_notoneshw_Xp_overlay_ncpi0_BG");
   cov.add_disabled_ch_name("sp_bdt_nc_pi0_notoneshw_0p_overlay_ncpi0_BG");
   cov.add_disabled_ch_name("sp_bdt_nc_pi0_notoneshw_Np_overlay_ncpi0_BG");
+
+  cov.add_disabled_ch_name("single_photon_nue_overlay_ncpi0_BG");
   //
 
   if (flag_osc) cov.add_osc_config();
