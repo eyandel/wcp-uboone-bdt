@@ -1301,13 +1301,13 @@ int main( int argc, char** argv )
         TMatrixD* data_ptr = (TMatrixD*)fileconstr.Get("matrix_data_Y");
         TMatrixD* cov_ptr = (TMatrixD*)fileconstr.Get("matrix_YY_under_XX");
 
-        TMatrixD pred = *pred_ptr;
-        TMatrixD data = *data_ptr;
-        TMatrixD cov = *cov_ptr;
+        TMatrixD pred_con = *pred_ptr;
+        TMatrixD data_con = *data_ptr;
+        TMatrixD cov_con = *cov_ptr;
 
-        pred.T();
-        data.T();
-        cov.T();
+        pred_con.T();
+        data_con.T();
+        cov_con.T();
 
         fileconstr.Close();
 
@@ -1330,7 +1330,7 @@ int main( int argc, char** argv )
             double ymc = hmc->GetBinContent(i+1);
             double ymc_err = hmc->GetBinError(i+1);
             double ymc2_err = hmc2->GetBinError(i+1);
-            double ymc_err_const = cov(i,i);
+            double ymc_err_const = cov_con(i,i);
             double total_error_const_low = sqrt( pow(bayesError_low*scalePOT/normalization, 2) + pow(ymc_err_const/2, 2)  );
             double total_error_const_up = sqrt( pow(bayesError_up*scalePOT/normalization, 2) + pow(ymc_err_const/2, 2)  );
             gr[obschannel-1]->SetPoint(i,x,y*scalePOT/normalization);
