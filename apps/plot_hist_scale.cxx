@@ -1294,7 +1294,7 @@ int main( int argc, char** argv )
         
         if (!fileconstr.IsOpen()){
             std::cout << "Error opening the constained ROOT file." << std::endl;
-            return;
+            break;
         }
 
         TMatrixD* pred_ptr = (TMatrixD*)fileconstr.Get("matrix_Y_under_X");
