@@ -1640,6 +1640,16 @@ int main( int argc, char** argv )
          //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Minumum Distance to Wall [cm]");
          //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Minimum Projected Distance [cm]");
 
+         //labels bdt scores
+        //if(obschannel==1) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco neutrino energy [MeV");
+        //if(obschannel==1) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("shw_sp_length_total");
+        //if(obschannel==2) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("shw_sp_n_vertex");
+        if(obschannel==2) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("#nu_{#mu} CC Background BDT Score");
+        if(obschannel==3) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Other Background BDT Score");
+        if(obschannel==4) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("NC #pi^{0} Background BDT Score");
+        if(obschannel==5) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("#nu_{e} CC Background BDT Score");
+        if(obschannel==6) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Number of Showers");
+
 
 
         //else gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco neutrino vtx in X-axis [cm]");
