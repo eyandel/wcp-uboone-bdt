@@ -1334,7 +1334,7 @@ int main( int argc, char** argv )
             double ymc_err = hmc->GetBinError(i+1);
             double ymc2_err = hmc2->GetBinError(i+1);
             double ymc_err_const = 0;
-            //ymc_err_const = h1_pred_Y_wiConstraint->GetBinError(i+1);//cov_con(i,i);
+            ymc_err_const = sqrt(cov_con(i,i));//h1_pred_Y_wiConstraint->GetBinError(i+1);
             double total_error_const_low = sqrt( pow(bayesError_low*scalePOT/normalization, 2) + pow(ymc_err_const/2., 2)  );
             double total_error_const_up = sqrt( pow(bayesError_up*scalePOT/normalization, 2) + pow(ymc_err_const/2., 2)  );
             gr[obschannel-1]->SetPoint(i,x,y*scalePOT/normalization);
