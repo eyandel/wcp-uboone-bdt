@@ -1205,8 +1205,8 @@ int main( int argc, char** argv )
         hdata->SetMaximum(3.0*excessymax);
         //hdata->GetYaxis()->SetRangeUser(-0.02*excessymax, 2.7*excessymax);
         if (excessymin > 0.0) excessymin = 0.0;
-        //hdata->GetYaxis()->SetRangeUser(17.0*excessymin - 0.02*excessymax, 2.7*excessymax);
-        hdata->GetYaxis()->SetRangeUser(30.0*excessymin - 1.0*excessymax, 3.5*excessymax);
+        hdata->GetYaxis()->SetRangeUser(17.0*excessymin - 0.02*excessymax, 2.7*excessymax);
+        //hdata->GetYaxis()->SetRangeUser(30.0*excessymin - 1.0*excessymax, 3.5*excessymax);
         //hdata->GetXaxis()->SetRange(1, hdata->GetNbinsX() + 1);
 
         hdata->SetLineColor(kWhite);
@@ -1229,8 +1229,8 @@ int main( int argc, char** argv )
             double scaleKS_NCpi1g = hdata->KolmogorovTest(hNCpi1gscale);
             //legend[obschannel-1]->AddEntry(hNCpi1gscale, Form("NC #pi^{0} 1#gamma x %.1f, #chi^{2} = %.2f", scale_amount_NCpi1g - 1.0, scalechi2_NCpi1g), "l");
             legend[obschannel-1]->AddEntry(hNCpi1gscale, Form("#splitline{NC #pi^{0} 1#gamma x %.1f, }{KS = %.2f}", scale_amount_NCpi1g - 1.0, scaleKS_NCpi1g), "l");
-            //legend3[obschannel-1]->AddEntry(hNCpi1gscale, Form("NC #pi^{0} 1#gamma x %.1f, KS = %.2f", scale_amount_NCpi1g - 1.0, scaleKS_NCpi1g), "l");
-            legend3[obschannel-1]->AddEntry(hNCpi1gscale, Form("NC #pi^{0} 1#gamma x %.1f", scale_amount_NCpi1g - 1.0), "l");
+            legend3[obschannel-1]->AddEntry(hNCpi1gscale, Form("NC #pi^{0} 1#gamma x %.1f, KS = %.2f", scale_amount_NCpi1g - 1.0, scaleKS_NCpi1g), "l");
+            //legend3[obschannel-1]->AddEntry(hNCpi1gscale, Form("NC #pi^{0} 1#gamma x %.1f", scale_amount_NCpi1g - 1.0), "l");
             //hNCpi1gscale->GetXaxis()->SetRange(1, hNCpi1gscale->GetNbinsX() + 1);
             hNCpi1gscale->Draw("hist same");
             canvas3[obschannel-1]->cd();
@@ -1241,8 +1241,8 @@ int main( int argc, char** argv )
             double scaleKS_NCdel = hdata->KolmogorovTest(hNCdelscale);
             //legend[obschannel-1]->AddEntry(hNCdelscale, Form("NC #Delta 1#gamma x %.1f, #chi^{2} = %.2f", scale_amount_NCdel - 1.0, scalechi2_NCdel), "l");
             legend[obschannel-1]->AddEntry(hNCdelscale, Form("#splitline{NC #Delta 1#gamma x %.1f, }{KS = %.2f}", scale_amount_NCdel - 1.0, scaleKS_NCdel), "l");
-            //legend3[obschannel-1]->AddEntry(hNCdelscale, Form("NC #Delta 1#gamma x %.1f, KS = %.2f", scale_amount_NCdel - 1.0, scaleKS_NCdel), "l");
-            legend3[obschannel-1]->AddEntry(hNCdelscale, Form("NC #Delta 1#gamma x %.1f", scale_amount_NCdel - 1.0), "l");
+            legend3[obschannel-1]->AddEntry(hNCdelscale, Form("NC #Delta 1#gamma x %.1f, KS = %.2f", scale_amount_NCdel - 1.0, scaleKS_NCdel), "l");
+            //legend3[obschannel-1]->AddEntry(hNCdelscale, Form("NC #Delta 1#gamma x %.1f", scale_amount_NCdel - 1.0), "l");
             //hNCdelscale->GetXaxis()->SetRange(1, hNCdelscale->GetNbinsX() + 1);
             hNCdelscale->Draw("hist same");    
             canvas3[obschannel-1]->cd();
@@ -1267,8 +1267,8 @@ int main( int argc, char** argv )
             double scaleKS_out1g = hdata->KolmogorovTest(hout1gscale);
             //legend[obschannel-1]->AddEntry(hout1gscale, Form("out of FV 1#gamma x %.1f, #chi^{2} = %.2f", scale_amount_out1g - 1.0, scalechi2_out1g), "l");
             legend[obschannel-1]->AddEntry(hout1gscale, Form("#splitline{out of FV 1#gamma x %.1f, }{KS = %.2f}", scale_amount_out1g - 1.0, scaleKS_out1g), "l");
-            //legend3[obschannel-1]->AddEntry(hout1gscale, Form("out of FV 1#gamma x %.1f, KS = %.2f", scale_amount_out1g - 1.0, scaleKS_out1g), "l");
-            legend3[obschannel-1]->AddEntry(hout1gscale, Form("out of FV 1#gamma x %.1f", scale_amount_out1g - 1.0), "l");
+            legend3[obschannel-1]->AddEntry(hout1gscale, Form("out of FV 1#gamma x %.1f, KS = %.2f", scale_amount_out1g - 1.0, scaleKS_out1g), "l");
+            //legend3[obschannel-1]->AddEntry(hout1gscale, Form("out of FV 1#gamma x %.1f", scale_amount_out1g - 1.0), "l");
             //hout1gscale->GetXaxis()->SetRange(1, hout1gscale->GetNbinsX() + 1);
             hout1gscale->Draw("hist same");
             canvas3[obschannel-1]->cd();
@@ -1333,8 +1333,7 @@ int main( int argc, char** argv )
             double ymc = hmc->GetBinContent(i+1);
             double ymc_err = hmc->GetBinError(i+1);
             double ymc2_err = hmc2->GetBinError(i+1);
-            double ymc_err_const = 0;
-            ymc_err_const = sqrt(cov_con(i,i));//h1_pred_Y_wiConstraint->GetBinError(i+1);
+            double ymc_err_const = ymc_err_const = sqrt(cov_con(i,i));//h1_pred_Y_wiConstraint->GetBinError(i+1);
             double total_error_const_low = sqrt( pow(bayesError_low*scalePOT/normalization, 2) + pow(ymc_err_const/2., 2)  );
             double total_error_const_up = sqrt( pow(bayesError_up*scalePOT/normalization, 2) + pow(ymc_err_const/2., 2)  );
             gr[obschannel-1]->SetPoint(i,x,y*scalePOT/normalization);
