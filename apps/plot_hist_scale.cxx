@@ -1310,6 +1310,8 @@ int main( int argc, char** argv )
         data_con.T();
         cov_con.T();
 
+        TH1D	*h1_pred_Y_wiConstraint = (TH1D*)fileconstr.Get("h1_pred_Y_wiConstraint_3002");
+
         fileconstr.Close();
 
         //assign error to the data (excess) points
@@ -1331,7 +1333,7 @@ int main( int argc, char** argv )
             double ymc = hmc->GetBinContent(i+1);
             double ymc_err = hmc->GetBinError(i+1);
             double ymc2_err = hmc2->GetBinError(i+1);
-            double ymc_err_const = cov_con(i,i);
+            double ymc_err_const = h1_pred_Y_wiConstraint->GetBinError(i+1);//cov_con(i,i);
             double total_error_const_low = sqrt( pow(bayesError_low*scalePOT/normalization, 2) + pow(ymc_err_const/2., 2)  );
             double total_error_const_up = sqrt( pow(bayesError_up*scalePOT/normalization, 2) + pow(ymc_err_const/2., 2)  );
             gr[obschannel-1]->SetPoint(i,x,y*scalePOT/normalization);
