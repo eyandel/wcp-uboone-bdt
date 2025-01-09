@@ -1510,7 +1510,6 @@ int main( int argc, char** argv )
         hmc->SetLineWidth(5);
         //cut out bins for num proton REMOVE
         hmc->GetXaxis()->SetRangeUser(0,4);
-        //hstack[obschannel-1]->GetXaxis()->SetRangeUser(0,4);
         hdata->GetXaxis()->SetRangeUser(0,4);
 
 
@@ -1573,6 +1572,8 @@ int main( int argc, char** argv )
                 else gratio_data2[obschannel-1]->SetPointError(i, x_err, x_err, 0, 0);
             }
         }
+        //cut out bins for num proton REMOVE
+        gr[obschannel-1]->GetXaxis()->SetRangeUser(0,4);
         gr[obschannel-1]->Draw("P same");
         gr[obschannel-1]->SetLineWidth(2);
         gr[obschannel-1]->SetMarkerStyle(20);
