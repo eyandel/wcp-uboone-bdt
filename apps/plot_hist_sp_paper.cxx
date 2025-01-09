@@ -1509,9 +1509,9 @@ int main( int argc, char** argv )
         hmc->SetLineColor(kBlack);
         hmc->SetLineWidth(5);
         //cut out bins for num proton REMOVE
-        hmc->GetXaxis()->SetRange(1,5);
-        hstack[obschannel-1]->GetXaxis()->SetRange(1,5);
-        hdata->GetXaxis()->SetRange(1,5);
+        hmc->GetXaxis()->SetRangeUser(0,4);
+        //hstack[obschannel-1]->GetXaxis()->SetRangeUser(0,4);
+        hdata->GetXaxis()->SetRangeUser(0,4);
 
 
         hstack[obschannel-1]->Draw("hist same");
