@@ -1779,7 +1779,9 @@ int main( int argc, char** argv )
         hist->GetYaxis()->SetNdivisions(405);
 
         TLine* line;
-        line = new TLine(hmc->GetXaxis()->GetXmin(),1,hmc->GetXaxis()->GetXmax(),1);
+        //line = new TLine(hmc->GetXaxis()->GetXmin(),1,hmc->GetXaxis()->GetXmax(),1);
+        //REMOVE
+        line = new TLine(hmc->GetXaxis()->GetXmin(),1,4,1);
         //if(obschannel==5 || obschannel==6) line = new TLine(0,1,1200,1);
         line->Draw();
         line->SetLineWidth(2);
