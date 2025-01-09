@@ -1623,7 +1623,7 @@ int main( int argc, char** argv )
         gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reconstructed Shower Cos#theta");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("#nu_{e} CC Background BDT Score");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Number of Tracks");
-        //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Number of Protons");
+        gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Number of Protons");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("#nu_{e}CC BDT Score");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Neutrino Energy [MeV]");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("NC#pi^{0} BDT Score");
@@ -1640,7 +1640,8 @@ int main( int argc, char** argv )
          //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Minumum Distance to Wall [cm]");
          //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Minimum Projected Distance [cm]");
 
-         //labels bdt scores
+        /* 
+        //labels bdt scores
         if(obschannel==1) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reconstructed Neutrino Energy (MeV)");
         //if(obschannel==1) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("shw_sp_length_total");
         //if(obschannel==2) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("shw_sp_n_vertex");
@@ -1649,6 +1650,7 @@ int main( int argc, char** argv )
         if(obschannel==4) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("NC #pi^{0} Background BDT Score");
         if(obschannel==5) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("#nu_{e} CC Background BDT Score");
         if(obschannel==6) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Number of Showers");
+        */
 
 
 
