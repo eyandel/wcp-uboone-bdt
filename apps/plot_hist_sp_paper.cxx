@@ -1572,8 +1572,6 @@ int main( int argc, char** argv )
                 else gratio_data2[obschannel-1]->SetPointError(i, x_err, x_err, 0, 0);
             }
         }
-        //cut out bins for num proton REMOVE
-        gr[obschannel-1]->GetXaxis()->SetRangeUser(0,4);
         gr[obschannel-1]->Draw("P same");
         gr[obschannel-1]->SetLineWidth(2);
         gr[obschannel-1]->SetMarkerStyle(20);
@@ -1600,6 +1598,8 @@ int main( int argc, char** argv )
         legend[obschannel-1]->Draw();
         pad1->Modified();
         pad2->cd();
+        //cut out bins for num proton REMOVE
+        gratio_mc[obschannel-1]->GetXaxis()->SetRangeUser(0,4);
         gratio_mc[obschannel-1]->Draw("a2");
         gratio_mc[obschannel-1]->SetFillColor(kBlue-10);
         //gratio_mc[obschannel-1]->SetFillColor(kRed-10);
