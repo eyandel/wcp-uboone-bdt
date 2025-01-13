@@ -1509,8 +1509,8 @@ int main( int argc, char** argv )
         hmc->SetLineColor(kBlack);
         hmc->SetLineWidth(5);
         //cut out bins for num proton REMOVE
-        hmc->GetXaxis()->SetRangeUser(0,4);
-        hdata->GetXaxis()->SetRangeUser(0,4);
+        //hmc->GetXaxis()->SetRangeUser(0,4);
+        //hdata->GetXaxis()->SetRangeUser(0,4);
 
 
         hstack[obschannel-1]->Draw("hist same");
@@ -1745,8 +1745,8 @@ int main( int argc, char** argv )
         //hack end
 
         //cut out bins for num proton REMOVE
-        gratio_mc[obschannel-1]->GetXaxis()->SetRangeUser(0,4);
-        gratio_data[obschannel-1]->GetXaxis()->SetRangeUser(0,4);
+        //gratio_mc[obschannel-1]->GetXaxis()->SetRangeUser(0,4);
+        //gratio_data[obschannel-1]->GetXaxis()->SetRangeUser(0,4);
 
         gratio_mc[obschannel-1]->GetXaxis()->SetTitleSize(0.12);
         gratio_mc[obschannel-1]->GetXaxis()->SetLabelSize(0.12);
@@ -1779,9 +1779,9 @@ int main( int argc, char** argv )
         hist->GetYaxis()->SetNdivisions(405);
 
         TLine* line;
-        //line = new TLine(hmc->GetXaxis()->GetXmin(),1,hmc->GetXaxis()->GetXmax(),1);
+        line = new TLine(hmc->GetXaxis()->GetXmin(),1,hmc->GetXaxis()->GetXmax(),1);
         //REMOVE
-        line = new TLine(hmc->GetXaxis()->GetXmin(),1,4,1);
+        //line = new TLine(hmc->GetXaxis()->GetXmin(),1,4,1);
         //if(obschannel==5 || obschannel==6) line = new TLine(0,1,1200,1);
         line->Draw();
         line->SetLineWidth(2);
