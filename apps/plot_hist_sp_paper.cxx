@@ -944,8 +944,8 @@ int main( int argc, char** argv )
         if (flag_move == 1){
             legend[obschannel-1]->SetX1(0.14); // New x1 position
             legend[obschannel-1]->SetX2(0.8); // New x2 position
-            //legend[obschannel-1]->SetY1(0.85); // New y1 position
-            //legend[obschannel-1]->SetY2(0.92); // New y2 position
+            legend[obschannel-1]->SetY1(0.85); // New y1 position
+            legend[obschannel-1]->SetY2(0.9); // New y2 position
         }
         legend[obschannel-1]->SetFillStyle(0);
 
