@@ -2718,7 +2718,7 @@ void TLee::Set_Spectra_MatrixCov()
     map_Lee_ch[6] = 1; 
   }
 
-  int Np0p_constraints = 0;
+  int Np0p_constraints = 1;
 
   if (Np0p_constraints){
     map_Lee_ch[7] = 1;
