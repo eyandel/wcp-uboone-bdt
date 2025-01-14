@@ -944,8 +944,8 @@ int main( int argc, char** argv )
         if (flag_move == 1){
             legend[obschannel-1]->SetX1(0.14); // New x1 position
             legend[obschannel-1]->SetX2(0.8); // New x2 position
-            //legend[obschannel-1]->SetY1(0.7); // New y1 position
-            legend[obschannel-1]->SetY2(0.95); // New y2 position
+            //legend[obschannel-1]->SetY1(0.85); // New y1 position
+            //legend[obschannel-1]->SetY2(0.92); // New y2 position
         }
         legend[obschannel-1]->SetFillStyle(0);
 
@@ -1342,7 +1342,7 @@ int main( int argc, char** argv )
         hLEE->SetLineStyle(kDashed);
         hLEE->SetFillColorAlpha(kMagenta, 1.0);
         hLEE->SetLineColor(kMagenta);
-        hLEE->SetLineWidth(2);
+        hLEE->SetLineWidth(4);
 
         hmc->Add(hLEE, -1);
         hmc2->Add(hLEE, -1);
@@ -1531,6 +1531,16 @@ int main( int argc, char** argv )
         float maxratio = 1.5;
         for(int i=0; i<hdata->GetNbinsX(); i++)
         {
+            double yLEE = -1;
+            if (flag_leeexist){
+              TH1F* hmcLEE = (TH1F*)hmc->Clone("hmcLEE");
+              TH1F* hmcLEE2 = (TH1F*)hmc2->Clone("hmcLEE2");
+              TH1F* hmcerrorLEE = (TH1F*)hmcerror->Clone("hmcerrorLEE");
+              hmcLEE->Add(hLEE);
+              hmcLEE2->Add(hLEE);
+              hmcerrorLEE->Add(hLEE);
+              yLEE = hmcLEE->GetBinContent(i+1);
+            }
             double x = hdata->GetBinCenter(i+1);
             double x_err = hdata->GetBinWidth(1)*0.5;
             double y = hdata->GetBinContent(i+1);
@@ -1626,7 +1636,7 @@ int main( int argc, char** argv )
         gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reconstructed Shower Cos#theta");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("#nu_{e} CC Background BDT Score");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Number of Tracks");
-        gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Number of Protons");
+        //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Number of Protons");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("#nu_{e}CC BDT Score");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Neutrino Energy [MeV]");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("NC#pi^{0} BDT Score");
