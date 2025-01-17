@@ -1205,7 +1205,7 @@ int main( int argc, char** argv )
         hdata->SetMaximum(3.0*excessymax);
         //hdata->GetYaxis()->SetRangeUser(-0.02*excessymax, 2.7*excessymax);
         if (excessymin > 0.0) excessymin = 0.0;
-        hdata->GetYaxis()->SetRangeUser(17.0*excessymin - 0.02*excessymax, 2.7*excessymax);
+        hdata->GetYaxis()->SetRangeUser(1.0*excessymin - 0.02*excessymax, 2.7*excessymax);
         //hdata->GetYaxis()->SetRangeUser(30.0*excessymin - 1.0*excessymax, 3.5*excessymax);
         //hdata->GetXaxis()->SetRange(1, hdata->GetNbinsX() + 1);
 
@@ -1426,10 +1426,10 @@ int main( int argc, char** argv )
         }
         else*/ 
         //Erin 
-        hdata->GetXaxis()->SetTitle("Reconstructed Shower Energy (MeV)");
+        //hdata->GetXaxis()->SetTitle("Reconstructed Shower Energy (MeV)");
         //hdata->GetXaxis()->SetTitle("Reco Shower Angle [degrees]");
         //hdata->GetXaxis()->SetTitle("Reconstructed Shower Cosine Angle");
-        //hdata->GetXaxis()->SetTitle("Reconstructed Shower Backwards Projected Distance (cm)");
+        hdata->GetXaxis()->SetTitle("Reconstructed Shower Backwards Projected Distance (cm)");
         //hdata->GetXaxis()->SetTitle("Reco Shower Forwards Projected Distance [cm]");
         //hdata->GetXaxis()->SetTitle("Reco Shower Minumum Distance to Wall [cm]");
         //hdata->GetXaxis()->SetTitle("Reco Shower Minimum Projected Distance [cm]");
