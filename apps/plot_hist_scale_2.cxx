@@ -1205,7 +1205,7 @@ int main( int argc, char** argv )
         hdata->SetMaximum(3.0*excessymax);
         //hdata->GetYaxis()->SetRangeUser(-0.02*excessymax, 2.7*excessymax);
         if (excessymin > 0.0) excessymin = 0.0;
-        hdata->GetYaxis()->SetRangeUser(1.0*excessymin - 0.02*excessymax, 2.7*excessymax);
+        hdata->GetYaxis()->SetRangeUser(2.0*excessymin - 0.02*excessymax, 2.7*excessymax);
         //hdata->GetYaxis()->SetRangeUser(30.0*excessymin - 1.0*excessymax, 3.5*excessymax);
         //hdata->GetXaxis()->SetRange(1, hdata->GetNbinsX() + 1);
 
@@ -1223,7 +1223,8 @@ int main( int argc, char** argv )
             double scaleKS = hdata->KolmogorovTest(h1gscale);
             //legend[obschannel-1]->AddEntry(h1gscale, Form("Signal #times %.1f, %.1f, #chi^{2} = %.2f", scale_amount, signal_amount, scalechi2), "F");
             //legend[obschannel-1]->AddEntry(h1gscale, Form("Signal #times %.1f, #chi^{2} = %.2f", scale_amount - 1.0, scalechi2), "l");
-            //h1gscale->Draw("hist same");
+            legend[obschannel-1]->AddEntry(hNCpi1gscale, Form("#splitline{1#gammaXp #times %.1f, }{KS = %.2f}", scale_amount - 1.0, scaleKS), "l");
+            h1gscale->Draw("hist same");
 
             double scalechi2_NCpi1g = hdata->Chi2Test(hNCpi1gscale,"CHI2");
             double scaleKS_NCpi1g = hdata->KolmogorovTest(hNCpi1gscale);
