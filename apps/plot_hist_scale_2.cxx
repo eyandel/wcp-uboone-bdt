@@ -872,7 +872,7 @@ int main( int argc, char** argv )
             //legend[obschannel-1]->AddEntry(h1gscale, Form("Signal #times %.1f, %.1f", scale_amount, signal_amount), "F");
             h1gscale->SetFillStyle(0);
             //h1gscale->SetFillColorAlpha(kMagenta, 0.5);
-            h1gscale->SetLineColor(colors.At(0));
+            h1gscale->SetLineColor(kPink+5);//colors.At(0));
             h1gscale->SetLineStyle(4);//2);
             h1gscale->SetLineWidth(8);
 
