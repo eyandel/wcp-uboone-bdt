@@ -1429,7 +1429,7 @@ int main( int argc, char** argv )
         hdata->GetXaxis()->SetTitle("Reconstructed Shower Energy (MeV)");
         //hdata->GetXaxis()->SetTitle("Reco Shower Angle [degrees]");
         //hdata->GetXaxis()->SetTitle("Reconstructed Shower Cosine Angle");
-        hdata->GetXaxis()->SetTitle("Reco Shower Backwards Projected Distance [cm]");
+        hdata->GetXaxis()->SetTitle("Reconstructed Shower Backwards Projected Distance (cm)");
         //hdata->GetXaxis()->SetTitle("Reco Shower Forwards Projected Distance [cm]");
         //hdata->GetXaxis()->SetTitle("Reco Shower Minumum Distance to Wall [cm]");
         //hdata->GetXaxis()->SetTitle("Reco Shower Minimum Projected Distance [cm]");
