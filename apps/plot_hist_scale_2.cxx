@@ -1439,7 +1439,7 @@ int main( int argc, char** argv )
 
         //hdata->SetTitle("");
 
-        hdata->GetXaxis()->SetTitleSize(0.055);
+        hdata->GetXaxis()->SetTitleSize(0.045);//0.055);
         hdata->GetXaxis()->SetLabelSize(0.055);
         hdata->GetYaxis()->SetTitleSize(0.055);
         hdata->GetYaxis()->SetLabelSize(0.055);
