@@ -873,7 +873,7 @@ int main( int argc, char** argv )
             h1gscale->SetFillStyle(0);
             //h1gscale->SetFillColorAlpha(kMagenta, 0.5);
             h1gscale->SetLineColor(kPink+5);//colors.At(0));
-            h1gscale->SetLineStyle(4);//2);
+            h1gscale->SetLineStyle(1);//2);
             h1gscale->SetLineWidth(8);
 
             hNCpi1gscale->Scale(abs(scale_amount_NCpi1g - 1.0));
