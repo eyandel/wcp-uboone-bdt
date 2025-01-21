@@ -1224,7 +1224,11 @@ int main( int argc, char** argv )
             //legend[obschannel-1]->AddEntry(h1gscale, Form("Signal #times %.1f, %.1f, #chi^{2} = %.2f", scale_amount, signal_amount, scalechi2), "F");
             //legend[obschannel-1]->AddEntry(h1gscale, Form("Signal #times %.1f, #chi^{2} = %.2f", scale_amount - 1.0, scalechi2), "l");
             legend[obschannel-1]->AddEntry(h1gscale, Form("#splitline{1#gammaXp #times %.1f, }{KS = %.2f}", scale_amount - 1.0, scaleKS), "l");
+            legend3[obschannel-1]->AddEntry(h1gscale, Form("1#gammaXp #times %.1f, KS = %.2f", scale_amount - 1.0, scaleKS), "l");
             h1gscale->Draw("hist same");
+            canvas3[obschannel-1]->cd();
+            h1gscale->Draw("hist same");
+            canvas[obschannel-1]->cd();
 
             double scalechi2_NCpi1g = hdata->Chi2Test(hNCpi1gscale,"CHI2");
             double scaleKS_NCpi1g = hdata->KolmogorovTest(hNCpi1gscale);
