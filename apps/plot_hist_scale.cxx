@@ -1434,7 +1434,7 @@ int main( int argc, char** argv )
         //hdata->GetXaxis()->SetTitle("Reco Shower Minumum Distance to Wall [cm]");
         //hdata->GetXaxis()->SetTitle("Reco Shower Minimum Projected Distance [cm]");
 
-        hdata->GetYaxis()->SetTitle("Excess Events");
+        hdata->GetYaxis()->SetTitle("Background-Subtracted Events"); //"Excess Events");
 
         //hdata->SetTitle("");
 
