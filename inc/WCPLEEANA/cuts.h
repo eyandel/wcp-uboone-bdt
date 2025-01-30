@@ -390,7 +390,11 @@ double LEEana::get_weight(TString weight_name, EvalInfo& eval, PFevalInfo& pfeva
           double pi0_cos;
           double ratio;
           ss >> pi0_KE >> comma >> pi0_cos >> comma >> ratio;
-          if (truth_pi0_costheta + 0.04 >= pi0_cos && truth_pi0_KE + 10.0 >= pi0_KE){
+          double pi0_cos_low = pi0_cos - 0.02;
+          double pi0_cos_high = pi0_cos + 0.02;
+          double pi0_KE_low = pi0_KE - 5.0;
+          double pi0_KE_high = pi0_KE + 5.0;
+          if (pi0_cos_low <= truth_pi0_costheta && truth_pi0_costheta <= pi0_cos_high && pi0_KE_low <= truth_pi0_KE && truth_pi0_KE <= pi0_KE_high){
             ratio_weight = ratio;
             break;
           }  
@@ -441,7 +445,11 @@ double LEEana::get_weight(TString weight_name, EvalInfo& eval, PFevalInfo& pfeva
           double pi0_cos;
           double ratio;
           ss >> pi0_KE >> comma >> pi0_cos >> comma >> ratio;
-          if (truth_pi0_costheta + 0.04 >= pi0_cos && truth_pi0_KE + 10.0 >= pi0_KE){
+          double pi0_cos_low = pi0_cos - 0.02;
+          double pi0_cos_high = pi0_cos + 0.02;
+          double pi0_KE_low = pi0_KE - 5.0;
+          double pi0_KE_high = pi0_KE + 5.0;
+          if (pi0_cos_low <= truth_pi0_costheta && truth_pi0_costheta <= pi0_cos_high && pi0_KE_low <= truth_pi0_KE && truth_pi0_KE <= pi0_KE_high){
             ratio_weight = ratio;
             break;
           }
