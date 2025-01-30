@@ -371,22 +371,22 @@ double LEEana::get_weight(TString weight_name, EvalInfo& eval, PFevalInfo& pfeva
         }
       }
       //pick 0p or Np csv file
-      string filename;
+      string ratiofilename;
       if (true_num_protons_35_MeV>0){
-        filename = "/exp/uboone/data/users/mismail/pi0-fsi/get_ratios/2d_ratio_Np1pi0.csv";
+        ratiofilename = "/exp/uboone/data/users/mismail/pi0-fsi/get_ratios/2d_ratio_Np1pi0.csv";
       }else{
-        filename = "/exp/uboone/data/users/mismail/pi0-fsi/get_ratios/2d_ratio_0p1pi0.csv";
+        ratiofilename = "/exp/uboone/data/users/mismail/pi0-fsi/get_ratios/2d_ratio_0p1pi0.csv";
       }
-      std::ifstream file(filename);
-      if (!file.is_open()) {
+      std::ifstream ratiofile(ratiofilename);
+      if (!ratiofile.is_open()) {
           throw std::runtime_error("Could not open file");
       }
       double last_pi0_costheta = -1000.;
       double last_pi0_KE = -1000.;
-      std::string line;
-      std::getline(file, line); // Skip header line
-      while (std::getline(file, line)) {
-          std::istringstream ss(line);
+      std::string ratioline;
+      std::getline(ratiofile, ratioline); // Skip header line
+      while (std::getline(ratiofile, ratioline)) {
+          std::istringstream ss(ratioline);
           char comma;
           double pi0_KE;
           double pi0_cos;
