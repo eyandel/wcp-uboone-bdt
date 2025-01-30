@@ -395,10 +395,10 @@ double LEEana::get_weight(TString weight_name, EvalInfo& eval, PFevalInfo& pfeva
           if (truth_pi0_costheta + 0.04 >= pi0_cos && truth_pi0_KE + 10.0 >= pi0_KE){
             ratio_weight = ratio;
             break;
-          }
-          
+          }  
       }
     }
+    return addtl_weight*eval.weight_cv * eval.weight_spline * ratio_weight;
   }else if (weight_name = "cv_spline_cexbugfix_cv_spline_cexbugfix"){
     double ratio_weight = 1.0;
     if (eval.truth_isCC == 0 && pfeval.truth_NprimPio==1)
@@ -449,9 +449,9 @@ double LEEana::get_weight(TString weight_name, EvalInfo& eval, PFevalInfo& pfeva
             ratio_weight = ratio;
             break;
           }
-          
       }
     }
+    return pow(addtl_weight*eval.weight_cv * eval.weight_spline * ratio_weight,2);
   }else if (weight_name == "cv_spline_cv_spline"){
     return pow(addtl_weight*eval.weight_cv * eval.weight_spline,2);
   }else if (weight_name == "unity" || weight_name == "unity_unity"){
