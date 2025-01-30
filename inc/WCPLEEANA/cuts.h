@@ -353,7 +353,7 @@ double LEEana::get_weight(TString weight_name, EvalInfo& eval, PFevalInfo& pfeva
       //get the pi0 costheta and KE
       double truth_pi0_costheta = -1000.;
       double truth_pi0_KE = -1000.;
-      double true_num_protons_35_MeV = -1000.;
+      int true_num_protons_35_MeV = 0;
       for(int jth=0; jth<pfeval.truth_Ntrack; jth++){
         int mother = pfeval.truth_mother[jth];
         if(mother != 0) continue;
@@ -408,7 +408,7 @@ double LEEana::get_weight(TString weight_name, EvalInfo& eval, PFevalInfo& pfeva
       //get the pi0 costheta and KE
       double truth_pi0_costheta = -1000.;
       double truth_pi0_KE = -1000.;
-      double true_num_protons_35_MeV = -1000.;
+      int true_num_protons_35_MeV = 0;
       for(int jth=0; jth<pfeval.truth_Ntrack; jth++){
         int mother = pfeval.truth_mother[jth];
         if(mother != 0) continue;
