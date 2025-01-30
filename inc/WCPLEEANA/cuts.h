@@ -345,6 +345,113 @@ double LEEana::get_weight(TString weight_name, EvalInfo& eval, PFevalInfo& pfeva
     //ext_rej = ext_rej + 0.03;
     float ext_scale = 1.0 - ext_rej;
     return pow(ext_scale,2);
+//cex bug fix weights
+  }else if (weight_name = "cv_spline_cexbugfix"){
+    double ratio_weight = 1.0;
+    if (eval.truth_isCC == 0 && pfeval.truth_NprimPio==1)
+    {
+      //get the pi0 costheta and KE
+      double truth_pi0_costheta = -1000.;
+      double truth_pi0_KE = -1000.;
+      double true_num_protons_35_MeV = -1000.;
+      for(int jth=0; jth<pfeval.truth_Ntrack; jth++){
+        int mother = pfeval.truth_mother[jth];
+        if(mother != 0) continue;
+        int pdgcode = pfeval.truth_pdg[jth];
+        if(abs(pdgcode)==111){
+          //N_th_pi0++;
+          double px = pfeval.truth_startMomentum[jth][0]*1000.; // MeV
+          double py = pfeval.truth_startMomentum[jth][1]*1000.; // MeV
+          double pz = pfeval.truth_startMomentum[jth][2]*1000.; // MeV
+          truth_pi0_costheta = pz / sqrt(px*px + py*py + pz*pz);
+          truth_pi0_KE = pfeval.truth_startMomentum[jth][3]*1000. - 134.9768;
+        }
+        if (pdgcode==2212 && pfeval.truth_startMomentum[jth][3]*1000. - 938.272089 > 35.){
+          true_num_protons_35_MeV++;
+        }
+      }
+      //pick 0p or Np csv file
+      string filename;
+      if (true_num_protons_35_MeV>0){
+        filename = "/exp/uboone/data/users/mismail/pi0-fsi/get_ratios/2d_ratio_Np1pi0.csv";
+      }else{
+        filename = "/exp/uboone/data/users/mismail/pi0-fsi/get_ratios/2d_ratio_0p1pi0.csv";
+      }
+      std::ifstream file(filename);
+      if (!file.is_open()) {
+          throw std::runtime_error("Could not open file");
+      }
+      double last_pi0_costheta = -1000.;
+      double last_pi0_KE = -1000.;
+      std::string line;
+      std::getline(file, line); // Skip header line
+      while (std::getline(file, line)) {
+          std::istringstream ss(line);
+          char comma;
+          double pi0_KE;
+          double pi0_cos;
+          double ratio;
+          ss >> pi0_KE >> comma >> pi0_cos >> comma >> ratio;
+          if (truth_pi0_costheta + 0.04 >= pi0_cos && truth_pi0_KE + 10.0 >= pi0_KE){
+            ratio_weight = ratio;
+            break;
+          }
+          
+      }
+    }
+  }else if (weight_name = "cv_spline_cexbugfix_cv_spline_cexbugfix"){
+    double ratio_weight = 1.0;
+    if (eval.truth_isCC == 0 && pfeval.truth_NprimPio==1)
+    {
+      //get the pi0 costheta and KE
+      double truth_pi0_costheta = -1000.;
+      double truth_pi0_KE = -1000.;
+      double true_num_protons_35_MeV = -1000.;
+      for(int jth=0; jth<pfeval.truth_Ntrack; jth++){
+        int mother = pfeval.truth_mother[jth];
+        if(mother != 0) continue;
+        int pdgcode = pfeval.truth_pdg[jth];
+        if(abs(pdgcode)==111){
+          //N_th_pi0++;
+          double px = pfeval.truth_startMomentum[jth][0]*1000.; // MeV
+          double py = pfeval.truth_startMomentum[jth][1]*1000.; // MeV
+          double pz = pfeval.truth_startMomentum[jth][2]*1000.; // MeV
+          truth_pi0_costheta = pz / sqrt(px*px + py*py + pz*pz);
+          truth_pi0_KE = pfeval.truth_startMomentum[jth][3]*1000. - 134.9768;
+        }
+        if (pdgcode==2212 && pfeval.truth_startMomentum[jth][3]*1000. - 938.272089 > 35.){
+          true_num_protons_35_MeV++;
+        }
+      }
+      //pick 0p or Np csv file
+      string filename;
+      if (true_num_protons_35_MeV>0){
+        filename = "/exp/uboone/data/users/mismail/pi0-fsi/get_ratios/2d_ratio_Np1pi0.csv";
+      }else{
+        filename = "/exp/uboone/data/users/mismail/pi0-fsi/get_ratios/2d_ratio_0p1pi0.csv";
+      }
+      std::ifstream file(filename);
+      if (!file.is_open()) {
+          throw std::runtime_error("Could not open file");
+      }
+      double last_pi0_costheta = -1000.;
+      double last_pi0_KE = -1000.;
+      std::string line;
+      std::getline(file, line); // Skip header line
+      while (std::getline(file, line)) {
+          std::istringstream ss(line);
+          char comma;
+          double pi0_KE;
+          double pi0_cos;
+          double ratio;
+          ss >> pi0_KE >> comma >> pi0_cos >> comma >> ratio;
+          if (truth_pi0_costheta + 0.04 >= pi0_cos && truth_pi0_KE + 10.0 >= pi0_KE){
+            ratio_weight = ratio;
+            break;
+          }
+          
+      }
+    }
   }else if (weight_name == "cv_spline_cv_spline"){
     return pow(addtl_weight*eval.weight_cv * eval.weight_spline,2);
   }else if (weight_name == "unity" || weight_name == "unity_unity"){
