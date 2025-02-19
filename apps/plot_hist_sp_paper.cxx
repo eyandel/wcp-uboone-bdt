@@ -35,7 +35,7 @@ int main( int argc, char** argv )
 {
 
   if (argc < 2){
-    std::cout << "./plot_hist_sp_paper -r[#run, 0 for all] -e[1 for standard, 2 for Bayesian, 3 for total uncertainty] -l[LEE strength, check against total uncertainty config] -s[path-to-external covmatrix file] -c[check MC and DATA spectra against the ones from external file] -m[move legend]" << std::endl;
+    std::cout << "./plot_hist_sp_paper -r[#run, 0 for all] -e[1 for standard, 2 for Bayesian, 3 for total uncertainty] -l[LEE strength, check against total uncertainty config] -s[path-to-external covmatrix file] -c[check MC and DATA spectra against the ones from external file] -m[move legend] -p[print txt file]" << std::endl;
   }
 
   int run = 1; // run 1 ...
@@ -49,6 +49,7 @@ int main( int argc, char** argv )
   int flag_check = 0;
   int flag_truthlabel = 0;
   int flag_move = 0;
+  int flag_print = 0;
 
   for (Int_t i=1;i!=argc;i++){
     switch(argv[i][1]){
@@ -80,8 +81,13 @@ int main( int argc, char** argv )
     case 'm':{
       flag_move = atoi(&argv[i][2]);
     }break;
+    case 'p':{
+      flag_print = atoi(&argv[i][2]);
+    }
     }
   }
+
+  ofstream bin_contents_file("./bin_contents.txt");
 
   CovMatrix cov;
 
@@ -1214,6 +1220,19 @@ int main( int argc, char** argv )
         TH1F* hmcerror = (TH1F*)hmc->Clone("hmcerror");
         legend[obschannel-1]->AddEntry(hmcerror, "Pred. uncertainty", "lf");
 
+        if (flag_print == 1){
+          bin_contents_file << (TString)hdata->GetTitle() << "\n";
+          bin_contents_file << "bin_low TO bin_high; Cosmic; OutFV/Dirt; NC pi0 bkg; CC pi0 bkg; Other in FV; nueCC; 1g; LEE (if exists);" << "\n" << "\n";
+
+          for (int ibin = 1; ibin < hmc->GetNbinsX()+1; ibin++){
+            double bin_low = hmc->GetBinLowEdge(ibin);
+            double bin_high = hmc->GetBinLowEdge(ibin+1);
+            bin_contents_file << bin_low << " TO " << bin_high << "; " << hext->GetBinContent(ibin) << "; " << houtFV->GetBinContent(ibin) << "; " << hNCpi0inFV->GetBinContent(ibin) << "; " << hCCpi0inFV->GetBinContent(ibin) << "; " << hnumuCCinFV->GetBinContent(ibin) << "; " << hnueCCinFV->GetBinContent(ibin) << "; " << h1g->GetBinContent(ibin) << "; "; 
+            if (flag_leeexist) bin_contents_file << hLEE->GetBinContent(ibin) << ";" << "\n";
+            else bin_contents_file << "\n";
+          }
+       }
+
         if(flag_truthlabel==0){
         // truth labels start
         //hstack[obschannel-1]->Add(hbadmatch);
@@ -1299,6 +1318,7 @@ int main( int argc, char** argv )
         h1g->SetFillColorAlpha(kPink+5, 1.0);
         h1g->SetLineColor(kPink+5);
         h1g->SetLineWidth(1);
+
        
         //hstack[obschannel-1]->Add(hNCpi1g);
         //legend[obschannel-1]->AddEntry(hNCpi1g, Form("NC #pi^{0} 1#gamma, %.1f", hNCpi1g->Integral()), "F");
@@ -1815,13 +1835,14 @@ int main( int argc, char** argv )
         legend2[obschannel-1]->SetFillStyle(0);
         legend2[obschannel-1]->Draw();
         pad2->Modified();
+        
+        //CHANGE TO SAVE PLOTS
+        //canvas[obschannel-1]->Print((TString)hdata->GetTitle()+"_paper.png");
+        //canvas[obschannel-1]->Print(Form("canvas%d_paper.pdf", obschannel));
 
-        canvas[obschannel-1]->Print((TString)hdata->GetTitle()+"_paper.png");
-        canvas[obschannel-1]->Print(Form("canvas%d_paper.pdf", obschannel));
-
-        if(obschannel==1) canvas[obschannel-1]->Print("selection_paper.pdf(");
-        else if(obschannel==nchannels) canvas[obschannel-1]->Print("selection_paper.pdf)");
-        else canvas[obschannel-1]->Print("selection_paper.pdf");
+        //if(obschannel==1) canvas[obschannel-1]->Print("selection_paper.pdf(");
+        //else if(obschannel==nchannels) canvas[obschannel-1]->Print("selection_paper.pdf)");
+        //else canvas[obschannel-1]->Print("selection_paper.pdf");
 
     }
     theApp.Run();
@@ -1905,5 +1926,7 @@ int main( int argc, char** argv )
     file3->Write();
     file3->Close();
   }
+
+  bin_contents_file.close();
 
 }
