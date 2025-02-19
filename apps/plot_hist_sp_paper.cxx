@@ -1232,6 +1232,7 @@ int main( int argc, char** argv )
             if (flag_leeexist) bin_contents_file << hLEE->GetBinContent(ibin) << ";" << "\n";
             else bin_contents_file << "\n";
           }
+          bin_contents_file << "\n \n";
        }
 
         if(flag_truthlabel==0){
