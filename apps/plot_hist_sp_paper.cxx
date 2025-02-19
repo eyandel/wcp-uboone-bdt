@@ -1222,7 +1222,7 @@ int main( int argc, char** argv )
 
         if (flag_print == 1){
           std::cout<<"printing"<<std::endl;
-          bin_contents_file << (TString)hdata->GetTitle() << "\n";
+          //bin_contents_file << (TString)hdata->GetTitle() << "\n";
           bin_contents_file << "bin_low TO bin_high; Cosmic; OutFV/Dirt; NC pi0 bkg; CC pi0 bkg; Other in FV; nueCC; 1g; LEE (if exists);" << "\n" << "\n";
 
           for (int ibin = 1; ibin < hmc->GetNbinsX()+1; ibin++){
@@ -1844,6 +1844,7 @@ int main( int argc, char** argv )
         //if(obschannel==1) canvas[obschannel-1]->Print("selection_paper.pdf(");
         //else if(obschannel==nchannels) canvas[obschannel-1]->Print("selection_paper.pdf)");
         //else canvas[obschannel-1]->Print("selection_paper.pdf");
+        if (obschannel==nchannels) std::cout << "Finished plotting all channels" << std::endl;
 
     }
     theApp.Run();
@@ -1928,6 +1929,7 @@ int main( int argc, char** argv )
     file3->Close();
   }
 
+  std::cout << "Closing bin content file" << std::endl;
   bin_contents_file.close();
 
 }
