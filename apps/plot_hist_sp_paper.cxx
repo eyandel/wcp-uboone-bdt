@@ -1225,7 +1225,7 @@ int main( int argc, char** argv )
           bin_contents_file << (TString)hdata->GetTitle() << "\n";
           bin_contents_file << "bin_low TO bin_high; Cosmic; OutFV/Dirt; NC pi0 bkg; CC pi0 bkg; Other in FV; nueCC; 1g; LEE (if exists);" << "\n" << "\n";
 
-          for (int ibin = 1; ibin < hmc->GetNbinsX()+1; ibin++){
+          for (int ibin = 1; ibin < hmc->GetNbinsX()+2; ibin++){
             double bin_low = hmc->GetBinLowEdge(ibin);
             double bin_high = hmc->GetBinLowEdge(ibin+1);
             bin_contents_file << bin_low << " TO " << bin_high << "; " << hext->GetBinContent(ibin) << "; " << houtFV->GetBinContent(ibin) << "; " << hNCpi0inFV->GetBinContent(ibin) << "; " << hCCpi0inFV->GetBinContent(ibin) << "; " << hnumuCCinFV->GetBinContent(ibin) << "; " << hnueCCinFV->GetBinContent(ibin) << "; " << h1g->GetBinContent(ibin) << "; "; 
