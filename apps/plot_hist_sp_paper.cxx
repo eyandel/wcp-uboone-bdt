@@ -1235,37 +1235,45 @@ int main( int argc, char** argv )
           }
           bin_contents_file << "\n \n";
 
+          bin_contents_yaml << "- header: {name: Cosmic Data, units: counts per bin}" << "\n" << "  values:" << "\n";
           for (int ibin = 1; ibin < hmc->GetNbinsX()+2; ibin++){
-            bin_contents_yaml << "- header: {name: Cosmic Data, units: counts per bin}" << "\n" << "  values:" << "\n" << "    - {value: " << hext->GetBinContent(ibin) << "}" << "\n";
+            bin_contents_yaml << "    - {value: " << hext->GetBinContent(ibin) << "}" << "\n";
           }
 
+          bin_contents_yaml << "- header: {name: Dirt/Out FV, units: counts per bin}" << "\n" << "  values:" << "\n";
           for (int ibin = 1; ibin < hmc->GetNbinsX()+2; ibin++){
-            bin_contents_yaml << "- header: {name: Dirt/Out FV, units: counts per bin}" << "\n" << "  values:" << "\n" << "    - {value: " << houtFV->GetBinContent(ibin) << "}" << "\n";
+            bin_contents_yaml << "    - {value: " << houtFV->GetBinContent(ibin) << "}" << "\n";
           }
           
+          bin_contents_yaml << "- header: {name: NC $\pi^0$ in FV, units: counts per bin}" << "\n" << "  values:" << "\n";
           for (int ibin = 1; ibin < hmc->GetNbinsX()+2; ibin++){
-            bin_contents_yaml << "- header: {name: NC $\pi^0$ in FV, units: counts per bin}" << "\n" << "  values:" << "\n" << "    - {value: " << hNCpi0inFV->GetBinContent(ibin) << "}" << "\n";
+            bin_contents_yaml << "    - {value: " << hNCpi0inFV->GetBinContent(ibin) << "}" << "\n";
           }
 
+          bin_contents_yaml << "- header: {name: CC $\pi^0$ in FV, units: counts per bin}" << "\n" << "  values:" << "\n";
           for (int ibin = 1; ibin < hmc->GetNbinsX()+2; ibin++){
-            bin_contents_yaml << "- header: {name: CC $\pi^0$ in FV, units: counts per bin}" << "\n" << "  values:" << "\n" << "    - {value: " << hCCpi0inFV->GetBinContent(ibin) << "}" << "\n";
+            bin_contents_yaml << "    - {value: " << hCCpi0inFV->GetBinContent(ibin) << "}" << "\n";
           }
 
+          bin_contents_yaml << "- header: {name: Other in FV, units: counts per bin}" << "\n" << "  values:" << "\n";
           for (int ibin = 1; ibin < hmc->GetNbinsX()+2; ibin++){
-            bin_contents_yaml << "- header: {name: Other in FV, units: counts per bin}" << "\n" << "  values:" << "\n" << "    - {value: " << hnumuCCinFV->GetBinContent(ibin) << "}" << "\n";
+            bin_contents_yaml << "    - {value: " << hnumuCCinFV->GetBinContent(ibin) << "}" << "\n";
           }
 
+          bin_contents_yaml << "- header: {name: $\nu_e$ CC in FV, units: counts per bin}" << "\n" << "  values:" << "\n";
           for (int ibin = 1; ibin < hmc->GetNbinsX()+2; ibin++){
-            bin_contents_yaml << "- header: {name: $\nu_e$ CC in FV, units: counts per bin}" << "\n" << "  values:" << "\n" << "    - {value: " << hnueCCinFV->GetBinContent(ibin) << "}" << "\n";
+            bin_contents_yaml << "    - {value: " << hnueCCinFV->GetBinContent(ibin) << "}" << "\n";
           }
 
+          bin_contents_yaml << "- header: {name: 1$\gamma$ in FV, units: counts per bin}" << "\n" << "  values:" << "\n";
           for (int ibin = 1; ibin < hmc->GetNbinsX()+2; ibin++){
-            bin_contents_yaml << "- header: {name: 1$\gamma$ in FV, units: counts per bin}" << "\n" << "  values:" << "\n" << "    - {value: " << h1g->GetBinContent(ibin) << "}" << "\n";
+            bin_contents_yaml << "    - {value: " << h1g->GetBinContent(ibin) << "}" << "\n";
           }
 
           if (flag_leeexist){
+            bin_contents_yaml << "- header: {name: LEE, units: counts per bin}" << "\n" << "  values:" << "\n";
             for (int ibin = 1; ibin < hmc->GetNbinsX()+2; ibin++){
-              bin_contents_yaml << "- header: {name: LEE, units: counts per bin}" << "\n" << "  values:" << "\n" << "    - {value: " << hLEE->GetBinContent(ibin) << "}" << "\n";
+              bin_contents_yaml << "    - {value: " << hLEE->GetBinContent(ibin) << "}" << "\n";
             }
           }
 
