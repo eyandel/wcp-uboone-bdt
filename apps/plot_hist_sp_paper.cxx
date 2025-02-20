@@ -87,8 +87,8 @@ int main( int argc, char** argv )
     }
   }
 
-  ofstream bin_contents_file("./bin_contents.txt");
-  ofstream bin_contents_yaml("./bin_contents.yaml");
+  ofstream bin_contents_file("./bin_contents_cat.txt");
+  ofstream bin_contents_yaml("./bin_contents_cat.yaml");
 
   CovMatrix cov;
 
