@@ -1224,6 +1224,7 @@ int main( int argc, char** argv )
         if (flag_print == 1){
           std::cout<<"printing"<<std::endl;
           bin_contents_file << (TString)hdata->GetTitle() << "\n";
+          bin_contents_yaml << (TString)hdata->GetTitle() << "\n";
           bin_contents_file << "bin_low TO bin_high; Cosmic; OutFV/Dirt; NC pi0 bkg; CC pi0 bkg; Other in FV; nueCC; 1g; LEE (if exists);" << "\n" << "\n";
 
           for (int ibin = 1; ibin < hmc->GetNbinsX()+2; ibin++){
