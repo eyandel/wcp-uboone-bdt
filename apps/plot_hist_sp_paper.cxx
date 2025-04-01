@@ -1266,7 +1266,7 @@ int main( int argc, char** argv )
             bin_contents_yaml << "    - {value: " << hnueCCinFV->GetBinContent(ibin) << "}" << "\n";
           }
 
-          bin_contents_yaml << "- header: {name: 1$\\gamma$ in FV, units: counts per bin}" << "\n" << "  values:" << "\n";
+          bin_contents_yaml << "- header: {name: 1$\\gamma$, units: counts per bin}" << "\n" << "  values:" << "\n";
           for (int ibin = 1; ibin < hmc->GetNbinsX()+2; ibin++){
             bin_contents_yaml << "    - {value: " << h1g->GetBinContent(ibin) << "}" << "\n";
           }
