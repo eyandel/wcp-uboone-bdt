@@ -124,3 +124,5 @@ weights/backup/tro_2_BDT.weights.xml
 weights/backup/tro_4_BDT.weights.xml
 weights/backup/tro_5_BDT.weights.xml
 weights/backup/xgboost_set8seed7_kaicheng_0819.xml
+bin/
+lib/

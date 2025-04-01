@@ -81,6 +81,11 @@ namespace LEEana{
     Float_t pl_reco_nu_vtx_sce_z;
     Double_t pl_reco_e;
     Int_t pl_flag;
+
+    // gLEE
+    Bool_t flag_gl;
+    Int_t gl_sel_type, gl_file_type;
+    Float_t gl_true_Enu, gl_true_Elep, gl_reco_Eshower,gl_reco_shower_dirz, gl_reco_shower_implied_dirz,  gl_simple_pot_weight, gl_rem_orig_wc_pot_weight, gl_new_pot_weight, gl_overlap_weight, gl_overlap_weight_tweaked, gl_wc_total_overlapped_weight;
 };
 
  void set_tree_address(TTree *tree0, EvalInfo& eval_info, int flag = 1);
@@ -93,6 +98,7 @@ void LEEana::set_tree_address(TTree *tree0, EvalInfo& eval_info, int flag){
   eval_info.is_match_found_int = false;
   eval_info.is_file_type = false;
   eval_info.flag_pl = false;
+  eval_info.flag_gl = false;
 
   if (tree0->GetBranch("pl_flag")){
     eval_info.flag_pl = true;
@@ -106,6 +112,24 @@ void LEEana::set_tree_address(TTree *tree0, EvalInfo& eval_info, int flag){
     tree0->SetBranchAddress("pl_flag",&eval_info.pl_flag);
   }
 
+  if (tree0->GetBranch("gl_sel_type")){
+    eval_info.flag_gl = true;
+    tree0->SetBranchAddress("gl_sel_type",&eval_info.gl_sel_type);
+    tree0->SetBranchAddress("gl_file_type",&eval_info.gl_file_type);
+    tree0->SetBranchAddress("gl_true_Enu",&eval_info.gl_true_Enu);
+    tree0->SetBranchAddress("gl_true_Elep",&eval_info.gl_true_Elep);
+    tree0->SetBranchAddress("gl_reco_Eshower",&eval_info.gl_reco_Eshower);
+    tree0->SetBranchAddress("gl_reco_shower_dirz",&eval_info.gl_reco_shower_dirz);
+    tree0->SetBranchAddress("gl_reco_shower_implied_dirz",&eval_info.gl_reco_shower_implied_dirz);
+    tree0->SetBranchAddress("gl_simple_pot_weight",&eval_info.gl_simple_pot_weight);
+    tree0->SetBranchAddress("gl_rem_orig_wc_pot_weight",&eval_info.gl_rem_orig_wc_pot_weight);
+    tree0->SetBranchAddress("gl_new_pot_weight",&eval_info.gl_new_pot_weight);
+    tree0->SetBranchAddress("gl_overlap_weight",&eval_info.gl_overlap_weight);
+    tree0->SetBranchAddress("gl_overlap_weight_tweaked",&eval_info.gl_overlap_weight_tweaked);
+    tree0->SetBranchAddress("gl_wc_total_overlapped_weight",&eval_info.gl_wc_total_overlapped_weight);
+  }
+  
+  
   tree0->SetBranchAddress("run", &eval_info.run);
   tree0->SetBranchAddress("subrun", &eval_info.subrun);
   tree0->SetBranchAddress("event", &eval_info.event);
@@ -264,6 +288,22 @@ void LEEana::put_tree_address(TTree *tree0, EvalInfo& eval_info, int flag){
     tree0->Branch("pl_flag",&eval_info.pl_flag,"data/I");
   }
 
+  if (eval_info.flag_gl){
+    tree0->Branch("gl_sel_type",&eval_info.gl_sel_type,"gl_sel_type/I");
+    tree0->Branch("gl_file_type",&eval_info.gl_file_type,"gl_file_type/I");
+    tree0->Branch("gl_true_Enu",&eval_info.gl_true_Enu,"gl_true_Enu/F");
+    tree0->Branch("gl_true_Elep",&eval_info.gl_true_Elep,"gl_true_Elep/F");
+    tree0->Branch("gl_reco_Eshower",&eval_info.gl_reco_Eshower,"gl_reco_Eshower/F");
+    tree0->Branch("gl_reco_shower_dirz",&eval_info.gl_reco_shower_dirz,"gl_reco_shower_dirz/F");
+    tree0->Branch("gl_reco_shower_implied_dirz",&eval_info.gl_reco_shower_implied_dirz,"gl_reco_shower_implied_dirz/F");
+    tree0->Branch("gl_simple_pot_weight",&eval_info.gl_simple_pot_weight,"gl_simple_pot_weight/F");
+    tree0->Branch("gl_rem_orig_wc_pot_weight",&eval_info.gl_rem_orig_wc_pot_weight,"gl_rem_orig_wc_pot_weight/F");
+    tree0->Branch("gl_new_pot_weight",&eval_info.gl_new_pot_weight,"gl_new_pot_weight/F");
+    tree0->Branch("gl_overlap_weight",&eval_info.gl_overlap_weight,"gl_overlap_weight/F");
+    tree0->Branch("gl_overlap_weight_tweaked",&eval_info.gl_overlap_weight_tweaked,"gl_overlap_weight_tweaked/F");
+    tree0->Branch("gl_wc_total_overlapped_weight",&eval_info.gl_wc_total_overlapped_weight,"gl_wc_total_overlapped_weight/F");
+  }
+  
 }
 
 
