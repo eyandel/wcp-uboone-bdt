@@ -151,6 +151,9 @@ int main( int argc, char** argv )
   TTree *T_PFeval = (TTree*)file1->Get("wcpselection/T_PFeval");
   TTree *T_KINEvars = (TTree*)file1->Get("wcpselection/T_KINEvars");
 
+  file1->cd("nuselection");
+  TDirectory *old_nuselection = gDirectory;
+  old_nuselection->ReadAll();
 
 
 
@@ -707,7 +710,11 @@ int main( int argc, char** argv )
   std::set<int> low_neutrino_count_numi_run2RHC_set(low_neutrino_count_numi_run2RHC.begin(), low_neutrino_count_numi_run2RHC.end());
   
   //  std::cout << T_eval->GetEntries() << std::endl;
+  
   TFile *file2 = new TFile(out_file,"RECREATE");
+  file2->mkdir("nuselection");
+  file2->cd("nuselection");
+  old_nuselection->GetList()->Write();
   file2->mkdir("wcpselection");
   file2->cd("wcpselection");
   TTree *t4 = new TTree("T_BDTvars","T_BDTvars");
