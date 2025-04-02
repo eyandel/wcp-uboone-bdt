@@ -725,10 +725,12 @@ int main( int argc, char** argv )
   TFile *file2 = new TFile(out_file,"RECREATE");
 
   //CopyDir(nuselection);
+  TDirectory *topdirout = gDirectory;
   file2->mkdir("nuselection");
   file2->cd("nuselection");
   TTree *new_NeutrinoSelectionFilter = NeutrinoSelectionFilter->CloneTree(0);
   TTree *new_SubRun = SubRun->CloneTree(0);
+  topdirout->cd();
   CopyDir(shrreco3d);
   //file2->mkdir("shrreco3d");
   //file2->cd("shrreco3d");
