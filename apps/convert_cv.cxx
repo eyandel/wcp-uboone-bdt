@@ -12,6 +12,7 @@
 #include "TSystem.h"
 #include "TROOT.h"
 #include "TMath.h"
+#include "TKey.h"
 
 #include "WCPLEEANA/tagger.h"
 
@@ -24,6 +25,42 @@ using namespace LEEana;
 #include "WCPLEEANA/pot.h"
 #include "WCPLEEANA/pfeval.h"
 #include "WCPLEEANA/kine.h"
+
+void CopyDir(TDirectory *source) {
+  //copy all objects and subdirs of directory source as a subdir of the current directory   
+  source->ls();
+  TDirectory *savdir = gDirectory;
+  TDirectory *adir = savdir->mkdir(source->GetName());
+  adir->cd();
+  //loop on all entries of this directory
+  TKey *key;
+  TIter nextkey(source->GetListOfKeys());
+  while ((key = (TKey*)nextkey())) {
+     const char *classname = key->GetClassName();
+     TClass *cl = gROOT->GetClass(classname);
+     if (!cl) continue;
+     if (cl->InheritsFrom(TDirectory::Class())) {
+        source->cd(key->GetName());
+        TDirectory *subdir = gDirectory;
+        adir->cd();
+        CopyDir(subdir);
+        adir->cd();
+     } else if (cl->InheritsFrom(TTree::Class())) {
+        TTree *T = (TTree*)source->Get(key->GetName());
+        adir->cd();
+        TTree *newT = T->CloneTree(-1,"fast");
+        newT->Write();
+     } else {
+        source->cd();
+        TObject *obj = key->ReadObj();
+        adir->cd();
+        obj->Write();
+        delete obj;
+    }
+ }
+ adir->SaveSelf(kTRUE);
+ savdir->cd();
+}
 
 int main( int argc, char** argv )
 {
@@ -50,6 +87,21 @@ int main( int argc, char** argv )
   TTree *T_pot_cv = (TTree*)file1->Get("wcpselection/T_pot");
   TTree *T_PFeval_cv = (TTree*)file1->Get("wcpselection/T_PFeval");
   TTree *T_KINEvars_cv = (TTree*)file1->Get("wcpselection/T_KINEvars");
+
+  TDirectory *topdir = gDirectory;
+  //file1->cd("nuselection");
+  //TDirectory *nuselection = gDirectory;
+  file1->cd("shrreco3d");
+  TDirectory *shrreco3d = gDirectory;
+  file1->cd("proximity");
+  TDirectory *proximity = gDirectory;
+  topdir->cd();
+  TTree *NeutrinoSelectionFilter = (TTree*)file1->Get("nuselection/NeutrinoSelectionFilter");
+  TTree *SubRun = (TTree*)file1->Get("nuselection/SubRun");
+  //TTree *_energy_tree = (TTree*)file1->Get("shrreco3d/_energy_tree");
+  //TTree *_dedx_tree = (TTree*)file1->Get("shrreco3d/_dedx_tree");
+  //TTree *_rcshr_tree = (TTree*)file1->Get("shrreco3d/_rcshr_tree");
+  //TTree *_clus_tree = (TTree*)file1->Get("proximity/_clus_tree");
 
   if (T_eval_cv->GetBranch("weight_cv")) flag_data =false;
 
@@ -556,6 +608,25 @@ int main( int argc, char** argv )
 
 
   TFile *file3 = new TFile(out_file,"RECREATE");
+
+  //CopyDir(nuselection);
+  TDirectory *topdirout = gDirectory;
+  file2->mkdir("nuselection");
+  file2->cd("nuselection");
+  TTree *new_NeutrinoSelectionFilter = NeutrinoSelectionFilter->CloneTree(0);
+  TTree *new_SubRun = SubRun->CloneTree(0);
+  topdirout->cd();
+  CopyDir(shrreco3d);
+  //file2->mkdir("shrreco3d");
+  //file2->cd("shrreco3d");
+  //TTree *new_energy_tree = _energy_tree->CloneTree(0);
+  //TTree *new_dedx_tree = _dedx_tree->CloneTree(0);
+  //TTree *new_rcshr_tree = _rcshr_tree->CloneTree(0);
+  CopyDir(proximity);
+  //file2->mkdir("proximity");
+  //file2->cd("proximity");
+  //TTree *new_clus_tree = _clus_tree->CloneTree(0);
+
   file3->mkdir("wcpselection");
 
   file3->cd("wcpselection");
@@ -608,6 +679,9 @@ int main( int argc, char** argv )
     t3_cv->Fill();
     t4_cv->Fill();
     t5_cv->Fill();
+
+    NeutrinoSelectionFilter->GetEntry(*it);
+    new_NeutrinoSelectionFilter->Fill();
   }
 
   double cv_pot=0;
@@ -633,6 +707,9 @@ int main( int argc, char** argv )
     pot_cv.pot_tor875good *= pass_ratio;
 
     t2_cv->Fill();
+
+    SubRun->GetEntry(it->second.first);
+    new_SubRun->Fill();
   }
 
   std::cout << out_file << std::endl;
