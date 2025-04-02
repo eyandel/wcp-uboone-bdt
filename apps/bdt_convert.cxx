@@ -154,7 +154,7 @@ int main( int argc, char** argv )
 
   file1->cd("nuselection");
   TDirectory *old_nuselection = gDirectory;
-  old_nuselection->ReadAll();
+  //old_nuselection->ReadAll();
 
 
 
@@ -713,9 +713,10 @@ int main( int argc, char** argv )
   //  std::cout << T_eval->GetEntries() << std::endl;
   
   TFile *file2 = new TFile(out_file,"RECREATE");
-  file2->mkdir("nuselection");
-  file2->cd("nuselection");
-  old_nuselection->GetList()->Write();
+  //file2->mkdir("nuselection");
+  //file2->cd("nuselection");
+  //old_nuselection->GetList()->Write();
+  CopyDir(old_nuselection);
   file2->mkdir("wcpselection");
   file2->cd("wcpselection");
   TTree *t4 = new TTree("T_BDTvars","T_BDTvars");
