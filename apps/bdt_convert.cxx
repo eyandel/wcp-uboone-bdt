@@ -116,6 +116,7 @@ int main( int argc, char** argv )
   bool flag_check_run_subrun = false;
   bool flag_use_global_file_type = false;
   if (global_file_type != "") flag_use_global_file_type = true;
+  
 
 
   std::map<string, std::set<std::pair<int, int> > > map_type_run_subrun;
@@ -3621,6 +3622,8 @@ int main( int argc, char** argv )
 
   file2->Write();
   file2->Close();
+
+  if (!fail_percentage || flag_presel){}
 
   return 0;
 
