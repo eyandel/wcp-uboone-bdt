@@ -729,16 +729,16 @@ int main( int argc, char** argv )
   file2->cd("nuselection");
   TTree *new_NeutrinoSelectionFilter = NeutrinoSelectionFilter->CloneTree(0);
   TTree *new_SubRun = SubRun->CloneTree(0);
-  //CopyDir(shrreco3d);
-  file2->mkdir("shrreco3d");
-  file2->cd("shrreco3d");
-  TTree *new_energy_tree = _energy_tree->CloneTree(0);
-  TTree *new_dedx_tree = _dedx_tree->CloneTree(0);
-  TTree *new_rcshr_tree = _rcshr_tree->CloneTree(0);
-  //CopyDir(proximity);
-  file2->mkdir("proximity");
-  file2->cd("proximity");
-  TTree *new_clus_tree = _clus_tree->CloneTree(0);
+  CopyDir(shrreco3d);
+  //file2->mkdir("shrreco3d");
+  //file2->cd("shrreco3d");
+  //TTree *new_energy_tree = _energy_tree->CloneTree(0);
+  //TTree *new_dedx_tree = _dedx_tree->CloneTree(0);
+  //TTree *new_rcshr_tree = _rcshr_tree->CloneTree(0);
+  CopyDir(proximity);
+  //file2->mkdir("proximity");
+  //file2->cd("proximity");
+  //TTree *new_clus_tree = _clus_tree->CloneTree(0);
 
   file2->mkdir("wcpselection");
   file2->cd("wcpselection");
