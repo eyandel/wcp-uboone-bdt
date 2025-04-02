@@ -152,15 +152,20 @@ int main( int argc, char** argv )
   TTree *T_PFeval = (TTree*)file1->Get("wcpselection/T_PFeval");
   TTree *T_KINEvars = (TTree*)file1->Get("wcpselection/T_KINEvars");
 
-  TDirectory *topdir = gDirectory;
+  /*TDirectory *topdir = gDirectory;
   file1->cd("nuselection");
   TDirectory *nuselection = gDirectory;
   file1->cd("shrreco3d");
   TDirectory *shrreco3d = gDirectory;
   file1->cd("proximity");
   TDirectory *proximity = gDirectory;
-  topdir->cd();
-
+  topdir->cd();*/
+  TTree *NeutrinoSelectionFilter = (TTree*)file1->Get("nuselection/NeutrinoSelectionFilter");
+  TTree *SubRun = (TTree*)file1->Get("nuselection/SubRun");
+  TTree *_energy_tree = (TTree*)file1->Get("shrreco3d/_energy_tree");
+  TTree *_dedx_tree = (TTree*)file1->Get("shrreco3d/_dedx_tree");
+  TTree *_rcshr_tree = (TTree*)file1->Get("shrreco3d/_rcshr_tree");
+  TTree *_clus_tree = (TTree*)file1->Get("proximity/_clus_tree");
 
 
   if (T_eval->GetBranch("weight_cv")) flag_data =false;
@@ -718,9 +723,23 @@ int main( int argc, char** argv )
   //  std::cout << T_eval->GetEntries() << std::endl;
   
   TFile *file2 = new TFile(out_file,"RECREATE");
-  CopyDir(nuselection);
-  CopyDir(shrreco3d);
-  CopyDir(proximity);
+
+  //CopyDir(nuselection);
+  file2->mkdir("nuselection");
+  file2->cd("nuselection");
+  TTree *new_NeutrinoSelectionFilter = NeutrinoSelectionFilter->CloneTree(0);
+  TTree *new_SubRun = SubRun->CloneTree(0);
+  //CopyDir(shrreco3d);
+  file2->mkdir("shrreco3d");
+  file2->cd("shrreco3d");
+  TTree *new_energy_tree = _energy_tree->CloneTree(0);
+  TTree *new_dedx_tree = _dedx_tree->CloneTree(0);
+  TTree *new_rcshr_tree = _rcshr_tree->CloneTree(0);
+  //CopyDir(proximity);
+  file2->mkdir("proximity");
+  file2->cd("proximity");
+  TTree *new_clus_tree = _clus_tree->CloneTree(0);
+
   file2->mkdir("wcpselection");
   file2->cd("wcpselection");
   TTree *t4 = new TTree("T_BDTvars","T_BDTvars");
@@ -3590,6 +3609,9 @@ int main( int argc, char** argv )
     t3->Fill();
     t5->Fill();
 
+    NeutrinoSelectionFilter->GetEntry(i);
+    new_NeutrinoSelectionFilter->Fill();
+
     //    std::cout << pfeval.reco_daughters->size() << std::endl;
     //    break;
   }
@@ -3618,6 +3640,9 @@ int main( int argc, char** argv )
       if (pot.runNo >=15369 && pot.runNo <= 15402) continue;
     }
     t2->Fill();
+
+    SubRun->GetEntry(i);
+    new_SubRun->Fill();
   }
 
 
