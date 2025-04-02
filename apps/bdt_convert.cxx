@@ -152,20 +152,20 @@ int main( int argc, char** argv )
   TTree *T_PFeval = (TTree*)file1->Get("wcpselection/T_PFeval");
   TTree *T_KINEvars = (TTree*)file1->Get("wcpselection/T_KINEvars");
 
-  /*TDirectory *topdir = gDirectory;
-  file1->cd("nuselection");
-  TDirectory *nuselection = gDirectory;
+  TDirectory *topdir = gDirectory;
+  //file1->cd("nuselection");
+  //TDirectory *nuselection = gDirectory;
   file1->cd("shrreco3d");
   TDirectory *shrreco3d = gDirectory;
   file1->cd("proximity");
   TDirectory *proximity = gDirectory;
-  topdir->cd();*/
+  topdir->cd();
   TTree *NeutrinoSelectionFilter = (TTree*)file1->Get("nuselection/NeutrinoSelectionFilter");
   TTree *SubRun = (TTree*)file1->Get("nuselection/SubRun");
-  TTree *_energy_tree = (TTree*)file1->Get("shrreco3d/_energy_tree");
-  TTree *_dedx_tree = (TTree*)file1->Get("shrreco3d/_dedx_tree");
-  TTree *_rcshr_tree = (TTree*)file1->Get("shrreco3d/_rcshr_tree");
-  TTree *_clus_tree = (TTree*)file1->Get("proximity/_clus_tree");
+  //TTree *_energy_tree = (TTree*)file1->Get("shrreco3d/_energy_tree");
+  //TTree *_dedx_tree = (TTree*)file1->Get("shrreco3d/_dedx_tree");
+  //TTree *_rcshr_tree = (TTree*)file1->Get("shrreco3d/_rcshr_tree");
+  //TTree *_clus_tree = (TTree*)file1->Get("proximity/_clus_tree");
 
 
   if (T_eval->GetBranch("weight_cv")) flag_data =false;
