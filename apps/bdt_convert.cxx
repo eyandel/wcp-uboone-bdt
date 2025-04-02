@@ -152,9 +152,14 @@ int main( int argc, char** argv )
   TTree *T_PFeval = (TTree*)file1->Get("wcpselection/T_PFeval");
   TTree *T_KINEvars = (TTree*)file1->Get("wcpselection/T_KINEvars");
 
+  TDirectory *topdir = gDirectory;
   file1->cd("nuselection");
-  TDirectory *old_nuselection = gDirectory;
-  //old_nuselection->ReadAll();
+  TDirectory *nuselection = gDirectory;
+  file1->cd("shrreco3d");
+  TDirectory *shrreco3d = gDirectory;
+  file1->cd("proximity");
+  TDirectory *proximity = gDirectory;
+  topdir->cd();
 
 
 
@@ -713,10 +718,9 @@ int main( int argc, char** argv )
   //  std::cout << T_eval->GetEntries() << std::endl;
   
   TFile *file2 = new TFile(out_file,"RECREATE");
-  //file2->mkdir("nuselection");
-  //file2->cd("nuselection");
-  //old_nuselection->GetList()->Write();
-  CopyDir(old_nuselection);
+  CopyDir(nuselection);
+  CopyDir(shrreco3d);
+  CopyDir(proximity);
   file2->mkdir("wcpselection");
   file2->cd("wcpselection");
   TTree *t4 = new TTree("T_BDTvars","T_BDTvars");
