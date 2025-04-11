@@ -960,7 +960,7 @@ int main( int argc, char** argv )
         pad1->Draw();
         pad2->Draw();
         hstack[obschannel-1] = new THStack(Form("hs%d", obschannel),"");
-        legend[obschannel-1] = new TLegend(0.25, 0.5, 0.87, 0.9);//0.25, 0.5, 0.87, 0.92);
+        legend[obschannel-1] = new TLegend(0.23, 0.47, 0.85, 0.87);//0.25, 0.5, 0.87, 0.92);
         if (flag_move == 1){
             legend[obschannel-1]->SetX1(0.14); // New x1 position
             legend[obschannel-1]->SetX2(0.8); // New x2 position
@@ -1577,7 +1577,7 @@ int main( int argc, char** argv )
         hmc->GetYaxis()->SetTitle("Entries");//Event counts");
         hmc->GetYaxis()->SetTitleSize(0.06);//0.07);
         hmc->GetYaxis()->SetTitleFont(62);//22);//132);
-        hmc->GetYaxis()->SetTitleOffset(0.77);
+        hmc->GetYaxis()->SetTitleOffset(1.0);//0.77);
         hmc->GetYaxis()->SetLabelFont(62);//22);//132);
         hmc->GetYaxis()->SetLabelSize(0.06);//0.05);
         //if(obschannel==9) hmc->GetXaxis()->SetRangeUser(0.5,1);
@@ -1691,7 +1691,7 @@ int main( int argc, char** argv )
         gratio_mc[obschannel-1]->Draw("a2");
         gratio_mc[obschannel-1]->SetFillColor(kBlue-10);
         //gratio_mc[obschannel-1]->SetFillColor(kRed-10);
-        gratio_mc[obschannel-1]->GetYaxis()->SetRangeUser(0,int(1.5*maxratio)<2?int(1.5*maxratio):2);
+        gratio_mc[obschannel-1]->GetYaxis()->SetRangeUser(0,int(1.5*maxratio)<2?int(1.5*maxratio):2.2);
         gratio_mc[obschannel-1]->GetXaxis()->SetRangeUser(hmc->GetXaxis()->GetXmin(),hmc->GetXaxis()->GetXmax());
         gratio_mc[obschannel-1]->GetYaxis()->SetNdivisions(405);//210);
         //if(obschannel==5 || obschannel==6) gratio_mc[obschannel-1]->GetXaxis()->SetRangeUser(0,1200);
@@ -1700,7 +1700,7 @@ int main( int argc, char** argv )
         if(flag_err==3){
         //gratio_mc2[obschannel-1]->Draw("2 same");
         gratio_mc2[obschannel-1]->SetFillColor(kRed-10);
-        gratio_mc2[obschannel-1]->GetYaxis()->SetRangeUser(0,int(1.5*maxratio)<2?int(1.5*maxratio):2);
+        gratio_mc2[obschannel-1]->GetYaxis()->SetRangeUser(0,int(1.5*maxratio)<2?int(1.5*maxratio):2.2);
         gratio_mc2[obschannel-1]->GetXaxis()->SetRangeUser(hmc->GetXaxis()->GetXmin(),hmc->GetXaxis()->GetXmax());
         }
         /*if(obschannel>=5) //hard coded at this moment
@@ -1847,7 +1847,7 @@ int main( int argc, char** argv )
         //gratio_mc[obschannel-1]->GetYaxis()->SetNdivisions(-210);
         //gratio_data[obschannel-1]->GetYaxis()->SetNdivisions(-210);
         //gratio_mc[obschannel-1]->GetYaxis()->SetTitleSize(0.12);
-        gratio_mc[obschannel-1]->GetYaxis()->SetTitleOffset(0.35);
+        gratio_mc[obschannel-1]->GetYaxis()->SetTitleOffset(0.85);//0.35);
         gratio_mc[obschannel-1]->GetYaxis()->SetLabelSize(0.06);//0.1);
         gratio_mc[obschannel-1]->GetYaxis()->SetTitleSize(0.06);//0.12);
         gratio_data[obschannel-1]->Draw("P same");
