@@ -1847,6 +1847,8 @@ int main( int argc, char** argv )
         gratio_data[obschannel-1]->SetMarkerStyle(20);
         gratio_data[obschannel-1]->SetMarkerSize(1.5);
         gratio_data[obschannel-1]->SetLineColor(kBlack);
+        gratio_data[obschannel-1]->GetYaxis()->SetTitleFont(62);//22);//132);
+        gratio_data[obschannel-1]->GetYaxis()->SetLabelFont(62);//22);//132);
         /* gratio_data2[obschannel-1]->Draw("P same"); */
         /* gratio_data2[obschannel-1]->SetLineWidth(2); */
         /* gratio_data2[obschannel-1]->SetMarkerStyle(24); */
