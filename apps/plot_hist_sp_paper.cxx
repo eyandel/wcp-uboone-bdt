@@ -1880,7 +1880,7 @@ int main( int argc, char** argv )
         line->Draw();
         line->SetLineWidth(2);
         line->SetLineStyle(kDashed);
-        legend2[obschannel-1] = new TLegend(0.2, 0.7, 0.8, 0.95);
+        legend2[obschannel-1] = new TLegend(0.2, 0.8, 0.8, 0.95);//0.2, 0.7, 0.8, 0.95);
         if (flag_move == 1){
             legend2[obschannel-1]->SetX1(0.65); // New x1 position
             legend2[obschannel-1]->SetX2(0.9); // New x2 position
