@@ -960,7 +960,7 @@ int main( int argc, char** argv )
         pad1->Draw();
         pad2->Draw();
         hstack[obschannel-1] = new THStack(Form("hs%d", obschannel),"");
-        legend[obschannel-1] = new TLegend(0.25, 0.47, 0.87, 0.87);//0.25, 0.5, 0.87, 0.92);
+        legend[obschannel-1] = new TLegend(0.27, 0.47, 0.9, 0.87);//0.25, 0.5, 0.87, 0.92);
         if (flag_move == 1){
             legend[obschannel-1]->SetX1(0.14); // New x1 position
             legend[obschannel-1]->SetX2(0.8); // New x2 position
@@ -1839,7 +1839,7 @@ int main( int argc, char** argv )
         //gratio_mc[obschannel-1]->GetXaxis()->SetRangeUser(0,4);
         //gratio_data[obschannel-1]->GetXaxis()->SetRangeUser(0,4);
 
-        gratio_mc[obschannel-1]->GetXaxis()->SetTitleSize(0.12);
+        gratio_mc[obschannel-1]->GetXaxis()->SetTitleSize(0.06);//0.12);
         gratio_mc[obschannel-1]->GetXaxis()->SetLabelSize(0.06);//0.12);
         gratio_mc[obschannel-1]->GetXaxis()->SetTitleFont(62);//22);//132);
         gratio_mc[obschannel-1]->GetXaxis()->SetLabelFont(62);//22);//132);
