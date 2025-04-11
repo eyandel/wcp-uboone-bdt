@@ -916,10 +916,11 @@ int main( int argc, char** argv )
     gROOT->ProcessLine(".x DrawOption.cc");
     gStyle->SetLegendBorderSize(0);
     gStyle->SetLegendFillColor(0);
-    gStyle->SetLegendFont(22); //132);
-    gStyle->SetLegendTextSize(0.055);
-    gStyle->SetLabelFont(22); //132);
-    gStyle->SetLabelSize(0.05);
+    gStyle->SetLegendFont(62);//22); //132);
+    gStyle->SetLegendTextSize(0.06);//0.055);
+    gStyle->SetLabelFont(62);//22); //132);
+    gStyle->SetLabelSize(0.06);//0.05);
+    gStyle->SetTitleSize(0.06);
 
     int nchannels = map_obsch_subhistos.size();
     TCanvas *canvas[nchannels];
@@ -1561,11 +1562,11 @@ int main( int argc, char** argv )
         hmc->Scale(scalePOT);
         hmc->SetTitle("");
         hmc->Draw("hist");
-        hmc->GetYaxis()->SetTitle("Event counts");
+        hmc->GetYaxis()->SetTitle("Entries");//Event counts");
         hmc->GetYaxis()->SetTitleSize(0.07);
-        hmc->GetYaxis()->SetTitleFont(22);//132);
+        hmc->GetYaxis()->SetTitleFont(62);//22);//132);
         hmc->GetYaxis()->SetTitleOffset(0.77);
-        hmc->GetYaxis()->SetLabelFont(22);//132);
+        hmc->GetYaxis()->SetLabelFont(62);//22);//132);
         hmc->GetYaxis()->SetLabelSize(0.05);
         //if(obschannel==9) hmc->GetXaxis()->SetRangeUser(0.5,1);
         float mcymax = hmc->GetBinContent(hmc->GetMaximumBin())*scalePOT;
@@ -1827,10 +1828,10 @@ int main( int argc, char** argv )
 
         gratio_mc[obschannel-1]->GetXaxis()->SetTitleSize(0.12);
         gratio_mc[obschannel-1]->GetXaxis()->SetLabelSize(0.12);
-        gratio_mc[obschannel-1]->GetXaxis()->SetTitleFont(22);//132);
-        gratio_mc[obschannel-1]->GetXaxis()->SetLabelFont(22);//132);
-        gratio_mc[obschannel-1]->GetYaxis()->SetTitleFont(22);//132);
-        gratio_mc[obschannel-1]->GetYaxis()->SetLabelFont(22);//132);
+        gratio_mc[obschannel-1]->GetXaxis()->SetTitleFont(62);//22);//132);
+        gratio_mc[obschannel-1]->GetXaxis()->SetLabelFont(62);//22);//132);
+        gratio_mc[obschannel-1]->GetYaxis()->SetTitleFont(62);//22);//132);
+        gratio_mc[obschannel-1]->GetYaxis()->SetLabelFont(62);//22);//132);
         //gratio_mc[obschannel-1]->GetYaxis()->SetNdivisions(-210);
         //gratio_data[obschannel-1]->GetYaxis()->SetNdivisions(-210);
         //gratio_mc[obschannel-1]->GetYaxis()->SetTitleSize(0.12);
