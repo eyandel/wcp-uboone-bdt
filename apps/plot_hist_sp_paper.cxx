@@ -86,9 +86,13 @@ int main( int argc, char** argv )
     }break;
     }
   }
-
-  ofstream bin_contents_file("./bin_contents_cat.txt");
-  ofstream bin_contents_yaml("./bin_contents_cat.yaml");
+  
+  ofstream bin_contents_file;
+  ofstream bin_contents_yaml;
+  if (flag_print){
+    bin_contents_file.open("./bin_contents_cat.txt");
+    bin_contents_yaml.open("./bin_contents_cat.yaml");
+  }
 
   CovMatrix cov;
 
@@ -1885,13 +1889,13 @@ int main( int argc, char** argv )
         pad2->Modified();
         
         //CHANGE TO SAVE PLOTS
-        //canvas[obschannel-1]->Print((TString)hdata->GetTitle()+"_paper.png");
-        //canvas[obschannel-1]->Print(Form("canvas%d_paper.pdf", obschannel));
+        canvas[obschannel-1]->Print((TString)hdata->GetTitle()+"_paper.png");
+        canvas[obschannel-1]->Print(Form("canvas%d_paper.pdf", obschannel));
 
-        //if(obschannel==1) canvas[obschannel-1]->Print("selection_paper.pdf(");
-        //else if(obschannel==nchannels) canvas[obschannel-1]->Print("selection_paper.pdf)");
-        //else canvas[obschannel-1]->Print("selection_paper.pdf");
-        if (obschannel==nchannels) {
+        if(obschannel==1) canvas[obschannel-1]->Print("selection_paper.pdf(");
+        else if(obschannel==nchannels) canvas[obschannel-1]->Print("selection_paper.pdf)");
+        else canvas[obschannel-1]->Print("selection_paper.pdf");
+        if (flag_print && obschannel==nchannels) {
           std::cout << "Finished plotting all channels" << std::endl;
           std::cout << "Closing bin content file" << std::endl;
           bin_contents_file.close();
