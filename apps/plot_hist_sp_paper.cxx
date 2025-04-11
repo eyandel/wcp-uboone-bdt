@@ -960,7 +960,7 @@ int main( int argc, char** argv )
         pad1->Draw();
         pad2->Draw();
         hstack[obschannel-1] = new THStack(Form("hs%d", obschannel),"");
-        legend[obschannel-1] = new TLegend(0.25, 0.5, 0.87, 0.92);
+        legend[obschannel-1] = new TLegend(0.25, 0.5, 0.87, 0.9);//0.25, 0.5, 0.87, 0.92);
         if (flag_move == 1){
             legend[obschannel-1]->SetX1(0.14); // New x1 position
             legend[obschannel-1]->SetX2(0.8); // New x2 position
@@ -1575,11 +1575,11 @@ int main( int argc, char** argv )
         hmc->SetTitle("");
         hmc->Draw("hist");
         hmc->GetYaxis()->SetTitle("Entries");//Event counts");
-        hmc->GetYaxis()->SetTitleSize(0.07);
+        hmc->GetYaxis()->SetTitleSize(0.06);//0.07);
         hmc->GetYaxis()->SetTitleFont(62);//22);//132);
         hmc->GetYaxis()->SetTitleOffset(0.77);
         hmc->GetYaxis()->SetLabelFont(62);//22);//132);
-        hmc->GetYaxis()->SetLabelSize(0.05);
+        hmc->GetYaxis()->SetLabelSize(0.06);//0.05);
         //if(obschannel==9) hmc->GetXaxis()->SetRangeUser(0.5,1);
         float mcymax = hmc->GetBinContent(hmc->GetMaximumBin())*scalePOT;
         float dataymax = hdata->GetBinContent(hdata->GetMaximumBin())*scalePOT/normalization;
@@ -1839,7 +1839,7 @@ int main( int argc, char** argv )
         //gratio_data[obschannel-1]->GetXaxis()->SetRangeUser(0,4);
 
         gratio_mc[obschannel-1]->GetXaxis()->SetTitleSize(0.12);
-        gratio_mc[obschannel-1]->GetXaxis()->SetLabelSize(0.12);
+        gratio_mc[obschannel-1]->GetXaxis()->SetLabelSize(0.06);//0.12);
         gratio_mc[obschannel-1]->GetXaxis()->SetTitleFont(62);//22);//132);
         gratio_mc[obschannel-1]->GetXaxis()->SetLabelFont(62);//22);//132);
         gratio_mc[obschannel-1]->GetYaxis()->SetTitleFont(62);//22);//132);
@@ -1848,8 +1848,8 @@ int main( int argc, char** argv )
         //gratio_data[obschannel-1]->GetYaxis()->SetNdivisions(-210);
         //gratio_mc[obschannel-1]->GetYaxis()->SetTitleSize(0.12);
         gratio_mc[obschannel-1]->GetYaxis()->SetTitleOffset(0.35);
-        gratio_mc[obschannel-1]->GetYaxis()->SetLabelSize(0.05);//0.1);
-        gratio_mc[obschannel-1]->GetYaxis()->SetTitleSize(0.12);
+        gratio_mc[obschannel-1]->GetYaxis()->SetLabelSize(0.06);//0.1);
+        gratio_mc[obschannel-1]->GetYaxis()->SetTitleSize(0.06);//0.12);
         gratio_data[obschannel-1]->Draw("P same");
         gratio_data[obschannel-1]->SetLineWidth(2);
         gratio_data[obschannel-1]->SetMarkerStyle(20);
@@ -1893,7 +1893,7 @@ int main( int argc, char** argv )
         //if(flag_err==3) legend2[obschannel-1]->AddEntry(gratio_mc2[obschannel-1],"Pred stat+xsec+flux uncertainty", "F");
         //legend2[obschannel-1]->AddEntry(gratio_data[obschannel-1],"Data with stat. uncertainty", "lp");
         //legend2[obschannel-1]->AddEntry(gratio_data2[obschannel-1],"Data with stat. uncertainty (normalized)", "lp");
-        legend2[obschannel-1]->SetTextSize(0.1);//0.08);
+        legend2[obschannel-1]->SetTextSize(0.06);//0.1);//0.08);
         legend2[obschannel-1]->SetFillStyle(0);
         legend2[obschannel-1]->Draw();
         pad2->Modified();
