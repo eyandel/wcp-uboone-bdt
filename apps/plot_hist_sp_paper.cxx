@@ -960,7 +960,7 @@ int main( int argc, char** argv )
         pad1->Draw();
         pad2->Draw();
         hstack[obschannel-1] = new THStack(Form("hs%d", obschannel),"");
-        legend[obschannel-1] = new TLegend(0.23, 0.47, 0.85, 0.87);//0.25, 0.5, 0.87, 0.92);
+        legend[obschannel-1] = new TLegend(0.25, 0.47, 0.87, 0.87);//0.25, 0.5, 0.87, 0.92);
         if (flag_move == 1){
             legend[obschannel-1]->SetX1(0.14); // New x1 position
             legend[obschannel-1]->SetX2(0.8); // New x2 position
@@ -1580,6 +1580,7 @@ int main( int argc, char** argv )
         hmc->GetYaxis()->SetTitleOffset(1.0);//0.77);
         hmc->GetYaxis()->SetLabelFont(62);//22);//132);
         hmc->GetYaxis()->SetLabelSize(0.06);//0.05);
+        hmc->GetXaxis()->SetLabelOffset(3.0);
         //if(obschannel==9) hmc->GetXaxis()->SetRangeUser(0.5,1);
         float mcymax = hmc->GetBinContent(hmc->GetMaximumBin())*scalePOT;
         float dataymax = hdata->GetBinContent(hdata->GetMaximumBin())*scalePOT/normalization;
