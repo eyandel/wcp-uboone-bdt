@@ -940,15 +940,23 @@ int main( int argc, char** argv )
         int obschannel = it->first;
         std::cout<<"Channel: "<<obschannel<<std::endl;
         canvas[obschannel-1] = new TCanvas(Form("canvas%d", obschannel), Form("channel%d", obschannel), 1200, 900);
-        TPad *pad1 = new TPad("pad1", "", 0.01,0.3,0.99,0.99,0,0,0);
-        TPad *pad2 = new TPad("pad2", "", 0.01,0.01,0.99,0.3,0,0,0);
-        pad1->SetBottomMargin(0.008);
+        TPad *pad1 = new TPad("pad1", "", 0, 0.45, 1, 1);//0.01,0.3,0.99,0.99,0,0,0);
+        TPad *pad2 = new TPad("pad2", "", 0, 0, 1, 0.45);//0.01,0.01,0.99,0.3,0,0,0);
+        pad1->SetLeftMargin(0.15);
+        pad1->SetRightMargin(0.1);
+        pad1->SetTopMargin(0.1);
+        pad1->SetBottomMargin(0.012);
+        pad2->SetLeftMargin(0.15);
+        pad2->SetRightMargin(0.1);
+        pad2->SetTopMargin(0.047);
+        pad2->SetBottomMargin(0.3);
+        /*pad1->SetBottomMargin(0.008);
         pad1->SetLeftMargin(0.12);
         pad1->SetRightMargin(0.1);
         pad2->SetTopMargin(0.047);
         pad2->SetLeftMargin(0.12);
         pad2->SetRightMargin(0.1);
-        pad2->SetBottomMargin(0.25);
+        pad2->SetBottomMargin(0.25);*/
         pad1->Draw();
         pad2->Draw();
         hstack[obschannel-1] = new THStack(Form("hs%d", obschannel),"");
@@ -1840,7 +1848,7 @@ int main( int argc, char** argv )
         //gratio_data[obschannel-1]->GetYaxis()->SetNdivisions(-210);
         //gratio_mc[obschannel-1]->GetYaxis()->SetTitleSize(0.12);
         gratio_mc[obschannel-1]->GetYaxis()->SetTitleOffset(0.35);
-        gratio_mc[obschannel-1]->GetYaxis()->SetLabelSize(0.1);//0.1);
+        gratio_mc[obschannel-1]->GetYaxis()->SetLabelSize(0.05);//0.1);
         gratio_mc[obschannel-1]->GetYaxis()->SetTitleSize(0.12);
         gratio_data[obschannel-1]->Draw("P same");
         gratio_data[obschannel-1]->SetLineWidth(2);
