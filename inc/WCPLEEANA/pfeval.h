@@ -156,25 +156,24 @@ struct PFevalInfo{
   Double_t mcs_ambiguity_MCS; // "Goodness" of MCS estimation
 
   //new parpid and backtrackng variables
-  static int MAX_TRACKS = 10000;
-  Int_t reco_larpid_classified[MAX_TRACKS]; //LArPID pdg label
-  Int_t reco_larpid_pdg[MAX_TRACKS]; //LArPID pdg label
-  Int_t reco_larpid_proccess[MAX_TRACKS]; //LArPID primary vs. secondary production process class
-  Float_t reco_larpid_completeness[MAX_TRACKS]; //LArPID reconstruction completeness estimate
-  Float_t reco_larpid_purity[MAX_TRACKS]; //LArPID reconstruction purity estimate
-  Float_t reco_larpid_pidScore_el[MAX_TRACKS]; //LArPID electron score from particle classifier
-  Float_t reco_larpid_pidScore_ph[MAX_TRACKS]; //LArPID photon score from particle classifier
-  Float_t reco_larpid_pidScore_mu[MAX_TRACKS]; //LArPID muon score from particle classifier
-  Float_t reco_larpid_pidScore_pi[MAX_TRACKS]; //LArPID pion score from particle classifier
-  Float_t reco_larpid_pidScore_pr[MAX_TRACKS]; //LArPID proton score from particle classifier
-  Float_t reco_larpid_procScore_prim[MAX_TRACKS]; //LArPID primary score from production process classifier
-  Float_t reco_larpid_procScore_ntrl[MAX_TRACKS]; //LArPID secondary with neutral parent score from process classifier
-  Float_t reco_larpid_procScore_chgd[MAX_TRACKS]; //LArPID secondary with charged parent score from process classifier
-  Int_t reco_truthMatch_pdg[MAX_TRACKS]; //MC back tracking: pdg of best match simulated particle
-  Int_t reco_truthMatch_id[MAX_TRACKS]; //MC back tracking: track id (truth_id variable) of best match sim particle
-  Float_t reco_truthMatch_purity[MAX_TRACKS]; //MC back tracking: fraction of reco particle from best match sim particle
-  Float_t reco_truthMatch_completeness[MAX_TRACKS]; //MC backtracking: fraction of best match sim particle reconstructed
-  Int_t reco_truthMatch_nSimParts[MAX_TRACKS]; //MC backtracking: number of different sim particle types matched
+  Int_t reco_larpid_classified[10000]; //LArPID pdg label
+  Int_t reco_larpid_pdg[10000]; //LArPID pdg label
+  Int_t reco_larpid_proccess[10000]; //LArPID primary vs. secondary production process class
+  Float_t reco_larpid_completeness[10000]; //LArPID reconstruction completeness estimate
+  Float_t reco_larpid_purity[10000]; //LArPID reconstruction purity estimate
+  Float_t reco_larpid_pidScore_el[10000]; //LArPID electron score from particle classifier
+  Float_t reco_larpid_pidScore_ph[10000]; //LArPID photon score from particle classifier
+  Float_t reco_larpid_pidScore_mu[10000]; //LArPID muon score from particle classifier
+  Float_t reco_larpid_pidScore_pi[10000]; //LArPID pion score from particle classifier
+  Float_t reco_larpid_pidScore_pr[10000]; //LArPID proton score from particle classifier
+  Float_t reco_larpid_procScore_prim[10000]; //LArPID primary score from production process classifier
+  Float_t reco_larpid_procScore_ntrl[10000]; //LArPID secondary with neutral parent score from process classifier
+  Float_t reco_larpid_procScore_chgd[10000]; //LArPID secondary with charged parent score from process classifier
+  Int_t reco_truthMatch_pdg[10000]; //MC back tracking: pdg of best match simulated particle
+  Int_t reco_truthMatch_id[10000]; //MC back tracking: track id (truth_id variable) of best match sim particle
+  Float_t reco_truthMatch_purity[10000]; //MC back tracking: fraction of reco particle from best match sim particle
+  Float_t reco_truthMatch_completeness[10000]; //MC backtracking: fraction of best match sim particle reconstructed
+  Int_t reco_truthMatch_nSimParts[10000]; //MC backtracking: number of different sim particle types matched
   std::vector<std::vector<int>> reco_truthMatch_simPart_pdg; //MC backtracking: pdg of contributing particle type
   std::vector<std::vector<float>> reco_truthMatch_simPart_purity;//MC backtracking: purity contributing particle type
 
