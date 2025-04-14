@@ -149,6 +149,47 @@ struct PFevalInfo{
   Float_t mc_nu_pos[4];  // interaction position of nu
   Float_t mc_nu_mom[4];  // interaction momentum of nu
 
+  //new mcs variables
+  Double_t mcs_mu_tracklen; // Muon length in cm
+  Double_t mcs_emu_tracklen; // Pure range based, in GeV
+  Double_t mcs_emu_MCS; // MCS based, in GeV
+  Double_t mcs_ambiguity_MCS; // "Goodness" of MCS estimation
+
+  //new parpid and backtrackng variables
+  int MAX_TRACKS = 10000;
+  Int_t reco_larpid_classified[MAX_TRACKS]; //LArPID pdg label
+  Int_t reco_larpid_pdg[MAX_TRACKS]; //LArPID pdg label
+  Int_t reco_larpid_proccess[MAX_TRACKS]; //LArPID primary vs. secondary production process class
+  Float_t reco_larpid_completeness[MAX_TRACKS]; //LArPID reconstruction completeness estimate
+  Float_t reco_larpid_purity[MAX_TRACKS]; //LArPID reconstruction purity estimate
+  Float_t reco_larpid_pidScore_el[MAX_TRACKS]; //LArPID electron score from particle classifier
+  Float_t reco_larpid_pidScore_ph[MAX_TRACKS]; //LArPID photon score from particle classifier
+  Float_t reco_larpid_pidScore_mu[MAX_TRACKS]; //LArPID muon score from particle classifier
+  Float_t reco_larpid_pidScore_pi[MAX_TRACKS]; //LArPID pion score from particle classifier
+  Float_t reco_larpid_pidScore_pr[MAX_TRACKS]; //LArPID proton score from particle classifier
+  Float_t reco_larpid_procScore_prim[MAX_TRACKS]; //LArPID primary score from production process classifier
+  Float_t reco_larpid_procScore_ntrl[MAX_TRACKS]; //LArPID secondary with neutral parent score from process classifier
+  Float_t reco_larpid_procScore_chgd[MAX_TRACKS]; //LArPID secondary with charged parent score from process classifier
+  Int_t reco_truthMatch_pdg[MAX_TRACKS]; //MC back tracking: pdg of best match simulated particle
+  Int_t reco_truthMatch_id[MAX_TRACKS]; //MC back tracking: track id (truth_id variable) of best match sim particle
+  Float_t reco_truthMatch_purity[MAX_TRACKS]; //MC back tracking: fraction of reco particle from best match sim particle
+  Float_t reco_truthMatch_completeness[MAX_TRACKS]; //MC backtracking: fraction of best match sim particle reconstructed
+  Int_t reco_truthMatch_nSimParts[MAX_TRACKS]; //MC backtracking: number of different sim particle types matched
+  std::vector<std::vector<int>> reco_truthMatch_simPart_pdg; //MC backtracking: pdg of contributing particle type
+  std::vector<std::vector<float>> reco_truthMatch_simPart_purity;//MC backtracking: purity contributing particle type
+
+  //new ns timing vars
+  Float_t evtTimeNS_cor;
+  Float_t Ph_Tot;
+  std::vector<int> *PMT_ID;
+  std::vector<float> *PMT_Time;
+  std::vector<float> *PMT_Amp;
+  std::vector<float> *PMT_TimeProp;
+  std::vector<float> *PMT_TimeDP;
+  std::vector<float> *PMT_TimeDL;
+  std::vector<bool> *PMT_Sat;
+  Float_t RWM_Time;
+
 };
 
 
@@ -316,6 +357,28 @@ void LEEana::clear_pfeval_info(PFevalInfo& tagger_info){
     tagger_info.mc_nu_pos[i] = 0;  // interaction position of nu
     tagger_info.mc_nu_mom[i] = 0;  // interaction momentum of nu
   }
+
+  //new mcs variables
+  mcs_mu_tracklen=0; // Muon length in cm
+  mcs_emu_tracklen=0; // Pure range based, in GeV
+  mcs_emu_MCS=0; // MCS based, in GeV
+  mcs_ambiguity_MCS=0; // "Goodness" of MCS estimation
+
+  //new parpid and backtrackng variables
+  reco_truthMatch_simPart_pdg.clear();
+  reco_truthMatch_simPart_purity.clear();
+
+  //new ns timing vars
+  evtTimeNS_cor = 0;
+  Ph_Tot = 0;
+  PMT_ID->clear();
+  PMT_Time->clear();
+  PMT_Amp->clear();
+  PMT_TimeProp->clear();
+  PMT_TimeDP->clear();
+  PMT_TimeDL->clear();
+  PMT_Sat->clear();
+  RWM_Time = 0;
 
 }
 
@@ -508,6 +571,59 @@ void LEEana::set_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
     tree0->SetBranchAddress("reco_daughters", &tagger_info.reco_daughters);
   }
 
+  //new mcs vars
+  if (tree0->GetBranch("mcs_mu_tracklen")){
+    tree0->SetBranchAddress("mcs_mu_tracklen",&tagger_info.mcs_mu_tracklen);
+    tree0->SetBranchAddress("mcs_emu_tracklen",&tagger_info.mcs_emu_tracklen);
+    tree0->SetBranchAddress("mcs_emu_MCS",&tagger_info.mcs_emu_MCS);
+    tree0->SetBranchAddress("mcs_ambiguity_MCS",&tagger_info.mcs_ambiguity_MCS);
+  }
+
+  //new larpid and backtracking variables
+  if (tree0->GetBranch("reco_larpid_classified")){
+    tree0->SetBranchAddress("reco_larpid_classified",&tagger_info.reco_larpid_classified);
+    tree0->SetBranchAddress("reco_larpid_pdg",&tagger_info.reco_larpid_pdg);
+    tree0->SetBranchAddress("reco_larpid_proccess",&tagger_info.reco_larpid_proccess);
+    tree0->SetBranchAddress("reco_larpid_completeness",&tagger_info.reco_larpid_completeness);
+    tree0->SetBranchAddress("reco_larpid_purity",&tagger_info.reco_larpid_purity);
+    tree0->SetBranchAddress("reco_larpid_pidScore_el",&tagger_info.reco_larpid_pidScore_el);
+    tree0->SetBranchAddress("reco_larpid_pidScore_ph",&tagger_info.reco_larpid_pidScore_ph);
+    tree0->SetBranchAddress("reco_larpid_pidScore_mu",&tagger_info.reco_larpid_pidScore_mu);
+    tree0->SetBranchAddress("reco_larpid_pidScore_pi",&tagger_info.reco_larpid_pidScore_pi);
+    tree0->SetBranchAddress("reco_larpid_pidScore_pr",&tagger_info.reco_larpid_pidScore_pr);
+    tree0->SetBranchAddress("reco_larpid_procScore_prim",&tagger_info.reco_larpid_procScore_prim);
+    tree0->SetBranchAddress("reco_larpid_procScore_ntrl",&tagger_info.reco_larpid_procScore_ntrl);
+    tree0->SetBranchAddress("reco_larpid_procScore_chgd",&tagger_info.reco_larpid_procScore_chgd);
+  }
+
+  if (tree0->GetBranch("reco_truthMatch_pdg")){
+    tree0->SetBranchAddress("reco_truthMatch_pdg",&tagger_info.reco_truthMatch_pdg);
+    tree0->SetBranchAddress("reco_truthMatch_id",&tagger_info.reco_truthMatch_id);
+    tree0->SetBranchAddress("reco_truthMatch_purity",&tagger_info.reco_truthMatch_purity);
+    tree0->SetBranchAddress("reco_truthMatch_completeness",&tagger_info.reco_truthMatch_completeness);
+    tree0->SetBranchAddress("reco_truthMatch_nSimParts",&tagger_info.reco_truthMatch_nSimParts);
+    tree0->SetBranchAddress("reco_truthMatch_simPart_pdg",&tagger_info.reco_truthMatch_simPart_pdg);
+    tree0->SetBranchAddress("reco_truthMatch_simPart_purity",&tagger_info.reco_truthMatch_simPart_purity);
+  }
+
+  //new ns timing vars
+  if (tree0->GetBranch("evtTimeNS_cor")){
+    tree0->SetBranchAddress("evtTimeNS_cor",&tagger_info.evtTimeNS_cor);
+  }
+  if (tree0->GetBranch("Ph_Tot")){
+    tree0->SetBranchAddress("Ph_Tot",&tagger_info.Ph_Tot);
+  }
+  if (tree0->GetBranch("PMT_ID")){
+    tree0->SetBranchAddress("PMT_ID",&tagger_info.PMT_ID);
+    tree0->SetBranchAddress("PMT_Time",&tagger_info.PMT_Time);
+    tree0->SetBranchAddress("PMT_Amp",&tagger_info.PMT_Amp);
+    tree0->SetBranchAddress("PMT_TimeProp",&tagger_info.PMT_TimeProp);
+    tree0->SetBranchAddress("PMT_TimeDP",&tagger_info.PMT_TimeDP);
+    tree0->SetBranchAddress("PMT_TimeDL",&tagger_info.PMT_TimeDL);
+    tree0->SetBranchAddress("PMT_Sat",&tagger_info.PMT_Sat);
+    tree0->SetBranchAddress("RWM_Time",&tagger_info.RWM_Time);
+  }
+
 
 }
 
@@ -671,6 +787,62 @@ void LEEana::put_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
     tree0->Branch("reco_endMomentum", &tagger_info.reco_endMomentum, "reco_endMomentum[reco_Ntrack][4]/F");
     tree0->Branch("reco_daughters", tagger_info.reco_daughters);
   }
+
+  //new mcs vars
+  if (tree0->GetBranch("mcs_mu_tracklen")){
+    tree0->Branch("mcs_mu_tracklen",&tagger_info.mcs_mu_tracklen,"mcs_mu_tracklen/D");
+    tree0->Branch("mcs_emu_tracklen",&tagger_info.mcs_emu_tracklen,"mcs_emu_tracklen/D");
+    tree0->Branch("mcs_emu_MCS",&tagger_info.mcs_emu_MCS,"mcs_emu_MCS/D");
+    tree0->Branch("mcs_ambiguity_MCS",&tagger_info.mcs_ambiguity_MCS,"mcs_ambiguity_MCS/D");
+  }
+
+  //new larpid and backtracking variables
+  if (tree0->GetBranch("reco_larpid_classified")){
+    tree0->Branch("reco_larpid_classified", &reco_larpid_classified, "reco_larpid_classified[reco_Ntrack]/I");
+    tree0->Branch("reco_larpid_pdg", &reco_larpid_pdg, "reco_larpid_pdg[reco_Ntrack]/I");
+    tree0->Branch("reco_larpid_proccess", &reco_larpid_proccess, "reco_larpid_proccess[reco_Ntrack]/I");
+    tree0->Branch("reco_larpid_completeness", &reco_larpid_completeness, "reco_larpid_completeness[reco_Ntrack]/F");
+    tree0->Branch("reco_larpid_purity", &reco_larpid_purity, "reco_larpid_purity[reco_Ntrack]/F");
+    tree0->Branch("reco_larpid_pidScore_el", &reco_larpid_pidScore_el, "reco_larpid_pidScore_el[reco_Ntrack]/F");
+    tree0->Branch("reco_larpid_pidScore_ph", &reco_larpid_pidScore_ph, "reco_larpid_pidScore_ph[reco_Ntrack]/F");
+    tree0->Branch("reco_larpid_pidScore_mu", &reco_larpid_pidScore_mu, "reco_larpid_pidScore_mu[reco_Ntrack]/F");
+    tree0->Branch("reco_larpid_pidScore_pi", &reco_larpid_pidScore_pi, "reco_larpid_pidScore_pi[reco_Ntrack]/F");
+    tree0->Branch("reco_larpid_pidScore_pr", &reco_larpid_pidScore_pr, "reco_larpid_pidScore_pr[reco_Ntrack]/F");
+    tree0->Branch("reco_larpid_procScore_prim", &reco_larpid_procScore_prim, "reco_larpid_procScore_prim[reco_Ntrack]/F");
+    tree0->Branch("reco_larpid_procScore_ntrl", &reco_larpid_procScore_ntrl, "reco_larpid_procScore_ntrl[reco_Ntrack]/F");
+    tree0->Branch("reco_larpid_procScore_chgd", &reco_larpid_procScore_chgd, "reco_larpid_procScore_chgd[reco_Ntrack]/F");
+  }
+
+  if (tree0->GetBranch("reco_truthMatch_pdg")){
+    tree0->Branch("reco_truthMatch_pdg", &reco_truthMatch_pdg, "reco_truthMatch_pdg[reco_Ntrack]/I");
+    tree0->Branch("reco_truthMatch_id", &reco_truthMatch_id, "reco_truthMatch_id[reco_Ntrack]/I");
+    tree0->Branch("reco_truthMatch_purity", &reco_truthMatch_purity, "reco_truthMatch_purity[reco_Ntrack]/F");
+    tree0->Branch("reco_truthMatch_completeness", &reco_truthMatch_completeness, "reco_truthMatch_completeness[reco_Ntrack]/F");
+    tree0->Branch("reco_truthMatch_nSimParts", &reco_truthMatch_nSimParts, "reco_truthMatch_nSimParts[reco_Ntrack]/I");
+    tree0->Branch("reco_truthMatch_simPart_pdg", &reco_truthMatch_simPart_pdg);
+    tree0->Branch("reco_truthMatch_simPart_purity", &reco_truthMatch_simPart_purity);
+  }
+
+  //new ns timing vars
+  if (tree0->GetBranch("evtTimeNS_cor")){
+    tree0->Branch("evtTimeNS_cor",&tagger_info.evtTimeNS_cor,"evtTimeNS_cor/F");
+  }
+  if (tree0->GetBranch("Ph_Tot")){
+    tree0->Branch("Ph_Tot",&tagger_info.Ph_Tot,"Ph_Tot/F");
+  }
+  if (tree0->GetBranch("PMT_ID")){
+    tree0->Branch("PMT_ID",&tagger_info.PMT_ID);
+    tree0->Branch("PMT_Time",&tagger_info.PMT_Time);
+    tree0->Branch("PMT_Amp",&tagger_info.PMT_Amp);
+    tree0->Branch("PMT_TimeProp",&tagger_info.PMT_TimeProp);
+    tree0->Branch("PMT_TimeDP",&tagger_info.PMT_TimeDP);
+    tree0->Branch("PMT_TimeDL",&tagger_info.PMT_TimeDL);
+    tree0->Branch("PMT_Sat",&tagger_info.PMT_Sat);
+    tree0->Branch("RWM_Time",&tagger_info.RWM_Time,"RWM_Time/F");
+  }
+
+
+  
 
 }
 
