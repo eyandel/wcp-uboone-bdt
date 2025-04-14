@@ -154,7 +154,7 @@ struct PFevalInfo{
   Double_t mc_nu_Theta; // angle relative to lepton
   Float_t mc_nu_pos[4];  // interaction position of nu
   Float_t mc_nu_mom[4];  // interaction momentum of nu
-/*
+
   //new mcs variables
   Double_t mcs_mu_tracklen; // Muon length in cm
   Double_t mcs_emu_tracklen; // Pure range based, in GeV
@@ -194,7 +194,7 @@ struct PFevalInfo{
   std::vector<float> *PMT_TimeDL;
   std::vector<bool> *PMT_Sat;
   Float_t RWM_Time;
-  */
+  
 
 };
 
