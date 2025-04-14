@@ -156,7 +156,7 @@ struct PFevalInfo{
   Double_t mcs_ambiguity_MCS; // "Goodness" of MCS estimation
 
   //new parpid and backtrackng variables
-  int MAX_TRACKS = 10000;
+  static int MAX_TRACKS = 10000;
   Int_t reco_larpid_classified[MAX_TRACKS]; //LArPID pdg label
   Int_t reco_larpid_pdg[MAX_TRACKS]; //LArPID pdg label
   Int_t reco_larpid_proccess[MAX_TRACKS]; //LArPID primary vs. secondary production process class
