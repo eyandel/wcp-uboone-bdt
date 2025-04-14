@@ -234,8 +234,8 @@ void LEEana::del_pointers(PFevalInfo& tagger_info){
   delete tagger_info.reco_process;
   delete tagger_info.reco_daughters;
 
-  delete tagger_info.reco_truthMatch_simPart_pdg; 
-  delete tagger_info.reco_truthMatch_simPart_purity;
+  //delete tagger_info.reco_truthMatch_simPart_pdg; 
+  //delete tagger_info.reco_truthMatch_simPart_purity;
 
   delete tagger_info.PMT_ID;
   delete tagger_info.PMT_Time;
