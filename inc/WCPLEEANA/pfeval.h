@@ -215,8 +215,8 @@ void LEEana::init_pointers(PFevalInfo& tagger_info){
   tagger_info.reco_process = new   std::vector<std::string >;
   tagger_info.reco_daughters = new   std::vector<std::vector<Int_t> > ;
 
-  tagger_info.reco_truthMatch_simPart_pdg = new std::vector<std::vector<int>>; 
-  tagger_info.reco_truthMatch_simPart_purity = new std::vector<std::vector<float>>;
+  //tagger_info.reco_truthMatch_simPart_pdg = new std::vector<std::vector<int>>; 
+  //tagger_info.reco_truthMatch_simPart_purity = new std::vector<std::vector<float>>;
 
   tagger_info.PMT_ID = new std::vector<int>;
   tagger_info.PMT_Time = new std::vector<float>;
