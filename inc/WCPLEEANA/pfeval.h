@@ -214,6 +214,17 @@ void LEEana::init_pointers(PFevalInfo& tagger_info){
   tagger_info.fMC_trackPosition->SetOwner(kTRUE);
   tagger_info.reco_process = new   std::vector<std::string >;
   tagger_info.reco_daughters = new   std::vector<std::vector<Int_t> > ;
+
+  tagger_info.reco_truthMatch_simPart_pdg = new std::vector<std::vector<int>>; 
+  tagger_info.reco_truthMatch_simPart_purity = new std::vector<std::vector<float>>;
+
+  tagger_info.PMT_ID = new std::vector<int>;
+  tagger_info.PMT_Time = new std::vector<float>;
+  tagger_info.PMT_Amp = new std::vector<float>;
+  tagger_info.PMT_TimeProp = new std::vector<float>;
+  tagger_info.PMT_TimeDP = new std::vector<float>;
+  tagger_info.PMT_TimeDL = new std::vector<float>;
+  tagger_info.PMT_Sat = new std::vector<bool>;
 }
 
 void LEEana::del_pointers(PFevalInfo& tagger_info){
@@ -222,6 +233,17 @@ void LEEana::del_pointers(PFevalInfo& tagger_info){
   delete tagger_info.fMC_trackPosition;
   delete tagger_info.reco_process;
   delete tagger_info.reco_daughters;
+
+  delete tagger_info.reco_truthMatch_simPart_pdg; 
+  delete tagger_info.reco_truthMatch_simPart_purity;
+
+  delete tagger_info.PMT_ID;
+  delete tagger_info.PMT_Time;
+  delete tagger_info.PMT_Amp;
+  delete tagger_info.PMT_TimeProp;
+  delete tagger_info.PMT_TimeDP;
+  delete tagger_info.PMT_TimeDL;
+  delete tagger_info.PMT_Sat;
 }
 
 
@@ -363,7 +385,7 @@ void LEEana::clear_pfeval_info(PFevalInfo& tagger_info){
     tagger_info.mc_nu_pos[i] = 0;  // interaction position of nu
     tagger_info.mc_nu_mom[i] = 0;  // interaction momentum of nu
   }
-/*
+
   //new mcs variables
   tagger_info.mcs_mu_tracklen=0; // Muon length in cm
   tagger_info.mcs_emu_tracklen=0; // Pure range based, in GeV
@@ -385,7 +407,7 @@ void LEEana::clear_pfeval_info(PFevalInfo& tagger_info){
   tagger_info.PMT_TimeDL->clear();
   tagger_info.PMT_Sat->clear();
   tagger_info.RWM_Time = 0;
-  */
+  
 
 }
 
