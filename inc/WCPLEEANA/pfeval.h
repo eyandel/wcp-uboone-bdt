@@ -607,7 +607,7 @@ void LEEana::set_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
     tree0->SetBranchAddress("reco_daughters", &tagger_info.reco_daughters);
   }
 
-/* 
+
 
   //new mcs vars
   if (tree0->GetBranch("mcs_mu_tracklen")){
@@ -667,7 +667,7 @@ void LEEana::set_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
     tree0->SetBranchAddress("PMT_Sat",&tagger_info.PMT_Sat);
     tree0->SetBranchAddress("RWM_Time",&tagger_info.RWM_Time);
   }
-*/
+
 
 }
 
@@ -832,7 +832,7 @@ void LEEana::put_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
     tree0->Branch("reco_daughters", tagger_info.reco_daughters);
   }
 
-  /*
+  
   //new mcs vars
   
   if (tagger_info.flag_mcs){
@@ -886,7 +886,7 @@ void LEEana::put_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
     tree0->Branch("PMT_Sat",&tagger_info.PMT_Sat);
     tree0->Branch("RWM_Time",&tagger_info.RWM_Time,"RWM_Time/F");
   }
-  */
+  
 
 
   
