@@ -798,29 +798,29 @@ void LEEana::put_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
 
   //new larpid and backtracking variables
   if (tree0->GetBranch("reco_larpid_classified")){
-    tree0->Branch("reco_larpid_classified", &reco_larpid_classified, "reco_larpid_classified[reco_Ntrack]/I");
-    tree0->Branch("reco_larpid_pdg", &reco_larpid_pdg, "reco_larpid_pdg[reco_Ntrack]/I");
-    tree0->Branch("reco_larpid_proccess", &reco_larpid_proccess, "reco_larpid_proccess[reco_Ntrack]/I");
-    tree0->Branch("reco_larpid_completeness", &reco_larpid_completeness, "reco_larpid_completeness[reco_Ntrack]/F");
-    tree0->Branch("reco_larpid_purity", &reco_larpid_purity, "reco_larpid_purity[reco_Ntrack]/F");
-    tree0->Branch("reco_larpid_pidScore_el", &reco_larpid_pidScore_el, "reco_larpid_pidScore_el[reco_Ntrack]/F");
-    tree0->Branch("reco_larpid_pidScore_ph", &reco_larpid_pidScore_ph, "reco_larpid_pidScore_ph[reco_Ntrack]/F");
-    tree0->Branch("reco_larpid_pidScore_mu", &reco_larpid_pidScore_mu, "reco_larpid_pidScore_mu[reco_Ntrack]/F");
-    tree0->Branch("reco_larpid_pidScore_pi", &reco_larpid_pidScore_pi, "reco_larpid_pidScore_pi[reco_Ntrack]/F");
-    tree0->Branch("reco_larpid_pidScore_pr", &reco_larpid_pidScore_pr, "reco_larpid_pidScore_pr[reco_Ntrack]/F");
-    tree0->Branch("reco_larpid_procScore_prim", &reco_larpid_procScore_prim, "reco_larpid_procScore_prim[reco_Ntrack]/F");
-    tree0->Branch("reco_larpid_procScore_ntrl", &reco_larpid_procScore_ntrl, "reco_larpid_procScore_ntrl[reco_Ntrack]/F");
-    tree0->Branch("reco_larpid_procScore_chgd", &reco_larpid_procScore_chgd, "reco_larpid_procScore_chgd[reco_Ntrack]/F");
+    tree0->Branch("reco_larpid_classified", &tagger_info.reco_larpid_classified, "reco_larpid_classified[reco_Ntrack]/I");
+    tree0->Branch("reco_larpid_pdg", &tagger_info.reco_larpid_pdg, "reco_larpid_pdg[reco_Ntrack]/I");
+    tree0->Branch("reco_larpid_proccess", &tagger_info.reco_larpid_proccess, "reco_larpid_proccess[reco_Ntrack]/I");
+    tree0->Branch("reco_larpid_completeness", &tagger_info.reco_larpid_completeness, "reco_larpid_completeness[reco_Ntrack]/F");
+    tree0->Branch("reco_larpid_purity", &tagger_info.reco_larpid_purity, "reco_larpid_purity[reco_Ntrack]/F");
+    tree0->Branch("reco_larpid_pidScore_el", &tagger_info.reco_larpid_pidScore_el, "reco_larpid_pidScore_el[reco_Ntrack]/F");
+    tree0->Branch("reco_larpid_pidScore_ph", &tagger_info.reco_larpid_pidScore_ph, "reco_larpid_pidScore_ph[reco_Ntrack]/F");
+    tree0->Branch("reco_larpid_pidScore_mu", &tagger_info.reco_larpid_pidScore_mu, "reco_larpid_pidScore_mu[reco_Ntrack]/F");
+    tree0->Branch("reco_larpid_pidScore_pi", &tagger_info.reco_larpid_pidScore_pi, "reco_larpid_pidScore_pi[reco_Ntrack]/F");
+    tree0->Branch("reco_larpid_pidScore_pr", &tagger_info.reco_larpid_pidScore_pr, "reco_larpid_pidScore_pr[reco_Ntrack]/F");
+    tree0->Branch("reco_larpid_procScore_prim", &tagger_info.reco_larpid_procScore_prim, "reco_larpid_procScore_prim[reco_Ntrack]/F");
+    tree0->Branch("reco_larpid_procScore_ntrl", &tagger_info.reco_larpid_procScore_ntrl, "reco_larpid_procScore_ntrl[reco_Ntrack]/F");
+    tree0->Branch("reco_larpid_procScore_chgd", &tagger_info.reco_larpid_procScore_chgd, "reco_larpid_procScore_chgd[reco_Ntrack]/F");
   }
 
   if (tree0->GetBranch("reco_truthMatch_pdg")){
-    tree0->Branch("reco_truthMatch_pdg", &reco_truthMatch_pdg, "reco_truthMatch_pdg[reco_Ntrack]/I");
-    tree0->Branch("reco_truthMatch_id", &reco_truthMatch_id, "reco_truthMatch_id[reco_Ntrack]/I");
-    tree0->Branch("reco_truthMatch_purity", &reco_truthMatch_purity, "reco_truthMatch_purity[reco_Ntrack]/F");
-    tree0->Branch("reco_truthMatch_completeness", &reco_truthMatch_completeness, "reco_truthMatch_completeness[reco_Ntrack]/F");
-    tree0->Branch("reco_truthMatch_nSimParts", &reco_truthMatch_nSimParts, "reco_truthMatch_nSimParts[reco_Ntrack]/I");
-    tree0->Branch("reco_truthMatch_simPart_pdg", &reco_truthMatch_simPart_pdg);
-    tree0->Branch("reco_truthMatch_simPart_purity", &reco_truthMatch_simPart_purity);
+    tree0->Branch("reco_truthMatch_pdg", &tagger_info.reco_truthMatch_pdg, "reco_truthMatch_pdg[reco_Ntrack]/I");
+    tree0->Branch("reco_truthMatch_id", &tagger_info.reco_truthMatch_id, "reco_truthMatch_id[reco_Ntrack]/I");
+    tree0->Branch("reco_truthMatch_purity", &tagger_info.reco_truthMatch_purity, "reco_truthMatch_purity[reco_Ntrack]/F");
+    tree0->Branch("reco_truthMatch_completeness", &tagger_info.reco_truthMatch_completeness, "reco_truthMatch_completeness[reco_Ntrack]/F");
+    tree0->Branch("reco_truthMatch_nSimParts", &tagger_info.reco_truthMatch_nSimParts, "reco_truthMatch_nSimParts[reco_Ntrack]/I");
+    tree0->Branch("reco_truthMatch_simPart_pdg", &tagger_info.reco_truthMatch_simPart_pdg);
+    tree0->Branch("reco_truthMatch_simPart_purity", &tagger_info.reco_truthMatch_simPart_purity);
   }
 
   //new ns timing vars
