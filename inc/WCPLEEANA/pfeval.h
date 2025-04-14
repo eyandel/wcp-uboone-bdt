@@ -13,6 +13,12 @@ struct PFevalInfo{
   bool flag_single_photon;
   bool flag_nsbeam;
   //
+  bool flag_mcs;
+  bool flag_larpid;
+  bool flag_backtracking;
+  bool flag_ns_time_cor;
+  bool flag_Phtot;
+  bool flag_PMT;
 
   Int_t run;
   Int_t subrun;
@@ -395,6 +401,13 @@ void LEEana::set_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
   tagger_info.flag_pf_reco = false;
   tagger_info.flag_init_pointers = false;
 
+  tagger_info.flag_mcs = false;
+  tagger_info.flag_larpid = false;
+  tagger_info.flag_backtracking = false;
+  tagger_info.flag_ns_time_cor = false;
+  tagger_info.flag_Phtot = false;
+  tagger_info.flag_PMT = false;
+
 
 
   tree0->SetBranchAddress("run", &tagger_info.run);
@@ -572,6 +585,7 @@ void LEEana::set_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
 
   //new mcs vars
   if (tree0->GetBranch("mcs_mu_tracklen")){
+    tagger_info.flag_mcs = true;
     tree0->SetBranchAddress("mcs_mu_tracklen",&tagger_info.mcs_mu_tracklen);
     tree0->SetBranchAddress("mcs_emu_tracklen",&tagger_info.mcs_emu_tracklen);
     tree0->SetBranchAddress("mcs_emu_MCS",&tagger_info.mcs_emu_MCS);
@@ -580,6 +594,7 @@ void LEEana::set_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
 
   //new larpid and backtracking variables
   if (tree0->GetBranch("reco_larpid_classified")){
+    tagger_info.flag_larpid = true;
     tree0->SetBranchAddress("reco_larpid_classified",&tagger_info.reco_larpid_classified);
     tree0->SetBranchAddress("reco_larpid_pdg",&tagger_info.reco_larpid_pdg);
     tree0->SetBranchAddress("reco_larpid_proccess",&tagger_info.reco_larpid_proccess);
@@ -596,6 +611,7 @@ void LEEana::set_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
   }
 
   if (tree0->GetBranch("reco_truthMatch_pdg")){
+    tagger_info.flag_backtracking = true;
     tree0->SetBranchAddress("reco_truthMatch_pdg",&tagger_info.reco_truthMatch_pdg);
     tree0->SetBranchAddress("reco_truthMatch_id",&tagger_info.reco_truthMatch_id);
     tree0->SetBranchAddress("reco_truthMatch_purity",&tagger_info.reco_truthMatch_purity);
@@ -607,12 +623,15 @@ void LEEana::set_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
 
   //new ns timing vars
   if (tree0->GetBranch("evtTimeNS_cor")){
+    tagger_info.flag_ns_time_cor = true;
     tree0->SetBranchAddress("evtTimeNS_cor",&tagger_info.evtTimeNS_cor);
   }
   if (tree0->GetBranch("Ph_Tot")){
+    tagger_info.flag_Phtot = true;
     tree0->SetBranchAddress("Ph_Tot",&tagger_info.Ph_Tot);
   }
   if (tree0->GetBranch("PMT_ID")){
+    tagger_info.flag_PMT = true;
     tree0->SetBranchAddress("PMT_ID",&tagger_info.PMT_ID);
     tree0->SetBranchAddress("PMT_Time",&tagger_info.PMT_Time);
     tree0->SetBranchAddress("PMT_Amp",&tagger_info.PMT_Amp);
@@ -788,7 +807,7 @@ void LEEana::put_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
   }
 
   //new mcs vars
-  if (tree0->GetBranch("mcs_mu_tracklen")){
+  if (tagger_info.flag_mcs){
     tree0->Branch("mcs_mu_tracklen",&tagger_info.mcs_mu_tracklen,"mcs_mu_tracklen/D");
     tree0->Branch("mcs_emu_tracklen",&tagger_info.mcs_emu_tracklen,"mcs_emu_tracklen/D");
     tree0->Branch("mcs_emu_MCS",&tagger_info.mcs_emu_MCS,"mcs_emu_MCS/D");
@@ -796,7 +815,7 @@ void LEEana::put_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
   }
 
   //new larpid and backtracking variables
-  if (tree0->GetBranch("reco_larpid_classified")){
+  if (tagger_info.flag_larpid){
     tree0->Branch("reco_larpid_classified", &tagger_info.reco_larpid_classified, "reco_larpid_classified[reco_Ntrack]/I");
     tree0->Branch("reco_larpid_pdg", &tagger_info.reco_larpid_pdg, "reco_larpid_pdg[reco_Ntrack]/I");
     tree0->Branch("reco_larpid_proccess", &tagger_info.reco_larpid_proccess, "reco_larpid_proccess[reco_Ntrack]/I");
@@ -812,7 +831,7 @@ void LEEana::put_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
     tree0->Branch("reco_larpid_procScore_chgd", &tagger_info.reco_larpid_procScore_chgd, "reco_larpid_procScore_chgd[reco_Ntrack]/F");
   }
 
-  if (tree0->GetBranch("reco_truthMatch_pdg")){
+  if (tagger_info.flag_backtracking){
     tree0->Branch("reco_truthMatch_pdg", &tagger_info.reco_truthMatch_pdg, "reco_truthMatch_pdg[reco_Ntrack]/I");
     tree0->Branch("reco_truthMatch_id", &tagger_info.reco_truthMatch_id, "reco_truthMatch_id[reco_Ntrack]/I");
     tree0->Branch("reco_truthMatch_purity", &tagger_info.reco_truthMatch_purity, "reco_truthMatch_purity[reco_Ntrack]/F");
@@ -823,13 +842,13 @@ void LEEana::put_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
   }
 
   //new ns timing vars
-  if (tree0->GetBranch("evtTimeNS_cor")){
+  if (tagger_info.flag_ns_time_cor){
     tree0->Branch("evtTimeNS_cor",&tagger_info.evtTimeNS_cor,"evtTimeNS_cor/F");
   }
-  if (tree0->GetBranch("Ph_Tot")){
+  if (tagger_info.flag_Phtot){
     tree0->Branch("Ph_Tot",&tagger_info.Ph_Tot,"Ph_Tot/F");
   }
-  if (tree0->GetBranch("PMT_ID")){
+  if (tagger_info.flag_PMT){
     tree0->Branch("PMT_ID",&tagger_info.PMT_ID);
     tree0->Branch("PMT_Time",&tagger_info.PMT_Time);
     tree0->Branch("PMT_Amp",&tagger_info.PMT_Amp);
