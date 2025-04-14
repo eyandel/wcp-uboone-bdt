@@ -358,26 +358,26 @@ void LEEana::clear_pfeval_info(PFevalInfo& tagger_info){
   }
 
   //new mcs variables
-  mcs_mu_tracklen=0; // Muon length in cm
-  mcs_emu_tracklen=0; // Pure range based, in GeV
-  mcs_emu_MCS=0; // MCS based, in GeV
-  mcs_ambiguity_MCS=0; // "Goodness" of MCS estimation
+  tagger_info.mcs_mu_tracklen=0; // Muon length in cm
+  tagger_info.mcs_emu_tracklen=0; // Pure range based, in GeV
+  tagger_info.mcs_emu_MCS=0; // MCS based, in GeV
+  tagger_info.mcs_ambiguity_MCS=0; // "Goodness" of MCS estimation
 
   //new parpid and backtrackng variables
-  reco_truthMatch_simPart_pdg.clear();
-  reco_truthMatch_simPart_purity.clear();
+  tagger_info.reco_truthMatch_simPart_pdg.clear();
+  tagger_info.reco_truthMatch_simPart_purity.clear();
 
   //new ns timing vars
-  evtTimeNS_cor = 0;
-  Ph_Tot = 0;
-  PMT_ID->clear();
-  PMT_Time->clear();
-  PMT_Amp->clear();
-  PMT_TimeProp->clear();
-  PMT_TimeDP->clear();
-  PMT_TimeDL->clear();
-  PMT_Sat->clear();
-  RWM_Time = 0;
+  tagger_info.evtTimeNS_cor = 0;
+  tagger_info.Ph_Tot = 0;
+  tagger_info.PMT_ID->clear();
+  tagger_info.PMT_Time->clear();
+  tagger_info.PMT_Amp->clear();
+  tagger_info.PMT_TimeProp->clear();
+  tagger_info.PMT_TimeDP->clear();
+  tagger_info.PMT_TimeDL->clear();
+  tagger_info.PMT_Sat->clear();
+  tagger_info.RWM_Time = 0;
 
 }
 
