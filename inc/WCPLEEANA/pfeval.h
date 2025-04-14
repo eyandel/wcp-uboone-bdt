@@ -154,7 +154,7 @@ struct PFevalInfo{
   Double_t mc_nu_Theta; // angle relative to lepton
   Float_t mc_nu_pos[4];  // interaction position of nu
   Float_t mc_nu_mom[4];  // interaction momentum of nu
-
+/*
   //new mcs variables
   Double_t mcs_mu_tracklen; // Muon length in cm
   Double_t mcs_emu_tracklen; // Pure range based, in GeV
@@ -194,6 +194,7 @@ struct PFevalInfo{
   std::vector<float> *PMT_TimeDL;
   std::vector<bool> *PMT_Sat;
   Float_t RWM_Time;
+  */
 
 };
 
@@ -362,7 +363,7 @@ void LEEana::clear_pfeval_info(PFevalInfo& tagger_info){
     tagger_info.mc_nu_pos[i] = 0;  // interaction position of nu
     tagger_info.mc_nu_mom[i] = 0;  // interaction momentum of nu
   }
-
+/*
   //new mcs variables
   tagger_info.mcs_mu_tracklen=0; // Muon length in cm
   tagger_info.mcs_emu_tracklen=0; // Pure range based, in GeV
@@ -384,6 +385,7 @@ void LEEana::clear_pfeval_info(PFevalInfo& tagger_info){
   tagger_info.PMT_TimeDL->clear();
   tagger_info.PMT_Sat->clear();
   tagger_info.RWM_Time = 0;
+  */
 
 }
 
@@ -583,6 +585,8 @@ void LEEana::set_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
     tree0->SetBranchAddress("reco_daughters", &tagger_info.reco_daughters);
   }
 
+/* 
+
   //new mcs vars
   if (tree0->GetBranch("mcs_mu_tracklen")){
     tagger_info.flag_mcs = true;
@@ -641,7 +645,7 @@ void LEEana::set_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
     tree0->SetBranchAddress("PMT_Sat",&tagger_info.PMT_Sat);
     tree0->SetBranchAddress("RWM_Time",&tagger_info.RWM_Time);
   }
-
+*/
 
 }
 
