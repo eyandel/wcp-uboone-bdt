@@ -682,7 +682,7 @@ int main( int argc, char** argv )
     t4_cv->Fill();
     t5_cv->Fill();
 
-    T_spacepoints->GetEntry(i);
+    T_spacepoints->GetEntry(*it);
     new_T_spacepoints->Fill();
 
     NeutrinoSelectionFilter->GetEntry(*it);
