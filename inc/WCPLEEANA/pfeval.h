@@ -870,9 +870,9 @@ void LEEana::put_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
   }
 
   //new ns timing vars
-  if (tagger_info.flag_ns_time_cor){
-    tree0->Branch("evtTimeNS_cor",&tagger_info.evtTimeNS_cor,"evtTimeNS_cor/F");
-  }
+  //if (tagger_info.flag_ns_time_cor){
+  //  tree0->Branch("evtTimeNS_cor",&tagger_info.evtTimeNS_cor,"evtTimeNS_cor/F");
+  //}
   if (tagger_info.flag_Phtot){
     tree0->Branch("Ph_Tot",&tagger_info.Ph_Tot,"Ph_Tot/F");
   }
