@@ -869,7 +869,7 @@ void LEEana::put_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
     //tree0->Branch("reco_truthMatch_simPart_purity", &tagger_info.reco_truthMatch_simPart_purity);
   }
 
-  new ns timing vars
+  //new ns timing vars
   if (tagger_info.flag_ns_time_cor){
     tree0->Branch("evtTimeNS_cor",&tagger_info.evtTimeNS_cor,"evtTimeNS_cor/F");
   }
