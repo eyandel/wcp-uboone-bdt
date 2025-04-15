@@ -87,6 +87,7 @@ int main( int argc, char** argv )
   TTree *T_pot_cv = (TTree*)file1->Get("wcpselection/T_pot");
   TTree *T_PFeval_cv = (TTree*)file1->Get("wcpselection/T_PFeval");
   TTree *T_KINEvars_cv = (TTree*)file1->Get("wcpselection/T_KINEvars");
+  TTree *T_spacepoints = (TTree*)file1->Get("wcpselection/T_spacepoints");
 
   TDirectory *topdir = gDirectory;
   //file1->cd("nuselection");
@@ -636,6 +637,7 @@ int main( int argc, char** argv )
   TTree *t3_cv = new TTree("T_PFeval", "T_PFeval");
   TTree *t5_cv = new TTree("T_KINEvars", "T_KINEvars");
   TTree *t4_cv = new TTree("T_BDTvars","T_BDTvars");
+  TTree *new_T_spacepoints = T_spacepoints->CloneTree(0);
 
   put_tree_address(t4_cv, tagger_cv,2);
 
@@ -679,6 +681,9 @@ int main( int argc, char** argv )
     t3_cv->Fill();
     t4_cv->Fill();
     t5_cv->Fill();
+
+    T_spacepoints->GetEntry(i);
+    new_T_spacepoints->Fill();
 
     NeutrinoSelectionFilter->GetEntry(*it);
     new_NeutrinoSelectionFilter->Fill();
