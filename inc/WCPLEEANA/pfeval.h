@@ -643,8 +643,8 @@ void LEEana::set_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
     tree0->SetBranchAddress("reco_truthMatch_purity",&tagger_info.reco_truthMatch_purity);
     tree0->SetBranchAddress("reco_truthMatch_completeness",&tagger_info.reco_truthMatch_completeness);
     tree0->SetBranchAddress("reco_truthMatch_nSimParts",&tagger_info.reco_truthMatch_nSimParts);
-    //tree0->SetBranchAddress("reco_truthMatch_simPart_pdg",&tagger_info.reco_truthMatch_simPart_pdg);
-    //tree0->SetBranchAddress("reco_truthMatch_simPart_purity",&tagger_info.reco_truthMatch_simPart_purity);
+    tree0->SetBranchAddress("reco_truthMatch_simPart_pdg",&tagger_info.reco_truthMatch_simPart_pdg);
+    tree0->SetBranchAddress("reco_truthMatch_simPart_purity",&tagger_info.reco_truthMatch_simPart_purity);
   }
 
   //new ns timing vars
@@ -865,8 +865,8 @@ void LEEana::put_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
     tree0->Branch("reco_truthMatch_purity", &tagger_info.reco_truthMatch_purity, "reco_truthMatch_purity[reco_Ntrack]/F");
     tree0->Branch("reco_truthMatch_completeness", &tagger_info.reco_truthMatch_completeness, "reco_truthMatch_completeness[reco_Ntrack]/F");
     tree0->Branch("reco_truthMatch_nSimParts", &tagger_info.reco_truthMatch_nSimParts, "reco_truthMatch_nSimParts[reco_Ntrack]/I");
-    //tree0->Branch("reco_truthMatch_simPart_pdg", &tagger_info.reco_truthMatch_simPart_pdg);
-    //tree0->Branch("reco_truthMatch_simPart_purity", &tagger_info.reco_truthMatch_simPart_purity);
+    tree0->Branch("reco_truthMatch_simPart_pdg", &tagger_info.reco_truthMatch_simPart_pdg);
+    tree0->Branch("reco_truthMatch_simPart_purity", &tagger_info.reco_truthMatch_simPart_purity);
   }
 
   //new ns timing vars
