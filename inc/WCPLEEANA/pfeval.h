@@ -180,8 +180,8 @@ struct PFevalInfo{
   Float_t reco_truthMatch_purity[10000]; //MC back tracking: fraction of reco particle from best match sim particle
   Float_t reco_truthMatch_completeness[10000]; //MC backtracking: fraction of best match sim particle reconstructed
   Int_t reco_truthMatch_nSimParts[10000]; //MC backtracking: number of different sim particle types matched
-  std::vector<std::vector<int>> reco_truthMatch_simPart_pdg; //MC backtracking: pdg of contributing particle type
-  std::vector<std::vector<float>> reco_truthMatch_simPart_purity;//MC backtracking: purity contributing particle type
+  std::vector<std::vector<int>> *reco_truthMatch_simPart_pdg; //MC backtracking: pdg of contributing particle type
+  std::vector<std::vector<float>> *reco_truthMatch_simPart_purity;//MC backtracking: purity contributing particle type
 
   //new ns timing vars
   Float_t evtTimeNS_cor;
@@ -215,8 +215,8 @@ void LEEana::init_pointers(PFevalInfo& tagger_info){
   tagger_info.reco_process = new   std::vector<std::string >;
   tagger_info.reco_daughters = new   std::vector<std::vector<Int_t> > ;
 
-  //tagger_info.reco_truthMatch_simPart_pdg = new std::vector<std::vector<int>>; 
-  //tagger_info.reco_truthMatch_simPart_purity = new std::vector<std::vector<float>>;
+  tagger_info.reco_truthMatch_simPart_pdg = new std::vector<std::vector<int>>; 
+  tagger_info.reco_truthMatch_simPart_purity = new std::vector<std::vector<float>>;
 
   tagger_info.PMT_ID = new std::vector<int>;
   tagger_info.PMT_Time = new std::vector<float>;
@@ -234,8 +234,8 @@ void LEEana::del_pointers(PFevalInfo& tagger_info){
   delete tagger_info.reco_process;
   delete tagger_info.reco_daughters;
 
-  //delete tagger_info.reco_truthMatch_simPart_pdg; 
-  //delete tagger_info.reco_truthMatch_simPart_purity;
+  delete tagger_info.reco_truthMatch_simPart_pdg; 
+  delete tagger_info.reco_truthMatch_simPart_purity;
 
   delete tagger_info.PMT_ID;
   delete tagger_info.PMT_Time;
@@ -393,8 +393,8 @@ void LEEana::clear_pfeval_info(PFevalInfo& tagger_info){
   tagger_info.mcs_ambiguity_MCS=0; // "Goodness" of MCS estimation
 
   //new parpid and backtrackng variables
-  tagger_info.reco_truthMatch_simPart_pdg.clear();
-  tagger_info.reco_truthMatch_simPart_purity.clear();
+  tagger_info.reco_truthMatch_simPart_pdg->clear();
+  tagger_info.reco_truthMatch_simPart_purity->clear();
 
   //new ns timing vars
   tagger_info.evtTimeNS_cor = 0;
@@ -869,10 +869,10 @@ void LEEana::put_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
     tree0->Branch("reco_truthMatch_simPart_purity", &tagger_info.reco_truthMatch_simPart_purity);
   }
 
-  //new ns timing vars
-  //if (tagger_info.flag_ns_time_cor){
-  //  tree0->Branch("evtTimeNS_cor",&tagger_info.evtTimeNS_cor,"evtTimeNS_cor/F");
-  //}
+  new ns timing vars
+  if (tagger_info.flag_ns_time_cor){
+    tree0->Branch("evtTimeNS_cor",&tagger_info.evtTimeNS_cor,"evtTimeNS_cor/F");
+  }
   if (tagger_info.flag_Phtot){
     tree0->Branch("Ph_Tot",&tagger_info.Ph_Tot,"Ph_Tot/F");
   }
