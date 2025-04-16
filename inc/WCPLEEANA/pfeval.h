@@ -194,6 +194,10 @@ struct PFevalInfo{
   std::vector<float> *PMT_TimeDL;
   std::vector<bool> *PMT_Sat;
   Float_t RWM_Time;
+  Float_t cor_nu_time;
+  Float_t cor_nu_time_nospill;
+  Float_t cor_nu_time_spill;
+  Float_t cor_nu_deltatime;
   
 
 };
@@ -407,6 +411,10 @@ void LEEana::clear_pfeval_info(PFevalInfo& tagger_info){
   tagger_info.PMT_TimeDL->clear();
   tagger_info.PMT_Sat->clear();
   tagger_info.RWM_Time = 0;
+  tagger_info.cor_nu_time = -9999.;
+  tagger_info.cor_nu_time_nospill = -9999.;
+  tagger_info.cor_nu_time_spill = -9999.;
+  tagger_info.cor_nu_deltatime = -9999.;
   
 
 }
@@ -651,6 +659,10 @@ void LEEana::set_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
   if (tree0->GetBranch("evtTimeNS_cor")){
     tagger_info.flag_ns_time_cor = true;
     tree0->SetBranchAddress("evtTimeNS_cor",&tagger_info.evtTimeNS_cor);
+    tree0->SetBranchAddress("cor_nu_time",&tagger_info.cor_nu_time);
+    tree0->SetBranchAddress("cor_nu_time_nospill",&tagger_info.cor_nu_time_nospill);
+    tree0->SetBranchAddress("cor_nu_time_spill",&tagger_info.cor_nu_time_spill);
+    tree0->SetBranchAddress("cor_nu_deltatime",&tagger_info.cor_nu_deltatime);
   }
   if (tree0->GetBranch("Ph_Tot")){
     tagger_info.flag_Phtot = true;
@@ -745,7 +757,7 @@ void LEEana::put_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
 
   }
 
-  if (flag!=1){//tagger_info.flag_nsbeam){
+  if (tagger_info.flag_nsbeam){
     tree0->Branch("evtDeltaTimeNS",&tagger_info.evtDeltaTimeNS,"evtDeltaTimeNS/F");
     tree0->Branch("evtTimeNS",&tagger_info.evtTimeNS,"evtTimeNS/F");
   }
@@ -872,6 +884,10 @@ void LEEana::put_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
   //new ns timing vars
   if (tagger_info.flag_ns_time_cor){
     tree0->Branch("evtTimeNS_cor",&tagger_info.evtTimeNS_cor,"evtTimeNS_cor/F");
+    tree0->Branch("cor_nu_time",&tagger_info.cor_nu_time,"cor_nu_time/F");
+    tree0->Branch("cor_nu_time_nospill",&tagger_info.cor_nu_time_nospill,"cor_nu_time_nospill/F");
+    tree0->Branch("cor_nu_time_spill",&tagger_info.cor_nu_time_spill,"cor_nu_time_spill/F");
+    tree0->Branch("cor_nu_deltatime",&tagger_info.cor_nu_deltatime,"cor_nu_deltatime/F");
   }
   if (tagger_info.flag_Phtot){
     tree0->Branch("Ph_Tot",&tagger_info.Ph_Tot,"Ph_Tot/F");
