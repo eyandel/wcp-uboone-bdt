@@ -1023,6 +1023,12 @@ int main( int argc, char** argv )
   tagger.numu_cc_2_total_length = new std::vector<float>;
   tagger.numu_cc_2_n_daughter_tracks = new std::vector<float>;
   tagger.numu_cc_2_n_daughter_all = new std::vector<float>;
+  tagger.ssm_kine_energy_particle = new std::vector<float>;
+  tagger.ssm_kine_energy_info = new std::vector<int>;
+  tagger.ssm_kine_particle_type = new std::vector<int>;
+  tagger.ssm_kine_energy_included = new std::vector<int>;
+  tagger.ssm_cosmict_flag_10 = new std::vector<float>;
+
 
   set_tree_address(T_BDTvars, tagger,2 );
   tagger.flag_nc_gamma_bdt = true;
