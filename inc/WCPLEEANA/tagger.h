@@ -1067,6 +1067,440 @@ namespace LEEana{
     float shw_sp_lol_3_flag;
     //end single photon variables
 
+    // KDAR vars
+    bool saved_ssm_bdt_vars;
+    bool saved_ssm_kine_vars;
+    bool saved_ssm_bdt_scores;
+
+    float ssm_flag_st_kdar;
+
+    float ssm_Nsm;
+    float ssm_Nsm_wivtx;
+
+    float ssm_dq_dx_fwd_1;
+    float ssm_dq_dx_fwd_2;
+    float ssm_dq_dx_fwd_3;
+    float ssm_dq_dx_fwd_4;
+    float ssm_dq_dx_fwd_5;
+    float ssm_dq_dx_bck_1;
+    float ssm_dq_dx_bck_2;
+    float ssm_dq_dx_bck_3;
+    float ssm_dq_dx_bck_4;
+    float ssm_dq_dx_bck_5;
+    float ssm_d_dq_dx_fwd_12;
+    float ssm_d_dq_dx_fwd_23;
+    float ssm_d_dq_dx_fwd_34;
+    float ssm_d_dq_dx_fwd_45;
+    float ssm_d_dq_dx_bck_12;
+    float ssm_d_dq_dx_bck_23;
+    float ssm_d_dq_dx_bck_34;
+    float ssm_d_dq_dx_bck_45;
+    float ssm_max_dq_dx_fwd_3;
+    float ssm_max_dq_dx_fwd_5;
+    float ssm_max_dq_dx_bck_3;
+    float ssm_max_dq_dx_bck_5;
+    float ssm_max_d_dq_dx_fwd_3;
+    float ssm_max_d_dq_dx_fwd_5;
+    float ssm_max_d_dq_dx_bck_3;
+    float ssm_max_d_dq_dx_bck_5;
+    float ssm_medium_dq_dx;
+    float ssm_medium_dq_dx_bp;
+    //angluar info
+    float ssm_angle_to_z;
+    float ssm_angle_to_target;
+    float ssm_angle_to_absorber;
+    float ssm_angle_to_vertical;
+    //directional info
+    float ssm_x_dir;
+    float ssm_y_dir;
+    float ssm_z_dir;
+    //energy info
+    float ssm_kine_energy;
+    float ssm_kine_energy_reduced;
+    //general properties
+    float ssm_vtx_activity;
+    float ssm_pdg;
+    float ssm_dQ_dx_cut;
+    float ssm_score_mu_fwd;
+    float ssm_score_p_fwd;
+    float ssm_score_e_fwd;
+    float ssm_score_mu_bck;
+    float ssm_score_p_bck;
+    float ssm_score_e_bck;
+    float ssm_score_mu_fwd_bp;
+    float ssm_score_p_fwd_bp;
+    float ssm_score_e_fwd_bp;
+    //track "straighness"
+    float ssm_length;
+    float ssm_direct_length;
+    float ssm_length_ratio;
+    float ssm_max_dev;
+
+    //number of other particles
+    float ssm_n_prim_tracks_1;
+    float ssm_n_prim_tracks_3;
+    float ssm_n_prim_tracks_5;
+    float ssm_n_prim_tracks_8;
+    float ssm_n_prim_tracks_11;
+    float ssm_n_all_tracks_1;
+    float ssm_n_all_tracks_3;
+    float ssm_n_all_tracks_5;
+    float ssm_n_all_tracks_8;
+    float ssm_n_all_tracks_11;
+    float ssm_n_daughter_tracks_1;
+    float ssm_n_daughter_tracks_3;
+    float ssm_n_daughter_tracks_5;
+    float ssm_n_daughter_tracks_8;
+    float ssm_n_daughter_tracks_11;
+    float ssm_n_daughter_all_1;
+    float ssm_n_daughter_all_3;
+    float ssm_n_daughter_all_5;
+    float ssm_n_daughter_all_8;
+    float ssm_n_daughter_all_11;
+
+    //properties of leading other primary track
+    float ssm_prim_track1_pdg;
+    float ssm_prim_track1_score_mu_fwd;
+    float ssm_prim_track1_score_p_fwd;
+    float ssm_prim_track1_score_e_fwd;
+    float ssm_prim_track1_score_mu_bck;
+    float ssm_prim_track1_score_p_bck;
+    float ssm_prim_track1_score_e_bck;
+    float ssm_prim_track1_length;
+    float ssm_prim_track1_direct_length;
+    float ssm_prim_track1_length_ratio;
+    float ssm_prim_track1_max_dev;
+    float ssm_prim_track1_kine_energy_range;
+    float ssm_prim_track1_kine_energy_range_mu;
+    float ssm_prim_track1_kine_energy_range_p;
+    float ssm_prim_track1_kine_energy_range_e;
+    float ssm_prim_track1_kine_energy_cal;
+    float ssm_prim_track1_medium_dq_dx;
+    float ssm_prim_track1_x_dir;
+    float ssm_prim_track1_y_dir;
+    float ssm_prim_track1_z_dir;
+    float ssm_prim_track1_add_daught_track_counts_1;
+    float ssm_prim_track1_add_daught_all_counts_1;
+    float ssm_prim_track1_add_daught_track_counts_5;
+    float ssm_prim_track1_add_daught_all_counts_5;
+    float ssm_prim_track1_add_daught_track_counts_11;
+    float ssm_prim_track1_add_daught_all_counts_11;
+
+    //properties of sub-leading other primary track
+    float ssm_prim_track2_pdg;
+    float ssm_prim_track2_score_mu_fwd;
+    float ssm_prim_track2_score_p_fwd;
+    float ssm_prim_track2_score_e_fwd;
+    float ssm_prim_track2_score_mu_bck;
+    float ssm_prim_track2_score_p_bck;
+    float ssm_prim_track2_score_e_bck;
+    float ssm_prim_track2_length;
+    float ssm_prim_track2_direct_length;
+    float ssm_prim_track2_length_ratio;
+    float ssm_prim_track2_max_dev;
+    float ssm_prim_track2_kine_energy_range;
+    float ssm_prim_track2_kine_energy_range_mu;
+    float ssm_prim_track2_kine_energy_range_p;
+    float ssm_prim_track2_kine_energy_range_e;
+    float ssm_prim_track2_kine_energy_cal;
+    float ssm_prim_track2_medium_dq_dx;
+    float ssm_prim_track2_x_dir;
+    float ssm_prim_track2_y_dir;
+    float ssm_prim_track2_z_dir;
+    float ssm_prim_track2_add_daught_track_counts_1;
+    float ssm_prim_track2_add_daught_all_counts_1;
+    float ssm_prim_track2_add_daught_track_counts_5;
+    float ssm_prim_track2_add_daught_all_counts_5;
+    float ssm_prim_track2_add_daught_track_counts_11;
+    float ssm_prim_track2_add_daught_all_counts_11;
+
+    //properties of leading daughter track
+    float ssm_daught_track1_pdg;
+    float ssm_daught_track1_score_mu_fwd;
+    float ssm_daught_track1_score_p_fwd;
+    float ssm_daught_track1_score_e_fwd;
+    float ssm_daught_track1_score_mu_bck;
+    float ssm_daught_track1_score_p_bck;
+    float ssm_daught_track1_score_e_bck;
+    float ssm_daught_track1_length;
+    float ssm_daught_track1_direct_length;
+    float ssm_daught_track1_length_ratio;
+    float ssm_daught_track1_max_dev;
+    float ssm_daught_track1_kine_energy_range;
+    float ssm_daught_track1_kine_energy_range_mu;
+    float ssm_daught_track1_kine_energy_range_p;
+    float ssm_daught_track1_kine_energy_range_e;
+    float ssm_daught_track1_kine_energy_cal;
+    float ssm_daught_track1_medium_dq_dx;
+    float ssm_daught_track1_x_dir;
+    float ssm_daught_track1_y_dir;
+    float ssm_daught_track1_z_dir;
+    float ssm_daught_track1_add_daught_track_counts_1;
+    float ssm_daught_track1_add_daught_all_counts_1;
+    float ssm_daught_track1_add_daught_track_counts_5;
+    float ssm_daught_track1_add_daught_all_counts_5;
+    float ssm_daught_track1_add_daught_track_counts_11;
+    float ssm_daught_track1_add_daught_all_counts_11;
+
+    //properties of sub-leading daughter track
+    float ssm_daught_track2_pdg;
+    float ssm_daught_track2_score_mu_fwd;
+    float ssm_daught_track2_score_p_fwd;
+    float ssm_daught_track2_score_e_fwd;
+    float ssm_daught_track2_score_mu_bck;
+    float ssm_daught_track2_score_p_bck;
+    float ssm_daught_track2_score_e_bck;
+    float ssm_daught_track2_length;
+    float ssm_daught_track2_direct_length;
+    float ssm_daught_track2_length_ratio;
+    float ssm_daught_track2_max_dev;
+    float ssm_daught_track2_kine_energy_range;
+    float ssm_daught_track2_kine_energy_range_mu;
+    float ssm_daught_track2_kine_energy_range_p;
+    float ssm_daught_track2_kine_energy_range_e;
+    float ssm_daught_track2_kine_energy_cal;
+    float ssm_daught_track2_medium_dq_dx;
+    float ssm_daught_track2_x_dir;
+    float ssm_daught_track2_y_dir;
+    float ssm_daught_track2_z_dir;
+    float ssm_daught_track2_add_daught_track_counts_1;
+    float ssm_daught_track2_add_daught_all_counts_1;
+    float ssm_daught_track2_add_daught_track_counts_5;
+    float ssm_daught_track2_add_daught_all_counts_5;
+    float ssm_daught_track2_add_daught_track_counts_11;
+    float ssm_daught_track2_add_daught_all_counts_11;
+
+    //properties of leading other primary shower
+    float ssm_prim_shw1_pdg;
+    float ssm_prim_shw1_score_mu_fwd;
+    float ssm_prim_shw1_score_p_fwd;
+    float ssm_prim_shw1_score_e_fwd;
+    float ssm_prim_shw1_score_mu_bck;
+    float ssm_prim_shw1_score_p_bck;
+    float ssm_prim_shw1_score_e_bck;
+    float ssm_prim_shw1_length;
+    float ssm_prim_shw1_direct_length;
+    float ssm_prim_shw1_length_ratio;
+    float ssm_prim_shw1_max_dev;
+    float ssm_prim_shw1_kine_energy_range;
+    float ssm_prim_shw1_kine_energy_range_mu;
+    float ssm_prim_shw1_kine_energy_range_p;
+    float ssm_prim_shw1_kine_energy_range_e;
+    float ssm_prim_shw1_kine_energy_cal;
+    float ssm_prim_shw1_kine_energy_best;
+    float ssm_prim_shw1_medium_dq_dx;
+    float ssm_prim_shw1_x_dir;
+    float ssm_prim_shw1_y_dir;
+    float ssm_prim_shw1_z_dir;
+    float ssm_prim_shw1_add_daught_track_counts_1;
+    float ssm_prim_shw1_add_daught_all_counts_1;
+    float ssm_prim_shw1_add_daught_track_counts_5;
+    float ssm_prim_shw1_add_daught_all_counts_5;
+    float ssm_prim_shw1_add_daught_track_counts_11;
+    float ssm_prim_shw1_add_daught_all_counts_11;
+
+    //properties of sub-leading other primary shower
+    float ssm_prim_shw2_pdg;
+    float ssm_prim_shw2_score_mu_fwd;
+    float ssm_prim_shw2_score_p_fwd;
+    float ssm_prim_shw2_score_e_fwd;
+    float ssm_prim_shw2_score_mu_bck;
+    float ssm_prim_shw2_score_p_bck;
+    float ssm_prim_shw2_score_e_bck; 
+    float ssm_prim_shw2_length;
+    float ssm_prim_shw2_direct_length;
+    float ssm_prim_shw2_length_ratio;
+    float ssm_prim_shw2_max_dev;
+    float ssm_prim_shw2_kine_energy_range;
+    float ssm_prim_shw2_kine_energy_range_mu;
+    float ssm_prim_shw2_kine_energy_range_p;
+    float ssm_prim_shw2_kine_energy_range_e;
+    float ssm_prim_shw2_kine_energy_cal;
+    float ssm_prim_shw2_kine_energy_best;
+    float ssm_prim_shw2_medium_dq_dx;
+    float ssm_prim_shw2_x_dir;
+    float ssm_prim_shw2_y_dir;
+    float ssm_prim_shw2_z_dir;
+    float ssm_prim_shw2_add_daught_track_counts_1;
+    float ssm_prim_shw2_add_daught_all_counts_1;
+    float ssm_prim_shw2_add_daught_track_counts_5;
+    float ssm_prim_shw2_add_daught_all_counts_5;
+    float ssm_prim_shw2_add_daught_track_counts_11;
+    float ssm_prim_shw2_add_daught_all_counts_11;
+
+    //properties of leading daughter shower
+    float ssm_daught_shw1_pdg;
+    float ssm_daught_shw1_score_mu_fwd;
+    float ssm_daught_shw1_score_p_fwd;
+    float ssm_daught_shw1_score_e_fwd;
+    float ssm_daught_shw1_score_mu_bck;
+    float ssm_daught_shw1_score_p_bck;
+    float ssm_daught_shw1_score_e_bck;
+    float ssm_daught_shw1_length;
+    float ssm_daught_shw1_direct_length;
+    float ssm_daught_shw1_length_ratio;
+    float ssm_daught_shw1_max_dev;
+    float ssm_daught_shw1_kine_energy_range;
+    float ssm_daught_shw1_kine_energy_range_mu;
+    float ssm_daught_shw1_kine_energy_range_p;
+    float ssm_daught_shw1_kine_energy_range_e;
+    float ssm_daught_shw1_kine_energy_cal;
+    float ssm_daught_shw1_kine_energy_best;
+    float ssm_daught_shw1_medium_dq_dx;
+    float ssm_daught_shw1_x_dir;
+    float ssm_daught_shw1_y_dir;
+    float ssm_daught_shw1_z_dir;
+    float ssm_daught_shw1_add_daught_track_counts_1;
+    float ssm_daught_shw1_add_daught_all_counts_1;
+    float ssm_daught_shw1_add_daught_track_counts_5;
+    float ssm_daught_shw1_add_daught_all_counts_5;
+    float ssm_daught_shw1_add_daught_track_counts_11;
+    float ssm_daught_shw1_add_daught_all_counts_11;
+
+    //properties of sub-leading daughter shower
+    float ssm_daught_shw2_pdg;
+    float ssm_daught_shw2_score_mu_fwd;
+    float ssm_daught_shw2_score_p_fwd;
+    float ssm_daught_shw2_score_e_fwd;
+    float ssm_daught_shw2_score_mu_bck;
+    float ssm_daught_shw2_score_p_bck;
+    float ssm_daught_shw2_score_e_bck;
+    float ssm_daught_shw2_length;
+    float ssm_daught_shw2_direct_length;
+    float ssm_daught_shw2_length_ratio;
+    float ssm_daught_shw2_max_dev;
+    float ssm_daught_shw2_kine_energy_range;
+    float ssm_daught_shw2_kine_energy_range_mu;
+    float ssm_daught_shw2_kine_energy_range_p;
+    float ssm_daught_shw2_kine_energy_range_e;
+    float ssm_daught_shw2_kine_energy_cal;
+    float ssm_daught_shw2_kine_energy_best;
+    float ssm_daught_shw2_medium_dq_dx;
+    float ssm_daught_shw2_x_dir;
+    float ssm_daught_shw2_y_dir;
+    float ssm_daught_shw2_z_dir;
+    float ssm_daught_shw2_add_daught_track_counts_1;
+    float ssm_daught_shw2_add_daught_all_counts_1;
+    float ssm_daught_shw2_add_daught_track_counts_5;
+    float ssm_daught_shw2_add_daught_all_counts_5;
+    float ssm_daught_shw2_add_daught_track_counts_11;
+    float ssm_daught_shw2_add_daught_all_counts_11;
+
+    //event level properties
+    float ssm_nu_angle_z;
+    float ssm_nu_angle_target;
+    float ssm_nu_angle_absorber;
+    float ssm_nu_angle_vertical;
+    float ssm_con_nu_angle_z;
+    float ssm_con_nu_angle_target;
+    float ssm_con_nu_angle_absorber;
+    float ssm_con_nu_angle_vertical;
+    float ssm_prim_nu_angle_z;
+    float ssm_prim_nu_angle_target;
+    float ssm_prim_nu_angle_absorber;
+    float ssm_prim_nu_angle_vertical;
+    float ssm_track_angle_z;
+    float ssm_track_angle_target;
+    float ssm_track_angle_absorber;
+    float ssm_track_angle_vertical;
+    float ssm_vtxX;
+    float ssm_vtxY;
+    float ssm_vtxZ;
+
+    //off vertex stuff
+    float ssm_offvtx_length;
+    float ssm_offvtx_energy;
+    float ssm_n_offvtx_tracks_1;
+    float ssm_n_offvtx_tracks_3;
+    float ssm_n_offvtx_tracks_5;
+    float ssm_n_offvtx_tracks_8;
+    float ssm_n_offvtx_tracks_11;
+    float ssm_n_offvtx_showers_1;
+    float ssm_n_offvtx_showers_3;
+    float ssm_n_offvtx_showers_5;
+    float ssm_n_offvtx_showers_8;
+    float ssm_n_offvtx_showers_11;
+
+    //properties of leading off vertex track
+    float ssm_offvtx_track1_pdg;
+    float ssm_offvtx_track1_score_mu_fwd;
+    float ssm_offvtx_track1_score_p_fwd;
+    float ssm_offvtx_track1_score_e_fwd;
+    float ssm_offvtx_track1_score_mu_bck;
+    float ssm_offvtx_track1_score_p_bck;
+    float ssm_offvtx_track1_score_e_bck;
+    float ssm_offvtx_track1_length;
+    float ssm_offvtx_track1_direct_length;
+    float ssm_offvtx_track1_max_dev;
+    float ssm_offvtx_track1_kine_energy_range;
+    float ssm_offvtx_track1_kine_energy_range_mu;
+    float ssm_offvtx_track1_kine_energy_range_p;
+    float ssm_offvtx_track1_kine_energy_range_e;
+    float ssm_offvtx_track1_kine_energy_cal;
+    float ssm_offvtx_track1_medium_dq_dx;
+    float ssm_offvtx_track1_x_dir;
+    float ssm_offvtx_track1_y_dir;
+    float ssm_offvtx_track1_z_dir;
+    float ssm_offvtx_track1_dist_mainvtx;
+
+    //properties of leading off vertex shower
+    float ssm_offvtx_shw1_pdg_offvtx;
+    float ssm_offvtx_shw1_score_mu_fwd;
+    float ssm_offvtx_shw1_score_p_fwd;
+    float ssm_offvtx_shw1_score_e_fwd;
+    float ssm_offvtx_shw1_score_mu_bck;
+    float ssm_offvtx_shw1_score_p_bck;
+    float ssm_offvtx_shw1_score_e_bck;
+    float ssm_offvtx_shw1_length;
+    float ssm_offvtx_shw1_direct_length;
+    float ssm_offvtx_shw1_max_dev;
+    float ssm_offvtx_shw1_kine_energy_best;
+    float ssm_offvtx_shw1_kine_energy_range;
+    float ssm_offvtx_shw1_kine_energy_range_mu;
+    float ssm_offvtx_shw1_kine_energy_range_p;
+    float ssm_offvtx_shw1_kine_energy_range_e;
+    float ssm_offvtx_shw1_kine_energy_cal;
+    float ssm_offvtx_shw1_medium_dq_dx;
+    float ssm_offvtx_shw1_x_dir;
+    float ssm_offvtx_shw1_y_dir;
+    float ssm_offvtx_shw1_z_dir;
+    float ssm_offvtx_shw1_dist_mainvtx;
+
+    //Kine vars
+    float ssm_kine_reco_Enu; // kinetic energy  + additional energy ...
+    float ssm_kine_reco_add_energy;  // mass, binding energy ...
+    std::vector<float> *ssm_kine_energy_particle;  // energy of each particle
+    std::vector<int> *ssm_kine_energy_info; // what kind of energy reconstruction?
+    std::vector<int> *ssm_kine_particle_type;
+    std::vector<int> *ssm_kine_energy_included; // included in the neutrino energy calculation?
+    float ssm_kine_pio_mass; // mass
+    int ssm_kine_pio_flag; // 0 not filled, 1, with vertex, 2 without vertex
+    float ssm_kine_pio_vtx_dis;
+    float ssm_kine_pio_energy_1;
+    float ssm_kine_pio_theta_1;
+    float ssm_kine_pio_phi_1;
+    float ssm_kine_pio_dis_1;
+    float ssm_kine_pio_energy_2;
+    float ssm_kine_pio_theta_2;
+    float ssm_kine_pio_phi_2;
+    float ssm_kine_pio_dis_2;
+    float ssm_kine_pio_angle;
+
+    // Other vars
+    float ssm_numu_cc_flag;
+    float ssm_cosmict_flag_1; // fiducial volume vertex
+    float ssm_cosmict_flag_2;  // single muon
+    float ssm_cosmict_flag_3;  // single muon (long)
+    float ssm_cosmict_flag_4;  // kinematics muon
+    float ssm_cosmict_flag_5; // kinematics muon (long)
+    float ssm_cosmict_flag_6; // special ...
+    float ssm_cosmict_flag_7;  // muon+ michel
+    float ssm_cosmict_flag_8;  // muon + michel + special
+    float ssm_cosmict_flag_9;  // this tagger is relevant for nueCC, see "cosmic tagger ones, one case of cosmics ..." (frist one ...)
+    std::vector<float> *ssm_cosmict_flag_10;  // front upstream (dirt)
+    float ssm_cosmict_flag;
+    // End KDAR vars
+
 
     float event_type;
 
@@ -2141,6 +2575,440 @@ void LEEana::clear_tagger_info(TaggerInfo& tagger_info){
     tagger_info.shw_sp_lol_3_flag=0;
     //end single photon variables
 
+    //KDAR vars
+    tagger_info.saved_ssm_bdt_vars = false;
+    tagger_info.saved_ssm_kine_vars = false;
+    tagger_info.saved_ssm_bdt_scores = false;
+
+    tagger_info.ssm_flag_st_kdar = 0;
+
+    tagger_info.ssm_Nsm = 0;
+    tagger_info.ssm_Nsm_wivtx = 0;
+
+    tagger_info.ssm_dq_dx_fwd_1 = 0;
+    tagger_info.ssm_dq_dx_fwd_2 = 0;
+    tagger_info.ssm_dq_dx_fwd_3 = 0;
+    tagger_info.ssm_dq_dx_fwd_4 = 0;
+    tagger_info.ssm_dq_dx_fwd_5 = 0;
+    tagger_info.ssm_dq_dx_bck_1 = 0;
+    tagger_info.ssm_dq_dx_bck_2 = 0;
+    tagger_info.ssm_dq_dx_bck_3 = 0;
+    tagger_info.ssm_dq_dx_bck_4 = 0;
+    tagger_info.ssm_dq_dx_bck_5 = 0;
+    tagger_info.ssm_d_dq_dx_fwd_12 = 0;
+    tagger_info.ssm_d_dq_dx_fwd_23 = 0;
+    tagger_info.ssm_d_dq_dx_fwd_34 = 0;
+    tagger_info.ssm_d_dq_dx_fwd_45 = 0;
+    tagger_info.ssm_d_dq_dx_bck_12 = 0;
+    tagger_info.ssm_d_dq_dx_bck_23 = 0;
+    tagger_info.ssm_d_dq_dx_bck_34 = 0;
+    tagger_info.ssm_d_dq_dx_bck_45 = 0;
+    tagger_info.ssm_max_dq_dx_fwd_3 = 0;
+    tagger_info.ssm_max_dq_dx_fwd_5 = 0;
+    tagger_info.ssm_max_dq_dx_bck_3 = 0;
+    tagger_info.ssm_max_dq_dx_bck_5 = 0;
+    tagger_info.ssm_max_d_dq_dx_fwd_3 = 0;
+    tagger_info.ssm_max_d_dq_dx_fwd_5 = 0;
+    tagger_info.ssm_max_d_dq_dx_bck_3 = 0;
+    tagger_info.ssm_max_d_dq_dx_bck_5 = 0;
+    tagger_info.ssm_medium_dq_dx = 0;
+    tagger_info.ssm_medium_dq_dx_bp = 0;
+    //angluar info
+    tagger_info.ssm_angle_to_z = 0;
+    tagger_info.ssm_angle_to_target = 0;
+    tagger_info.ssm_angle_to_absorber = 0;
+    tagger_info.ssm_angle_to_vertical = 0;
+    //directional info
+    tagger_info.ssm_x_dir = 0;
+    tagger_info.ssm_y_dir = 0;
+    tagger_info.ssm_z_dir = 0;
+    //energy info
+    tagger_info.ssm_kine_energy = 0;
+    tagger_info.ssm_kine_energy_reduced = 0;
+    //general properties
+    tagger_info.ssm_vtx_activity = 0;
+    tagger_info.ssm_pdg = 0;
+    tagger_info.ssm_dQ_dx_cut = 0;
+    tagger_info.ssm_score_mu_fwd = 0;
+    tagger_info.ssm_score_p_fwd = 0;
+    tagger_info.ssm_score_e_fwd = 0;
+    tagger_info.ssm_score_mu_bck = 0;
+    tagger_info.ssm_score_p_bck = 0;
+    tagger_info.ssm_score_e_bck = 0;
+    tagger_info.ssm_score_mu_fwd_bp = 0;
+    tagger_info.ssm_score_p_fwd_bp = 0;
+    tagger_info.ssm_score_e_fwd_bp = 0;
+    //track "straighness"
+    tagger_info.ssm_length = 0;
+    tagger_info.ssm_direct_length = 0;
+    tagger_info.ssm_length_ratio = 0;
+    tagger_info.ssm_max_dev = 0;
+
+    //number of other particles
+    tagger_info.ssm_n_prim_tracks_1 = 0;
+    tagger_info.ssm_n_prim_tracks_3 = 0;
+    tagger_info.ssm_n_prim_tracks_5 = 0;
+    tagger_info.ssm_n_prim_tracks_8 = 0;
+    tagger_info.ssm_n_prim_tracks_11 = 0;
+    tagger_info.ssm_n_all_tracks_1 = 0;
+    tagger_info.ssm_n_all_tracks_3 = 0;
+    tagger_info.ssm_n_all_tracks_5 = 0;
+    tagger_info.ssm_n_all_tracks_8 = 0;
+    tagger_info.ssm_n_all_tracks_11 = 0;
+    tagger_info.ssm_n_daughter_tracks_1 = 0;
+    tagger_info.ssm_n_daughter_tracks_3 = 0;
+    tagger_info.ssm_n_daughter_tracks_5 = 0;
+    tagger_info.ssm_n_daughter_tracks_8 = 0;
+    tagger_info.ssm_n_daughter_tracks_11 = 0;
+    tagger_info.ssm_n_daughter_all_1 = 0;
+    tagger_info.ssm_n_daughter_all_3 = 0;
+    tagger_info.ssm_n_daughter_all_5 = 0;
+    tagger_info.ssm_n_daughter_all_8 = 0;
+    tagger_info.ssm_n_daughter_all_11 = 0;
+
+    //properties of leading other primary track
+    tagger_info.ssm_prim_track1_pdg = 0;
+    tagger_info.ssm_prim_track1_score_mu_fwd = 0;
+    tagger_info.ssm_prim_track1_score_p_fwd = 0;
+    tagger_info.ssm_prim_track1_score_e_fwd = 0;
+    tagger_info.ssm_prim_track1_score_mu_bck = 0;
+    tagger_info.ssm_prim_track1_score_p_bck = 0;
+    tagger_info.ssm_prim_track1_score_e_bck = 0;
+    tagger_info.ssm_prim_track1_length = 0;
+    tagger_info.ssm_prim_track1_direct_length = 0;
+    tagger_info.ssm_prim_track1_length_ratio = 0;
+    tagger_info.ssm_prim_track1_max_dev = 0;
+    tagger_info.ssm_prim_track1_kine_energy_range = 0;
+    tagger_info.ssm_prim_track1_kine_energy_range_mu = 0;
+    tagger_info.ssm_prim_track1_kine_energy_range_p = 0;
+    tagger_info.ssm_prim_track1_kine_energy_range_e = 0;
+    tagger_info.ssm_prim_track1_kine_energy_cal = 0;
+    tagger_info.ssm_prim_track1_medium_dq_dx = 0;
+    tagger_info.ssm_prim_track1_x_dir = 0;
+    tagger_info.ssm_prim_track1_y_dir = 0;
+    tagger_info.ssm_prim_track1_z_dir = 0;
+    tagger_info.ssm_prim_track1_add_daught_track_counts_1 = 0;
+    tagger_info.ssm_prim_track1_add_daught_all_counts_1 = 0;
+    tagger_info.ssm_prim_track1_add_daught_track_counts_5 = 0;
+    tagger_info.ssm_prim_track1_add_daught_all_counts_5 = 0;
+    tagger_info.ssm_prim_track1_add_daught_track_counts_11 = 0;
+    tagger_info.ssm_prim_track1_add_daught_all_counts_11 = 0;
+
+    //properties of sub-leading other primary track
+    tagger_info.ssm_prim_track2_pdg = 0;
+    tagger_info.ssm_prim_track2_score_mu_fwd = 0;
+    tagger_info.ssm_prim_track2_score_p_fwd = 0;
+    tagger_info.ssm_prim_track2_score_e_fwd = 0;
+    tagger_info.ssm_prim_track2_score_mu_bck = 0;
+    tagger_info.ssm_prim_track2_score_p_bck = 0;
+    tagger_info.ssm_prim_track2_score_e_bck = 0;
+    tagger_info.ssm_prim_track2_length = 0;
+    tagger_info.ssm_prim_track2_direct_length = 0;
+    tagger_info.ssm_prim_track2_length_ratio = 0;
+    tagger_info.ssm_prim_track2_max_dev = 0;
+    tagger_info.ssm_prim_track2_kine_energy_range = 0;
+    tagger_info.ssm_prim_track2_kine_energy_range_mu = 0;
+    tagger_info.ssm_prim_track2_kine_energy_range_p = 0;
+    tagger_info.ssm_prim_track2_kine_energy_range_e = 0;
+    tagger_info.ssm_prim_track2_kine_energy_cal = 0;
+    tagger_info.ssm_prim_track2_medium_dq_dx = 0;
+    tagger_info.ssm_prim_track2_x_dir = 0;
+    tagger_info.ssm_prim_track2_y_dir = 0;
+    tagger_info.ssm_prim_track2_z_dir = 0;
+    tagger_info.ssm_prim_track2_add_daught_track_counts_1 = 0;
+    tagger_info.ssm_prim_track2_add_daught_all_counts_1 = 0;
+    tagger_info.ssm_prim_track2_add_daught_track_counts_5 = 0;
+    tagger_info.ssm_prim_track2_add_daught_all_counts_5 = 0;
+    tagger_info.ssm_prim_track2_add_daught_track_counts_11 = 0;
+    tagger_info.ssm_prim_track2_add_daught_all_counts_11 = 0;
+
+    //properties of leading daughter track
+    tagger_info.ssm_daught_track1_pdg = 0;
+    tagger_info.ssm_daught_track1_score_mu_fwd = 0;
+    tagger_info.ssm_daught_track1_score_p_fwd = 0;
+    tagger_info.ssm_daught_track1_score_e_fwd = 0;
+    tagger_info.ssm_daught_track1_score_mu_bck = 0;
+    tagger_info.ssm_daught_track1_score_p_bck = 0;
+    tagger_info.ssm_daught_track1_score_e_bck = 0;
+    tagger_info.ssm_daught_track1_length = 0;
+    tagger_info.ssm_daught_track1_direct_length = 0;
+    tagger_info.ssm_daught_track1_length_ratio = 0;
+    tagger_info.ssm_daught_track1_max_dev = 0;
+    tagger_info.ssm_daught_track1_kine_energy_range = 0;
+    tagger_info.ssm_daught_track1_kine_energy_range_mu = 0;
+    tagger_info.ssm_daught_track1_kine_energy_range_p = 0;
+    tagger_info.ssm_daught_track1_kine_energy_range_e = 0;
+    tagger_info.ssm_daught_track1_kine_energy_cal = 0;
+    tagger_info.ssm_daught_track1_medium_dq_dx = 0;
+    tagger_info.ssm_daught_track1_x_dir = 0;
+    tagger_info.ssm_daught_track1_y_dir = 0;
+    tagger_info.ssm_daught_track1_z_dir = 0;
+    tagger_info.ssm_daught_track1_add_daught_track_counts_1 = 0;
+    tagger_info.ssm_daught_track1_add_daught_all_counts_1 = 0;
+    tagger_info.ssm_daught_track1_add_daught_track_counts_5 = 0;
+    tagger_info.ssm_daught_track1_add_daught_all_counts_5 = 0;
+    tagger_info.ssm_daught_track1_add_daught_track_counts_11 = 0;
+    tagger_info.ssm_daught_track1_add_daught_all_counts_11 = 0;
+
+    //properties of sub-leading daughter track
+    tagger_info.ssm_daught_track2_pdg = 0;
+    tagger_info.ssm_daught_track2_score_mu_fwd = 0;
+    tagger_info.ssm_daught_track2_score_p_fwd = 0;
+    tagger_info.ssm_daught_track2_score_e_fwd = 0;
+    tagger_info.ssm_daught_track2_score_mu_bck = 0;
+    tagger_info.ssm_daught_track2_score_p_bck = 0;
+    tagger_info.ssm_daught_track2_score_e_bck = 0;
+    tagger_info.ssm_daught_track2_length = 0;
+    tagger_info.ssm_daught_track2_direct_length = 0;
+    tagger_info.ssm_daught_track2_length_ratio = 0;
+    tagger_info.ssm_daught_track2_max_dev = 0;
+    tagger_info.ssm_daught_track2_kine_energy_range = 0;
+    tagger_info.ssm_daught_track2_kine_energy_range_mu = 0;
+    tagger_info.ssm_daught_track2_kine_energy_range_p = 0;
+    tagger_info.ssm_daught_track2_kine_energy_range_e = 0;
+    tagger_info.ssm_daught_track2_kine_energy_cal = 0;
+    tagger_info.ssm_daught_track2_medium_dq_dx = 0;
+    tagger_info.ssm_daught_track2_x_dir = 0;
+    tagger_info.ssm_daught_track2_y_dir = 0;
+    tagger_info.ssm_daught_track2_z_dir = 0;
+    tagger_info.ssm_daught_track2_add_daught_track_counts_1 = 0;
+    tagger_info.ssm_daught_track2_add_daught_all_counts_1 = 0;
+    tagger_info.ssm_daught_track2_add_daught_track_counts_5 = 0;
+    tagger_info.ssm_daught_track2_add_daught_all_counts_5 = 0;
+    tagger_info.ssm_daught_track2_add_daught_track_counts_11 = 0;
+    tagger_info.ssm_daught_track2_add_daught_all_counts_11 = 0;
+
+    //properties of leading other primary shower
+    tagger_info.ssm_prim_shw1_pdg = 0;
+    tagger_info.ssm_prim_shw1_score_mu_fwd = 0;
+    tagger_info.ssm_prim_shw1_score_p_fwd = 0;
+    tagger_info.ssm_prim_shw1_score_e_fwd = 0;
+    tagger_info.ssm_prim_shw1_score_mu_bck = 0;
+    tagger_info.ssm_prim_shw1_score_p_bck = 0;
+    tagger_info.ssm_prim_shw1_score_e_bck = 0;
+    tagger_info.ssm_prim_shw1_length = 0;
+    tagger_info.ssm_prim_shw1_direct_length = 0;
+    tagger_info.ssm_prim_shw1_length_ratio = 0;
+    tagger_info.ssm_prim_shw1_max_dev = 0;
+    tagger_info.ssm_prim_shw1_kine_energy_range = 0;
+    tagger_info.ssm_prim_shw1_kine_energy_range_mu = 0;
+    tagger_info.ssm_prim_shw1_kine_energy_range_p = 0;
+    tagger_info.ssm_prim_shw1_kine_energy_range_e = 0;
+    tagger_info.ssm_prim_shw1_kine_energy_cal = 0;
+    tagger_info.ssm_prim_shw1_kine_energy_best = 0;
+    tagger_info.ssm_prim_shw1_medium_dq_dx = 0;
+    tagger_info.ssm_prim_shw1_x_dir = 0;
+    tagger_info.ssm_prim_shw1_y_dir = 0;
+    tagger_info.ssm_prim_shw1_z_dir = 0;
+    tagger_info.ssm_prim_shw1_add_daught_track_counts_1 = 0;
+    tagger_info.ssm_prim_shw1_add_daught_all_counts_1 = 0;
+    tagger_info.ssm_prim_shw1_add_daught_track_counts_5 = 0;
+    tagger_info.ssm_prim_shw1_add_daught_all_counts_5 = 0;
+    tagger_info.ssm_prim_shw1_add_daught_track_counts_11 = 0;
+    tagger_info.ssm_prim_shw1_add_daught_all_counts_11 = 0;
+
+    //properties of sub-leading other primary shower
+    tagger_info.ssm_prim_shw2_pdg = 0;
+    tagger_info.ssm_prim_shw2_score_mu_fwd = 0;
+    tagger_info.ssm_prim_shw2_score_p_fwd = 0;
+    tagger_info.ssm_prim_shw2_score_e_fwd = 0;
+    tagger_info.ssm_prim_shw2_score_mu_bck = 0;
+    tagger_info.ssm_prim_shw2_score_p_bck = 0;
+    tagger_info.ssm_prim_shw2_score_e_bck = 0; 
+    tagger_info.ssm_prim_shw2_length = 0;
+    tagger_info.ssm_prim_shw2_direct_length = 0;
+    tagger_info.ssm_prim_shw2_length_ratio = 0;
+    tagger_info.ssm_prim_shw2_max_dev = 0;
+    tagger_info.ssm_prim_shw2_kine_energy_range = 0;
+    tagger_info.ssm_prim_shw2_kine_energy_range_mu = 0;
+    tagger_info.ssm_prim_shw2_kine_energy_range_p = 0;
+    tagger_info.ssm_prim_shw2_kine_energy_range_e = 0;
+    tagger_info.ssm_prim_shw2_kine_energy_cal = 0;
+    tagger_info.ssm_prim_shw2_kine_energy_best = 0;
+    tagger_info.ssm_prim_shw2_medium_dq_dx = 0;
+    tagger_info.ssm_prim_shw2_x_dir = 0;
+    tagger_info.ssm_prim_shw2_y_dir = 0;
+    tagger_info.ssm_prim_shw2_z_dir = 0;
+    tagger_info.ssm_prim_shw2_add_daught_track_counts_1 = 0;
+    tagger_info.ssm_prim_shw2_add_daught_all_counts_1 = 0;
+    tagger_info.ssm_prim_shw2_add_daught_track_counts_5 = 0;
+    tagger_info.ssm_prim_shw2_add_daught_all_counts_5 = 0;
+    tagger_info.ssm_prim_shw2_add_daught_track_counts_11 = 0;
+    tagger_info.ssm_prim_shw2_add_daught_all_counts_11 = 0;
+
+    //properties of leading daughter shower
+    tagger_info.ssm_daught_shw1_pdg = 0;
+    tagger_info.ssm_daught_shw1_score_mu_fwd = 0;
+    tagger_info.ssm_daught_shw1_score_p_fwd = 0;
+    tagger_info.ssm_daught_shw1_score_e_fwd = 0;
+    tagger_info.ssm_daught_shw1_score_mu_bck = 0;
+    tagger_info.ssm_daught_shw1_score_p_bck = 0;
+    tagger_info.ssm_daught_shw1_score_e_bck = 0;
+    tagger_info.ssm_daught_shw1_length = 0;
+    tagger_info.ssm_daught_shw1_direct_length = 0;
+    tagger_info.ssm_daught_shw1_length_ratio = 0;
+    tagger_info.ssm_daught_shw1_max_dev = 0;
+    tagger_info.ssm_daught_shw1_kine_energy_range = 0;
+    tagger_info.ssm_daught_shw1_kine_energy_range_mu = 0;
+    tagger_info.ssm_daught_shw1_kine_energy_range_p = 0;
+    tagger_info.ssm_daught_shw1_kine_energy_range_e = 0;
+    tagger_info.ssm_daught_shw1_kine_energy_cal = 0;
+    tagger_info.ssm_daught_shw1_kine_energy_best = 0;
+    tagger_info.ssm_daught_shw1_medium_dq_dx = 0;
+    tagger_info.ssm_daught_shw1_x_dir = 0;
+    tagger_info.ssm_daught_shw1_y_dir = 0;
+    tagger_info.ssm_daught_shw1_z_dir = 0;
+    tagger_info.ssm_daught_shw1_add_daught_track_counts_1 = 0;
+    tagger_info.ssm_daught_shw1_add_daught_all_counts_1 = 0;
+    tagger_info.ssm_daught_shw1_add_daught_track_counts_5 = 0;
+    tagger_info.ssm_daught_shw1_add_daught_all_counts_5 = 0;
+    tagger_info.ssm_daught_shw1_add_daught_track_counts_11 = 0;
+    tagger_info.ssm_daught_shw1_add_daught_all_counts_11 = 0;
+
+    //properties of sub-leading daughter shower
+    tagger_info.ssm_daught_shw2_pdg = 0;
+    tagger_info.ssm_daught_shw2_score_mu_fwd = 0;
+    tagger_info.ssm_daught_shw2_score_p_fwd = 0;
+    tagger_info.ssm_daught_shw2_score_e_fwd = 0;
+    tagger_info.ssm_daught_shw2_score_mu_bck = 0;
+    tagger_info.ssm_daught_shw2_score_p_bck = 0;
+    tagger_info.ssm_daught_shw2_score_e_bck = 0;
+    tagger_info.ssm_daught_shw2_length = 0;
+    tagger_info.ssm_daught_shw2_direct_length = 0;
+    tagger_info.ssm_daught_shw2_length_ratio = 0;
+    tagger_info.ssm_daught_shw2_max_dev = 0;
+    tagger_info.ssm_daught_shw2_kine_energy_range = 0;
+    tagger_info.ssm_daught_shw2_kine_energy_range_mu = 0;
+    tagger_info.ssm_daught_shw2_kine_energy_range_p = 0;
+    tagger_info.ssm_daught_shw2_kine_energy_range_e = 0;
+    tagger_info.ssm_daught_shw2_kine_energy_cal = 0;
+    tagger_info.ssm_daught_shw2_kine_energy_best = 0;
+    tagger_info.ssm_daught_shw2_medium_dq_dx = 0;
+    tagger_info.ssm_daught_shw2_x_dir = 0;
+    tagger_info.ssm_daught_shw2_y_dir = 0;
+    tagger_info.ssm_daught_shw2_z_dir = 0;
+    tagger_info.ssm_daught_shw2_add_daught_track_counts_1 = 0;
+    tagger_info.ssm_daught_shw2_add_daught_all_counts_1 = 0;
+    tagger_info.ssm_daught_shw2_add_daught_track_counts_5 = 0;
+    tagger_info.ssm_daught_shw2_add_daught_all_counts_5 = 0;
+    tagger_info.ssm_daught_shw2_add_daught_track_counts_11 = 0;
+    tagger_info.ssm_daught_shw2_add_daught_all_counts_11 = 0;
+
+    //event level properties
+    tagger_info.ssm_nu_angle_z = 0;
+    tagger_info.ssm_nu_angle_target = 0;
+    tagger_info.ssm_nu_angle_absorber = 0;
+    tagger_info.ssm_nu_angle_vertical = 0;
+    tagger_info.ssm_con_nu_angle_z = 0;
+    tagger_info.ssm_con_nu_angle_target = 0;
+    tagger_info.ssm_con_nu_angle_absorber = 0;
+    tagger_info.ssm_con_nu_angle_vertical = 0;
+    tagger_info.ssm_prim_nu_angle_z = 0;
+    tagger_info.ssm_prim_nu_angle_target = 0;
+    tagger_info.ssm_prim_nu_angle_absorber = 0;
+    tagger_info.ssm_prim_nu_angle_vertical = 0;
+    tagger_info.ssm_track_angle_z = 0;
+    tagger_info.ssm_track_angle_target = 0;
+    tagger_info.ssm_track_angle_absorber = 0;
+    tagger_info.ssm_track_angle_vertical = 0;
+    tagger_info.ssm_vtxX = 0;
+    tagger_info.ssm_vtxY = 0;
+    tagger_info.ssm_vtxZ = 0;
+
+    //off vertex stuff
+    tagger_info.ssm_offvtx_length = 0;
+    tagger_info.ssm_offvtx_energy = 0;
+    tagger_info.ssm_n_offvtx_tracks_1 = 0;
+    tagger_info.ssm_n_offvtx_tracks_3 = 0;
+    tagger_info.ssm_n_offvtx_tracks_5 = 0;
+    tagger_info.ssm_n_offvtx_tracks_8 = 0;
+    tagger_info.ssm_n_offvtx_tracks_11 = 0;
+    tagger_info.ssm_n_offvtx_showers_1 = 0;
+    tagger_info.ssm_n_offvtx_showers_3 = 0;
+    tagger_info.ssm_n_offvtx_showers_5 = 0;
+    tagger_info.ssm_n_offvtx_showers_8 = 0;
+    tagger_info.ssm_n_offvtx_showers_11 = 0;
+
+    //properties of leading off vertex track
+    tagger_info.ssm_offvtx_track1_pdg = 0;
+    tagger_info.ssm_offvtx_track1_score_mu_fwd = 0;
+    tagger_info.ssm_offvtx_track1_score_p_fwd = 0;
+    tagger_info.ssm_offvtx_track1_score_e_fwd = 0;
+    tagger_info.ssm_offvtx_track1_score_mu_bck = 0;
+    tagger_info.ssm_offvtx_track1_score_p_bck = 0;
+    tagger_info.ssm_offvtx_track1_score_e_bck = 0;
+    tagger_info.ssm_offvtx_track1_length = 0;
+    tagger_info.ssm_offvtx_track1_direct_length = 0;
+    tagger_info.ssm_offvtx_track1_max_dev = 0;
+    tagger_info.ssm_offvtx_track1_kine_energy_range = 0;
+    tagger_info.ssm_offvtx_track1_kine_energy_range_mu = 0;
+    tagger_info.ssm_offvtx_track1_kine_energy_range_p = 0;
+    tagger_info.ssm_offvtx_track1_kine_energy_range_e = 0;
+    tagger_info.ssm_offvtx_track1_kine_energy_cal = 0;
+    tagger_info.ssm_offvtx_track1_medium_dq_dx = 0;
+    tagger_info.ssm_offvtx_track1_x_dir = 0;
+    tagger_info.ssm_offvtx_track1_y_dir = 0;
+    tagger_info.ssm_offvtx_track1_z_dir = 0;
+    tagger_info.ssm_offvtx_track1_dist_mainvtx = 0;
+
+    //properties of leading off vertex shower
+    tagger_info.ssm_offvtx_shw1_pdg_offvtx = 0;
+    tagger_info.ssm_offvtx_shw1_score_mu_fwd = 0;
+    tagger_info.ssm_offvtx_shw1_score_p_fwd = 0;
+    tagger_info.ssm_offvtx_shw1_score_e_fwd = 0;
+    tagger_info.ssm_offvtx_shw1_score_mu_bck = 0;
+    tagger_info.ssm_offvtx_shw1_score_p_bck = 0;
+    tagger_info.ssm_offvtx_shw1_score_e_bck = 0;
+    tagger_info.ssm_offvtx_shw1_length = 0;
+    tagger_info.ssm_offvtx_shw1_direct_length = 0;
+    tagger_info.ssm_offvtx_shw1_max_dev = 0;
+    tagger_info.ssm_offvtx_shw1_kine_energy_best = 0;
+    tagger_info.ssm_offvtx_shw1_kine_energy_range = 0;
+    tagger_info.ssm_offvtx_shw1_kine_energy_range_mu = 0;
+    tagger_info.ssm_offvtx_shw1_kine_energy_range_p = 0;
+    tagger_info.ssm_offvtx_shw1_kine_energy_range_e = 0;
+    tagger_info.ssm_offvtx_shw1_kine_energy_cal = 0;
+    tagger_info.ssm_offvtx_shw1_medium_dq_dx = 0;
+    tagger_info.ssm_offvtx_shw1_x_dir = 0;
+    tagger_info.ssm_offvtx_shw1_y_dir = 0;
+    tagger_info.ssm_offvtx_shw1_z_dir = 0;
+    tagger_info.ssm_offvtx_shw1_dist_mainvtx = 0;
+
+    //Kine vars
+    tagger_info.ssm_kine_reco_Enu = 0; // kinetic energy  + additional energy ...
+    tagger_info.ssm_kine_reco_add_energy = 0;  // mass, binding energy ...
+    tagger_info.ssm_kine_energy_particle->clear();  // energy of each particle
+    tagger_info.ssm_kine_energy_info->clear(); // what kind of energy reconstruction?
+    tagger_info.ssm_kine_particle_type->clear();
+    tagger_info.ssm_kine_energy_included->clear(); // included in the neutrino energy calculation?
+    tagger_info.ssm_kine_pio_mass = 0; // mass
+    tagger_info.ssm_kine_pio_flag = 0; // 0 not filled, 1, with vertex, 2 without vertex
+    tagger_info.ssm_kine_pio_vtx_dis = 0;
+    tagger_info.ssm_kine_pio_energy_1 = 0;
+    tagger_info.ssm_kine_pio_theta_1 = 0;
+    tagger_info.ssm_kine_pio_phi_1 = 0;
+    tagger_info.ssm_kine_pio_dis_1 = 0;
+    tagger_info.ssm_kine_pio_energy_2 = 0;
+    tagger_info.ssm_kine_pio_theta_2 = 0;
+    tagger_info.ssm_kine_pio_phi_2 = 0;
+    tagger_info.ssm_kine_pio_dis_2 = 0;
+    tagger_info.ssm_kine_pio_angle = 0;
+
+    // Other vars
+    tagger_info.ssm_numu_cc_flag = 0;
+    tagger_info.ssm_cosmict_flag_1 = 0; // fiducial volume vertex
+    tagger_info.ssm_cosmict_flag_2 = 0;  // single muon
+    tagger_info.ssm_cosmict_flag_3 = 0;  // single muon (long)
+    tagger_info.ssm_cosmict_flag_4 = 0;  // kinematics muon
+    tagger_info.ssm_cosmict_flag_5 = 0; // kinematics muon (long)
+    tagger_info.ssm_cosmict_flag_6 = 0; // special ...
+    tagger_info.ssm_cosmict_flag_7 = 0;  // muon+ michel
+    tagger_info.ssm_cosmict_flag_8 = 0;  // muon + michel + special
+    tagger_info.ssm_cosmict_flag_9 = 0;  // this tagger is relevant for nueCC, see "cosmic tagger ones, one case of cosmics ..." (frist one ...)
+    tagger_info.ssm_cosmict_flag_10->clear();  // front upstream (dirt)
+    //End KDAR vars
+
+
     tagger_info.event_type=0;
 
     // original ...
@@ -3129,6 +3997,448 @@ void LEEana::set_tree_address(TTree *tree0, TaggerInfo& tagger_info, int flag){
   tree0->SetBranchAddress("shw_sp_lem_flag",&tagger_info.shw_sp_lem_flag);
   //
 
+  // KDAR vars
+  if(tree0->GetBranch("ssm_kdar_score_lowE"){
+    tagger_info.saved_ssm_bdt_scores = true;
+    tree0->SetBranchAddress("ssm_kdar_score_lowE", &tagger_info.ssm_kdar_score_lowE);
+    tree0->SetBranchAddress("ssm_kdar_score_hiE", &tagger_info.ssm_kdar_score_hiE);
+  }
+
+  if(tree0->GetBranch("ssm_flag_st_kdar"){
+    tagger_info.saved_ssm_bdt_vars = true;
+
+    tree0->SetBranchAddress("ssm_flag_st_kdar",&tagger_info.ssm_flag_st_kdar);
+    tree0->SetBranchAddress("ssm_Nsm",&tagger_info.ssm_Nsm);
+    tree0->SetBranchAddress("ssm_Nsm_wivtx",&tagger_info.ssm_Nsm_wivtx);
+
+    //only filled if there is one ssm
+    //properties of the ssm
+    //dq/dx info
+    tree0->SetBranchAddress("ssm_dq_dx_fwd_1", &tagger_info.ssm_dq_dx_fwd_1);
+    tree0->SetBranchAddress("ssm_dq_dx_fwd_2", &tagger_info.ssm_dq_dx_fwd_2);
+    tree0->SetBranchAddress("ssm_dq_dx_fwd_3", &tagger_info.ssm_dq_dx_fwd_3);
+    tree0->SetBranchAddress("ssm_dq_dx_fwd_4", &tagger_info.ssm_dq_dx_fwd_4);
+    tree0->SetBranchAddress("ssm_dq_dx_fwd_5", &tagger_info.ssm_dq_dx_fwd_5);
+    tree0->SetBranchAddress("ssm_dq_dx_bck_1", &tagger_info.ssm_dq_dx_bck_1);
+    tree0->SetBranchAddress("ssm_dq_dx_bck_2", &tagger_info.ssm_dq_dx_bck_2);
+    tree0->SetBranchAddress("ssm_dq_dx_bck_3", &tagger_info.ssm_dq_dx_bck_3);
+    tree0->SetBranchAddress("ssm_dq_dx_bck_4", &tagger_info.ssm_dq_dx_bck_4);
+    tree0->SetBranchAddress("ssm_dq_dx_bck_5", &tagger_info.ssm_dq_dx_bck_5);
+    tree0->SetBranchAddress("ssm_d_dq_dx_fwd_12", &tagger_info.ssm_d_dq_dx_fwd_12);
+    tree0->SetBranchAddress("ssm_d_dq_dx_fwd_23", &tagger_info.ssm_d_dq_dx_fwd_23);
+    tree0->SetBranchAddress("ssm_d_dq_dx_fwd_34", &tagger_info.ssm_d_dq_dx_fwd_34);
+    tree0->SetBranchAddress("ssm_d_dq_dx_fwd_45", &tagger_info.ssm_d_dq_dx_fwd_45);
+    tree0->SetBranchAddress("ssm_d_dq_dx_bck_12", &tagger_info.ssm_d_dq_dx_bck_12);
+    tree0->SetBranchAddress("ssm_d_dq_dx_bck_23", &tagger_info.ssm_d_dq_dx_bck_23);
+    tree0->SetBranchAddress("ssm_d_dq_dx_bck_34", &tagger_info.ssm_d_dq_dx_bck_34);
+    tree0->SetBranchAddress("ssm_d_dq_dx_bck_45", &tagger_info.ssm_d_dq_dx_bck_45);
+    tree0->SetBranchAddress("ssm_max_dq_dx_fwd_3", &tagger_info.ssm_max_dq_dx_fwd_3);
+    tree0->SetBranchAddress("ssm_max_dq_dx_fwd_5", &tagger_info.ssm_max_dq_dx_fwd_5);
+    tree0->SetBranchAddress("ssm_max_dq_dx_bck_3", &tagger_info.ssm_max_dq_dx_bck_3);
+    tree0->SetBranchAddress("ssm_max_dq_dx_bck_5", &tagger_info.ssm_max_dq_dx_bck_5);
+    tree0->SetBranchAddress("ssm_max_d_dq_dx_fwd_3", &tagger_info.ssm_max_d_dq_dx_fwd_3);
+    tree0->SetBranchAddress("ssm_max_d_dq_dx_fwd_5", &tagger_info.ssm_max_d_dq_dx_fwd_5);
+    tree0->SetBranchAddress("ssm_max_d_dq_dx_bck_3", &tagger_info.ssm_max_d_dq_dx_bck_3);
+    tree0->SetBranchAddress("ssm_max_d_dq_dx_bck_5", &tagger_info.ssm_max_d_dq_dx_bck_5);
+    tree0->SetBranchAddress("ssm_medium_dq_dx", &tagger_info.ssm_medium_dq_dx);
+    tree0->SetBranchAddress("ssm_medium_dq_dx_bp", &tagger_info.ssm_medium_dq_dx_bp);
+    //angluar info
+    tree0->SetBranchAddress("ssm_angle_to_z", &tagger_info.ssm_angle_to_z);
+    tree0->SetBranchAddress("ssm_angle_to_target", &tagger_info.ssm_angle_to_target);
+    tree0->SetBranchAddress("ssm_angle_to_absorber", &tagger_info.ssm_angle_to_absorber);
+    tree0->SetBranchAddress("ssm_angle_to_vertical", &tagger_info.ssm_angle_to_vertical);
+    //directional info
+    tree0->SetBranchAddress("ssm_x_dir", &tagger_info.ssm_x_dir);
+    tree0->SetBranchAddress("ssm_y_dir", &tagger_info.ssm_y_dir);
+    tree0->SetBranchAddress("ssm_z_dir", &tagger_info.ssm_z_dir);
+    //energy info
+    tree0->SetBranchAddress("ssm_kine_energy", &tagger_info.ssm_kine_energy);
+    tree0->SetBranchAddress("ssm_kine_energy_reduced", &tagger_info.ssm_kine_energy_reduced);
+    //general properties
+    tree0->SetBranchAddress("ssm_vtx_activity", &tagger_info.ssm_vtx_activity);
+    tree0->SetBranchAddress("ssm_pdg", &tagger_info.ssm_pdg);
+    tree0->SetBranchAddress("ssm_dQ_dx_cut", &tagger_info.ssm_dQ_dx_cut);
+    tree0->SetBranchAddress("ssm_score_mu_fwd", &tagger_info.ssm_score_mu_fwd);
+    tree0->SetBranchAddress("ssm_score_p_fwd", &tagger_info.ssm_score_p_fwd);
+    tree0->SetBranchAddress("ssm_score_e_fwd", &tagger_info.ssm_score_e_fwd);
+    tree0->SetBranchAddress("ssm_score_mu_bck", &tagger_info.ssm_score_mu_bck);
+    tree0->SetBranchAddress("ssm_score_p_bck", &tagger_info.ssm_score_p_bck);
+    tree0->SetBranchAddress("ssm_score_e_bck", &tagger_info.ssm_score_e_bck);
+    tree0->SetBranchAddress("ssm_score_mu_fwd_bp", &tagger_info.ssm_score_mu_fwd_bp);
+    tree0->SetBranchAddress("ssm_score_p_fwd_bp", &tagger_info.ssm_score_p_fwd_bp);
+    tree0->SetBranchAddress("ssm_score_e_fwd_bp", &tagger_info.ssm_score_e_fwd_bp);
+    //track "straighness"
+    tree0->SetBranchAddress("ssm_length", &tagger_info.ssm_length);
+    tree0->SetBranchAddress("ssm_direct_length", &tagger_info.ssm_direct_length);
+    tree0->SetBranchAddress("ssm_length_ratio", &tagger_info.ssm_length_ratio);
+    tree0->SetBranchAddress("ssm_max_dev", &tagger_info.ssm_max_dev);
+
+    //number of other particles
+    tree0->SetBranchAddress("ssm_n_prim_tracks_1", &tagger_info.ssm_n_prim_tracks_1);
+    tree0->SetBranchAddress("ssm_n_prim_tracks_3", &tagger_info.ssm_n_prim_tracks_3);
+    tree0->SetBranchAddress("ssm_n_prim_tracks_5", &tagger_info.ssm_n_prim_tracks_5);
+    tree0->SetBranchAddress("ssm_n_prim_tracks_8", &tagger_info.ssm_n_prim_tracks_8);
+    tree0->SetBranchAddress("ssm_n_prim_tracks_11", &tagger_info.ssm_n_prim_tracks_11);
+    tree0->SetBranchAddress("ssm_n_all_tracks_1", &tagger_info.ssm_n_all_tracks_1);
+    tree0->SetBranchAddress("ssm_n_all_tracks_3", &tagger_info.ssm_n_all_tracks_3);
+    tree0->SetBranchAddress("ssm_n_all_tracks_5", &tagger_info.ssm_n_all_tracks_5);
+    tree0->SetBranchAddress("ssm_n_all_tracks_8", &tagger_info.ssm_n_all_tracks_8);
+    tree0->SetBranchAddress("ssm_n_all_tracks_11", &tagger_info.ssm_n_all_tracks_11);
+    tree0->SetBranchAddress("ssm_n_daughter_tracks_1", &tagger_info.ssm_n_daughter_tracks_1);
+    tree0->SetBranchAddress("ssm_n_daughter_tracks_3", &tagger_info.ssm_n_daughter_tracks_3);
+    tree0->SetBranchAddress("ssm_n_daughter_tracks_5", &tagger_info.ssm_n_daughter_tracks_5);
+    tree0->SetBranchAddress("ssm_n_daughter_tracks_8", &tagger_info.ssm_n_daughter_tracks_8);
+    tree0->SetBranchAddress("ssm_n_daughter_tracks_11", &tagger_info.ssm_n_daughter_tracks_11);
+    tree0->SetBranchAddress("ssm_n_daughter_all_1", &tagger_info.ssm_n_daughter_all_1);
+    tree0->SetBranchAddress("ssm_n_daughter_all_3", &tagger_info.ssm_n_daughter_all_3);
+    tree0->SetBranchAddress("ssm_n_daughter_all_5", &tagger_info.ssm_n_daughter_all_5);
+    tree0->SetBranchAddress("ssm_n_daughter_all_8", &tagger_info.ssm_n_daughter_all_8);
+    tree0->SetBranchAddress("ssm_n_daughter_all_11", &tagger_info.ssm_n_daughter_all_11);
+
+    //properties of leading other primary track
+    tree0->SetBranchAddress("ssm_prim_track1_pdg", &tagger_info.ssm_prim_track1_pdg);
+    tree0->SetBranchAddress("ssm_prim_track1_score_mu_fwd", &tagger_info.ssm_prim_track1_score_mu_fwd);
+    tree0->SetBranchAddress("ssm_prim_track1_score_p_fwd", &tagger_info.ssm_prim_track1_score_p_fwd);
+    tree0->SetBranchAddress("ssm_prim_track1_score_e_fwd", &tagger_info.ssm_prim_track1_score_e_fwd);
+    tree0->SetBranchAddress("ssm_prim_track1_score_mu_bck", &tagger_info.ssm_prim_track1_score_mu_bck);
+    tree0->SetBranchAddress("ssm_prim_track1_score_p_bck", &tagger_info.ssm_prim_track1_score_p_bck);
+    tree0->SetBranchAddress("ssm_prim_track1_score_e_bck", &tagger_info.ssm_prim_track1_score_e_bck);
+    tree0->SetBranchAddress("ssm_prim_track1_length", &tagger_info.ssm_prim_track1_length);
+    tree0->SetBranchAddress("ssm_prim_track1_direct_length", &tagger_info.ssm_prim_track1_direct_length);
+    tree0->SetBranchAddress("ssm_prim_track1_length_ratio", &tagger_info.ssm_prim_track1_length_ratio);
+    tree0->SetBranchAddress("ssm_prim_track1_max_dev", &tagger_info.ssm_prim_track1_max_dev);
+    tree0->SetBranchAddress("ssm_prim_track1_kine_energy_range", &tagger_info.ssm_prim_track1_kine_energy_range);
+    tree0->SetBranchAddress("ssm_prim_track1_kine_energy_range_mu", &tagger_info.ssm_prim_track1_kine_energy_range_mu);
+    tree0->SetBranchAddress("ssm_prim_track1_kine_energy_range_p", &tagger_info.ssm_prim_track1_kine_energy_range_p);
+    tree0->SetBranchAddress("ssm_prim_track1_kine_energy_range_e", &tagger_info.ssm_prim_track1_kine_energy_range_e);
+    tree0->SetBranchAddress("ssm_prim_track1_kine_energy_cal", &tagger_info.ssm_prim_track1_kine_energy_cal);
+    tree0->SetBranchAddress("ssm_prim_track1_medium_dq_dx", &tagger_info.ssm_prim_track1_medium_dq_dx);
+    tree0->SetBranchAddress("ssm_prim_track1_x_dir", &tagger_info.ssm_prim_track1_x_dir);
+    tree0->SetBranchAddress("ssm_prim_track1_y_dir", &tagger_info.ssm_prim_track1_y_dir);
+    tree0->SetBranchAddress("ssm_prim_track1_z_dir", &tagger_info.ssm_prim_track1_z_dir);
+    tree0->SetBranchAddress("ssm_prim_track1_add_daught_track_counts_1", &tagger_info.ssm_prim_track1_add_daught_track_counts_1);
+    tree0->SetBranchAddress("ssm_prim_track1_add_daught_all_counts_1", &tagger_info.ssm_prim_track1_add_daught_all_counts_1);
+    tree0->SetBranchAddress("ssm_prim_track1_add_daught_track_counts_5", &tagger_info.ssm_prim_track1_add_daught_track_counts_5);
+    tree0->SetBranchAddress("ssm_prim_track1_add_daught_all_counts_5", &tagger_info.ssm_prim_track1_add_daught_all_counts_5);
+    tree0->SetBranchAddress("ssm_prim_track1_add_daught_track_counts_11", &tagger_info.ssm_prim_track1_add_daught_track_counts_11);
+    tree0->SetBranchAddress("ssm_prim_track1_add_daught_all_counts_11", &tagger_info.ssm_prim_track1_add_daught_all_counts_11);
+
+    //properties of sub-leading other primary track
+    tree0->SetBranchAddress("ssm_prim_track2_pdg", &tagger_info.ssm_prim_track2_pdg);
+    tree0->SetBranchAddress("ssm_prim_track2_score_mu_fwd", &tagger_info.ssm_prim_track2_score_mu_fwd);
+    tree0->SetBranchAddress("ssm_prim_track2_score_p_fwd", &tagger_info.ssm_prim_track2_score_p_fwd);
+    tree0->SetBranchAddress("ssm_prim_track2_score_e_fwd", &tagger_info.ssm_prim_track2_score_e_fwd);
+    tree0->SetBranchAddress("ssm_prim_track2_score_mu_bck", &tagger_info.ssm_prim_track2_score_mu_bck);
+    tree0->SetBranchAddress("ssm_prim_track2_score_p_bck", &tagger_info.ssm_prim_track2_score_p_bck);
+    tree0->SetBranchAddress("ssm_prim_track2_score_e_bck", &tagger_info.ssm_prim_track2_score_e_bck);
+    tree0->SetBranchAddress("ssm_prim_track2_length", &tagger_info.ssm_prim_track2_length);
+    tree0->SetBranchAddress("ssm_prim_track2_direct_length", &tagger_info.ssm_prim_track2_direct_length);
+    tree0->SetBranchAddress("ssm_prim_track2_length_ratio", &tagger_info.ssm_prim_track2_length_ratio);
+    tree0->SetBranchAddress("ssm_prim_track2_max_dev", &tagger_info.ssm_prim_track2_max_dev);
+    tree0->SetBranchAddress("ssm_prim_track2_kine_energy_range", &tagger_info.ssm_prim_track2_kine_energy_range);
+    tree0->SetBranchAddress("ssm_prim_track2_kine_energy_range_mu", &tagger_info.ssm_prim_track2_kine_energy_range_mu);
+    tree0->SetBranchAddress("ssm_prim_track2_kine_energy_range_p", &tagger_info.ssm_prim_track2_kine_energy_range_p);
+    tree0->SetBranchAddress("ssm_prim_track2_kine_energy_range_e", &tagger_info.ssm_prim_track2_kine_energy_range_e);
+    tree0->SetBranchAddress("ssm_prim_track2_kine_energy_cal", &tagger_info.ssm_prim_track2_kine_energy_cal);
+    tree0->SetBranchAddress("ssm_prim_track2_medium_dq_dx", &tagger_info.ssm_prim_track2_medium_dq_dx);
+    tree0->SetBranchAddress("ssm_prim_track2_x_dir", &tagger_info.ssm_prim_track2_x_dir);
+    tree0->SetBranchAddress("ssm_prim_track2_y_dir", &tagger_info.ssm_prim_track2_y_dir);
+    tree0->SetBranchAddress("ssm_prim_track2_z_dir", &tagger_info.ssm_prim_track2_z_dir);
+    tree0->SetBranchAddress("ssm_prim_track2_add_daught_track_counts_1", &tagger_info.ssm_prim_track2_add_daught_track_counts_1);
+    tree0->SetBranchAddress("ssm_prim_track2_add_daught_all_counts_1", &tagger_info.ssm_prim_track2_add_daught_all_counts_1);
+    tree0->SetBranchAddress("ssm_prim_track2_add_daught_track_counts_5", &tagger_info.ssm_prim_track2_add_daught_track_counts_5);
+    tree0->SetBranchAddress("ssm_prim_track2_add_daught_all_counts_5", &tagger_info.ssm_prim_track2_add_daught_all_counts_5);
+    tree0->SetBranchAddress("ssm_prim_track2_add_daught_track_counts_11", &tagger_info.ssm_prim_track2_add_daught_track_counts_11);
+    tree0->SetBranchAddress("ssm_prim_track2_add_daught_all_counts_11", &tagger_info.ssm_prim_track2_add_daught_all_counts_11);
+
+    //properties of leading daughter track
+    tree0->SetBranchAddress("ssm_daught_track1_pdg", &tagger_info.ssm_daught_track1_pdg);
+    tree0->SetBranchAddress("ssm_daught_track1_score_mu_fwd", &tagger_info.ssm_daught_track1_score_mu_fwd);
+    tree0->SetBranchAddress("ssm_daught_track1_score_p_fwd", &tagger_info.ssm_daught_track1_score_p_fwd);
+    tree0->SetBranchAddress("ssm_daught_track1_score_e_fwd", &tagger_info.ssm_daught_track1_score_e_fwd);
+    tree0->SetBranchAddress("ssm_daught_track1_score_mu_bck", &tagger_info.ssm_daught_track1_score_mu_bck);
+    tree0->SetBranchAddress("ssm_daught_track1_score_p_bck", &tagger_info.ssm_daught_track1_score_p_bck);
+    tree0->SetBranchAddress("ssm_daught_track1_score_e_bck", &tagger_info.ssm_daught_track1_score_e_bck);
+    tree0->SetBranchAddress("ssm_daught_track1_length", &tagger_info.ssm_daught_track1_length);
+    tree0->SetBranchAddress("ssm_daught_track1_direct_length", &tagger_info.ssm_daught_track1_direct_length);
+    tree0->SetBranchAddress("ssm_daught_track1_length_ratio", &tagger_info.ssm_daught_track1_length_ratio);
+    tree0->SetBranchAddress("ssm_daught_track1_max_dev", &tagger_info.ssm_daught_track1_max_dev);
+    tree0->SetBranchAddress("ssm_daught_track1_kine_energy_range", &tagger_info.ssm_daught_track1_kine_energy_range);
+    tree0->SetBranchAddress("ssm_daught_track1_kine_energy_range_mu", &tagger_info.ssm_daught_track1_kine_energy_range_mu);
+    tree0->SetBranchAddress("ssm_daught_track1_kine_energy_range_p", &tagger_info.ssm_daught_track1_kine_energy_range_p);
+    tree0->SetBranchAddress("ssm_daught_track1_kine_energy_range_e", &tagger_info.ssm_daught_track1_kine_energy_range_e);
+    tree0->SetBranchAddress("ssm_daught_track1_kine_energy_cal", &tagger_info.ssm_daught_track1_kine_energy_cal);
+    tree0->SetBranchAddress("ssm_daught_track1_medium_dq_dx", &tagger_info.ssm_daught_track1_medium_dq_dx);
+    tree0->SetBranchAddress("ssm_daught_track1_x_dir", &tagger_info.ssm_daught_track1_x_dir);
+    tree0->SetBranchAddress("ssm_daught_track1_y_dir", &tagger_info.ssm_daught_track1_y_dir);
+    tree0->SetBranchAddress("ssm_daught_track1_z_dir", &tagger_info.ssm_daught_track1_z_dir);
+    tree0->SetBranchAddress("ssm_daught_track1_add_daught_track_counts_1", &tagger_info.ssm_daught_track1_add_daught_track_counts_1);
+    tree0->SetBranchAddress("ssm_daught_track1_add_daught_all_counts_1", &tagger_info.ssm_daught_track1_add_daught_all_counts_1);
+    tree0->SetBranchAddress("ssm_daught_track1_add_daught_track_counts_5", &tagger_info.ssm_daught_track1_add_daught_track_counts_5);
+    tree0->SetBranchAddress("ssm_daught_track1_add_daught_all_counts_5", &tagger_info.ssm_daught_track1_add_daught_all_counts_5);
+    tree0->SetBranchAddress("ssm_daught_track1_add_daught_track_counts_11", &tagger_info.ssm_daught_track1_add_daught_track_counts_11);
+    tree0->SetBranchAddress("ssm_daught_track1_add_daught_all_counts_11", &tagger_info.ssm_daught_track1_add_daught_all_counts_11);
+
+    //properties of sub-leading daughter track
+    tree0->SetBranchAddress("ssm_daught_track2_pdg", &tagger_info.ssm_daught_track2_pdg);
+    tree0->SetBranchAddress("ssm_daught_track2_score_mu_fwd", &tagger_info.ssm_daught_track2_score_mu_fwd);
+    tree0->SetBranchAddress("ssm_daught_track2_score_p_fwd", &tagger_info.ssm_daught_track2_score_p_fwd);
+    tree0->SetBranchAddress("ssm_daught_track2_score_e_fwd", &tagger_info.ssm_daught_track2_score_e_fwd);
+    tree0->SetBranchAddress("ssm_daught_track2_score_mu_bck", &tagger_info.ssm_daught_track2_score_mu_bck);
+    tree0->SetBranchAddress("ssm_daught_track2_score_p_bck", &tagger_info.ssm_daught_track2_score_p_bck);
+    tree0->SetBranchAddress("ssm_daught_track2_score_e_bck", &tagger_info.ssm_daught_track2_score_e_bck);
+    tree0->SetBranchAddress("ssm_daught_track2_length", &tagger_info.ssm_daught_track2_length);
+    tree0->SetBranchAddress("ssm_daught_track2_direct_length", &tagger_info.ssm_daught_track2_direct_length);
+    tree0->SetBranchAddress("ssm_daught_track2_length_ratio", &tagger_info.ssm_daught_track2_length_ratio);
+    tree0->SetBranchAddress("ssm_daught_track2_max_dev", &tagger_info.ssm_daught_track2_max_dev);
+    tree0->SetBranchAddress("ssm_daught_track2_kine_energy_range", &tagger_info.ssm_daught_track2_kine_energy_range);
+    tree0->SetBranchAddress("ssm_daught_track2_kine_energy_range_mu", &tagger_info.ssm_daught_track2_kine_energy_range_mu);
+    tree0->SetBranchAddress("ssm_daught_track2_kine_energy_range_p", &tagger_info.ssm_daught_track2_kine_energy_range_p);
+    tree0->SetBranchAddress("ssm_daught_track2_kine_energy_range_e", &tagger_info.ssm_daught_track2_kine_energy_range_e);
+    tree0->SetBranchAddress("ssm_daught_track2_kine_energy_cal", &tagger_info.ssm_daught_track2_kine_energy_cal);
+    tree0->SetBranchAddress("ssm_daught_track2_medium_dq_dx", &tagger_info.ssm_daught_track2_medium_dq_dx);
+    tree0->SetBranchAddress("ssm_daught_track2_x_dir", &tagger_info.ssm_daught_track2_x_dir);
+    tree0->SetBranchAddress("ssm_daught_track2_y_dir", &tagger_info.ssm_daught_track2_y_dir);
+    tree0->SetBranchAddress("ssm_daught_track2_z_dir", &tagger_info.ssm_daught_track2_z_dir);
+    tree0->SetBranchAddress("ssm_daught_track2_add_daught_track_counts_1", &tagger_info.ssm_daught_track2_add_daught_track_counts_1);
+    tree0->SetBranchAddress("ssm_daught_track2_add_daught_all_counts_1", &tagger_info.ssm_daught_track2_add_daught_all_counts_1);
+    tree0->SetBranchAddress("ssm_daught_track2_add_daught_track_counts_5", &tagger_info.ssm_daught_track2_add_daught_track_counts_5);
+    tree0->SetBranchAddress("ssm_daught_track2_add_daught_all_counts_5", &tagger_info.ssm_daught_track2_add_daught_all_counts_5);
+    tree0->SetBranchAddress("ssm_daught_track2_add_daught_track_counts_11", &tagger_info.ssm_daught_track2_add_daught_track_counts_11);
+    tree0->SetBranchAddress("ssm_daught_track2_add_daught_all_counts_11", &tagger_info.ssm_daught_track2_add_daught_all_counts_11);
+
+    //properties of leading other primary shower
+    tree0->SetBranchAddress("ssm_prim_shw1_pdg", &tagger_info.ssm_prim_shw1_pdg);
+    tree0->SetBranchAddress("ssm_prim_shw1_score_mu_fwd", &tagger_info.ssm_prim_shw1_score_mu_fwd);
+    tree0->SetBranchAddress("ssm_prim_shw1_score_p_fwd", &tagger_info.ssm_prim_shw1_score_p_fwd);
+    tree0->SetBranchAddress("ssm_prim_shw1_score_e_fwd", &tagger_info.ssm_prim_shw1_score_e_fwd);
+    tree0->SetBranchAddress("ssm_prim_shw1_score_mu_bck", &tagger_info.ssm_prim_shw1_score_mu_bck);
+    tree0->SetBranchAddress("ssm_prim_shw1_score_p_bck", &tagger_info.ssm_prim_shw1_score_p_bck);
+    tree0->SetBranchAddress("ssm_prim_shw1_score_e_bck", &tagger_info.ssm_prim_shw1_score_e_bck);
+    tree0->SetBranchAddress("ssm_prim_shw1_length", &tagger_info.ssm_prim_shw1_length);
+    tree0->SetBranchAddress("ssm_prim_shw1_direct_length", &tagger_info.ssm_prim_shw1_direct_length);
+    tree0->SetBranchAddress("ssm_prim_shw1_length_ratio", &tagger_info.ssm_prim_shw1_length_ratio);
+    tree0->SetBranchAddress("ssm_prim_shw1_max_dev", &tagger_info.ssm_prim_shw1_max_dev);
+    tree0->SetBranchAddress("ssm_prim_shw1_kine_energy_range", &tagger_info.ssm_prim_shw1_kine_energy_range);
+    tree0->SetBranchAddress("ssm_prim_shw1_kine_energy_range_mu", &tagger_info.ssm_prim_shw1_kine_energy_range_mu);
+    tree0->SetBranchAddress("ssm_prim_shw1_kine_energy_range_p", &tagger_info.ssm_prim_shw1_kine_energy_range_p);
+    tree0->SetBranchAddress("ssm_prim_shw1_kine_energy_range_e", &tagger_info.ssm_prim_shw1_kine_energy_range_e);
+    tree0->SetBranchAddress("ssm_prim_shw1_kine_energy_cal", &tagger_info.ssm_prim_shw1_kine_energy_cal);
+    tree0->SetBranchAddress("ssm_prim_shw1_kine_energy_best", &tagger_info.ssm_prim_shw1_kine_energy_best);
+    tree0->SetBranchAddress("ssm_prim_shw1_medium_dq_dx", &tagger_info.ssm_prim_shw1_medium_dq_dx);
+    tree0->SetBranchAddress("ssm_prim_shw1_x_dir", &tagger_info.ssm_prim_shw1_x_dir);
+    tree0->SetBranchAddress("ssm_prim_shw1_y_dir", &tagger_info.ssm_prim_shw1_y_dir);
+    tree0->SetBranchAddress("ssm_prim_shw1_z_dir", &tagger_info.ssm_prim_shw1_z_dir);
+    tree0->SetBranchAddress("ssm_prim_shw1_add_daught_track_counts_1", &tagger_info.ssm_prim_shw1_add_daught_track_counts_1);
+    tree0->SetBranchAddress("ssm_prim_shw1_add_daught_all_counts_1", &tagger_info.ssm_prim_shw1_add_daught_all_counts_1);
+    tree0->SetBranchAddress("ssm_prim_shw1_add_daught_track_counts_5", &tagger_info.ssm_prim_shw1_add_daught_track_counts_5);
+    tree0->SetBranchAddress("ssm_prim_shw1_add_daught_all_counts_5", &tagger_info.ssm_prim_shw1_add_daught_all_counts_5);
+    tree0->SetBranchAddress("ssm_prim_shw1_add_daught_track_counts_11", &tagger_info.ssm_prim_shw1_add_daught_track_counts_11);
+    tree0->SetBranchAddress("ssm_prim_shw1_add_daught_all_counts_11", &tagger_info.ssm_prim_shw1_add_daught_all_counts_11);
+
+    //properties of sub-leading other primary shower
+    tree0->SetBranchAddress("ssm_prim_shw2_pdg", &tagger_info.ssm_prim_shw2_pdg);
+    tree0->SetBranchAddress("ssm_prim_shw2_score_mu_fwd", &tagger_info.ssm_prim_shw2_score_mu_fwd);
+    tree0->SetBranchAddress("ssm_prim_shw2_score_p_fwd", &tagger_info.ssm_prim_shw2_score_p_fwd);
+    tree0->SetBranchAddress("ssm_prim_shw2_score_e_fwd", &tagger_info.ssm_prim_shw2_score_e_fwd);
+    tree0->SetBranchAddress("ssm_prim_shw2_score_mu_bck", &tagger_info.ssm_prim_shw2_score_mu_bck);
+    tree0->SetBranchAddress("ssm_prim_shw2_score_p_bck", &tagger_info.ssm_prim_shw2_score_p_bck);
+    tree0->SetBranchAddress("ssm_prim_shw2_score_e_bck", &tagger_info.ssm_prim_shw2_score_e_bck);
+    tree0->SetBranchAddress("ssm_prim_shw2_length", &tagger_info.ssm_prim_shw2_length);
+    tree0->SetBranchAddress("ssm_prim_shw2_direct_length", &tagger_info.ssm_prim_shw2_direct_length);
+    tree0->SetBranchAddress("ssm_prim_shw2_length_ratio", &tagger_info.ssm_prim_shw2_length_ratio);
+    tree0->SetBranchAddress("ssm_prim_shw2_max_dev", &tagger_info.ssm_prim_shw2_max_dev);
+    tree0->SetBranchAddress("ssm_prim_shw2_kine_energy_range", &tagger_info.ssm_prim_shw2_kine_energy_range);
+    tree0->SetBranchAddress("ssm_prim_shw2_kine_energy_range_mu", &tagger_info.ssm_prim_shw2_kine_energy_range_mu);
+    tree0->SetBranchAddress("ssm_prim_shw2_kine_energy_range_p", &tagger_info.ssm_prim_shw2_kine_energy_range_p);
+    tree0->SetBranchAddress("ssm_prim_shw2_kine_energy_range_e", &tagger_info.ssm_prim_shw2_kine_energy_range_e);
+    tree0->SetBranchAddress("ssm_prim_shw2_kine_energy_cal", &tagger_info.ssm_prim_shw2_kine_energy_cal);
+    tree0->SetBranchAddress("ssm_prim_shw2_kine_energy_best", &tagger_info.ssm_prim_shw2_kine_energy_best);
+    tree0->SetBranchAddress("ssm_prim_shw2_medium_dq_dx", &tagger_info.ssm_prim_shw2_medium_dq_dx);
+    tree0->SetBranchAddress("ssm_prim_shw2_x_dir", &tagger_info.ssm_prim_shw2_x_dir);
+    tree0->SetBranchAddress("ssm_prim_shw2_y_dir", &tagger_info.ssm_prim_shw2_y_dir);
+    tree0->SetBranchAddress("ssm_prim_shw2_z_dir", &tagger_info.ssm_prim_shw2_z_dir);
+    tree0->SetBranchAddress("ssm_prim_shw2_add_daught_track_counts_1", &tagger_info.ssm_prim_shw2_add_daught_track_counts_1);
+    tree0->SetBranchAddress("ssm_prim_shw2_add_daught_all_counts_1", &tagger_info.ssm_prim_shw2_add_daught_all_counts_1);
+    tree0->SetBranchAddress("ssm_prim_shw2_add_daught_track_counts_5", &tagger_info.ssm_prim_shw2_add_daught_track_counts_5);
+    tree0->SetBranchAddress("ssm_prim_shw2_add_daught_all_counts_5", &tagger_info.ssm_prim_shw2_add_daught_all_counts_5);
+    tree0->SetBranchAddress("ssm_prim_shw2_add_daught_track_counts_11", &tagger_info.ssm_prim_shw2_add_daught_track_counts_11);
+    tree0->SetBranchAddress("ssm_prim_shw2_add_daught_all_counts_11", &tagger_info.ssm_prim_shw2_add_daught_all_counts_11);
+
+    //properties of leading daughter shower
+    tree0->SetBranchAddress("ssm_daught_shw1_pdg", &tagger_info.ssm_daught_shw1_pdg);
+    tree0->SetBranchAddress("ssm_daught_shw1_score_mu_fwd", &tagger_info.ssm_daught_shw1_score_mu_fwd);
+    tree0->SetBranchAddress("ssm_daught_shw1_score_p_fwd", &tagger_info.ssm_daught_shw1_score_p_fwd);
+    tree0->SetBranchAddress("ssm_daught_shw1_score_e_fwd", &tagger_info.ssm_daught_shw1_score_e_fwd);
+    tree0->SetBranchAddress("ssm_daught_shw1_score_mu_bck", &tagger_info.ssm_daught_shw1_score_mu_bck);
+    tree0->SetBranchAddress("ssm_daught_shw1_score_p_bck", &tagger_info.ssm_daught_shw1_score_p_bck);
+    tree0->SetBranchAddress("ssm_daught_shw1_score_e_bck", &tagger_info.ssm_daught_shw1_score_e_bck);
+    tree0->SetBranchAddress("ssm_daught_shw1_length", &tagger_info.ssm_daught_shw1_length);
+    tree0->SetBranchAddress("ssm_daught_shw1_direct_length", &tagger_info.ssm_daught_shw1_direct_length);
+    tree0->SetBranchAddress("ssm_daught_shw1_length_ratio", &tagger_info.ssm_daught_shw1_length_ratio);
+    tree0->SetBranchAddress("ssm_daught_shw1_max_dev", &tagger_info.ssm_daught_shw1_max_dev);
+    tree0->SetBranchAddress("ssm_daught_shw1_kine_energy_range", &tagger_info.ssm_daught_shw1_kine_energy_range);
+    tree0->SetBranchAddress("ssm_daught_shw1_kine_energy_range_mu", &tagger_info.ssm_daught_shw1_kine_energy_range_mu);
+    tree0->SetBranchAddress("ssm_daught_shw1_kine_energy_range_p", &tagger_info.ssm_daught_shw1_kine_energy_range_p);
+    tree0->SetBranchAddress("ssm_daught_shw1_kine_energy_range_e", &tagger_info.ssm_daught_shw1_kine_energy_range_e);
+    tree0->SetBranchAddress("ssm_daught_shw1_kine_energy_cal", &tagger_info.ssm_daught_shw1_kine_energy_cal);
+    tree0->SetBranchAddress("ssm_daught_shw1_kine_energy_best", &tagger_info.ssm_daught_shw1_kine_energy_best);
+    tree0->SetBranchAddress("ssm_daught_shw1_medium_dq_dx", &tagger_info.ssm_daught_shw1_medium_dq_dx);
+    tree0->SetBranchAddress("ssm_daught_shw1_x_dir", &tagger_info.ssm_daught_shw1_x_dir);
+    tree0->SetBranchAddress("ssm_daught_shw1_y_dir", &tagger_info.ssm_daught_shw1_y_dir);
+    tree0->SetBranchAddress("ssm_daught_shw1_z_dir", &tagger_info.ssm_daught_shw1_z_dir);
+    tree0->SetBranchAddress("ssm_daught_shw1_add_daught_track_counts_1", &tagger_info.ssm_daught_shw1_add_daught_track_counts_1);
+    tree0->SetBranchAddress("ssm_daught_shw1_add_daught_all_counts_1", &tagger_info.ssm_daught_shw1_add_daught_all_counts_1);
+    tree0->SetBranchAddress("ssm_daught_shw1_add_daught_track_counts_5", &tagger_info.ssm_daught_shw1_add_daught_track_counts_5);
+    tree0->SetBranchAddress("ssm_daught_shw1_add_daught_all_counts_5", &tagger_info.ssm_daught_shw1_add_daught_all_counts_5);
+    tree0->SetBranchAddress("ssm_daught_shw1_add_daught_track_counts_11", &tagger_info.ssm_daught_shw1_add_daught_track_counts_11);
+    tree0->SetBranchAddress("ssm_daught_shw1_add_daught_all_counts_11", &tagger_info.ssm_daught_shw1_add_daught_all_counts_11);
+
+    //properties of sub-leading daughter shower
+    tree0->SetBranchAddress("ssm_daught_shw2_pdg", &tagger_info.ssm_daught_shw2_pdg);
+    tree0->SetBranchAddress("ssm_daught_shw2_score_mu_fwd", &tagger_info.ssm_daught_shw2_score_mu_fwd);
+    tree0->SetBranchAddress("ssm_daught_shw2_score_p_fwd", &tagger_info.ssm_daught_shw2_score_p_fwd);
+    tree0->SetBranchAddress("ssm_daught_shw2_score_e_fwd", &tagger_info.ssm_daught_shw2_score_e_fwd);
+    tree0->SetBranchAddress("ssm_daught_shw2_score_mu_bck", &tagger_info.ssm_daught_shw2_score_mu_bck);
+    tree0->SetBranchAddress("ssm_daught_shw2_score_p_bck", &tagger_info.ssm_daught_shw2_score_p_bck);
+    tree0->SetBranchAddress("ssm_daught_shw2_score_e_bck", &tagger_info.ssm_daught_shw2_score_e_bck);
+    tree0->SetBranchAddress("ssm_daught_shw2_length", &tagger_info.ssm_daught_shw2_length);
+    tree0->SetBranchAddress("ssm_daught_shw2_direct_length", &tagger_info.ssm_daught_shw2_direct_length);
+    tree0->SetBranchAddress("ssm_daught_shw2_length_ratio", &tagger_info.ssm_daught_shw2_length_ratio);
+    tree0->SetBranchAddress("ssm_daught_shw2_max_dev", &tagger_info.ssm_daught_shw2_max_dev);
+    tree0->SetBranchAddress("ssm_daught_shw2_kine_energy_range", &tagger_info.ssm_daught_shw2_kine_energy_range);
+    tree0->SetBranchAddress("ssm_daught_shw2_kine_energy_range_mu", &tagger_info.ssm_daught_shw2_kine_energy_range_mu);
+    tree0->SetBranchAddress("ssm_daught_shw2_kine_energy_range_p", &tagger_info.ssm_daught_shw2_kine_energy_range_p);
+    tree0->SetBranchAddress("ssm_daught_shw2_kine_energy_range_e", &tagger_info.ssm_daught_shw2_kine_energy_range_e);
+    tree0->SetBranchAddress("ssm_daught_shw2_kine_energy_cal", &tagger_info.ssm_daught_shw2_kine_energy_cal);
+    tree0->SetBranchAddress("ssm_daught_shw2_kine_energy_best", &tagger_info.ssm_daught_shw2_kine_energy_best);
+    tree0->SetBranchAddress("ssm_daught_shw2_medium_dq_dx", &tagger_info.ssm_daught_shw2_medium_dq_dx);
+    tree0->SetBranchAddress("ssm_daught_shw2_x_dir", &tagger_info.ssm_daught_shw2_x_dir);
+    tree0->SetBranchAddress("ssm_daught_shw2_y_dir", &tagger_info.ssm_daught_shw2_y_dir);
+    tree0->SetBranchAddress("ssm_daught_shw2_z_dir", &tagger_info.ssm_daught_shw2_z_dir);
+    tree0->SetBranchAddress("ssm_daught_shw2_add_daught_track_counts_1", &tagger_info.ssm_daught_shw2_add_daught_track_counts_1);
+    tree0->SetBranchAddress("ssm_daught_shw2_add_daught_all_counts_1", &tagger_info.ssm_daught_shw2_add_daught_all_counts_1);
+    tree0->SetBranchAddress("ssm_daught_shw2_add_daught_track_counts_5", &tagger_info.ssm_daught_shw2_add_daught_track_counts_5);
+    tree0->SetBranchAddress("ssm_daught_shw2_add_daught_all_counts_5", &tagger_info.ssm_daught_shw2_add_daught_all_counts_5);
+    tree0->SetBranchAddress("ssm_daught_shw2_add_daught_track_counts_11", &tagger_info.ssm_daught_shw2_add_daught_track_counts_11);
+    tree0->SetBranchAddress("ssm_daught_shw2_add_daught_all_counts_11", &tagger_info.ssm_daught_shw2_add_daught_all_counts_11);
+
+    //event level properties
+    tree0->SetBranchAddress("ssm_nu_angle_z", &tagger_info.ssm_nu_angle_z);
+    tree0->SetBranchAddress("ssm_nu_angle_target", &tagger_info.ssm_nu_angle_target);
+    tree0->SetBranchAddress("ssm_nu_angle_absorber", &tagger_info.ssm_nu_angle_absorber);
+    tree0->SetBranchAddress("ssm_nu_angle_vertical", &tagger_info.ssm_nu_angle_vertical);
+    tree0->SetBranchAddress("ssm_con_nu_angle_z", &tagger_info.ssm_con_nu_angle_z);
+    tree0->SetBranchAddress("ssm_con_nu_angle_target", &tagger_info.ssm_con_nu_angle_target);
+    tree0->SetBranchAddress("ssm_con_nu_angle_absorber", &tagger_info.ssm_con_nu_angle_absorber);
+    tree0->SetBranchAddress("ssm_con_nu_angle_vertical", &tagger_info.ssm_con_nu_angle_vertical);
+    tree0->SetBranchAddress("ssm_prim_nu_angle_z", &tagger_info.ssm_prim_nu_angle_z);
+    tree0->SetBranchAddress("ssm_prim_nu_angle_target", &tagger_info.ssm_prim_nu_angle_target);
+    tree0->SetBranchAddress("ssm_prim_nu_angle_absorber", &tagger_info.ssm_prim_nu_angle_absorber);
+    tree0->SetBranchAddress("ssm_prim_nu_angle_vertical", &tagger_info.ssm_prim_nu_angle_vertical);
+    tree0->SetBranchAddress("ssm_track_angle_z", &tagger_info.ssm_track_angle_z);
+    tree0->SetBranchAddress("ssm_track_angle_target", &tagger_info.ssm_track_angle_target);
+    tree0->SetBranchAddress("ssm_track_angle_absorber", &tagger_info.ssm_track_angle_absorber);
+    tree0->SetBranchAddress("ssm_track_angle_vertical", &tagger_info.ssm_track_angle_vertical);
+    tree0->SetBranchAddress("ssm_vtxX", &tagger_info.ssm_vtxX);
+    tree0->SetBranchAddress("ssm_vtxY", &tagger_info.ssm_vtxY);
+    tree0->SetBranchAddress("ssm_vtxZ", &tagger_info.ssm_vtxZ);
+
+    //off vertex stuff
+    tree0->SetBranchAddress("ssm_offvtx_length",&tagger_info.ssm_offvtx_length);
+    tree0->SetBranchAddress("ssm_offvtx_energy",&tagger_info.ssm_offvtx_energy);
+    tree0->SetBranchAddress("ssm_n_offvtx_tracks_1",&tagger_info.ssm_n_offvtx_tracks_1);
+    tree0->SetBranchAddress("ssm_n_offvtx_tracks_3",&tagger_info.ssm_n_offvtx_tracks_3);
+    tree0->SetBranchAddress("ssm_n_offvtx_tracks_5",&tagger_info.ssm_n_offvtx_tracks_5);
+    tree0->SetBranchAddress("ssm_n_offvtx_tracks_8",&tagger_info.ssm_n_offvtx_tracks_8);
+    tree0->SetBranchAddress("ssm_n_offvtx_tracks_11",&tagger_info.ssm_n_offvtx_tracks_11);
+    tree0->SetBranchAddress("ssm_n_offvtx_showers_1",&tagger_info.ssm_n_offvtx_showers_1);
+    tree0->SetBranchAddress("ssm_n_offvtx_showers_3",&tagger_info.ssm_n_offvtx_showers_3);
+    tree0->SetBranchAddress("ssm_n_offvtx_showers_5",&tagger_info.ssm_n_offvtx_showers_5);
+    tree0->SetBranchAddress("ssm_n_offvtx_showers_8",&tagger_info.ssm_n_offvtx_showers_8);
+    tree0->SetBranchAddress("ssm_n_offvtx_showers_11",&tagger_info.ssm_n_offvtx_showers_11);
+
+    //properties of leading off vertex track
+    tree0->SetBranchAddress("ssm_offvtx_track1_pdg",&tagger_info.ssm_offvtx_track1_pdg);
+    tree0->SetBranchAddress("ssm_offvtx_track1_score_mu_fwd",&tagger_info.ssm_offvtx_track1_score_mu_fwd);
+    tree0->SetBranchAddress("ssm_offvtx_track1_score_p_fwd",&tagger_info.ssm_offvtx_track1_score_p_fwd);
+    tree0->SetBranchAddress("ssm_offvtx_track1_score_e_fwd",&tagger_info.ssm_offvtx_track1_score_e_fwd);
+    tree0->SetBranchAddress("ssm_offvtx_track1_score_mu_bck",&tagger_info.ssm_offvtx_track1_score_mu_bck);
+    tree0->SetBranchAddress("ssm_offvtx_track1_score_p_bck",&tagger_info.ssm_offvtx_track1_score_p_bck);
+    tree0->SetBranchAddress("ssm_offvtx_track1_score_e_bck",&tagger_info.ssm_offvtx_track1_score_e_bck);
+    tree0->SetBranchAddress("ssm_offvtx_track1_length",&tagger_info.ssm_offvtx_track1_length);
+    tree0->SetBranchAddress("ssm_offvtx_track1_direct_length",&tagger_info.ssm_offvtx_track1_direct_length);
+    tree0->SetBranchAddress("ssm_offvtx_track1_max_dev",&tagger_info.ssm_offvtx_track1_max_dev);
+    tree0->SetBranchAddress("ssm_offvtx_track1_kine_energy_range",&tagger_info.ssm_offvtx_track1_kine_energy_range);
+    tree0->SetBranchAddress("ssm_offvtx_track1_kine_energy_range_mu",&tagger_info.ssm_offvtx_track1_kine_energy_range_mu);
+    tree0->SetBranchAddress("ssm_offvtx_track1_kine_energy_range_p",&tagger_info.ssm_offvtx_track1_kine_energy_range_p);
+    tree0->SetBranchAddress("ssm_offvtx_track1_kine_energy_range_e",&tagger_info.ssm_offvtx_track1_kine_energy_range_e);
+    tree0->SetBranchAddress("ssm_offvtx_track1_kine_energy_cal",&tagger_info.ssm_offvtx_track1_kine_energy_cal);
+    tree0->SetBranchAddress("ssm_offvtx_track1_medium_dq_dx",&tagger_info.ssm_offvtx_track1_medium_dq_dx);
+    tree0->SetBranchAddress("ssm_offvtx_track1_x_dir",&tagger_info.ssm_offvtx_track1_x_dir);
+    tree0->SetBranchAddress("ssm_offvtx_track1_y_dir",&tagger_info.ssm_offvtx_track1_y_dir);
+    tree0->SetBranchAddress("ssm_offvtx_track1_z_dir",&tagger_info.ssm_offvtx_track1_z_dir);
+    tree0->SetBranchAddress("ssm_offvtx_track1_dist_mainvtx",&tagger_info.ssm_offvtx_track1_dist_mainvtx);
+
+    //properties of leading off vertex shower
+    tree0->SetBranchAddress("ssm_offvtx_shw1_pdg_offvtx",&tagger_info.ssm_offvtx_shw1_pdg_offvtx);
+    tree0->SetBranchAddress("ssm_offvtx_shw1_score_mu_fwd",&tagger_info.ssm_offvtx_shw1_score_mu_fwd);
+    tree0->SetBranchAddress("ssm_offvtx_shw1_score_p_fwd",&tagger_info.ssm_offvtx_shw1_score_p_fwd);
+    tree0->SetBranchAddress("ssm_offvtx_shw1_score_e_fwd",&tagger_info.ssm_offvtx_shw1_score_e_fwd);
+    tree0->SetBranchAddress("ssm_offvtx_shw1_score_mu_bck",&tagger_info.ssm_offvtx_shw1_score_mu_bck);
+    tree0->SetBranchAddress("ssm_offvtx_shw1_score_p_bck",&tagger_info.ssm_offvtx_shw1_score_p_bck);
+    tree0->SetBranchAddress("ssm_offvtx_shw1_score_e_bck",&tagger_info.ssm_offvtx_shw1_score_e_bck);
+    tree0->SetBranchAddress("ssm_offvtx_shw1_length",&tagger_info.ssm_offvtx_shw1_length);
+    tree0->SetBranchAddress("ssm_offvtx_shw1_direct_length",&tagger_info.ssm_offvtx_shw1_direct_length);
+    tree0->SetBranchAddress("ssm_offvtx_shw1_max_dev",&tagger_info.ssm_offvtx_shw1_max_dev);
+    tree0->SetBranchAddress("ssm_offvtx_shw1_kine_energy_best",&tagger_info.ssm_offvtx_shw1_kine_energy_best);
+    tree0->SetBranchAddress("ssm_offvtx_shw1_kine_energy_range",&tagger_info.ssm_offvtx_shw1_kine_energy_range);
+    tree0->SetBranchAddress("ssm_offvtx_shw1_kine_energy_range_mu",&tagger_info.ssm_offvtx_shw1_kine_energy_range_mu);
+    tree0->SetBranchAddress("ssm_offvtx_shw1_kine_energy_range_p",&tagger_info.ssm_offvtx_shw1_kine_energy_range_p);
+    tree0->SetBranchAddress("ssm_offvtx_shw1_kine_energy_range_e",&tagger_info.ssm_offvtx_shw1_kine_energy_range_e);
+    tree0->SetBranchAddress("ssm_offvtx_shw1_kine_energy_cal",&tagger_info.ssm_offvtx_shw1_kine_energy_cal);
+    tree0->SetBranchAddress("ssm_offvtx_shw1_medium_dq_dx",&tagger_info.ssm_offvtx_shw1_medium_dq_dx);
+    tree0->SetBranchAddress("ssm_offvtx_shw1_x_dir",&tagger_info.ssm_offvtx_shw1_x_dir);
+    tree0->SetBranchAddress("ssm_offvtx_shw1_y_dir",&tagger_info.ssm_offvtx_shw1_y_dir);
+    tree0->SetBranchAddress("ssm_offvtx_shw1_z_dir",&tagger_info.ssm_offvtx_shw1_z_dir);
+    tree0->SetBranchAddress("ssm_offvtx_shw1_dist_mainvtx",&tagger_info.ssm_offvtx_shw1_dist_mainvtx);
+
+    // Kine vars
+    if(tree0->SetBranch("ssm_kine_reco_Enu")){
+      tagger_info.saved_ssm_kine_vars = true;
+      tree0->SetBranchAddress("ssm_kine_reco_Enu", &tagger_info.ssm_kine_reco_Enu); // ssm_kinetic energy  + additional energy ...
+      tree0->SetBranchAddress("ssm_kine_reco_add_energy", &tagger_info.ssm_kine_reco_add_energy);  // mass, binding energy ...
+      tree0->SetBranchAddress("ssm_kine_energy_particle", &tagger_info.ssm_kine_energy_particle);  // energy of each particle
+      tree0->SetBranchAddress("ssm_kine_energy_info", &tagger_info.ssm_kine_energy_info); // what kind of energy reconstruction?
+      tree0->SetBranchAddress("ssm_kine_particle_type", &tagger_info.ssm_kine_particle_type);
+      tree0->SetBranchAddress("ssm_kine_energy_included", &tagger_info.ssm_kine_energy_included); // included in the neutrino energy calculation?
+      tree0->SetBranchAddress("ssm_kine_pio_mass", &tagger_info.ssm_kine_pio_mass); // mass
+      tree0->SetBranchAddress("ssm_kine_pio_flag", &tagger_info.ssm_kine_pio_flag); // 0 not filled, 1, with vertex: CCpio, 2 without vertex: NCpi0
+      tree0->SetBranchAddress("ssm_kine_pio_vtx_dis", &tagger_info.ssm_kine_pio_vtx_dis);
+      tree0->SetBranchAddress("ssm_kine_pio_energy_1", &tagger_info.ssm_kine_pio_energy_1);
+      tree0->SetBranchAddress("ssm_kine_pio_theta_1", &tagger_info.ssm_kine_pio_theta_1);
+      tree0->SetBranchAddress("ssm_kine_pio_phi_1", &tagger_info.ssm_kine_pio_phi_1);
+      tree0->SetBranchAddress("ssm_kine_pio_dis_1", &tagger_info.ssm_kine_pio_dis_1);
+      tree0->SetBranchAddress("ssm_kine_pio_energy_2", &tagger_info.ssm_kine_pio_energy_2);
+      tree0->SetBranchAddress("ssm_kine_pio_theta_2", &tagger_info.ssm_kine_pio_theta_2);
+      tree0->SetBranchAddress("ssm_kine_pio_phi_2", &tagger_info.ssm_kine_pio_phi_2);
+      tree0->SetBranchAddress("ssm_kine_pio_dis_2", &tagger_info.ssm_kine_pio_dis_2);
+      tree0->SetBranchAddress("ssm_kine_pio_angle", &tagger_info.ssm_kine_pio_angle);
+    }
+    tree0->SetBranchAddress("ssm_cosmict_flag_1",&tagger_info.cosmict_flag_1);
+    tree0->SetBranchAddress("ssm_cosmict_flag_2",&tagger_info.cosmict_flag_2);
+    tree0->SetBranchAddress("ssm_cosmict_flag_3",&tagger_info.cosmict_flag_3);
+    tree0->SetBranchAddress("ssm_cosmict_flag_4",&tagger_info.cosmict_flag_4);
+    tree0->SetBranchAddress("ssm_cosmict_flag_5",&tagger_info.cosmict_flag_5);
+    tree0->SetBranchAddress("ssm_cosmict_flag_6",&tagger_info.cosmict_flag_6);
+    tree0->SetBranchAddress("ssm_cosmict_flag_7",&tagger_info.cosmict_flag_7);
+    tree0->SetBranchAddress("ssm_cosmict_flag_8",&tagger_info.cosmict_flag_8);
+    tree0->SetBranchAddress("ssm_cosmict_flag_9",&tagger_info.cosmict_flag_9);
+    tree0->SetBranchAddress("ssm_cosmict_flag_10",&tagger_info.cosmict_flag_10);
+    tree0->SetBranchAddress("ssm_cosmict_flag",&tagger_info.cosmict_flag);
+  }
+  // End KDAR vars
+
   if (flag==1) tree0->SetBranchAddress("event_type",&tagger_info.event_type);
 }
 
@@ -4112,6 +5422,445 @@ void LEEana::put_tree_address(TTree *T_tagger, TaggerInfo& tagger_info, int flag
     T_tagger->Branch("shw_sp_lem_flag",&tagger_info.shw_sp_lem_flag,"shw_sp_lem_flag/F");
 //
 
+    // KDAR vars
+    if(tagger_info.saved_ssm_bdt_scores){
+      T_tagger->Branch("ssm_kdar_score_lowE",&ssm_kdar_score_lowE,"ssm_kdar_score_lowE/F");
+      T_tagger->Branch("ssm_kdar_score_hiE",&ssm_kdar_score_hiE,"ssm_kdar_score_hiE/F");
+    }
+
+    if(tagger_info.saved_ssm_bdt_vars){
+      //single track kdar tagger
+      T_tagger->Branch("ssm_flag_st_kdar",&ssm_flag_st_kdar,"ssm_flag_st_kdar/F");
+      T_tagger->Branch("ssm_Nsm",&ssm_Nsm,"ssm_Nsm/F");
+      T_tagger->Branch("ssm_Nsm_wivtx",&ssm_Nsm_wivtx,"ssm_Nsm_wivtx/F");
+
+      //only filled if there is one ssm
+      //properties of the ssm
+      //dq/dx info
+      T_tagger->Branch("ssm_dq_dx_fwd_1", &ssm_dq_dx_fwd_1, "ssm_dq_dx_fwd_1/F");
+      T_tagger->Branch("ssm_dq_dx_fwd_2", &ssm_dq_dx_fwd_2, "ssm_dq_dx_fwd_2/F");
+      T_tagger->Branch("ssm_dq_dx_fwd_3", &ssm_dq_dx_fwd_3, "ssm_dq_dx_fwd_3/F");
+      T_tagger->Branch("ssm_dq_dx_fwd_4", &ssm_dq_dx_fwd_4, "ssm_dq_dx_fwd_4/F");
+      T_tagger->Branch("ssm_dq_dx_fwd_5", &ssm_dq_dx_fwd_5, "ssm_dq_dx_fwd_5/F");
+      T_tagger->Branch("ssm_dq_dx_bck_1", &ssm_dq_dx_bck_1, "ssm_dq_dx_bck_1/F");
+      T_tagger->Branch("ssm_dq_dx_bck_2", &ssm_dq_dx_bck_2, "ssm_dq_dx_bck_2/F");
+      T_tagger->Branch("ssm_dq_dx_bck_3", &ssm_dq_dx_bck_3, "ssm_dq_dx_bck_3/F");
+      T_tagger->Branch("ssm_dq_dx_bck_4", &ssm_dq_dx_bck_4, "ssm_dq_dx_bck_4/F");
+      T_tagger->Branch("ssm_dq_dx_bck_5", &ssm_dq_dx_bck_5, "ssm_dq_dx_bck_5/F");
+      T_tagger->Branch("ssm_d_dq_dx_fwd_12", &ssm_d_dq_dx_fwd_12, "ssm_d_dq_dx_fwd_12/F");
+      T_tagger->Branch("ssm_d_dq_dx_fwd_23", &ssm_d_dq_dx_fwd_23, "ssm_d_dq_dx_fwd_23/F");
+      T_tagger->Branch("ssm_d_dq_dx_fwd_34", &ssm_d_dq_dx_fwd_34, "ssm_d_dq_dx_fwd_34/F");
+      T_tagger->Branch("ssm_d_dq_dx_fwd_45", &ssm_d_dq_dx_fwd_45, "ssm_d_dq_dx_fwd_45/F");
+      T_tagger->Branch("ssm_d_dq_dx_bck_12", &ssm_d_dq_dx_bck_12, "ssm_d_dq_dx_bck_12/F");
+      T_tagger->Branch("ssm_d_dq_dx_bck_23", &ssm_d_dq_dx_bck_23, "ssm_d_dq_dx_bck_23/F");
+      T_tagger->Branch("ssm_d_dq_dx_bck_34", &ssm_d_dq_dx_bck_34, "ssm_d_dq_dx_bck_34/F");
+      T_tagger->Branch("ssm_d_dq_dx_bck_45", &ssm_d_dq_dx_bck_45, "ssm_d_dq_dx_bck_45/F");
+      T_tagger->Branch("ssm_max_dq_dx_fwd_3", &ssm_max_dq_dx_fwd_3, "ssm_max_dq_dx_fwd_3/F");
+      T_tagger->Branch("ssm_max_dq_dx_fwd_5", &ssm_max_dq_dx_fwd_5, "ssm_max_dq_dx_fwd_5/F");
+      T_tagger->Branch("ssm_max_dq_dx_bck_3", &ssm_max_dq_dx_bck_3, "ssm_max_dq_dx_bck_3/F");
+      T_tagger->Branch("ssm_max_dq_dx_bck_5", &ssm_max_dq_dx_bck_5, "ssm_max_dq_dx_bck_5/F");
+      T_tagger->Branch("ssm_max_d_dq_dx_fwd_3", &ssm_max_d_dq_dx_fwd_3, "ssm_max_d_dq_dx_fwd_3/F");
+      T_tagger->Branch("ssm_max_d_dq_dx_fwd_5", &ssm_max_d_dq_dx_fwd_5, "ssm_max_d_dq_dx_fwd_5/F");
+      T_tagger->Branch("ssm_max_d_dq_dx_bck_3", &ssm_max_d_dq_dx_bck_3, "ssm_max_d_dq_dx_bck_3/F");
+      T_tagger->Branch("ssm_max_d_dq_dx_bck_5", &ssm_max_d_dq_dx_bck_5, "ssm_max_d_dq_dx_bck_5/F");
+      T_tagger->Branch("ssm_medium_dq_dx", &ssm_medium_dq_dx, "ssm_medium_dq_dx/F");
+      T_tagger->Branch("ssm_medium_dq_dx_bp", &ssm_medium_dq_dx_bp, "ssm_medium_dq_dx_bp/F");
+      //angluar info
+      T_tagger->Branch("ssm_angle_to_z", &ssm_angle_to_z, "ssm_angle_to_z/F");
+      T_tagger->Branch("ssm_angle_to_target", &ssm_angle_to_target, "ssm_angle_to_target/F");
+      T_tagger->Branch("ssm_angle_to_absorber", &ssm_angle_to_absorber, "ssm_angle_to_absorber/F");
+      T_tagger->Branch("ssm_angle_to_vertical", &ssm_angle_to_vertical, "ssm_angle_to_vertical/F");
+      //directional info
+      T_tagger->Branch("ssm_x_dir", &ssm_x_dir, "ssm_x_dir/F");
+      T_tagger->Branch("ssm_y_dir", &ssm_y_dir, "ssm_y_dir/F");
+      T_tagger->Branch("ssm_z_dir", &ssm_z_dir, "ssm_z_dir/F");
+      //energy info
+      T_tagger->Branch("ssm_kine_energy", &ssm_kine_energy, "ssm_kine_energy/F");
+      T_tagger->Branch("ssm_kine_energy_reduced", &ssm_kine_energy_reduced, "ssm_kine_energy_reduced/F");
+      //general properties
+      T_tagger->Branch("ssm_vtx_activity", &ssm_vtx_activity, "ssm_vtx_activity/F");
+      T_tagger->Branch("ssm_pdg", &ssm_pdg, "ssm_pdg/F");
+      T_tagger->Branch("ssm_dQ_dx_cut", &ssm_dQ_dx_cut, "ssm_dQ_dx_cut/F");
+      T_tagger->Branch("ssm_score_mu_fwd", &ssm_score_mu_fwd, "ssm_score_mu_fwd/F");
+      T_tagger->Branch("ssm_score_p_fwd", &ssm_score_p_fwd, "ssm_score_p_fwd/F");
+      T_tagger->Branch("ssm_score_e_fwd", &ssm_score_e_fwd, "ssm_score_e_fwd/F");
+      T_tagger->Branch("ssm_score_mu_bck", &ssm_score_mu_bck, "ssm_score_mu_bck/F");
+      T_tagger->Branch("ssm_score_p_bck", &ssm_score_p_bck, "ssm_score_p_bck/F");
+      T_tagger->Branch("ssm_score_e_bck", &ssm_score_e_bck, "ssm_score_e_bck/F");
+      T_tagger->Branch("ssm_score_mu_fwd_bp", &ssm_score_mu_fwd_bp, "ssm_score_mu_fwd_bp/F");
+      T_tagger->Branch("ssm_score_p_fwd_bp", &ssm_score_p_fwd_bp, "ssm_score_p_fwd_bp/F");
+      T_tagger->Branch("ssm_score_e_fwd_bp", &ssm_score_e_fwd_bp, "ssm_score_e_fwd_bp/F");
+      //track "straighness"
+      T_tagger->Branch("ssm_length", &ssm_length, "ssm_length/F");
+      T_tagger->Branch("ssm_direct_length", &ssm_direct_length, "ssm_direct_length/F");
+      T_tagger->Branch("ssm_length_ratio", &ssm_length_ratio, "ssm_length_ratio/F");
+      T_tagger->Branch("ssm_max_dev", &ssm_max_dev, "ssm_max_dev/F");
+      //number of other particles
+      T_tagger->Branch("ssm_n_prim_tracks_1", &ssm_n_prim_tracks_1, "ssm_n_prim_tracks_1/F");
+      T_tagger->Branch("ssm_n_prim_tracks_3", &ssm_n_prim_tracks_3, "ssm_n_prim_tracks_3/F");
+      T_tagger->Branch("ssm_n_prim_tracks_5", &ssm_n_prim_tracks_5, "ssm_n_prim_tracks_5/F");
+      T_tagger->Branch("ssm_n_prim_tracks_8", &ssm_n_prim_tracks_8, "ssm_n_prim_tracks_8/F");
+      T_tagger->Branch("ssm_n_prim_tracks_11", &ssm_n_prim_tracks_11, "ssm_n_prim_tracks_11/F");
+      T_tagger->Branch("ssm_n_all_tracks_1", &ssm_n_all_tracks_1, "ssm_n_all_tracks_1/F");
+      T_tagger->Branch("ssm_n_all_tracks_3", &ssm_n_all_tracks_3, "ssm_n_all_tracks_3/F");
+      T_tagger->Branch("ssm_n_all_tracks_5", &ssm_n_all_tracks_5, "ssm_n_all_tracks_5/F");
+      T_tagger->Branch("ssm_n_all_tracks_8", &ssm_n_all_tracks_8, "ssm_n_all_tracks_8/F");
+      T_tagger->Branch("ssm_n_all_tracks_11", &ssm_n_all_tracks_11, "ssm_n_all_tracks_11/F");
+      T_tagger->Branch("ssm_n_daughter_tracks_1", &ssm_n_daughter_tracks_1, "ssm_n_daughter_tracks_1/F");
+      T_tagger->Branch("ssm_n_daughter_tracks_3", &ssm_n_daughter_tracks_3, "ssm_n_daughter_tracks_3/F");
+      T_tagger->Branch("ssm_n_daughter_tracks_5", &ssm_n_daughter_tracks_5, "ssm_n_daughter_tracks_5/F");
+      T_tagger->Branch("ssm_n_daughter_tracks_8", &ssm_n_daughter_tracks_8, "ssm_n_daughter_tracks_8/F");
+      T_tagger->Branch("ssm_n_daughter_tracks_11", &ssm_n_daughter_tracks_11, "ssm_n_daughter_tracks_11/F");
+      T_tagger->Branch("ssm_n_daughter_all_1", &ssm_n_daughter_all_1, "ssm_n_daughter_all_1/F");
+      T_tagger->Branch("ssm_n_daughter_all_3", &ssm_n_daughter_all_3, "ssm_n_daughter_all_3/F");
+      T_tagger->Branch("ssm_n_daughter_all_5", &ssm_n_daughter_all_5, "ssm_n_daughter_all_5/F");
+      T_tagger->Branch("ssm_n_daughter_all_8", &ssm_n_daughter_all_8, "ssm_n_daughter_all_8/F");
+      T_tagger->Branch("ssm_n_daughter_all_11", &ssm_n_daughter_all_11, "ssm_n_daughter_all_11/F");
+
+      //properties of leading other primary track
+      T_tagger->Branch("ssm_prim_track1_pdg", &ssm_prim_track1_pdg, "ssm_prim_track1_pdg/F");
+      T_tagger->Branch("ssm_prim_track1_score_mu_fwd", &ssm_prim_track1_score_mu_fwd, "ssm_prim_track1_score_mu_fwd/F");
+      T_tagger->Branch("ssm_prim_track1_score_p_fwd", &ssm_prim_track1_score_p_fwd, "ssm_prim_track1_score_p_fwd/F");
+      T_tagger->Branch("ssm_prim_track1_score_e_fwd", &ssm_prim_track1_score_e_fwd, "ssm_prim_track1_score_e_fwd/F");
+      T_tagger->Branch("ssm_prim_track1_score_mu_bck", &ssm_prim_track1_score_mu_bck, "ssm_prim_track1_score_mu_bck/F");
+      T_tagger->Branch("ssm_prim_track1_score_p_bck", &ssm_prim_track1_score_p_bck, "ssm_prim_track1_score_p_bck/F");
+      T_tagger->Branch("ssm_prim_track1_score_e_bck", &ssm_prim_track1_score_e_bck, "ssm_prim_track1_score_e_bck/F");
+      T_tagger->Branch("ssm_prim_track1_length", &ssm_prim_track1_length, "ssm_prim_track1_length/F");
+      T_tagger->Branch("ssm_prim_track1_direct_length", &ssm_prim_track1_direct_length, "ssm_prim_track1_direct_length/F");
+      T_tagger->Branch("ssm_prim_track1_length_ratio", &ssm_prim_track1_length_ratio, "ssm_prim_track1_length_ratio/F");
+      T_tagger->Branch("ssm_prim_track1_max_dev", &ssm_prim_track1_max_dev, "ssm_prim_track1_max_dev/F");
+      T_tagger->Branch("ssm_prim_track1_kine_energy_range", &ssm_prim_track1_kine_energy_range, "ssm_prim_track1_kine_energy_range/F");
+      T_tagger->Branch("ssm_prim_track1_kine_energy_range_mu", &ssm_prim_track1_kine_energy_range_mu, "ssm_prim_track1_kine_energy_range_mu/F");
+      T_tagger->Branch("ssm_prim_track1_kine_energy_range_p", &ssm_prim_track1_kine_energy_range_p, "ssm_prim_track1_kine_energy_range_p/F");
+      T_tagger->Branch("ssm_prim_track1_kine_energy_range_e", &ssm_prim_track1_kine_energy_range_e, "ssm_prim_track1_kine_energy_range_e/F");
+      T_tagger->Branch("ssm_prim_track1_kine_energy_cal", &ssm_prim_track1_kine_energy_cal, "ssm_prim_track1_kine_energy_cal/F");
+      T_tagger->Branch("ssm_prim_track1_medium_dq_dx", &ssm_prim_track1_medium_dq_dx, "ssm_prim_track1_medium_dq_dx/F");
+      T_tagger->Branch("ssm_prim_track1_x_dir", &ssm_prim_track1_x_dir, "ssm_prim_track1_x_dir/F");
+      T_tagger->Branch("ssm_prim_track1_y_dir", &ssm_prim_track1_y_dir, "ssm_prim_track1_y_dir/F");
+      T_tagger->Branch("ssm_prim_track1_z_dir", &ssm_prim_track1_z_dir, "ssm_prim_track1_z_dir/F");
+      T_tagger->Branch("ssm_prim_track1_add_daught_track_counts_1", &ssm_prim_track1_add_daught_track_counts_1, "ssm_prim_track1_add_daught_track_counts_1/F");
+      T_tagger->Branch("ssm_prim_track1_add_daught_all_counts_1", &ssm_prim_track1_add_daught_all_counts_1, "ssm_prim_track1_add_daught_all_counts_1/F");
+      T_tagger->Branch("ssm_prim_track1_add_daught_track_counts_5", &ssm_prim_track1_add_daught_track_counts_5, "ssm_prim_track1_add_daught_track_counts_5/F");
+      T_tagger->Branch("ssm_prim_track1_add_daught_all_counts_5", &ssm_prim_track1_add_daught_all_counts_5, "ssm_prim_track1_add_daught_all_counts_5/F");
+      T_tagger->Branch("ssm_prim_track1_add_daught_track_counts_11", &ssm_prim_track1_add_daught_track_counts_11, "ssm_prim_track1_add_daught_track_counts_11/F");
+      T_tagger->Branch("ssm_prim_track1_add_daught_all_counts_11", &ssm_prim_track1_add_daught_all_counts_11, "ssm_prim_track1_add_daught_all_counts_11/F");
+
+      //properties of sub-leading other primary track
+      T_tagger->Branch("ssm_prim_track2_pdg", &ssm_prim_track2_pdg, "ssm_prim_track2_pdg/F");
+      T_tagger->Branch("ssm_prim_track2_score_mu_fwd", &ssm_prim_track2_score_mu_fwd, "ssm_prim_track2_score_mu_fwd/F");
+      T_tagger->Branch("ssm_prim_track2_score_p_fwd", &ssm_prim_track2_score_p_fwd, "ssm_prim_track2_score_p_fwd/F");
+      T_tagger->Branch("ssm_prim_track2_score_e_fwd", &ssm_prim_track2_score_e_fwd, "ssm_prim_track2_score_e_fwd/F");
+      T_tagger->Branch("ssm_prim_track2_score_mu_bck", &ssm_prim_track2_score_mu_bck, "ssm_prim_track2_score_mu_bck/F");
+      T_tagger->Branch("ssm_prim_track2_score_p_bck", &ssm_prim_track2_score_p_bck, "ssm_prim_track2_score_p_bck/F");
+      T_tagger->Branch("ssm_prim_track2_score_e_bck", &ssm_prim_track2_score_e_bck, "ssm_prim_track2_score_e_bck/F");
+      T_tagger->Branch("ssm_prim_track2_length", &ssm_prim_track2_length, "ssm_prim_track2_length/F");
+      T_tagger->Branch("ssm_prim_track2_direct_length", &ssm_prim_track2_direct_length, "ssm_prim_track2_direct_length/F");
+      T_tagger->Branch("ssm_prim_track2_length_ratio", &ssm_prim_track2_length_ratio, "ssm_prim_track2_length_ratio/F");
+      T_tagger->Branch("ssm_prim_track2_max_dev", &ssm_prim_track2_max_dev, "ssm_prim_track2_max_dev/F");
+      T_tagger->Branch("ssm_prim_track2_kine_energy_range", &ssm_prim_track2_kine_energy_range, "ssm_prim_track2_kine_energy_range/F");
+      T_tagger->Branch("ssm_prim_track2_kine_energy_range_mu", &ssm_prim_track2_kine_energy_range_mu, "ssm_prim_track2_kine_energy_range_mu/F");
+      T_tagger->Branch("ssm_prim_track2_kine_energy_range_p", &ssm_prim_track2_kine_energy_range_p, "ssm_prim_track2_kine_energy_range_p/F");
+      T_tagger->Branch("ssm_prim_track2_kine_energy_range_e", &ssm_prim_track2_kine_energy_range_e, "ssm_prim_track2_kine_energy_range_e/F");
+      T_tagger->Branch("ssm_prim_track2_kine_energy_cal", &ssm_prim_track2_kine_energy_cal, "ssm_prim_track2_kine_energy_cal/F");
+      T_tagger->Branch("ssm_prim_track2_medium_dq_dx", &ssm_prim_track2_medium_dq_dx, "ssm_prim_track2_medium_dq_dx/F");
+      T_tagger->Branch("ssm_prim_track2_x_dir", &ssm_prim_track2_x_dir, "ssm_prim_track2_x_dir/F");
+      T_tagger->Branch("ssm_prim_track2_y_dir", &ssm_prim_track2_y_dir, "ssm_prim_track2_y_dir/F");
+      T_tagger->Branch("ssm_prim_track2_z_dir", &ssm_prim_track2_z_dir, "ssm_prim_track2_z_dir/F");
+      T_tagger->Branch("ssm_prim_track2_add_daught_track_counts_1", &ssm_prim_track2_add_daught_track_counts_1, "ssm_prim_track2_add_daught_track_counts_1/F");
+      T_tagger->Branch("ssm_prim_track2_add_daught_all_counts_1", &ssm_prim_track2_add_daught_all_counts_1, "ssm_prim_track2_add_daught_all_counts_1/F");
+      T_tagger->Branch("ssm_prim_track2_add_daught_track_counts_5", &ssm_prim_track2_add_daught_track_counts_5, "ssm_prim_track2_add_daught_track_counts_5/F");
+      T_tagger->Branch("ssm_prim_track2_add_daught_all_counts_5", &ssm_prim_track2_add_daught_all_counts_5, "ssm_prim_track2_add_daught_all_counts_5/F");
+      T_tagger->Branch("ssm_prim_track2_add_daught_track_counts_11", &ssm_prim_track2_add_daught_track_counts_11, "ssm_prim_track2_add_daught_track_counts_11/F");
+      T_tagger->Branch("ssm_prim_track2_add_daught_all_counts_11", &ssm_prim_track2_add_daught_all_counts_11, "ssm_prim_track2_add_daught_all_counts_11/F");
+
+      //properties of leading daughter track
+      T_tagger->Branch("ssm_daught_track1_pdg", &ssm_daught_track1_pdg, "ssm_daught_track1_pdg/F");
+      T_tagger->Branch("ssm_daught_track1_score_mu_fwd", &ssm_daught_track1_score_mu_fwd, "ssm_daught_track1_score_mu_fwd/F");
+      T_tagger->Branch("ssm_daught_track1_score_p_fwd", &ssm_daught_track1_score_p_fwd, "ssm_daught_track1_score_p_fwd/F");
+      T_tagger->Branch("ssm_daught_track1_score_e_fwd", &ssm_daught_track1_score_e_fwd, "ssm_daught_track1_score_e_fwd/F");
+      T_tagger->Branch("ssm_daught_track1_score_mu_bck", &ssm_daught_track1_score_mu_bck, "ssm_daught_track1_score_mu_bck/F");
+      T_tagger->Branch("ssm_daught_track1_score_p_bck", &ssm_daught_track1_score_p_bck, "ssm_daught_track1_score_p_bck/F");
+      T_tagger->Branch("ssm_daught_track1_score_e_bck", &ssm_daught_track1_score_e_bck, "ssm_daught_track1_score_e_bck/F");
+      T_tagger->Branch("ssm_daught_track1_length", &ssm_daught_track1_length, "ssm_daught_track1_length/F");
+      T_tagger->Branch("ssm_daught_track1_direct_length", &ssm_daught_track1_direct_length, "ssm_daught_track1_direct_length/F");
+      T_tagger->Branch("ssm_daught_track1_length_ratio", &ssm_daught_track1_length_ratio, "ssm_daught_track1_length_ratio/F");
+      T_tagger->Branch("ssm_daught_track1_max_dev", &ssm_daught_track1_max_dev, "ssm_daught_track1_max_dev/F");
+      T_tagger->Branch("ssm_daught_track1_kine_energy_range", &ssm_daught_track1_kine_energy_range, "ssm_daught_track1_kine_energy_range/F");
+      T_tagger->Branch("ssm_daught_track1_kine_energy_range_mu", &ssm_daught_track1_kine_energy_range_mu, "ssm_daught_track1_kine_energy_range_mu/F");
+      T_tagger->Branch("ssm_daught_track1_kine_energy_range_p", &ssm_daught_track1_kine_energy_range_p, "ssm_daught_track1_kine_energy_range_p/F");
+      T_tagger->Branch("ssm_daught_track1_kine_energy_range_e", &ssm_daught_track1_kine_energy_range_e, "ssm_daught_track1_kine_energy_range_e/F");
+      T_tagger->Branch("ssm_daught_track1_kine_energy_cal", &ssm_daught_track1_kine_energy_cal, "ssm_daught_track1_kine_energy_cal/F");
+      T_tagger->Branch("ssm_daught_track1_medium_dq_dx", &ssm_daught_track1_medium_dq_dx, "ssm_daught_track1_medium_dq_dx/F");
+      T_tagger->Branch("ssm_daught_track1_x_dir", &ssm_daught_track1_x_dir, "ssm_daught_track1_x_dir/F");
+      T_tagger->Branch("ssm_daught_track1_y_dir", &ssm_daught_track1_y_dir, "ssm_daught_track1_y_dir/F");
+      T_tagger->Branch("ssm_daught_track1_z_dir", &ssm_daught_track1_z_dir, "ssm_daught_track1_z_dir/F");
+      T_tagger->Branch("ssm_daught_track1_add_daught_track_counts_1", &ssm_daught_track1_add_daught_track_counts_1, "ssm_daught_track1_add_daught_track_counts_1/F");
+      T_tagger->Branch("ssm_daught_track1_add_daught_all_counts_1", &ssm_daught_track1_add_daught_all_counts_1, "ssm_daught_track1_add_daught_all_counts_1/F");
+      T_tagger->Branch("ssm_daught_track1_add_daught_track_counts_5", &ssm_daught_track1_add_daught_track_counts_5, "ssm_daught_track1_add_daught_track_counts_5/F");
+      T_tagger->Branch("ssm_daught_track1_add_daught_all_counts_5", &ssm_daught_track1_add_daught_all_counts_5, "ssm_daught_track1_add_daught_all_counts_5/F");
+      T_tagger->Branch("ssm_daught_track1_add_daught_track_counts_11", &ssm_daught_track1_add_daught_track_counts_11, "ssm_daught_track1_add_daught_track_counts_11/F");
+      T_tagger->Branch("ssm_daught_track1_add_daught_all_counts_11", &ssm_daught_track1_add_daught_all_counts_11, "ssm_daught_track1_add_daught_all_counts_11/F");
+
+      //properties of sub-leading daughter track
+      T_tagger->Branch("ssm_daught_track2_pdg", &ssm_daught_track2_pdg, "ssm_daught_track2_pdg/F");
+      T_tagger->Branch("ssm_daught_track2_score_mu_fwd", &ssm_daught_track2_score_mu_fwd, "ssm_daught_track2_score_mu_fwd/F");
+      T_tagger->Branch("ssm_daught_track2_score_p_fwd", &ssm_daught_track2_score_p_fwd, "ssm_daught_track2_score_p_fwd/F");
+      T_tagger->Branch("ssm_daught_track2_score_e_fwd", &ssm_daught_track2_score_e_fwd, "ssm_daught_track2_score_e_fwd/F");
+      T_tagger->Branch("ssm_daught_track2_score_mu_bck", &ssm_daught_track2_score_mu_bck, "ssm_daught_track2_score_mu_bck/F");
+      T_tagger->Branch("ssm_daught_track2_score_p_bck", &ssm_daught_track2_score_p_bck, "ssm_daught_track2_score_p_bck/F");
+      T_tagger->Branch("ssm_daught_track2_score_e_bck", &ssm_daught_track2_score_e_bck, "ssm_daught_track2_score_e_bck/F");
+      T_tagger->Branch("ssm_daught_track2_length", &ssm_daught_track2_length, "ssm_daught_track2_length/F");
+      T_tagger->Branch("ssm_daught_track2_direct_length", &ssm_daught_track2_direct_length, "ssm_daught_track2_direct_length/F");
+      T_tagger->Branch("ssm_daught_track2_length_ratio", &ssm_daught_track2_length_ratio, "ssm_daught_track2_length_ratio/F");
+      T_tagger->Branch("ssm_daught_track2_max_dev", &ssm_daught_track2_max_dev, "ssm_daught_track2_max_dev/F");
+      T_tagger->Branch("ssm_daught_track2_kine_energy_range", &ssm_daught_track2_kine_energy_range, "ssm_daught_track2_kine_energy_range/F");
+      T_tagger->Branch("ssm_daught_track2_kine_energy_range_mu", &ssm_daught_track2_kine_energy_range_mu, "ssm_daught_track2_kine_energy_range_mu/F");
+      T_tagger->Branch("ssm_daught_track2_kine_energy_range_p", &ssm_daught_track2_kine_energy_range_p, "ssm_daught_track2_kine_energy_range_p/F");
+      T_tagger->Branch("ssm_daught_track2_kine_energy_range_e", &ssm_daught_track2_kine_energy_range_e, "ssm_daught_track2_kine_energy_range_e/F");
+      T_tagger->Branch("ssm_daught_track2_kine_energy_cal", &ssm_daught_track2_kine_energy_cal, "ssm_daught_track2_kine_energy_cal/F");
+      T_tagger->Branch("ssm_daught_track2_medium_dq_dx", &ssm_daught_track2_medium_dq_dx, "ssm_daught_track2_medium_dq_dx/F");
+      T_tagger->Branch("ssm_daught_track2_x_dir", &ssm_daught_track2_x_dir, "ssm_daught_track2_x_dir/F");
+      T_tagger->Branch("ssm_daught_track2_y_dir", &ssm_daught_track2_y_dir, "ssm_daught_track2_y_dir/F");
+      T_tagger->Branch("ssm_daught_track2_z_dir", &ssm_daught_track2_z_dir, "ssm_daught_track2_z_dir/F");
+      T_tagger->Branch("ssm_daught_track2_add_daught_track_counts_1", &ssm_daught_track2_add_daught_track_counts_1, "ssm_daught_track2_add_daught_track_counts_1/F");
+      T_tagger->Branch("ssm_daught_track2_add_daught_all_counts_1", &ssm_daught_track2_add_daught_all_counts_1, "ssm_daught_track2_add_daught_all_counts_1/F");
+      T_tagger->Branch("ssm_daught_track2_add_daught_track_counts_5", &ssm_daught_track2_add_daught_track_counts_5, "ssm_daught_track2_add_daught_track_counts_5/F");
+      T_tagger->Branch("ssm_daught_track2_add_daught_all_counts_5", &ssm_daught_track2_add_daught_all_counts_5, "ssm_daught_track2_add_daught_all_counts_5/F");
+      T_tagger->Branch("ssm_daught_track2_add_daught_track_counts_11", &ssm_daught_track2_add_daught_track_counts_11, "ssm_daught_track2_add_daught_track_counts_11/F");
+      T_tagger->Branch("ssm_daught_track2_add_daught_all_counts_11", &ssm_daught_track2_add_daught_all_counts_11, "ssm_daught_track2_add_daught_all_counts_11/F");
+
+      //properties of leading other primary shower
+      T_tagger->Branch("ssm_prim_shw1_pdg", &ssm_prim_shw1_pdg, "ssm_prim_shw1_pdg/F");
+      T_tagger->Branch("ssm_prim_shw1_score_mu_fwd", &ssm_prim_shw1_score_mu_fwd, "ssm_prim_shw1_score_mu_fwd/F");
+      T_tagger->Branch("ssm_prim_shw1_score_p_fwd", &ssm_prim_shw1_score_p_fwd, "ssm_prim_shw1_score_p_fwd/F");
+      T_tagger->Branch("ssm_prim_shw1_score_e_fwd", &ssm_prim_shw1_score_e_fwd, "ssm_prim_shw1_score_e_fwd/F");
+      T_tagger->Branch("ssm_prim_shw1_score_mu_bck", &ssm_prim_shw1_score_mu_bck, "ssm_prim_shw1_score_mu_bck/F");
+      T_tagger->Branch("ssm_prim_shw1_score_p_bck", &ssm_prim_shw1_score_p_bck, "ssm_prim_shw1_score_p_bck/F");
+      T_tagger->Branch("ssm_prim_shw1_score_e_bck", &ssm_prim_shw1_score_e_bck, "ssm_prim_shw1_score_e_bck/F");
+      T_tagger->Branch("ssm_prim_shw1_length", &ssm_prim_shw1_length, "ssm_prim_shw1_length/F");
+      T_tagger->Branch("ssm_prim_shw1_direct_length", &ssm_prim_shw1_direct_length, "ssm_prim_shw1_direct_length/F");
+      T_tagger->Branch("ssm_prim_shw1_length_ratio", &ssm_prim_shw1_length_ratio, "ssm_prim_shw1_length_ratio/F");
+      T_tagger->Branch("ssm_prim_shw1_max_dev", &ssm_prim_shw1_max_dev, "ssm_prim_shw1_max_dev/F");
+      T_tagger->Branch("ssm_prim_shw1_kine_energy_range", &ssm_prim_shw1_kine_energy_range, "ssm_prim_shw1_kine_energy_range/F");
+      T_tagger->Branch("ssm_prim_shw1_kine_energy_range_mu", &ssm_prim_shw1_kine_energy_range_mu, "ssm_prim_shw1_kine_energy_range_mu/F");
+      T_tagger->Branch("ssm_prim_shw1_kine_energy_range_p", &ssm_prim_shw1_kine_energy_range_p, "ssm_prim_shw1_kine_energy_range_p/F");
+      T_tagger->Branch("ssm_prim_shw1_kine_energy_range_e", &ssm_prim_shw1_kine_energy_range_e, "ssm_prim_shw1_kine_energy_range_e/F");
+      T_tagger->Branch("ssm_prim_shw1_kine_energy_cal", &ssm_prim_shw1_kine_energy_cal, "ssm_prim_shw1_kine_energy_cal/F");
+      T_tagger->Branch("ssm_prim_shw1_kine_energy_best", &ssm_prim_shw1_kine_energy_best, "ssm_prim_shw1_kine_energy_best/F");
+      T_tagger->Branch("ssm_prim_shw1_medium_dq_dx", &ssm_prim_shw1_medium_dq_dx, "ssm_prim_shw1_medium_dq_dx/F");
+      T_tagger->Branch("ssm_prim_shw1_x_dir", &ssm_prim_shw1_x_dir, "ssm_prim_shw1_x_dir/F");
+      T_tagger->Branch("ssm_prim_shw1_y_dir", &ssm_prim_shw1_y_dir, "ssm_prim_shw1_y_dir/F");
+      T_tagger->Branch("ssm_prim_shw1_z_dir", &ssm_prim_shw1_z_dir, "ssm_prim_shw1_z_dir/F");
+      T_tagger->Branch("ssm_prim_shw1_add_daught_track_counts_1", &ssm_prim_shw1_add_daught_track_counts_1, "ssm_prim_shw1_add_daught_track_counts_1/F");
+      T_tagger->Branch("ssm_prim_shw1_add_daught_all_counts_1", &ssm_prim_shw1_add_daught_all_counts_1, "ssm_prim_shw1_add_daught_all_counts_1/F");
+      T_tagger->Branch("ssm_prim_shw1_add_daught_track_counts_5", &ssm_prim_shw1_add_daught_track_counts_5, "ssm_prim_shw1_add_daught_track_counts_5/F");
+      T_tagger->Branch("ssm_prim_shw1_add_daught_all_counts_5", &ssm_prim_shw1_add_daught_all_counts_5, "ssm_prim_shw1_add_daught_all_counts_5/F");
+      T_tagger->Branch("ssm_prim_shw1_add_daught_track_counts_11", &ssm_prim_shw1_add_daught_track_counts_11, "ssm_prim_shw1_add_daught_track_counts_11/F");
+      T_tagger->Branch("ssm_prim_shw1_add_daught_all_counts_11", &ssm_prim_shw1_add_daught_all_counts_11, "ssm_prim_shw1_add_daught_all_counts_11/F");
+
+      //properties of sub-leading other primary shower
+      T_tagger->Branch("ssm_prim_shw2_pdg", &ssm_prim_shw2_pdg, "ssm_prim_shw2_pdg/F");
+      T_tagger->Branch("ssm_prim_shw2_score_mu_fwd", &ssm_prim_shw2_score_mu_fwd, "ssm_prim_shw2_score_mu_fwd/F");
+      T_tagger->Branch("ssm_prim_shw2_score_p_fwd", &ssm_prim_shw2_score_p_fwd, "ssm_prim_shw2_score_p_fwd/F");
+      T_tagger->Branch("ssm_prim_shw2_score_e_fwd", &ssm_prim_shw2_score_e_fwd, "ssm_prim_shw2_score_e_fwd/F");
+      T_tagger->Branch("ssm_prim_shw2_score_mu_bck", &ssm_prim_shw2_score_mu_bck, "ssm_prim_shw2_score_mu_bck/F");
+      T_tagger->Branch("ssm_prim_shw2_score_p_bck", &ssm_prim_shw2_score_p_bck, "ssm_prim_shw2_score_p_bck/F");
+      T_tagger->Branch("ssm_prim_shw2_score_e_bck", &ssm_prim_shw2_score_e_bck, "ssm_prim_shw2_score_e_bck/F");
+      T_tagger->Branch("ssm_prim_shw2_length", &ssm_prim_shw2_length, "ssm_prim_shw2_length/F");
+      T_tagger->Branch("ssm_prim_shw2_direct_length", &ssm_prim_shw2_direct_length, "ssm_prim_shw2_direct_length/F");
+      T_tagger->Branch("ssm_prim_shw2_length_ratio", &ssm_prim_shw2_length_ratio, "ssm_prim_shw2_length_ratio/F");
+      T_tagger->Branch("ssm_prim_shw2_max_dev", &ssm_prim_shw2_max_dev, "ssm_prim_shw2_max_dev/F");
+      T_tagger->Branch("ssm_prim_shw2_kine_energy_range", &ssm_prim_shw2_kine_energy_range, "ssm_prim_shw2_kine_energy_range/F");
+      T_tagger->Branch("ssm_prim_shw2_kine_energy_range_mu", &ssm_prim_shw2_kine_energy_range_mu, "ssm_prim_shw2_kine_energy_range_mu/F");
+      T_tagger->Branch("ssm_prim_shw2_kine_energy_range_p", &ssm_prim_shw2_kine_energy_range_p, "ssm_prim_shw2_kine_energy_range_p/F");
+      T_tagger->Branch("ssm_prim_shw2_kine_energy_range_e", &ssm_prim_shw2_kine_energy_range_e, "ssm_prim_shw2_kine_energy_range_e/F");
+      T_tagger->Branch("ssm_prim_shw2_kine_energy_cal", &ssm_prim_shw2_kine_energy_cal, "ssm_prim_shw2_kine_energy_cal/F");
+      T_tagger->Branch("ssm_prim_shw2_kine_energy_best", &ssm_prim_shw2_kine_energy_best, "ssm_prim_shw2_kine_energy_best/F");
+      T_tagger->Branch("ssm_prim_shw2_medium_dq_dx", &ssm_prim_shw2_medium_dq_dx, "ssm_prim_shw2_medium_dq_dx/F");
+      T_tagger->Branch("ssm_prim_shw2_x_dir", &ssm_prim_shw2_x_dir, "ssm_prim_shw2_x_dir/F");
+      T_tagger->Branch("ssm_prim_shw2_y_dir", &ssm_prim_shw2_y_dir, "ssm_prim_shw2_y_dir/F");
+      T_tagger->Branch("ssm_prim_shw2_z_dir", &ssm_prim_shw2_z_dir, "ssm_prim_shw2_z_dir/F");
+      T_tagger->Branch("ssm_prim_shw2_add_daught_track_counts_1", &ssm_prim_shw2_add_daught_track_counts_1, "ssm_prim_shw2_add_daught_track_counts_1/F");
+      T_tagger->Branch("ssm_prim_shw2_add_daught_all_counts_1", &ssm_prim_shw2_add_daught_all_counts_1, "ssm_prim_shw2_add_daught_all_counts_1/F");
+      T_tagger->Branch("ssm_prim_shw2_add_daught_track_counts_5", &ssm_prim_shw2_add_daught_track_counts_5, "ssm_prim_shw2_add_daught_track_counts_5/F");
+      T_tagger->Branch("ssm_prim_shw2_add_daught_all_counts_5", &ssm_prim_shw2_add_daught_all_counts_5, "ssm_prim_shw2_add_daught_all_counts_5/F");
+      T_tagger->Branch("ssm_prim_shw2_add_daught_track_counts_11", &ssm_prim_shw2_add_daught_track_counts_11, "ssm_prim_shw2_add_daught_track_counts_11/F");
+      T_tagger->Branch("ssm_prim_shw2_add_daught_all_counts_11", &ssm_prim_shw2_add_daught_all_counts_11, "ssm_prim_shw2_add_daught_all_counts_11/F");
+
+      //properties of leading daughter shower
+      T_tagger->Branch("ssm_daught_shw1_pdg", &ssm_daught_shw1_pdg, "ssm_daught_shw1_pdg/F");
+      T_tagger->Branch("ssm_daught_shw1_score_mu_fwd", &ssm_daught_shw1_score_mu_fwd, "ssm_daught_shw1_score_mu_fwd/F");
+      T_tagger->Branch("ssm_daught_shw1_score_p_fwd", &ssm_daught_shw1_score_p_fwd, "ssm_daught_shw1_score_p_fwd/F");
+      T_tagger->Branch("ssm_daught_shw1_score_e_fwd", &ssm_daught_shw1_score_e_fwd, "ssm_daught_shw1_score_e_fwd/F");
+      T_tagger->Branch("ssm_daught_shw1_score_mu_bck", &ssm_daught_shw1_score_mu_bck, "ssm_daught_shw1_score_mu_bck/F");
+      T_tagger->Branch("ssm_daught_shw1_score_p_bck", &ssm_daught_shw1_score_p_bck, "ssm_daught_shw1_score_p_bck/F");
+      T_tagger->Branch("ssm_daught_shw1_score_e_bck", &ssm_daught_shw1_score_e_bck, "ssm_daught_shw1_score_e_bck/F");
+      T_tagger->Branch("ssm_daught_shw1_length", &ssm_daught_shw1_length, "ssm_daught_shw1_length/F");
+      T_tagger->Branch("ssm_daught_shw1_direct_length", &ssm_daught_shw1_direct_length, "ssm_daught_shw1_direct_length/F");
+      T_tagger->Branch("ssm_daught_shw1_length_ratio", &ssm_daught_shw1_length_ratio, "ssm_daught_shw1_length_ratio/F");
+      T_tagger->Branch("ssm_daught_shw1_max_dev", &ssm_daught_shw1_max_dev, "ssm_daught_shw1_max_dev/F");
+      T_tagger->Branch("ssm_daught_shw1_kine_energy_range", &ssm_daught_shw1_kine_energy_range, "ssm_daught_shw1_kine_energy_range/F");
+      T_tagger->Branch("ssm_daught_shw1_kine_energy_range_mu", &ssm_daught_shw1_kine_energy_range_mu, "ssm_daught_shw1_kine_energy_range_mu/F");
+      T_tagger->Branch("ssm_daught_shw1_kine_energy_range_p", &ssm_daught_shw1_kine_energy_range_p, "ssm_daught_shw1_kine_energy_range_p/F");
+      T_tagger->Branch("ssm_daught_shw1_kine_energy_range_e", &ssm_daught_shw1_kine_energy_range_e, "ssm_daught_shw1_kine_energy_range_e/F");
+      T_tagger->Branch("ssm_daught_shw1_kine_energy_cal", &ssm_daught_shw1_kine_energy_cal, "ssm_daught_shw1_kine_energy_cal/F");
+      T_tagger->Branch("ssm_daught_shw1_kine_energy_best", &ssm_daught_shw1_kine_energy_best, "ssm_daught_shw1_kine_energy_best/F");
+      T_tagger->Branch("ssm_daught_shw1_medium_dq_dx", &ssm_daught_shw1_medium_dq_dx, "ssm_daught_shw1_medium_dq_dx/F");
+      T_tagger->Branch("ssm_daught_shw1_x_dir", &ssm_daught_shw1_x_dir, "ssm_daught_shw1_x_dir/F");
+      T_tagger->Branch("ssm_daught_shw1_y_dir", &ssm_daught_shw1_y_dir, "ssm_daught_shw1_y_dir/F");
+      T_tagger->Branch("ssm_daught_shw1_z_dir", &ssm_daught_shw1_z_dir, "ssm_daught_shw1_z_dir/F");
+      T_tagger->Branch("ssm_daught_shw1_add_daught_track_counts_1", &ssm_daught_shw1_add_daught_track_counts_1, "ssm_daught_shw1_add_daught_track_counts_1/F");
+      T_tagger->Branch("ssm_daught_shw1_add_daught_all_counts_1", &ssm_daught_shw1_add_daught_all_counts_1, "ssm_daught_shw1_add_daught_all_counts_1/F");
+      T_tagger->Branch("ssm_daught_shw1_add_daught_track_counts_5", &ssm_daught_shw1_add_daught_track_counts_5, "ssm_daught_shw1_add_daught_track_counts_5/F");
+      T_tagger->Branch("ssm_daught_shw1_add_daught_all_counts_5", &ssm_daught_shw1_add_daught_all_counts_5, "ssm_daught_shw1_add_daught_all_counts_5/F");
+      T_tagger->Branch("ssm_daught_shw1_add_daught_track_counts_11", &ssm_daught_shw1_add_daught_track_counts_11, "ssm_daught_shw1_add_daught_track_counts_11/F");
+      T_tagger->Branch("ssm_daught_shw1_add_daught_all_counts_11", &ssm_daught_shw1_add_daught_all_counts_11, "ssm_daught_shw1_add_daught_all_counts_11/F");
+
+      //properties of sub-leading daughter shower
+      T_tagger->Branch("ssm_daught_shw2_pdg", &ssm_daught_shw2_pdg, "ssm_daught_shw2_pdg/F");
+      T_tagger->Branch("ssm_daught_shw2_score_mu_fwd", &ssm_daught_shw2_score_mu_fwd, "ssm_daught_shw2_score_mu_fwd/F");
+      T_tagger->Branch("ssm_daught_shw2_score_p_fwd", &ssm_daught_shw2_score_p_fwd, "ssm_daught_shw2_score_p_fwd/F");
+      T_tagger->Branch("ssm_daught_shw2_score_e_fwd", &ssm_daught_shw2_score_e_fwd, "ssm_daught_shw2_score_e_fwd/F");
+      T_tagger->Branch("ssm_daught_shw2_score_mu_bck", &ssm_daught_shw2_score_mu_bck, "ssm_daught_shw2_score_mu_bck/F");
+      T_tagger->Branch("ssm_daught_shw2_score_p_bck", &ssm_daught_shw2_score_p_bck, "ssm_daught_shw2_score_p_bck/F");
+      T_tagger->Branch("ssm_daught_shw2_score_e_bck", &ssm_daught_shw2_score_e_bck, "ssm_daught_shw2_score_e_bck/F");
+      T_tagger->Branch("ssm_daught_shw2_length", &ssm_daught_shw2_length, "ssm_daught_shw2_length/F");
+      T_tagger->Branch("ssm_daught_shw2_direct_length", &ssm_daught_shw2_direct_length, "ssm_daught_shw2_direct_length/F");
+      T_tagger->Branch("ssm_daught_shw2_length_ratio", &ssm_daught_shw2_length_ratio, "ssm_daught_shw2_length_ratio/F");
+      T_tagger->Branch("ssm_daught_shw2_max_dev", &ssm_daught_shw2_max_dev, "ssm_daught_shw2_max_dev/F");
+      T_tagger->Branch("ssm_daught_shw2_kine_energy_range", &ssm_daught_shw2_kine_energy_range, "ssm_daught_shw2_kine_energy_range/F");
+      T_tagger->Branch("ssm_daught_shw2_kine_energy_range_mu", &ssm_daught_shw2_kine_energy_range_mu, "ssm_daught_shw2_kine_energy_range_mu/F");
+      T_tagger->Branch("ssm_daught_shw2_kine_energy_range_p", &ssm_daught_shw2_kine_energy_range_p, "ssm_daught_shw2_kine_energy_range_p/F");
+      T_tagger->Branch("ssm_daught_shw2_kine_energy_range_e", &ssm_daught_shw2_kine_energy_range_e, "ssm_daught_shw2_kine_energy_range_e/F");
+      T_tagger->Branch("ssm_daught_shw2_kine_energy_cal", &ssm_daught_shw2_kine_energy_cal, "ssm_daught_shw2_kine_energy_cal/F");
+      T_tagger->Branch("ssm_daught_shw2_kine_energy_best", &ssm_daught_shw2_kine_energy_best, "ssm_daught_shw2_kine_energy_best/F");
+      T_tagger->Branch("ssm_daught_shw2_medium_dq_dx", &ssm_daught_shw2_medium_dq_dx, "ssm_daught_shw2_medium_dq_dx/F");
+      T_tagger->Branch("ssm_daught_shw2_x_dir", &ssm_daught_shw2_x_dir, "ssm_daught_shw2_x_dir/F");
+      T_tagger->Branch("ssm_daught_shw2_y_dir", &ssm_daught_shw2_y_dir, "ssm_daught_shw2_y_dir/F");
+      T_tagger->Branch("ssm_daught_shw2_z_dir", &ssm_daught_shw2_z_dir, "ssm_daught_shw2_z_dir/F");
+      T_tagger->Branch("ssm_daught_shw2_add_daught_track_counts_1", &ssm_daught_shw2_add_daught_track_counts_1, "ssm_daught_shw2_add_daught_track_counts_1/F");
+      T_tagger->Branch("ssm_daught_shw2_add_daught_all_counts_1", &ssm_daught_shw2_add_daught_all_counts_1, "ssm_daught_shw2_add_daught_all_counts_1/F");
+      T_tagger->Branch("ssm_daught_shw2_add_daught_track_counts_5", &ssm_daught_shw2_add_daught_track_counts_5, "ssm_daught_shw2_add_daught_track_counts_5/F");
+      T_tagger->Branch("ssm_daught_shw2_add_daught_all_counts_5", &ssm_daught_shw2_add_daught_all_counts_5, "ssm_daught_shw2_add_daught_all_counts_5/F");
+      T_tagger->Branch("ssm_daught_shw2_add_daught_track_counts_11", &ssm_daught_shw2_add_daught_track_counts_11, "ssm_daught_shw2_add_daught_track_counts_11/F");
+      T_tagger->Branch("ssm_daught_shw2_add_daught_all_counts_11", &ssm_daught_shw2_add_daught_all_counts_11, "ssm_daught_shw2_add_daught_all_counts_11/F");
+
+      //event level properties
+      T_tagger->Branch("ssm_nu_angle_z", &ssm_nu_angle_z, "ssm_nu_angle_z/F");
+      T_tagger->Branch("ssm_nu_angle_target", &ssm_nu_angle_target, "ssm_nu_angle_target/F");
+      T_tagger->Branch("ssm_nu_angle_absorber", &ssm_nu_angle_absorber, "ssm_nu_angle_absorber/F");
+      T_tagger->Branch("ssm_nu_angle_vertical", &ssm_nu_angle_vertical, "ssm_nu_angle_vertical/F");
+      T_tagger->Branch("ssm_con_nu_angle_z", &ssm_con_nu_angle_z, "ssm_con_nu_angle_z/F");
+      T_tagger->Branch("ssm_con_nu_angle_target", &ssm_con_nu_angle_target, "ssm_con_nu_angle_target/F");
+      T_tagger->Branch("ssm_con_nu_angle_absorber", &ssm_con_nu_angle_absorber, "ssm_con_nu_angle_absorber/F");
+      T_tagger->Branch("ssm_con_nu_angle_vertical", &ssm_con_nu_angle_vertical, "ssm_con_nu_angle_vertical/F");
+      T_tagger->Branch("ssm_prim_nu_angle_z", &ssm_prim_nu_angle_z, "ssm_prim_nu_angle_z/F");
+      T_tagger->Branch("ssm_prim_nu_angle_target", &ssm_prim_nu_angle_target, "ssm_prim_nu_angle_target/F");
+      T_tagger->Branch("ssm_prim_nu_angle_absorber", &ssm_prim_nu_angle_absorber, "ssm_prim_nu_angle_absorber/F");
+      T_tagger->Branch("ssm_prim_nu_angle_vertical", &ssm_prim_nu_angle_vertical, "ssm_prim_nu_angle_vertical/F");
+      T_tagger->Branch("ssm_track_angle_z", &ssm_track_angle_z, "ssm_track_angle_z/F");
+      T_tagger->Branch("ssm_track_angle_target", &ssm_track_angle_target, "ssm_track_angle_target/F");
+      T_tagger->Branch("ssm_track_angle_absorber", &ssm_track_angle_absorber, "ssm_track_angle_absorber/F");
+      T_tagger->Branch("ssm_track_angle_vertical", &ssm_track_angle_vertical, "ssm_track_angle_vertical/F");
+      T_tagger->Branch("ssm_vtxX", &ssm_vtxX, "ssm_vtxX/F");
+      T_tagger->Branch("ssm_vtxY", &ssm_vtxY, "ssm_vtxY/F");
+      T_tagger->Branch("ssm_vtxZ", &ssm_vtxZ, "ssm_vtxZ/F");
+
+      //off vertex stuff
+      T_tagger->Branch("ssm_offvtx_length",&ssm_offvtx_length,"ssm_offvtx_length/F");
+      T_tagger->Branch("ssm_offvtx_energy",&ssm_offvtx_energy,"ssm_offvtx_energy/F");
+      T_tagger->Branch("ssm_n_offvtx_tracks_1",&ssm_n_offvtx_tracks_1,"ssm_n_offvtx_tracks_1/F");
+      T_tagger->Branch("ssm_n_offvtx_tracks_3",&ssm_n_offvtx_tracks_3,"ssm_n_offvtx_tracks_3/F");
+      T_tagger->Branch("ssm_n_offvtx_tracks_5",&ssm_n_offvtx_tracks_5,"ssm_n_offvtx_tracks_5/F");
+      T_tagger->Branch("ssm_n_offvtx_tracks_8",&ssm_n_offvtx_tracks_8,"ssm_n_offvtx_tracks_8/F");
+      T_tagger->Branch("ssm_n_offvtx_tracks_11",&ssm_n_offvtx_tracks_11,"ssm_n_offvtx_tracks_11/F");
+      T_tagger->Branch("ssm_n_offvtx_showers_1",&ssm_n_offvtx_showers_1,"ssm_n_offvtx_showers_1/F");
+      T_tagger->Branch("ssm_n_offvtx_showers_3",&ssm_n_offvtx_showers_3,"ssm_n_offvtx_showers_3/F");
+      T_tagger->Branch("ssm_n_offvtx_showers_5",&ssm_n_offvtx_showers_5,"ssm_n_offvtx_showers_5/F");
+      T_tagger->Branch("ssm_n_offvtx_showers_8",&ssm_n_offvtx_showers_8,"ssm_n_offvtx_showers_8/F");
+      T_tagger->Branch("ssm_n_offvtx_showers_11",&ssm_n_offvtx_showers_11,"ssm_n_offvtx_showers_11/F");
+
+      //properties of leading off vertex track
+      T_tagger->Branch("ssm_offvtx_track1_pdg",&ssm_offvtx_track1_pdg,"ssm_offvtx_track1_pdg/F");
+      T_tagger->Branch("ssm_offvtx_track1_score_mu_fwd",&ssm_offvtx_track1_score_mu_fwd,"ssm_offvtx_track1_score_mu_fwd/F");
+      T_tagger->Branch("ssm_offvtx_track1_score_p_fwd",&ssm_offvtx_track1_score_p_fwd,"ssm_offvtx_track1_score_p_fwd/F");
+      T_tagger->Branch("ssm_offvtx_track1_score_e_fwd",&ssm_offvtx_track1_score_e_fwd,"ssm_offvtx_track1_score_e_fwd/F");
+      T_tagger->Branch("ssm_offvtx_track1_score_mu_bck",&ssm_offvtx_track1_score_mu_bck,"ssm_offvtx_track1_score_mu_bck/F");
+      T_tagger->Branch("ssm_offvtx_track1_score_p_bck",&ssm_offvtx_track1_score_p_bck,"ssm_offvtx_track1_score_p_bck/F");
+      T_tagger->Branch("ssm_offvtx_track1_score_e_bck",&ssm_offvtx_track1_score_e_bck,"ssm_offvtx_track1_score_e_bck/F");
+      T_tagger->Branch("ssm_offvtx_track1_length",&ssm_offvtx_track1_length,"ssm_offvtx_track1_length/F");
+      T_tagger->Branch("ssm_offvtx_track1_direct_length",&ssm_offvtx_track1_direct_length,"ssm_offvtx_track1_direct_length/F");
+      T_tagger->Branch("ssm_offvtx_track1_max_dev",&ssm_offvtx_track1_max_dev,"ssm_offvtx_track1_max_dev/F");
+      T_tagger->Branch("ssm_offvtx_track1_kine_energy_range",&ssm_offvtx_track1_kine_energy_range,"ssm_offvtx_track1_kine_energy_range/F");
+      T_tagger->Branch("ssm_offvtx_track1_kine_energy_range_mu",&ssm_offvtx_track1_kine_energy_range_mu,"ssm_offvtx_track1_kine_energy_range_mu/F");
+      T_tagger->Branch("ssm_offvtx_track1_kine_energy_range_p",&ssm_offvtx_track1_kine_energy_range_p,"ssm_offvtx_track1_kine_energy_range_p/F");
+      T_tagger->Branch("ssm_offvtx_track1_kine_energy_range_e",&ssm_offvtx_track1_kine_energy_range_e,"ssm_offvtx_track1_kine_energy_range_e/F");
+      T_tagger->Branch("ssm_offvtx_track1_kine_energy_cal",&ssm_offvtx_track1_kine_energy_cal,"ssm_offvtx_track1_kine_energy_cal/F");
+      T_tagger->Branch("ssm_offvtx_track1_medium_dq_dx",&ssm_offvtx_track1_medium_dq_dx,"ssm_offvtx_track1_medium_dq_dx/F");
+      T_tagger->Branch("ssm_offvtx_track1_x_dir",&ssm_offvtx_track1_x_dir,"ssm_offvtx_track1_x_dir/F");
+      T_tagger->Branch("ssm_offvtx_track1_y_dir",&ssm_offvtx_track1_y_dir,"ssm_offvtx_track1_y_dir/F");
+      T_tagger->Branch("ssm_offvtx_track1_z_dir",&ssm_offvtx_track1_z_dir,"ssm_offvtx_track1_z_dir/F");
+      T_tagger->Branch("ssm_offvtx_track1_dist_mainvtx",&ssm_offvtx_track1_dist_mainvtx,"ssm_offvtx_track1_dist_mainvtx/F");
+
+      //properties of leading off vertex shower
+      T_tagger->Branch("ssm_offvtx_shw1_pdg_offvtx",&ssm_offvtx_shw1_pdg_offvtx,"ssm_offvtx_shw1_pdg_offvtx/F");
+      T_tagger->Branch("ssm_offvtx_shw1_score_mu_fwd",&ssm_offvtx_shw1_score_mu_fwd,"ssm_offvtx_shw1_score_mu_fwd/F");
+      T_tagger->Branch("ssm_offvtx_shw1_score_p_fwd",&ssm_offvtx_shw1_score_p_fwd,"ssm_offvtx_shw1_score_p_fwd/F");
+      T_tagger->Branch("ssm_offvtx_shw1_score_e_fwd",&ssm_offvtx_shw1_score_e_fwd,"ssm_offvtx_shw1_score_e_fwd/F");
+      T_tagger->Branch("ssm_offvtx_shw1_score_mu_bck",&ssm_offvtx_shw1_score_mu_bck,"ssm_offvtx_shw1_score_mu_bck/F");
+      T_tagger->Branch("ssm_offvtx_shw1_score_p_bck",&ssm_offvtx_shw1_score_p_bck,"ssm_offvtx_shw1_score_p_bck/F");
+      T_tagger->Branch("ssm_offvtx_shw1_score_e_bck",&ssm_offvtx_shw1_score_e_bck,"ssm_offvtx_shw1_score_e_bck/F");
+      T_tagger->Branch("ssm_offvtx_shw1_length",&ssm_offvtx_shw1_length,"ssm_offvtx_shw1_length/F");
+      T_tagger->Branch("ssm_offvtx_shw1_direct_length",&ssm_offvtx_shw1_direct_length,"ssm_offvtx_shw1_direct_length/F");
+      T_tagger->Branch("ssm_offvtx_shw1_max_dev",&ssm_offvtx_shw1_max_dev,"ssm_offvtx_shw1_max_dev/F");
+      T_tagger->Branch("ssm_offvtx_shw1_kine_energy_best",&ssm_offvtx_shw1_kine_energy_best,"ssm_offvtx_shw1_kine_energy_best/F");
+      T_tagger->Branch("ssm_offvtx_shw1_kine_energy_range",&ssm_offvtx_shw1_kine_energy_range,"ssm_offvtx_shw1_kine_energy_range/F");
+      T_tagger->Branch("ssm_offvtx_shw1_kine_energy_range_mu",&ssm_offvtx_shw1_kine_energy_range_mu,"ssm_offvtx_shw1_kine_energy_range_mu/F");
+      T_tagger->Branch("ssm_offvtx_shw1_kine_energy_range_p",&ssm_offvtx_shw1_kine_energy_range_p,"ssm_offvtx_shw1_kine_energy_range_p/F");
+      T_tagger->Branch("ssm_offvtx_shw1_kine_energy_range_e",&ssm_offvtx_shw1_kine_energy_range_e,"ssm_offvtx_shw1_kine_energy_range_e/F");
+      T_tagger->Branch("ssm_offvtx_shw1_kine_energy_cal",&ssm_offvtx_shw1_kine_energy_cal,"ssm_offvtx_shw1_kine_energy_cal/F");
+      T_tagger->Branch("ssm_offvtx_shw1_medium_dq_dx",&ssm_offvtx_shw1_medium_dq_dx,"ssm_offvtx_shw1_medium_dq_dx/F");
+      T_tagger->Branch("ssm_offvtx_shw1_x_dir",&ssm_offvtx_shw1_x_dir,"ssm_offvtx_shw1_x_dir/F");
+      T_tagger->Branch("ssm_offvtx_shw1_y_dir",&ssm_offvtx_shw1_y_dir,"ssm_offvtx_shw1_y_dir/F");
+      T_tagger->Branch("ssm_offvtx_shw1_z_dir",&ssm_offvtx_shw1_z_dir,"ssm_offvtx_shw1_z_dir/F");
+      T_tagger->Branch("ssm_offvtx_shw1_dist_mainvtx",&ssm_offvtx_shw1_dist_mainvtx,"ssm_offvtx_shw1_dist_mainvtx/F");
+
+      // Kine vars
+      if(tagger_info.saved_ssm_kine_vars){
+        T_tagger->Branch("ssm_kine_reco_Enu",&ssm_kine_reco_Enu,"ssm_kine_reco_Enu/F");
+        T_tagger->Branch("ssm_kine_reco_add_energy",&ssm_kine_reco_add_energy,"ssm_kine_reco_add_energy/F");
+        T_tagger->Branch("ssm_kine_energy_particle",&ssm_kine_energy_particle);
+        T_tagger->Branch("ssm_kine_energy_info",&ssm_kine_energy_info);
+        T_tagger->Branch("ssm_kine_particle_type",&ssm_kine_particle_type);
+        T_tagger->Branch("ssm_kine_energy_included",&ssm_kine_energy_included);
+        T_tagger->Branch("ssm_kine_pio_mass",&ssm_kine_pio_mass,"ssm_kine_pio_mass/F");
+        T_tagger->Branch("ssm_kine_pio_flag",&ssm_kine_pio_flag,"ssm_kine_pio_flag/I");
+        T_tagger->Branch("ssm_kine_pio_vtx_dis",&ssm_kine_pio_vtx_dis,"ssm_kine_pio_vtx_dis/F");
+        T_tagger->Branch("ssm_kine_pio_energy_1",&ssm_kine_pio_energy_1,"ssm_kine_pio_energy_1/F");
+        T_tagger->Branch("ssm_kine_pio_theta_1",&ssm_kine_pio_theta_1,"ssm_kine_pio_theta_1/F");
+        T_tagger->Branch("ssm_kine_pio_phi_1",&ssm_kine_pio_phi_1,"ssm_kine_pio_phi_1/F");
+        T_tagger->Branch("ssm_kine_pio_dis_1",&ssm_kine_pio_dis_1,"ssm_kine_pio_dis_1/F");
+        T_tagger->Branch("ssm_kine_pio_energy_2",&ssm_kine_pio_energy_2,"ssm_kine_pio_energy_2/F");
+        T_tagger->Branch("ssm_kine_pio_theta_2",&ssm_kine_pio_theta_2,"ssm_kine_pio_theta_2/F");
+        T_tagger->Branch("ssm_kine_pio_phi_2",&ssm_kine_pio_phi_2,"ssm_kine_pio_phi_2/F");
+        T_tagger->Branch("ssm_kine_pio_dis_2",&ssm_kine_pio_dis_2,"ssm_kine_pio_dis_2/F");
+        T_tagger->Branch("ssm_kine_pio_angle",&ssm_kine_pio_angle,"ssm_kine_pio_angle/F");
+      }
+      // Other vars
+      T_tagger->Branch("ssm_numu_cc_flag",&ssm_numu_cc_flag);
+      T_tagger->Branch("ssm_cosmict_flag_1",&ssm_cosmict_flag_1,"ssm_cosmict_flag_1/F");
+      T_tagger->Branch("ssm_cosmict_flag_2",&ssm_cosmict_flag_2,"ssm_cosmict_flag_2/F");
+      T_tagger->Branch("ssm_cosmict_flag_3",&ssm_cosmict_flag_3,"ssm_cosmict_flag_3/F");
+      T_tagger->Branch("ssm_cosmict_flag_4",&ssm_cosmict_flag_4,"ssm_cosmict_flag_4/F");
+      T_tagger->Branch("ssm_cosmict_flag_5",&ssm_cosmict_flag_5,"ssm_cosmict_flag_5/F");
+      T_tagger->Branch("ssm_cosmict_flag_6",&ssm_cosmict_flag_6,"ssm_cosmict_flag_6/F");
+      T_tagger->Branch("ssm_cosmict_flag_7",&ssm_cosmict_flag_7,"ssm_cosmict_flag_7/F");
+      T_tagger->Branch("ssm_cosmict_flag_8",&ssm_cosmict_flag_8,"ssm_cosmict_flag_8/F");
+      T_tagger->Branch("ssm_cosmict_flag_9",&ssm_cosmict_flag_9,"ssm_cosmict_flag_9/F");
+      T_tagger->Branch("ssm_cosmict_flag_10",&ssm_cosmict_flag_10);
+      T_tagger->Branch("ssm_cosmict_flag",&ssm_cosmict_flag,"ssm_cosmict_flag/F");
+    }
+    // End KDAR vars
 
     if (flag==1) T_tagger->Branch("event_type",&tagger_info.event_type,"data/F");
 
