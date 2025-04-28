@@ -263,7 +263,7 @@ int main( int argc, char** argv )
             //cov = h1->SetBinError(i+1, h1->GetBinError(i));
         }
 	h1->SetBinError(i+1,sqrt(cov));
-    if(i!=h1->GetNbinsX()+1) temp_sumtotalcov += cov;
+    if(i!=h1->GetNbinsX()) temp_sumtotalcov += cov;
       }
       sumtotalcov[obsch] = temp_sumtotalcov;
       // obsch --> bin with overflow bin --> vector of all channels (merge certain channels) --> mean and err2
@@ -343,7 +343,7 @@ int main( int argc, char** argv )
         int index = obsch_bin_index.find(std::make_pair(obsch, i+1))->second;
         double total_uncertainty = (*matrix_absolute_cov)(index, index); // only diagonal term
         //summation of total cov
-        if(i!=h1->GetNbinsX()){ //no overflow bin in this calculation
+        if(i!=h1->GetNbinsX()+1){ //no overflow bin in this calculation
         for(int j=0; j!=h1->GetNbinsX();j++){
             int jndex = obsch_bin_index.find(std::make_pair(obsch, j+1))->second;
             temp_sumtotalcov += (*matrix_absolute_cov)(index, jndex);
