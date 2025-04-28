@@ -263,7 +263,7 @@ int main( int argc, char** argv )
             //cov = h1->SetBinError(i+1, h1->GetBinError(i));
         }
 	h1->SetBinError(i+1,sqrt(cov));
-    if(i!=h1->GetNbinsX()) temp_sumtotalcov += cov;
+    if(i!=h1->GetNbinsX()+1) temp_sumtotalcov += cov;
       }
       sumtotalcov[obsch] = temp_sumtotalcov;
       // obsch --> bin with overflow bin --> vector of all channels (merge certain channels) --> mean and err2
