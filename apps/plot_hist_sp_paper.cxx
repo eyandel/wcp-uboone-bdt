@@ -1683,7 +1683,7 @@ int main( int argc, char** argv )
 
         //legend[obschannel-1]->SetFillStyle(0);
         double relerr_data = 1./TMath::Sqrt(hdata->Integral(1,hdata->GetNbinsX() + 1));
-        double relerr_pred = TMath::Sqrt(sumtotalcov[obschannel])/hmc->Integral(1,hdata->GetNbinsX() + 1);
+        double relerr_pred = TMath::Sqrt(sumtotalcov[obschannel])/hmc->Integral(1,hdata->GetNbinsX());
         double data_pred_ratio = hdata->Integral(1,hdata->GetNbinsX() + 1)/normalization/hmc->Integral(1,hdata->GetNbinsX() + 1);
         legend[obschannel-1]->SetHeader(Form("#SigmaDATA/#SigmaPRED=%.2f#pm%.2f(data err)#pm%.2f(pred err)", data_pred_ratio, relerr_data*data_pred_ratio, relerr_pred*data_pred_ratio), "C");
         legend[obschannel-1]->Draw();
