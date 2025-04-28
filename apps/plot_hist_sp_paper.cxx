@@ -344,7 +344,7 @@ int main( int argc, char** argv )
         double total_uncertainty = (*matrix_absolute_cov)(index, index); // only diagonal term
         //summation of total cov
         if(i!=h1->GetNbinsX()+1){ //no overflow bin in this calculation
-        for(int j=0; j!=h1->GetNbinsX();j++){
+        for(int j=0; j!=h1->GetNbinsX()+1;j++){
             int jndex = obsch_bin_index.find(std::make_pair(obsch, j+1))->second;
             temp_sumtotalcov += (*matrix_absolute_cov)(index, jndex);
         }
