@@ -3010,7 +3010,7 @@ void LEEana::clear_tagger_info(TaggerInfo& tagger_info){
     tagger_info.ssm_cosmict_flag_9 = 0;  // this tagger is relevant for nueCC, see "cosmic tagger ones, one case of cosmics ..." (frist one ...)
     tagger_info.ssm_cosmict_flag_10->clear();  // front upstream (dirt)
 
-    tagger_info.ssm_kdar_score_lowE - 0;
+    tagger_info.ssm_kdar_score_lowE = 0;
     tagger_info.ssm_kdar_score_hiE = 0;
     //End KDAR vars
 
