@@ -154,8 +154,8 @@ int main( int argc, char** argv )
   TTree *T_spacepoints = (TTree*)file1->Get("wcpselection/T_spacepoints");
 
   
-  TTree *NeutrinoSelectionFilter;
-  TTree *SubRun;
+  TTree *NeutrinoSelectionFilter = new TTree("NeutrinoSelectionFilter","NeutrinoSelectionFilter");
+  TTree *SubRun = new TTree("SubRun","SubRun");
   bool has_pelee = false;
   if (file1->GetDirectory("nuselection")){
     has_pelee = true;
@@ -733,8 +733,8 @@ int main( int argc, char** argv )
   TFile *file2 = new TFile(out_file,"RECREATE");
 
   //CopyDir(nuselection);
-  TTree *new_NeutrinoSelectionFilter;
-  TTree *new_SubRun;
+  TTree *new_NeutrinoSelectionFilter = new TTree("NeutrinoSelectionFilter","NeutrinoSelectionFilter");
+  TTree *new_SubRun = new TTree("SubRun","SubRun");
   if (has_pelee){
     TDirectory *topdirout = gDirectory;
     file2->mkdir("nuselection");
