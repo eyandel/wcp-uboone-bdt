@@ -156,6 +156,8 @@ int main( int argc, char** argv )
   
   TTree *NeutrinoSelectionFilter;// = new TTree("NeutrinoSelectionFilter","NeutrinoSelectionFilter");
   TTree *SubRun;// = new TTree("SubRun","SubRun");
+  TDirectory *shrreco3d;
+  TDirectory *proximity;
   bool has_pelee = false;
   if (file1->GetDirectory("nuselection")){
     has_pelee = true;
@@ -163,9 +165,9 @@ int main( int argc, char** argv )
     //file1->cd("nuselection");
     //TDirectory *nuselection = gDirectory;
     file1->cd("shrreco3d");
-    TDirectory *shrreco3d = gDirectory;
+    shrreco3d = gDirectory;
     file1->cd("proximity");
-    TDirectory *proximity = gDirectory;
+    proximity = gDirectory;
     topdir->cd();
     NeutrinoSelectionFilter = (TTree*)file1->Get("nuselection/NeutrinoSelectionFilter");
     SubRun = (TTree*)file1->Get("nuselection/SubRun");
