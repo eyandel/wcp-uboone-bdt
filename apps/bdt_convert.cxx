@@ -153,20 +153,27 @@ int main( int argc, char** argv )
   TTree *T_KINEvars = (TTree*)file1->Get("wcpselection/T_KINEvars");
   TTree *T_spacepoints = (TTree*)file1->Get("wcpselection/T_spacepoints");
 
-  TDirectory *topdir = gDirectory;
-  //file1->cd("nuselection");
-  //TDirectory *nuselection = gDirectory;
-  file1->cd("shrreco3d");
-  TDirectory *shrreco3d = gDirectory;
-  file1->cd("proximity");
-  TDirectory *proximity = gDirectory;
-  topdir->cd();
-  TTree *NeutrinoSelectionFilter = (TTree*)file1->Get("nuselection/NeutrinoSelectionFilter");
-  TTree *SubRun = (TTree*)file1->Get("nuselection/SubRun");
-  //TTree *_energy_tree = (TTree*)file1->Get("shrreco3d/_energy_tree");
-  //TTree *_dedx_tree = (TTree*)file1->Get("shrreco3d/_dedx_tree");
-  //TTree *_rcshr_tree = (TTree*)file1->Get("shrreco3d/_rcshr_tree");
-  //TTree *_clus_tree = (TTree*)file1->Get("proximity/_clus_tree");
+  
+  TTree *NeutrinoSelectionFilter;
+  TTree *SubRun;
+  bool has_pelee = false;
+  if (file1->GetDirectory("nuselection")){
+    has_pelee = true;
+    TDirectory *topdir = gDirectory;
+    //file1->cd("nuselection");
+    //TDirectory *nuselection = gDirectory;
+    file1->cd("shrreco3d");
+    TDirectory *shrreco3d = gDirectory;
+    file1->cd("proximity");
+    TDirectory *proximity = gDirectory;
+    topdir->cd();
+    NeutrinoSelectionFilter = (TTree*)file1->Get("nuselection/NeutrinoSelectionFilter");
+    SubRun = (TTree*)file1->Get("nuselection/SubRun");
+    //TTree *_energy_tree = (TTree*)file1->Get("shrreco3d/_energy_tree");
+    //TTree *_dedx_tree = (TTree*)file1->Get("shrreco3d/_dedx_tree");
+    //TTree *_rcshr_tree = (TTree*)file1->Get("shrreco3d/_rcshr_tree");
+    //TTree *_clus_tree = (TTree*)file1->Get("proximity/_clus_tree");
+  }
 
 
   if (T_eval->GetBranch("weight_cv")) flag_data =false;
@@ -726,22 +733,26 @@ int main( int argc, char** argv )
   TFile *file2 = new TFile(out_file,"RECREATE");
 
   //CopyDir(nuselection);
-  TDirectory *topdirout = gDirectory;
-  file2->mkdir("nuselection");
-  file2->cd("nuselection");
-  TTree *new_NeutrinoSelectionFilter = NeutrinoSelectionFilter->CloneTree(0);
-  TTree *new_SubRun = SubRun->CloneTree(0);
-  topdirout->cd();
-  CopyDir(shrreco3d);
-  //file2->mkdir("shrreco3d");
-  //file2->cd("shrreco3d");
-  //TTree *new_energy_tree = _energy_tree->CloneTree(0);
-  //TTree *new_dedx_tree = _dedx_tree->CloneTree(0);
-  //TTree *new_rcshr_tree = _rcshr_tree->CloneTree(0);
-  CopyDir(proximity);
-  //file2->mkdir("proximity");
-  //file2->cd("proximity");
-  //TTree *new_clus_tree = _clus_tree->CloneTree(0);
+  TTree *new_NeutrinoSelectionFilter;
+  TTree *new_SubRun;
+  if (has_pelee){
+    TDirectory *topdirout = gDirectory;
+    file2->mkdir("nuselection");
+    file2->cd("nuselection");
+    new_NeutrinoSelectionFilter = NeutrinoSelectionFilter->CloneTree(0);
+    new_SubRun = SubRun->CloneTree(0);
+    topdirout->cd();
+    CopyDir(shrreco3d);
+    //file2->mkdir("shrreco3d");
+    //file2->cd("shrreco3d");
+    //TTree *new_energy_tree = _energy_tree->CloneTree(0);
+    //TTree *new_dedx_tree = _dedx_tree->CloneTree(0);
+    //TTree *new_rcshr_tree = _rcshr_tree->CloneTree(0);
+    CopyDir(proximity);
+    //file2->mkdir("proximity");
+    //file2->cd("proximity");
+    //TTree *new_clus_tree = _clus_tree->CloneTree(0);
+  }
 
   file2->mkdir("wcpselection");
   file2->cd("wcpselection");
@@ -3622,8 +3633,10 @@ int main( int argc, char** argv )
     T_spacepoints->GetEntry(i);
     new_T_spacepoints->Fill();
 
-    NeutrinoSelectionFilter->GetEntry(i);
-    new_NeutrinoSelectionFilter->Fill();
+    if (has_pelee){
+      NeutrinoSelectionFilter->GetEntry(i);
+      new_NeutrinoSelectionFilter->Fill();
+    }
 
     //    std::cout << pfeval.reco_daughters->size() << std::endl;
     //    break;
