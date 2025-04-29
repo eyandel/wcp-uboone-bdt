@@ -185,7 +185,7 @@ int main( int argc, char** argv )
   TTree *geant4_tree;
   //TTree *true_eventweight_tree;
   bool has_glee = false;
-  if (file1->GetDirectory(singlephotonana)){
+  if (file1->GetDirectory("singlephotonana")){
     has_glee = true;
     
     vertex_tree = (TTree*)file1->Get("singlephotonana/vertex_tree");
