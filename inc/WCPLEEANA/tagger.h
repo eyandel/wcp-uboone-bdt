@@ -3998,13 +3998,13 @@ void LEEana::set_tree_address(TTree *tree0, TaggerInfo& tagger_info, int flag){
   //
 
   // KDAR vars
-  if(tree0->GetBranch("ssm_kdar_score_lowE"){
+  if(tree0->GetBranch("ssm_kdar_score_lowE")){
     tagger_info.saved_ssm_bdt_scores = true;
     tree0->SetBranchAddress("ssm_kdar_score_lowE", &tagger_info.ssm_kdar_score_lowE);
     tree0->SetBranchAddress("ssm_kdar_score_hiE", &tagger_info.ssm_kdar_score_hiE);
   }
 
-  if(tree0->GetBranch("ssm_flag_st_kdar"){
+  if(tree0->GetBranch("ssm_flag_st_kdar")){
     tagger_info.saved_ssm_bdt_vars = true;
 
     tree0->SetBranchAddress("ssm_flag_st_kdar",&tagger_info.ssm_flag_st_kdar);
