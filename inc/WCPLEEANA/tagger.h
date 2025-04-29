@@ -1499,6 +1499,9 @@ namespace LEEana{
     float ssm_cosmict_flag_9;  // this tagger is relevant for nueCC, see "cosmic tagger ones, one case of cosmics ..." (frist one ...)
     std::vector<float> *ssm_cosmict_flag_10;  // front upstream (dirt)
     float ssm_cosmict_flag;
+
+    float ssm_kdar_score_lowE;
+    float ssm_kdar_score_hiE;
     // End KDAR vars
 
 
@@ -3006,6 +3009,9 @@ void LEEana::clear_tagger_info(TaggerInfo& tagger_info){
     tagger_info.ssm_cosmict_flag_8 = 0;  // muon + michel + special
     tagger_info.ssm_cosmict_flag_9 = 0;  // this tagger is relevant for nueCC, see "cosmic tagger ones, one case of cosmics ..." (frist one ...)
     tagger_info.ssm_cosmict_flag_10->clear();  // front upstream (dirt)
+
+    tagger_info.ssm_kdar_score_lowE - 0;
+    tagger_info.ssm_kdar_score_hiE = 0;
     //End KDAR vars
 
 
@@ -4404,7 +4410,7 @@ void LEEana::set_tree_address(TTree *tree0, TaggerInfo& tagger_info, int flag){
     tree0->SetBranchAddress("ssm_offvtx_shw1_dist_mainvtx",&tagger_info.ssm_offvtx_shw1_dist_mainvtx);
 
     // Kine vars
-    if(tree0->SetBranch("ssm_kine_reco_Enu")){
+    if(tree0->GetBranch("ssm_kine_reco_Enu")){
       tagger_info.saved_ssm_kine_vars = true;
       tree0->SetBranchAddress("ssm_kine_reco_Enu", &tagger_info.ssm_kine_reco_Enu); // ssm_kinetic energy  + additional energy ...
       tree0->SetBranchAddress("ssm_kine_reco_add_energy", &tagger_info.ssm_kine_reco_add_energy);  // mass, binding energy ...
