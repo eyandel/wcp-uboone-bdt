@@ -766,18 +766,18 @@ int main( int argc, char** argv )
     }
 
     if (has_glee){
-      new_vertex_tree->GetEntry(*it);
+      vertex_tree->GetEntry(*it);
       new_vertex_tree->Fill();
-      new_eventweight_tree->GetEntry(*it);
+      eventweight_tree->GetEntry(*it);
       new_eventweight_tree->Fill();
       if (!flag_data) {
-        new_geant4_tree->GetEntry(*it);
+        geant4_tree->GetEntry(*it);
         new_geant4_tree->Fill();
       }
     }
 
     if (has_lantern){
-      new_EventTree->GetEntry(*it);
+      EventTree->GetEntry(*it);
       new_EventTree->Fill();
     }
   }
@@ -812,7 +812,7 @@ int main( int argc, char** argv )
     }
 
     if (has_glee){
-      new_run_subrun_tree->GetEntry(it->second.first);
+      run_subrun_tree->GetEntry(it->second.first);
       new_run_subrun_tree->Fill();
     }
   }
