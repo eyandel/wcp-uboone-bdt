@@ -1592,6 +1592,10 @@ int main( int argc, char** argv )
         //cut out bins for num proton REMOVE
         //hmc->GetXaxis()->SetRangeUser(0,4);
         //hdata->GetXaxis()->SetRangeUser(0,4);
+        //cut out bins for nue REMOVE
+        hmc->GetXaxis()->SetRangeUser(-8,3.5);
+        hdata->GetXaxis()->SetRangeUser(-8,3.5);
+
 
 
         hstack[obschannel-1]->Draw("hist same");
