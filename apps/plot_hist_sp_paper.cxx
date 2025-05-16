@@ -1842,6 +1842,9 @@ int main( int argc, char** argv )
         //cut out bins for num proton REMOVE
         //gratio_mc[obschannel-1]->GetXaxis()->SetRangeUser(0,4);
         //gratio_data[obschannel-1]->GetXaxis()->SetRangeUser(0,4);
+        //cut out bins for nue REMOVE
+        gratio_mc[obschannel-1]->GetXaxis()->SetRangeUser(-8,3.5);
+        gratio_data[obschannel-1]->GetXaxis()->SetRangeUser(-8,3.5);
 
         gratio_mc[obschannel-1]->GetXaxis()->SetTitleSize(0.08);//0.12);
         gratio_mc[obschannel-1]->GetXaxis()->SetLabelSize(0.08);//0.12);
