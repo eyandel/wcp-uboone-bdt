@@ -962,7 +962,7 @@ int main( int argc, char** argv )
         hstack[obschannel-1] = new THStack(Form("hs%d", obschannel),"");
         legend[obschannel-1] = new TLegend(0.27, 0.47, 0.9, 0.87);//0.25, 0.5, 0.87, 0.92);
         if (flag_move == 1){
-            legend[obschannel-1]->SetX1(0.14); // New x1 position
+            legend[obschannel-1]->SetX1(0.2); // New x1 position
             legend[obschannel-1]->SetX2(0.8); // New x2 position
             legend[obschannel-1]->SetY1(0.48); // New y1 position
             legend[obschannel-1]->SetY2(0.9); // New y2 position
