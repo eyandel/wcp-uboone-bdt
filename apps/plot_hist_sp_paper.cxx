@@ -1590,11 +1590,11 @@ int main( int argc, char** argv )
         hmc->SetLineColor(kBlack);
         hmc->SetLineWidth(5);
         //cut out bins for num proton REMOVE
-        //hmc->GetXaxis()->SetRangeUser(0,4);
-        //hdata->GetXaxis()->SetRangeUser(0,4);
+        hmc->GetXaxis()->SetRangeUser(0,4);
+        hdata->GetXaxis()->SetRangeUser(0,4);
         //cut out bins for nue REMOVE
-        hmc->GetXaxis()->SetRangeUser(-8,3.5);
-        hdata->GetXaxis()->SetRangeUser(-8,3.5);
+        //hmc->GetXaxis()->SetRangeUser(-8,3.5);
+        //hdata->GetXaxis()->SetRangeUser(-8,3.5);
 
 
 
@@ -1719,9 +1719,9 @@ int main( int argc, char** argv )
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Median dE/dx (0-4 cm) [MeV/cm]");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Median dE/dx (1-5 cm) [MeV/cm]");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reconstructed Shower Cos#theta");
-        gratio_mc[obschannel-1]->GetXaxis()->SetTitle("#nu_{e} CC Background BDT Score");
+        //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("#nu_{e} CC Background BDT Score");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Number of Tracks");
-        //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Number of Protons");
+        gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Number of Protons");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("#nu_{e}CC BDT Score");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Neutrino Energy [MeV]");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("NC#pi^{0} BDT Score");
@@ -1840,11 +1840,11 @@ int main( int argc, char** argv )
         //hack end
 
         //cut out bins for num proton REMOVE
-        //gratio_mc[obschannel-1]->GetXaxis()->SetRangeUser(0,4);
-        //gratio_data[obschannel-1]->GetXaxis()->SetRangeUser(0,4);
+        gratio_mc[obschannel-1]->GetXaxis()->SetRangeUser(0,4);
+        gratio_data[obschannel-1]->GetXaxis()->SetRangeUser(0,4);
         //cut out bins for nue REMOVE
-        gratio_mc[obschannel-1]->GetXaxis()->SetRangeUser(-8,3.5);
-        gratio_data[obschannel-1]->GetXaxis()->SetRangeUser(-8,3.5);
+        //gratio_mc[obschannel-1]->GetXaxis()->SetRangeUser(-8,3.5);
+        //gratio_data[obschannel-1]->GetXaxis()->SetRangeUser(-8,3.5);
 
         gratio_mc[obschannel-1]->GetXaxis()->SetTitleSize(0.08);//0.12);
         gratio_mc[obschannel-1]->GetXaxis()->SetLabelSize(0.08);//0.12);
