@@ -1738,6 +1738,8 @@ int main( int argc, char** argv )
          //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Minumum Distance to Wall [cm]");
          //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Minimum Projected Distance [cm]");
 
+         if(obschannel==2) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reconstructed #pi^{0} Energy (MeV)");
+
         /* 
         //labels bdt scores
         if(obschannel==1) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reconstructed Neutrino Energy (MeV)");
