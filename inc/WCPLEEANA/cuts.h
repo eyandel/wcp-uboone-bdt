@@ -108,6 +108,7 @@ namespace LEEana{
   bool is_singlephoton_eff_ncpi0(TaggerInfo& tagger_info, PFevalInfo& pfeval);
   bool is_singlephoton_eff_nue(TaggerInfo& tagger_info, PFevalInfo& pfeval);
   bool is_singlephoton_oneshw(TaggerInfo& tagger_info, PFevalInfo& pfeval);
+  bool is_back2lengths(TaggerInfo& tagger_info, KineInfo& kine, PFevalInfo& pfeval);
 
 
   // TCut FC_cut = "match_isFC==1";
