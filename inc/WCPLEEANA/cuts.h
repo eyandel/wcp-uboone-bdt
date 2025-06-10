@@ -2781,6 +2781,8 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
   bool flag_singlephoton_eff_ncpi0 = is_singlephoton_eff_ncpi0(tagger, pfeval);
   bool flag_singlephoton_eff_nue = is_singlephoton_eff_nue(tagger, pfeval);
   bool flag_singlephoton_oneshw = is_singlephoton_oneshw(tagger, pfeval);
+
+  bool flag_back2lengths = is_back2lengths(tagger, kine, pfeval);
   //
 
   float costheta_binning[10] = {-1, -.5, 0, .27, .45, .62, .76, .86, .94, 1};		// PeLEE binning
@@ -4684,6 +4686,11 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
     || ch_name == "single_photon_LEE_0p"){
             if (flag_singlephoton_sel && flag_0p) return true;
             return false;
+    }else if (ch_name == "single_photon_bnb_0p_28cm" || ch_name == "single_photon_ext_0p_28cm"
+    || ch_name == "single_photon_overlay_0p_28cm" || ch_name == "single_photon_dirt_0p_28cm" 
+    || ch_name == "single_photon_LEE_0p_28cm"){
+            if (flag_singlephoton_sel && flag_0p && flag_back2lengths) return true;
+            return false;
   }else if (ch_name == "single_photon_eff_bnb_0p" || ch_name == "single_photon_eff_ext_0p"
     || ch_name == "single_photon_eff_overlay_0p" || ch_name == "single_photon_eff_dirt_0p" 
     || ch_name == "single_photon_eff_LEE_0p"){
@@ -4875,6 +4882,12 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
               map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
               map_cuts_flag["SPNumuCCSig"])) return true;
             return false;
+  }else if (ch_name == "single_photon_spoverlay_0p_28cm"){
+            if (flag_singlephoton_sel && flag_0p && flag_back2lengths &&
+              (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])) return true;
+            return false;
   }else if (ch_name == "single_photon_eff_spoverlay_0p"){
             if (flag_singlephoton_eff_sel && flag_0p &&
               (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
@@ -5029,8 +5042,30 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
               && (eval.match_completeness_energy>0.1*eval.truth_energyInside
                 && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio==1)) return true;
             return false;
+  }else if (ch_name == "single_photon_ncpi0overlay_0p_28cm"){
+            if (flag_singlephoton_sel && flag_0p && flag_back2lengths &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && (eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio==1)) return true;
+            return false;
   }else if (ch_name == "single_photon_overlay_ncpi0_0p_BG"){
             if (flag_singlephoton_sel && flag_0p &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+              && !(eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio==1)) return true;
+            return false;
+  }else if (ch_name == "single_photon_overlay_ncpi0_0p_BG_28cm"){
+            if (flag_singlephoton_sel && flag_0p && flag_back2lengths &&
               !(map_cuts_flag["SPNCDeltaSig"] ||
               map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
               map_cuts_flag["SPNumuCCSig"])
@@ -9099,6 +9134,85 @@ bool LEEana::is_singlephoton_oneshw(TaggerInfo& tagger_info, PFevalInfo& pfeval)
   bool flag = false;
   if (tagger_info.shw_sp_n_20br1_showers==1) {flag = true;}
   return flag;
+}
+
+bool LEEana::is_back2lengths(TaggerInfo& tagger_info, KineInfo& kine, PFevalInfo& pfeval){
+  bool is2lengths = false;
+
+  float backwards_projected_dist = -99999.0;
+
+    if (pfeval.reco_showerMomentum[3] > 0){
+        float reco_shower_momentum_perp = sqrt(pow(pfeval.reco_showerMomentum[0],2) + pow(pfeval.reco_showerMomentum[1],2));
+        float shower_theta = atan2(reco_shower_momentum_perp, pfeval.reco_showerMomentum[2]) * (180. / TMath::Pi());
+        float shower_phis = atan2(pfeval.reco_showerMomentum[0], pfeval.reco_showerMomentum[1]) * (180. / TMath::Pi());
+
+        float shower_momentum_total_3d = sqrt(pfeval.reco_showerMomentum[0] * pfeval.reco_showerMomentum[0] +
+                                           pfeval.reco_showerMomentum[1] * pfeval.reco_showerMomentum[1] +
+                                           pfeval.reco_showerMomentum[2] * pfeval.reco_showerMomentum[2]);
+        std::vector<float> shower_unit_vector_3d = {pfeval.reco_showerMomentum[0] / shower_momentum_total_3d,
+                                 pfeval.reco_showerMomentum[1] / shower_momentum_total_3d,
+                                 pfeval.reco_showerMomentum[2] / shower_momentum_total_3d};
+        float center_x = 130.;
+        float center_y = 0.;
+        float center_z = 525.;
+        float towards_center_length = sqrt((pfeval.reco_showervtxX - center_x) * (pfeval.reco_showervtxX - center_x) +
+                                        (pfeval.reco_showervtxY - center_y) * (pfeval.reco_showervtxY - center_y) +
+                                        (pfeval.reco_showervtxZ - center_z) * (pfeval.reco_showervtxZ - center_z));
+        std::vector<float> towards_center_unit_vector_3d = {(center_x - pfeval.reco_showervtxX) / towards_center_length,
+                                         (center_y - pfeval.reco_showervtxY) / towards_center_length,
+                                         (center_z - pfeval.reco_showervtxZ) / towards_center_length};
+        float inwardness_3d = (shower_unit_vector_3d[0] * towards_center_unit_vector_3d[0]) +
+                             (shower_unit_vector_3d[1] * towards_center_unit_vector_3d[1]) +
+                             (shower_unit_vector_3d[2] * towards_center_unit_vector_3d[2]);
+
+        float shower_momentum_total_2d = sqrt(pfeval.reco_showerMomentum[0] * pfeval.reco_showerMomentum[0] +
+                                           pfeval.reco_showerMomentum[1] * pfeval.reco_showerMomentum[1]);
+        std::vector<float> shower_unit_vector_2d = {pfeval.reco_showerMomentum[0] / shower_momentum_total_3d,
+                                 pfeval.reco_showerMomentum[1] / shower_momentum_total_3d};
+        towards_center_length = sqrt((pfeval.reco_showervtxX - center_x) * (pfeval.reco_showervtxX - center_x) +
+                                        (pfeval.reco_showervtxY - center_y) * (pfeval.reco_showervtxY - center_y));
+        std::vector<float> towards_center_unit_vector_2d = {(center_x - pfeval.reco_showervtxX) / towards_center_length,
+                                         (center_y - pfeval.reco_showervtxY) / towards_center_length};
+        float inwardness_2d = (shower_unit_vector_2d[0] * towards_center_unit_vector_2d[0]) +
+                             (shower_unit_vector_2d[1] * towards_center_unit_vector_2d[1]);
+
+
+        float min_backwards_projected_dist = 1e9;
+
+        //projecting to x walls
+        if (shower_unit_vector_3d[0] > 0){
+            if ((pfeval.reco_showervtxX - (-1.0)) / shower_unit_vector_3d[0] < min_backwards_projected_dist)
+              min_backwards_projected_dist =  (pfeval.reco_showervtxX - (-1.0)) / shower_unit_vector_3d[0];
+        }else{
+          if ((pfeval.reco_showervtxX - (254.3)) / shower_unit_vector_3d[0] < min_backwards_projected_dist)
+            min_backwards_projected_dist = (pfeval.reco_showervtxX - (254.3)) / shower_unit_vector_3d[0];
+        }
+        //projecting to y walls
+        if (shower_unit_vector_3d[1] > 0){
+          if ((pfeval.reco_showervtxY - (-115.0)) / shower_unit_vector_3d[1] < min_backwards_projected_dist)
+            min_backwards_projected_dist = (pfeval.reco_showervtxY - (-115.)) / shower_unit_vector_3d[1];
+        }else{
+          if ((pfeval.reco_showervtxY - (117.0)) / shower_unit_vector_3d[1] < min_backwards_projected_dist)
+            min_backwards_projected_dist = (pfeval.reco_showervtxY - (117.)) / shower_unit_vector_3d[1];
+        }
+        //projecting to z walls
+        if (shower_unit_vector_3d[2] > 0){
+          if ((pfeval.reco_showervtxZ - (0.6)) / shower_unit_vector_3d[2] < min_backwards_projected_dist)
+            min_backwards_projected_dist = (pfeval.reco_showervtxZ - (0.6)) / shower_unit_vector_3d[2];
+        }else{
+          if ((pfeval.reco_showervtxZ - (1036.4)) / shower_unit_vector_3d[2] < min_backwards_projected_dist)
+            min_backwards_projected_dist = (pfeval.reco_showervtxZ - (1036.4)) / shower_unit_vector_3d[2];
+        }
+        if (isinf(min_backwards_projected_dist)) min_backwards_projected_dist = -99999.0;
+
+        backwards_projected_dist = min_backwards_projected_dist;
+      }
+
+      if (backwards_projected_dist > 28.0) {
+        is2lengths = true;
+      }
+
+      return is2lengths;
 }
 //
 

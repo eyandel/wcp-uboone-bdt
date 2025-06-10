@@ -2650,7 +2650,10 @@ void TLee::Set_Spectra_MatrixCov()
   roostr = spectra_file;
   TFile *file_spectra = new TFile(roostr, "read");
   //Erin
-  TFile *file_time = new TFile(time_file, "read");
+  TFile *file_time;
+  if (flag_syst_time) {
+    file_time = new TFile(time_file, "read");
+  }
 
   ///
   TMatrixD *mat_collapse = (TMatrixD*)file_spectra->Get("mat_collapse");
@@ -2710,7 +2713,7 @@ void TLee::Set_Spectra_MatrixCov()
   // Erin: must be on for correct handling of systematics if using separate LEE channel (preferred)
   //CHANGE for more/less channels
 
-  int three_constraints = 1;
+  int three_constraints = 0;
   
   if (three_constraints){
     map_Lee_ch[4] = 1;
@@ -2718,7 +2721,7 @@ void TLee::Set_Spectra_MatrixCov()
     map_Lee_ch[6] = 1; 
   }
 
-  int Np0p_constraints = 0;
+  int Np0p_constraints = 1;
 
   if (Np0p_constraints){
     map_Lee_ch[7] = 1;
