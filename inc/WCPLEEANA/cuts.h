@@ -569,6 +569,17 @@ double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, 
     }else{
       return kine.kine_pio_mass;
     }
+  }else if (var_name == "truth_pi0_energy"){
+    //get the pi0 KE
+      double truth_pi0_KE = -1000.;
+      for(int jth=0; jth<pfeval.truth_Ntrack; jth++){
+        int mother = pfeval.truth_mother[jth];
+        if(mother != 0) continue;
+        int pdgcode = pfeval.truth_pdg[jth];
+        if(abs(pdgcode)==111){
+          truth_pi0_KE = pfeval.truth_startMomentum[jth][3]*1000. - 134.9768;
+        }
+        return truth_pi0_KE;
     //  }else if (var_name == "pi0_mass"){
     // return kine.kine_pio_mass;
   }else if (var_name == "nue_score"){
