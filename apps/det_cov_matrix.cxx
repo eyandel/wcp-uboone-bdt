@@ -133,6 +133,18 @@ int main( int argc, char** argv )
   cov.add_disabled_ch_name("single_photon_eff_ncpi0overlay_Np_28cm");
   cov.add_disabled_ch_name("single_shower_ncpi0overlay_Np_28cm");
   cov.add_disabled_ch_name("single_shower_eff_ncpi0overlay_Np_28cm");
+  cov.add_disabled_ch_name("single_photon_overlay_ncpi0_BG_28cm");
+  cov.add_disabled_ch_name("single_photon_eff_overlay_ncpi0_BG_28cm");
+  cov.add_disabled_ch_name("single_shower_overlay_ncpi0_BG_28cm");
+  cov.add_disabled_ch_name("single_shower_eff_overlay_ncpi0_BG_28cm");
+  cov.add_disabled_ch_name("single_photon_overlay_ncpi0_0p_BG_28cm");
+  cov.add_disabled_ch_name("single_photon_eff_overlay_ncpi0_0p_BG_28cm");
+  cov.add_disabled_ch_name("single_shower_overlay_ncpi0_0p_BG_28cm");
+  cov.add_disabled_ch_name("single_shower_eff_overlay_ncpi0_0p_BG_28cm");
+  cov.add_disabled_ch_name("single_photon_overlay_ncpi0_Np_BG_28cm");
+  cov.add_disabled_ch_name("single_photon_eff_overlay_ncpi0_Np_BG_28cm");
+  cov.add_disabled_ch_name("single_shower_overlay_ncpi0_Np_BG_28cm");
+  cov.add_disabled_ch_name("single_shower_eff_overlay_ncpi0_Np_BG_28cm");
 
   cov.add_disabled_ch_name("sp_bdt_nc_pi0_Xp_overlay_ncpi0_BG");
   cov.add_disabled_ch_name("sp_bdt_nc_pi0_0p_overlay_ncpi0_BG");
