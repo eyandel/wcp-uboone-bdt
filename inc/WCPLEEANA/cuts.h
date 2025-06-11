@@ -579,6 +579,7 @@ double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, 
         if(abs(pdgcode)==111){
           truth_pi0_KE = pfeval.truth_startMomentum[jth][3]*1000. - 134.9768;
         }
+      }
         return truth_pi0_KE;
     //  }else if (var_name == "pi0_mass"){
     // return kine.kine_pio_mass;
