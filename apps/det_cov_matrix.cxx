@@ -96,7 +96,31 @@ int main( int argc, char** argv )
   cov.add_disabled_ch_name("single_photon_eff_ncpi0overlay_Np");
   cov.add_disabled_ch_name("single_shower_ncpi0overlay_Np");
   cov.add_disabled_ch_name("single_shower_eff_ncpi0overlay_Np");
-
+  
+  cov.add_disabled_ch_name("single_photon_overlay_BG_28cm");
+  cov.add_disabled_ch_name("single_photon_eff_overlay_BG_28cm");
+  cov.add_disabled_ch_name("single_shower_overlay_BG_28cm");
+  cov.add_disabled_ch_name("single_shower_eff_overlay_BG_28cm");
+  cov.add_disabled_ch_name("single_photon_overlay_0p_BG_28cm");
+  cov.add_disabled_ch_name("single_photon_eff_overlay_0p_BG_28cm");
+  cov.add_disabled_ch_name("single_shower_overlay_0p_BG_28cm");
+  cov.add_disabled_ch_name("single_shower_eff_overlay_0p_BG_28cm");
+  cov.add_disabled_ch_name("single_photon_overlay_Np_BG_28cm");
+  cov.add_disabled_ch_name("single_photon_eff_overlay_Np_BG_28cm");
+  cov.add_disabled_ch_name("single_shower_overlay_Np_BG_28cm");
+  cov.add_disabled_ch_name("single_shower_eff_overlay_Np_BG_28cm");
+  cov.add_disabled_ch_name("single_photon_overlay_BG_28cm");
+  cov.add_disabled_ch_name("single_photon_eff_overlay_BG_28cm");
+  cov.add_disabled_ch_name("single_shower_overlay_BG_28cm");
+  cov.add_disabled_ch_name("single_shower_eff_overlay_BG_28cm");
+  cov.add_disabled_ch_name("single_photon_overlay_0p_BG_28cm");
+  cov.add_disabled_ch_name("single_photon_eff_overlay_0p_BG_28cm");
+  cov.add_disabled_ch_name("single_shower_overlay_0p_BG_28cm");
+  cov.add_disabled_ch_name("single_shower_eff_overlay_0p_BG_28cm");
+  cov.add_disabled_ch_name("single_photon_overlay_Np_BG_28cm");
+  cov.add_disabled_ch_name("single_photon_eff_overlay_Np_BG_28cm");
+  cov.add_disabled_ch_name("single_shower_overlay_Np_BG_28cm");
+  cov.add_disabled_ch_name("single_shower_eff_overlay_Np_BG_28cm");
   cov.add_disabled_ch_name("single_photon_ncpi0overlay_28cm");
   cov.add_disabled_ch_name("single_photon_eff_ncpi0overlay_28cm");
   cov.add_disabled_ch_name("single_shower_ncpi0overlay_28cm");
