@@ -439,7 +439,7 @@ int main( int argc, char** argv )
     // T_KINEvars_cv->SetBranchStatus("vlne_nue_partial_totalE",1);
   }
 
-  T_PFeval_cv->SetBranchStatus("*",0);
+  T_PFeval_cv->SetBranchStatus("*",1);
   T_PFeval_cv->SetBranchStatus("reco_nuvtxX",1);
   T_PFeval_cv->SetBranchStatus("reco_nuvtxY",1);
   T_PFeval_cv->SetBranchStatus("reco_nuvtxZ",1);

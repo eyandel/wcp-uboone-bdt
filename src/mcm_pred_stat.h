@@ -768,7 +768,7 @@ void LEEana::CovMatrix::get_pred_events_info(TString input_filename, std::map<TS
     // T_KINEvars->SetBranchStatus("vlne_nue_partial_totalE",1);
   }
 
-  T_PFeval->SetBranchStatus("*",0);
+  T_PFeval->SetBranchStatus("*",1);
   T_PFeval->SetBranchStatus("reco_nuvtxX",1);
   T_PFeval->SetBranchStatus("reco_nuvtxY",1);
   T_PFeval->SetBranchStatus("reco_nuvtxZ",1);
