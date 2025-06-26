@@ -468,7 +468,7 @@ int main(int argc, char** argv)
     Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 3001 );
   }
 
-  int make_constrained_sp_Np0p_plot = 0;
+  int make_constrained_sp_Np0p_plot = 1;
 
   if (make_constrained_sp_Np0p_plot) {
 
