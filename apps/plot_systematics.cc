@@ -74,8 +74,10 @@ void plot_systematics()
   int color_time = kPink+1;
   int color_total = kBlack;
   
-  const int num_ch = 3;//6; //7;
-  int nbins_ch[num_ch] = {16,16,16};//{7,7,7,7,7,7}; //{26, 26, 26, 26, 11, 11, 11};
+  //const int num_ch = 3;
+  const int num_ch = 6; //7;
+  //int nbins_ch[num_ch] = {16,16,16};
+  int nbins_ch[num_ch] = {7,7,7,7,7,7}; //{26, 26, 26, 26, 11, 11, 11};
   
   double *axis_label = new double[rows+1];
   int line_axis = 0;
@@ -186,8 +188,10 @@ void plot_systematics()
   //////////////////
   
   map<int, TPaveText*>pt_text_ch;
-  TString pt_str_ch[num_ch] = {"1#gamma", "NC#pi^{0}", "#nu_{#mu}CC"};//{"1#gamma 0p", "1#gamma Np", "NC#pi^{0} 0p", "NC#pi^{0} Np", "#nu_{#mu}CC 0p", "#nu_{#mu}CC Np"};//{"FC #nu_{e}CC", "PC #nu_{e}CC", "FC #nu_{#mu}CC", "PC #nu_{#mu}CC", "FC CC#pi^{0}", "PC CC#pi^{0}", "NC#pi^{0}"};
-  double pt_str_angle[num_ch] = {0,0,0}; //{30,30,30,30,30,30};//,0,30,30,30};
+  //TString pt_str_ch[num_ch] = {"1#gamma", "NC#pi^{0}", "#nu_{#mu}CC"};
+  TString pt_str_ch[num_ch] = {"1#gamma 0p", "1#gamma Np", "NC#pi^{0} 0p", "NC#pi^{0} Np", "#nu_{#mu}CC 0p", "#nu_{#mu}CC Np"};//{"FC #nu_{e}CC", "PC #nu_{e}CC", "FC #nu_{#mu}CC", "PC #nu_{#mu}CC", "FC CC#pi^{0}", "PC CC#pi^{0}", "NC#pi^{0}"};
+  //double pt_str_angle[num_ch] = {0,0,0}; 
+  double pt_str_angle[num_ch] = {30,30,30,30,30,30};//,0,30,30,30};
   for(int idx=0; idx<num_ch; idx++) {
     int line_eff = 0;
     for(int jdx=0; jdx<idx; jdx++) line_eff += nbins_ch[jdx];

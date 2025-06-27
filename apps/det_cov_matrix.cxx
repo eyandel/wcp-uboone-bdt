@@ -169,6 +169,11 @@ int main( int argc, char** argv )
 
   cov.add_disabled_ch_name("single_photon_nue_overlay_ncpi0_BG");
 
+  cov.add_disabled_ch_name("sp_bdt_nc_pi0_0p_spoverlay");
+  cov.add_disabled_ch_name("sp_bdt_nc_pi0_Np_spoverlay");
+  cov.add_disabled_ch_name("sp_bdt_numuCC_0p_spoverlay");
+  cov.add_disabled_ch_name("sp_bdt_numuCC_Np_spoverlay");
+
   //cov.add_disabled_ch_name("sp_bdt_numuCC_Xp_spoverlay");
   //cov.add_disabled_ch_name("sp_bdt_numuCC_Xp_ncpi0overlay");
   //cov.add_disabled_ch_name("sp_bdt_nc_pi0_Xp_spoverlay");
