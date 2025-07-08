@@ -2982,12 +2982,14 @@ void TLee::Set_Spectra_MatrixCov()
   //Erin
   ////////////////////////////////////////// ns time/scaling
   TMatrixD *matrix_time_abs_point;
+  TMatrixD matrix_time_abs;
   if (flag_syst_time){
     matrix_time_abs_point = (TMatrixD*)file_time->Get("cov_mat_time");
-  }else{
+    matrix_time_abs = (*matrix_time_abs_point);
+  }/*else{
     matrix_time_abs_point = (TMatrixD*)file_spectra->Get("cov_mat_add");
-  }
-  TMatrixD matrix_time_abs = (*matrix_time_abs_point);
+  }*/
+  
   //
 
   //////////////////////////////////////////
