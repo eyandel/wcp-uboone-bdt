@@ -19,6 +19,8 @@
 
 #include "WCPLEEANA/eval.h"
 
+#include "WCPLEEANA/Util.h"
+
 using namespace std;
 using namespace LEEana;
 
@@ -60,6 +62,61 @@ int main( int argc, char** argv )
   TTree *T_pot = (TTree*)file1->Get("wcpselection/T_pot");
   TTree *T_PFeval = (TTree*)file1->Get("wcpselection/T_PFeval");
   TTree *T_KINEvars = (TTree*)file1->Get("wcpselection/T_KINEvars");
+
+  TTree *T_spacepoints = (TTree*)file1->Get("wcpselection/T_spacepoints");
+
+  TTree *NeutrinoSelectionFilter;
+  TTree *SubRun;
+  TDirectory *shrreco3d;
+  TDirectory *proximity;
+  bool has_pelee = false;
+  if (file1->GetDirectory("nuselection")){
+    has_pelee = true;
+    TDirectory *topdir = gDirectory;
+    //file1->cd("nuselection");
+    //TDirectory *nuselection = gDirectory;
+    file1->cd("shrreco3d");
+    shrreco3d = gDirectory;
+    file1->cd("proximity");
+    proximity = gDirectory;
+    topdir->cd();
+    NeutrinoSelectionFilter = (TTree*)file1->Get("nuselection/NeutrinoSelectionFilter");
+    SubRun = (TTree*)file1->Get("nuselection/SubRun");
+    //TTree *_energy_tree = (TTree*)file1->Get("shrreco3d/_energy_tree");
+    //TTree *_dedx_tree = (TTree*)file1->Get("shrreco3d/_dedx_tree");
+    //TTree *_rcshr_tree = (TTree*)file1->Get("shrreco3d/_rcshr_tree");
+    //TTree *_clus_tree = (TTree*)file1->Get("proximity/_clus_tree");
+  }
+
+  TTree *vertex_tree;
+  //TTree *pot_tree;
+  TTree *eventweight_tree;
+  //TTree *ncdelta_slice_tree;
+  TTree *run_subrun_tree;
+  TTree *geant4_tree;
+  //TTree *true_eventweight_tree;
+  bool has_glee = false;
+  if (file1->GetDirectory("singlephotonana")){
+    has_glee = true;
+
+    vertex_tree = (TTree*)file1->Get("singlephotonana/vertex_tree");
+    //pot_tree = (TTree*)file1->Get("singlephotonana/pot_tree");
+    eventweight_tree = (TTree*)file1->Get("singlephotonana/eventweight_tree");
+    //ncdelta_slice_tree = (TTree*)file1->Get("singlephotonana/ncdelta_slice_tree");
+    run_subrun_tree = (TTree*)file1->Get("singlephotonana/run_subrun_tree");
+  }
+
+  TTree *EventTree;
+  bool has_lantern = false;
+  if (file1->GetDirectory("lantern")){
+    has_lantern = true;
+    EventTree = (TTree*)file1->Get("lantern/EventTree");
+  }
+
+  if (has_glee){
+    geant4_tree = (TTree*)file1->Get("singlephotonana/geant4_tree");
+    //true_eventweight_tree = (TTree*)file1->Get("singlephotonana/true_eventweight_tree");
+  }
 
   TFile *file2 = new TFile(input_file_xf);
   TTree *T;
@@ -144,6 +201,57 @@ int main( int argc, char** argv )
 
 
   TFile *file3 = new TFile(out_file,"RECREATE");
+
+  TTree *new_NeutrinoSelectionFilter;// = new TTree("NeutrinoSelectionFilter","NeutrinoSelectionFilter");
+  TTree *new_SubRun;// = new TTree("SubRun","SubRun");
+  if (has_pelee){
+    TDirectory *topdirout = gDirectory;
+    file3->mkdir("nuselection");
+    file3->cd("nuselection");
+    new_NeutrinoSelectionFilter = NeutrinoSelectionFilter->CloneTree(0);
+    new_SubRun = SubRun->CloneTree(0);
+    topdirout->cd();
+    CopyDir(shrreco3d);
+    //file2->mkdir("shrreco3d");
+    //file2->cd("shrreco3d");
+    //TTree *new_energy_tree = _energy_tree->CloneTree(0);
+    //TTree *new_dedx_tree = _dedx_tree->CloneTree(0);
+    //TTree *new_rcshr_tree = _rcshr_tree->CloneTree(0);
+    CopyDir(proximity);
+    //file2->mkdir("proximity");
+    //file2->cd("proximity");
+    //TTree *new_clus_tree = _clus_tree->CloneTree(0);
+  }
+
+  TTree *new_vertex_tree;
+  //TTree *pot_tree;
+  TTree *new_eventweight_tree;
+  //TTree *ncdelta_slice_tree;
+  TTree *new_run_subrun_tree;
+  TTree *new_geant4_tree;
+  //TTree *true_eventweight_tree;
+
+  if (has_glee){
+    TDirectory *topdirout = gDirectory;
+    file3->mkdir("singlephotonana");
+    file3->cd("singlephotonana");
+    new_vertex_tree = vertex_tree->CloneTree(0);
+    new_eventweight_tree = eventweight_tree->CloneTree(0);
+    new_run_subrun_tree = run_subrun_tree->CloneTree(0);
+    new_geant4_tree = geant4_tree->CloneTree(0);
+    topdirout->cd();
+  }
+
+  TTree *new_EventTree;
+  if (has_lantern){
+    TDirectory *topdirout = gDirectory;
+    file3->mkdir("lantern");
+    file3->cd("lantern");
+    new_EventTree = EventTree->CloneTree(0);
+    topdirout->cd();
+  }
+
+
   file3->mkdir("wcpselection");
   file3->cd("wcpselection");
   TTree *t1 = new TTree("T_eval","T_eval");
@@ -151,8 +259,11 @@ int main( int argc, char** argv )
   TTree *t3 = new TTree("T_PFeval", "T_PFeval");
   TTree *t5 = new TTree("T_KINEvars", "T_KINEvars");
   TTree *t4 = new TTree("T_BDTvars","T_BDTvars");
+  TTree *new_T_spacepoints = T_spacepoints->CloneTree(0);
 
   TTree *t6 = new TTree("T_weight","T_weight");
+
+
 
   EvalInfo eval;
   eval.file_type = new std::string();
@@ -437,7 +548,7 @@ int main( int argc, char** argv )
 
   //std::cout << T->GetEntries() << std::endl;
 
-
+/*
   T_BDTvars->SetBranchStatus("*",0);
   T_BDTvars->SetBranchStatus("numu_cc_flag",1);
   T_BDTvars->SetBranchStatus("numu_score",1);
@@ -636,7 +747,7 @@ int main( int argc, char** argv )
   }
   //
 
-
+*/
 
 
   std::map<std::pair<int, int>, int> map_re_entry;
@@ -734,6 +845,28 @@ int main( int argc, char** argv )
       t4->Fill();
       t5->Fill();
       t6->Fill();
+ 
+      T_spacepoints->GetEntry(it->first);
+      new_T_spacepoints->Fill();
+
+      if (has_pelee){
+        NeutrinoSelectionFilter->GetEntry(it->first);
+        new_NeutrinoSelectionFilter->Fill();
+      }
+
+      if (has_glee){
+        vertex_tree->GetEntry(it->first);
+        new_vertex_tree->Fill();
+        eventweight_tree->GetEntry(it->first);
+        new_eventweight_tree->Fill();
+        geant4_tree->GetEntry(it->first);
+        new_geant4_tree->Fill();
+      }
+
+      if (has_lantern){
+        EventTree->GetEntry(it->first);
+        new_EventTree->Fill();
+      }
 
   }
 
@@ -755,6 +888,17 @@ int main( int argc, char** argv )
     pot.pot_tor875good *= pass_ratio;
 
     t2->Fill();
+
+    if (has_pelee){
+      SubRun->GetEntry(it->second.first);
+      new_SubRun->Fill();
+    }
+
+    if (has_glee){
+      run_subrun_tree->GetEntry(it->second.first);
+      new_run_subrun_tree->Fill();
+    }
+
   }
   std::cout << out_file << std::endl;
   std::cout << "Events: " << t1->GetEntries()<<"/"<<T_eval->GetEntries() << std::endl;

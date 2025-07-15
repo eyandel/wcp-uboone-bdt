@@ -8,6 +8,10 @@
 #include "TH1D.h"
 #include "TH2D.h"
 
+#include "TFile.h"
+#include "TTree.h"
+#include "TKey.h"
+#include "TROOT.h"
 
 // interactive initilization of a matrix/vector
 TMatrixD Matrix(Int_t row, Int_t column);
@@ -33,5 +37,6 @@ void H2V(const TH1D* histo, TVectorD& vec);
 void M2H(const TMatrixD mat, TH2D* histo);
 void V2H(const TVectorD vec, TH1D* histo);
 
+void CopyDir(TDirectory *source);
 
 #endif

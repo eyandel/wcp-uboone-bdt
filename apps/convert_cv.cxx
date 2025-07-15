@@ -18,6 +18,8 @@
 
 #include "WCPLEEANA/eval.h"
 
+#include "WCPLEEANA/Util.h"
+
 using namespace std;
 using namespace LEEana;
 
@@ -26,6 +28,7 @@ using namespace LEEana;
 #include "WCPLEEANA/pfeval.h"
 #include "WCPLEEANA/kine.h"
 
+/*
 void CopyDir(TDirectory *source) {
   //copy all objects and subdirs of directory source as a subdir of the current directory   
   source->ls();
@@ -61,6 +64,7 @@ void CopyDir(TDirectory *source) {
  adir->SaveSelf(kTRUE);
  savdir->cd();
 }
+*/
 
 int main( int argc, char** argv )
 {
