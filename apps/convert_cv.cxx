@@ -89,22 +89,60 @@ int main( int argc, char** argv )
   TTree *T_KINEvars_cv = (TTree*)file1->Get("wcpselection/T_KINEvars");
   TTree *T_spacepoints = (TTree*)file1->Get("wcpselection/T_spacepoints");
 
-  TDirectory *topdir = gDirectory;
-  //file1->cd("nuselection");
-  //TDirectory *nuselection = gDirectory;
-  file1->cd("shrreco3d");
-  TDirectory *shrreco3d = gDirectory;
-  file1->cd("proximity");
-  TDirectory *proximity = gDirectory;
-  topdir->cd();
-  TTree *NeutrinoSelectionFilter = (TTree*)file1->Get("nuselection/NeutrinoSelectionFilter");
-  TTree *SubRun = (TTree*)file1->Get("nuselection/SubRun");
-  //TTree *_energy_tree = (TTree*)file1->Get("shrreco3d/_energy_tree");
-  //TTree *_dedx_tree = (TTree*)file1->Get("shrreco3d/_dedx_tree");
-  //TTree *_rcshr_tree = (TTree*)file1->Get("shrreco3d/_rcshr_tree");
-  //TTree *_clus_tree = (TTree*)file1->Get("proximity/_clus_tree");
+  TTree *NeutrinoSelectionFilter;
+  TTree *SubRun;
+  TDirectory *shrreco3d;
+  TDirectory *proximity;
+  bool has_pelee = false;
+  if (file1->GetDirectory("nuselection")){
+    has_pelee = true;
+    TDirectory *topdir = gDirectory;
+    //file1->cd("nuselection");
+    //TDirectory *nuselection = gDirectory;
+    file1->cd("shrreco3d");
+    shrreco3d = gDirectory;
+    file1->cd("proximity");
+    proximity = gDirectory;
+    topdir->cd();
+    NeutrinoSelectionFilter = (TTree*)file1->Get("nuselection/NeutrinoSelectionFilter");
+    SubRun = (TTree*)file1->Get("nuselection/SubRun");
+    //TTree *_energy_tree = (TTree*)file1->Get("shrreco3d/_energy_tree");
+    //TTree *_dedx_tree = (TTree*)file1->Get("shrreco3d/_dedx_tree");
+    //TTree *_rcshr_tree = (TTree*)file1->Get("shrreco3d/_rcshr_tree");
+    //TTree *_clus_tree = (TTree*)file1->Get("proximity/_clus_tree");
+  }
+
+  TTree *vertex_tree;
+  //TTree *pot_tree;
+  TTree *eventweight_tree;
+  //TTree *ncdelta_slice_tree;
+  TTree *run_subrun_tree;
+  TTree *geant4_tree;
+  //TTree *true_eventweight_tree;
+  bool has_glee = false;
+  if (file1->GetDirectory("singlephotonana")){
+    has_glee = true;
+    
+    vertex_tree = (TTree*)file1->Get("singlephotonana/vertex_tree");
+    //pot_tree = (TTree*)file1->Get("singlephotonana/pot_tree");
+    eventweight_tree = (TTree*)file1->Get("singlephotonana/eventweight_tree");
+    //ncdelta_slice_tree = (TTree*)file1->Get("singlephotonana/ncdelta_slice_tree");
+    run_subrun_tree = (TTree*)file1->Get("singlephotonana/run_subrun_tree");
+  }
+
+  TTree *EventTree;
+  bool has_lantern = false;
+  if (file1->GetDirectory("lantern")){
+    has_lantern = true;
+    EventTree = (TTree*)file1->Get("lantern/EventTree");
+  }
 
   if (T_eval_cv->GetBranch("weight_cv")) flag_data =false;
+
+  if (has_glee && !flag_data){
+    geant4_tree = (TTree*)file1->Get("singlephotonana/geant4_tree");
+    //true_eventweight_tree = (TTree*)file1->Get("singlephotonana/true_eventweight_tree");
+  }
 
 
 
@@ -616,22 +654,54 @@ int main( int argc, char** argv )
   TFile *file3 = new TFile(out_file,"RECREATE");
 
   //CopyDir(nuselection);
-  TDirectory *topdirout = gDirectory;
-  file3->mkdir("nuselection");
-  file3->cd("nuselection");
-  TTree *new_NeutrinoSelectionFilter = NeutrinoSelectionFilter->CloneTree(0);
-  TTree *new_SubRun = SubRun->CloneTree(0);
-  topdirout->cd();
-  CopyDir(shrreco3d);
-  //file3->mkdir("shrreco3d");
-  //file3->cd("shrreco3d");
-  //TTree *new_energy_tree = _energy_tree->CloneTree(0);
-  //TTree *new_dedx_tree = _dedx_tree->CloneTree(0);
-  //TTree *new_rcshr_tree = _rcshr_tree->CloneTree(0);
-  CopyDir(proximity);
-  //file3->mkdir("proximity");
-  //file3->cd("proximity");
-  //TTree *new_clus_tree = _clus_tree->CloneTree(0);
+  TTree *new_NeutrinoSelectionFilter;// = new TTree("NeutrinoSelectionFilter","NeutrinoSelectionFilter");
+  TTree *new_SubRun;// = new TTree("SubRun","SubRun");
+  if (has_pelee){
+    TDirectory *topdirout = gDirectory;
+    file3->mkdir("nuselection");
+    file3->cd("nuselection");
+    new_NeutrinoSelectionFilter = NeutrinoSelectionFilter->CloneTree(0);
+    new_SubRun = SubRun->CloneTree(0);
+    topdirout->cd();
+    CopyDir(shrreco3d);
+    //file2->mkdir("shrreco3d");
+    //file2->cd("shrreco3d");
+    //TTree *new_energy_tree = _energy_tree->CloneTree(0);
+    //TTree *new_dedx_tree = _dedx_tree->CloneTree(0);
+    //TTree *new_rcshr_tree = _rcshr_tree->CloneTree(0);
+    CopyDir(proximity);
+    //file2->mkdir("proximity");
+    //file2->cd("proximity");
+    //TTree *new_clus_tree = _clus_tree->CloneTree(0);
+  }
+
+  TTree *new_vertex_tree;
+  //TTree *pot_tree;
+  TTree *new_eventweight_tree;
+  //TTree *ncdelta_slice_tree;
+  TTree *new_run_subrun_tree;
+  TTree *new_geant4_tree;
+  //TTree *true_eventweight_tree;
+
+  if (has_glee){
+    TDirectory *topdirout = gDirectory;
+    file3->mkdir("singlephotonana");
+    file3->cd("singlephotonana");
+    new_vertex_tree = vertex_tree->CloneTree(0);
+    new_eventweight_tree = eventweight_tree->CloneTree(0);
+    new_run_subrun_tree = run_subrun_tree->CloneTree(0);
+    if (!flag_data) new_geant4_tree = geant4_tree->CloneTree(0);
+    topdirout->cd();
+  }
+
+  TTree *new_EventTree;
+  if (has_lantern){
+    TDirectory *topdirout = gDirectory;
+    file3->mkdir("lantern");
+    file3->cd("lantern");
+    new_EventTree = EventTree->CloneTree(0);
+    topdirout->cd();
+  }
 
   file3->mkdir("wcpselection");
 
@@ -690,8 +760,26 @@ int main( int argc, char** argv )
     T_spacepoints->GetEntry(*it);
     new_T_spacepoints->Fill();
 
-    NeutrinoSelectionFilter->GetEntry(*it);
-    new_NeutrinoSelectionFilter->Fill();
+    if (has_pelee){
+      NeutrinoSelectionFilter->GetEntry(*it);
+      new_NeutrinoSelectionFilter->Fill();
+    }
+
+    if (has_glee){
+      vertex_tree->GetEntry(*it);
+      new_vertex_tree->Fill();
+      eventweight_tree->GetEntry(*it);
+      new_eventweight_tree->Fill();
+      if (!flag_data) {
+        geant4_tree->GetEntry(*it);
+        new_geant4_tree->Fill();
+      }
+    }
+
+    if (has_lantern){
+      EventTree->GetEntry(*it);
+      new_EventTree->Fill();
+    }
   }
 
   double cv_pot=0;
@@ -718,8 +806,15 @@ int main( int argc, char** argv )
 
     t2_cv->Fill();
 
-    SubRun->GetEntry(it->second.first);
-    new_SubRun->Fill();
+    if (has_pelee){
+      SubRun->GetEntry(it->second.first);
+      new_SubRun->Fill();
+    }
+
+    if (has_glee){
+      run_subrun_tree->GetEntry(it->second.first);
+      new_run_subrun_tree->Fill();
+    }
   }
 
   std::cout << out_file << std::endl;
