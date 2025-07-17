@@ -1,6 +1,7 @@
 #include "WCPLEEANA/Util.h"
 
 #include <iostream>
+#include <algorithm>
 #include "stdlib.h"
 
 #include "TMatrixD.h"
@@ -151,7 +152,7 @@ void V2H(const TVectorD vec, TH1D* histo)
     }
 }
 
-void CopyDir(TDirectory *source, bool blank_tree, bool verbose) {
+void CopyDir(TDirectory *source, bool blank_tree, std::vector<std::string> to_skip, bool verbose) {
   //copy all objects and subdirs of directory source as a subdir of the current directory
   if(verbose) source->ls();
   TDirectory *savdir = gDirectory;
@@ -172,6 +173,8 @@ void CopyDir(TDirectory *source, bool blank_tree, bool verbose) {
         adir->cd();
      } else if (cl->InheritsFrom(TTree::Class())) {
         TTree *T = (TTree*)source->Get(key->GetName());
+        std::string temp_name = T->GetName();
+        if (std::find(to_skip.begin(), to_skip.end(), temp_name) != to_skip.end()) continue;
         adir->cd();
         int nentry = -1;
         if (blank_tree){nentry=0;}
@@ -189,7 +192,7 @@ void CopyDir(TDirectory *source, bool blank_tree, bool verbose) {
  savdir->cd();
 }
 
-void CopyDir(TDirectory *source, TString TDirectory_name, bool blank_tree, bool verbose) {
+void CopyDir(TDirectory *source, TString TDirectory_name, bool blank_tree, std::vector<std::string> to_skip, bool verbose) {
   //copy all objects and subdirs of directory source as a subdir of the current directory
   if(verbose) source->ls();
   TDirectory *savdir = gDirectory;
@@ -201,6 +204,8 @@ void CopyDir(TDirectory *source, TString TDirectory_name, bool blank_tree, bool 
      if (!cl) continue;
      if (cl->InheritsFrom(TTree::Class())) {
         TTree *T = (TTree*)source->Get(key->GetName());
+        std::string temp_name = T->GetName();
+        if (std::find(to_skip.begin(), to_skip.end(), temp_name) != to_skip.end()) continue;
         savdir->cd();
         int nentry = -1;
 	if (blank_tree){nentry=0;}
@@ -213,7 +218,7 @@ void CopyDir(TDirectory *source, TString TDirectory_name, bool blank_tree, bool 
 }
 
 
-std::vector<TTree*>* CopyTrees(TDirectory *source, bool blank_tree,  bool rename, TString TDirectory_name, bool verbose) {
+std::vector<TTree*>* CopyTrees(TDirectory *source, bool blank_tree,  bool rename, TString TDirectory_name, std::vector<std::string> to_skip, bool verbose) {
   if(verbose) source->ls();
   TDirectory *savdir = gDirectory;
   TKey *key;
@@ -225,7 +230,9 @@ std::vector<TTree*>* CopyTrees(TDirectory *source, bool blank_tree,  bool rename
      if (!cl) continue;
      if (cl->InheritsFrom(TTree::Class())) {
         TTree *T = (TTree*)source->Get(key->GetName());
-        savdir->cd();
+        std::string temp_name = T->GetName();
+        if (std::find(to_skip.begin(), to_skip.end(), temp_name) != to_skip.end()) continue; 
+       savdir->cd();
         int nentry = -1;
         if (blank_tree) {nentry=0;}
         TTree *newT = T->CloneTree(nentry,"fast");
@@ -238,7 +245,7 @@ std::vector<TTree*>* CopyTrees(TDirectory *source, bool blank_tree,  bool rename
   return ttree_vec;
 }
 
-std::vector<TTree*>* GetTrees(TDirectory *source, bool verbose) {
+std::vector<TTree*>* GetTrees(TDirectory *source, std::vector<std::string> to_skip, bool verbose) {
   if(verbose) source->ls();
   TDirectory *savdir = gDirectory;
   TKey *key;
@@ -250,6 +257,8 @@ std::vector<TTree*>* GetTrees(TDirectory *source, bool verbose) {
      if (!cl) continue;
      if (cl->InheritsFrom(TTree::Class())) {
         TTree *T = (TTree*)source->Get(key->GetName());
+        std::string temp_name = T->GetName();
+        if (std::find(to_skip.begin(), to_skip.end(), temp_name) != to_skip.end()) continue;
         ttree_vec->push_back(T);
     }
   }

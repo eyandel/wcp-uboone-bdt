@@ -42,6 +42,9 @@ int main( int argc, char** argv )
   TString out_file = argv[3];
   TString option = argv[4];
 
+  std::vector<std::string> pelee_skip = {"SubRun"};
+  std::vector<std::string> glee_skip = {"run_subrun_tree","pot_tree"};
+
 
   TFile *file1 = new TFile(input_file_cv);
   TTree *T_BDTvars = (TTree*)file1->Get("wcpselection/T_BDTvars");
@@ -65,15 +68,15 @@ int main( int argc, char** argv )
 
     file1->cd("nuselection");
     nuselection = gDirectory;
-    nuselection_ttree_vec = GetTrees(nuselection);
+    nuselection_ttree_vec = GetTrees(nuselection,pelee_skip);
 
     file1->cd("shrreco3d");
     shrreco3d = gDirectory;
-    shrreco3d_ttree_vec = GetTrees(shrreco3d);
+    shrreco3d_ttree_vec = GetTrees(shrreco3d,pelee_skip);
 
     file1->cd("proximity");
     proximity = gDirectory;
-    proximity_ttree_vec = GetTrees(proximity);
+    proximity_ttree_vec = GetTrees(proximity,pelee_skip);
 
     topdir->cd();
   }
@@ -87,7 +90,7 @@ int main( int argc, char** argv )
 
     file1->cd("singlephotonana");
     singlephotonana = gDirectory;
-    singlephotonana_ttree_vec = GetTrees(singlephotonana);
+    singlephotonana_ttree_vec = GetTrees(singlephotonana,glee_skip);
 
     topdir->cd();
   }
@@ -195,17 +198,17 @@ int main( int argc, char** argv )
 
     file3->mkdir("nuselection");
     file3->cd("nuselection");
-    new_nuselection_ttree_vec = CopyTrees(nuselection,true);
+    new_nuselection_ttree_vec = CopyTrees(nuselection,true,false,"",pelee_skip);
     topdirout->cd();
 
     file3->mkdir("shrreco3d");
     file3->cd("shrreco3d");
-    new_shrreco3d_ttree_vec = CopyTrees(shrreco3d,true);
+    new_shrreco3d_ttree_vec = CopyTrees(shrreco3d,true,false,"",pelee_skip);
     topdirout->cd();
 
     file3->mkdir("proximity");
     file3->cd("proximity");
-    new_proximity_ttree_vec = CopyTrees(proximity,true);
+    new_proximity_ttree_vec = CopyTrees(proximity,true,false,"",pelee_skip);
     topdirout->cd();
   }else{std::cout<<"No pelee"<<std::endl;}
   
@@ -217,7 +220,7 @@ int main( int argc, char** argv )
     TDirectory *topdirout = gDirectory;
     file3->mkdir("singlephotonana");
     file3->cd("singlephotonana");
-    new_singlephotonana_ttree_vec = CopyTrees(singlephotonana,true);
+    new_singlephotonana_ttree_vec = CopyTrees(singlephotonana,true,false,"",glee_skip);
     topdirout->cd();
   }else{std::cout<<"No glee"<<std::endl;}
 
