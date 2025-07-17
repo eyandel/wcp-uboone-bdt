@@ -62,26 +62,26 @@ int main( int argc, char** argv )
   TTree *T_pot = (TTree*)file1->Get("wcpselection/T_pot");
   TTree *T_PFeval = (TTree*)file1->Get("wcpselection/T_PFeval");
   TTree *T_KINEvars = (TTree*)file1->Get("wcpselection/T_KINEvars");
-
   TTree *T_spacepoints = (TTree*)file1->Get("wcpselection/T_spacepoints");
 
   TTree *NeutrinoSelectionFilter;
   TTree *SubRun;
   TDirectory *shrreco3d;
   TDirectory *proximity;
+  TDirectory *nuselection;
   bool has_pelee = false;
   if (file1->GetDirectory("nuselection")){
     has_pelee = true;
     TDirectory *topdir = gDirectory;
-    //file1->cd("nuselection");
-    //TDirectory *nuselection = gDirectory;
+    file1->cd("nuselection");
+    nuselection = gDirectory;
     file1->cd("shrreco3d");
     shrreco3d = gDirectory;
     file1->cd("proximity");
     proximity = gDirectory;
     topdir->cd();
-    NeutrinoSelectionFilter = (TTree*)file1->Get("nuselection/NeutrinoSelectionFilter");
-    SubRun = (TTree*)file1->Get("nuselection/SubRun");
+    //NeutrinoSelectionFilter = (TTree*)file1->Get("nuselection/NeutrinoSelectionFilter");
+    //SubRun = (TTree*)file1->Get("nuselection/SubRun");
     //TTree *_energy_tree = (TTree*)file1->Get("shrreco3d/_energy_tree");
     //TTree *_dedx_tree = (TTree*)file1->Get("shrreco3d/_dedx_tree");
     //TTree *_rcshr_tree = (TTree*)file1->Get("shrreco3d/_rcshr_tree");
@@ -95,15 +95,17 @@ int main( int argc, char** argv )
   TTree *run_subrun_tree;
   TTree *geant4_tree;
   //TTree *true_eventweight_tree;
+  TDirectory *singlephotonana;
   bool has_glee = false;
   if (file1->GetDirectory("singlephotonana")){
     has_glee = true;
-
-    vertex_tree = (TTree*)file1->Get("singlephotonana/vertex_tree");
+    singlephotonana = gDirectory;
+    //vertex_tree = (TTree*)file1->Get("singlephotonana/vertex_tree");
     //pot_tree = (TTree*)file1->Get("singlephotonana/pot_tree");
-    eventweight_tree = (TTree*)file1->Get("singlephotonana/eventweight_tree");
+    //eventweight_tree = (TTree*)file1->Get("singlephotonana/eventweight_tree");
     //ncdelta_slice_tree = (TTree*)file1->Get("singlephotonana/ncdelta_slice_tree");
-    run_subrun_tree = (TTree*)file1->Get("singlephotonana/run_subrun_tree");
+    //run_subrun_tree = (TTree*)file1->Get("singlephotonana/run_subrun_tree");
+    //geant4_tree = (TTree*)file1->Get("singlephotonana/geant4_tree");
   }
 
   TTree *EventTree;
@@ -113,10 +115,6 @@ int main( int argc, char** argv )
     EventTree = (TTree*)file1->Get("lantern/EventTree");
   }
 
-  if (has_glee){
-    geant4_tree = (TTree*)file1->Get("singlephotonana/geant4_tree");
-    //true_eventweight_tree = (TTree*)file1->Get("singlephotonana/true_eventweight_tree");
-  }
 
   TFile *file2 = new TFile(input_file_xf);
   TTree *T;
@@ -206,11 +204,13 @@ int main( int argc, char** argv )
   TTree *new_SubRun;// = new TTree("SubRun","SubRun");
   if (has_pelee){
     TDirectory *topdirout = gDirectory;
-    file3->mkdir("nuselection");
-    file3->cd("nuselection");
-    new_NeutrinoSelectionFilter = NeutrinoSelectionFilter->CloneTree(0);
-    new_SubRun = SubRun->CloneTree(0);
     topdirout->cd();
+    CopyDir(nuselection);
+    //file3->mkdir("nuselection");
+    //file3->cd("nuselection");
+    //new_NeutrinoSelectionFilter = NeutrinoSelectionFilter->CloneTree(0);
+    //new_SubRun = SubRun->CloneTree(0);
+    //topdirout->cd();
     CopyDir(shrreco3d);
     //file2->mkdir("shrreco3d");
     //file2->cd("shrreco3d");
@@ -233,12 +233,13 @@ int main( int argc, char** argv )
 
   if (has_glee){
     TDirectory *topdirout = gDirectory;
-    file3->mkdir("singlephotonana");
-    file3->cd("singlephotonana");
-    new_vertex_tree = vertex_tree->CloneTree(0);
-    new_eventweight_tree = eventweight_tree->CloneTree(0);
-    new_run_subrun_tree = run_subrun_tree->CloneTree(0);
-    new_geant4_tree = geant4_tree->CloneTree(0);
+    CopyDir(singlephotonana);
+    //file3->mkdir("singlephotonana");
+    //file3->cd("singlephotonana");
+    //new_vertex_tree = vertex_tree->CloneTree(0);
+    //new_eventweight_tree = eventweight_tree->CloneTree(0);
+    //new_run_subrun_tree = run_subrun_tree->CloneTree(0);
+    //new_geant4_tree = geant4_tree->CloneTree(0);
     topdirout->cd();
   }
 
@@ -546,208 +547,6 @@ int main( int argc, char** argv )
   put_tree_address(t6, weight, option);
 
 
-  //std::cout << T->GetEntries() << std::endl;
-
-/*
-  T_BDTvars->SetBranchStatus("*",0);
-  T_BDTvars->SetBranchStatus("numu_cc_flag",1);
-  T_BDTvars->SetBranchStatus("numu_score",1);
-  T_BDTvars->SetBranchStatus("nue_score",1);
-  T_BDTvars->SetBranchStatus("cosmict_flag",1);
-  T_BDTvars->SetBranchStatus("mip_vec_dQ_dx_0",1);
-  T_BDTvars->SetBranchStatus("mip_vec_dQ_dx_1",1);
-  T_BDTvars->SetBranchStatus("mip_vec_dQ_dx_2",1);
-  T_BDTvars->SetBranchStatus("mip_vec_dQ_dx_3",1);
-  T_BDTvars->SetBranchStatus("mip_vec_dQ_dx_4",1);
-  T_BDTvars->SetBranchStatus("mip_vec_dQ_dx_5",1);
-  T_BDTvars->SetBranchStatus("mip_vec_dQ_dx_6",1);
-  T_BDTvars->SetBranchStatus("mip_vec_dQ_dx_7",1);
-  T_BDTvars->SetBranchStatus("mip_vec_dQ_dx_8",1);
-  T_BDTvars->SetBranchStatus("mip_vec_dQ_dx_9",1);
-  T_BDTvars->SetBranchStatus("mip_vec_dQ_dx_10",1);
-  T_BDTvars->SetBranchStatus("mip_vec_dQ_dx_11",1);
-  T_BDTvars->SetBranchStatus("mip_vec_dQ_dx_12",1);
-  T_BDTvars->SetBranchStatus("mip_vec_dQ_dx_13",1);
-  T_BDTvars->SetBranchStatus("mip_vec_dQ_dx_14",1);
-  T_BDTvars->SetBranchStatus("mip_vec_dQ_dx_15",1);
-  T_BDTvars->SetBranchStatus("mip_vec_dQ_dx_16",1);
-  T_BDTvars->SetBranchStatus("mip_vec_dQ_dx_17",1);
-  T_BDTvars->SetBranchStatus("mip_vec_dQ_dx_18",1);
-  T_BDTvars->SetBranchStatus("mip_vec_dQ_dx_19",1);
-  T_BDTvars->SetBranchStatus("mip_energy",1);
-  T_BDTvars->SetBranchStatus("mip_angle_beam",1);
-  T_BDTvars->SetBranchStatus("spt_angle_vertical",1);
-  T_BDTvars->SetBranchStatus("mip_quality_n_tracks",1);
-  T_BDTvars->SetBranchStatus("mip_quality_n_showers",1);
-  T_BDTvars->SetBranchStatus("gap_n_bad",1);
-  T_BDTvars->SetBranchStatus("spt_angle_beam",1);
-  T_BDTvars->SetBranchStatus("spt_angle_vertical",1);
-
-   if (tagger.flag_nc_gamma_bdt){
-    T_BDTvars->SetBranchStatus("nc_delta_score", 1);
-    T_BDTvars->SetBranchStatus("nc_pio_score", 1);
-  }
-
-  //Erin
-  if (tagger.flag_single_photon_bdt){
-    T_BDTvars->SetBranchStatus("single_photon_numu_score", 1);
-    T_BDTvars->SetBranchStatus("single_photon_other_score", 1);
-    T_BDTvars->SetBranchStatus("single_photon_ncpi0_score", 1);
-    T_BDTvars->SetBranchStatus("single_photon_nue_score", 1);
-
-    T_BDTvars->SetBranchStatus("shw_sp_energy",1);
-    T_BDTvars->SetBranchStatus("shw_sp_angle_beam",1);
-    T_BDTvars->SetBranchStatus("shw_sp_n_20mev_showers",1);
-    T_BDTvars->SetBranchStatus("shw_sp_n_20br1_showers",1);
-    T_BDTvars->SetBranchStatus("shw_sp_vec_median_dedx",1);
-    T_BDTvars->SetBranchStatus("shw_sp_shw_vtx_dis",1);
-    T_BDTvars->SetBranchStatus("shw_sp_max_shw_dis",1);
-    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_0",1);
-    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_1",1);
-    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_2",1);
-    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_3",1);
-    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_4",1);
-    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_5",1);
-    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_6",1);
-    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_7",1);
-    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_8",1);
-    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_9",1);
-    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_10",1);
-    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_11",1);
-    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_12",1);
-    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_13",1);
-    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_14",1);
-    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_15",1);
-    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_16",1);
-    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_17",1);
-    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_18",1);
-    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_19",1);
-    T_BDTvars->SetBranchStatus("shw_sp_br3_1_n_shower_segments",1);
-    T_BDTvars->SetBranchStatus("shw_sp_E_indirect_max_energy",1);
-    T_BDTvars->SetBranchStatus("shw_sp_lem_n_3seg",1);
-    T_BDTvars->SetBranchStatus("shw_sp_pio_flag_pio",1);
-    T_BDTvars->SetBranchStatus("shw_sp_length_total",1);
-    T_BDTvars->SetBranchStatus("shw_sp_n_vertex",1);
-  }
-  //
-
-  T_eval->SetBranchStatus("*",0);
-  T_eval->SetBranchStatus("match_energy",1);
-  T_eval->SetBranchStatus("match_isFC",1);
-  T_eval->SetBranchStatus("match_found",1);
-  if (T_eval->GetBranch("match_found_asInt")) T_eval->SetBranchStatus("match_found_asInt",1);
-  T_eval->SetBranchStatus("stm_eventtype",1);
-  T_eval->SetBranchStatus("stm_lowenergy",1);
-  T_eval->SetBranchStatus("stm_LM",1);
-  T_eval->SetBranchStatus("stm_TGM",1);
-  T_eval->SetBranchStatus("stm_STM",1);
-  T_eval->SetBranchStatus("stm_FullDead",1);
-  T_eval->SetBranchStatus("stm_clusterlength",1);
-
-  T_eval->SetBranchStatus("weight_spline",1);
-  T_eval->SetBranchStatus("weight_cv",1);
-  T_eval->SetBranchStatus("weight_lee",1);
-  T_eval->SetBranchStatus("weight_change",1);
-  // MC enable truth information ...
-  T_eval->SetBranchStatus("truth_isCC",1);
-  T_eval->SetBranchStatus("truth_nuPdg",1);
-  T_eval->SetBranchStatus("truth_vtxInside",1);
-  T_eval->SetBranchStatus("truth_nuEnergy",1);
-  T_eval->SetBranchStatus("truth_vtxX",1);
-  T_eval->SetBranchStatus("truth_vtxY",1);
-  T_eval->SetBranchStatus("truth_vtxZ",1);
-  T_eval->SetBranchStatus("run",1);
-  T_eval->SetBranchStatus("subrun",1);
-  T_eval->SetBranchStatus("event",1);
-   // Xs related
-  T_eval->SetBranchStatus("match_completeness_energy",1);
-  T_eval->SetBranchStatus("truth_energyInside",1);
-
-  T_KINEvars->SetBranchStatus("*",0);
-  T_KINEvars->SetBranchStatus("kine_reco_Enu",1);
-  T_KINEvars->SetBranchStatus("kine_energy_particle",1);
-  T_KINEvars->SetBranchStatus("kine_particle_type",1);
-  T_KINEvars->SetBranchStatus("kine_energy_info",1);
-  T_KINEvars->SetBranchStatus("kine_energy_included",1);
-  T_KINEvars->SetBranchStatus("kine_reco_add_energy",1);
-  T_KINEvars->SetBranchStatus("kine_pio_mass",1);
-  T_KINEvars->SetBranchStatus("kine_pio_flag",1);
-  T_KINEvars->SetBranchStatus("kine_pio_vtx_dis",1);
-  T_KINEvars->SetBranchStatus("kine_pio_energy_1",1);
-  T_KINEvars->SetBranchStatus("kine_pio_theta_1",1);
-  T_KINEvars->SetBranchStatus("kine_pio_phi_1",1);
-  T_KINEvars->SetBranchStatus("kine_pio_dis_1",1);
-  T_KINEvars->SetBranchStatus("kine_pio_energy_2",1);
-  T_KINEvars->SetBranchStatus("kine_pio_theta_2",1);
-  T_KINEvars->SetBranchStatus("kine_pio_phi_2",1);
-  T_KINEvars->SetBranchStatus("kine_pio_dis_2",1);
-  T_KINEvars->SetBranchStatus("kine_pio_angle",1);
-  if (T_KINEvars->GetBranch("vlne_v4_numu_full_primaryE")) {
-    T_KINEvars->SetBranchStatus("vlne_v4_numu_full_primaryE",1);
-    T_KINEvars->SetBranchStatus("vlne_v4_numu_full_totalE",1);
-    T_KINEvars->SetBranchStatus("vlne_v4_numu_partial_primaryE",1);
-    T_KINEvars->SetBranchStatus("vlne_v4_numu_partial_totalE",1);
-    // T_KINEvars->SetBranchStatus("vlne_nue_full_primaryE",1);
-    // T_KINEvars->SetBranchStatus("vlne_nue_full_totalE",1);
-    // T_KINEvars->SetBranchStatus("vlne_nue_partial_primaryE",1);
-    // T_KINEvars->SetBranchStatus("vlne_nue_partial_totalE",1);
-  }
-
-  T_PFeval->SetBranchStatus("*",1);
-  T_PFeval->SetBranchStatus("run",1);
-  T_PFeval->SetBranchStatus("subrun",1);
-  T_PFeval->SetBranchStatus("event",1);
-  T_PFeval->SetBranchStatus("reco_nuvtxX",1);
-  T_PFeval->SetBranchStatus("reco_nuvtxY",1);
-  T_PFeval->SetBranchStatus("reco_nuvtxZ",1);
-  T_PFeval->SetBranchStatus("reco_showervtxX",1);
-  T_PFeval->SetBranchStatus("reco_showervtxY",1);
-  T_PFeval->SetBranchStatus("reco_showervtxZ",1);
-  T_PFeval->SetBranchStatus("reco_muonMomentum",1);
-  T_PFeval->SetBranchStatus("reco_showerKE",1);
-  T_PFeval->SetBranchStatus("nuvtx_diff",1);
-  T_PFeval->SetBranchStatus("showervtx_diff",1);
-  T_PFeval->SetBranchStatus("muonvtx_diff",1);
-  T_PFeval->SetBranchStatus("truth_muonMomentum",1);
-  T_PFeval->SetBranchStatus("truth_corr_nuvtxX",1);
-  T_PFeval->SetBranchStatus("truth_corr_nuvtxY",1);
-  T_PFeval->SetBranchStatus("truth_corr_nuvtxZ",1);
-  if (pfeval.flag_NCDelta){
-
-      T_PFeval->SetBranchStatus("truth_NCDelta",1);
-      T_PFeval->SetBranchStatus("truth_NprimPio",1);
-  }
-  if (pfeval.flag_recoprotonMomentum){
-    T_PFeval->SetBranchStatus("reco_protonMomentum",1);
-  }
-  if (pfeval.flag_showerMomentum){
-    T_PFeval->SetBranchStatus("reco_showerMomentum",1);
-    T_PFeval->SetBranchStatus("reco_Nproton",1);
-    T_PFeval->SetBranchStatus("truth_showerMomentum",1);
-    T_PFeval->SetBranchStatus("truth_nuScatType",1);
-    // oscillation formula ...
-    T_PFeval->SetBranchStatus("truth_nu_momentum",1);
-    T_PFeval->SetBranchStatus("neutrino_type",1);
-    T_PFeval->SetBranchStatus("mcflux_ntype",1);
-    T_PFeval->SetBranchStatus("mcflux_dk2gen",1);
-    T_PFeval->SetBranchStatus("mcflux_gen2vtx",1);
-    T_PFeval->SetBranchStatus("mcflux_ndecay",1);
-  }
-  //Erin
-  if (pfeval.flag_single_photon){
-    T_PFeval->SetBranchStatus("truth_Npi0",1);
-    T_PFeval->SetBranchStatus("truth_single_photon",1);
-    T_PFeval->SetBranchStatus("truth_photon_angle",1);
-    T_PFeval->SetBranchStatus("truth_photon_dis",1);
-    T_PFeval->SetBranchStatus("truth_showerMother",1);
-  }
-  if (pfeval.flag_nsbeam){
-    T_PFeval->SetBranchStatus("evtDeltaTimeNS",1);
-    T_PFeval->SetBranchStatus("evtTimeNS",1);
-  }
-  //
-
-*/
 
 
   std::map<std::pair<int, int>, int> map_re_entry;

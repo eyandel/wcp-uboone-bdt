@@ -151,7 +151,7 @@ void V2H(const TVectorD vec, TH1D* histo)
     }
 }
 
-void CopyDir(TDirectory *source) {
+void CopyDir(TDirectory *source, bool blank_tree) {
   //copy all objects and subdirs of directory source as a subdir of the current directory
   source->ls();
   TDirectory *savdir = gDirectory;
@@ -173,7 +173,9 @@ void CopyDir(TDirectory *source) {
      } else if (cl->InheritsFrom(TTree::Class())) {
         TTree *T = (TTree*)source->Get(key->GetName());
         adir->cd();
-        TTree *newT = T->CloneTree(-1,"fast");
+        int nentry = -1;
+        if (blank_tree){nentry=0;}
+        TTree *newT = T->CloneTree(nentry,"fast");
         newT->Write();
      } else {
         source->cd();
@@ -186,4 +188,54 @@ void CopyDir(TDirectory *source) {
  adir->SaveSelf(kTRUE);
  savdir->cd();
 }
+
+void CopyDir(TDirectory *source, TString TDirectory_name, bool blank_tree) {
+  //copy all objects and subdirs of directory source as a subdir of the current directory
+  source->ls();
+  TDirectory *savdir = gDirectory;
+  TKey *key;
+  TIter nextkey(source->GetListOfKeys());
+  while ((key = (TKey*)nextkey())) {
+     const char *classname = key->GetClassName();
+     TClass *cl = gROOT->GetClass(classname);
+     if (!cl) continue;
+     if (cl->InheritsFrom(TTree::Class())) {
+        TTree *T = (TTree*)source->Get(key->GetName());
+        savdir->cd();
+        int nentry = -1;
+	if (blank_tree){nentry=0;}
+        TTree *newT = T->CloneTree(nentry,"fast");
+	newT->SetObject(key->GetName()+TDirectory_name,key->GetName()+TDirectory_name);
+        newT->Write();
+    }
+ }
+ savdir->cd();
+}
+
+std::vector<TTree*> CopyDir_vec(TDirectory *source, TString TDirectory_name, bool blank_tree) {
+  //copy all objects and subdirs of directory source as a subdir of the current directory
+  source->ls();
+  TDirectory *savdir = gDirectory;
+  TKey *key;
+  TIter nextkey(source->GetListOfKeys());
+  std::vector<TTree*> ttree_vec;
+  while ((key = (TKey*)nextkey())) {
+     const char *classname = key->GetClassName();
+     TClass *cl = gROOT->GetClass(classname);
+     if (!cl) continue;
+     if (cl->InheritsFrom(TTree::Class())) {
+        TTree *T = (TTree*)source->Get(key->GetName());
+        savdir->cd();
+        int nentry = -1;
+        if (blank_tree){nentry=0;}
+        TTree *newT = T->CloneTree(nentry,"fast");
+        newT->SetObject(key->GetName()+TDirectory_name,key->GetName()+TDirectory_name);
+        newT->Write();
+        ttree_vec.push_back(newT);
+    }
+  }
+  savdir->cd();
+  return ttree_vec;
+}
+
 

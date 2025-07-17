@@ -37,6 +37,8 @@ void H2V(const TH1D* histo, TVectorD& vec);
 void M2H(const TMatrixD mat, TH2D* histo);
 void V2H(const TVectorD vec, TH1D* histo);
 
-void CopyDir(TDirectory *source);
+void CopyDir(TDirectory *source, bool blank_tree=false);
+void CopyDir(TDirectory *source, TString TDirectory_name, bool blank_tree=false);
+std::vector<TTree*> CopyDir_vec(TDirectory *source, TString TDirectory_name, bool blank_tree=false);
 
 #endif
