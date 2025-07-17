@@ -56,55 +56,45 @@ int main( int argc, char** argv )
   TTree *T_KINEvars_det = (TTree*)file2->Get("wcpselection/T_KINEvars");
   TTree *T_spacepoints_det = (TTree*)file2->Get("wcpselection/T_spacepoints");
 
-  TTree *NeutrinoSelectionFilter_cv;
-  TTree *SubRun_cv;
+  TDirectory *nuselection_cv;
   TDirectory *shrreco3d_cv;
   TDirectory *proximity_cv;
-  TDirectory *nuselection_cv;
+  std::vector<TTree*>* nuselection_ttree_vec_cv = new std::vector<TTree*>();
+  std::vector<TTree*>* shrreco3d_ttree_vec_cv = new std::vector<TTree*>();
+  std::vector<TTree*>* proximity_ttree_vec_cv = new std::vector<TTree*>();
   bool has_pelee_cv = false;
   if (file1->GetDirectory("nuselection")){
     has_pelee_cv = true;
     TDirectory *topdir_cv = gDirectory;
-    std::cout<<"nuselection_cv"<<std::endl;
+
     file1->cd("nuselection");
     nuselection_cv = gDirectory;
-    std::cout<<"shrreco3d_cv"<<std::endl;
+    nuselection_ttree_vec_cv = GetTrees(nuselection_cv);
+
     file1->cd("shrreco3d");
     shrreco3d_cv = gDirectory;
-    std::cout<<"proximity_cv"<<std::endl;
+    shrreco3d_ttree_vec_cv = GetTrees(shrreco3d_cv);
+
     file1->cd("proximity");
     proximity_cv = gDirectory;
+    proximity_ttree_vec_cv = GetTrees(proximity_cv);
+
     topdir_cv->cd();
-    NeutrinoSelectionFilter_cv = (TTree*)file1->Get("nuselection/NeutrinoSelectionFilter");
-    SubRun_cv = (TTree*)file1->Get("nuselection/SubRun");
-    //TTree *_energy_tree_cv = (TTree*)file1->Get("shrreco3d/_energy_tree");
-    //TTree *_dedx_tree_cv = (TTree*)file1->Get("shrreco3d/_dedx_tree");
-    //TTree *_rcshr_tree_cv = (TTree*)file1->Get("shrreco3d/_rcshr_tree");
-    //TTree *_clus_tree_cv = (TTree*)file1->Get("proximity/_clus_tree");
   }
 
-  TTree *vertex_tree_cv;
-  //TTree *pot_tree_cv;
-  TTree *eventweight_tree_cv;
-  //TTree *ncdelta_slice_tree_cv;
-  //TTree *run_subrun_tree_cv;
-  TTree *geant4_tree_cv;
-  //TTree *true_eventweight_tree_cv;
+
   TDirectory *singlephotonana_cv;
+  std::vector<TTree*>* singlephotonana_ttree_vec_cv = new std::vector<TTree*>();
   bool has_glee_cv = false;
   if (file1->GetDirectory("singlephotonana")){
     has_glee_cv = true;
     TDirectory *topdir_cv = gDirectory;
-    std::cout<<"singlephotonana_cv"<<std::endl;
+    
     file1->cd("singlephotonana");
     singlephotonana_cv = gDirectory;
+    singlephotonana_ttree_vec_cv = GetTrees(singlephotonana_cv);
+
     topdir_cv->cd();
-    vertex_tree_cv = (TTree*)file1->Get("singlephotonana/vertex_tree");
-    //pot_tree_cv = (TTree*)file1->Get("singlephotonana/pot_tree");
-    eventweight_tree_cv = (TTree*)file1->Get("singlephotonana/eventweight_tree");
-    //ncdelta_slice_tree_cv = (TTree*)file1->Get("singlephotonana/ncdelta_slice_tree");
-    //run_subrun_tree_cv = (TTree*)file1->Get("singlephotonana/run_subrun_tree");
-    geant4_tree_cv = (TTree*)file1->Get("singlephotonana/geant4_tree");
   }
 
   TTree *EventTree_cv;
@@ -116,52 +106,44 @@ int main( int argc, char** argv )
 
 
 
-
-  TTree *NeutrinoSelectionFilter_det;
-  TTree *SubRun_det;
+  TDirectory *nuselection_det;
   TDirectory *shrreco3d_det;
   TDirectory *proximity_det;
-  TDirectory *nuselection_det;
+  std::vector<TTree*>* nuselection_ttree_vec_det = new std::vector<TTree*>();
+  std::vector<TTree*>* shrreco3d_ttree_vec_det = new std::vector<TTree*>();
+  std::vector<TTree*>* proximity_ttree_vec_det = new std::vector<TTree*>();
   bool has_pelee_det = false;
   if (file2->GetDirectory("nuselection")){
     has_pelee_det = true;
     TDirectory *topdir_det = gDirectory;
+
     file2->cd("nuselection");
     nuselection_det = gDirectory;
+    nuselection_ttree_vec_det = GetTrees(nuselection_det);
+
     file2->cd("shrreco3d");
     shrreco3d_det = gDirectory;
+    shrreco3d_ttree_vec_det = GetTrees(shrreco3d_det);
+
     file2->cd("proximity");
     proximity_det = gDirectory;
+    proximity_ttree_vec_det = GetTrees(proximity_det);
+
     topdir_det->cd();
-    NeutrinoSelectionFilter_det = (TTree*)file2->Get("nuselection/NeutrinoSelectionFilter");
-    SubRun_det = (TTree*)file2->Get("nuselection/SubRun");
-    //TTree *_energy_tree_det = (TTree*)file2->Get("shrreco3d/_energy_tree");
-    //TTree *_dedx_tree_det = (TTree*)file2->Get("shrreco3d/_dedx_tree");
-    //TTree *_rcshr_tree_det = (TTree*)file2->Get("shrreco3d/_rcshr_tree");
-    //TTree *_clus_tree_det = (TTree*)file2->Get("proximity/_clus_tree");
   }
 
-  TTree *vertex_tree_det;
-  //TTree *pot_tree_det;
-  TTree *eventweight_tree_det;
-  //TTree *ncdelta_slice_tree_det;
-  //TTree *run_subrun_tree_det;
-  TTree *geant4_tree_det;
-  //TTree *true_eventweight_tree_det;
   TDirectory *singlephotonana_det;
+  std::vector<TTree*>* singlephotonana_ttree_vec_det = new std::vector<TTree*>();
   bool has_glee_det = false;
   if (file2->GetDirectory("singlephotonana")){
     has_glee_det = true;
     TDirectory *topdir_det = gDirectory;
+
     file2->cd("singlephotonana");
     singlephotonana_det = gDirectory;
+    singlephotonana_ttree_vec_det = GetTrees(singlephotonana_det);
+
     topdir_det->cd();
-    vertex_tree_det = (TTree*)file2->Get("singlephotonana/vertex_tree");
-    //pot_tree_det = (TTree*)file2->Get("singlephotonana/pot_tree");
-    eventweight_tree_det = (TTree*)file2->Get("singlephotonana/eventweight_tree");
-    //ncdelta_slice_tree_det = (TTree*)file2->Get("singlephotonana/ncdelta_slice_tree");
-    //run_subrun_tree_det = (TTree*)file2->Get("singlephotonana/run_subrun_tree");
-    geant4_tree_det = (TTree*)file2->Get("singlephotonana/geant4_tree");
   }
 
   TTree *EventTree_det;
@@ -176,71 +158,55 @@ int main( int argc, char** argv )
 
   TFile *file3 = new TFile(out_file,"RECREATE");
 
-  TTree *new_NeutrinoSelectionFilter_cv;// = new TTree("NeutrinoSelectionFilter","NeutrinoSelectionFilter");
-  TTree *new_SubRun_cv;// = new TTree("SubRun","SubRun");
-  TTree *new_NeutrinoSelectionFilter_det;// = new TTree("NeutrinoSelectionFilter","NeutrinoSelectionFilter");
-  TTree *new_SubRun_det;// = new TTree("SubRun","SubRun");
+  std::vector<TTree*>* new_nuselection_ttree_vec_cv = new std::vector<TTree*>();
+  std::vector<TTree*>* new_nuselection_ttree_vec_det = new std::vector<TTree*>();
+  std::vector<TTree*>* new_shrreco3d_ttree_vec_cv = new std::vector<TTree*>();
+  std::vector<TTree*>* new_shrreco3d_ttree_vec_det = new std::vector<TTree*>();
+  std::vector<TTree*>* new_proximity_ttree_vec_cv = new std::vector<TTree*>();
+  std::vector<TTree*>* new_proximity_ttree_vec_det = new std::vector<TTree*>();
+  std::cout<<"Checking pelee"<<std::endl;
   if (has_pelee_cv && has_pelee_det){
+    std::cout<<"Starting pelee"<<std::endl;
     TDirectory *topdirout = gDirectory;
+
     file3->mkdir("nuselection");
     file3->cd("nuselection");
-    //new_NeutrinoSelectionFilter_cv = NeutrinoSelectionFilter_cv->CloneTree(0);
-    //new_SubRun_cv = SubRun_cv->CloneTree(0);
-    //new_NeutrinoSelectionFilter_det = NeutrinoSelectionFilter_det->CloneTree(0);
-    //new_SubRun_det = SubRun_det->CloneTree(0);
-    CopyDir(nuselection_cv,"_cv",true);
-    CopyDir(nuselection_det,"_det",true);
+    new_nuselection_ttree_vec_cv = CopyTrees(nuselection_cv,true,true,"_cv");
+    new_nuselection_ttree_vec_det = CopyTrees(nuselection_det,true,true,"_det");
     topdirout->cd();
+
     file3->mkdir("shrreco3d");
     file3->cd("shrreco3d");
-    CopyDir(shrreco3d_cv,"_cv",true);
-    CopyDir(shrreco3d_det,"_det",true);
+    new_shrreco3d_ttree_vec_cv = CopyTrees(shrreco3d_cv,true,true,"_cv");
+    new_shrreco3d_ttree_vec_det = CopyTrees(shrreco3d_det,true,true,"_det");
     topdirout->cd();
+
     file3->mkdir("proximity");
     file3->cd("proximity");
-    CopyDir(proximity_cv,"_cv",true);
-    CopyDir(proximity_det,"_det",true);
+    new_proximity_ttree_vec_cv = CopyTrees(proximity_cv,true,true,"_cv");
+    new_proximity_ttree_vec_det = CopyTrees(proximity_det,true,true,"_det");
     topdirout->cd();
-    new_NeutrinoSelectionFilter_cv = (TTree*)file3->Get("nuselection/NeutrinoSelectionFilter_cv");
-    //new_NeutrinoSelectionFilter_cv->SetBranchStatus("*",1);
-    new_NeutrinoSelectionFilter_det = (TTree*)file3->Get("nuselection/NeutrinoSelectionFilter_det");
-    //new_NeutrinoSelectionFilter_det->SetBranchStatus("*",1);
-  }
 
-  TTree *new_vertex_tree_cv;
-  //TTree *pot_tree_cv;
-  TTree *new_eventweight_tree_cv;
-  //TTree *ncdelta_slice_tree_cv;
-  //TTree *new_run_subrun_tree_cv;
-  TTree *new_geant4_tree_cv;
-  //TTree *true_eventweight_tree_cv;
-  TTree *new_vertex_tree_det;
-  //TTree *pot_tree_det;
-  TTree *new_eventweight_tree_det;
-  //TTree *ncdelta_slice_tree_det;
-  //TTree *new_run_subrun_tree_det;
-  TTree *new_geant4_tree_det;
-  //TTree *true_eventweight_tree_det;
+  }else{std::cout<<"No pelee"<<std::endl;}
+
+
+  std::vector<TTree*>* new_singlephotonana_ttree_vec_cv = new std::vector<TTree*>();
+  std::vector<TTree*>* new_singlephotonana_ttree_vec_det = new std::vector<TTree*>();
   std::cout<<"Checking glee"<<std::endl;
   if (has_glee_cv && has_glee_det){
-  std::cout<<"Starting glee"<<std::endl;
+    std::cout<<"Starting glee"<<std::endl;
     TDirectory *topdirout = gDirectory;
     file3->mkdir("singlephotonana");
     file3->cd("singlephotonana");
-    CopyDir(singlephotonana_cv,"_cv",true);
-    CopyDir(singlephotonana_det,"_det",true);
+    new_singlephotonana_ttree_vec_cv = CopyTrees(singlephotonana_cv,true,true,"_cv");
+    new_singlephotonana_ttree_vec_det = CopyTrees(singlephotonana_det,true,true,"_det");
     topdirout->cd();
-    new_vertex_tree_cv = (TTree*)file3->Get("singlephotonana/vertex_tree_cv");
-    //new_vertex_tree_cv->SetBranchStatus("*",1);
-    new_vertex_tree_det = (TTree*)file3->Get("singlephotonana/vertex_tree_det");
-    //new_vertex_tree_det->SetBranchStatus("*",1);
-    
   }else{std::cout<<"No glee"<<std::endl;}
+
 
   TTree *new_EventTree_cv;
   TTree *new_EventTree_det;
   std::cout<<"Checking lantern"<<std::endl;
-
   if (has_lantern_cv && has_lantern_det){
   std::cout<<"Starting lantern"<<std::endl;
     TDirectory *topdirout = gDirectory;
@@ -916,7 +882,8 @@ int main( int argc, char** argv )
       map_cv_det_index[it->second] = it1->second;
     }
   }
-std::cout<<"Start Filling the trees"<<std::endl;
+
+  std::cout<<"Start Filling the trees"<<std::endl;
   for (auto it = map_cv_det_index.begin(); it != map_cv_det_index.end(); it++){
       T_BDTvars_cv->GetEntry(it->first);
       T_eval_cv->GetEntry(it->first);
@@ -932,30 +899,43 @@ std::cout<<"Start Filling the trees"<<std::endl;
 
       T_spacepoints_det->GetEntry(it->second);
 
-    if (has_pelee_cv && has_pelee_det){
-      NeutrinoSelectionFilter_cv->GetEntry(it->first);
-      NeutrinoSelectionFilter_det->GetEntry(it->second);
-    }
+      if (has_pelee_cv && has_pelee_det){
+        for(auto tree_it=nuselection_ttree_vec_cv->begin(); tree_it!=nuselection_ttree_vec_cv->end(); tree_it++){
+          (*tree_it)->GetEntry(it->first);
+        }
+        for(auto tree_it=nuselection_ttree_vec_det->begin(); tree_it!=nuselection_ttree_vec_det->end(); tree_it++){
+          (*tree_it)->GetEntry(it->first);
+        }
+        for(auto tree_it=shrreco3d_ttree_vec_cv->begin(); tree_it!=shrreco3d_ttree_vec_cv->end(); tree_it++){
+          (*tree_it)->GetEntry(it->first);
+        }
+        for(auto tree_it=shrreco3d_ttree_vec_det->begin(); tree_it!=shrreco3d_ttree_vec_det->end(); tree_it++){
+          (*tree_it)->GetEntry(it->first);
+        }
+        for(auto tree_it=proximity_ttree_vec_cv->begin(); tree_it!=proximity_ttree_vec_cv->end(); tree_it++){
+          (*tree_it)->GetEntry(it->first);
+        }
+        for(auto tree_it=proximity_ttree_vec_det->begin(); tree_it!=proximity_ttree_vec_det->end(); tree_it++){
+          (*tree_it)->GetEntry(it->first);
+        }
+      }
 
-    if (has_glee_cv && has_glee_det){
+      if (has_glee_cv && has_glee_det){
+        for(auto tree_it=singlephotonana_ttree_vec_cv->begin(); tree_it!=singlephotonana_ttree_vec_cv->end(); tree_it++){
+          (*tree_it)->GetEntry(it->first);
+        }
+        for(auto tree_it=singlephotonana_ttree_vec_det->begin(); tree_it!=singlephotonana_ttree_vec_det->end(); tree_it++){
+          (*tree_it)->GetEntry(it->first);
+        }
+      }
 
-      vertex_tree_cv->GetEntry(it->first);
-      //eventweight_tree_cv->GetEntry(it->first);
-      //geant4_tree_cv->GetEntry(it->first);
-
-      vertex_tree_det->GetEntry(it->second);
-      //eventweight_tree_det->GetEntry(it->second);
-      //geant4_tree_det->GetEntry(it->second);
-
-    }
-
-    if (has_lantern_cv && has_lantern_det){
-      EventTree_cv->GetEntry(it->first);
-      EventTree_det->GetEntry(it->second);
-    }
+      if (has_lantern_cv && has_lantern_det){
+        EventTree_cv->GetEntry(it->first);
+        EventTree_det->GetEntry(it->second);
+      }
 
 
-    map_rs_re_common[std::make_pair(eval_cv.run, eval_cv.subrun)].insert(std::make_pair(eval_cv.run, eval_cv.event));
+      map_rs_re_common[std::make_pair(eval_cv.run, eval_cv.subrun)].insert(std::make_pair(eval_cv.run, eval_cv.event));
 
       t1_cv->Fill();
       t3_cv->Fill();
@@ -972,17 +952,33 @@ std::cout<<"Start Filling the trees"<<std::endl;
       T_spacepoints_new_det->Fill();
 
       if (has_pelee_cv && has_pelee_det){
-        new_NeutrinoSelectionFilter_cv->Fill();
-        new_NeutrinoSelectionFilter_det->Fill();
+        for(auto tree_it=new_nuselection_ttree_vec_cv->begin(); tree_it!=new_nuselection_ttree_vec_cv->end(); tree_it++){
+          (*tree_it)->Fill();
+        }
+        for(auto tree_it=new_nuselection_ttree_vec_det->begin(); tree_it!=new_nuselection_ttree_vec_det->end(); tree_it++){
+          (*tree_it)->Fill();
+        }
+        for(auto tree_it=new_shrreco3d_ttree_vec_cv->begin(); tree_it!=new_shrreco3d_ttree_vec_cv->end(); tree_it++){
+          (*tree_it)->Fill();
+        }
+        for(auto tree_it=new_shrreco3d_ttree_vec_det->begin(); tree_it!=new_shrreco3d_ttree_vec_det->end(); tree_it++){
+          (*tree_it)->Fill();
+        }
+        for(auto tree_it=new_proximity_ttree_vec_cv->begin(); tree_it!=new_proximity_ttree_vec_cv->end(); tree_it++){
+          (*tree_it)->Fill();
+        }
+        for(auto tree_it=new_proximity_ttree_vec_det->begin(); tree_it!=new_proximity_ttree_vec_det->end(); tree_it++){
+          (*tree_it)->Fill();
+        }
       }
 
       if (has_glee_cv && has_glee_det){
-        new_vertex_tree_cv->Fill();
-        //new_eventweight_tree_cv->Fill();
-        //new_geant4_tree_cv->Fill();
-        new_vertex_tree_det->Fill();
-        //new_eventweight_tree_det->Fill();
-        //new_geant4_tree_det->Fill();
+        for(auto tree_it=new_singlephotonana_ttree_vec_cv->begin(); tree_it!=new_singlephotonana_ttree_vec_cv->end(); tree_it++){
+          (*tree_it)->Fill();
+        }
+        for(auto tree_it=new_singlephotonana_ttree_vec_det->begin(); tree_it!=new_singlephotonana_ttree_vec_det->end(); tree_it++){
+          (*tree_it)->Fill();
+        }
       }
 
       if (has_lantern_cv && has_lantern_det){
