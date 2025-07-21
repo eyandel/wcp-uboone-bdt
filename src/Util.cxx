@@ -267,4 +267,23 @@ std::vector<TTree*>* GetTrees(TDirectory *source, std::vector<std::string> to_sk
 }
 
 
+std::vector<std::string> splitString(const std::string& s, char delimiter) {
+        std::vector<std::string> tokens;
+        std::string currentToken;
+        size_t start = 0;
+        size_t end = s.find(delimiter);
+
+        while (end != std::string::npos) {
+            currentToken = s.substr(start, end - start);
+            tokens.push_back(currentToken);
+            start = end + 1; // Move past the delimiter
+            end = s.find(delimiter, start);
+        }
+
+        // Add the last token (after the last delimiter or if no delimiter was found)
+        currentToken = s.substr(start);
+        tokens.push_back(currentToken);
+
+        return tokens;
+}
 
