@@ -1,6 +1,7 @@
 #include "WCPLEEANA/Util.h"
 
 #include <iostream>
+#include <algorithm>
 #include "stdlib.h"
 
 #include "TMatrixD.h"
@@ -150,3 +151,139 @@ void V2H(const TVectorD vec, TH1D* histo)
         histo->SetBinContent(i+1, vec(i));
     }
 }
+
+void CopyDir(TDirectory *source, bool blank_tree, std::vector<std::string> to_skip, bool verbose) {
+  //copy all objects and subdirs of directory source as a subdir of the current directory
+  if(verbose) source->ls();
+  TDirectory *savdir = gDirectory;
+  TDirectory *adir = savdir->mkdir(source->GetName());
+  adir->cd();
+  //loop on all entries of this directory
+  TKey *key;
+  TIter nextkey(source->GetListOfKeys());
+  while ((key = (TKey*)nextkey())) {
+     const char *classname = key->GetClassName();
+     TClass *cl = gROOT->GetClass(classname);
+     if (!cl) continue;
+     if (cl->InheritsFrom(TDirectory::Class())) {
+        source->cd(key->GetName());
+        TDirectory *subdir = gDirectory;
+        adir->cd();
+        CopyDir(subdir);
+        adir->cd();
+     } else if (cl->InheritsFrom(TTree::Class())) {
+        TTree *T = (TTree*)source->Get(key->GetName());
+        std::string temp_name = T->GetName();
+        if (std::find(to_skip.begin(), to_skip.end(), temp_name) != to_skip.end()) continue;
+        adir->cd();
+        int nentry = -1;
+        if (blank_tree){nentry=0;}
+        TTree *newT = T->CloneTree(nentry,"fast");
+        newT->Write();
+     } else {
+        source->cd();
+        TObject *obj = key->ReadObj();
+        adir->cd();
+        obj->Write();
+        delete obj;
+    }
+ }
+ adir->SaveSelf(kTRUE);
+ savdir->cd();
+}
+
+void CopyDir(TDirectory *source, TString TDirectory_name, bool blank_tree, std::vector<std::string> to_skip, bool verbose) {
+  //copy all objects and subdirs of directory source as a subdir of the current directory
+  if(verbose) source->ls();
+  TDirectory *savdir = gDirectory;
+  TKey *key;
+  TIter nextkey(source->GetListOfKeys());
+  while ((key = (TKey*)nextkey())) {
+     const char *classname = key->GetClassName();
+     TClass *cl = gROOT->GetClass(classname);
+     if (!cl) continue;
+     if (cl->InheritsFrom(TTree::Class())) {
+        TTree *T = (TTree*)source->Get(key->GetName());
+        std::string temp_name = T->GetName();
+        if (std::find(to_skip.begin(), to_skip.end(), temp_name) != to_skip.end()) continue;
+        savdir->cd();
+        int nentry = -1;
+	if (blank_tree){nentry=0;}
+        TTree *newT = T->CloneTree(nentry,"fast");
+	newT->SetObject(key->GetName()+TDirectory_name,key->GetName()+TDirectory_name);
+        newT->Write();
+    }
+ }
+ savdir->cd();
+}
+
+
+std::vector<TTree*>* CopyTrees(TDirectory *source, bool blank_tree,  bool rename, TString TDirectory_name, std::vector<std::string> to_skip, bool verbose) {
+  if(verbose) source->ls();
+  TDirectory *savdir = gDirectory;
+  TKey *key;
+  TIter nextkey(source->GetListOfKeys());
+  std::vector<TTree*>* ttree_vec = new std::vector<TTree*>();
+  while ((key = (TKey*)nextkey())) {
+     const char *classname = key->GetClassName();
+     TClass *cl = gROOT->GetClass(classname);
+     if (!cl) continue;
+     if (cl->InheritsFrom(TTree::Class())) {
+        TTree *T = (TTree*)source->Get(key->GetName());
+        std::string temp_name = T->GetName();
+        if (std::find(to_skip.begin(), to_skip.end(), temp_name) != to_skip.end()) continue; 
+       savdir->cd();
+        int nentry = -1;
+        if (blank_tree) {nentry=0;}
+        TTree *newT = T->CloneTree(nentry,"fast");
+        if (rename) {newT->SetObject(key->GetName()+TDirectory_name,key->GetName()+TDirectory_name);}
+        newT->Write();
+        ttree_vec->push_back(newT);
+    }
+  }
+  savdir->cd();
+  return ttree_vec;
+}
+
+std::vector<TTree*>* GetTrees(TDirectory *source, std::vector<std::string> to_skip, bool verbose) {
+  if(verbose) source->ls();
+  TDirectory *savdir = gDirectory;
+  TKey *key;
+  TIter nextkey(source->GetListOfKeys());
+  std::vector<TTree*>* ttree_vec = new std::vector<TTree*>();
+  while ((key = (TKey*)nextkey())) {
+     const char *classname = key->GetClassName();
+     TClass *cl = gROOT->GetClass(classname);
+     if (!cl) continue;
+     if (cl->InheritsFrom(TTree::Class())) {
+        TTree *T = (TTree*)source->Get(key->GetName());
+        std::string temp_name = T->GetName();
+        if (std::find(to_skip.begin(), to_skip.end(), temp_name) != to_skip.end()) continue;
+        ttree_vec->push_back(T);
+    }
+  }
+  savdir->cd();
+  return ttree_vec;
+}
+
+
+std::vector<std::string> splitString(const std::string& s, char delimiter) {
+        std::vector<std::string> tokens;
+        std::string currentToken;
+        size_t start = 0;
+        size_t end = s.find(delimiter);
+
+        while (end != std::string::npos) {
+            currentToken = s.substr(start, end - start);
+            tokens.push_back(currentToken);
+            start = end + 1; // Move past the delimiter
+            end = s.find(delimiter, start);
+        }
+
+        // Add the last token (after the last delimiter or if no delimiter was found)
+        currentToken = s.substr(start);
+        tokens.push_back(currentToken);
+
+        return tokens;
+}
+

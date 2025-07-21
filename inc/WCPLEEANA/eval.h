@@ -46,6 +46,8 @@ namespace LEEana{
     Float_t truth_nuEnergy;
     Float_t truth_energyInside;
 
+    Float_t lm_cluster_length;
+
     Float_t truth_electronInside;
     Int_t truth_nuPdg;
     Bool_t truth_isCC;
@@ -173,6 +175,8 @@ void LEEana::set_tree_address(TTree *tree0, EvalInfo& eval_info, int flag){
   tree0->SetBranchAddress("stm_FullDead", &eval_info.stm_FullDead);
   tree0->SetBranchAddress("stm_clusterlength", &eval_info.stm_clusterlength);
 
+  tree0->SetBranchAddress("lm_cluster_length", &eval_info.lm_cluster_length);
+
   if (flag==1){
     tree0->SetBranchAddress("truth_nuEnergy", &eval_info.truth_nuEnergy);
     tree0->SetBranchAddress("truth_energyInside", &eval_info.truth_energyInside);
@@ -247,6 +251,9 @@ void LEEana::put_tree_address(TTree *tree0, EvalInfo& eval_info, int flag){
   tree0->Branch("stm_STM", &eval_info.stm_STM,"data/I");
   tree0->Branch("stm_FullDead", &eval_info.stm_FullDead,"data/I");
   tree0->Branch("stm_clusterlength", &eval_info.stm_clusterlength,"data/F");
+
+  tree0->Branch("lm_cluster_length", &eval_info.lm_cluster_length,"data/F");
+
   if (flag==1){
     tree0->Branch("truth_nuEnergy", &eval_info.truth_nuEnergy,"data/F");
     tree0->Branch("truth_energyInside", &eval_info.truth_energyInside,"data/F");

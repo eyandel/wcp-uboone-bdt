@@ -5,6 +5,8 @@
 #include <map>
 #include <string>
 #include <set>
+#include <fstream>
+#include <sstream>
 
 #include "TChain.h"
 #include "TFile.h"
@@ -18,6 +20,8 @@
 #include "WCPLEEANA/tagger.h"
 
 #include "WCPLEEANA/eval.h"
+
+#include "WCPLEEANA/tree_wrangler.h"
 
 using namespace std;
 using namespace LEEana;
@@ -39,27 +43,38 @@ int main( int argc, char** argv )
   TString input_file_xf = argv[2];
   TString out_file = argv[3];
   TString option = argv[4];
+  bool flag_config = false;
+  std::string config_file_name="config.txt";
+  char delimiter = ',';
+  for (Int_t i=1;i!=argc;i++){
+    switch(argv[i][1]){
+    case 't':
+       config_file_name = &argv[i][2];
+       flag_config = true;
+      break;
+    case 'd':
+        delimiter = argv[i][2];//In case you want to change what character you use to sperate your trees in the config
+      break;
+    }
+  }
 
-  // bool flag_spec = true;
-  // for (Int_t i=1;i!=argc;i++){
-  //   switch(argv[i][1]){
-  //   case 's':
-  //     flag_spec = atoi(&argv[i][2]);
-  //     break;
-  //   }
-  // }
-  // // only work for the Xs ones ...
-  // if (!(flag_spec && option == "UBGenieFluxSmallUni"))
-  //   flag_spec = false;
-  // std::cout << "flag_spec: " << flag_spec << std::endl;
-
-
+  tree_wrangler wrangler(flag_config, config_file_name, delimiter);
+  tree_wrangler wrangler_pot(flag_config, config_file_name, delimiter,true);  
+  
+  // Always load WC
   TFile *file1 = new TFile(input_file_cv);
   TTree *T_BDTvars = (TTree*)file1->Get("wcpselection/T_BDTvars");
   TTree *T_eval = (TTree*)file1->Get("wcpselection/T_eval");
   TTree *T_pot = (TTree*)file1->Get("wcpselection/T_pot");
   TTree *T_PFeval = (TTree*)file1->Get("wcpselection/T_PFeval");
   TTree *T_KINEvars = (TTree*)file1->Get("wcpselection/T_KINEvars");
+  TTree *T_spacepoints = (TTree*)file1->Get("wcpselection/T_spacepoints");
+
+  //Load other trees from directories as specified by the config file
+  std::vector<TTree*>* old_trees = new std::vector<TTree*>;
+  old_trees = wrangler.get_old_trees(file1);
+  std::vector<TTree*>* old_trees_pot = new std::vector<TTree*>;
+  old_trees_pot = wrangler_pot.get_old_trees(file1);
 
   TFile *file2 = new TFile(input_file_xf);
   TTree *T;
@@ -144,6 +159,15 @@ int main( int argc, char** argv )
 
 
   TFile *file3 = new TFile(out_file,"RECREATE");
+  file3->cd();
+
+  //Setup the directories specified in the config file
+  std::vector<TTree*>* new_trees = new std::vector<TTree*>;
+  new_trees = wrangler.set_new_trees(file3);
+  std::vector<TTree*>* new_trees_pot = new std::vector<TTree*>;
+  new_trees_pot = wrangler_pot.set_new_trees(file3);
+
+  // Always do WC
   file3->mkdir("wcpselection");
   file3->cd("wcpselection");
   TTree *t1 = new TTree("T_eval","T_eval");
@@ -151,8 +175,10 @@ int main( int argc, char** argv )
   TTree *t3 = new TTree("T_PFeval", "T_PFeval");
   TTree *t5 = new TTree("T_KINEvars", "T_KINEvars");
   TTree *t4 = new TTree("T_BDTvars","T_BDTvars");
-
+  TTree *new_T_spacepoints = T_spacepoints->CloneTree(0);
   TTree *t6 = new TTree("T_weight","T_weight");
+
+
 
   EvalInfo eval;
   eval.file_type = new std::string();
@@ -435,208 +461,6 @@ int main( int argc, char** argv )
   put_tree_address(t6, weight, option);
 
 
-  //std::cout << T->GetEntries() << std::endl;
-
-
-  T_BDTvars->SetBranchStatus("*",0);
-  T_BDTvars->SetBranchStatus("numu_cc_flag",1);
-  T_BDTvars->SetBranchStatus("numu_score",1);
-  T_BDTvars->SetBranchStatus("nue_score",1);
-  T_BDTvars->SetBranchStatus("cosmict_flag",1);
-  T_BDTvars->SetBranchStatus("mip_vec_dQ_dx_0",1);
-  T_BDTvars->SetBranchStatus("mip_vec_dQ_dx_1",1);
-  T_BDTvars->SetBranchStatus("mip_vec_dQ_dx_2",1);
-  T_BDTvars->SetBranchStatus("mip_vec_dQ_dx_3",1);
-  T_BDTvars->SetBranchStatus("mip_vec_dQ_dx_4",1);
-  T_BDTvars->SetBranchStatus("mip_vec_dQ_dx_5",1);
-  T_BDTvars->SetBranchStatus("mip_vec_dQ_dx_6",1);
-  T_BDTvars->SetBranchStatus("mip_vec_dQ_dx_7",1);
-  T_BDTvars->SetBranchStatus("mip_vec_dQ_dx_8",1);
-  T_BDTvars->SetBranchStatus("mip_vec_dQ_dx_9",1);
-  T_BDTvars->SetBranchStatus("mip_vec_dQ_dx_10",1);
-  T_BDTvars->SetBranchStatus("mip_vec_dQ_dx_11",1);
-  T_BDTvars->SetBranchStatus("mip_vec_dQ_dx_12",1);
-  T_BDTvars->SetBranchStatus("mip_vec_dQ_dx_13",1);
-  T_BDTvars->SetBranchStatus("mip_vec_dQ_dx_14",1);
-  T_BDTvars->SetBranchStatus("mip_vec_dQ_dx_15",1);
-  T_BDTvars->SetBranchStatus("mip_vec_dQ_dx_16",1);
-  T_BDTvars->SetBranchStatus("mip_vec_dQ_dx_17",1);
-  T_BDTvars->SetBranchStatus("mip_vec_dQ_dx_18",1);
-  T_BDTvars->SetBranchStatus("mip_vec_dQ_dx_19",1);
-  T_BDTvars->SetBranchStatus("mip_energy",1);
-  T_BDTvars->SetBranchStatus("mip_angle_beam",1);
-  T_BDTvars->SetBranchStatus("spt_angle_vertical",1);
-  T_BDTvars->SetBranchStatus("mip_quality_n_tracks",1);
-  T_BDTvars->SetBranchStatus("mip_quality_n_showers",1);
-  T_BDTvars->SetBranchStatus("gap_n_bad",1);
-  T_BDTvars->SetBranchStatus("spt_angle_beam",1);
-  T_BDTvars->SetBranchStatus("spt_angle_vertical",1);
-
-   if (tagger.flag_nc_gamma_bdt){
-    T_BDTvars->SetBranchStatus("nc_delta_score", 1);
-    T_BDTvars->SetBranchStatus("nc_pio_score", 1);
-  }
-
-  //Erin
-  if (tagger.flag_single_photon_bdt){
-    T_BDTvars->SetBranchStatus("single_photon_numu_score", 1);
-    T_BDTvars->SetBranchStatus("single_photon_other_score", 1);
-    T_BDTvars->SetBranchStatus("single_photon_ncpi0_score", 1);
-    T_BDTvars->SetBranchStatus("single_photon_nue_score", 1);
-
-    T_BDTvars->SetBranchStatus("shw_sp_energy",1);
-    T_BDTvars->SetBranchStatus("shw_sp_angle_beam",1);
-    T_BDTvars->SetBranchStatus("shw_sp_n_20mev_showers",1);
-    T_BDTvars->SetBranchStatus("shw_sp_n_20br1_showers",1);
-    T_BDTvars->SetBranchStatus("shw_sp_vec_median_dedx",1);
-    T_BDTvars->SetBranchStatus("shw_sp_shw_vtx_dis",1);
-    T_BDTvars->SetBranchStatus("shw_sp_max_shw_dis",1);
-    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_0",1);
-    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_1",1);
-    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_2",1);
-    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_3",1);
-    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_4",1);
-    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_5",1);
-    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_6",1);
-    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_7",1);
-    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_8",1);
-    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_9",1);
-    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_10",1);
-    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_11",1);
-    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_12",1);
-    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_13",1);
-    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_14",1);
-    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_15",1);
-    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_16",1);
-    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_17",1);
-    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_18",1);
-    T_BDTvars->SetBranchStatus("shw_sp_vec_dQ_dx_19",1);
-    T_BDTvars->SetBranchStatus("shw_sp_br3_1_n_shower_segments",1);
-    T_BDTvars->SetBranchStatus("shw_sp_E_indirect_max_energy",1);
-    T_BDTvars->SetBranchStatus("shw_sp_lem_n_3seg",1);
-    T_BDTvars->SetBranchStatus("shw_sp_pio_flag_pio",1);
-    T_BDTvars->SetBranchStatus("shw_sp_length_total",1);
-    T_BDTvars->SetBranchStatus("shw_sp_n_vertex",1);
-  }
-  //
-
-  T_eval->SetBranchStatus("*",0);
-  T_eval->SetBranchStatus("match_energy",1);
-  T_eval->SetBranchStatus("match_isFC",1);
-  T_eval->SetBranchStatus("match_found",1);
-  if (T_eval->GetBranch("match_found_asInt")) T_eval->SetBranchStatus("match_found_asInt",1);
-  T_eval->SetBranchStatus("stm_eventtype",1);
-  T_eval->SetBranchStatus("stm_lowenergy",1);
-  T_eval->SetBranchStatus("stm_LM",1);
-  T_eval->SetBranchStatus("stm_TGM",1);
-  T_eval->SetBranchStatus("stm_STM",1);
-  T_eval->SetBranchStatus("stm_FullDead",1);
-  T_eval->SetBranchStatus("stm_clusterlength",1);
-
-  T_eval->SetBranchStatus("weight_spline",1);
-  T_eval->SetBranchStatus("weight_cv",1);
-  T_eval->SetBranchStatus("weight_lee",1);
-  T_eval->SetBranchStatus("weight_change",1);
-  // MC enable truth information ...
-  T_eval->SetBranchStatus("truth_isCC",1);
-  T_eval->SetBranchStatus("truth_nuPdg",1);
-  T_eval->SetBranchStatus("truth_vtxInside",1);
-  T_eval->SetBranchStatus("truth_nuEnergy",1);
-  T_eval->SetBranchStatus("truth_vtxX",1);
-  T_eval->SetBranchStatus("truth_vtxY",1);
-  T_eval->SetBranchStatus("truth_vtxZ",1);
-  T_eval->SetBranchStatus("run",1);
-  T_eval->SetBranchStatus("subrun",1);
-  T_eval->SetBranchStatus("event",1);
-   // Xs related
-  T_eval->SetBranchStatus("match_completeness_energy",1);
-  T_eval->SetBranchStatus("truth_energyInside",1);
-
-  T_KINEvars->SetBranchStatus("*",0);
-  T_KINEvars->SetBranchStatus("kine_reco_Enu",1);
-  T_KINEvars->SetBranchStatus("kine_energy_particle",1);
-  T_KINEvars->SetBranchStatus("kine_particle_type",1);
-  T_KINEvars->SetBranchStatus("kine_energy_info",1);
-  T_KINEvars->SetBranchStatus("kine_energy_included",1);
-  T_KINEvars->SetBranchStatus("kine_reco_add_energy",1);
-  T_KINEvars->SetBranchStatus("kine_pio_mass",1);
-  T_KINEvars->SetBranchStatus("kine_pio_flag",1);
-  T_KINEvars->SetBranchStatus("kine_pio_vtx_dis",1);
-  T_KINEvars->SetBranchStatus("kine_pio_energy_1",1);
-  T_KINEvars->SetBranchStatus("kine_pio_theta_1",1);
-  T_KINEvars->SetBranchStatus("kine_pio_phi_1",1);
-  T_KINEvars->SetBranchStatus("kine_pio_dis_1",1);
-  T_KINEvars->SetBranchStatus("kine_pio_energy_2",1);
-  T_KINEvars->SetBranchStatus("kine_pio_theta_2",1);
-  T_KINEvars->SetBranchStatus("kine_pio_phi_2",1);
-  T_KINEvars->SetBranchStatus("kine_pio_dis_2",1);
-  T_KINEvars->SetBranchStatus("kine_pio_angle",1);
-  if (T_KINEvars->GetBranch("vlne_v4_numu_full_primaryE")) {
-    T_KINEvars->SetBranchStatus("vlne_v4_numu_full_primaryE",1);
-    T_KINEvars->SetBranchStatus("vlne_v4_numu_full_totalE",1);
-    T_KINEvars->SetBranchStatus("vlne_v4_numu_partial_primaryE",1);
-    T_KINEvars->SetBranchStatus("vlne_v4_numu_partial_totalE",1);
-    // T_KINEvars->SetBranchStatus("vlne_nue_full_primaryE",1);
-    // T_KINEvars->SetBranchStatus("vlne_nue_full_totalE",1);
-    // T_KINEvars->SetBranchStatus("vlne_nue_partial_primaryE",1);
-    // T_KINEvars->SetBranchStatus("vlne_nue_partial_totalE",1);
-  }
-
-  T_PFeval->SetBranchStatus("*",1);
-  T_PFeval->SetBranchStatus("run",1);
-  T_PFeval->SetBranchStatus("subrun",1);
-  T_PFeval->SetBranchStatus("event",1);
-  T_PFeval->SetBranchStatus("reco_nuvtxX",1);
-  T_PFeval->SetBranchStatus("reco_nuvtxY",1);
-  T_PFeval->SetBranchStatus("reco_nuvtxZ",1);
-  T_PFeval->SetBranchStatus("reco_showervtxX",1);
-  T_PFeval->SetBranchStatus("reco_showervtxY",1);
-  T_PFeval->SetBranchStatus("reco_showervtxZ",1);
-  T_PFeval->SetBranchStatus("reco_muonMomentum",1);
-  T_PFeval->SetBranchStatus("reco_showerKE",1);
-  T_PFeval->SetBranchStatus("nuvtx_diff",1);
-  T_PFeval->SetBranchStatus("showervtx_diff",1);
-  T_PFeval->SetBranchStatus("muonvtx_diff",1);
-  T_PFeval->SetBranchStatus("truth_muonMomentum",1);
-  T_PFeval->SetBranchStatus("truth_corr_nuvtxX",1);
-  T_PFeval->SetBranchStatus("truth_corr_nuvtxY",1);
-  T_PFeval->SetBranchStatus("truth_corr_nuvtxZ",1);
-  if (pfeval.flag_NCDelta){
-
-      T_PFeval->SetBranchStatus("truth_NCDelta",1);
-      T_PFeval->SetBranchStatus("truth_NprimPio",1);
-  }
-  if (pfeval.flag_recoprotonMomentum){
-    T_PFeval->SetBranchStatus("reco_protonMomentum",1);
-  }
-  if (pfeval.flag_showerMomentum){
-    T_PFeval->SetBranchStatus("reco_showerMomentum",1);
-    T_PFeval->SetBranchStatus("reco_Nproton",1);
-    T_PFeval->SetBranchStatus("truth_showerMomentum",1);
-    T_PFeval->SetBranchStatus("truth_nuScatType",1);
-    // oscillation formula ...
-    T_PFeval->SetBranchStatus("truth_nu_momentum",1);
-    T_PFeval->SetBranchStatus("neutrino_type",1);
-    T_PFeval->SetBranchStatus("mcflux_ntype",1);
-    T_PFeval->SetBranchStatus("mcflux_dk2gen",1);
-    T_PFeval->SetBranchStatus("mcflux_gen2vtx",1);
-    T_PFeval->SetBranchStatus("mcflux_ndecay",1);
-  }
-  //Erin
-  if (pfeval.flag_single_photon){
-    T_PFeval->SetBranchStatus("truth_Npi0",1);
-    T_PFeval->SetBranchStatus("truth_single_photon",1);
-    T_PFeval->SetBranchStatus("truth_photon_angle",1);
-    T_PFeval->SetBranchStatus("truth_photon_dis",1);
-    T_PFeval->SetBranchStatus("truth_showerMother",1);
-  }
-  if (pfeval.flag_nsbeam){
-    T_PFeval->SetBranchStatus("evtDeltaTimeNS",1);
-    T_PFeval->SetBranchStatus("evtTimeNS",1);
-  }
-  //
-
-
 
 
   std::map<std::pair<int, int>, int> map_re_entry;
@@ -734,7 +558,17 @@ int main( int argc, char** argv )
       t4->Fill();
       t5->Fill();
       t6->Fill();
+ 
+      T_spacepoints->GetEntry(it->first);
+      new_T_spacepoints->Fill();
 
+      for(auto tree_it=old_trees->begin(); tree_it!=old_trees->end(); tree_it++){
+        (*tree_it)->GetEntry(it->first);
+      }
+
+      for(auto tree_it=new_trees->begin(); tree_it!=new_trees->end(); tree_it++){
+        (*tree_it)->Fill();
+      } 
   }
 
   double cv_pot = 0;
@@ -755,6 +589,13 @@ int main( int argc, char** argv )
     pot.pot_tor875good *= pass_ratio;
 
     t2->Fill();
+    for(auto tree_it=old_trees_pot->begin(); tree_it!=old_trees_pot->end(); tree_it++){
+      (*tree_it)->GetEntry(it->second.first);
+    }
+
+    for(auto tree_it=new_trees_pot->begin(); tree_it!=new_trees_pot->end(); tree_it++){
+      (*tree_it)->Fill();
+    }
   }
   std::cout << out_file << std::endl;
   std::cout << "Events: " << t1->GetEntries()<<"/"<<T_eval->GetEntries() << std::endl;
