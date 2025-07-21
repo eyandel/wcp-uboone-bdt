@@ -58,6 +58,7 @@ int main( int argc, char** argv )
    bool flag_data = true;
 
   tree_wrangler wrangler(flag_config, config_file_name, delimiter);
+  tree_wrangler wrangler_pot(flag_config, config_file_name, delimiter,true);
 
   //Always load WC
   TFile *file1 = new TFile(input_file_cv);
@@ -71,7 +72,8 @@ int main( int argc, char** argv )
   //Load other trees from directories as specified by the config file
   std::vector<TTree*>* old_trees = new std::vector<TTree*>;
   old_trees = wrangler.get_old_trees(file1);
-
+  std::vector<TTree*>* old_trees_pot = new std::vector<TTree*>;
+  old_trees_pot = wrangler_pot.get_old_trees(file1);
 
   EvalInfo eval_cv;
   eval_cv.file_type = new std::string();
@@ -583,7 +585,9 @@ int main( int argc, char** argv )
   //Setup the directories specified in the config file
   std::vector<TTree*>* new_trees = new std::vector<TTree*>;
   new_trees = wrangler.set_new_trees(file3);
-  
+  std::vector<TTree*>* new_trees_pot = new std::vector<TTree*>;
+  new_trees_pot = wrangler_pot.set_new_trees(file3);
+
   file3->mkdir("wcpselection");
 
   file3->cd("wcpselection");
@@ -673,17 +677,14 @@ int main( int argc, char** argv )
     pot_cv.pot_tor875good *= pass_ratio;
 
     t2_cv->Fill();
-/*
-    if (has_pelee){
-      SubRun->GetEntry(it->second.first);
-      new_SubRun->Fill();
+
+    for(auto tree_it=old_trees_pot->begin(); tree_it!=old_trees_pot->end(); tree_it++){
+        (*tree_it)->GetEntry(it->second.first);
     }
 
-    if (has_glee){
-      run_subrun_tree->GetEntry(it->second.first);
-      new_run_subrun_tree->Fill();
+    for(auto tree_it=new_trees_pot->begin(); tree_it!=new_trees_pot->end(); tree_it++){
+        (*tree_it)->Fill();
     }
-    */
   }
 
   std::cout << out_file << std::endl;

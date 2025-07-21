@@ -123,6 +123,7 @@ int main( int argc, char** argv )
 
 
   tree_wrangler wrangler(flag_config, config_file_name, delimiter);
+  tree_wrangler wrangler_pot(flag_config, config_file_name, delimiter,true);
 
   TFile *file1 = new TFile(input_file);
   TTree *T_BDTvars = (TTree*)file1->Get("wcpselection/T_BDTvars");
@@ -136,6 +137,8 @@ int main( int argc, char** argv )
   //Load other trees from directories as specified by the config file
   std::vector<TTree*>* old_trees = new std::vector<TTree*>;
   old_trees = wrangler.get_old_trees(file1);
+  std::vector<TTree*>* old_trees_pot = new std::vector<TTree*>;
+  old_trees_pot = wrangler_pot.get_old_trees(file1);
 
   if (T_eval->GetBranch("weight_cv")) flag_data =false;
   //  if (T_eval->GetBranch("file_type")) flag_use_global_file_type = false;
@@ -158,7 +161,8 @@ int main( int argc, char** argv )
   //Setup the directories specified in the config file
   std::vector<TTree*>* new_trees = new std::vector<TTree*>;
   new_trees = wrangler.set_new_trees(file2);
-
+  std::vector<TTree*>* new_trees_pot = new std::vector<TTree*>;
+  new_trees_pot = wrangler_pot.set_new_trees(file2);
 
   file2->mkdir("wcpselection");
   file2->cd("wcpselection");
@@ -3076,17 +3080,14 @@ int main( int argc, char** argv )
       if (pot.runNo >=15369 && pot.runNo <= 15402) continue;
     }
     t2->Fill();
-/*
-    if (has_pelee){
-      SubRun->GetEntry(i);
-      new_SubRun->Fill();
+    for(auto tree_it=old_trees_pot->begin(); tree_it!=old_trees_pot->end(); tree_it++){
+        (*tree_it)->GetEntry(i);
     }
 
-    if (has_glee){
-      run_subrun_tree->GetEntry(i);
-      new_run_subrun_tree->Fill();
+    for(auto tree_it=new_trees_pot->begin(); tree_it!=new_trees_pot->end(); tree_it++){
+        (*tree_it)->Fill();
     }
-*/
+
   }
 
 

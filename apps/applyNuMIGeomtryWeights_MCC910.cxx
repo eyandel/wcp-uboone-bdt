@@ -70,6 +70,7 @@ int main( int argc, char** argv )
   }
   
   tree_wrangler wrangler(flag_config, config_file_name, delimiter);
+  tree_wrangler wrangler_pot(flag_config, config_file_name, delimiter,true);
 
   auto CVfile = TFile::Open(path_to_CV.c_str());
   auto weightHistosFile = TFile::Open(path_to_weightHistos.c_str());
@@ -83,6 +84,8 @@ int main( int argc, char** argv )
   //Load other trees from directories as specified by the config file
   std::vector<TTree*>* old_trees = new std::vector<TTree*>;
   old_trees = wrangler.get_old_trees(CVfile);
+  std::vector<TTree*>* old_trees_pot = new std::vector<TTree*>;
+  old_trees_pot = wrangler_pot.get_old_trees(CVfile);
 
   auto h_nue_FHC_variation1=(TH1D*)weightHistosFile->Get("EnergyVarBin/ratio_run1_FHC_nue_CV_AV_TPC");
   auto h_nue_FHC_variation2=(TH1D*)weightHistosFile->Get("EnergyVarBin/ratio_run2_FHC_nue_CV_AV_TPC");
@@ -279,7 +282,8 @@ int main( int argc, char** argv )
   //Setup the directories specified in the config file
   std::vector<TTree*>* new_trees = new std::vector<TTree*>;
   new_trees = wrangler.set_new_trees(ofile);
-
+  std::vector<TTree*>* new_trees_pot = new std::vector<TTree*>;
+  new_trees_pot = wrangler_pot.set_new_trees(ofile);
 
   ofile->mkdir("wcpselection")->cd();
   // ofile->cd();
@@ -331,6 +335,13 @@ int main( int argc, char** argv )
   for (size_t i=0;i < T_pot_copy->GetEntries(); i++){
     T_pot_copy->GetEntry(i);
     T_pot->Fill();
+    for(auto tree_it=old_trees_pot->begin(); tree_it!=old_trees_pot->end(); tree_it++){
+        (*tree_it)->GetEntry(i);
+    }
+
+    for(auto tree_it=new_trees_pot->begin(); tree_it!=new_trees_pot->end(); tree_it++){
+        (*tree_it)->Fill();
+    }
   }
   
 

@@ -75,6 +75,7 @@ int main( int argc, char** argv )
   TString outfile_name;
 
   tree_wrangler wrangler(flag_config, config_file_name, delimiter);
+  tree_wrangler wrangler_pot(flag_config, config_file_name, delimiter,true);
 
   std::vector<int>good_run_list_vec = wrangler.get_good_run_list();
   std::set<int> good_runlist_set(good_run_list_vec.begin(), good_run_list_vec.end());
@@ -106,12 +107,16 @@ int main( int argc, char** argv )
   //Load other trees from directories as specified by the config file
   std::vector<TTree*>* old_trees = new std::vector<TTree*>;
   old_trees = wrangler.get_old_trees(file1);
+  std::vector<TTree*>* old_trees_pot = new std::vector<TTree*>;
+  old_trees_pot = wrangler_pot.get_old_trees(file1);
 
   TFile *file2 = new TFile(outfile_name,"RECREATE");
 
   //Setup the directories specified in the config file
   std::vector<TTree*>* new_trees = new std::vector<TTree*>;
   new_trees = wrangler.set_new_trees(file2);
+  std::vector<TTree*>* new_trees_pot = new std::vector<TTree*>;
+  new_trees_pot = wrangler_pot.set_new_trees(file2);
 
   file2->mkdir("wcpselection");
   file2->cd("wcpselection");
@@ -479,6 +484,13 @@ int main( int argc, char** argv )
 			    pot.runNo >= 24256 && pot.runNo <= 25763
 			    )) continue;
     t2->Fill();
+    for(auto tree_it=old_trees_pot->begin(); tree_it!=old_trees_pot->end(); tree_it++){
+      (*tree_it)->GetEntry(i);
+    }
+
+    for(auto tree_it=new_trees_pot->begin(); tree_it!=new_trees_pot->end(); tree_it++){
+      (*tree_it)->Fill();
+    }
   }
 
 
