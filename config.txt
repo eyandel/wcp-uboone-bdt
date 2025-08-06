@@ -2,7 +2,7 @@ nuselection SubRun
 shrreco3d none
 proximity none
 singlephotonana run_subrun_tree,pot_tree
-lanturn none
+lantern none
 
 exclusive
 nuselection SubRun
