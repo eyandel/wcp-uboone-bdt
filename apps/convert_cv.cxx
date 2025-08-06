@@ -69,6 +69,8 @@ int main( int argc, char** argv )
   TTree *T_KINEvars_cv = (TTree*)file1->Get("wcpselection/T_KINEvars");
   TTree *T_spacepoints = (TTree*)file1->Get("wcpselection/T_spacepoints");
 
+  if (T_eval_cv->GetBranch("weight_cv")) flag_data =false;
+
   //Load other trees from directories as specified by the config file
   std::vector<TTree*>* old_trees = new std::vector<TTree*>;
   old_trees = wrangler.get_old_trees(file1);
