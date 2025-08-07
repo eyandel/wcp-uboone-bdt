@@ -634,7 +634,7 @@ int main( int argc, char** argv )
   T_BDTvars->Write();
   T_KINEvars->Write();
 */
-  ofile->Write();
+  ofile->Write("",TFile::kOverwrite);
   ofile->Close();
   CVfile->Close();
   weightHistosFile->Close();

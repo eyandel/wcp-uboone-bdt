@@ -9,6 +9,7 @@
 #include <iostream>
 #include <map>
 #include <string>
+#include <algorithm> 
 #include <fstream>
 #include <sstream>
 
@@ -151,7 +152,7 @@ std::vector<TTree*>* LEEana::tree_wrangler::CopyTrees(TDirectory *source, bool b
         if (rename) {
 		newT->SetObject(key->GetName()+TDirectory_extension,key->GetName()+TDirectory_extension);
 	}
-	newT->Write();
+	newT->Write("",TTree::kOverwrite);
         ttree_vec->push_back(newT);
     }
   }
