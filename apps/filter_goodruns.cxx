@@ -191,7 +191,7 @@ int main( int argc, char** argv )
     }
   }
 
-  file2->Write();
+  file2->Write("",TFile::kOverwrite);
   file2->Close();
 
   return 0;

@@ -867,7 +867,7 @@ int main( int argc, char** argv )
 
 
 
-  file3->Write();
+  file3->Write("",TFile::kOverwrite);
   file3->Close();
 
 

@@ -46,6 +46,7 @@ int main( int argc, char** argv )
   bool flag_config = false;
   std::string config_file_name="config.txt";
   char delimiter = ',';
+  bool override_pot = false;
   for (Int_t i=1;i!=argc;i++){
     switch(argv[i][1]){
     case 't':
@@ -54,6 +55,10 @@ int main( int argc, char** argv )
       break;
     case 'd':
         delimiter = argv[i][2];//In case you want to change what character you use to sperate your trees in the config
+      break;
+    case 'p':
+        override_pot = argv[i][2];
+        if(override_pot) std::cout<<"Overriding the pot of each subrun"<<std::endl;
       break;
     }
   }
@@ -588,6 +593,11 @@ int main( int argc, char** argv )
     pot.pot_tor875 *= pass_ratio;
     pot.pot_tor875good *= pass_ratio;
 
+    if(override_pot){
+      pot.pot_tor875=5e18;
+      pot.pot_tor875good=5e18;
+    }
+
     t2->Fill();
     for(auto tree_it=old_trees_pot->begin(); tree_it!=old_trees_pot->end(); tree_it++){
       (*tree_it)->GetEntry(it->second.first);
@@ -601,7 +611,7 @@ int main( int argc, char** argv )
   std::cout << "Events: " << t1->GetEntries()<<"/"<<T_eval->GetEntries() << std::endl;
   std::cout << "POT:    " << cv1_pot << " " << cv_pot << std::endl;
 
-  file3->Write();
+  file3->Write("",TFile::kOverwrite);
   file3->Close();
 
   return 0;
