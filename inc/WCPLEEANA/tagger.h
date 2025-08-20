@@ -1504,6 +1504,21 @@ namespace LEEana{
     float ssm_kdar_score_hiE;
     // End KDAR vars
 
+    // new variables for PMT info
+    bool saved_WCPMTInfo;
+    std::vector<double> *WCPMTInfoPePred = new std::vector<double>;
+    std::vector<double> *WCPMTInfoPeMeas = new std::vector<double>;
+    std::vector<double> *WCPMTInfoPeMeasErr = new std::vector<double>;
+    Int_t WCPMTInfoTPCClusterID;
+    Int_t WCPMTInfoFlashID;
+    Double_t WCPMTInfoStrength;
+    Int_t WCPMTInfoEventType;
+    Double_t WCPMTInfoKSDistance;
+    Double_t WCPMTInfoChi2;
+    Int_t WCPMTInfoNDF;
+    Double_t WCPMTInfoClusterLength;
+    Int_t WCPMTInfoNeutrinoType;
+    Double_t WCPMTInfoFlashTime;
 
     float event_type;
 
@@ -3014,6 +3029,21 @@ void LEEana::clear_tagger_info(TaggerInfo& tagger_info){
     tagger_info.ssm_kdar_score_hiE = 0;
     //End KDAR vars
 
+    // new variables for PMT info
+    tagger_info.saved_WCPMTInfo=false;
+    tagger_info.WCPMTInfoPePred->clear();
+    tagger_info.WCPMTInfoPeMeas->clear();
+    tagger_info.WCPMTInfoPeMeasErr->clear();
+    tagger_info.WCPMTInfoTPCClusterID = 0;
+    tagger_info.WCPMTInfoFlashID = 0;
+    tagger_info.WCPMTInfoStrength = 0;
+    tagger_info.WCPMTInfoEventType = 0;
+    tagger_info.WCPMTInfoKSDistance = 0;
+    tagger_info.WCPMTInfoChi2 = 0;
+    tagger_info.WCPMTInfoNDF = 0;
+    tagger_info.WCPMTInfoClusterLength = 0;
+    tagger_info.WCPMTInfoNeutrinoType = 0;
+    tagger_info.WCPMTInfoFlashTime = 0;
 
     tagger_info.event_type=0;
 
@@ -4431,19 +4461,36 @@ void LEEana::set_tree_address(TTree *tree0, TaggerInfo& tagger_info, int flag){
       tree0->SetBranchAddress("ssm_kine_pio_dis_2", &tagger_info.ssm_kine_pio_dis_2);
       tree0->SetBranchAddress("ssm_kine_pio_angle", &tagger_info.ssm_kine_pio_angle);
     }
-    tree0->SetBranchAddress("ssm_cosmict_flag_1",&tagger_info.cosmict_flag_1);
-    tree0->SetBranchAddress("ssm_cosmict_flag_2",&tagger_info.cosmict_flag_2);
-    tree0->SetBranchAddress("ssm_cosmict_flag_3",&tagger_info.cosmict_flag_3);
-    tree0->SetBranchAddress("ssm_cosmict_flag_4",&tagger_info.cosmict_flag_4);
-    tree0->SetBranchAddress("ssm_cosmict_flag_5",&tagger_info.cosmict_flag_5);
-    tree0->SetBranchAddress("ssm_cosmict_flag_6",&tagger_info.cosmict_flag_6);
-    tree0->SetBranchAddress("ssm_cosmict_flag_7",&tagger_info.cosmict_flag_7);
-    tree0->SetBranchAddress("ssm_cosmict_flag_8",&tagger_info.cosmict_flag_8);
-    tree0->SetBranchAddress("ssm_cosmict_flag_9",&tagger_info.cosmict_flag_9);
-    tree0->SetBranchAddress("ssm_cosmict_flag_10",&tagger_info.cosmict_flag_10);
-    tree0->SetBranchAddress("ssm_cosmict_flag",&tagger_info.cosmict_flag);
+    tree0->SetBranchAddress("ssm_cosmict_flag_1",&tagger_info.ssm_cosmict_flag_1);
+    tree0->SetBranchAddress("ssm_cosmict_flag_2",&tagger_info.ssm_cosmict_flag_2);
+    tree0->SetBranchAddress("ssm_cosmict_flag_3",&tagger_info.ssm_cosmict_flag_3);
+    tree0->SetBranchAddress("ssm_cosmict_flag_4",&tagger_info.ssm_cosmict_flag_4);
+    tree0->SetBranchAddress("ssm_cosmict_flag_5",&tagger_info.ssm_cosmict_flag_5);
+    tree0->SetBranchAddress("ssm_cosmict_flag_6",&tagger_info.ssm_cosmict_flag_6);
+    tree0->SetBranchAddress("ssm_cosmict_flag_7",&tagger_info.ssm_cosmict_flag_7);
+    tree0->SetBranchAddress("ssm_cosmict_flag_8",&tagger_info.ssm_cosmict_flag_8);
+    tree0->SetBranchAddress("ssm_cosmict_flag_9",&tagger_info.ssm_cosmict_flag_9);
+    tree0->SetBranchAddress("ssm_cosmict_flag_10",&tagger_info.ssm_cosmict_flag_10);
+    tree0->SetBranchAddress("ssm_cosmict_flag",&tagger_info.ssm_cosmict_flag);
   }
   // End KDAR vars
+
+  if(tree0->GetBranch("WCPMTInfoFlashTime")){
+    tagger_info.saved_WCPMTInfo = true;
+    tree0->SetBranchAddress("WCPMTInfoPePred", 		&tagger_info.WCPMTInfoPePred);
+    tree0->SetBranchAddress("WCPMTInfoPeMeas", 		&tagger_info.WCPMTInfoPeMeas);
+    tree0->SetBranchAddress("WCPMTInfoPeMeasErr", 	&tagger_info.WCPMTInfoPeMeasErr);
+    tree0->SetBranchAddress("WCPMTInfoTPCClusterID", 	&tagger_info.WCPMTInfoTPCClusterID);
+    tree0->SetBranchAddress("WCPMTInfoFlashID", 		&tagger_info.WCPMTInfoFlashID);
+    tree0->SetBranchAddress("WCPMTInfoStrength", 		&tagger_info.WCPMTInfoStrength);
+    tree0->SetBranchAddress("WCPMTInfoEventType", 		&tagger_info.WCPMTInfoEventType);
+    tree0->SetBranchAddress("WCPMTInfoKSDistance", 		&tagger_info.WCPMTInfoKSDistance);
+    tree0->SetBranchAddress("WCPMTInfoChi2", 		&tagger_info.WCPMTInfoChi2);
+    tree0->SetBranchAddress("WCPMTInfoNDF", 		&tagger_info.WCPMTInfoNDF);
+    tree0->SetBranchAddress("WCPMTInfoClusterLength", 	&tagger_info.WCPMTInfoClusterLength);
+    tree0->SetBranchAddress("WCPMTInfoNeutrinoType", 	&tagger_info.WCPMTInfoNeutrinoType);
+    tree0->SetBranchAddress("WCPMTInfoFlashTime", 		&tagger_info.WCPMTInfoFlashTime);
+  }
 
   if (flag==1) tree0->SetBranchAddress("event_type",&tagger_info.event_type);
 }
@@ -5867,6 +5914,22 @@ void LEEana::put_tree_address(TTree *T_tagger, TaggerInfo& tagger_info, int flag
       T_tagger->Branch("ssm_cosmict_flag",&tagger_info.ssm_cosmict_flag,"ssm_cosmict_flag/F");
     }
     // End KDAR vars
+
+    if(tagger_info.saved_WCPMTInfo){
+      T_tagger->Branch("WCPMTInfoPePred",          &tagger_info.WCPMTInfoPePred);
+      T_tagger->Branch("WCPMTInfoPeMeas",          &tagger_info.WCPMTInfoPeMeas);
+      T_tagger->Branch("WCPMTInfoPeMeasErr",       &tagger_info.WCPMTInfoPeMeasErr);
+      T_tagger->Branch("WCPMTInfoTPCClusterID",    &tagger_info.WCPMTInfoTPCClusterID,"WCPMTInfoTPCClusterID/I");
+      T_tagger->Branch("WCPMTInfoFlashID",                 &tagger_info.WCPMTInfoFlashID,"WCPMTInfoFlashID/I");
+      T_tagger->Branch("WCPMTInfoStrength",                &tagger_info.WCPMTInfoStrength,"WCPMTInfoStrength/D");
+      T_tagger->Branch("WCPMTInfoEventType",               &tagger_info.WCPMTInfoEventType,"WCPMTInfoEventType/I");
+      T_tagger->Branch("WCPMTInfoKSDistance",              &tagger_info.WCPMTInfoKSDistance,"WCPMTInfoKSDistance/D");
+      T_tagger->Branch("WCPMTInfoChi2",            &tagger_info.WCPMTInfoChi2,"WCPMTInfoChi2/D");
+      T_tagger->Branch("WCPMTInfoNDF",             &tagger_info.WCPMTInfoNDF,"WCPMTInfoNDF/I");
+      T_tagger->Branch("WCPMTInfoClusterLength",   &tagger_info.WCPMTInfoClusterLength,"WCPMTInfoClusterLength/D");
+      T_tagger->Branch("WCPMTInfoNeutrinoType",    &tagger_info.WCPMTInfoNeutrinoType,"WCPMTInfoNeutrinoType/I");
+      T_tagger->Branch("WCPMTInfoFlashTime",               &tagger_info.WCPMTInfoFlashTime,"WCPMTInfoFlashTime/D");
+    }
 
     if (flag==1) T_tagger->Branch("event_type",&tagger_info.event_type,"data/F");
 

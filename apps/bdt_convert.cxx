@@ -63,7 +63,7 @@ int main( int argc, char** argv )
 
   bool flag_gibuu = false;
 
-  for (Int_t i=1;i!=argc;i++){
+  for (Int_t i=3;i!=argc;i++){
     switch(argv[i][1]){
     case 'c':
       weight_cut_val = atof(&argv[i][2]);
@@ -153,7 +153,7 @@ int main( int argc, char** argv )
   
   std::vector<int>good_run_list_vec = wrangler.get_good_run_list();
   std::set<int> good_runlist_set(good_run_list_vec.begin(), good_run_list_vec.end());
-  
+
   std::vector<int> low_lifetime_runs = wrangler.get_low_lifetime_runs();
   std::set<int> low_lifetime_set(low_lifetime_runs.begin(), low_lifetime_runs.end());
   
@@ -455,12 +455,14 @@ int main( int argc, char** argv )
   tagger.ssm_kine_particle_type = new std::vector<int>;
   tagger.ssm_kine_energy_included = new std::vector<int>;
   tagger.ssm_cosmict_flag_10 = new std::vector<float>;
-
+  tagger.WCPMTInfoPePred = new std::vector<double>;
+  tagger.WCPMTInfoPeMeas = new std::vector<double>;
+  tagger.WCPMTInfoPeMeasErr = new std::vector<double>;
 
   set_tree_address(T_BDTvars, tagger,2 );
   tagger.flag_nc_gamma_bdt = true;
   tagger.flag_nc_gamma_0track_bdt = true;
-  //tagger.saved_ssm_bdt_scores = true;
+  tagger.saved_ssm_bdt_scores = true;
   put_tree_address(t4, tagger,2);
 
   if (flag_data){
@@ -2806,7 +2808,7 @@ int main( int argc, char** argv )
 
   reader_single_photon_nue.BookMVA( "MyBDT", "weights/single_photon_nue_bdt_final.xml");
   //
-/*
+
   TMVA::Reader reader_kdar_lowE;
   TMVA::Reader reader_kdar_hiE;
 
@@ -3452,7 +3454,7 @@ int main( int argc, char** argv )
   
   reader_kdar_lowE.BookMVA( "MyBDT", "weights/kdar_lowE.xml");
   reader_kdar_hiE.BookMVA( "MyBDT", "weights/kdar_hiE.xml");
-*/
+
   std::map<std::pair<int, int>, int> map_rs_n;
   std::map<std::pair<int, int>, std::set<int> > map_rs_f1p5; // Reco 1.5
   std::map<std::pair<int, int>, std::set<int> > map_rs_f2stm; // Reco2 stm
@@ -3550,7 +3552,7 @@ int main( int argc, char** argv )
   //  for (int i=0;i!=100;i++){
   for (int i=0;i!=T_BDTvars->GetEntries();i++){
     eval.weight_change = false;
-    T_BDTvars->GetEntry(i); //temp_ssm_kine_pio_flag = tagger.ssm_kine_pio_flag;
+    T_BDTvars->GetEntry(i); temp_ssm_kine_pio_flag = tagger.ssm_kine_pio_flag;
     T_eval->GetEntry(i); tagger.match_isFC = eval.match_isFC;
     T_KINEvars->GetEntry(i); tagger.kine_reco_Enu = kine.kine_reco_Enu; temp_kine_pio_flag = kine.kine_pio_flag;
     T_PFeval->GetEntry(i);
@@ -3658,8 +3660,33 @@ int main( int argc, char** argv )
     tagger.single_photon_ncpi0_score = cal_single_photon_ncpi0_bdts_xgboost(tagger, reader_single_photon_ncpi0);
     tagger.single_photon_nue_score = cal_single_photon_nue_bdts_xgboost(tagger, reader_single_photon_nue);
 
-    //tagger.ssm_kdar_score_lowE = cal_kdar_lowE_bdt_xgboost(tagger, eval, reader_kdar_lowE);
-    //tagger.ssm_kdar_score_hiE = cal_kdar_hiE_bdt_xgboost(tagger, eval, reader_kdar_hiE);
+    if (std::isnan(tagger.ssm_nu_angle_z)) tagger.ssm_nu_angle_z = 0;
+    if (std::isnan(tagger.ssm_nu_angle_target)) tagger.ssm_nu_angle_target = 0;
+    if (std::isnan(tagger.ssm_nu_angle_absorber)) tagger.ssm_nu_angle_absorber = 0;
+    if (std::isnan(tagger.ssm_nu_angle_vertical)) tagger.ssm_nu_angle_vertical = 0;
+    if (std::isnan(tagger.ssm_prim_nu_angle_z)) tagger.ssm_prim_nu_angle_z = 0;
+    if (std::isnan(tagger.ssm_prim_nu_angle_target)) tagger.ssm_prim_nu_angle_target = 0;
+    if (std::isnan(tagger.ssm_prim_nu_angle_absorber)) tagger.ssm_prim_nu_angle_absorber = 0;
+    if (std::isnan(tagger.ssm_prim_nu_angle_vertical)) tagger.ssm_prim_nu_angle_vertical = 0;
+    if (std::isnan(tagger.ssm_con_nu_angle_z)) tagger.ssm_con_nu_angle_z = 0;
+    if (std::isnan(tagger.ssm_con_nu_angle_target)) tagger.ssm_con_nu_angle_target = 0;
+    if (std::isnan(tagger.ssm_con_nu_angle_absorber)) tagger.ssm_con_nu_angle_absorber = 0;
+    if (std::isnan(tagger.ssm_con_nu_angle_vertical)) tagger.ssm_con_nu_angle_vertical = 0;
+    if (std::isnan(tagger.ssm_track_angle_z)) tagger.ssm_track_angle_z = 0;
+    if (std::isnan(tagger.ssm_track_angle_target)) tagger.ssm_track_angle_target = 0;
+    if (std::isnan(tagger.ssm_track_angle_absorber)) tagger.ssm_track_angle_absorber = 0;
+    if (std::isnan(tagger.ssm_track_angle_vertical)) tagger.ssm_track_angle_vertical = 0;
+    if (std::isnan(tagger.ssm_kine_pio_mass)) tagger.ssm_kine_pio_mass = 0;
+    if (std::isnan(tagger.ssm_kine_pio_vtx_dis)) tagger.ssm_kine_pio_vtx_dis = 0;
+    if (std::isnan(tagger.ssm_kine_pio_theta_1)) tagger.ssm_kine_pio_theta_1 = 0;
+    if (std::isnan(tagger.ssm_kine_pio_theta_2)) tagger.ssm_kine_pio_theta_2 = 0;
+    if (std::isnan(tagger.ssm_kine_pio_phi_1)) tagger.ssm_kine_pio_phi_1 = 0;
+    if (std::isnan(tagger.ssm_kine_pio_phi_2)) tagger.ssm_kine_pio_phi_2 = 0;
+    if (std::isnan(tagger.ssm_kine_pio_dis_1)) tagger.ssm_kine_pio_dis_1 = 0;
+    if (std::isnan(tagger.ssm_kine_pio_dis_2)) tagger.ssm_kine_pio_dis_2 = 0;
+    if (std::isnan(tagger.ssm_kine_pio_angle)) tagger.ssm_kine_pio_angle = 0;
+    tagger.ssm_kdar_score_lowE = cal_kdar_lowE_bdt_xgboost(tagger, eval, reader_kdar_lowE);
+    tagger.ssm_kdar_score_hiE = cal_kdar_hiE_bdt_xgboost(tagger, eval, reader_kdar_hiE);
 
     // limit the cut val ...
     if (std::isnan(eval.weight_spline) || std::isinf(eval.weight_spline) ||

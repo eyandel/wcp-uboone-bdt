@@ -41,7 +41,7 @@ int main( int argc, char** argv )
   std::string config_file_name="config.txt";
   char delimiter = ',';
   float fail_percentage = 0.2;
-   for (Int_t i=1;i!=argc;i++){
+   for (Int_t i=3;i!=argc;i++){
     switch(argv[i][1]){
     case 'f'://Note switched the flag here
       fail_percentage = atof(&argv[i][2]);
@@ -346,6 +346,9 @@ int main( int argc, char** argv )
   tagger_cv.ssm_kine_particle_type = new std::vector<int>;
   tagger_cv.ssm_kine_energy_included = new std::vector<int>;
   tagger_cv.ssm_cosmict_flag_10 = new std::vector<float>;
+  tagger_cv.WCPMTInfoPePred = new std::vector<double>;
+  tagger_cv.WCPMTInfoPeMeas = new std::vector<double>;
+  tagger_cv.WCPMTInfoPeMeasErr = new std::vector<double>;
 
   set_tree_address(T_BDTvars_cv, tagger_cv,2 );
 
@@ -693,7 +696,7 @@ int main( int argc, char** argv )
   std::cout << "Events: " << t1_cv->GetEntries()<<"/"<<T_eval_cv->GetEntries() << std::endl;
   std::cout << "POT:    " << cv1_pot << " " << cv_pot << std::endl;
 
-  file3->Write();
+  file3->Write("",TFile::kOverwrite);
   file3->Close();
 
 

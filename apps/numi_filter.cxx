@@ -55,7 +55,7 @@ int main( int argc, char** argv )
   std::string config_file_name="config.txt";
   char delimiter = ',';
 
-  for (Int_t i=1;i!=argc;i++){
+  for (Int_t i=3;i!=argc;i++){
     switch(argv[i][1]){
     case 'r':
       run_filter = atoi(&argv[i][2]);
@@ -391,6 +391,14 @@ int main( int argc, char** argv )
   tagger.numu_cc_2_total_length = new std::vector<float>;
   tagger.numu_cc_2_n_daughter_tracks = new std::vector<float>;
   tagger.numu_cc_2_n_daughter_all = new std::vector<float>;
+  tagger.ssm_kine_energy_particle = new std::vector<float>;
+  tagger.ssm_kine_energy_info = new std::vector<int>;
+  tagger.ssm_kine_particle_type = new std::vector<int>;
+  tagger.ssm_kine_energy_included = new std::vector<int>;
+  tagger.ssm_cosmict_flag_10 = new std::vector<float>;
+  tagger.WCPMTInfoPePred = new std::vector<double>;
+  tagger.WCPMTInfoPeMeas = new std::vector<double>;
+  tagger.WCPMTInfoPeMeasErr = new std::vector<double>;
 
   set_tree_address(T_BDTvars, tagger,2 );
   put_tree_address(t4, tagger,2);
