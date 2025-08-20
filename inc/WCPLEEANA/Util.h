@@ -44,11 +44,6 @@ void H2V(const TH1D* histo, TVectorD& vec);
 void M2H(const TMatrixD mat, TH2D* histo);
 void V2H(const TVectorD vec, TH1D* histo);
 
-void CopyDir(TDirectory *source, bool blank_tree=false, std::vector<std::string> to_skip={}, bool verbose=true);
-void CopyDir(TDirectory *source, TString TDirectory_name, bool blank_tree=false, std::vector<std::string> to_skip={}, bool verbose=true);
-std::vector<TTree*>* CopyTrees(TDirectory *source, bool blank_tree=false, bool rename=false, TString TDirectory_name="", std::vector<std::string> to_skip={}, bool verbose=true);
-std::vector<TTree*>* GetTrees(TDirectory *source, std::vector<std::string> to_skip={}, bool verbose=true);
-
 std::vector<std::string> splitString(const std::string& s, char delimiter);
 
 #endif

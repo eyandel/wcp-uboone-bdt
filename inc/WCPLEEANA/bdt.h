@@ -13,7 +13,10 @@ namespace LEEana{
   float cal_single_photon_nue_bdts_xgboost(TaggerInfo& tagger_info, TMVA::Reader& reader);
   //
 
-float cal_numu_bdts_xgboost(TaggerInfo& tagger_info, TMVA::Reader& reader);
+  float cal_kdar_lowE_bdt_xgboost(TaggerInfo& tagger_info, EvalInfo& eval, TMVA::Reader& reader);
+  float cal_kdar_hiE_bdt_xgboost(TaggerInfo& tagger_info, EvalInfo& eval, TMVA::Reader& reader);
+
+  float cal_numu_bdts_xgboost(TaggerInfo& tagger_info, TMVA::Reader& reader);
 
 float cal_cosmict_10_bdt(float default_val,TaggerInfo& tagger_info, TMVA::Reader& reader,
 			 float& cosmict_10_vtx_z,
@@ -207,6 +210,20 @@ float LEEana::cal_single_photon_nue_bdts_xgboost(TaggerInfo& tagger_info, TMVA::
 }
 //
 
+
+float LEEana::cal_kdar_lowE_bdt_xgboost(TaggerInfo& tagger_info, EvalInfo& eval, TMVA::Reader& reader){
+  float val = -999;
+  double val1 = reader.EvaluateMVA("MyBDT");
+  val = TMath::Log( (1+val1)/(1-val1) )/2;//To match what comes out of xgboost logitraw
+  return val;
+}
+
+float LEEana::cal_kdar_hiE_bdt_xgboost(TaggerInfo& tagger_info, EvalInfo& eval, TMVA::Reader& reader){
+  float val = -999;
+  double val1 = reader.EvaluateMVA("MyBDT");
+  val = TMath::Log( (1+val1)/(1-val1) )/2;//To match what comes out of xgboost logitraw
+  return val;
+}
 
 float LEEana::cal_numu_bdts_xgboost(TaggerInfo& tagger_info, TMVA::Reader& reader)
 {

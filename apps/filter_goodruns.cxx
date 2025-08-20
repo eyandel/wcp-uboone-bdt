@@ -40,7 +40,7 @@ int main( int argc, char** argv )
   std::string config_file_name="config.txt";
   char delimiter = ',';
 
-  for (Int_t i=1;i!=argc;i++){
+  for (Int_t i=3;i!=argc;i++){
     switch(argv[i][1]){
       case 'n':
         flag_numi = atoi(&argv[i][2]);
