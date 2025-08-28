@@ -2653,6 +2653,8 @@ void TLee::Set_Spectra_MatrixCov()
   TFile *file_time;
   if (flag_syst_time) {
     file_time = new TFile(time_file, "read");
+  }else{
+    file_time = new TFile(roostr, "read");
   }
 
   ///
@@ -2985,10 +2987,10 @@ void TLee::Set_Spectra_MatrixCov()
   TMatrixD matrix_time_abs;
   if (flag_syst_time){
     matrix_time_abs_point = (TMatrixD*)file_time->Get("cov_mat_time");
-    matrix_time_abs = (*matrix_time_abs_point);
-  }/*else{
-    matrix_time_abs_point = (TMatrixD*)file_spectra->Get("cov_mat_add");
-  }*/
+  }else{
+    matrix_time_abs_point = (TMatrixD*)file_time->Get("cov_mat_add");
+  }
+  matrix_time_abs = (*matrix_time_abs_point);
   
   //
 
