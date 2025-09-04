@@ -1,4 +1,6 @@
 #include "GPSmoothing.C"
+#include "TRandom.h"
+#include "TRandom3.h"
 
 void LEEana::CovMatrix::add_disabled_ch_name(TString name){
   disabled_ch_names.insert(name);
@@ -7,8 +9,10 @@ void LEEana::CovMatrix::remove_disabled_ch_name(TString name){
   disabled_ch_names.erase(name);
 }
 
-void LEEana::CovMatrix::gen_det_cov_matrix(int run, std::map<int, TH1F*>& map_covch_hist, std::map<TString, TH1F*>& map_histoname_hist, TVectorD* vec_mean, TVectorD* vec_mean_diff, TMatrixD* cov_mat_bootstrapping, TMatrixD* cov_det_mat, int flag_gp=0){
+//void LEEana::CovMatrix::gen_det_cov_matrix(int run, std::map<int, TH1F*>& map_covch_hist, std::map<TString, TH1F*>& map_histoname_hist, TVectorD* vec_mean, TVectorD* vec_mean_diff, TMatrixD* cov_mat_bootstrapping, TMatrixD* cov_det_mat, int flag_gp=0){
+void LEEana::CovMatrix::gen_det_cov_matrix(int run, std::map<int, TH1F*>& map_covch_hist, std::map<TString, TH1F*>& map_histoname_hist, TVectorD* vec_mean, TVectorD* vec_mean_diff, TMatrixD* cov_mat_bootstrapping, TMatrixD* cov_det_mat, int flag_gp=0, double seed=0){
 
+     gRandom = new TRandom3(seed);
 
   // prepare the maps ... name --> no,  covch, lee
   std::map<TString, std::tuple<int, int, int, TString>> map_histoname_infos ;
@@ -165,7 +169,8 @@ void LEEana::CovMatrix::gen_det_cov_matrix(int run, std::map<int, TH1F*>& map_co
   TVectorD matrix_eigenvalue = DMatrix_eigen.GetEigenValues();
 
   TPrincipal prin_full(rows, "ND");
-  TRandom3 random3(0);
+  //TRandom3 random3(0);
+  TRandom3 random3(seed);
   for (int i=0;i!=16000;i++){
     TMatrixD matrix_element(rows,1);
     for (int j=0;j!=rows;j++){

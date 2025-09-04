@@ -2,6 +2,7 @@
 
 #include "WCPLEEANA/master_cov_matrix.h"
 #include "WCPLEEANA/bayes.h"
+#include "WCPLEEANA/Util.h"
 
 #include "TROOT.h"
 #include "TApplication.h"
@@ -29,6 +30,8 @@ int main( int argc, char** argv )
   int run = 1; // run 1 ...
   bool flag_osc = false;
   int flag_gp = 0; // gaussian process smoothing
+  bool flag_v2h=false;
+  double seed = 0;
   for (Int_t i=1;i!=argc;i++){
     switch(argv[i][1]){
     case 'r':
@@ -39,6 +42,14 @@ int main( int argc, char** argv )
       break;
     case 'g':
       flag_gp = atoi(&argv[i][2]); // 1: on, 0: off.  2 = off but do GPSmoothing debugging, 3 = smoothing and debugging
+      break;
+    case 'h':
+      flag_v2h = atoi(&argv[i][2]);
+      if(flag_v2h==1) std::cout<<"Will save histograms in addition to vectors"<<std::endl;
+      break;
+     case 's':
+      seed = atoi(&argv[i][2]); //Set the seed for bootsrapping
+      std::cout<<"Setting bootstrapping seed to "<<seed<<std::endl;
       break;
     }
   }
@@ -239,7 +250,8 @@ int main( int argc, char** argv )
   TVectorD* vec_mean_diff = new TVectorD(cov_add_mat->GetNrows());
   TVectorD* vec_mean = new TVectorD(cov_add_mat->GetNrows());
 
-  cov.gen_det_cov_matrix(run, map_covch_hist, map_histoname_hist, vec_mean, vec_mean_diff, cov_mat_bootstrapping, cov_det_mat, flag_gp);
+  //cov.gen_det_cov_matrix(run, map_covch_hist, map_histoname_hist, vec_mean, vec_mean_diff, cov_mat_bootstrapping, cov_det_mat, flag_gp);
+  cov.gen_det_cov_matrix(run, map_covch_hist, map_histoname_hist, vec_mean, vec_mean_diff, cov_mat_bootstrapping, cov_det_mat, flag_gp, seed);
 
   TMatrixD* frac_cov_det_mat = new TMatrixD(cov_add_mat->GetNrows(), cov_add_mat->GetNcols());
   for (size_t i=0; i!= frac_cov_det_mat->GetNrows(); i++){
@@ -273,6 +285,37 @@ int main( int argc, char** argv )
   cov_mat_bootstrapping->Write(Form("cov_mat_boostrapping_%d",run));
   cov_det_mat->Write(Form("cov_det_mat_%d",run));
   frac_cov_det_mat->Write(Form("frac_cov_det_mat_%d",run));
+
+  if(flag_v2h){
+    std::cout<<"Saving histograms in addition to vectors"<<std::endl;
+    int nbin = vec_mean->GetNrows();
+    TH1D* h_mean = new TH1D(Form("h_mean_%d",run), Form("h_mean_%d",run), nbin, 0, nbin);
+    V2H((*vec_mean), h_mean);
+    h_mean->Write();
+
+    nbin = vec_mean_diff->GetNrows();
+    TH1D* h_mean_diff = new TH1D(Form("h_mean_diff_%d",run), Form("h_mean_diff_%d",run), nbin, 0, nbin);
+    V2H((*vec_mean_diff), h_mean_diff);
+    h_mean_diff->Write();
+
+    int nbinx = cov_det_mat->GetNrows();
+    int nbiny = cov_det_mat->GetNcols();
+    TH2D* h_cov_det = new TH2D(Form("h_cov_det_%d",run), Form("h_cov_det_%d",run), nbinx, 0, nbinx, nbiny, 0, nbiny);
+    M2H((*cov_det_mat), h_cov_det);
+    h_cov_det->Write();
+
+    nbinx = frac_cov_det_mat->GetNrows();
+    nbiny = frac_cov_det_mat->GetNcols();
+    TH2D* h_frac_cov_det = new TH2D(Form("h_frac_cov_det_%d",run), Form("h_frac_cov_det_%d",run), nbinx, 0, nbinx, nbiny, 0, nbiny);
+    M2H((*frac_cov_det_mat), h_frac_cov_det);
+    h_frac_cov_det->Write();
+
+    nbinx = cov_mat_bootstrapping->GetNrows();
+    nbiny = cov_mat_bootstrapping->GetNcols();
+    TH2D* h_cov_bootstrapping = new TH2D(Form("h_cov_bootstrapping_%d",run), Form("h_cov_bootstrapping_%d",run), nbinx, 0, nbinx, nbiny, 0, nbiny);
+    M2H((*cov_mat_bootstrapping), h_cov_bootstrapping);
+    h_cov_bootstrapping->Write();
+   }
 
 
   // save central ... results ...
