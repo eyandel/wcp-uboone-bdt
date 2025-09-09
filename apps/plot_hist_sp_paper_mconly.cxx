@@ -942,14 +942,15 @@ int main( int argc, char** argv )
         canvas[obschannel-1] = new TCanvas(Form("canvas%d", obschannel), Form("channel%d", obschannel), 1200, 900);
         TPad *pad1 = new TPad("pad1", "", 0, 0.45, 1, 1);//0.01,0.3,0.99,0.99,0,0,0);
         TPad *pad2 = new TPad("pad2", "", 0, 0, 0.45, 0.001);//new TPad("pad2", "", 0, 0, 1, 0.45);//0.01,0.01,0.99,0.3,0,0,0);
-        pad1->SetLeftMargin(0.15);
+        /*pad1->SetLeftMargin(0.15);
         pad1->SetRightMargin(0.1);
         pad1->SetTopMargin(0.1);
         pad1->SetBottomMargin(0.012);
         pad2->SetLeftMargin(0.15);
         pad2->SetRightMargin(0.1);
         pad2->SetTopMargin(0.047);
-        pad2->SetBottomMargin(0.3);
+        pad2->SetBottomMargin(0.3);*/
+
         /*pad1->SetBottomMargin(0.008);
         pad1->SetLeftMargin(0.12);
         pad1->SetRightMargin(0.1);
@@ -1714,7 +1715,9 @@ int main( int argc, char** argv )
         }
         else*/ 
         //Erin 
-        gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reconstructed Shower Energy (MeV)");
+        gratio_mc[obschannel-1]->GetXaxis()->SetTitle("True #pi^{0} Energy (MeV)");
+        hmc->GetXaxis()->SetTitle("True #pi^{0} Energy (MeV)");
+        //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reconstructed Shower Energy (MeV)");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Angle [degrees]");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Median dE/dx (0-4 cm) [MeV/cm]");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Median dE/dx (1-5 cm) [MeV/cm]");
