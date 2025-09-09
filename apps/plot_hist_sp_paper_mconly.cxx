@@ -943,6 +943,7 @@ int main( int argc, char** argv )
         TPad *pad1 = new TPad("pad1", "", 0, 0.45, 1, 1);//0.01,0.3,0.99,0.99,0,0,0);
         TPad *pad2 = new TPad("pad2", "", 0, 0, 0.001, 0.001);//new TPad("pad2", "", 0, 0, 1, 0.45);//0.01,0.01,0.99,0.3,0,0,0);
         pad2->SetTopMargin(0.57);
+        pad1->SetBottomMargin(0.25);
         /*pad1->SetLeftMargin(0.15);
         pad1->SetRightMargin(0.1);
         pad1->SetTopMargin(0.1);
