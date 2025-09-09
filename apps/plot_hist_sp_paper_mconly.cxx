@@ -1583,7 +1583,7 @@ int main( int argc, char** argv )
         hmc->GetYaxis()->SetTitleOffset(1.0);//0.77);
         hmc->GetYaxis()->SetLabelFont(62);//22);//132);
         hmc->GetYaxis()->SetLabelSize(0.06);//0.05);
-        hmc->GetXaxis()->SetLabelOffset(3.0);
+        //hmc->GetXaxis()->SetLabelOffset(3.0);
         //if(obschannel==9) hmc->GetXaxis()->SetRangeUser(0.5,1);
         float mcymax = hmc->GetBinContent(hmc->GetMaximumBin())*scalePOT;
         float dataymax = hdata->GetBinContent(hdata->GetMaximumBin())*scalePOT/normalization;
@@ -1862,7 +1862,7 @@ int main( int argc, char** argv )
         hmc->GetYaxis()->SetTitleOffset(0.75);//0.85);//0.35);
         hmc->GetYaxis()->SetLabelSize(0.08);//0.1);
         hmc->GetYaxis()->SetTitleSize(0.08);//0.12);
-        hmc->GetXaxis()->SetNdivisions(-210);
+        //hmc->GetXaxis()->SetNdivisions(-210);
 
         gratio_mc[obschannel-1]->GetXaxis()->SetTitleSize(0.08);//0.12);
         gratio_mc[obschannel-1]->GetXaxis()->SetLabelSize(0.08);//0.12);
