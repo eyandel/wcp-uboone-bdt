@@ -1719,6 +1719,7 @@ int main( int argc, char** argv )
         //Erin 
         gratio_mc[obschannel-1]->GetXaxis()->SetTitle("True #pi^{0} Energy (MeV)");
         hmc->GetXaxis()->SetTitle("True #pi^{0} Energy (MeV)");
+        hmc->GetXaxis()->SetTitle("True p_{#mu} (MeV)");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reconstructed Shower Energy (MeV)");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reco Shower Angle [degrees]");
         //gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Median dE/dx (0-4 cm) [MeV/cm]");

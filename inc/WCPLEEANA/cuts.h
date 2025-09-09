@@ -717,6 +717,10 @@ double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, 
       if (pfeval.reco_muonMomentum[3] < 0) { return -1; }
       float KE_muon = pfeval.reco_muonMomentum[3]*1000.-105.66; // GeV --> MeV
       return (TMath::Sqrt(pow(KE_muon,2) + 2*KE_muon*105.66));
+  }else if (var_name == "truth_muon_momentum"){
+      if (pfeval.truth_muonMomentum[3] < 0) { return -1; }
+      float KE_muon = pfeval.truth_muonMomentum[3]*1000.-105.66; // GeV --> MeV
+      return (TMath::Sqrt(pow(KE_muon,2) + 2*KE_muon*105.66));
   }else if (var_name == "muon_costheta"){
       TLorentzVector muonMomentum(pfeval.reco_muonMomentum[0], pfeval.reco_muonMomentum[1], pfeval.reco_muonMomentum[2], pfeval.reco_muonMomentum[3]);
       if (pfeval.reco_muonMomentum[3]>0)

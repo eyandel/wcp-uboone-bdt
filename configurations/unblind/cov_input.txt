@@ -1,26 +1,26 @@
-single_photon_LEE                   truth_pi0_energy                       25    0          2500     1	   0		      0	    0	        0		      4		      10      cv_spline		  1
-single_photon_spoverlay             truth_pi0_energy                       25    0          2500     1	   1		      1	    0	        0		      1		      9	      cv_spline		  0
-single_photon_ncpi0overlay   	    truth_pi0_energy                       25    0          2500     1	   1		      1	    0	        0		      1		      6	      cv_spline		  0
-single_photon_overlay_ncpi0_BG      truth_pi0_energy                       25    0          2500     1	   1		      1	    0	        0		      1		      2	      cv_spline		  0
-single_photon_dirt   		        truth_pi0_energy                       25    0          2500 	 1	   1		      0	    0.5	        0		      1		      4	      cv_spline       0
-single_photon_ext    		        truth_pi0_energy                       25    0          2500 	 1	   0		      0	    0 	        0		      7	          3	      unity   	      0
-single_photon_bnb    		        truth_pi0_energy                       25    0          2500     1	   0		      0	    0 	        0		      0		      5	      unity		      0
+single_photon_LEE                   truth_muon_momentum                       15    0          1500     1	   0		      0	    0	        0		      4		      10      cv_spline		  1
+single_photon_spoverlay             truth_muon_momentum                       15    0          1500     1	   1		      1	    0	        0		      1		      9	      cv_spline		  0
+single_photon_ncpi0overlay   	    truth_muon_momentum                       15    0          1500     1	   1		      1	    0	        0		      1		      6	      cv_spline		  0
+single_photon_overlay_ncpi0_BG      truth_muon_momentum                       15    0          1500     1	   1		      1	    0	        0		      1		      2	      cv_spline		  0
+single_photon_dirt   		        truth_muon_momentum                       15    0          1500 	 1	   1		      0	    0.5	        0		      1		      4	      cv_spline       0
+single_photon_ext    		        truth_muon_momentum                       15    0          1500 	 1	   0		      0	    0 	        0		      7	          3	      unity   	      0
+single_photon_bnb    		        truth_muon_momentum                       15    0          1500     1	   0		      0	    0 	        0		      0		      5	      unity		      0
 
-sp_bdt_nc_pi0_2_Xp	                truth_pi0_energy                       25    0          2500     2	   0		      0	    0	        0		      5		      10      cv_spline		  1
-sp_bdt_nc_pi0_Xp_spoverlay	        truth_pi0_energy                       25    0          2500     2	   1		      1	    0	        0		      2		      9	      cv_spline		  0
-sp_bdt_nc_pi0_Xp_ncpi0overlay	    truth_pi0_energy                       25    0          2500     2	   1		      1	    0	        0		      2		      6	      cv_spline		  0
-sp_bdt_nc_pi0_Xp_overlay_ncpi0_BG	truth_pi0_energy                       25    0          2500     2	   1		      1	    0	        0		      2		      2	      cv_spline		  0
-sp_bdt_nc_pi0_Xp_dirt			    truth_pi0_energy                       25    0          2500     2	   1		      0	    0.5	        0		      2		      4	      cv_spline		  0
-sp_bdt_nc_pi0_Xp_ext 			    truth_pi0_energy                       25    0          2500     2	   0		      0	    0 	        0		      8	          3	      unity   	  	  0
-sp_bdt_nc_pi0_Xp     	            truth_pi0_energy                       25    0          2500     2	   0		      0	    0 	        0		      0		      5	      unity		      0
+sp_bdt_nc_pi0_2_Xp	                truth_muon_momentum                       15    0          1500     2	   0		      0	    0	        0		      5		      10      cv_spline		  1
+sp_bdt_nc_pi0_Xp_spoverlay	        truth_muon_momentum                       15    0          1500     2	   1		      1	    0	        0		      2		      9	      cv_spline		  0
+sp_bdt_nc_pi0_Xp_ncpi0overlay	    truth_muon_momentum                       15    0          1500     2	   1		      1	    0	        0		      2		      6	      cv_spline		  0
+sp_bdt_nc_pi0_Xp_overlay_ncpi0_BG	truth_muon_momentum                       15    0          1500     2	   1		      1	    0	        0		      2		      2	      cv_spline		  0
+sp_bdt_nc_pi0_Xp_dirt			    truth_muon_momentum                       15    0          1500     2	   1		      0	    0.5	        0		      2		      4	      cv_spline		  0
+sp_bdt_nc_pi0_Xp_ext 			    truth_muon_momentum                       15    0          1500     2	   0		      0	    0 	        0		      8	          3	      unity   	  	  0
+sp_bdt_nc_pi0_Xp     	            truth_muon_momentum                       15    0          1500     2	   0		      0	    0 	        0		      0		      5	      unity		      0
 
-sp_bdt_numuCC_2_Xp             	    truth_pi0_energy                       25    0          2500     3	   0		      0	    0	        0		      6		      10      cv_spline		  1
-sp_bdt_numuCC_Xp_spoverlay	        truth_pi0_energy                       25    0          2500     3	   1		      1	    0	        0		      3		      9	      cv_spline		  0
-sp_bdt_numuCC_Xp_ncpi0overlay	    truth_pi0_energy                       25    0          2500     3	   1		      1	    0	        0		      3		      6	      cv_spline		  0
-sp_bdt_numuCC_Xp_overlay_ncpi0_BG	truth_pi0_energy                       25    0          2500     3	   1		      1	    0	        0		      3		      2	      cv_spline		  0
-sp_bdt_numuCC_Xp_dirt			    truth_pi0_energy                       25    0          2500     3	   1		      0	    0.5	        0		      3		      4	      cv_spline		  0
-sp_bdt_numuCC_Xp_ext 			    truth_pi0_energy                       25    0          2500     3	   0		      0	    0 	        0		      9	          3	      unity   	  	  0
-sp_bdt_numuCC_Xp     	            truth_pi0_energy                       25    0          2500     3	   0		      0	    0 	        0		      0		      5	      unity		      0
+sp_bdt_numuCC_2_Xp             	    truth_muon_momentum                       15    0          1500     3	   0		      0	    0	        0		      6		      10      cv_spline		  1
+sp_bdt_numuCC_Xp_spoverlay	        truth_muon_momentum                       15    0          1500     3	   1		      1	    0	        0		      3		      9	      cv_spline		  0
+sp_bdt_numuCC_Xp_ncpi0overlay	    truth_muon_momentum                       15    0          1500     3	   1		      1	    0	        0		      3		      6	      cv_spline		  0
+sp_bdt_numuCC_Xp_overlay_ncpi0_BG	truth_muon_momentum                       15    0          1500     3	   1		      1	    0	        0		      3		      2	      cv_spline		  0
+sp_bdt_numuCC_Xp_dirt			    truth_muon_momentum                       15    0          1500     3	   1		      0	    0.5	        0		      3		      4	      cv_spline		  0
+sp_bdt_numuCC_Xp_ext 			    truth_muon_momentum                       15    0          1500     3	   0		      0	    0 	        0		      9	          3	      unity   	  	  0
+sp_bdt_numuCC_Xp     	            truth_muon_momentum                       15    0          1500     3	   0		      0	    0 	        0		      0		      5	      unity		      0
 End					                End		                         -1	   -1	      -1	   -1	   -1		      -1	  -1		    -1		    -1		    -1	    end		        -1
 #current plot
 
