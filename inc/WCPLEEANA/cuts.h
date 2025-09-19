@@ -259,6 +259,18 @@ double LEEana::get_weight(TString weight_name, EvalInfo& eval, PFevalInfo& pfeva
     }
   }
 
+  //Erin: for estmiating muon radiation. TURN OFF FOR MAIN RESULTS!!!
+  if (true){
+    float muon_rad_weight = 1.0;
+    if (pfeval.truth_muonMomentum[3] > 0) {
+        float KE_muon = pfeval.truth_muonMomentum[3]*1000.-105.66; // GeV --> MeV
+        float muon_mom = TMath::Sqrt(pow(KE_muon,2) + 2*KE_muon*105.66);
+        if (muon_mom >= 600){muon_rad_weight = 1.02;}
+    }
+    addtl_weight *= muon_rad_weight;
+  }
+
+
   if (weight_name == "cv_spline"){
     return addtl_weight*eval.weight_cv * eval.weight_spline;
   //Erin - ns beam time scaling
