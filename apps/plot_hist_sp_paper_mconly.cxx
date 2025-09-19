@@ -1576,7 +1576,7 @@ int main( int argc, char** argv )
         hmc->Sumw2();
         hmc->Scale(scalePOT);
         hmc->SetTitle("");
-        hmc->Draw("hist");
+        hmc->Draw("hist text");
         hmc->GetYaxis()->SetTitle("Entries");//Event counts");
         hmc->GetYaxis()->SetTitleSize(0.06);//0.07);
         hmc->GetYaxis()->SetTitleFont(62);//22);//132);
