@@ -260,7 +260,7 @@ double LEEana::get_weight(TString weight_name, EvalInfo& eval, PFevalInfo& pfeva
   }
 
   //Erin: for estmiating muon radiation. TURN OFF FOR MAIN RESULTS!!!
-  if (true){
+  if (false){
     float muon_rad_weight = 1.0;
     if (pfeval.truth_muonMomentum[3] > 0) {
         float KE_muon = pfeval.truth_muonMomentum[3]*1000.-105.66; // GeV --> MeV
