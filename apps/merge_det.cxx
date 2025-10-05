@@ -692,8 +692,14 @@ int main( int argc, char** argv )
   put_tree_address(t3_det, pfeval_det);
   put_tree_address(t2_det, pot_det);
   put_tree_address(t5_det, kine_det);
-
-
+  // Not filled nominally, so force turn them one. 
+  if(pfeval_cv.flag_ns_time_cor){
+    t3_det->Branch("evtTimeNS_cor",&pfeval_det.evtTimeNS_cor);
+    t3_det->Branch("cor_nu_time",&pfeval_det.cor_nu_time);
+    t3_det->Branch("cor_nu_time_nospill",&pfeval_det.cor_nu_time_nospill);
+    t3_det->Branch("cor_nu_time_spill",&pfeval_det.cor_nu_time_spill);
+    t3_det->Branch("cor_nu_deltatime",&pfeval_det.cor_nu_deltatime);
+  }
 
   std::map<std::pair<int, int>, int> map_re_entry_cv;
   std::map<std::pair<int, int>, std::set<std::pair<int, int> > > map_rs_re_cv;
@@ -804,6 +810,15 @@ int main( int argc, char** argv )
 
 
       map_rs_re_common[std::make_pair(eval_cv.run, eval_cv.subrun)].insert(std::make_pair(eval_cv.run, eval_cv.event));
+
+      // We have to set these by hand for the detvar to make sure the beamspill time reassignment is the same. 
+      if(pfeval_cv.flag_ns_time_cor){
+        pfeval_det.evtTimeNS_cor = pfeval_det.evtTimeNS + pfeval_cv.cor_nu_deltatime;
+        pfeval_det.cor_nu_time = pfeval_cv.cor_nu_time;
+        pfeval_det.cor_nu_time_nospill = pfeval_cv.cor_nu_time_nospill;
+        pfeval_det.cor_nu_time_spill = pfeval_cv.cor_nu_time_spill;
+        pfeval_det.cor_nu_deltatime = pfeval_cv.cor_nu_deltatime;
+      }
 
       t1_cv->Fill();
       t3_cv->Fill();
