@@ -1740,7 +1740,7 @@ int main( int argc, char** argv )
 
          //if(obschannel==2) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reconstructed #pi^{0} Energy (MeV)");
 
-        /* 
+        
         //labels bdt scores
         if(obschannel==1) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Reconstructed Neutrino Energy (MeV)");
         //if(obschannel==1) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("shw_sp_length_total");
@@ -1750,7 +1750,7 @@ int main( int argc, char** argv )
         if(obschannel==4) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("NC #pi^{0} Background BDT Score");
         if(obschannel==5) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("#nu_{e} CC Background BDT Score");
         if(obschannel==6) gratio_mc[obschannel-1]->GetXaxis()->SetTitle("Number of Showers");
-        */
+        
 
 
 
