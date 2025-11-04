@@ -1,6 +1,7 @@
 // cz: code modified from tutorials/tmva/TMVAClassification.C
 
 #include <cstdlib>
+#include <iomanip>
 #include <iostream>
 #include <map>
 #include <string>
@@ -105,18 +106,17 @@ int main( int argc, char** argv )
   TTree *T_spacepoints = (TTree*)file1->Get("wcpselection/T_spacepoints");
 
   //Load other trees from directories as specified by the config file
-  std::vector<TTree*>* old_trees = new std::vector<TTree*>;
-  old_trees = wrangler.get_old_trees(file1);
-  std::vector<TTree*>* old_trees_pot = new std::vector<TTree*>;
-  old_trees_pot = wrangler_pot.get_old_trees(file1);
+  wrangler.get_old_trees(file1);
+  wrangler_pot.get_old_trees(file1);
 
   TFile *file2 = new TFile(outfile_name,"RECREATE");
 
   //Setup the directories specified in the config file
-  std::vector<TTree*>* new_trees = new std::vector<TTree*>;
-  new_trees = wrangler.set_new_trees(file2);
-  std::vector<TTree*>* new_trees_pot = new std::vector<TTree*>;
-  new_trees_pot = wrangler_pot.set_new_trees(file2);
+  wrangler.set_new_trees(file2);
+  wrangler_pot.set_new_trees(file2);
+
+  // Build the pairs of pot trees
+  wrangler_pot.grow_pot_arboretum();
 
   file2->mkdir("wcpselection");
   file2->cd("wcpselection");
@@ -428,8 +428,12 @@ int main( int argc, char** argv )
   T_BDTvars->SetBranchStatus("*",1);
 
 
-  
-  for (int i=0;i!=T_BDTvars->GetEntries();i++){
+  int nentries = T_BDTvars->GetEntries();
+  std::cout<<"Begin looping over "<<nentries<<" events"<<std::endl; 
+  for (int i=0;i!=nentries;i++){
+
+    if (i%10000 == 0) std::cout << i/1000 << " k " << std::setprecision(3) << double(i)/nentries*100. << " %"<< std::endl;
+
     T_BDTvars->GetEntry(i);
     T_eval->GetEntry(i); tagger.match_isFC = eval.match_isFC;
     T_KINEvars->GetEntry(i); tagger.kine_reco_Enu = kine.kine_reco_Enu;
@@ -465,17 +469,24 @@ int main( int argc, char** argv )
     T_spacepoints->GetEntry(i);
     new_T_spacepoints->Fill();
 
-    for(auto tree_it=old_trees->begin(); tree_it!=old_trees->end(); tree_it++){
+    for(auto tree_it=wrangler.old_trees->begin(); tree_it!=wrangler.old_trees->end(); tree_it++){
         (*tree_it)->GetEntry(i);
     }
 
-    for(auto tree_it=new_trees->begin(); tree_it!=new_trees->end(); tree_it++){
+    for(auto tree_it=wrangler.new_trees->begin(); tree_it!=wrangler.new_trees->end(); tree_it++){
         (*tree_it)->Fill();
     }
 
   }
 
-  for (Int_t i=0;i!=T_pot->GetEntries();i++){
+  // Loop over each POT tree seperatly
+  // Start with WireCell
+  nentries = T_pot->GetEntries();
+  std::cout<<"Begin looping over WC pot tree with "<<nentries<<" entries"<<std::endl;
+  for (Int_t i=0;i!=nentries;i++){
+
+    if (i%10000 == 0) std::cout << i/1000 << " k " << std::setprecision(3) << double(i)/nentries*100. << " %"<< std::endl;
+
     T_pot->GetEntry(i);
 
     if (good_runlist_set.find(pot.runNo) == good_runlist_set.end()) continue;
@@ -492,15 +503,39 @@ int main( int argc, char** argv )
 			    pot.runNo >= 24256 && pot.runNo <= 25763
 			    )) continue;
     t2->Fill();
-    for(auto tree_it=old_trees_pot->begin(); tree_it!=old_trees_pot->end(); tree_it++){
-      (*tree_it)->GetEntry(i);
-    }
-
-    for(auto tree_it=new_trees_pot->begin(); tree_it!=new_trees_pot->end(); tree_it++){
-      (*tree_it)->Fill();
-    }
   }
 
+
+  // Now the other trees
+  for(auto pot_tree_it=wrangler_pot.pot_arboretum->begin(); pot_tree_it!=wrangler_pot.pot_arboretum->end(); pot_tree_it++){
+
+    std::cout<<"Begin looping over "<<(*pot_tree_it)->old_pot_tree->GetName()<<" tree with "<<nentries<<" entries"<<std::endl;
+    nentries = (*pot_tree_it)->old_pot_tree->GetEntries();
+    for (Int_t i=0;i!=nentries;i++){
+
+      if (i%10000 == 0) std::cout << i/1000 << " k " << std::setprecision(3) << double(i)/nentries*100. << " %"<< std::endl;
+
+      (*pot_tree_it)->old_pot_tree->GetEntry(i);
+
+    if (good_runlist_set.find((*pot_tree_it)->runNo) == good_runlist_set.end()) continue;
+    if (low_lifetime_set.find((*pot_tree_it)->runNo) != low_lifetime_set.end()) continue;
+
+    if (filter_level==1 && ((*pot_tree_it)->runNo > 6748 && (*pot_tree_it)->runNo <=7001 || // RHC
+                            (*pot_tree_it)->runNo >=10140 && (*pot_tree_it)->runNo <= 11949 ||
+                            (*pot_tree_it)->runNo >= 13697 && (*pot_tree_it)->runNo <=17566 ||
+                            (*pot_tree_it)->runNo >= 19668 && (*pot_tree_it)->runNo <=21410
+                            ) ) continue;
+    if (filter_level!=1 && ((*pot_tree_it)->runNo <=6748 || // FHC
+                            (*pot_tree_it)->runNo >=8784 && (*pot_tree_it)->runNo <=10139 ||
+                            (*pot_tree_it)->runNo >= 21411 && (*pot_tree_it)->runNo <= 23259 ||
+                            (*pot_tree_it)->runNo >= 24256 && (*pot_tree_it)->runNo <= 25763
+                            )) continue;
+
+      (*pot_tree_it)->new_pot_tree->Fill();
+
+    }//i, loop over events in a given pot tree set
+
+  }//pot_trees_it, loop over sets of pot trees
 
   
   file2->Write("",TFile::kOverwrite);

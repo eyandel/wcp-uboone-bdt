@@ -1,6 +1,7 @@
 // cz: code modified from tutorials/tmva/TMVAClassification.C
 
 #include <cstdlib>
+#include <iomanip>
 #include <iostream>
 #include <map>
 #include <string>
@@ -81,26 +82,22 @@ int main( int argc, char** argv )
   TTree *T_spacepoints_det = (TTree*)file2->Get("wcpselection/T_spacepoints");
 
   //Load other trees from directories as specified by the config file
-  std::vector<TTree*>* old_trees_cv = new std::vector<TTree*>;
-  old_trees_cv = wrangler_cv.get_old_trees(file1);
-  std::vector<TTree*>* old_trees_det = new std::vector<TTree*>;
-  old_trees_det = wrangler_det.get_old_trees(file2);
-  std::vector<TTree*>* old_trees_pot_cv = new std::vector<TTree*>;
-  old_trees_pot_cv = wrangler_pot_cv.get_old_trees(file1);
-  std::vector<TTree*>* old_trees_pot_det = new std::vector<TTree*>;
-  old_trees_pot_det = wrangler_pot_det.get_old_trees(file2);
+  wrangler_cv.get_old_trees(file1);
+  wrangler_det.get_old_trees(file2);
+  wrangler_pot_cv.get_old_trees(file1);
+  wrangler_pot_det.get_old_trees(file2);
 
   TFile *file3 = new TFile(out_file,"RECREATE");
 
   //Setup the directories specified in the config file
-  std::vector<TTree*>* new_trees_cv = new std::vector<TTree*>;
-  new_trees_cv = wrangler_cv.set_new_trees(file3,true,"_cv");
-  std::vector<TTree*>* new_trees_det = new std::vector<TTree*>;
-  new_trees_det = wrangler_det.set_new_trees(file3,true,"_det");
-  std::vector<TTree*>* new_trees_pot_cv = new std::vector<TTree*>;
-  new_trees_pot_cv = wrangler_pot_cv.set_new_trees(file3,true,"_cv");
-  std::vector<TTree*>* new_trees_pot_det = new std::vector<TTree*>;
-  new_trees_pot_det = wrangler_pot_det.set_new_trees(file3,true,"_det");
+  wrangler_cv.set_new_trees(file3,true,"_cv");
+  wrangler_det.set_new_trees(file3,true,"_det");
+  wrangler_pot_cv.set_new_trees(file3,true,"_cv");
+  wrangler_pot_det.set_new_trees(file3,true,"_det");
+
+  // Build the pairs of pot trees
+  wrangler_pot_cv.grow_pot_arboretum();
+  wrangler_pot_det.grow_pot_arboretum();
 
   //Always do WC
   file3->mkdir("wcpselection");
@@ -706,6 +703,7 @@ int main( int argc, char** argv )
 
   bool flag_presel = false;
 
+  // Find the index of the "goofy" events for the cv, this will be common across all trees
   for (int i=0;i!=T_eval_cv->GetEntries();i++){
     T_eval_cv->GetEntry(i);
     T_BDTvars_cv->GetEntry(i);
@@ -726,6 +724,7 @@ int main( int argc, char** argv )
 
   }
 
+  // Find the index of the "goofy" events for the cv, this will be common across all trees
   std::map<std::pair<int, int>, int> map_re_entry_det;
   std::map<std::pair<int, int>, std::set<std::pair<int, int> > > map_rs_re_det;
   for (int i=0;i!=T_eval_det->GetEntries();i++){
@@ -748,19 +747,41 @@ int main( int argc, char** argv )
 
   }
 
+  // Map out the relation between index and run-subrun for WC CV
   std::map<std::tuple<int, int>, std::pair<int, double> > map_rs_entry_pot_cv;
   for (Int_t i=0;i!=T_pot_cv->GetEntries();i++){
     T_pot_cv->GetEntry(i);
     map_rs_entry_pot_cv[std::make_pair(pot_cv.runNo,pot_cv.subRunNo)] = std::make_pair(i, pot_cv.pot_tor875);
   }
 
+  // Map out the relation between index and run-subrun for WC DetVar
   std::map<std::tuple<int, int>, std::pair<int, double> > map_rs_entry_pot_det;
   for (Int_t i=0;i!=T_pot_det->GetEntries();i++){
     T_pot_det->GetEntry(i);
     map_rs_entry_pot_det[std::make_pair(pot_det.runNo,pot_det.subRunNo)] = std::make_pair(i, pot_det.pot_tor875);
   }
 
-
+  // Map out the relation between index and run-subrun for the non-WC POT CV trees
+  wrangler_pot_cv.map_rs_to_entry();
+  // Map out the relation between index and run-subrun for the non-WC POT DetVar trees
+  wrangler_pot_det.map_rs_to_entry();
+  // Check that these are one to one
+  for(int arb_index=0; arb_index<wrangler_pot_cv.pot_arboretum->size(); arb_index++){
+    std::string tree_name_cv = wrangler_pot_cv.pot_arboretum->at(arb_index)->old_pot_tree->GetName();
+    std::string tree_name_det = wrangler_pot_det.pot_arboretum->at(arb_index)->old_pot_tree->GetName();
+    if(tree_name_cv!=tree_name_det){
+      std::cout<<"ERROR! Mismatch in pot trees"<<std::endl;
+      return 1;
+    }
+    tree_name_cv = wrangler_pot_cv.pot_arboretum->at(arb_index)->new_pot_tree->GetName();
+    tree_name_det = wrangler_pot_det.pot_arboretum->at(arb_index)->new_pot_tree->GetName();
+    removeSubstring(tree_name_cv, "_cv");
+    removeSubstring(tree_name_det, "_det");
+    if(tree_name_cv!=tree_name_det){
+      std::cout<<"ERROR! Mismatch in pot trees"<<std::endl;
+      return 1;
+    }
+  }
 
    T_eval_cv->SetBranchStatus("*",1);
    T_PFeval_cv->SetBranchStatus("*",1);
@@ -785,8 +806,14 @@ int main( int argc, char** argv )
     }
   }
 
-  std::cout<<"Start Filling the trees"<<std::endl;
+  int nentries = map_cv_det_index.size();
+  int ientry = 0;
+  std::cout<<"Begin looping over "<<nentries<<" events"<<std::endl;
   for (auto it = map_cv_det_index.begin(); it != map_cv_det_index.end(); it++){
+
+      if (ientry%10000 == 0) std::cout << ientry/1000 << " k " << std::setprecision(3) << double(ientry)/nentries*100. << " %"<< std::endl;
+      ientry++;
+
       T_BDTvars_cv->GetEntry(it->first);
       T_eval_cv->GetEntry(it->first);
       T_KINEvars_cv->GetEntry(it->first);
@@ -801,10 +828,10 @@ int main( int argc, char** argv )
 
       T_spacepoints_det->GetEntry(it->second);
 
-      for(auto tree_it=old_trees_cv->begin(); tree_it!=old_trees_cv->end(); tree_it++){
+      for(auto tree_it=wrangler_cv.old_trees->begin(); tree_it!=wrangler_cv.old_trees->end(); tree_it++){
           (*tree_it)->GetEntry(it->first);
       }
-      for(auto tree_it=old_trees_det->begin(); tree_it!=old_trees_det->end(); tree_it++){
+      for(auto tree_it=wrangler_det.old_trees->begin(); tree_it!=wrangler_det.old_trees->end(); tree_it++){
           (*tree_it)->GetEntry(it->second);
       }
 
@@ -812,6 +839,7 @@ int main( int argc, char** argv )
       map_rs_re_common[std::make_pair(eval_cv.run, eval_cv.subrun)].insert(std::make_pair(eval_cv.run, eval_cv.event));
 
       // We have to set these by hand for the detvar to make sure the beamspill time reassignment is the same. 
+      // Pandora should probably have similar code?
       if(pfeval_cv.flag_ns_time_cor){
         pfeval_det.evtTimeNS_cor = pfeval_det.evtTimeNS + pfeval_cv.cor_nu_deltatime;
         pfeval_det.cor_nu_time = pfeval_cv.cor_nu_time;
@@ -834,25 +862,57 @@ int main( int argc, char** argv )
 
       T_spacepoints_new_det->Fill();
 
-      for(auto tree_it=new_trees_cv->begin(); tree_it!=new_trees_cv->end(); tree_it++){
+      for(auto tree_it=wrangler_cv.new_trees->begin(); tree_it!=wrangler_cv.new_trees->end(); tree_it++){
           (*tree_it)->Fill();
       }
-      for(auto tree_it=new_trees_det->begin(); tree_it!=new_trees_det->end(); tree_it++){
+      for(auto tree_it=wrangler_det.new_trees->begin(); tree_it!=wrangler_det.new_trees->end(); tree_it++){
           (*tree_it)->Fill();
       }
 
   }
+
+  // Add up the pot for both the cv and det files before merging
+  std::vector<double> vec_cv_pot;
+  std::vector<double> vec_det_pot;
   double cv_pot=0;
   double det_pot=0;
+  // First for WC
   for (auto it = map_rs_entry_pot_cv.begin(); it != map_rs_entry_pot_cv.end(); it++){
     cv_pot += it->second.second;
   }
   for (auto it = map_rs_entry_pot_det.begin(); it != map_rs_entry_pot_det.end(); it++){
     det_pot += it->second.second;
   }
+  vec_cv_pot.push_back(cv_pot);
+  vec_det_pot.push_back(det_pot);
+  // Then for the other trees
+  for (auto it_map_rs_entry = wrangler_pot_cv.arboretum_map_rs_entry.begin(); it_map_rs_entry != wrangler_pot_cv.arboretum_map_rs_entry.end(); it_map_rs_entry++){
+    cv_pot=0;
+    for (auto it = (*it_map_rs_entry).begin(); it != (*it_map_rs_entry).end(); it++){
+      cv_pot += it->second.second;
+    }
+    vec_cv_pot.push_back(cv_pot);
+  }
+  for (auto it_map_rs_entry = wrangler_pot_det.arboretum_map_rs_entry.begin(); it_map_rs_entry != wrangler_pot_det.arboretum_map_rs_entry.end(); it_map_rs_entry++){
+    det_pot=0;
+    for (auto it = (*it_map_rs_entry).begin(); it != (*it_map_rs_entry).end(); it++){
+      det_pot += it->second.second;
+    }
+    vec_det_pot.push_back(cv_pot);
+  }
 
+  // Loop over each POT tree seperatly
+  // Start with WireCell
+  nentries =  map_rs_re_common.size();
+  ientry=0;
+  std::cout<<"Begin looping over WC pot tree checking "<<nentries<<" entries"<<std::endl;
+  std::vector<double> vec_common_pot;
   double common_pot = 0;
   for (auto it = map_rs_re_common.begin(); it != map_rs_re_common.end(); it++){
+
+    if (ientry%10000 == 0) std::cout << ientry/1000 << " k " << std::setprecision(3) << double(ientry)/nentries*100. << " %"<< std::endl;
+    ientry++;
+
     auto it1 = map_rs_entry_pot_cv.find(it->first);
     auto it2 = map_rs_entry_pot_det.find(it->first);
 
@@ -879,20 +939,58 @@ int main( int argc, char** argv )
 
       t2_cv->Fill();
       t2_det->Fill();
-      for(auto tree_it=old_trees_pot_cv->begin(); tree_it!=old_trees_pot_cv->end(); tree_it++){
-        (*tree_it)->GetEntry(it1->second.first);
-      }
-      for(auto tree_it=new_trees_pot_cv->begin(); tree_it!=new_trees_pot_cv->end(); tree_it++){
-        (*tree_it)->Fill();
-      }
-      for(auto tree_it=old_trees_pot_det->begin(); tree_it!=old_trees_pot_det->end(); tree_it++){
-        (*tree_it)->GetEntry(it2->second.first);
-      }
-      for(auto tree_it=new_trees_pot_det->begin(); tree_it!=new_trees_pot_det->end(); tree_it++){
-        (*tree_it)->Fill();
-      }    
     }
   }
+  vec_common_pot.push_back(common_pot);
+  common_pot = 0;
+
+  // Now the other trees
+  for(int arb_index=0; arb_index<wrangler_pot_cv.pot_arboretum->size(); arb_index++){
+
+    std::cout<<"Begin looping over WC pot tree checking "<<nentries<<" entries"<<std::endl;
+    ientry=0;
+    for (auto it_re = map_rs_re_common.begin(); it_re != map_rs_re_common.end(); it_re++){
+
+      if (ientry%10000 == 0) std::cout << ientry/1000 << " k " << std::setprecision(3) << double(ientry)/nentries*100. << " %"<< std::endl;
+      ientry++;
+
+      auto it_cv = wrangler_pot_cv.arboretum_map_rs_entry.at(arb_index).find(it_re->first);
+      auto it_det = wrangler_pot_det.arboretum_map_rs_entry.at(arb_index).find(it_re->first);
+
+      if (it_cv != wrangler_pot_cv.arboretum_map_rs_entry.at(arb_index).end() && it_det != wrangler_pot_det.arboretum_map_rs_entry.at(arb_index).end()){
+        wrangler_pot_cv.pot_arboretum->at(arb_index)->old_pot_tree->GetEntry(it_cv->second.first);      
+        wrangler_pot_det.pot_arboretum->at(arb_index)->old_pot_tree->GetEntry(it_det->second.first);
+
+        // For both the cv and the detvar, set both the double and the float, only the correct one will fill the tree
+        double ratio = it_re->second.size() * 1.0/map_rs_re_cv[it_re->first].size();
+        wrangler_pot_cv.pot_arboretum->at(arb_index)->fpot = wrangler_pot_cv.pot_arboretum->at(arb_index)->pot()*ratio;
+        wrangler_pot_cv.pot_arboretum->at(arb_index)->dpot = wrangler_pot_cv.pot_arboretum->at(arb_index)->pot()*ratio;
+
+        ratio = it_re->second.size() * 1.0 /map_rs_re_det[it_re->first].size();
+        wrangler_pot_det.pot_arboretum->at(arb_index)->fpot = wrangler_pot_det.pot_arboretum->at(arb_index)->pot()*ratio;
+        wrangler_pot_det.pot_arboretum->at(arb_index)->dpot = wrangler_pot_det.pot_arboretum->at(arb_index)->pot()*ratio;
+
+        common_pot += wrangler_pot_cv.pot_arboretum->at(arb_index)->pot()*ratio;
+
+      if(override_pot){
+        wrangler_pot_cv.pot_arboretum->at(arb_index)->fpot = 5e18; 
+        wrangler_pot_cv.pot_arboretum->at(arb_index)->dpot = 5e18;
+        wrangler_pot_det.pot_arboretum->at(arb_index)->fpot = 5e18;
+        wrangler_pot_det.pot_arboretum->at(arb_index)->dpot = 5e18;
+      }
+
+      wrangler_pot_cv.pot_arboretum->at(arb_index)->new_pot_tree->Fill();
+      wrangler_pot_det.pot_arboretum->at(arb_index)->new_pot_tree->Fill();
+
+    } 
+
+  } // it_re, loop over all runs in the run subrun map 
+
+  vec_common_pot.push_back(common_pot);
+  common_pot = 0;
+
+} // arb_index, loop over all trees in the arboretum
+
 
   int nevents_cv = 0;
   int nevents_det = 0;
@@ -904,7 +1002,10 @@ int main( int argc, char** argv )
   }
   std::cout << out_file << std::endl;
   std::cout << "Events: " << t1_cv->GetEntries() << " " << nevents_cv<<"/"<<T_eval_cv->GetEntries() << " " << nevents_det << "/" << T_eval_det->GetEntries() << std::endl;
-  std::cout << "POT:    " << common_pot << " " << cv_pot << " " << det_pot << std::endl;
+  for(int i=0; i<vec_cv_pot.size(); i++){
+    std::cout << "POT:    " << vec_common_pot.at(i) << " " << vec_cv_pot.at(i) << " " << vec_det_pot.at(i) <<std::endl;
+  }
+
 
 
 

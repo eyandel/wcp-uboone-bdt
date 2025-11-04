@@ -1,6 +1,7 @@
 // cz: code modified from tutorials/tmva/TMVAClassification.C
 
 #include <cstdlib>
+#include <iomanip>
 #include <iostream>
 #include <fstream>
 #include <map>
@@ -35,8 +36,9 @@ using namespace LEEana;
 #include "WCPLEEANA/pot.h"
 #include "WCPLEEANA/pfeval.h"
 #include "WCPLEEANA/kine.h"
+#include "WCPLEEANA/space.h"
+#include "WCPLEEANA/particle.h"
 
-//#include "WCPLEEANA/Util.h"
 #include "WCPLEEANA/tree_wrangler.h"
 
 int main( int argc, char** argv )
@@ -62,6 +64,8 @@ int main( int argc, char** argv )
   char delimiter = ',';
 
   bool flag_gibuu = false;
+
+  bool flag_spbdt=false;
 
   for (Int_t i=3;i!=argc;i++){
     switch(argv[i][1]){
@@ -93,6 +97,10 @@ int main( int argc, char** argv )
     case 'w':
       flag_gibuu = &argv[i][2];
       if (flag_gibuu) std::cout<<"GiBUU sample, overiding the weights"<<std::endl;
+      break;
+    case 'p':
+      flag_spbdt = &argv[i][2];
+      if (flag_spbdt) std::cout<<"Particle level spacepoint BDTs will be included"<<std::endl;
       break;
     }
   }
@@ -141,10 +149,8 @@ int main( int argc, char** argv )
   TTree *T_spacepoints = (TTree*)file1->Get("wcpselection/T_spacepoints");
 
   //Load other trees from directories as specified by the config file
-  std::vector<TTree*>* old_trees = new std::vector<TTree*>;
-  old_trees = wrangler.get_old_trees(file1);
-  std::vector<TTree*>* old_trees_pot = new std::vector<TTree*>;
-  old_trees_pot = wrangler_pot.get_old_trees(file1);
+  wrangler.get_old_trees(file1);
+  wrangler_pot.get_old_trees(file1);
 
   if (T_eval->GetBranch("weight_cv")) flag_data =false;
   //  if (T_eval->GetBranch("file_type")) flag_use_global_file_type = false;
@@ -165,10 +171,12 @@ int main( int argc, char** argv )
   TFile *file2 = new TFile(out_file,"RECREATE");
 
   //Setup the directories specified in the config file
-  std::vector<TTree*>* new_trees = new std::vector<TTree*>;
-  new_trees = wrangler.set_new_trees(file2);
-  std::vector<TTree*>* new_trees_pot = new std::vector<TTree*>;
-  new_trees_pot = wrangler_pot.set_new_trees(file2);
+  wrangler.set_new_trees(file2);
+  wrangler_pot.set_new_trees(file2);
+
+  // Build the pairs of pot trees
+  wrangler_pot.grow_pot_arboretum();
+
 
   file2->mkdir("wcpselection");
   file2->cd("wcpselection");
@@ -191,6 +199,10 @@ int main( int argc, char** argv )
   TaggerInfo tagger;
   PFevalInfo pfeval;
   KineInfo kine;
+
+  SpaceInfo space_info;
+
+  ParticleInfo particle_info;
 
   kine.kine_energy_particle = new std::vector<float>;
   kine.kine_energy_info = new std::vector<int>;
@@ -459,10 +471,16 @@ int main( int argc, char** argv )
   tagger.WCPMTInfoPeMeas = new std::vector<double>;
   tagger.WCPMTInfoPeMeasErr = new std::vector<double>;
 
+  particle_info.spacepoints_x = new std::vector<float>;
+  particle_info.spacepoints_y = new std::vector<float>;
+  particle_info.spacepoints_z = new std::vector<float>;
+  particle_info.spacepoints_q = new std::vector<float>;
+
   set_tree_address(T_BDTvars, tagger,2 );
   tagger.flag_nc_gamma_bdt = true;
   tagger.flag_nc_gamma_0track_bdt = true;
   tagger.saved_ssm_bdt_scores = true;
+  if(flag_spbdt) tagger.saved_pi_veto_scores = true;
   put_tree_address(t4, tagger,2);
 
   if (flag_data){
@@ -487,6 +505,8 @@ int main( int argc, char** argv )
   set_tree_address(T_KINEvars, kine);
   put_tree_address(t5, kine);
 
+  set_tree_address(T_spacepoints, space_info);
+  //put_tree_address(new_T_spacepoints, space_info);
 
   //  bool match_isFC;
   //  T_eval->SetBranchAddress("match_isFC",&match_isFC);
@@ -3455,6 +3475,281 @@ int main( int argc, char** argv )
   reader_kdar_lowE.BookMVA( "MyBDT", "weights/kdar_lowE.xml");
   reader_kdar_hiE.BookMVA( "MyBDT", "weights/kdar_hiE.xml");
 
+
+  TMVA::Reader reader_pi_veto;
+  TMVA::Reader reader_mu_veto;
+  TMVA::Reader reader_el_veto;
+  TMVA::Reader reader_p_veto;
+  TMVA::Reader reader_n_veto;
+  float flag_has_prim_tracks=0;
+  float reco_Emuon=0;
+  TMVA::Reader reader_VtxAct_bdt;
+  float temp_pi_veto_score = -999;
+  float temp_mu_veto_score = -999;
+  float temp_el_veto_score = -999;
+  float temp_p_veto_score = -999;
+  float temp_n_veto_score = -999;
+  float temp_all_veto_score = -999;
+  TMVA::Reader reader_all_veto;
+  if(flag_spbdt){
+    reader_pi_veto.AddVariable("spacepoints_q_0", &particle_info.spacepoints_q_0);
+    reader_pi_veto.AddVariable("spacepoints_q_1", &particle_info.spacepoints_q_1);
+    reader_pi_veto.AddVariable("spacepoints_q_2", &particle_info.spacepoints_q_2);
+    reader_pi_veto.AddVariable("spacepoints_q_3", &particle_info.spacepoints_q_3);
+    reader_pi_veto.AddVariable("spacepoints_q_4", &particle_info.spacepoints_q_4);
+    reader_pi_veto.AddVariable("spacepoints_q_5", &particle_info.spacepoints_q_5);
+    reader_pi_veto.AddVariable("spacepoints_q_6", &particle_info.spacepoints_q_6);
+    reader_pi_veto.AddVariable("spacepoints_q_7", &particle_info.spacepoints_q_7);
+    reader_pi_veto.AddVariable("spacepoints_q_8", &particle_info.spacepoints_q_8);
+    reader_pi_veto.AddVariable("spacepoints_q_9", &particle_info.spacepoints_q_9);
+    reader_pi_veto.AddVariable("spacepoints_q_10", &particle_info.spacepoints_q_10);
+    reader_pi_veto.AddVariable("spacepoints_q_11", &particle_info.spacepoints_q_11);
+    reader_pi_veto.AddVariable("spacepoints_q_12", &particle_info.spacepoints_q_12);
+    reader_pi_veto.AddVariable("spacepoints_q_13", &particle_info.spacepoints_q_13);
+    reader_pi_veto.AddVariable("spacepoints_q_14", &particle_info.spacepoints_q_14);
+    reader_pi_veto.AddVariable("spacepoints_q_bck_0", &particle_info.spacepoints_q_bck_0);
+    reader_pi_veto.AddVariable("spacepoints_q_bck_1", &particle_info.spacepoints_q_bck_1);
+    reader_pi_veto.AddVariable("spacepoints_q_bck_2", &particle_info.spacepoints_q_bck_2);
+    reader_pi_veto.AddVariable("spacepoints_q_bck_3", &particle_info.spacepoints_q_bck_3);
+    reader_pi_veto.AddVariable("spacepoints_q_bck_4", &particle_info.spacepoints_q_bck_4);
+    reader_pi_veto.AddVariable("spacepoints_q_bck_5", &particle_info.spacepoints_q_bck_5);
+    reader_pi_veto.AddVariable("spacepoints_q_bck_6", &particle_info.spacepoints_q_bck_6);
+    reader_pi_veto.AddVariable("spacepoints_q_bck_7", &particle_info.spacepoints_q_bck_7);
+    reader_pi_veto.AddVariable("spacepoints_q_bck_8", &particle_info.spacepoints_q_bck_8);
+    reader_pi_veto.AddVariable("spacepoints_q_bck_9", &particle_info.spacepoints_q_bck_9);
+    reader_pi_veto.AddVariable("spacepoints_q_bck_10", &particle_info.spacepoints_q_bck_10);
+    reader_pi_veto.AddVariable("spacepoints_q_bck_11", &particle_info.spacepoints_q_bck_11);
+    reader_pi_veto.AddVariable("spacepoints_q_med", &particle_info.spacepoints_q_med);
+    reader_pi_veto.AddVariable("flag_has_daught", &particle_info.flag_has_daught);
+    reader_pi_veto.AddVariable("flag_has_daught_p", &particle_info.flag_has_daught_p);
+    reader_pi_veto.AddVariable("flag_has_daught_el", &particle_info.flag_has_daught_el);
+    reader_pi_veto.AddVariable("flag_has_daught_pi", &particle_info.flag_has_daught_pi);
+    reader_pi_veto.AddVariable("reco_larpid_pidScore_el", &particle_info.reco_larpid_pidScore_el);
+    reader_pi_veto.AddVariable("reco_larpid_pidScore_ph", &particle_info.reco_larpid_pidScore_ph);
+    reader_pi_veto.AddVariable("reco_larpid_pidScore_mu", &particle_info.reco_larpid_pidScore_mu);
+    reader_pi_veto.AddVariable("reco_larpid_pidScore_pr", &particle_info.reco_larpid_pidScore_pr);
+    reader_pi_veto.AddVariable("reco_larpid_pidScore_pi", &particle_info.reco_larpid_pidScore_pi);
+    reader_pi_veto.AddVariable("reco_larpid_proccess", &particle_info.reco_larpid_proccess);
+    reader_pi_veto.AddVariable("flag_is_contained", &particle_info.flag_is_contained);
+    reader_pi_veto.AddVariable("reco_pdg_list", &particle_info.reco_pdg);
+    reader_pi_veto.AddVariable("track_len_ratio", &particle_info.track_len_ratio);
+    reader_pi_veto.BookMVA( "MyBDT", "weights/pi_veto.xml");
+
+    reader_mu_veto.AddVariable("spacepoints_q_0", &particle_info.spacepoints_q_0);
+    reader_mu_veto.AddVariable("spacepoints_q_1", &particle_info.spacepoints_q_1);
+    reader_mu_veto.AddVariable("spacepoints_q_2", &particle_info.spacepoints_q_2);
+    reader_mu_veto.AddVariable("spacepoints_q_3", &particle_info.spacepoints_q_3);
+    reader_mu_veto.AddVariable("spacepoints_q_4", &particle_info.spacepoints_q_4);
+    reader_mu_veto.AddVariable("spacepoints_q_5", &particle_info.spacepoints_q_5);
+    reader_mu_veto.AddVariable("spacepoints_q_6", &particle_info.spacepoints_q_6);
+    reader_mu_veto.AddVariable("spacepoints_q_7", &particle_info.spacepoints_q_7);
+    reader_mu_veto.AddVariable("spacepoints_q_8", &particle_info.spacepoints_q_8);
+    reader_mu_veto.AddVariable("spacepoints_q_9", &particle_info.spacepoints_q_9);
+    reader_mu_veto.AddVariable("spacepoints_q_10", &particle_info.spacepoints_q_10);
+    reader_mu_veto.AddVariable("spacepoints_q_11", &particle_info.spacepoints_q_11);
+    reader_mu_veto.AddVariable("spacepoints_q_12", &particle_info.spacepoints_q_12);
+    reader_mu_veto.AddVariable("spacepoints_q_13", &particle_info.spacepoints_q_13);
+    reader_mu_veto.AddVariable("spacepoints_q_14", &particle_info.spacepoints_q_14);
+    reader_mu_veto.AddVariable("spacepoints_q_bck_0", &particle_info.spacepoints_q_bck_0);
+    reader_mu_veto.AddVariable("spacepoints_q_bck_1", &particle_info.spacepoints_q_bck_1);
+    reader_mu_veto.AddVariable("spacepoints_q_bck_2", &particle_info.spacepoints_q_bck_2);
+    reader_mu_veto.AddVariable("spacepoints_q_bck_3", &particle_info.spacepoints_q_bck_3);
+    reader_mu_veto.AddVariable("spacepoints_q_bck_4", &particle_info.spacepoints_q_bck_4);
+    reader_mu_veto.AddVariable("spacepoints_q_bck_5", &particle_info.spacepoints_q_bck_5);
+    reader_mu_veto.AddVariable("spacepoints_q_bck_6", &particle_info.spacepoints_q_bck_6);
+    reader_mu_veto.AddVariable("spacepoints_q_bck_7", &particle_info.spacepoints_q_bck_7);
+    reader_mu_veto.AddVariable("spacepoints_q_bck_8", &particle_info.spacepoints_q_bck_8);
+    reader_mu_veto.AddVariable("spacepoints_q_bck_9", &particle_info.spacepoints_q_bck_9);
+    reader_mu_veto.AddVariable("spacepoints_q_bck_10", &particle_info.spacepoints_q_bck_10);
+    reader_mu_veto.AddVariable("spacepoints_q_bck_11", &particle_info.spacepoints_q_bck_11);
+    reader_mu_veto.AddVariable("spacepoints_q_med", &particle_info.spacepoints_q_med);
+    reader_mu_veto.AddVariable("flag_has_daught", &particle_info.flag_has_daught);
+    reader_mu_veto.AddVariable("flag_has_daught_p", &particle_info.flag_has_daught_p);
+    reader_mu_veto.AddVariable("flag_has_daught_el", &particle_info.flag_has_daught_el);
+    reader_mu_veto.AddVariable("flag_has_daught_pi", &particle_info.flag_has_daught_pi);
+    reader_mu_veto.AddVariable("reco_larpid_pidScore_el", &particle_info.reco_larpid_pidScore_el);
+    reader_mu_veto.AddVariable("reco_larpid_pidScore_ph", &particle_info.reco_larpid_pidScore_ph);
+    reader_mu_veto.AddVariable("reco_larpid_pidScore_mu", &particle_info.reco_larpid_pidScore_mu);
+    reader_mu_veto.AddVariable("reco_larpid_pidScore_pr", &particle_info.reco_larpid_pidScore_pr);
+    reader_mu_veto.AddVariable("reco_larpid_pidScore_pi", &particle_info.reco_larpid_pidScore_pi);
+    reader_mu_veto.AddVariable("reco_larpid_proccess", &particle_info.reco_larpid_proccess);
+    reader_mu_veto.AddVariable("flag_is_contained", &particle_info.flag_is_contained);
+    reader_mu_veto.AddVariable("reco_pdg_list", &particle_info.reco_pdg);
+    reader_mu_veto.AddVariable("track_len_ratio", &particle_info.track_len_ratio);
+    reader_mu_veto.BookMVA( "MyBDT", "weights/mu_veto.xml");
+
+    reader_el_veto.AddVariable("spacepoints_q_0", &particle_info.spacepoints_q_0);
+    reader_el_veto.AddVariable("spacepoints_q_1", &particle_info.spacepoints_q_1);
+    reader_el_veto.AddVariable("spacepoints_q_2", &particle_info.spacepoints_q_2);
+    reader_el_veto.AddVariable("spacepoints_q_3", &particle_info.spacepoints_q_3);
+    reader_el_veto.AddVariable("spacepoints_q_4", &particle_info.spacepoints_q_4);
+    reader_el_veto.AddVariable("spacepoints_q_5", &particle_info.spacepoints_q_5);
+    reader_el_veto.AddVariable("spacepoints_q_6", &particle_info.spacepoints_q_6);
+    reader_el_veto.AddVariable("spacepoints_q_7", &particle_info.spacepoints_q_7);
+    reader_el_veto.AddVariable("spacepoints_q_8", &particle_info.spacepoints_q_8);
+    reader_el_veto.AddVariable("spacepoints_q_9", &particle_info.spacepoints_q_9);
+    reader_el_veto.AddVariable("spacepoints_q_10", &particle_info.spacepoints_q_10);
+    reader_el_veto.AddVariable("spacepoints_q_11", &particle_info.spacepoints_q_11);
+    reader_el_veto.AddVariable("spacepoints_q_12", &particle_info.spacepoints_q_12);
+    reader_el_veto.AddVariable("spacepoints_q_13", &particle_info.spacepoints_q_13);
+    reader_el_veto.AddVariable("spacepoints_q_14", &particle_info.spacepoints_q_14);
+    reader_el_veto.AddVariable("spacepoints_q_bck_0", &particle_info.spacepoints_q_bck_0);
+    reader_el_veto.AddVariable("spacepoints_q_bck_1", &particle_info.spacepoints_q_bck_1);
+    reader_el_veto.AddVariable("spacepoints_q_bck_2", &particle_info.spacepoints_q_bck_2);
+    reader_el_veto.AddVariable("spacepoints_q_bck_3", &particle_info.spacepoints_q_bck_3);
+    reader_el_veto.AddVariable("spacepoints_q_bck_4", &particle_info.spacepoints_q_bck_4);
+    reader_el_veto.AddVariable("spacepoints_q_bck_5", &particle_info.spacepoints_q_bck_5);
+    reader_el_veto.AddVariable("spacepoints_q_bck_6", &particle_info.spacepoints_q_bck_6);
+    reader_el_veto.AddVariable("spacepoints_q_bck_7", &particle_info.spacepoints_q_bck_7);
+    reader_el_veto.AddVariable("spacepoints_q_bck_8", &particle_info.spacepoints_q_bck_8);
+    reader_el_veto.AddVariable("spacepoints_q_bck_9", &particle_info.spacepoints_q_bck_9);
+    reader_el_veto.AddVariable("spacepoints_q_bck_10", &particle_info.spacepoints_q_bck_10);
+    reader_el_veto.AddVariable("spacepoints_q_bck_11", &particle_info.spacepoints_q_bck_11);
+    reader_el_veto.AddVariable("spacepoints_q_med", &particle_info.spacepoints_q_med);
+    reader_el_veto.AddVariable("flag_has_daught", &particle_info.flag_has_daught);
+    reader_el_veto.AddVariable("flag_has_daught_p", &particle_info.flag_has_daught_p);
+    reader_el_veto.AddVariable("flag_has_daught_el", &particle_info.flag_has_daught_el);
+    reader_el_veto.AddVariable("flag_has_daught_pi", &particle_info.flag_has_daught_pi);
+    reader_el_veto.AddVariable("reco_larpid_pidScore_el", &particle_info.reco_larpid_pidScore_el);
+    reader_el_veto.AddVariable("reco_larpid_pidScore_ph", &particle_info.reco_larpid_pidScore_ph);
+    reader_el_veto.AddVariable("reco_larpid_pidScore_mu", &particle_info.reco_larpid_pidScore_mu);
+    reader_el_veto.AddVariable("reco_larpid_pidScore_pr", &particle_info.reco_larpid_pidScore_pr);
+    reader_el_veto.AddVariable("reco_larpid_pidScore_pi", &particle_info.reco_larpid_pidScore_pi);
+    reader_el_veto.AddVariable("reco_larpid_proccess", &particle_info.reco_larpid_proccess);
+    reader_el_veto.AddVariable("flag_is_contained", &particle_info.flag_is_contained);
+    reader_el_veto.AddVariable("reco_pdg_list", &particle_info.reco_pdg);
+    reader_el_veto.AddVariable("track_len_ratio", &particle_info.track_len_ratio);
+    reader_el_veto.BookMVA( "MyBDT", "weights/el_veto.xml");
+
+    reader_p_veto.AddVariable("spacepoints_q_0", &particle_info.spacepoints_q_0);
+    reader_p_veto.AddVariable("spacepoints_q_1", &particle_info.spacepoints_q_1);
+    reader_p_veto.AddVariable("spacepoints_q_2", &particle_info.spacepoints_q_2);
+    reader_p_veto.AddVariable("spacepoints_q_3", &particle_info.spacepoints_q_3);
+    reader_p_veto.AddVariable("spacepoints_q_4", &particle_info.spacepoints_q_4);
+    reader_p_veto.AddVariable("spacepoints_q_5", &particle_info.spacepoints_q_5);
+    reader_p_veto.AddVariable("spacepoints_q_6", &particle_info.spacepoints_q_6);
+    reader_p_veto.AddVariable("spacepoints_q_7", &particle_info.spacepoints_q_7);
+    reader_p_veto.AddVariable("spacepoints_q_8", &particle_info.spacepoints_q_8);
+    reader_p_veto.AddVariable("spacepoints_q_9", &particle_info.spacepoints_q_9);
+    reader_p_veto.AddVariable("spacepoints_q_10", &particle_info.spacepoints_q_10);
+    reader_p_veto.AddVariable("spacepoints_q_11", &particle_info.spacepoints_q_11);
+    reader_p_veto.AddVariable("spacepoints_q_12", &particle_info.spacepoints_q_12);
+    reader_p_veto.AddVariable("spacepoints_q_13", &particle_info.spacepoints_q_13);
+    reader_p_veto.AddVariable("spacepoints_q_14", &particle_info.spacepoints_q_14);
+    reader_p_veto.AddVariable("spacepoints_q_bck_0", &particle_info.spacepoints_q_bck_0);
+    reader_p_veto.AddVariable("spacepoints_q_bck_1", &particle_info.spacepoints_q_bck_1);
+    reader_p_veto.AddVariable("spacepoints_q_bck_2", &particle_info.spacepoints_q_bck_2);
+    reader_p_veto.AddVariable("spacepoints_q_bck_3", &particle_info.spacepoints_q_bck_3);
+    reader_p_veto.AddVariable("spacepoints_q_bck_4", &particle_info.spacepoints_q_bck_4);
+    reader_p_veto.AddVariable("spacepoints_q_bck_5", &particle_info.spacepoints_q_bck_5);
+    reader_p_veto.AddVariable("spacepoints_q_bck_6", &particle_info.spacepoints_q_bck_6);
+    reader_p_veto.AddVariable("spacepoints_q_bck_7", &particle_info.spacepoints_q_bck_7);
+    reader_p_veto.AddVariable("spacepoints_q_bck_8", &particle_info.spacepoints_q_bck_8);
+    reader_p_veto.AddVariable("spacepoints_q_bck_9", &particle_info.spacepoints_q_bck_9);
+    reader_p_veto.AddVariable("spacepoints_q_bck_10", &particle_info.spacepoints_q_bck_10);
+    reader_p_veto.AddVariable("spacepoints_q_bck_11", &particle_info.spacepoints_q_bck_11);
+    reader_p_veto.AddVariable("spacepoints_q_med", &particle_info.spacepoints_q_med);
+    reader_p_veto.AddVariable("flag_has_daught", &particle_info.flag_has_daught);
+    reader_p_veto.AddVariable("flag_has_daught_p", &particle_info.flag_has_daught_p);
+    reader_p_veto.AddVariable("flag_has_daught_el", &particle_info.flag_has_daught_el);
+    reader_p_veto.AddVariable("flag_has_daught_pi", &particle_info.flag_has_daught_pi);
+    reader_p_veto.AddVariable("reco_larpid_pidScore_el", &particle_info.reco_larpid_pidScore_el);
+    reader_p_veto.AddVariable("reco_larpid_pidScore_ph", &particle_info.reco_larpid_pidScore_ph);
+    reader_p_veto.AddVariable("reco_larpid_pidScore_mu", &particle_info.reco_larpid_pidScore_mu);
+    reader_p_veto.AddVariable("reco_larpid_pidScore_pr", &particle_info.reco_larpid_pidScore_pr);
+    reader_p_veto.AddVariable("reco_larpid_pidScore_pi", &particle_info.reco_larpid_pidScore_pi);
+    reader_p_veto.AddVariable("reco_larpid_proccess", &particle_info.reco_larpid_proccess);
+    reader_p_veto.AddVariable("flag_is_contained", &particle_info.flag_is_contained);
+    reader_p_veto.AddVariable("reco_pdg_list", &particle_info.reco_pdg);
+    reader_p_veto.AddVariable("track_len_ratio", &particle_info.track_len_ratio);
+    reader_p_veto.BookMVA( "MyBDT", "weights/p_veto.xml");
+
+    reader_n_veto.AddVariable("spacepoints_q_0", &particle_info.spacepoints_q_0);
+    reader_n_veto.AddVariable("spacepoints_q_1", &particle_info.spacepoints_q_1);
+    reader_n_veto.AddVariable("spacepoints_q_2", &particle_info.spacepoints_q_2);
+    reader_n_veto.AddVariable("spacepoints_q_3", &particle_info.spacepoints_q_3);
+    reader_n_veto.AddVariable("spacepoints_q_4", &particle_info.spacepoints_q_4);
+    reader_n_veto.AddVariable("spacepoints_q_5", &particle_info.spacepoints_q_5);
+    reader_n_veto.AddVariable("spacepoints_q_6", &particle_info.spacepoints_q_6);
+    reader_n_veto.AddVariable("spacepoints_q_7", &particle_info.spacepoints_q_7);
+    reader_n_veto.AddVariable("spacepoints_q_8", &particle_info.spacepoints_q_8);
+    reader_n_veto.AddVariable("spacepoints_q_9", &particle_info.spacepoints_q_9);
+    reader_n_veto.AddVariable("spacepoints_q_10", &particle_info.spacepoints_q_10);
+    reader_n_veto.AddVariable("spacepoints_q_11", &particle_info.spacepoints_q_11);
+    reader_n_veto.AddVariable("spacepoints_q_12", &particle_info.spacepoints_q_12);
+    reader_n_veto.AddVariable("spacepoints_q_13", &particle_info.spacepoints_q_13);
+    reader_n_veto.AddVariable("spacepoints_q_14", &particle_info.spacepoints_q_14);
+    reader_n_veto.AddVariable("spacepoints_q_bck_0", &particle_info.spacepoints_q_bck_0);
+    reader_n_veto.AddVariable("spacepoints_q_bck_1", &particle_info.spacepoints_q_bck_1);
+    reader_n_veto.AddVariable("spacepoints_q_bck_2", &particle_info.spacepoints_q_bck_2);
+    reader_n_veto.AddVariable("spacepoints_q_bck_3", &particle_info.spacepoints_q_bck_3);
+    reader_n_veto.AddVariable("spacepoints_q_bck_4", &particle_info.spacepoints_q_bck_4);
+    reader_n_veto.AddVariable("spacepoints_q_bck_5", &particle_info.spacepoints_q_bck_5);
+    reader_n_veto.AddVariable("spacepoints_q_bck_6", &particle_info.spacepoints_q_bck_6);
+    reader_n_veto.AddVariable("spacepoints_q_bck_7", &particle_info.spacepoints_q_bck_7);
+    reader_n_veto.AddVariable("spacepoints_q_bck_8", &particle_info.spacepoints_q_bck_8);
+    reader_n_veto.AddVariable("spacepoints_q_bck_9", &particle_info.spacepoints_q_bck_9);
+    reader_n_veto.AddVariable("spacepoints_q_bck_10", &particle_info.spacepoints_q_bck_10);
+    reader_n_veto.AddVariable("spacepoints_q_bck_11", &particle_info.spacepoints_q_bck_11);
+    reader_n_veto.AddVariable("spacepoints_q_med", &particle_info.spacepoints_q_med);
+    reader_n_veto.AddVariable("flag_has_daught", &particle_info.flag_has_daught);
+    reader_n_veto.AddVariable("flag_has_daught_p", &particle_info.flag_has_daught_p);
+    reader_n_veto.AddVariable("flag_has_daught_el", &particle_info.flag_has_daught_el);
+    reader_n_veto.AddVariable("flag_has_daught_pi", &particle_info.flag_has_daught_pi);
+    reader_n_veto.AddVariable("reco_larpid_pidScore_el", &particle_info.reco_larpid_pidScore_el);
+    reader_n_veto.AddVariable("reco_larpid_pidScore_ph", &particle_info.reco_larpid_pidScore_ph);
+    reader_n_veto.AddVariable("reco_larpid_pidScore_mu", &particle_info.reco_larpid_pidScore_mu);
+    reader_n_veto.AddVariable("reco_larpid_pidScore_pr", &particle_info.reco_larpid_pidScore_pr);
+    reader_n_veto.AddVariable("reco_larpid_pidScore_pi", &particle_info.reco_larpid_pidScore_pi);
+    reader_n_veto.AddVariable("reco_larpid_proccess", &particle_info.reco_larpid_proccess);
+    reader_n_veto.AddVariable("flag_is_contained", &particle_info.flag_is_contained);
+    reader_n_veto.AddVariable("dist_to_vtx", &particle_info.dist_to_vtx);
+    reader_n_veto.AddVariable("cos_theta", &particle_info.cos_theta);
+    reader_n_veto.AddVariable("proximity", &particle_info.proximity);
+    reader_n_veto.AddVariable("reco_pdg_list", &particle_info.reco_pdg);
+    reader_n_veto.AddVariable("track_len_ratio", &particle_info.track_len_ratio);
+    reader_n_veto.BookMVA( "MyBDT", "weights/n_veto.xml");
+
+    reader_VtxAct_bdt.AddVariable("muon_spacepoints_q0", &particle_info.spacepoints_q_0);
+    reader_VtxAct_bdt.AddVariable("muon_spacepoints_q1", &particle_info.spacepoints_q_1);
+    reader_VtxAct_bdt.AddVariable("muon_spacepoints_q2", &particle_info.spacepoints_q_2);
+    reader_VtxAct_bdt.AddVariable("muon_spacepoints_q3", &particle_info.spacepoints_q_3);
+    reader_VtxAct_bdt.AddVariable("muon_spacepoints_q4", &particle_info.spacepoints_q_4);
+    reader_VtxAct_bdt.AddVariable("muon_spacepoints_q5", &particle_info.spacepoints_q_5);
+    reader_VtxAct_bdt.AddVariable("muon_spacepoints_q6", &particle_info.spacepoints_q_6);
+    reader_VtxAct_bdt.AddVariable("muon_spacepoints_q7", &particle_info.spacepoints_q_7);
+    reader_VtxAct_bdt.AddVariable("muon_spacepoints_q8", &particle_info.spacepoints_q_8);
+    reader_VtxAct_bdt.AddVariable("muon_spacepoints_q9", &particle_info.spacepoints_q_9);
+    reader_VtxAct_bdt.AddVariable("muon_spacepoints_q10", &particle_info.spacepoints_q_10);
+    reader_VtxAct_bdt.AddVariable("muon_spacepoints_q11", &particle_info.spacepoints_q_11);
+    reader_VtxAct_bdt.AddVariable("muon_spacepoints_q12", &particle_info.spacepoints_q_12);
+    reader_VtxAct_bdt.AddVariable("muon_spacepoints_q0_bck", &particle_info.spacepoints_q_bck_0);
+    reader_VtxAct_bdt.AddVariable("muon_spacepoints_q1_bck", &particle_info.spacepoints_q_bck_1);
+    reader_VtxAct_bdt.AddVariable("muon_spacepoints_q2_bck", &particle_info.spacepoints_q_bck_2);
+    reader_VtxAct_bdt.AddVariable("muon_spacepoints_q3_bck", &particle_info.spacepoints_q_bck_3);
+    reader_VtxAct_bdt.AddVariable("muon_spacepoints_q4_bck", &particle_info.spacepoints_q_bck_4);
+    reader_VtxAct_bdt.AddVariable("muon_spacepoints_q5_bck", &particle_info.spacepoints_q_bck_5);
+    reader_VtxAct_bdt.AddVariable("muon_spacepoints_q6_bck", &particle_info.spacepoints_q_bck_6);
+    reader_VtxAct_bdt.AddVariable("muon_spacepoints_q7_bck", &particle_info.spacepoints_q_bck_7);
+    reader_VtxAct_bdt.AddVariable("muon_spacepoints_q8_bck", &particle_info.spacepoints_q_bck_8);
+    reader_VtxAct_bdt.AddVariable("muon_spacepoints_q9_bck", &particle_info.spacepoints_q_bck_9);
+    reader_VtxAct_bdt.AddVariable("muon_spacepoints_q10_bck", &particle_info.spacepoints_q_bck_10);
+    reader_VtxAct_bdt.AddVariable("muon_spacepoints_q11_bck", &particle_info.spacepoints_q_bck_11);
+    reader_VtxAct_bdt.AddVariable("muon_spacepoints_q12_bck", &particle_info.spacepoints_q_bck_12);
+    reader_VtxAct_bdt.AddVariable("muon_spacepoints_q_med", &particle_info.spacepoints_q_med);
+    reader_VtxAct_bdt.AddVariable("reco_Emuon", &reco_Emuon);
+    reader_VtxAct_bdt.AddVariable("flag_has_prim_tracks", &flag_has_prim_tracks);
+    reader_VtxAct_bdt.BookMVA( "MyBDT", "weights/VtxAct_BDT.xml");
+  
+    reader_all_veto.AddVariable("score_pi_veto", &temp_pi_veto_score);
+    reader_all_veto.AddVariable("score_mu2_veto", &temp_mu_veto_score);
+    reader_all_veto.AddVariable("score_el_veto", &temp_el_veto_score);
+    reader_all_veto.AddVariable("score_p_veto", &temp_p_veto_score);
+    reader_all_veto.AddVariable("reco_pdg_list", &particle_info.reco_pdg);
+    reader_all_veto.AddVariable("flag_is_contained",&particle_info.flag_is_contained);
+    reader_all_veto.BookMVA( "MyBDT", "weights/all_veto.xml");
+  }
+
   std::map<std::pair<int, int>, int> map_rs_n;
   std::map<std::pair<int, int>, std::set<int> > map_rs_f1p5; // Reco 1.5
   std::map<std::pair<int, int>, std::set<int> > map_rs_f2stm; // Reco2 stm
@@ -3548,14 +3843,21 @@ int main( int argc, char** argv )
 
   T_eval->SetBranchStatus("*",1);
   T_BDTvars->SetBranchStatus("*",1);
-
+  T_spacepoints->SetBranchStatus("*",1);
   //  for (int i=0;i!=100;i++){
-  for (int i=0;i!=T_BDTvars->GetEntries();i++){
+
+  int nentries = T_BDTvars->GetEntries();
+  std::cout<<"Begin looping over "<<nentries<<" events"<<std::endl;
+  for (int i=0;i!=nentries;i++){
+
+    if (i%10000 == 0) std::cout << i/1000 << " k " << std::setprecision(3) << double(i)/nentries*100. << " %"<< std::endl;
+
     eval.weight_change = false;
     T_BDTvars->GetEntry(i); temp_ssm_kine_pio_flag = tagger.ssm_kine_pio_flag;
     T_eval->GetEntry(i); tagger.match_isFC = eval.match_isFC;
     T_KINEvars->GetEntry(i); tagger.kine_reco_Enu = kine.kine_reco_Enu; temp_kine_pio_flag = kine.kine_pio_flag;
     T_PFeval->GetEntry(i);
+    T_spacepoints->GetEntry(i);
 
     if (remove_set.find(std::make_pair(eval.run, eval.subrun)) != remove_set.end()) continue;
 
@@ -3688,6 +3990,78 @@ int main( int argc, char** argv )
     tagger.ssm_kdar_score_lowE = cal_kdar_lowE_bdt_xgboost(tagger, eval, reader_kdar_lowE);
     tagger.ssm_kdar_score_hiE = cal_kdar_hiE_bdt_xgboost(tagger, eval, reader_kdar_hiE);
 
+    tagger.pi_veto_score=-999;
+    tagger.pi_veto_prim_score=-999;
+    tagger.pi_veto_all_score=-999;
+    tagger.mu_veto_score=-999;
+    tagger.mu_veto_prim_score=-999;
+    tagger.mu_veto_all_score=-999;
+    tagger.el_veto_score=-999;
+    tagger.el_veto_prim_score=-999;
+    tagger.el_veto_all_score=-999;
+    tagger.n_veto_score=-999;
+    tagger.n_veto_nonprim_score=-999;
+    tagger.n_veto_all_score=-999;
+    tagger.all_veto_score=-999;
+    tagger.VtxAct_bdt_score=-999;
+    int prim_mu_index = -1;
+    flag_has_prim_tracks=0;
+    reco_Emuon=0;
+    for(int part=0; part<pfeval.reco_Ntrack; part++){
+      if(!flag_spbdt) break;
+      temp_pi_veto_score = -999;
+      temp_mu_veto_score = -999;
+      temp_el_veto_score = -999;
+      temp_p_veto_score = -999;
+      temp_n_veto_score = -999;
+      temp_all_veto_score = -999;
+      create_particle(space_info, pfeval, particle_info, part);
+      if(particle_info.reco_pdg<0) continue;
+      temp_pi_veto_score = cal_spacepoint_pi_veto(particle_info,reader_pi_veto);
+      if(temp_pi_veto_score>tagger.pi_veto_all_score) tagger.pi_veto_all_score = temp_pi_veto_score;
+      if(temp_pi_veto_score>tagger.pi_veto_prim_score && pfeval.reco_mother[part]==0) tagger.pi_veto_prim_score = temp_pi_veto_score;
+      if(temp_pi_veto_score>tagger.pi_veto_score && pfeval.reco_mother[part]==0 && pfeval.reco_pdg[part]==211) tagger.pi_veto_score = temp_pi_veto_score;
+
+      temp_mu_veto_score = cal_spacepoint_mu_veto(particle_info,reader_mu_veto);
+      if(temp_mu_veto_score>tagger.mu_veto_all_score) tagger.mu_veto_all_score = temp_mu_veto_score;
+      if(temp_mu_veto_score>tagger.mu_veto_prim_score && pfeval.reco_mother[part]==0 && particle_info.flag_prim_mu==0) tagger.mu_veto_prim_score = temp_mu_veto_score;
+      if(temp_mu_veto_score>tagger.mu_veto_score && pfeval.reco_mother[part]==0 && pfeval.reco_pdg[part]==13 && particle_info.flag_prim_mu==0) tagger.mu_veto_score = temp_mu_veto_score;
+
+      temp_el_veto_score = cal_spacepoint_el_veto(particle_info,reader_el_veto);
+      if(temp_el_veto_score>tagger.el_veto_all_score) tagger.el_veto_all_score = temp_el_veto_score;
+      if(temp_el_veto_score>tagger.el_veto_prim_score && pfeval.reco_mother[part]==0) tagger.el_veto_prim_score = temp_el_veto_score;
+      if(temp_el_veto_score>tagger.el_veto_score && pfeval.reco_mother[part]==0 && pfeval.reco_pdg[part]==11) tagger.el_veto_score = temp_el_veto_score;
+
+      temp_p_veto_score = cal_spacepoint_p_veto(particle_info,reader_p_veto);
+      if(temp_p_veto_score>tagger.p_veto_all_score) tagger.p_veto_all_score = temp_p_veto_score;
+      if(temp_p_veto_score>tagger.p_veto_prim_score && pfeval.reco_mother[part]==0) tagger.p_veto_prim_score = temp_p_veto_score;
+      if(temp_p_veto_score>tagger.p_veto_score && pfeval.reco_mother[part]==0 && pfeval.reco_pdg[part]==2212) tagger.p_veto_score = temp_p_veto_score;
+
+      temp_n_veto_score = cal_spacepoint_n_veto(particle_info,reader_n_veto);
+      if(temp_n_veto_score>tagger.n_veto_all_score) tagger.n_veto_all_score = temp_n_veto_score;
+      if(temp_n_veto_score>tagger.n_veto_nonprim_score && pfeval.reco_mother[part]!=0) tagger.n_veto_nonprim_score = temp_n_veto_score;
+      if(temp_n_veto_score>tagger.n_veto_score && pfeval.reco_mother[part]!=0 && (particle_info.reco_is_g_induced==1 || particle_info.reco_is_n_induced==1)) tagger.n_veto_score = temp_n_veto_score; 
+      
+      if(particle_info.flag_prim_mu==1){ prim_mu_index = part;}
+      else{
+        temp_pi_veto_score +=-0.31411579999999995;
+        temp_mu_veto_score +=-0.42706789999999994;
+        temp_el_veto_score +=-0.6701050000000001;
+        temp_p_veto_score +=0.7942918999999999;
+        temp_n_veto_score +=-1.6840734000000004;
+        temp_all_veto_score = cal_spacepoint_all_veto(particle_info,reader_all_veto);
+        if(temp_all_veto_score>tagger.all_veto_score) tagger.all_veto_score = temp_all_veto_score;
+      }
+
+      if(pfeval.reco_mother[part]==0 && (pfeval.reco_pdg[part]==2212 || pfeval.reco_pdg[part]==211) ) flag_has_prim_tracks=1;
+    }
+    if(prim_mu_index>=0){
+      create_particle(space_info, pfeval, particle_info, prim_mu_index);
+      reco_Emuon = (particle_info.reco_momentum_3+0.1057)*1000;
+      tagger.VtxAct_bdt_score = cal_VtxAct_bdt_score(particle_info,reader_VtxAct_bdt);
+    }
+
+
     // limit the cut val ...
     if (std::isnan(eval.weight_spline) || std::isinf(eval.weight_spline) ||
 	std::isnan(eval.weight_cv) || std::isinf(eval.weight_cv) ||
@@ -3730,14 +4104,14 @@ int main( int argc, char** argv )
     t3->Fill();
     t5->Fill();
 
-    T_spacepoints->GetEntry(i);
+    //T_spacepoints->GetEntry(i);
     new_T_spacepoints->Fill();
 
-    for(auto tree_it=old_trees->begin(); tree_it!=old_trees->end(); tree_it++){
+    for(auto tree_it=wrangler.old_trees->begin(); tree_it!=wrangler.old_trees->end(); tree_it++){
         (*tree_it)->GetEntry(i);
     }
 
-    for(auto tree_it=new_trees->begin(); tree_it!=new_trees->end(); tree_it++){
+    for(auto tree_it=wrangler.new_trees->begin(); tree_it!=wrangler.new_trees->end(); tree_it++){
         (*tree_it)->Fill();
     }
 
@@ -3746,7 +4120,15 @@ int main( int argc, char** argv )
     //    break;
   }
 
-  for (Int_t i=0;i!=T_pot->GetEntries();i++){
+
+  // Loop over each POT tree seperatly
+  // Start with WireCell
+  nentries = T_pot->GetEntries();
+  std::cout<<"Begin looping over WC pot tree with "<<nentries<<" entries"<<std::endl;
+  for (Int_t i=0;i!=nentries;i++){
+
+    if (i%10000 == 0) std::cout << i/1000 << " k " << std::setprecision(3) << double(i)/nentries*100. << " %"<< std::endl;
+
     T_pot->GetEntry(i);
 
     if (remove_set.find(std::make_pair(pot.runNo, pot.subRunNo)) != remove_set.end()) continue;
@@ -3770,15 +4152,43 @@ int main( int argc, char** argv )
       if (pot.runNo >=15369 && pot.runNo <= 15402) continue;
     }
     t2->Fill();
-    for(auto tree_it=old_trees_pot->begin(); tree_it!=old_trees_pot->end(); tree_it++){
-        (*tree_it)->GetEntry(i);
-    }
-
-    for(auto tree_it=new_trees_pot->begin(); tree_it!=new_trees_pot->end(); tree_it++){
-        (*tree_it)->Fill();
-    }
-
   }
+
+  // Now the other trees
+  for(auto pot_tree_it=wrangler_pot.pot_arboretum->begin(); pot_tree_it!=wrangler_pot.pot_arboretum->end(); pot_tree_it++){
+
+    std::cout<<"Begin looping over "<<(*pot_tree_it)->old_pot_tree->GetName()<<" tree with "<<nentries<<" entries"<<std::endl;
+    nentries = (*pot_tree_it)->old_pot_tree->GetEntries();
+    for (Int_t i=0;i!=nentries;i++){
+
+      if (i%10000 == 0) std::cout << i/1000 << " k " << std::setprecision(3) << double(i)/nentries*100. << " %"<< std::endl;
+
+      (*pot_tree_it)->old_pot_tree->GetEntry(i);
+
+      // This is dropping run-subruns without and events, don't do this here.
+      //if (remove_set.find(std::make_pair((*pot_tree_it).runNo, (*pot_tree_it).subRunNo)) != remove_set.end()) continue;
+      if (flag_data && skip_cut == 0){
+        if (good_runlist_set.find((*pot_tree_it)->runNo) == good_runlist_set.end()) continue;
+        if (low_lifetime_set.find((*pot_tree_it)->runNo) != low_lifetime_set.end()) continue;
+        if (flag_numi && low_neutrino_count_numi_run2RHC_set.find((*pot_tree_it)->runNo) != low_neutrino_count_numi_run2RHC_set.end()) continue;
+        //bad run in run 1 due to beam filter bnb
+        //if (pot.runNo <= 5367 && pot.runNo >= 5320) continue;
+        // ext bnb in run 1, high rate
+        if ((*pot_tree_it)->runNo >=7004 && (*pot_tree_it)->runNo <=7070) continue;
+        // ext bnb in run 2, high rate not in good list anyway
+        //if ((pot.runNo>=10287 && pot.runNo <= 10304) || (pot.runNo>=12277 && pot.runNo <=12350)) continue;
+        // ext bnb in run 2, low rate not in good list anyway
+        //if ((pot.runNo>=9768 && pot.runNo <= 10070) || (pot.runNo>=10102 && pot.runNo <=10246)) continue;
+        // bnb run 2 high rate
+        if ((*pot_tree_it)->runNo >= 8321 && (*pot_tree_it)->runNo <=8404) continue;
+        // bnb run 3 high rate
+        if ((*pot_tree_it)->runNo >=15369 && (*pot_tree_it)->runNo <= 15402) continue;
+      }
+      (*pot_tree_it)->new_pot_tree->Fill();
+
+    }//i, loop over events in a given pot tree set
+
+  }//pot_trees_it, loop over sets of pot trees
 
 
   for (auto it = remove_set.begin(); it!= remove_set.end(); it++){
@@ -3787,8 +4197,6 @@ int main( int argc, char** argv )
 
   file2->Write("",TFile::kOverwrite);
   file2->Close();
-
-  if (!fail_percentage || flag_presel){}
 
   return 0;
 

@@ -1,6 +1,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <fstream>
+#include <iomanip>
 #include <map>
 #include <set>
 #include <string>
@@ -82,10 +83,11 @@ int main( int argc, char** argv )
   TTree *T_spacepoints_copy = (TTree*)CVfile->Get("wcpselection/T_spacepoints");
 
   //Load other trees from directories as specified by the config file
-  std::vector<TTree*>* old_trees = new std::vector<TTree*>;
-  old_trees = wrangler.get_old_trees(CVfile);
-  std::vector<TTree*>* old_trees_pot = new std::vector<TTree*>;
-  old_trees_pot = wrangler_pot.get_old_trees(CVfile);
+  wrangler.get_old_trees(CVfile);
+  wrangler_pot.get_old_trees(CVfile);
+
+  // Build the pairs of pot trees
+  wrangler_pot.grow_pot_arboretum();
 
   auto h_nue_FHC_variation1=(TH1D*)weightHistosFile->Get("EnergyVarBin/ratio_run1_FHC_nue_CV_AV_TPC");
   auto h_nue_FHC_variation2=(TH1D*)weightHistosFile->Get("EnergyVarBin/ratio_run2_FHC_nue_CV_AV_TPC");
@@ -280,10 +282,8 @@ int main( int argc, char** argv )
   auto ofile = new TFile(outfile_name.c_str(),"RECREATE");
 
   //Setup the directories specified in the config file
-  std::vector<TTree*>* new_trees = new std::vector<TTree*>;
-  new_trees = wrangler.set_new_trees(ofile);
-  std::vector<TTree*>* new_trees_pot = new std::vector<TTree*>;
-  new_trees_pot = wrangler_pot.set_new_trees(ofile);
+  wrangler.set_new_trees(ofile);
+  wrangler_pot.set_new_trees(ofile);
 
   ofile->mkdir("wcpselection")->cd();
   // ofile->cd();
@@ -332,20 +332,32 @@ int main( int argc, char** argv )
   // float h19= 0;
   // float hcv = 0;
 
-  for (size_t i=0;i < T_pot_copy->GetEntries(); i++){
+  // Loop over each POT tree seperatly
+  // Start with WireCell
+  int nentries = T_pot_copy->GetEntries();
+  std::cout<<"Begin looping over WC pot tree with "<<nentries<<" ntries"<<std::endl;
+  for (size_t i=0;i < nentries; i++){
+    if (i%10000 == 0) std::cout << i/1000 << " k " << std::setprecision(3) << double(i)/nentries*100. << " %"<< std::endl;
     T_pot_copy->GetEntry(i);
     T_pot->Fill();
-    for(auto tree_it=old_trees_pot->begin(); tree_it!=old_trees_pot->end(); tree_it++){
-        (*tree_it)->GetEntry(i);
-    }
-
-    for(auto tree_it=new_trees_pot->begin(); tree_it!=new_trees_pot->end(); tree_it++){
-        (*tree_it)->Fill();
+  }
+  // Now the other trees
+  for(auto pot_tree_it=wrangler_pot.pot_arboretum->begin(); pot_tree_it!=wrangler_pot.pot_arboretum->end(); pot_tree_it++){
+    std::cout<<"Begin looping over "<<(*pot_tree_it)->old_pot_tree->GetName()<<" tree with "<<nentries<<" entries"<<std::endl;
+    nentries = (*pot_tree_it)->old_pot_tree->GetEntries();
+    for (Int_t i=0;i!=nentries;i++){
+      if (i%10000 == 0) std::cout << i/1000 << " k " << std::setprecision(3) << double(i)/nentries*100. << " %"<< std::endl;
+      (*pot_tree_it)->old_pot_tree->GetEntry(i);
+      (*pot_tree_it)->new_pot_tree->Fill();
     }
   }
-  
 
-  for (size_t i=0; i<T_eval_copy->GetEntries(); i++) {
+  nentries = T_eval_copy->GetEntries();
+  std::cout<<"Begin looping over "<<nentries<<" events"<<std::endl;
+  for (size_t i=0; i<nentries; i++) {
+
+    if (i%10000 == 0) std::cout << i/1000 << " k " << std::setprecision(3) << double(i)/nentries*100. << " %"<< std::endl;
+
     T_eval_copy->GetEntry(i);
     T_PFeval_copy->GetEntry(i);
     T_KINEvars_copy->GetEntry(i);
@@ -381,11 +393,11 @@ int main( int argc, char** argv )
     T_spacepoints_copy->GetEntry(i);
     T_spacepoints->Fill();
 
-    for(auto tree_it=old_trees->begin(); tree_it!=old_trees->end(); tree_it++){
+    for(auto tree_it=wrangler.old_trees->begin(); tree_it!=wrangler.old_trees->end(); tree_it++){
       (*tree_it)->GetEntry(i);
     }
 
-    for(auto tree_it=new_trees->begin(); tree_it!=new_trees->end(); tree_it++){
+    for(auto tree_it=wrangler.new_trees->begin(); tree_it!=wrangler.new_trees->end(); tree_it++){
       (*tree_it)->Fill();
     }
 

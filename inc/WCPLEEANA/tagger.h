@@ -1522,6 +1522,25 @@ namespace LEEana{
 
     float event_type;
 
+    // Spacepoint BDTs
+    bool saved_pi_veto_scores;
+    float pi_veto_all_score;
+    float pi_veto_prim_score;
+    float pi_veto_score;
+    float mu_veto_all_score;
+    float mu_veto_prim_score;
+    float mu_veto_score;
+    float el_veto_all_score;
+    float el_veto_prim_score;
+    float el_veto_score;
+    float p_veto_all_score;
+    float p_veto_prim_score;
+    float p_veto_score;
+    float n_veto_all_score;
+    float n_veto_nonprim_score;
+    float n_veto_score;
+    float all_veto_score;
+    float VtxAct_bdt_score;
 
     // original ...
     float weight; // standard weight
@@ -3047,6 +3066,26 @@ void LEEana::clear_tagger_info(TaggerInfo& tagger_info){
 
     tagger_info.event_type=0;
 
+    // Spacepoint BDTs
+    tagger_info.saved_pi_veto_scores=false;
+    tagger_info.pi_veto_all_score=-999;
+    tagger_info.pi_veto_prim_score=-999;
+    tagger_info.pi_veto_score=-999;
+    tagger_info.mu_veto_all_score=-999;
+    tagger_info.mu_veto_prim_score=-999;
+    tagger_info.mu_veto_score=-999;
+    tagger_info.el_veto_all_score=-999;
+    tagger_info.el_veto_prim_score=-999;
+    tagger_info.el_veto_score=-999;
+    tagger_info.p_veto_all_score=-999;
+    tagger_info.p_veto_prim_score=-999;
+    tagger_info.p_veto_score=-999;
+    tagger_info.n_veto_all_score=-999;
+    tagger_info.n_veto_nonprim_score=-999;
+    tagger_info.n_veto_score=-999;
+    tagger_info.all_veto_score=-999;
+    tagger_info.VtxAct_bdt_score=-999;
+  
     // original ...
     tagger_info.weight=0; // standard weight
     tagger_info.lowEweight=0; // extra weight for the training ...
@@ -4493,6 +4532,28 @@ void LEEana::set_tree_address(TTree *tree0, TaggerInfo& tagger_info, int flag){
   }
 
   if (flag==1) tree0->SetBranchAddress("event_type",&tagger_info.event_type);
+
+  if(tree0->GetBranch("pi_veto_all_score")){
+    tagger_info.saved_pi_veto_scores=true;
+    tree0->SetBranchAddress("pi_veto_all_score",&tagger_info.pi_veto_all_score);
+    tree0->SetBranchAddress("pi_veto_prim_score",&tagger_info.pi_veto_prim_score);
+    tree0->SetBranchAddress("pi_veto_score",&tagger_info.pi_veto_score);
+    tree0->SetBranchAddress("mu_veto_all_score",&tagger_info.mu_veto_all_score);
+    tree0->SetBranchAddress("mu_veto_prim_score",&tagger_info.mu_veto_prim_score);
+    tree0->SetBranchAddress("mu_veto_score",&tagger_info.mu_veto_score);
+    tree0->SetBranchAddress("el_veto_all_score",&tagger_info.el_veto_all_score);
+    tree0->SetBranchAddress("el_veto_prim_score",&tagger_info.el_veto_prim_score);
+    tree0->SetBranchAddress("el_veto_score",&tagger_info.el_veto_score);
+    tree0->SetBranchAddress("p_veto_all_score",&tagger_info.p_veto_all_score);
+    tree0->SetBranchAddress("p_veto_prim_score",&tagger_info.p_veto_prim_score);
+    tree0->SetBranchAddress("p_veto_score",&tagger_info.p_veto_score);
+    tree0->SetBranchAddress("n_veto_all_score",&tagger_info.n_veto_all_score);
+    tree0->SetBranchAddress("n_veto_nonprim_score",&tagger_info.n_veto_nonprim_score);
+    tree0->SetBranchAddress("n_veto_score",&tagger_info.n_veto_score);
+    tree0->SetBranchAddress("all_veto_score",&tagger_info.all_veto_score);
+    tree0->SetBranchAddress("VtxAct_bdt_score",&tagger_info.VtxAct_bdt_score);
+  }
+
 }
 
 void LEEana::put_tree_address(TTree *T_tagger, TaggerInfo& tagger_info, int flag){
@@ -5932,6 +5993,26 @@ void LEEana::put_tree_address(TTree *T_tagger, TaggerInfo& tagger_info, int flag
     }
 
     if (flag==1) T_tagger->Branch("event_type",&tagger_info.event_type,"data/F");
+
+    if(tagger_info.saved_pi_veto_scores){
+      T_tagger->Branch("pi_veto_all_score",&tagger_info.pi_veto_all_score);
+      T_tagger->Branch("pi_veto_prim_score",&tagger_info.pi_veto_prim_score);
+      T_tagger->Branch("pi_veto_score",&tagger_info.pi_veto_score);
+      T_tagger->Branch("mu_veto_all_score",&tagger_info.mu_veto_all_score);
+      T_tagger->Branch("mu_veto_prim_score",&tagger_info.mu_veto_prim_score);
+      T_tagger->Branch("mu_veto_score",&tagger_info.mu_veto_score);
+      T_tagger->Branch("el_veto_all_score",&tagger_info.el_veto_all_score);
+      T_tagger->Branch("el_veto_prim_score",&tagger_info.el_veto_prim_score);
+      T_tagger->Branch("el_veto_score",&tagger_info.el_veto_score);
+      T_tagger->Branch("p_veto_all_score",&tagger_info.p_veto_all_score);
+      T_tagger->Branch("p_veto_prim_score",&tagger_info.p_veto_prim_score);
+      T_tagger->Branch("p_veto_score",&tagger_info.p_veto_score);
+      T_tagger->Branch("n_veto_all_score",&tagger_info.n_veto_all_score);
+      T_tagger->Branch("n_veto_nonprim_score",&tagger_info.n_veto_nonprim_score);
+      T_tagger->Branch("n_veto_score",&tagger_info.n_veto_score);
+      T_tagger->Branch("all_veto_score",&tagger_info.all_veto_score);
+      T_tagger->Branch("VtxAct_bdt_score",&tagger_info.VtxAct_bdt_score);
+    }
 
     if (flag==1) T_tagger->Branch("weight",&tagger_info.weight,"data/F");
     if (flag==1) T_tagger->Branch("lowEweight",&tagger_info.lowEweight,"data/F");
