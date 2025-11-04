@@ -28,6 +28,7 @@ int main( int argc, char** argv )
   }
   int run = 1; // run 1 ...
   bool flag_osc = false;
+  int seed = 0; // Sets seed for boostrapping, if 0 it is random each time
   for (Int_t i=1;i!=argc;i++){
     switch(argv[i][1]){
     case 'r':
@@ -35,6 +36,10 @@ int main( int argc, char** argv )
       break;
     case 'o':
       flag_osc = atoi(&argv[i][2]); // which run period
+      break;
+    case 's':
+      seed = atoi(&argv[i][2]); //Set the seed for bootsrapping
+      std::cout<<"Setting bootstrapping seed to "<<seed<<std::endl;
       break;
     }
   }
@@ -114,7 +119,7 @@ int main( int argc, char** argv )
   // create a covariance matrix for det systematics ...
   TVectorD* vec_mean = new TVectorD(cov_add_mat->GetNrows());
   
-  cov.gen_pred_stat_cov_matrix(run, map_covch_hist, map_histoname_hist, vec_mean, cov_mat);
+  cov.gen_pred_stat_cov_matrix(run, map_covch_hist, map_histoname_hist, vec_mean, cov_mat, seed);
 
   
   TMatrixD* frac_cov_mat = new TMatrixD(cov_add_mat->GetNrows(), cov_add_mat->GetNcols());

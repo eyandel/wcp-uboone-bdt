@@ -45,5 +45,6 @@ void M2H(const TMatrixD mat, TH2D* histo);
 void V2H(const TVectorD vec, TH1D* histo);
 
 std::vector<std::string> splitString(const std::string& s, char delimiter);
+void removeSubstring(std::string& mainString, const std::string& subString);
 
 #endif

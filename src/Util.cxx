@@ -172,3 +172,11 @@ std::vector<std::string> splitString(const std::string& s, char delimiter) {
         return tokens;
 }
 
+void removeSubstring(std::string& mainString, const std::string& subString) {
+    size_t pos = mainString.find(subString); // Find the first occurrence
+
+    while (pos != std::string::npos) { // Loop while the substring is found
+        mainString.erase(pos, subString.length()); // Erase the substring
+        pos = mainString.find(subString); // Find the next occurrence
+    }
+}

@@ -669,7 +669,7 @@ bool LEEana::CovMatrix::is_xs_chname(TString name){
   }
 }
 
-void LEEana::CovMatrix::gen_xs_cov_matrix(int run, std::map<int, std::tuple<TH1F*, TH1F*, TH1F*, TH2F*, int> >& map_covch_hists, std::map<TString, std::tuple<TH1F*, TH1F*, TH1F*, TH2F*, int> >& map_histoname_hists, TVectorD* vec_mean,  TMatrixD* cov_xs_mat, TVectorD* vec_signal, TMatrixD* mat_R){
+void LEEana::CovMatrix::gen_xs_cov_matrix(int run, std::map<int, std::tuple<TH1F*, TH1F*, TH1F*, TH2F*, int> >& map_covch_hists, std::map<TString, std::tuple<TH1F*, TH1F*, TH1F*, TH2F*, int> >& map_histoname_hists, TVectorD* vec_mean,  TMatrixD* cov_xs_mat, TVectorD* vec_signal, TMatrixD* mat_R, int flag_save_each_universe){
   // prepare the maps ... name --> no,  covch, lee
   std::map<TString, std::tuple<int, int, int, TString>> map_histoname_infos ;
   std::map<int, TString> map_no_histoname;
@@ -740,12 +740,35 @@ void LEEana::CovMatrix::gen_xs_cov_matrix(int run, std::map<int, std::tuple<TH1F
   float x[rows];
   (*cov_xs_mat).Zero();
 
+  // For saving each univers to build blockwise cov later
+  TVectorD *x_vec = new TVectorD( rows );// Saves each uni
+  std::string filename;
+  if(run==17) {filename = "XsVars"+std::to_string(flag_save_each_universe)+".root";}
+  else if(run==18) {filename = "rwVars"+std::to_string(flag_save_each_universe)+".root";}
+  else if(run==19) {filename = "rwcorVars"+std::to_string(flag_save_each_universe)+".root";}
+  TFile* ofile;
+  Int_t universes;
+  Int_t sup_universes;
+  TTree* t_knobs;
+  TBranch* b_universes;
+  TBranch* b_sup_universes;
+  if(flag_save_each_universe>0){
+    ofile = new TFile(filename.c_str(), "RECREATE");
+    t_knobs = new TTree("knobs","knobs");
+    b_universes = t_knobs->Branch("universes",&universes,"universes/I");
+    b_sup_universes = t_knobs->Branch("sup_universes",&sup_universes,"sup_universes/I");
+  }
+
   int acc_no = 0;
   // build covariance matrix ...
 
   for (size_t j = 0; j!=max_lengths.size(); j++){ // j: index of knobs
     int nsize = max_lengths.at(j);
     int sup_nsize = max_sup_lengths.at(j);
+
+    universes = nsize;
+    sup_universes = sup_nsize;
+    if(flag_save_each_universe>0) t_knobs->Fill();
 
     TMatrixD temp_mat(rows, rows);
     temp_mat.Zero();
@@ -902,12 +925,17 @@ void LEEana::CovMatrix::gen_xs_cov_matrix(int run, std::map<int, std::tuple<TH1F
 
       // add covariance matrix ...
       for (size_t n = 0;n!=rows; n++){
+        (*x_vec)(n) = x[n];
      	for (size_t m =0; m!=rows;m++){
      	  temp_mat(n,m) += x[n] * x[m];
      	}
       }
-    } // i
 
+    // Write the histogram for the universe and knob we just made
+    if(flag_save_each_universe>0) x_vec->Write(Form("%s%d_%s%d", "knob",j,"x",i));
+
+
+    } // i
 
     if (nsize==2){  // second check
       temp_mat *= 1./sup_nsize;
@@ -1045,19 +1073,28 @@ void LEEana::CovMatrix::gen_xs_cov_matrix(int run, std::map<int, std::tuple<TH1F
     }
 
   }
+
+  // Save the cv to the file that contains the universes
+  if(flag_save_each_universe>0) vec_mean->Write("vec_mean");
+
   {
     // add additional uncertainties ...
     // POT ...
+    TVectorD* x_pot = new TVectorD(rows); // For saving each universe
+    x_pot->Zero();
     auto it = map_xs_bin_errs.begin();
     double pot_err = (it->second).first;
     double target_err = (it->second).second;
     for (int i=0; i!= (*cov_xs_mat).GetNrows(); i++){
+      (*x_pot)(i) = (*vec_mean)(i)* pot_err;
       for (int j=0;j!=(*cov_xs_mat).GetNcols(); j++){
     	(*cov_xs_mat)(i,j) += (*vec_mean)(i) * (*vec_mean)(j) *pot_err * pot_err;
       }
     }
     // Target Nucleons
     std::vector<int> bins;
+    TVectorD* x_ntarget = new TVectorD(rows);  // For saving each universe
+    x_ntarget->Zero();
     for (auto it = xs_signal_ch_names.begin(); it != xs_signal_ch_names.end(); it++){
       TString ch_name = *it;
       int ch = map_name_ch[ch_name];
@@ -1070,9 +1107,18 @@ void LEEana::CovMatrix::gen_xs_cov_matrix(int run, std::map<int, std::tuple<TH1F
     }
 
     for (size_t i=0;i!=bins.size();i++){
+      (*x_ntarget)(bins.at(i)) = (*vec_mean)(bins.at(i))* target_err;
       for (size_t j=0;j!=bins.size();j++){
     	(*cov_xs_mat)(bins.at(i),bins.at(j)) += (*vec_mean)(bins.at(i)) * (*vec_mean)(bins.at(j)) *target_err * target_err;
       }
+    }
+
+    // Write to the file where we are saving each universe
+    if(flag_save_each_universe>0){
+      x_ntarget->Write("x_ntarget_err");
+      x_pot->Write("x_pot_err");
+      t_knobs->Write();
+      ofile->Close();
     }
 
   }

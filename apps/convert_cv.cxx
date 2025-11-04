@@ -1,5 +1,6 @@
 #include <cstdlib>
 #include <iostream>
+#include <iomanip>
 #include <map>
 #include <string>
 #include <set>
@@ -72,10 +73,8 @@ int main( int argc, char** argv )
   if (T_eval_cv->GetBranch("weight_cv")) flag_data =false;
 
   //Load other trees from directories as specified by the config file
-  std::vector<TTree*>* old_trees = new std::vector<TTree*>;
-  old_trees = wrangler.get_old_trees(file1);
-  std::vector<TTree*>* old_trees_pot = new std::vector<TTree*>;
-  old_trees_pot = wrangler_pot.get_old_trees(file1);
+  wrangler.get_old_trees(file1);
+  wrangler_pot.get_old_trees(file1);
 
   EvalInfo eval_cv;
   eval_cv.file_type = new std::string();
@@ -528,6 +527,7 @@ int main( int argc, char** argv )
 
   int num_check = 0;
 
+  // Find the goofy events
   for (int i=0;i!=T_eval_cv->GetEntries();i++){
     T_eval_cv->GetEntry(i);
     T_BDTvars_cv->GetEntry(i);
@@ -555,8 +555,7 @@ int main( int argc, char** argv )
   //  std::cout << num_check << std::endl;
 
 
-
-
+  // Map out the relation between index and run-subrun for WC
   std::map<std::pair<int, int>, std::pair<int, double> > map_rs_entry_pot_cv;
   for (Int_t i=0;i!=T_pot_cv->GetEntries();i++){
     T_pot_cv->GetEntry(i);
@@ -564,11 +563,7 @@ int main( int argc, char** argv )
     map_rs_entry_pot_cv[std::make_pair(pot_cv.runNo,pot_cv.subRunNo)] = std::make_pair(i, pot_cv.pot_tor875);
   }
 
-
-
-
-
-  // run, subrun ...
+  // Find the "bad runs", this will be common across all trees
   std::set<std::pair<int,int> > remove_set;
   std::map<std::pair<int,int>, int> map_rs_failed;
   for (auto it =  map_rs_re_cv.begin(); it !=  map_rs_re_cv.end(); it++){
@@ -588,10 +583,15 @@ int main( int argc, char** argv )
   TFile *file3 = new TFile(out_file,"RECREATE");
 
   //Setup the directories specified in the config file
-  std::vector<TTree*>* new_trees = new std::vector<TTree*>;
-  new_trees = wrangler.set_new_trees(file3);
-  std::vector<TTree*>* new_trees_pot = new std::vector<TTree*>;
-  new_trees_pot = wrangler_pot.set_new_trees(file3);
+  wrangler.set_new_trees(file3);
+  wrangler_pot.set_new_trees(file3);
+
+  // Build the pairs of pot trees
+  wrangler_pot.grow_pot_arboretum();
+
+  // Map out the relation between index and run-subrun for the non-WC POT trees
+  wrangler_pot.map_rs_to_entry();
+
 
   file3->mkdir("wcpselection");
 
@@ -632,7 +632,14 @@ int main( int argc, char** argv )
   }
 
   //  for (auto it = map_re_entry_cv.begin(); it != map_re_entry_cv.end(); it++){
+  int nentries = read_list.size();
+  int ientry = 0;
+  std::cout<<"Begin looping over "<<nentries<<" events"<<std::endl;
   for (auto it = read_list.begin(); it != read_list.end(); it++){
+
+    if (ientry%10000 == 0) std::cout << ientry/1000 << " k " << std::setprecision(3) << double(ientry)/nentries*100. << " %"<< std::endl;
+    ientry++;
+
     T_eval_cv->GetEntry(*it);
     if (remove_set.find(std::make_pair(eval_cv.run, eval_cv.subrun)) != remove_set.end()) continue;
 
@@ -650,21 +657,32 @@ int main( int argc, char** argv )
     T_spacepoints->GetEntry(*it);
     new_T_spacepoints->Fill();
 
-    for(auto tree_it=old_trees->begin(); tree_it!=old_trees->end(); tree_it++){
+    for(auto tree_it=wrangler.old_trees->begin(); tree_it!=wrangler.old_trees->end(); tree_it++){
         (*tree_it)->GetEntry(*it);
     }
 
-    for(auto tree_it=new_trees->begin(); tree_it!=new_trees->end(); tree_it++){
+    for(auto tree_it=wrangler.new_trees->begin(); tree_it!=wrangler.new_trees->end(); tree_it++){
         (*tree_it)->Fill();
     }
   }
 
+  std::vector<double> vec_cv_pot;
+  std::vector<double> vec_cv1_pot;
   double cv_pot=0;
   double cv1_pot = 0;
   float pass_ratio;
   t2_cv->Branch("pass_ratio",&pass_ratio,"pass_ratio/F");
 
+  // Loop over each POT tree seperatly
+  // Start with WireCell
+  nentries = map_rs_entry_pot_cv.size();
+  ientry=0;
+  std::cout<<"Begin looping over WC pot tree with "<<nentries<<" entries"<<std::endl;
   for (auto it = map_rs_entry_pot_cv.begin(); it != map_rs_entry_pot_cv.end(); it++){
+
+    if (ientry%10000 == 0) std::cout << ientry/1000 << " k " << std::setprecision(3) << double(ientry)/nentries*100. << " %"<< std::endl;
+    ientry++;
+
     T_pot_cv->GetEntry(it->second.first);
     cv_pot += it->second.second;
 
@@ -682,20 +700,63 @@ int main( int argc, char** argv )
     pot_cv.pot_tor875good *= pass_ratio;
 
     t2_cv->Fill();
-
-    for(auto tree_it=old_trees_pot->begin(); tree_it!=old_trees_pot->end(); tree_it++){
-        (*tree_it)->GetEntry(it->second.first);
-    }
-
-    for(auto tree_it=new_trees_pot->begin(); tree_it!=new_trees_pot->end(); tree_it++){
-        (*tree_it)->Fill();
-    }
   }
+
+  vec_cv_pot.push_back(cv_pot);
+  vec_cv1_pot.push_back(cv1_pot);
+  cv_pot=0;
+  cv1_pot=0;
+  pass_ratio=1;
+
+  // Now the other trees
+  int arb_index=0;
+  for(auto pot_tree_it=wrangler_pot.pot_arboretum->begin(); pot_tree_it!=wrangler_pot.pot_arboretum->end(); pot_tree_it++){
+
+    (*pot_tree_it)->new_pot_tree->Branch("pass_ratio",&pass_ratio,"pass_ratio/F");
+
+    nentries = wrangler_pot.arboretum_map_rs_entry.at(arb_index).size();
+    ientry=0;
+    std::cout<<"Begin looping over "<<(*pot_tree_it)->old_pot_tree->GetName()<<" tree with "<<nentries<<" entries"<<std::endl;
+    for (auto it = wrangler_pot.arboretum_map_rs_entry.at(arb_index).begin(); it != wrangler_pot.arboretum_map_rs_entry.at(arb_index).end(); it++){
+
+      if (ientry%10000 == 0) std::cout << ientry/1000 << " k " << std::setprecision(3) << double(ientry)/nentries*100. << " %"<< std::endl;
+      ientry++;
+
+      (*pot_tree_it)->old_pot_tree->GetEntry(it->second.first); // it->second.first is index
+      cv_pot += it->second.second; // it->second.second is the pot at the given index
+
+      if(remove_set.find(it->first) != remove_set.end()) continue; //it->first is the run-subrun pair
+      if (map_rs_re_cv[it->first].size()==0) {
+        pass_ratio = 1;
+      }else{
+        pass_ratio = 1 - map_rs_failed[it->first] * 1.0 / map_rs_re_cv[it->first].size();
+      }
+      cv1_pot += it->second.second * pass_ratio;
+
+      //set both the double and the float, only the correct one will fill the tree
+      (*pot_tree_it)->fpot = (*pot_tree_it)->pot()*pass_ratio;
+      (*pot_tree_it)->dpot = (*pot_tree_it)->pot()*pass_ratio;
+
+      (*pot_tree_it)->new_pot_tree->Fill();
+
+    } // it, end loop over pot tree enteries in the given pot tree
+
+    arb_index+=1;
+    vec_cv_pot.push_back(cv_pot);
+    vec_cv1_pot.push_back(cv1_pot);
+    cv_pot=0;
+    cv1_pot=0;
+    
+  } // pot_tree_it, end loop over all trees in the arboretum
 
   std::cout << out_file << std::endl;
   std::cout << "Events: " << t1_cv->GetEntries()<<"/"<<T_eval_cv->GetEntries() << std::endl;
-  std::cout << "POT:    " << cv1_pot << " " << cv_pot << std::endl;
+  for(int i=0; i<vec_cv_pot.size(); i++){
+    if(flag_data && i>0) break;
+    std::cout << "POT:    " << vec_cv1_pot.at(i) << " " << vec_cv_pot.at(i) << std::endl;
+  }
 
+  
   file3->Write("",TFile::kOverwrite);
   file3->Close();
 

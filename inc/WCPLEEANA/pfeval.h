@@ -7,6 +7,7 @@ struct PFevalInfo{
   bool flag_showerMomentum;
   bool flag_recoprotonMomentum;
   bool flag_pf_truth;
+  bool flag_endprocess;
   bool flag_pf_reco;
   bool flag_init_pointers;
   //Erin
@@ -19,6 +20,7 @@ struct PFevalInfo{
   bool flag_ns_time_cor;
   bool flag_Phtot;
   bool flag_PMT;
+  bool flag_save_nstime_sps;
 
   Int_t run;
   Int_t subrun;
@@ -115,6 +117,7 @@ struct PFevalInfo{
   Int_t truth_id[10000];  // track id; size == truth_Ntrack
   Int_t truth_pdg[10000];  // track particle pdg; size == truth_Ntrack
   std::vector<std::string > *truth_process;
+  std::vector<std::string > *truth_endprocess;
   Int_t truth_mother[10000];  // mother id of this track; size == truth_Ntrack
   Float_t truth_startXYZT[10000][4];  // start position of this track; size == truth_Ntrack
   Float_t truth_endXYZT[10000][4];  // end position of this track; size == truth_Ntrack
@@ -198,7 +201,12 @@ struct PFevalInfo{
   Float_t cor_nu_time_nospill;
   Float_t cor_nu_time_spill;
   Float_t cor_nu_deltatime;
-  
+  std::vector<float> *reco_sps_x;
+  std::vector<float> *reco_sps_y;
+  std::vector<float> *reco_sps_z;
+  std::vector<float> *reco_sps_e;
+  std::vector<float> *reco_sps_pdg;
+  std::vector<float> *reco_sps_id;  
 
 };
 
@@ -213,6 +221,7 @@ struct PFevalInfo{
 void LEEana::init_pointers(PFevalInfo& tagger_info){
 
   tagger_info.truth_process = new std::vector<std::string >;
+  tagger_info.truth_endprocess = new std::vector<std::string >;
   tagger_info.truth_daughters = new   std::vector<std::vector<Int_t> >;
   tagger_info.fMC_trackPosition = new TObjArray();
   tagger_info.fMC_trackPosition->SetOwner(kTRUE);
@@ -229,10 +238,18 @@ void LEEana::init_pointers(PFevalInfo& tagger_info){
   tagger_info.PMT_TimeDP = new std::vector<float>;
   tagger_info.PMT_TimeDL = new std::vector<float>;
   tagger_info.PMT_Sat = new std::vector<bool>;
+
+  tagger_info.reco_sps_x = new std::vector<float>;
+  tagger_info.reco_sps_y = new std::vector<float>;
+  tagger_info.reco_sps_z = new std::vector<float>;
+  tagger_info.reco_sps_e = new std::vector<float>;
+  tagger_info.reco_sps_pdg = new std::vector<float>;
+  tagger_info.reco_sps_id = new std::vector<float>;
 }
 
 void LEEana::del_pointers(PFevalInfo& tagger_info){
   delete tagger_info.truth_process;
+  delete tagger_info.truth_endprocess;
   delete tagger_info.truth_daughters;
   delete tagger_info.fMC_trackPosition;
   delete tagger_info.reco_process;
@@ -248,6 +265,13 @@ void LEEana::del_pointers(PFevalInfo& tagger_info){
   delete tagger_info.PMT_TimeDP;
   delete tagger_info.PMT_TimeDL;
   delete tagger_info.PMT_Sat;
+
+  delete tagger_info.reco_sps_x;
+  delete tagger_info.reco_sps_y;
+  delete tagger_info.reco_sps_z;
+  delete tagger_info.reco_sps_e;
+  delete tagger_info.reco_sps_pdg;
+  delete tagger_info.reco_sps_id;
 }
 
 
@@ -256,6 +280,7 @@ void LEEana::clear_pfeval_info(PFevalInfo& tagger_info){
   tagger_info.flag_showerMomentum = false;
   tagger_info.flag_recoprotonMomentum = false;
   tagger_info.flag_pf_truth = false;
+  tagger_info.flag_endprocess = false;
   tagger_info.flag_pf_reco = false;
 
   if (!tagger_info.flag_init_pointers){
@@ -361,6 +386,7 @@ void LEEana::clear_pfeval_info(PFevalInfo& tagger_info){
   //PF ...
   tagger_info.truth_Ntrack = 0;  // number of tracks in MC
   tagger_info.truth_process->clear();
+  tagger_info.truth_endprocess->clear();
   tagger_info.truth_daughters->clear();  // daughters id of this track; vector
   tagger_info.fMC_trackPosition->Clear("");
 
@@ -415,8 +441,12 @@ void LEEana::clear_pfeval_info(PFevalInfo& tagger_info){
   tagger_info.cor_nu_time_nospill = -9999.;
   tagger_info.cor_nu_time_spill = -9999.;
   tagger_info.cor_nu_deltatime = -9999.;
-  
-
+  tagger_info.reco_sps_x->clear();
+  tagger_info.reco_sps_y->clear();
+  tagger_info.reco_sps_z->clear();
+  tagger_info.reco_sps_e->clear();
+  tagger_info.reco_sps_pdg->clear();
+  tagger_info.reco_sps_id->clear();
 }
 
 void LEEana::set_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
@@ -430,6 +460,7 @@ void LEEana::set_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
   tagger_info.flag_showerMomentum = false;
   tagger_info.flag_recoprotonMomentum = false;
   tagger_info.flag_pf_truth = false;
+  tagger_info.flag_endprocess = false;
   tagger_info.flag_pf_reco = false;
   tagger_info.flag_init_pointers = false;
 
@@ -439,7 +470,7 @@ void LEEana::set_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
   tagger_info.flag_ns_time_cor = false;
   tagger_info.flag_Phtot = false;
   tagger_info.flag_PMT = false;
-
+  tagger_info.flag_save_nstime_sps = false;
 
 
   tree0->SetBranchAddress("run", &tagger_info.run);
@@ -568,6 +599,10 @@ void LEEana::set_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
     tree0->SetBranchAddress("truth_id", &tagger_info.truth_id);
     tree0->SetBranchAddress("truth_pdg", &tagger_info.truth_pdg);
     tree0->SetBranchAddress("truth_process", &tagger_info.truth_process);
+    if(tree0->GetBranch("truth_endprocess")){
+      tagger_info.flag_endprocess = true;
+      tree0->SetBranchAddress("truth_endprocess", &tagger_info.truth_endprocess);
+    }
     tree0->SetBranchAddress("truth_mother", &tagger_info.truth_mother);
     tree0->SetBranchAddress("truth_startXYZT", &tagger_info.truth_startXYZT);
     tree0->SetBranchAddress("truth_endXYZT", &tagger_info.truth_endXYZT);
@@ -679,7 +714,15 @@ void LEEana::set_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
     tree0->SetBranchAddress("PMT_Sat",&tagger_info.PMT_Sat);
     tree0->SetBranchAddress("RWM_Time",&tagger_info.RWM_Time);
   }
-
+  if (tree0->GetBranch("reco_sps_x")){
+    tagger_info.flag_save_nstime_sps = true;
+    tree0->SetBranchAddress("reco_sps_x",&tagger_info.reco_sps_x);
+    tree0->SetBranchAddress("reco_sps_y",&tagger_info.reco_sps_y);
+    tree0->SetBranchAddress("reco_sps_z",&tagger_info.reco_sps_z);
+    tree0->SetBranchAddress("reco_sps_e",&tagger_info.reco_sps_e);
+    tree0->SetBranchAddress("reco_sps_pdg",&tagger_info.reco_sps_pdg);
+    tree0->SetBranchAddress("reco_sps_id",&tagger_info.reco_sps_id);
+  }
 
 }
 
@@ -802,6 +845,9 @@ void LEEana::put_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
     tree0->Branch("truth_id", &tagger_info.truth_id, "truth_id[truth_Ntrack]/I");
     tree0->Branch("truth_pdg", &tagger_info.truth_pdg, "truth_pdg[truth_Ntrack]/I");
     tree0->Branch("truth_process", &tagger_info.truth_process);
+    if(tagger_info.flag_endprocess){
+      tree0->Branch("truth_endprocess", &tagger_info.truth_endprocess);
+    }
     tree0->Branch("truth_mother", &tagger_info.truth_mother, "truth_mother[truth_Ntrack]/I");
     tree0->Branch("truth_startXYZT", &tagger_info.truth_startXYZT, "truth_startXYZT[truth_Ntrack][4]/F");
     tree0->Branch("truth_endXYZT", &tagger_info.truth_endXYZT, "truth_endXYZT[truth_Ntrack][4]/F");
@@ -902,7 +948,14 @@ void LEEana::put_tree_address(TTree *tree0, PFevalInfo& tagger_info, int flag){
     tree0->Branch("PMT_Sat",&tagger_info.PMT_Sat);
     tree0->Branch("RWM_Time",&tagger_info.RWM_Time,"RWM_Time/F");
   }
-  
+  if (tagger_info.flag_save_nstime_sps){
+    tree0->Branch("reco_sps_x",&tagger_info.reco_sps_x);
+    tree0->Branch("reco_sps_y",&tagger_info.reco_sps_y);
+    tree0->Branch("reco_sps_z",&tagger_info.reco_sps_z);
+    tree0->Branch("reco_sps_e",&tagger_info.reco_sps_e);
+    tree0->Branch("reco_sps_pdg",&tagger_info.reco_sps_pdg);
+    tree0->Branch("reco_sps_id",&tagger_info.reco_sps_id);
+  } 
 
 
   
