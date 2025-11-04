@@ -28,10 +28,15 @@ int main( int argc, char** argv )
     std::cout << "./xf_cov_matrix -r[#sys 1-14]" << std::endl;
   }
   int run = 17; // run 1 ... xs ...
+  int flag_save_each_universe=0;
   for (Int_t i=1;i!=argc;i++){
     switch(argv[i][1]){
     case 'r':
       run = atoi(&argv[i][2]); // which run period
+      break;
+    case 'u':
+      flag_save_each_universe = atoi(&argv[i][2]); // which run period
+      std::cout<<"Setting flag_save_each_universe to "<<flag_save_each_universe<<std::endl;
       break;
     }
   }
@@ -160,7 +165,7 @@ int main( int argc, char** argv )
   TMatrixD *mat_R = new TMatrixD(cov_add_mat->GetNrows(),cov.get_xs_nsignals());
 
   
-  cov.gen_xs_cov_matrix(run, map_covch_hists, map_histoname_hists, vec_mean, cov_xs_mat, vec_signal, mat_R);
+  cov.gen_xs_cov_matrix(run, map_covch_hists, map_histoname_hists, vec_mean, cov_xs_mat, vec_signal, mat_R, flag_save_each_universe);
 
   TMatrixD* frac_cov_xs_mat = new TMatrixD(cov_add_mat->GetNrows(), cov_add_mat->GetNcols());
   

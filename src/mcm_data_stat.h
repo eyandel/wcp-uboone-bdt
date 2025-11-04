@@ -1,5 +1,7 @@
-void LEEana::CovMatrix::gen_data_stat_cov_matrix(int run, std::map<int, TH1F*>& map_obsch_hist, std::map<TString, TH1F*>& map_histoname_hist, TVectorD* vec_mean, TMatrixD* cov_mat_bootstrapping){
-  
+void LEEana::CovMatrix::gen_data_stat_cov_matrix(int run, std::map<int, TH1F*>& map_obsch_hist, std::map<TString, TH1F*>& map_histoname_hist, TVectorD* vec_mean, TMatrixD* cov_mat_bootstrapping, int seed){
+ 
+  gRandom->SetSeed(seed);
+
   std::map<TString, std::tuple<int, int, int, TString>> map_histoname_infos ; 
   std::map<int, TString> map_no_histoname;
 

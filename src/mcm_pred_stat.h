@@ -1,4 +1,7 @@
-void LEEana::CovMatrix::gen_pred_stat_cov_matrix(int run, std::map<int, TH1F*>& map_covch_hist, std::map<TString, TH1F*>& map_histoname_hist, TVectorD* vec_mean, TMatrixD* cov_mat){
+void LEEana::CovMatrix::gen_pred_stat_cov_matrix(int run, std::map<int, TH1F*>& map_covch_hist, std::map<TString, TH1F*>& map_histoname_hist, TVectorD* vec_mean, TMatrixD* cov_mat, int seed){
+
+  gRandom->SetSeed(seed);
+
   // prepare the maps ... name --> no,  covch, lee
   std::map<TString, std::tuple<int, int, int, TString>> map_histoname_infos ;
   std::map<int, TString> map_no_histoname;

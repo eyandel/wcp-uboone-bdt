@@ -29,6 +29,7 @@ int main( int argc, char** argv )
   int run = 1; // run 1 ...
   bool flag_osc = false;
   int flag_gp = 0; // gaussian process smoothing
+  int seed = 0; // Sets seed for boostrapping, if 0 it is random each time
   for (Int_t i=1;i!=argc;i++){
     switch(argv[i][1]){
     case 'r':
@@ -39,6 +40,10 @@ int main( int argc, char** argv )
       break;
     case 'g':
       flag_gp = atoi(&argv[i][2]); // 1: on, 0: off.  2 = off but do GPSmoothing debugging, 3 = smoothing and debugging
+      break;
+    case 's':
+      seed = atoi(&argv[i][2]); //Set the seed for bootsrapping
+      std::cout<<"Setting bootstrapping seed to "<<seed<<std::endl;
       break;
     }
   }
@@ -181,7 +186,7 @@ int main( int argc, char** argv )
   TVectorD* vec_mean_diff = new TVectorD(cov_add_mat->GetNrows());
   TVectorD* vec_mean = new TVectorD(cov_add_mat->GetNrows());
 
-  cov.gen_det_cov_matrix(run, map_covch_hist, map_histoname_hist, vec_mean, vec_mean_diff, cov_mat_bootstrapping, cov_det_mat, flag_gp);
+  cov.gen_det_cov_matrix(run, map_covch_hist, map_histoname_hist, vec_mean, vec_mean_diff, cov_mat_bootstrapping, cov_det_mat, flag_gp, seed);
 
   TMatrixD* frac_cov_det_mat = new TMatrixD(cov_add_mat->GetNrows(), cov_add_mat->GetNcols());
   for (size_t i=0; i!= frac_cov_det_mat->GetNrows(); i++){
