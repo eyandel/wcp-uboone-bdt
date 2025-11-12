@@ -11,6 +11,9 @@
 #include "kine.h"
 #include "eval.h"
 #include "pfeval.h"
+#include "space.h"
+#include "pandora.h"
+#include "lantern.h"
 
 #include <map>
 #include <sstream>
@@ -31,10 +34,10 @@ namespace LEEana{
   double get_reco_Eproton(KineInfo& kine);
   double get_reco_Epion(KineInfo& kine);
 
-  double get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, TaggerInfo& tagger, bool flag_data, TString var_name="kine_reco_Enu");
+  double get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, TaggerInfo& tagger, bool flag_data, TString var_name, SpaceInfo& space, PandoraInfo& pandora, LanternInfo& lantern);
   double get_truth_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, TaggerInfo& tagger, TString var_name);
 
-  bool get_cut_pass(TString ch_name, TString add_cut, bool flag_data, EvalInfo& eval, PFevalInfo& pfeval, TaggerInfo& tagger, KineInfo& kine);
+  bool get_cut_pass(TString ch_name, TString add_cut, bool flag_data, EvalInfo& eval, PFevalInfo& pfeval, TaggerInfo& tagger, KineInfo& kine, SpaceInfo& space, PandoraInfo& pandora, LanternInfo& lantern);
   bool get_rw_cut_pass(TString cut, EvalInfo& eval, PFevalInfo& pfeval, TaggerInfo& tagger, KineInfo& kine);
   double get_weight(TString weight_name, EvalInfo& eval, PFevalInfo& pfeval, KineInfo& kine, TaggerInfo& tagger, std::tuple< bool, std::vector< std::tuple<bool, TString, TString, double, double, bool, bool, bool,  std::vector<double>, std::vector<double>  > > > rw_info, std::map<int, std::tuple< double, double, double, double > > time_info, bool flag_data=false);
   int get_xs_signal_no(int cut_file, std::map<TString, int>& map_cut_xs_bin, EvalInfo& eval, PFevalInfo& pfeval, TaggerInfo& tagger, KineInfo& kine);
@@ -346,7 +349,7 @@ double LEEana::get_weight(TString weight_name, EvalInfo& eval, PFevalInfo& pfeva
     float ext_scale = 1.0 - ext_rej;
     return pow(ext_scale,2);
 //cex bug fix weights
-  }else if (weight_name = "cv_spline_cexbugfix"){
+  }else if (weight_name == "cv_spline_cexbugfix"){
     double ratio_weight = 1.0;
     if (eval.truth_isCC == 0 && pfeval.truth_NprimPio==1)
     {
@@ -403,7 +406,7 @@ double LEEana::get_weight(TString weight_name, EvalInfo& eval, PFevalInfo& pfeva
     if (ratio_weight > 10.0) ratio_weight = 10.0;
     if (ratio_weight < 0.0) ratio_weight = 0.0;
     return addtl_weight*eval.weight_cv * eval.weight_spline * ratio_weight;
-  }else if (weight_name = "cv_spline_cexbugfix_cv_spline_cexbugfix"){
+  }else if (weight_name == "cv_spline_cexbugfix_cv_spline_cexbugfix"){
     double ratio_weight = 1.0;
     if (eval.truth_isCC == 0 && pfeval.truth_NprimPio==1)
     {
@@ -506,13 +509,14 @@ double LEEana::get_truth_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval,
   return 0;
 }
 
-
-double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, TaggerInfo& tagger, bool flag_data , TString var_name){
+double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, TaggerInfo& tagger, bool flag_data, TString var_name, SpaceInfo& space, PandoraInfo& pandora, LanternInfo& lantern){
   //  if (var_name == "kine_reco_Enu"){
   //  return kine.kine_reco_Enu;
   //  }else
   if (var_name == "kine_reco_Enu"){
     return get_reco_Enu_corr(kine, flag_data);
+  }else if (var_name == "lantern_nTracks"){
+    return lantern.nTracks;
   }else if (var_name == "reco_showerKE"){
     return get_reco_showerKE_corr(pfeval, flag_data) * 1000.;
   }else if (var_name == "kine_reco_Eproton"){
@@ -964,8 +968,8 @@ double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, 
     return -10000;
   }
   else if (var_name == "muon_momentum_costheta"){
-    float muon_momentum = get_kine_var(kine, eval, pfeval, tagger, flag_data , "muon_momentum");
-    float costheta = get_kine_var(kine, eval, pfeval, tagger, flag_data , "muon_costheta");
+    float muon_momentum = get_kine_var(kine, eval, pfeval, tagger, flag_data , "muon_momentum", space, pandora, lantern);
+    float costheta = get_kine_var(kine, eval, pfeval, tagger, flag_data , "muon_costheta", space, pandora, lantern);
     int bin = alt_var_index("muon_momentum",muon_momentum, "costheta", costheta);
     return bin;
   }
@@ -973,7 +977,7 @@ double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, 
     float Ehadron = -1000;
     if (pfeval.reco_muonMomentum[3]>0)
       Ehadron = get_reco_Enu_corr(kine, flag_data) - pfeval.reco_muonMomentum[3]*1000.;
-    float costheta = get_kine_var(kine, eval, pfeval, tagger, flag_data , "muon_costheta");
+    float costheta = get_kine_var(kine, eval, pfeval, tagger, flag_data , "muon_costheta", space, pandora, lantern);
     int bin = alt_var_index("Ehadron",Ehadron, "costheta", costheta);
     return bin;
   }
@@ -2482,8 +2486,7 @@ int LEEana::get_xs_signal_no(int cut_file, std::map<TString, int>& map_cut_xs_bi
   return -1;
 }
 
-bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, EvalInfo& eval, PFevalInfo& pfeval, TaggerInfo& tagger, KineInfo& kine){
-
+bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, EvalInfo& eval, PFevalInfo& pfeval, TaggerInfo& tagger, KineInfo& kine, SpaceInfo& space, PandoraInfo& pandora, LanternInfo& lantern){
 
   double reco_Enu = get_reco_Enu_corr(kine, flag_data);
 
