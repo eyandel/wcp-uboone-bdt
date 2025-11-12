@@ -12,6 +12,9 @@
 #include "WCPLEEANA/pot.h"
 #include "WCPLEEANA/pfeval.h"
 #include "WCPLEEANA/eval.h"
+#include "WCPLEEANA/space.h"
+#include "WCPLEEANA/pandora.h"
+#include "WCPLEEANA/lantern.h"
 
 using namespace std;
 using namespace LEEana;
@@ -21,7 +24,6 @@ int main( int argc, char** argv )
 
   TString input_filename = argv[1];
   TString out_filename = argv[2];
-
   bool flag_data = true;
 
   bool flag_osc = false;
@@ -46,6 +48,9 @@ int main( int argc, char** argv )
   TTree *T_pot = (TTree*)file->Get("wcpselection/T_pot");
   TTree *T_PFeval = (TTree*)file->Get("wcpselection/T_PFeval");
   TTree *T_KINEvars = (TTree*)file->Get("wcpselection/T_KINEvars");
+  TTree *T_spacepoints = (TTree*)file->Get("wcpselection/T_spacepoints");
+  TTree *T_pandora = (TTree*)file->Get("nuselection/NeutrinoSelectionFilter");
+  TTree *T_lantern = (TTree*)file->Get("lantern/EventTree");
 
   if (T_eval->GetBranch("weight_cv")) flag_data = false;
 
@@ -54,6 +59,9 @@ int main( int argc, char** argv )
   TaggerInfo tagger;
   PFevalInfo pfeval;
   KineInfo kine;
+  SpaceInfo space;
+  PandoraInfo pandora;
+  LanternInfo lantern;
 
 #include "init.txt"
 
@@ -67,6 +75,9 @@ int main( int argc, char** argv )
   }
   set_tree_address(T_pot, pot);
   set_tree_address(T_KINEvars, kine);
+  if(T_spacepoints) set_tree_address(T_spacepoints, space, 0);
+  if(T_pandora) set_tree_address(T_pandora, pandora);
+  if(T_lantern) set_tree_address(T_lantern, lantern);
 
   double total_pot = 0;
   //Erin
@@ -110,7 +121,6 @@ int main( int argc, char** argv )
     htemp = new TH1F(histoname, histoname, nbin, llimit, hlimit);
     map_histoname_hist[histoname] = htemp;
   }
-  //  std::cout << std::endl;
 
   std::vector< std::tuple<TString,  int, float, float, TString, TString, TString, TString > > histo_infos_err2 = cov.get_histograms(input_filename,1);
   std::copy(histo_infos_err2.begin(), histo_infos_err2.end(), std::back_inserter(all_histo_infos));
@@ -228,6 +238,10 @@ int main( int argc, char** argv )
     T_BDTvars->SetBranchStatus("shw_sp_pio_flag_pio",1);
     T_BDTvars->SetBranchStatus("shw_sp_length_total",1);
     T_BDTvars->SetBranchStatus("shw_sp_n_vertex",1);
+  }
+  if(tagger.saved_pi_veto_scores){
+    T_BDTvars->SetBranchStatus("all_veto_score",1);
+    T_BDTvars->SetBranchStatus("VtxAct_bdt_score",1);
   }
   //
 
@@ -367,6 +381,52 @@ int main( int argc, char** argv )
     }
   }
 
+  if(T_PFeval->GetBranch("reco_larpid_pdg")){
+    T_PFeval->SetBranchStatus("reco_larpid_pdg",1);
+  }
+
+  if(T_spacepoints){
+    T_spacepoints->SetBranchStatus("Trecchargeblob_spacepoints_x",1);
+    T_spacepoints->SetBranchStatus("Trecchargeblob_spacepoints_y",1);
+    T_spacepoints->SetBranchStatus("Trecchargeblob_spacepoints_z",1);
+    T_spacepoints->SetBranchStatus("Trecchargeblob_spacepoints_q",1);
+    T_spacepoints->SetBranchStatus("Trecchargeblob_spacepoints_real_cluster_id",1);
+  }
+
+  if(T_pandora){
+    T_pandora->SetBranchStatus("run",1);
+    T_pandora->SetBranchStatus("sub",1);
+    T_pandora->SetBranchStatus("evt",1);
+
+    T_pandora->SetBranchStatus("nslice",1);
+    T_pandora->SetBranchStatus("slice_orig_pass_id",1);
+    T_pandora->SetBranchStatus("n_pfps",1);
+
+    T_pandora->SetBranchStatus("trk_llr_pid_score_v",1);
+    T_pandora->SetBranchStatus("pfp_generation_v",1);
+    T_pandora->SetBranchStatus("trk_score_v",1);
+    T_pandora->SetBranchStatus("trk_energy_proton_v",1);
+    T_pandora->SetBranchStatus("pfpdg",1);
+  }
+
+  if(T_lantern){
+    T_lantern->SetBranchStatus("run",1);
+    T_lantern->SetBranchStatus("subrun",1);
+    T_lantern->SetBranchStatus("event",1);
+
+    T_lantern->SetBranchStatus("nTracks",1);
+
+    T_lantern->SetBranchStatus("trackIsSecondary",1);
+    T_lantern->SetBranchStatus("trackPID",1);
+    T_lantern->SetBranchStatus("trackMuScore",1);
+    T_lantern->SetBranchStatus("trackPrScore",1);
+    T_lantern->SetBranchStatus("trackPiScore",1);
+    T_lantern->SetBranchStatus("trackElScore",1);
+    T_lantern->SetBranchStatus("trackPhScore",1);
+    T_lantern->SetBranchStatus("trackRecoE",1);
+    T_lantern->SetBranchStatus("trackDistToVtx",1);
+  }
+
   std::cout << "Total entries: " << T_eval->GetEntries() << std::endl;
 
 
@@ -375,6 +435,9 @@ int main( int argc, char** argv )
     T_eval->GetEntry(i);
     T_KINEvars->GetEntry(i);
     T_PFeval->GetEntry(i);
+    if(T_spacepoints) T_spacepoints->GetEntry(i);
+    if(T_pandora) T_pandora->GetEntry(i);
+    if(T_lantern) T_lantern->GetEntry(i);
 
     if (!is_preselection(eval)) continue;
 
@@ -388,12 +451,11 @@ int main( int argc, char** argv )
       TString add_cut = std::get<6>(*it);
       TString weight = std::get<7>(*it);
 
-
       htemp = map_histoname_hist[histoname];
       // get kinematics variable ...
-      double val = get_kine_var(kine, eval, pfeval, tagger, flag_data, var_name);
+      double val = get_kine_var(kine, eval, pfeval, tagger, flag_data, var_name, space, pandora, lantern);
       // get pass or not
-      bool flag_pass = get_cut_pass(ch_name, add_cut, flag_data, eval, pfeval, tagger, kine);
+      bool flag_pass = get_cut_pass(ch_name, add_cut, flag_data, eval, pfeval, tagger, kine, space, pandora, lantern);
 
       double osc_weight = 1.0;
 

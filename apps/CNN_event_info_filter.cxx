@@ -35,6 +35,9 @@ using namespace LEEana;
 #include "WCPLEEANA/pfeval.h"
 #include "WCPLEEANA/kine.h"
 #include "WCPLEEANA/cuts.h"
+#include "WCPLEEANA/space.h"
+#include "WCPLEEANA/lantern.h"
+#include "WCPLEEANA/pandora.h"
 
 int main( int argc, char** argv )
 {
@@ -75,6 +78,9 @@ int main( int argc, char** argv )
   TaggerInfo tagger;
   PFevalInfo pfeval;
   KineInfo kine;
+  SpaceInfo space;
+  PandoraInfo pandora;
+  LanternInfo lantern;
 
   kine.kine_energy_particle = new std::vector<float>;
   kine.kine_energy_info = new std::vector<int>;
@@ -398,7 +404,7 @@ int main( int argc, char** argv )
 
     double pio_energy = 0;
     if (flag_pi0)
-      pio_energy = LEEana::get_kine_var(kine, eval, pfeval, tagger, flag_data, "pi0_energy");
+      pio_energy = LEEana::get_kine_var(kine, eval, pfeval, tagger, flag_data, "pi0_energy",space,pandora,lantern);
     
     // if (flag_far_sideband || flag_near_sideband || flag_LEE_signal){
     //   outfile1 << " " << eval.run << " " << eval.subrun << " " << eval.event << " " // event
