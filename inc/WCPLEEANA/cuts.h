@@ -315,7 +315,8 @@ std::vector<double> LEEana::get_pandora_proton_KE(PandoraInfo& pandora, double T
     }
   }
                
-  if(proton_KEs.size()==0) proton_KEs.push_back(0); -  std::sort(proton_KEs.begin(), proton_KEs.end(), wayToSort);
+  if(proton_KEs.size()==0) proton_KEs.push_back(0); 
+  std::sort(proton_KEs.begin(), proton_KEs.end(), wayToSort);
   std::sort(proton_KEs.begin(), proton_KEs.end(), wayToSort);
   return proton_KEs;
 
@@ -690,7 +691,7 @@ double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, 
 
   }else if (var_name == "pandora_leading_prim_proton_KE"){
     return get_pandora_proton_KE(pandora, 0.05, true).at(0);
-  }else if (var_name == "panora_subleading_prim_proton_KE"){
+  }else if (var_name == "pandora_subleading_prim_proton_KE"){
     std::vector<double> result = get_pandora_proton_KE(pandora, 0.05, true);
     if(result.size()<2) return 0;
     return result.at(1);
