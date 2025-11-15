@@ -67,6 +67,8 @@ int main( int argc, char** argv )
 
   bool flag_spbdt=false;
 
+  int remove_lantern_fails = true;
+
   for (Int_t i=3;i!=argc;i++){
     switch(argv[i][1]){
     case 'c':
@@ -102,8 +104,14 @@ int main( int argc, char** argv )
       flag_spbdt = &argv[i][2];
       if (flag_spbdt) std::cout<<"Particle level spacepoint BDTs will be included"<<std::endl;
       break;
+    case 'r':
+      remove_lantern_fails = atoi(&argv[i][2]);
+      break;
     }
   }
+
+  if (remove_lantern_fails==1) std::cout<<"Removing subruns where Lantern container failed"<<std::endl;
+  else std::cout<<"Will kepp subruns where Lantern container failed"<<std::endl;
 
   bool flag_check_run_subrun = false;
   bool flag_use_global_file_type = false;
@@ -147,6 +155,7 @@ int main( int argc, char** argv )
   TTree *T_PFeval = (TTree*)file1->Get("wcpselection/T_PFeval");
   TTree *T_KINEvars = (TTree*)file1->Get("wcpselection/T_KINEvars");
   TTree *T_spacepoints = (TTree*)file1->Get("wcpselection/T_spacepoints");
+  TTree *T_lantern = (TTree*)file1->Get("lantern/EventTree");
 
   //Load other trees from directories as specified by the config file
   wrangler.get_old_trees(file1);
@@ -3776,6 +3785,9 @@ int main( int argc, char** argv )
   T_BDTvars->SetBranchStatus("*",0);
   T_BDTvars->SetBranchStatus("numu_cc_flag",1);
 
+  int haveReco;
+  if(T_lantern && remove_lantern_fails==1) T_lantern->SetBranchAddress("haveReco",&haveReco);
+
   std::set<std::pair<int,int> > remove_set;
 
   bool flag_presel = false;
@@ -3784,6 +3796,13 @@ int main( int argc, char** argv )
     T_eval->GetEntry(i);
     T_BDTvars->GetEntry(i);
 
+    // Check if the Lantern container failed on this event, if so throw out the subrun.
+    if(T_lantern) T_lantern->GetEntry(i);
+    if(remove_lantern_fails==1 && haveReco==0){
+      remove_set.insert(std::make_pair(eval.run, eval.subrun));
+      continue;
+    }
+  
     if (flag_check_run_subrun){
       if (flag_use_global_file_type){
 	(*eval.file_type) = global_file_type;
