@@ -393,25 +393,36 @@ void LEEana::CovMatrix::fill_det_histograms(std::map<TString, TH1D*> map_filenam
   TTree *T_pot_cv = (TTree*)file->Get("wcpselection/T_pot_cv");
   TTree *T_PFeval_cv = (TTree*)file->Get("wcpselection/T_PFeval_cv");
   TTree *T_KINEvars_cv = (TTree*)file->Get("wcpselection/T_KINEvars_cv");
+  TTree *T_spacepoints_cv = (TTree*)file->Get("wcpselection/T_spacepoints_cv");
+  TTree *T_pandora_cv = (TTree*)file->Get("nuselection/NeutrinoSelectionFilter_cv");
+  TTree *T_lantern_cv = (TTree*)file->Get("lantern/EventTree_cv");
 
   EvalInfo eval_cv;
   POTInfo pot_cv;
   TaggerInfo tagger_cv;
   PFevalInfo pfeval_cv;
   KineInfo kine_cv;
+  SpaceInfo space_cv;
+  PandoraInfo pandora_cv;
+  LanternInfo lantern_cv;
 
   TTree *T_BDTvars_det = (TTree*)file->Get("wcpselection/T_BDTvars_det");
   TTree *T_eval_det = (TTree*)file->Get("wcpselection/T_eval_det");
   TTree *T_pot_det = (TTree*)file->Get("wcpselection/T_pot_det");
   TTree *T_PFeval_det = (TTree*)file->Get("wcpselection/T_PFeval_det");
   TTree *T_KINEvars_det = (TTree*)file->Get("wcpselection/T_KINEvars_det");
+  TTree *T_spacepoints_det = (TTree*)file->Get("wcpselection/T_spacepoints_det");
+  TTree *T_pandora_det = (TTree*)file->Get("nuselection/NeutrinoSelectionFilter_det");
+  TTree *T_lantern_det = (TTree*)file->Get("lantern/EventTree_det");
 
   EvalInfo eval_det;
   POTInfo pot_det;
   TaggerInfo tagger_det;
   PFevalInfo pfeval_det;
   KineInfo kine_det;
-
+  SpaceInfo space_det;
+  PandoraInfo pandora_det;
+  LanternInfo lantern_det;
 
 #include "init.txt"
 
@@ -420,12 +431,18 @@ void LEEana::CovMatrix::fill_det_histograms(std::map<TString, TH1D*> map_filenam
   set_tree_address(T_PFeval_cv, pfeval_cv);
   set_tree_address(T_pot_cv, pot_cv);
   set_tree_address(T_KINEvars_cv, kine_cv);
+  if(T_spacepoints_cv) set_tree_address(T_spacepoints_cv, space_cv, 0);
+  if(T_pandora_cv) set_tree_address(T_pandora_cv, pandora_cv);
+  if(T_lantern_cv) set_tree_address(T_lantern_cv, lantern_cv);
 
   set_tree_address(T_BDTvars_det, tagger_det,2 );
   set_tree_address(T_eval_det, eval_det);
   set_tree_address(T_PFeval_det, pfeval_det);
   set_tree_address(T_pot_det, pot_det);
   set_tree_address(T_KINEvars_det, kine_det);
+  if(T_spacepoints_det) set_tree_address(T_spacepoints_det, space_det, 0);
+  if(T_pandora_det) set_tree_address(T_pandora_det, pandora_det);
+  if(T_lantern_det) set_tree_address(T_lantern_det, lantern_det);
 
   double total_pot = 0;
   for (Int_t i=0;i!=T_pot_cv->GetEntries();i++){
@@ -515,6 +532,11 @@ void LEEana::CovMatrix::fill_det_histograms(std::map<TString, TH1D*> map_filenam
     T_BDTvars_cv->SetBranchStatus("shw_sp_pio_flag_pio",1);
     T_BDTvars_cv->SetBranchStatus("shw_sp_length_total",1);
     T_BDTvars_cv->SetBranchStatus("shw_sp_n_vertex",1);
+  }
+
+  if(tagger_cv.saved_pi_veto_scores){
+    T_BDTvars_cv->SetBranchStatus("all_veto_score",1);
+    T_BDTvars_cv->SetBranchStatus("VtxAct_bdt_score",1);
   }
   //
 
@@ -642,6 +664,53 @@ void LEEana::CovMatrix::fill_det_histograms(std::map<TString, TH1D*> map_filenam
     T_PFeval_cv->SetBranchStatus("evtDeltaTimeNS",1);
     T_PFeval_cv->SetBranchStatus("evtTimeNS",1);
   }
+
+  if(T_PFeval_cv->GetBranch("reco_larpid_pdg")){
+    T_PFeval_cv->SetBranchStatus("reco_larpid_pdg",1);
+  }
+
+  if(T_spacepoints_cv){
+    T_spacepoints_cv->SetBranchStatus("Trecchargeblob_spacepoints_x",1);
+    T_spacepoints_cv->SetBranchStatus("Trecchargeblob_spacepoints_y",1);
+    T_spacepoints_cv->SetBranchStatus("Trecchargeblob_spacepoints_z",1);
+    T_spacepoints_cv->SetBranchStatus("Trecchargeblob_spacepoints_q",1);
+    T_spacepoints_cv->SetBranchStatus("Trecchargeblob_spacepoints_real_cluster_id",1);
+  }
+
+  if(T_pandora_cv){
+    T_pandora_cv->SetBranchStatus("run",1);
+    T_pandora_cv->SetBranchStatus("sub",1);
+    T_pandora_cv->SetBranchStatus("evt",1);
+
+    T_pandora_cv->SetBranchStatus("nslice",1);
+    T_pandora_cv->SetBranchStatus("slice_orig_pass_id",1);
+    T_pandora_cv->SetBranchStatus("n_pfps",1);
+
+    T_pandora_cv->SetBranchStatus("trk_llr_pid_score_v",1);
+    T_pandora_cv->SetBranchStatus("pfp_generation_v",1);
+    T_pandora_cv->SetBranchStatus("trk_score_v",1);
+    T_pandora_cv->SetBranchStatus("trk_energy_proton_v",1);
+    T_pandora_cv->SetBranchStatus("pfpdg",1);
+  }
+
+  if(T_lantern_cv){
+    T_lantern_cv->SetBranchStatus("run",1);
+    T_lantern_cv->SetBranchStatus("subrun",1);
+    T_lantern_cv->SetBranchStatus("event",1);
+
+    T_lantern_cv->SetBranchStatus("nTracks",1);
+
+    T_lantern_cv->SetBranchStatus("trackIsSecondary",1);
+    T_lantern_cv->SetBranchStatus("trackPID",1);
+    T_lantern_cv->SetBranchStatus("trackMuScore",1);
+    T_lantern_cv->SetBranchStatus("trackPrScore",1);
+    T_lantern_cv->SetBranchStatus("trackPiScore",1);
+    T_lantern_cv->SetBranchStatus("trackElScore",1);
+    T_lantern_cv->SetBranchStatus("trackPhScore",1);
+    T_lantern_cv->SetBranchStatus("trackRecoE",1);
+    T_lantern_cv->SetBranchStatus("trackDistToVtx",1);
+  }
+
   //
 
 
@@ -725,6 +794,11 @@ void LEEana::CovMatrix::fill_det_histograms(std::map<TString, TH1D*> map_filenam
     T_BDTvars_det->SetBranchStatus("shw_sp_pio_flag_pio",1);
     T_BDTvars_det->SetBranchStatus("shw_sp_length_total",1);
     T_BDTvars_det->SetBranchStatus("shw_sp_n_vertex",1);
+  }
+
+  if(tagger_det.saved_pi_veto_scores){
+    T_BDTvars_det->SetBranchStatus("all_veto_score",1);
+    T_BDTvars_det->SetBranchStatus("VtxAct_bdt_score",1);
   }
   //
 
@@ -837,6 +911,53 @@ void LEEana::CovMatrix::fill_det_histograms(std::map<TString, TH1D*> map_filenam
     T_PFeval_det->SetBranchStatus("evtDeltaTimeNS",1);
     T_PFeval_det->SetBranchStatus("evtTimeNS",1);
   }
+
+  if(T_PFeval_det->GetBranch("reco_larpid_pdg")){
+    T_PFeval_det->SetBranchStatus("reco_larpid_pdg",1);
+  }
+
+  if(T_spacepoints_det){
+    T_spacepoints_det->SetBranchStatus("Trecchargeblob_spacepoints_x",1);
+    T_spacepoints_det->SetBranchStatus("Trecchargeblob_spacepoints_y",1);
+    T_spacepoints_det->SetBranchStatus("Trecchargeblob_spacepoints_z",1);
+    T_spacepoints_det->SetBranchStatus("Trecchargeblob_spacepoints_q",1);
+    T_spacepoints_det->SetBranchStatus("Trecchargeblob_spacepoints_real_cluster_id",1);
+  }
+
+  if(T_pandora_det){
+    T_pandora_det->SetBranchStatus("run",1);
+    T_pandora_det->SetBranchStatus("sub",1);
+    T_pandora_det->SetBranchStatus("evt",1);
+
+    T_pandora_det->SetBranchStatus("nslice",1);
+    T_pandora_det->SetBranchStatus("slice_orig_pass_id",1);
+    T_pandora_det->SetBranchStatus("n_pfps",1);
+
+    T_pandora_det->SetBranchStatus("trk_llr_pid_score_v",1);
+    T_pandora_det->SetBranchStatus("pfp_generation_v",1);
+    T_pandora_det->SetBranchStatus("trk_score_v",1);
+    T_pandora_det->SetBranchStatus("trk_energy_proton_v",1);
+    T_pandora_det->SetBranchStatus("pfpdg",1);
+  }
+
+  if(T_lantern_det){
+    T_lantern_det->SetBranchStatus("run",1);
+    T_lantern_det->SetBranchStatus("subrun",1);
+    T_lantern_det->SetBranchStatus("event",1);
+
+    T_lantern_det->SetBranchStatus("nTracks",1);
+
+    T_lantern_det->SetBranchStatus("trackIsSecondary",1);
+    T_lantern_det->SetBranchStatus("trackPID",1);
+    T_lantern_det->SetBranchStatus("trackMuScore",1);
+    T_lantern_det->SetBranchStatus("trackPrScore",1);
+    T_lantern_det->SetBranchStatus("trackPiScore",1);
+    T_lantern_det->SetBranchStatus("trackElScore",1);
+    T_lantern_det->SetBranchStatus("trackPhScore",1);
+    T_lantern_det->SetBranchStatus("trackRecoE",1);
+    T_lantern_det->SetBranchStatus("trackDistToVtx",1);
+  }
+
   //
 
   std::vector<std::tuple<int, int, double, double, std::set<std::tuple<int, double, bool, double, bool> > > > vec_events;
@@ -850,11 +971,17 @@ void LEEana::CovMatrix::fill_det_histograms(std::map<TString, TH1D*> map_filenam
     T_eval_cv->GetEntry(i);
     T_KINEvars_cv->GetEntry(i);
     T_PFeval_cv->GetEntry(i);
+    if(T_spacepoints_cv) T_spacepoints_cv->GetEntry(i);
+    if(T_pandora_cv) T_pandora_cv->GetEntry(i);
+    if(T_lantern_cv) T_lantern_cv->GetEntry(i);
 
     T_BDTvars_det->GetEntry(i);
     T_eval_det->GetEntry(i);
     T_KINEvars_det->GetEntry(i);
     T_PFeval_det->GetEntry(i);
+    if(T_spacepoints_det) T_spacepoints_det->GetEntry(i);
+    if(T_pandora_det) T_pandora_det->GetEntry(i);
+    if(T_lantern_det) T_lantern_det->GetEntry(i);
 
     if ( !(eval_cv.run == eval_det.run && eval_cv.event == eval_det.event)) std::cout <<"Wrong! " << std::endl;
 
@@ -885,11 +1012,11 @@ void LEEana::CovMatrix::fill_det_histograms(std::map<TString, TH1D*> map_filenam
       auto it3 = disabled_ch_names.find(ch_name);
       if (it3 != disabled_ch_names.end()) continue;
 
-      double val = get_kine_var(kine_cv, eval_cv, pfeval_cv, tagger_cv, false, var_name);
-      bool flag_pass = get_cut_pass(ch_name, add_cut, false, eval_cv, pfeval_cv, tagger_cv, kine_cv);
+      double val = get_kine_var(kine_cv, eval_cv, pfeval_cv, tagger_cv, false, var_name, space_cv, pandora_cv, lantern_cv);
+      bool flag_pass = get_cut_pass(ch_name, add_cut, false, eval_cv, pfeval_cv, tagger_cv, kine_cv, space_cv, pandora_cv, lantern_cv);
 
-      double val1 = get_kine_var(kine_det, eval_det, pfeval_det, tagger_det, false, var_name);
-      bool flag_pass1 = get_cut_pass(ch_name, add_cut, false, eval_det, pfeval_det, tagger_det, kine_det);
+      double val1 = get_kine_var(kine_det, eval_det, pfeval_det, tagger_det, false, var_name, space_det, pandora_det, lantern_det);
+      bool flag_pass1 = get_cut_pass(ch_name, add_cut, false, eval_det, pfeval_det, tagger_det, kine_det, space_det, pandora_det, lantern_det);
       if (flag_pass || flag_pass1) {
 	std::get<4>(vec_events.at(i) ).insert(std::make_tuple(no, val, flag_pass, val1, flag_pass1));
       }
