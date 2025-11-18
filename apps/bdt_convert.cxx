@@ -4009,7 +4009,6 @@ int main( int argc, char** argv )
     tagger.ssm_kdar_score_lowE = cal_kdar_lowE_bdt_xgboost(tagger, eval, reader_kdar_lowE);
     tagger.ssm_kdar_score_hiE = cal_kdar_hiE_bdt_xgboost(tagger, eval, reader_kdar_hiE);
 
-std::cout<<eval.run<<" "<<eval.subrun<<" "<<eval.event<<std::endl;
     tagger.pi_veto_score=-999;
     tagger.pi_veto_prim_score=-999;
     tagger.pi_veto_all_score=-999;
@@ -4136,7 +4135,6 @@ std::cout<<eval.run<<" "<<eval.subrun<<" "<<eval.event<<std::endl;
         (*tree_it)->Fill();
     }
 
-std::cout<<std::endl;
     //    std::cout << pfeval.reco_daughters->size() << std::endl;
     //    break;
   }
