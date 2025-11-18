@@ -108,13 +108,13 @@ struct ParticleInfo{
     float track_len_ratio;
 };
 
-void create_particle(SpaceInfo& space_info, PFevalInfo& pfeval, ParticleInfo& particle_info, int index, double tolerance_sp=0.5, double tolerance=0.0001);
+void create_particle(SpaceInfo& space_info, PFevalInfo& pfeval, ParticleInfo& particle_info, int index, bool flag_data, double tolerance_sp=0.5, double tolerance=0.0001);
 void reset_particle(ParticleInfo& particle_info);
 void print_particle(ParticleInfo& particle_info);
 }
 
 
-void LEEana::create_particle(SpaceInfo& space_info, PFevalInfo& pfeval, ParticleInfo& particle_info, int index, double tolerance_sp, double tolerance){
+void LEEana::create_particle(SpaceInfo& space_info, PFevalInfo& pfeval, ParticleInfo& particle_info, int index, bool flag_data, double tolerance_sp, double tolerance){
 
   //std::cout<<"Clearing particle"<<std::endl;
   reset_particle(particle_info);
@@ -127,7 +127,7 @@ void LEEana::create_particle(SpaceInfo& space_info, PFevalInfo& pfeval, Particle
     if(pfeval.reco_id[reco_part]!=pfeval.reco_id[index]) continue;
     //std::cout<<"Found ID"<<std::endl;
     if(pfeval.reco_pdg[reco_part]==2112 || pfeval.reco_pdg[reco_part]==22 || pfeval.reco_pdg[reco_part]==111) continue;
-    if(pfeval.reco_truthMatch_pdg[reco_part]<=0) continue;
+    //if(pfeval.reco_truthMatch_pdg[reco_part]<=0 && !flag_data) continue;
     //std::cout<<"Real particle and found amtch"<<std::endl;
 
     double part_x = pfeval.reco_startXYZT[reco_part][0];
