@@ -229,8 +229,8 @@ std::tuple<std::vector<double>,std::vector<double>,std::vector<double>,std::vect
 
     bool flag_wc=false;
     bool flag_larpid=false;
-    if (pfeval.reco_pdg[i]!=2212) flag_wc=true;
-    if (pfeval.reco_larpid_pdg[i]!=2212) flag_larpid=true;
+    if (pfeval.reco_pdg[i]==2212) flag_wc=true;
+    if (pfeval.reco_larpid_pdg[i]==2212) flag_larpid=true;
     if(!flag_wc && !flag_larpid) continue;
 
     double range_proton = 0; 
