@@ -11,6 +11,9 @@
 #include "kine.h"
 #include "eval.h"
 #include "pfeval.h"
+#include "space.h"
+#include "pandora.h"
+#include "lantern.h"
 
 #include <map>
 #include <sstream>
@@ -31,13 +34,19 @@ namespace LEEana{
   double get_reco_Eproton(KineInfo& kine);
   double get_reco_Epion(KineInfo& kine);
 
-  double get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, TaggerInfo& tagger, bool flag_data, TString var_name="kine_reco_Enu");
+  double get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, TaggerInfo& tagger, bool flag_data, TString var_name, SpaceInfo& space, PandoraInfo& pandora, LanternInfo& lantern);
   double get_truth_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, TaggerInfo& tagger, TString var_name);
 
-  bool get_cut_pass(TString ch_name, TString add_cut, bool flag_data, EvalInfo& eval, PFevalInfo& pfeval, TaggerInfo& tagger, KineInfo& kine);
+  bool get_cut_pass(TString ch_name, TString add_cut, bool flag_data, EvalInfo& eval, PFevalInfo& pfeval, TaggerInfo& tagger, KineInfo& kine, SpaceInfo& space, PandoraInfo& pandora, LanternInfo& lantern);
   bool get_rw_cut_pass(TString cut, EvalInfo& eval, PFevalInfo& pfeval, TaggerInfo& tagger, KineInfo& kine);
   double get_weight(TString weight_name, EvalInfo& eval, PFevalInfo& pfeval, KineInfo& kine, TaggerInfo& tagger, std::tuple< bool, std::vector< std::tuple<bool, TString, TString, double, double, bool, bool, bool,  std::vector<double>, std::vector<double>  > > > rw_info, std::map<int, std::tuple< double, double, double, double > > time_info, bool flag_data=false);
   int get_xs_signal_no(int cut_file, std::map<TString, int>& map_cut_xs_bin, EvalInfo& eval, PFevalInfo& pfeval, TaggerInfo& tagger, KineInfo& kine);
+
+  bool wayToSort(int i, int j) { return i > j; };
+  // WC prim, WC all, LArPID prim, LArPID all, each is sorted in order of KE
+  std::tuple<std::vector<double>,std::vector<double>,std::vector<double>,std::vector<double>> get_range_proton_KE(PFevalInfo& pfeval, SpaceInfo& space, bool return_MeV);
+  std::vector<double> get_pandora_proton_KE(PandoraInfo& pandora, double TRACK_SCORE_CUT, bool return_MeV);
+  std::vector<double> get_lantern_KE(LanternInfo& lantern, int pdg, double vtx_cut, bool return_MeV);
 
   // generic neutrino cuts
   // TCut generic_cut = "match_found == 1 && stm_eventtype != 0 &&stm_lowenergy ==0 && stm_LM ==0 && stm_TGM ==0 && stm_STM==0 && stm_FullDead == 0 && stm_cluster_length >15";
@@ -125,6 +134,18 @@ namespace LEEana{
   int mcc8_pmuon_costheta_bin(float pmuon, float costh);
   int alt_var_index(std::string var1, float val1, std::string var2, float val2, std::string config="./configurations/alt_var_xbins.txt");
   std::map<std::string, TH1F> map_var_hist; // variable name and binning
+
+
+  std::vector<double> get_proton_length_bins(){
+    std::vector<double> proton_length_bins = {7.65721e-06, 0.003103, 0.0091284, 0.0176375, 0.0283912, 0.0412807, 0.0562127, 0.0731138, 0.0919263, 0.112603, 0.135101, 0.159272, 0.185117, 0.212807, 0.24211, 0.273135, 0.305831, 0.340111, 0.376083, 0.413583, 0.452689, 0.493293, 0.535259, 0.57868, 0.62366, 0.670316, 0.718547, 0.768222, 0.819402, 0.871993, 0.926046, 0.981485, 1.03822, 1.09633, 1.15586, 1.21689, 1.27932, 1.34303, 1.40806, 1.47449, 1.54236, 1.61158, 1.68204, 1.75379, 1.82687, 1.90134, 1.97711, 2.05409, 2.13233, 2.21187, 2.29275, 2.37489, 2.45822, 2.54277, 2.62858, 2.71569, 2.80402, 2.89352, 2.98421, 3.07612, 3.16929, 3.26367, 3.35917, 3.45585, 3.55372, 3.65281, 3.75307, 3.85444, 3.95696, 4.06063, 4.1655, 4.2715, 4.37859, 4.48679, 4.59613, 4.70662, 4.81823, 4.9309, 5.04466, 5.15953, 5.27553, 5.39262, 5.51076, 5.62996, 5.75025, 5.87164, 5.9941, 6.11758, 6.24211, 6.3677, 6.49437, 6.62208, 6.75079, 6.88053, 7.0113, 7.14313, 7.27598, 7.40982, 7.54466, 7.68052, 7.81742, 7.95524, 8.09388, 8.23334, 8.37365, 8.51481, 8.65683, 8.79972, 8.94348, 9.08814, 9.23371, 9.38019, 9.52759, 9.67593, 9.82522, 9.97548, 10.1267, 10.2789, 10.4321, 10.5864, 10.7416, 10.8979, 11.0553, 11.2137, 11.3732, 11.5338, 11.6953, 11.8576, 12.0207, 12.1846, 12.3493, 12.5147, 12.681, 12.8481, 13.016, 13.1847, 13.3543, 13.5248, 13.696, 13.8682, 14.0412, 14.2152, 14.39, 14.5657, 14.7423, 14.9198, 15.0983, 15.2777, 15.4581, 15.6394, 15.8217, 16.0049, 16.1887, 16.3733, 16.5586, 16.7447, 16.9315, 17.119, 17.3073, 17.4963, 17.6862, 17.8767, 18.0681, 18.2603, 18.4532, 18.6469, 18.8415, 19.0368, 19.233, 19.43, 19.6278, 19.8265, 20.026, 20.2264, 20.4276, 20.6297, 20.8325, 21.0361, 21.2403, 21.4452, 21.6507, 21.857, 22.064, 22.2716, 22.48, 22.689, 22.8988, 23.1093, 23.3205, 23.5325, 23.7451, 23.9585, 24.1727, 24.3876, 24.6033, 24.8197, 25.0368, 25.2548, 25.4735, 25.693, 25.9133, 26.1343, 26.3559, 26.5782, 26.801, 27.0245, 27.2487, 27.4735, 27.6989, 27.925, 28.1517, 28.3791, 28.6072, 28.8359, 29.0653, 29.2953, 29.5261, 29.7575, 29.9896, 30.2223, 30.4558, 30.69, 30.9249, 31.1604, 31.3967, 31.6337, 31.8714, 32.1096, 32.3484, 32.5878, 32.8278, 33.0684, 33.3095, 33.5513, 33.7937, 34.0367, 34.2803, 34.5245, 34.7693, 35.0147, 35.2608, 35.5075, 35.7548, 36.0027, 36.2513, 36.5005, 36.7503, 37.0008, 37.2519, 37.5037, 37.7562, 38.0092, 38.2628, 38.5169, 38.7716, 39.0268, 39.2825, 39.5388, 39.7957, 40.0531, 40.3111, 40.5697, 40.8288, 41.0885, 41.3487, 41.6096, 41.871, 42.1329, 42.3955, 42.6586, 42.9224, 43.1867, 43.4516, 43.7171, 43.9832, 44.2498, 44.5171, 44.7848, 45.0531, 45.3218, 45.5911, 45.8609, 46.1312, 46.402, 46.6733, 46.9451, 47.2175, 47.4904, 47.7638, 48.0377, 48.3122, 48.5872, 48.8627, 49.1388, 49.4154, 49.6925, 49.9702, 50.2485, 50.5272, 50.8065, 51.0864, 51.3668, 51.6476, 51.9288, 52.2105, 52.4926, 52.7752, 53.0582, 53.3417, 53.6256, 53.9099, 54.1947, 54.48, 54.7657, 55.0518, 55.3384, 55.6255, 55.913, 56.201, 56.4895, 56.7784, 57.0678, 57.3576, 57.6479, 57.9387, 58.23, 58.5217, 58.8139, 59.1066, 59.3997, 59.6934, 59.9875, 60.2821, 60.5771, 60.8727, 61.1687, 61.4653, 61.7623, 62.0598, 62.3578, 62.6563, 62.9553, 63.2548, 63.5548, 63.8553, 64.1563, 64.4578, 64.7598, 65.0623, 65.3653, 65.6688, 65.9728, 66.2772, 66.5819, 66.8871, 67.1926, 67.4985, 67.8048, 68.1114, 68.4185, 68.726, 69.0338, 69.342, 69.6507, 69.9597, 70.2691, 70.5789, 70.8891, 71.1998, 71.5108, 71.8222, 72.134, 72.4462, 72.7588, 73.0719, 73.3853, 73.6991, 74.0134, 74.328, 74.6431, 74.9585, 75.2744, 75.5907, 75.9074, 76.2246, 76.5421, 76.8601, 77.1784, 77.4972, 77.8164, 78.1361, 78.4561, 78.7766, 79.0975, 79.4189, 79.7406, 80.0628, 80.3854, 80.7085, 81.032, 81.3559, 81.6802, 82.0048, 82.3298, 82.6551, 82.9808, 83.3068, 83.6331, 83.9598, 84.2868, 84.6142, 84.9419, 85.27, 85.5984, 85.9271, 86.2562, 86.5857, 86.9155, 87.2456, 87.5761, 87.907, 88.2382, 88.5697, 88.9016, 89.2339, 89.5665, 89.8995, 90.2328, 90.5665, 90.9005, 91.2349, 91.5697, 91.9048, 92.2403, 92.5761, 92.9123, 93.2489, 93.5858, 93.9231, 94.2608, 94.5988, 94.9372, 95.276, 95.6151, 95.9546, 96.2945, 96.6347, 96.9753, 97.3163, 97.6577, 97.9994, 98.3415, 98.6839, 99.0265, 99.3695, 99.7128, 100.056, 100.4, 100.744, 101.089, 101.434, 101.779, 102.124, 102.47, 102.816, 103.162, 103.509, 103.856, 104.203, 104.55, 104.898, 105.246, 105.595, 105.943, 106.292, 106.642, 106.991, 107.341, 107.692, 108.042, 108.393, 108.744, 109.096, 109.448, 109.8, 110.153, 110.505, 110.858, 111.212, 111.566, 111.92, 112.274, 112.629, 112.984, 113.339, 113.695, 114.051, 114.407, 114.764, 115.121, 115.478, 115.836, 116.194, 116.552, 116.91, 117.269, 117.628, 117.987, 118.346, 118.706, 119.066, 119.426, 119.786, 120.147, 120.508, 120.869, 121.231, 121.593, 121.955, 122.317, 122.68, 123.043, 123.406, 123.769, 124.133, 124.497, 124.861, 125.225, 125.59, 125.955, 126.321, 126.686, 127.052, 127.418, 127.785, 128.151, 128.518, 128.885, 129.253, 129.621, 129.989, 130.357, 130.726, 131.094, 131.464, 131.833, 132.203, 132.573, 132.943, 133.314, 133.684, 134.055, 134.427, 134.798, 135.17, 135.542, 135.914, 136.287, 136.659, 137.032, 137.406, 137.779, 138.153, 138.526, 138.901, 139.275, 139.649, 140.024, 140.399, 140.775, 141.15, 141.526, 141.902, 142.278, 142.655, 143.031, 143.408, 143.785, 144.163, 144.54, 144.918, 145.296, 145.675, 146.053, 146.432, 146.811, 147.191, 147.57, 147.95, 148.33, 148.71, 149.091, 149.472, 149.853, 150.234, 150.616, 150.997, 151.379, 151.762, 152.144, 152.527, 152.91, 153.293, 153.676, 154.06, 154.444, 154.828, 155.212, 155.596, 155.981, 156.366, 156.751, 157.136, 157.521, 157.907, 158.293, 158.679, 159.065, 159.452, 159.838, 160.225, 160.612, 161.0, 161.387, 161.775, 162.163, 162.551, 162.939, 163.328, 163.717, 164.106, 164.495, 164.884, 165.274, 165.664, 166.054, 166.444, 166.835, 167.225, 167.616, 168.007, 168.399, 168.79, 169.182, 169.574, 169.966, 170.359, 170.751, 171.144, 171.537, 171.93, 172.324, 172.717, 173.111, 173.505, 173.899, 174.294, 174.688, 175.083, 175.478, 175.873, 176.268, 176.664, 177.06, 177.455, 177.851, 178.248, 178.644, 179.041, 179.437, 179.834, 180.231, 180.629, 181.026, 181.424, 181.822, 182.22, 182.618, 183.017, 183.415, 183.814, 184.213, 184.612, 185.011, 185.411, 185.811, 186.211, 186.611, 187.011, 187.412, 187.812, 188.213, 188.614, 189.015, 189.417, 189.818, 190.22, 190.622, 191.024, 191.427, 191.829, 192.232, 192.635, 193.038, 193.441, 193.845, 194.248, 194.652, 195.056, 195.46, 195.864, 196.268, 196.673, 197.077, 197.482, 197.887, 198.292, 198.698, 199.103, 199.509, 199.914, 200.32, 200.726, 201.133, 201.539, 201.946, 202.352, 202.759, 203.166, 203.574, 203.981, 204.389, 204.796, 205.204, 205.612, 206.02, 206.429, 206.837, 207.246, 207.655, 208.064, 208.473, 208.882, 209.292, 209.702, 210.111, 210.521, 210.932, 211.342, 211.752, 212.163, 212.574, 212.985, 213.396, 213.807, 214.219, 214.63, 215.042, 215.454, 215.865, 216.278, 216.69, 217.102, 217.515, 217.927, 218.34, 218.753, 219.166, 219.579, 219.993, 220.406, 220.82, 221.234, 221.648, 222.062, 222.476, 222.89, 223.305, 223.72, 224.134, 224.549, 224.964, 225.38, 225.795, 226.211, 226.626, 227.042, 227.458, 227.874, 228.29, 228.707, 229.123, 229.54, 229.957, 230.374, 230.791, 231.208, 231.626, 232.043, 232.461, 232.879, 233.297, 233.715, 234.133, 234.552, 234.97, 235.389, 235.807, 236.226, 236.645, 237.064, 237.484, 237.903, 238.323, 238.742, 239.162, 239.582, 240.002, 240.422, 240.842, 241.263, 241.683, 242.104, 242.525, 242.946, 243.367, 243.788, 244.209, 244.631, 245.052, 245.474, 245.896, 246.318, 246.74, 247.162, 247.585, 248.007, 248.43, 248.852, 249.275, 249.698, 250.121, 250.545, 250.968, 251.392, 251.815, 252.239, 252.663, 253.087, 253.511, 253.935, 254.36, 254.784, 255.209, 255.634, 256.059, 256.484, 256.909, 257.334, 257.759, 258.185, 258.611, 259.036, 259.462, 259.888, 260.314, 260.74, 261.166, 261.593, 262.019, 262.446, 262.873, 263.3, 263.727, 264.154, 264.581, 265.008, 265.436, 265.863, 266.291, 266.719, 267.147, 267.575, 268.003, 268.431, 268.86, 269.288, 269.717, 270.146, 270.574, 271.003, 271.432, 271.862, 272.291, 272.72, 273.15, 273.58, 274.01, 274.44, 274.87, 275.3, 275.73, 276.16, 276.591, 277.021, 277.452, 277.883, 278.314, 278.745, 279.176, 279.607, 280.038, 280.47, 280.901, 281.333, 281.764, 282.196, 282.628, 283.06, 283.492, 283.924, 284.356, 284.789, 285.221, 285.654, 286.086, 286.519, 286.952, 287.385, 287.818, 288.251, 288.684, 289.118, 289.551, 289.985, 290.418, 290.852, 291.286, 291.72, 292.154, 292.588, 293.022, 293.457, 293.891, 294.326, 294.76, 295.195, 295.63, 296.065, 296.5, 296.935, 297.37, 297.805, 298.241, 298.676, 299.112, 299.548, 299.983, 300.419, 300.855, 301.291, 301.728, 302.164, 302.6, 303.036, 303.473, 303.91, 304.346, 304.783, 305.22, 305.657, 306.094, 306.531, 306.968, 307.406, 307.843, 308.28, 308.718, 309.156, 309.594, 310.031, 310.469, 310.907, 311.346, 311.784, 312.222, 312.661, 313.099, 313.538, 313.976, 314.415, 314.854, 315.293, 315.732, 316.171, 316.61, 317.05, 317.489, 317.929, 318.368, 328.368, 338.368, 348.368, 358.368, 368.368, 378.368, 388.368, 398.368, 408.368, 418.368, 428.368, 438.368, 448.368, 458.368, 468.368, 478.368, 488.368, 498.368, 508.368, 518.3679999999999, 528.3679999999999, 538.3679999999999, 548.3679999999999, 558.3679999999999, 568.3679999999999, 578.3679999999999, 588.3679999999999, 598.3679999999999, 608.3679999999999, 618.3679999999999, 628.3679999999999, 638.3679999999999, 648.3679999999999, 658.3679999999999, 668.3679999999999, 678.3679999999999, 688.3679999999999, 698.3679999999999, 708.3679999999999, 718.3679999999999, 728.3679999999999, 738.3679999999999, 748.3679999999999, 758.3679999999999, 768.3679999999999, 778.3679999999999, 788.3679999999999, 798.3679999999999, 808.3679999999999, 818.3679999999999, 828.3679999999999, 838.3679999999999, 848.3679999999999, 858.3679999999999, 868.3679999999999, 878.3679999999999, 888.3679999999999, 898.3679999999999, 908.3679999999999, 918.3679999999999, 928.3679999999999, 938.3679999999999, 948.3679999999999, 958.3679999999999, 968.3679999999999, 978.3679999999999, 988.3679999999999, 998.3679999999999, 1008.3679999999999, 1018.3679999999999, 1028.368, 1038.368, 1048.368, 1058.368, 1068.368, 1078.368, 1088.368, 1098.368, 1108.368};
+  return proton_length_bins;
+}
+  std::vector<double> get_proton_energy_bins(){ 
+    std::vector<double> proton_energy_bins = {0.001, 1.001, 2.001, 3.001, 4.001, 5.001, 6.001, 7.001, 8.001, 9.001, 10.001, 11.001, 12.001, 13.001, 14.001, 15.001, 16.001, 17.001, 18.001, 19.001, 20.001, 21.001, 22.001, 23.001, 24.001, 25.001, 26.001, 27.001, 28.001, 29.001, 30.001, 31.001, 32.001, 33.001, 34.001, 35.001, 36.001, 37.001, 38.001, 39.001, 40.001, 41.001, 42.001, 43.001, 44.001, 45.001, 46.001, 47.001, 48.001, 49.001, 50.001, 51.001, 52.001, 53.001, 54.001, 55.001, 56.001, 57.001, 58.001, 59.001, 60.001, 61.001, 62.001, 63.001, 64.001, 65.001, 66.001, 67.001, 68.001, 69.001, 70.001, 71.001, 72.001, 73.001, 74.001, 75.001, 76.001, 77.001, 78.001, 79.001, 80.001, 81.001, 82.001, 83.001, 84.001, 85.001, 86.001, 87.001, 88.001, 89.001, 90.001, 91.001, 92.001, 93.001, 94.001, 95.001, 96.001, 97.001, 98.001, 99.001, 100.001, 101.001, 102.001, 103.001, 104.001, 105.001, 106.001, 107.001, 108.001, 109.001, 110.001, 111.001, 112.001, 113.001, 114.001, 115.001, 116.001, 117.001, 118.001, 119.001, 120.001, 121.001, 122.001, 123.001, 124.001, 125.001, 126.001, 127.001, 128.001, 129.001, 130.001, 131.001, 132.001, 133.001, 134.001, 135.001, 136.001, 137.001, 138.001, 139.001, 140.001, 141.001, 142.001, 143.001, 144.001, 145.001, 146.001, 147.001, 148.001, 149.001, 150.001, 151.001, 152.001, 153.001, 154.001, 155.001, 156.001, 157.001, 158.001, 159.001, 160.001, 161.001, 162.001, 163.001, 164.001, 165.001, 166.001, 167.001, 168.001, 169.001, 170.001, 171.001, 172.001, 173.001, 174.001, 175.001, 176.001, 177.001, 178.001, 179.001, 180.001, 181.001, 182.001, 183.001, 184.001, 185.001, 186.001, 187.001, 188.001, 189.001, 190.001, 191.001, 192.001, 193.001, 194.001, 195.001, 196.001, 197.001, 198.001, 199.001, 200.001, 201.001, 202.001, 203.001, 204.001, 205.001, 206.001, 207.001, 208.001, 209.001, 210.001, 211.001, 212.001, 213.001, 214.001, 215.001, 216.001, 217.001, 218.001, 219.001, 220.001, 221.001, 222.001, 223.001, 224.001, 225.001, 226.001, 227.001, 228.001, 229.001, 230.001, 231.001, 232.001, 233.001, 234.001, 235.001, 236.001, 237.001, 238.001, 239.001, 240.001, 241.001, 242.001, 243.001, 244.001, 245.001, 246.001, 247.001, 248.001, 249.001, 250.001, 251.001, 252.001, 253.001, 254.001, 255.001, 256.001, 257.001, 258.001, 259.001, 260.001, 261.001, 262.001, 263.001, 264.001, 265.001, 266.001, 267.001, 268.001, 269.001, 270.001, 271.001, 272.001, 273.001, 274.001, 275.001, 276.001, 277.001, 278.001, 279.001, 280.001, 281.001, 282.001, 283.001, 284.001, 285.001, 286.001, 287.001, 288.001, 289.001, 290.001, 291.001, 292.001, 293.001, 294.001, 295.001, 296.001, 297.001, 298.001, 299.001, 300.001, 301.001, 302.001, 303.001, 304.001, 305.001, 306.001, 307.001, 308.001, 309.001, 310.001, 311.001, 312.001, 313.001, 314.001, 315.001, 316.001, 317.001, 318.001, 319.001, 320.001, 321.001, 322.001, 323.001, 324.001, 325.001, 326.001, 327.001, 328.001, 329.001, 330.001, 331.001, 332.001, 333.001, 334.001, 335.001, 336.001, 337.001, 338.001, 339.001, 340.001, 341.001, 342.001, 343.001, 344.001, 345.001, 346.001, 347.001, 348.001, 349.001, 350.001, 351.001, 352.001, 353.001, 354.001, 355.001, 356.001, 357.001, 358.001, 359.001, 360.001, 361.001, 362.001, 363.001, 364.001, 365.001, 366.001, 367.001, 368.001, 369.001, 370.001, 371.001, 372.001, 373.001, 374.001, 375.001, 376.001, 377.001, 378.001, 379.001, 380.001, 381.001, 382.001, 383.001, 384.001, 385.001, 386.001, 387.001, 388.001, 389.001, 390.001, 391.001, 392.001, 393.001, 394.001, 395.001, 396.001, 397.001, 398.001, 399.001, 400.001, 401.001, 402.001, 403.001, 404.001, 405.001, 406.001, 407.001, 408.001, 409.001, 410.001, 411.001, 412.001, 413.001, 414.001, 415.001, 416.001, 417.001, 418.001, 419.001, 420.001, 421.001, 422.001, 423.001, 424.001, 425.001, 426.001, 427.001, 428.001, 429.001, 430.001, 431.001, 432.001, 433.001, 434.001, 435.001, 436.001, 437.001, 438.001, 439.001, 440.001, 441.001, 442.001, 443.001, 444.001, 445.001, 446.001, 447.001, 448.001, 449.001, 450.001, 451.001, 452.001, 453.001, 454.001, 455.001, 456.001, 457.001, 458.001, 459.001, 460.001, 461.001, 462.001, 463.001, 464.001, 465.001, 466.001, 467.001, 468.001, 469.001, 470.001, 471.001, 472.001, 473.001, 474.001, 475.001, 476.001, 477.001, 478.001, 479.001, 480.001, 481.001, 482.001, 483.001, 484.001, 485.001, 486.001, 487.001, 488.001, 489.001, 490.001, 491.001, 492.001, 493.001, 494.001, 495.001, 496.001, 497.001, 498.001, 499.001, 500.001, 501.001, 502.001, 503.001, 504.001, 505.001, 506.001, 507.001, 508.001, 509.001, 510.001, 511.001, 512.001, 513.001, 514.001, 515.001, 516.001, 517.001, 518.001, 519.001, 520.001, 521.001, 522.001, 523.001, 524.001, 525.001, 526.001, 527.001, 528.001, 529.001, 530.001, 531.001, 532.001, 533.001, 534.001, 535.001, 536.001, 537.001, 538.001, 539.001, 540.001, 541.001, 542.001, 543.001, 544.001, 545.001, 546.001, 547.001, 548.001, 549.001, 550.001, 551.001, 552.001, 553.001, 554.001, 555.001, 556.001, 557.001, 558.001, 559.001, 560.001, 561.001, 562.001, 563.001, 564.001, 565.001, 566.001, 567.001, 568.001, 569.001, 570.001, 571.001, 572.001, 573.001, 574.001, 575.001, 576.001, 577.001, 578.001, 579.001, 580.001, 581.001, 582.001, 583.001, 584.001, 585.001, 586.001, 587.001, 588.001, 589.001, 590.001, 591.001, 592.001, 593.001, 594.001, 595.001, 596.001, 597.001, 598.001, 599.001, 600.001, 601.001, 602.001, 603.001, 604.001, 605.001, 606.001, 607.001, 608.001, 609.001, 610.001, 611.001, 612.001, 613.001, 614.001, 615.001, 616.001, 617.001, 618.001, 619.001, 620.001, 621.001, 622.001, 623.001, 624.001, 625.001, 626.001, 627.001, 628.001, 629.001, 630.001, 631.001, 632.001, 633.001, 634.001, 635.001, 636.001, 637.001, 638.001, 639.001, 640.001, 641.001, 642.001, 643.001, 644.001, 645.001, 646.001, 647.001, 648.001, 649.001, 650.001, 651.001, 652.001, 653.001, 654.001, 655.001, 656.001, 657.001, 658.001, 659.001, 660.001, 661.001, 662.001, 663.001, 664.001, 665.001, 666.001, 667.001, 668.001, 669.001, 670.001, 671.001, 672.001, 673.001, 674.001, 675.001, 676.001, 677.001, 678.001, 679.001, 680.001, 681.001, 682.001, 683.001, 684.001, 685.001, 686.001, 687.001, 688.001, 689.001, 690.001, 691.001, 692.001, 693.001, 694.001, 695.001, 696.001, 697.001, 698.001, 699.001, 700.001, 701.001, 702.001, 703.001, 704.001, 705.001, 706.001, 707.001, 708.001, 709.001, 710.001, 711.001, 712.001, 713.001, 714.001, 715.001, 716.001, 717.001, 718.001, 719.001, 720.001, 721.001, 722.001, 723.001, 724.001, 725.001, 726.001, 727.001, 728.001, 729.001, 730.001, 731.001, 732.001, 733.001, 734.001, 735.001, 736.001, 737.001, 738.001, 739.001, 740.001, 741.001, 742.001, 743.001, 744.001, 745.001, 746.001, 747.001, 748.001, 749.001, 750.001, 751.001, 752.001, 753.001, 754.001, 755.001, 756.001, 757.001, 758.001, 759.001, 760.001, 761.001, 762.001, 763.001, 764.001, 765.001, 766.001, 767.001, 768.001, 769.001, 770.001, 771.001, 772.001, 773.001, 774.001, 775.001, 776.001, 777.001, 778.001, 779.001, 780.001, 781.001, 782.001, 783.001, 784.001, 785.001, 786.001, 787.001, 788.001, 789.001, 790.001, 791.001, 792.001, 793.001, 794.001, 795.001, 796.001, 797.001, 798.001, 799.001, 800.001, 801.001, 802.001, 803.001, 804.001, 805.001, 806.001, 807.001, 808.001, 809.001, 810.001, 811.001, 812.001, 813.001, 814.001, 815.001, 816.001, 817.001, 818.001, 819.001, 820.001, 821.001, 822.001, 823.001, 824.001, 825.001, 826.001, 827.001, 828.001, 829.001, 830.001, 831.001, 832.001, 833.001, 834.001, 835.001, 836.001, 837.001, 838.001, 839.001, 840.001, 841.001, 842.001, 843.001, 844.001, 845.001, 846.001, 847.001, 848.001, 849.001, 850.001, 851.001, 852.001, 853.001, 854.001, 855.001, 856.001, 857.001, 858.001, 859.001, 860.001, 861.001, 862.001, 863.001, 864.001, 865.001, 866.001, 867.001, 868.001, 869.001, 870.001, 871.001, 872.001, 873.001, 874.001, 875.001, 876.001, 877.001, 878.001, 879.001, 880.001, 881.001, 882.001, 883.001, 884.001, 885.001, 886.001, 887.001, 888.001, 889.001, 890.001, 891.001, 892.001, 893.001, 894.001, 895.001, 896.001, 897.001, 898.001, 899.001, 900.001, 901.001, 902.001, 903.001, 904.001, 905.001, 906.001, 907.001, 908.001, 909.001, 910.001, 911.001, 912.001, 913.001, 914.001, 915.001, 916.001, 917.001, 918.001, 919.001, 920.001, 921.001, 922.001, 923.001, 924.001, 925.001, 926.001, 927.001, 928.001, 929.001, 930.001, 931.001, 932.001, 933.001, 934.001, 935.001, 936.001, 937.001, 938.001, 939.001, 940.001, 941.001, 942.001, 943.001, 944.001, 945.001, 946.001, 947.001, 948.001, 949.001, 950.001, 951.001, 952.001, 953.001, 954.001, 955.001, 956.001, 957.001, 958.001, 959.001, 960.001, 961.001, 962.001, 963.001, 964.001, 965.001, 966.001, 967.001, 968.001, 969.001, 970.001, 971.001, 972.001, 973.001, 974.001, 975.001, 976.001, 977.001, 978.001, 979.001, 980.001, 981.001, 982.001, 983.001, 984.001, 985.001, 986.001, 987.001, 988.001, 989.001, 990.001, 991.001, 992.001, 993.001, 994.001, 995.001, 996.001, 997.001, 998.001, 999.001, 1020.001, 1041.001, 1062.001, 1083.001, 1104.001, 1125.001, 1146.001, 1167.001, 1188.001, 1209.001, 1230.001, 1251.001, 1272.001, 1293.001, 1314.001, 1335.001, 1356.001, 1377.001, 1398.001, 1419.001, 1440.001, 1461.001, 1482.001, 1503.001, 1524.001, 1545.001, 1566.001, 1587.001, 1608.001, 1629.001, 1650.001, 1671.001, 1692.001, 1713.001, 1734.001, 1755.001, 1776.001, 1797.001, 1818.001, 1839.001, 1860.001, 1881.001, 1902.001, 1923.001, 1944.001, 1965.001, 1986.001, 2007.001, 2028.001, 2049.001, 2070.001, 2091.001, 2112.001, 2133.001, 2154.001, 2175.001, 2196.001, 2217.001, 2238.001, 2259.001, 2280.001, 2301.001, 2322.001, 2343.001, 2364.001, 2385.001, 2406.001, 2427.001, 2448.001, 2469.001, 2490.001, 2511.001, 2532.001, 2553.001, 2574.001, 2595.001, 2616.001, 2637.001, 2658.001};
+    return proton_energy_bins;
+  }
+
+
 }
 
 
@@ -191,6 +212,140 @@ bool LEEana::is_true_0p(PFevalInfo& pfeval){
     }
   return true;
 }
+
+std::tuple<std::vector<double>,std::vector<double>,std::vector<double>,std::vector<double>> LEEana::get_range_proton_KE(PFevalInfo& pfeval, SpaceInfo& space, bool return_MeV){
+
+  std::vector<double> prim_proton_KEs;
+  std::vector<double> proton_KEs;
+  std::vector<double> prim_larpid_proton_KEs;
+  std::vector<double> larpid_proton_KEs;
+
+  std::vector<double> proton_length_bins = get_proton_length_bins(); 
+  std::vector<double> proton_energy_bins = get_proton_energy_bins();
+
+  int n_spacepoints = space.Trecchargeblob_spacepoints_real_cluster_id->size();
+
+  for(size_t i=0; i<pfeval.reco_Ntrack; i++){
+
+    bool flag_wc=false;
+    bool flag_larpid=false;
+    if (pfeval.reco_pdg[i]==2212) flag_wc=true;
+    if (pfeval.reco_larpid_pdg[i]==2212) flag_larpid=true;
+    if(!flag_wc && !flag_larpid) continue;
+
+    double range_proton = 0; 
+    double proton_KE = 0;
+    std::vector<float> *temp_spacepoints_x = new std::vector<float>;
+    std::vector<float> *temp_spacepoints_y = new std::vector<float>;
+    std::vector<float> *temp_spacepoints_z = new std::vector<float>;
+    std::vector<float> *temp_spacepoints_q = new std::vector<float>;
+    for(size_t sp=0; sp<n_spacepoints; sp++){
+      if(space.Trecchargeblob_spacepoints_real_cluster_id->at(sp)==pfeval.reco_id[i]){
+        temp_spacepoints_x->push_back(space.Trecchargeblob_spacepoints_x->at(sp));
+        temp_spacepoints_y->push_back(space.Trecchargeblob_spacepoints_y->at(sp));
+        temp_spacepoints_z->push_back(space.Trecchargeblob_spacepoints_z->at(sp));
+        temp_spacepoints_q->push_back(space.Trecchargeblob_spacepoints_q->at(sp));
+      }
+    }
+    int n_spacepoints_part = temp_spacepoints_x->size();
+    if(n_spacepoints_part==0) continue;
+      
+    for(int sp=0; sp<n_spacepoints_part-1; sp++){
+      double dx = temp_spacepoints_x->at(sp) - temp_spacepoints_x->at(sp+1);
+      double dy = temp_spacepoints_y->at(sp) - temp_spacepoints_y->at(sp+1);
+      double dz = temp_spacepoints_z->at(sp) - temp_spacepoints_z->at(sp+1);
+      double dist = sqrt(pow(dx,2)+pow(dy,2)+pow(dz,2));
+      range_proton+=dist;
+    }
+
+    int nbb = proton_length_bins.size();
+    for(int bb=0; bb<nbb-1; bb++){
+      if(proton_length_bins.at(bb)<=range_proton && proton_length_bins.at(bb+1)>range_proton){
+        double m = (proton_energy_bins.at(bb+1)-proton_energy_bins.at(bb))/(proton_length_bins.at(bb+1)-proton_length_bins.at(bb));
+        proton_KE = proton_energy_bins.at(bb) + m * (range_proton-proton_length_bins.at(bb));
+        break;
+      }
+    }
+    
+    if(flag_wc) proton_KEs.push_back(proton_KE);
+    if(flag_larpid) larpid_proton_KEs.push_back(proton_KE);
+    if(pfeval.reco_mother[i]==0){
+      if(flag_wc) prim_proton_KEs.push_back(proton_KE);
+      if(flag_larpid) prim_larpid_proton_KEs.push_back(proton_KE);
+    }
+  }
+
+  if(proton_KEs.size()==0) proton_KEs.push_back(0);
+  if(larpid_proton_KEs.size()==0) larpid_proton_KEs.push_back(0);
+  if(prim_proton_KEs.size()==0) prim_proton_KEs.push_back(0);
+  if(prim_larpid_proton_KEs.size()==0) prim_larpid_proton_KEs.push_back(0);
+       
+  std::sort(prim_proton_KEs.begin(), prim_proton_KEs.end(), wayToSort);
+  std::sort(proton_KEs.begin(), proton_KEs.end(), wayToSort);
+  std::sort(prim_larpid_proton_KEs.begin(), prim_larpid_proton_KEs.end(), wayToSort);
+  std::sort(larpid_proton_KEs.begin(), larpid_proton_KEs.end(), wayToSort);
+  std::tuple<std::vector<double>,std::vector<double>,std::vector<double>,std::vector<double>> result = std::make_tuple(prim_proton_KEs,proton_KEs,prim_larpid_proton_KEs,larpid_proton_KEs);
+  return result;
+
+}
+
+
+std::vector<double> LEEana::get_pandora_proton_KE(PandoraInfo& pandora, double TRACK_SCORE_CUT, bool return_MeV){
+
+  std::vector<double> proton_KEs;
+    
+  if (pandora.slice_orig_pass_id != 1){
+    proton_KEs.push_back(0);
+    return proton_KEs;
+  }
+
+  for(size_t part=0; part<pandora.n_pfps; part++){
+        
+    int generation = pandora.pfp_generation_v->at(part);
+    if(generation!=2) continue;
+
+    if(pandora.pfpdg->at(part)!=13) continue;
+
+    if(pandora.trk_llr_pid_score_v->at(part) < TRACK_SCORE_CUT){ proton_KEs.push_back(pandora.trk_energy_proton_v->at(part)); }
+  }
+
+  if(return_MeV){
+    for(size_t part=0; part<proton_KEs.size(); part++){
+      proton_KEs.at(part) = proton_KEs.at(part)*1000;
+    }
+  }
+               
+  if(proton_KEs.size()==0) proton_KEs.push_back(0); 
+  std::sort(proton_KEs.begin(), proton_KEs.end(), wayToSort);
+  std::sort(proton_KEs.begin(), proton_KEs.end(), wayToSort);
+  return proton_KEs;
+
+}
+
+std::vector<double> LEEana::get_lantern_KE(LanternInfo& lantern, int pdg, double vtx_cut, bool return_MeV){
+
+  std::vector<double> p_KEs;
+
+  for(size_t part=0; part<lantern.nTracks; part++){
+
+    if(lantern.trackPID[part]!=pdg) continue;
+    if(lantern.trackIsSecondary[part]!=0) continue;
+    if(lantern.trackDistToVtx[part]>vtx_cut) continue;
+    p_KEs.push_back(lantern.trackRecoE[part]);
+  }
+
+  if(!return_MeV){
+    for(size_t part=0; part<p_KEs.size(); part++){
+      p_KEs.at(part) = p_KEs.at(part)/1000;
+    }
+  }
+
+  if(p_KEs.size()==0) p_KEs.push_back(0);
+  std::sort(p_KEs.begin(), p_KEs.end(), wayToSort);
+  return p_KEs;
+
+}
+
 
 double LEEana::get_weight(TString weight_name, EvalInfo& eval, PFevalInfo& pfeval, KineInfo& kine, TaggerInfo& tagger, std::tuple< bool, std::vector< std::tuple<bool, TString, TString, double, double, bool, bool, bool, std::vector<double>, std::vector<double>  > > > rw_info, std::map<int, std::tuple< double, double, double, double > > time_info, bool flag_data){
   double addtl_weight = 1.0;
@@ -346,7 +501,7 @@ double LEEana::get_weight(TString weight_name, EvalInfo& eval, PFevalInfo& pfeva
     float ext_scale = 1.0 - ext_rej;
     return pow(ext_scale,2);
 //cex bug fix weights
-  }else if (weight_name = "cv_spline_cexbugfix"){
+  }else if (weight_name == "cv_spline_cexbugfix"){
     double ratio_weight = 1.0;
     if (eval.truth_isCC == 0 && pfeval.truth_NprimPio==1)
     {
@@ -403,7 +558,7 @@ double LEEana::get_weight(TString weight_name, EvalInfo& eval, PFevalInfo& pfeva
     if (ratio_weight > 10.0) ratio_weight = 10.0;
     if (ratio_weight < 0.0) ratio_weight = 0.0;
     return addtl_weight*eval.weight_cv * eval.weight_spline * ratio_weight;
-  }else if (weight_name = "cv_spline_cexbugfix_cv_spline_cexbugfix"){
+  }else if (weight_name == "cv_spline_cexbugfix_cv_spline_cexbugfix"){
     double ratio_weight = 1.0;
     if (eval.truth_isCC == 0 && pfeval.truth_NprimPio==1)
     {
@@ -506,13 +661,48 @@ double LEEana::get_truth_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval,
   return 0;
 }
 
-
-double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, TaggerInfo& tagger, bool flag_data , TString var_name){
+double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, TaggerInfo& tagger, bool flag_data, TString var_name, SpaceInfo& space, PandoraInfo& pandora, LanternInfo& lantern){
   //  if (var_name == "kine_reco_Enu"){
   //  return kine.kine_reco_Enu;
   //  }else
   if (var_name == "kine_reco_Enu"){
     return get_reco_Enu_corr(kine, flag_data);
+
+  }else if (var_name == "lantern_nTracks"){
+    return lantern.nTracks;
+
+  }else if (var_name=="range_leading_prim_proton_KE"){
+    std::tuple<std::vector<double>,std::vector<double>,std::vector<double>,std::vector<double>> result = get_range_proton_KE(pfeval, space, true);
+    return std::get<0>(result).at(0);
+  }else if (var_name=="range_subleading_prim_proton_KE"){
+    std::tuple<std::vector<double>,std::vector<double>,std::vector<double>,std::vector<double>> result = get_range_proton_KE(pfeval, space, true);
+    if(std::get<0>(result).size()<2) return 0;
+    return std::get<0>(result).at(1);
+  }else if (var_name=="range_leading_proton_KE"){
+    std::tuple<std::vector<double>,std::vector<double>,std::vector<double>,std::vector<double>> result = get_range_proton_KE(pfeval, space, true);
+    return std::get<1>(result).at(0);
+  }else if (var_name=="range_leading_prim_LArPID_proton_KE"){
+    std::tuple<std::vector<double>,std::vector<double>,std::vector<double>,std::vector<double>> result = get_range_proton_KE(pfeval, space, true);
+    return std::get<2>(result).at(0);
+  }else if (var_name=="range_leading_LArPID_proton_KE"){
+    std::tuple<std::vector<double>,std::vector<double>,std::vector<double>,std::vector<double>> result = get_range_proton_KE(pfeval, space, true);
+    return std::get<3>(result).at(0);
+  std::vector<double> get_lantern_KE(LanternInfo& lantern, int pdg, double vtx_cut, bool return_MeV);
+
+  }else if (var_name == "pandora_leading_prim_proton_KE"){
+    return get_pandora_proton_KE(pandora, 0.05, true).at(0);
+  }else if (var_name == "pandora_subleading_prim_proton_KE"){
+    std::vector<double> result = get_pandora_proton_KE(pandora, 0.05, true);
+    if(result.size()<2) return 0;
+    return result.at(1);
+
+  }else if (var_name == "lantern_leading_prim_proton_KE"){
+    return get_lantern_KE(lantern, 2212, 10, true).at(0);
+  }else if (var_name == "lantern_subleading_prim_proton_KE"){
+    std::vector<double> result = get_lantern_KE(lantern, 2212, 10, true);
+    if(result.size()<2) return 0;
+    return result.at(1);
+
   }else if (var_name == "reco_showerKE"){
     return get_reco_showerKE_corr(pfeval, flag_data) * 1000.;
   }else if (var_name == "kine_reco_Eproton"){
@@ -964,8 +1154,8 @@ double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, 
     return -10000;
   }
   else if (var_name == "muon_momentum_costheta"){
-    float muon_momentum = get_kine_var(kine, eval, pfeval, tagger, flag_data , "muon_momentum");
-    float costheta = get_kine_var(kine, eval, pfeval, tagger, flag_data , "muon_costheta");
+    float muon_momentum = get_kine_var(kine, eval, pfeval, tagger, flag_data , "muon_momentum", space, pandora, lantern);
+    float costheta = get_kine_var(kine, eval, pfeval, tagger, flag_data , "muon_costheta", space, pandora, lantern);
     int bin = alt_var_index("muon_momentum",muon_momentum, "costheta", costheta);
     return bin;
   }
@@ -973,7 +1163,7 @@ double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, 
     float Ehadron = -1000;
     if (pfeval.reco_muonMomentum[3]>0)
       Ehadron = get_reco_Enu_corr(kine, flag_data) - pfeval.reco_muonMomentum[3]*1000.;
-    float costheta = get_kine_var(kine, eval, pfeval, tagger, flag_data , "muon_costheta");
+    float costheta = get_kine_var(kine, eval, pfeval, tagger, flag_data , "muon_costheta", space, pandora, lantern);
     int bin = alt_var_index("Ehadron",Ehadron, "costheta", costheta);
     return bin;
   }
@@ -2482,8 +2672,7 @@ int LEEana::get_xs_signal_no(int cut_file, std::map<TString, int>& map_cut_xs_bi
   return -1;
 }
 
-bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, EvalInfo& eval, PFevalInfo& pfeval, TaggerInfo& tagger, KineInfo& kine){
-
+bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, EvalInfo& eval, PFevalInfo& pfeval, TaggerInfo& tagger, KineInfo& kine, SpaceInfo& space, PandoraInfo& pandora, LanternInfo& lantern){
 
   double reco_Enu = get_reco_Enu_corr(kine, flag_data);
 
