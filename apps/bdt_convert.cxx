@@ -4184,7 +4184,7 @@ int main( int argc, char** argv )
 
       (*pot_tree_it)->old_pot_tree->GetEntry(i);
 
-      if (remove_set.find(std::make_pair((*pot_tree_it).runNo, (*pot_tree_it).subRunNo)) != remove_set.end()) continue;
+      if (remove_set.find(std::make_pair((*pot_tree_it)->runNo, (*pot_tree_it)->subRunNo)) != remove_set.end()) continue;
       if (flag_data && skip_cut == 0){
         if (good_runlist_set.find((*pot_tree_it)->runNo) == good_runlist_set.end()) continue;
         if (low_lifetime_set.find((*pot_tree_it)->runNo) != low_lifetime_set.end()) continue;
