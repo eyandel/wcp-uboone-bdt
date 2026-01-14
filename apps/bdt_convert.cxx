@@ -67,6 +67,8 @@ int main( int argc, char** argv )
 
   bool flag_spbdt=false;
 
+  int remove_lantern_fails = true;
+
   for (Int_t i=3;i!=argc;i++){
     switch(argv[i][1]){
     case 'c':
@@ -102,8 +104,14 @@ int main( int argc, char** argv )
       flag_spbdt = &argv[i][2];
       if (flag_spbdt) std::cout<<"Particle level spacepoint BDTs will be included"<<std::endl;
       break;
+    case 'r':
+      remove_lantern_fails = atoi(&argv[i][2]);
+      break;
     }
   }
+
+  if (remove_lantern_fails==1) std::cout<<"Removing subruns where Lantern container failed"<<std::endl;
+  else std::cout<<"Will kepp subruns where Lantern container failed"<<std::endl;
 
   bool flag_check_run_subrun = false;
   bool flag_use_global_file_type = false;
@@ -147,6 +155,7 @@ int main( int argc, char** argv )
   TTree *T_PFeval = (TTree*)file1->Get("wcpselection/T_PFeval");
   TTree *T_KINEvars = (TTree*)file1->Get("wcpselection/T_KINEvars");
   TTree *T_spacepoints = (TTree*)file1->Get("wcpselection/T_spacepoints");
+  TTree *T_lantern = (TTree*)file1->Get("lantern/EventTree");
 
   //Load other trees from directories as specified by the config file
   wrangler.get_old_trees(file1);
@@ -3776,6 +3785,9 @@ int main( int argc, char** argv )
   T_BDTvars->SetBranchStatus("*",0);
   T_BDTvars->SetBranchStatus("numu_cc_flag",1);
 
+  int haveReco;
+  if(T_lantern && remove_lantern_fails==1) T_lantern->SetBranchAddress("haveReco",&haveReco);
+
   std::set<std::pair<int,int> > remove_set;
 
   bool flag_presel = false;
@@ -3784,6 +3796,13 @@ int main( int argc, char** argv )
     T_eval->GetEntry(i);
     T_BDTvars->GetEntry(i);
 
+    // Check if the Lantern container failed on this event, if so throw out the subrun.
+    if(T_lantern) T_lantern->GetEntry(i);
+    if(remove_lantern_fails==1 && haveReco==0){
+      remove_set.insert(std::make_pair(eval.run, eval.subrun));
+      continue;
+    }
+  
     if (flag_check_run_subrun){
       if (flag_use_global_file_type){
 	(*eval.file_type) = global_file_type;
@@ -4015,13 +4034,13 @@ int main( int argc, char** argv )
       temp_p_veto_score = -999;
       temp_n_veto_score = -999;
       temp_all_veto_score = -999;
-      create_particle(space_info, pfeval, particle_info, part);
+      create_particle(space_info, pfeval, particle_info, part, flag_data);
       if(particle_info.reco_pdg<0) continue;
       temp_pi_veto_score = cal_spacepoint_pi_veto(particle_info,reader_pi_veto);
       if(temp_pi_veto_score>tagger.pi_veto_all_score) tagger.pi_veto_all_score = temp_pi_veto_score;
       if(temp_pi_veto_score>tagger.pi_veto_prim_score && pfeval.reco_mother[part]==0) tagger.pi_veto_prim_score = temp_pi_veto_score;
       if(temp_pi_veto_score>tagger.pi_veto_score && pfeval.reco_mother[part]==0 && pfeval.reco_pdg[part]==211) tagger.pi_veto_score = temp_pi_veto_score;
-
+//std::cout<<temp_pi_veto_score<<" "<<particle_info.reco_pdg<<" "<<particle_info.reco_momentum_0<<std::endl;
       temp_mu_veto_score = cal_spacepoint_mu_veto(particle_info,reader_mu_veto);
       if(temp_mu_veto_score>tagger.mu_veto_all_score) tagger.mu_veto_all_score = temp_mu_veto_score;
       if(temp_mu_veto_score>tagger.mu_veto_prim_score && pfeval.reco_mother[part]==0 && particle_info.flag_prim_mu==0) tagger.mu_veto_prim_score = temp_mu_veto_score;
@@ -4036,19 +4055,20 @@ int main( int argc, char** argv )
       if(temp_p_veto_score>tagger.p_veto_all_score) tagger.p_veto_all_score = temp_p_veto_score;
       if(temp_p_veto_score>tagger.p_veto_prim_score && pfeval.reco_mother[part]==0) tagger.p_veto_prim_score = temp_p_veto_score;
       if(temp_p_veto_score>tagger.p_veto_score && pfeval.reco_mother[part]==0 && pfeval.reco_pdg[part]==2212) tagger.p_veto_score = temp_p_veto_score;
+//std::cout<<temp_p_veto_score<<" "<<particle_info.reco_pdg<<" "<<particle_info.reco_momentum_0<<std::endl;
 
       temp_n_veto_score = cal_spacepoint_n_veto(particle_info,reader_n_veto);
       if(temp_n_veto_score>tagger.n_veto_all_score) tagger.n_veto_all_score = temp_n_veto_score;
       if(temp_n_veto_score>tagger.n_veto_nonprim_score && pfeval.reco_mother[part]!=0) tagger.n_veto_nonprim_score = temp_n_veto_score;
       if(temp_n_veto_score>tagger.n_veto_score && pfeval.reco_mother[part]!=0 && (particle_info.reco_is_g_induced==1 || particle_info.reco_is_n_induced==1)) tagger.n_veto_score = temp_n_veto_score; 
-      
+  
       if(particle_info.flag_prim_mu==1){ prim_mu_index = part;}
       else{
-        temp_pi_veto_score +=-0.31411579999999995;
-        temp_mu_veto_score +=-0.42706789999999994;
-        temp_el_veto_score +=-0.6701050000000001;
-        temp_p_veto_score +=0.7942918999999999;
-        temp_n_veto_score +=-1.6840734000000004;
+        temp_pi_veto_score +=-0.03167;
+        temp_mu_veto_score +=-0.12784585;
+        temp_el_veto_score +=-0.5630117;
+        temp_p_veto_score +=1.2690324;
+        temp_n_veto_score +=-1.4071424;
         temp_all_veto_score = cal_spacepoint_all_veto(particle_info,reader_all_veto);
         if(temp_all_veto_score>tagger.all_veto_score) tagger.all_veto_score = temp_all_veto_score;
       }
@@ -4056,7 +4076,7 @@ int main( int argc, char** argv )
       if(pfeval.reco_mother[part]==0 && (pfeval.reco_pdg[part]==2212 || pfeval.reco_pdg[part]==211) ) flag_has_prim_tracks=1;
     }
     if(prim_mu_index>=0){
-      create_particle(space_info, pfeval, particle_info, prim_mu_index);
+      create_particle(space_info, pfeval, particle_info, prim_mu_index, flag_data);
       reco_Emuon = (particle_info.reco_momentum_3+0.1057)*1000;
       tagger.VtxAct_bdt_score = cal_VtxAct_bdt_score(particle_info,reader_VtxAct_bdt);
     }
@@ -4115,7 +4135,6 @@ int main( int argc, char** argv )
         (*tree_it)->Fill();
     }
 
-
     //    std::cout << pfeval.reco_daughters->size() << std::endl;
     //    break;
   }
@@ -4165,8 +4184,7 @@ int main( int argc, char** argv )
 
       (*pot_tree_it)->old_pot_tree->GetEntry(i);
 
-      // This is dropping run-subruns without and events, don't do this here.
-      //if (remove_set.find(std::make_pair((*pot_tree_it).runNo, (*pot_tree_it).subRunNo)) != remove_set.end()) continue;
+      if (remove_set.find(std::make_pair((*pot_tree_it)->runNo, (*pot_tree_it)->subRunNo)) != remove_set.end()) continue;
       if (flag_data && skip_cut == 0){
         if (good_runlist_set.find((*pot_tree_it)->runNo) == good_runlist_set.end()) continue;
         if (low_lifetime_set.find((*pot_tree_it)->runNo) != low_lifetime_set.end()) continue;
