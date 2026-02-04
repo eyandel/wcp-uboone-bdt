@@ -1,0 +1,52 @@
+1    NCPi0_Np    truth_energyInside    250    1000    0    0    1
+
+0.406366   0.511624   0.601452   0.58003   0.518105   0.484413   0.433561   0.358873   0.303316   0.309188   0.375834   0.45791   0.516311   0.519274   0.451251
+
+1   NCPi0_0p     truth_energyInside    100    900    0    0    1
+
+1.38501   1.37444   1.36037   1.34265   1.26576   1.05254   0.694593   0.340093   0.180095   0.29023   0.537049   0.742396   0.810889   0.72826   0.567224   0.443822
+
+end
+
+All reweightings below were derived with the "wrong pi0 cuts" that did not take the >1pi0 events from the nu overlay file. The above reweighting was derived with the correct cuts.
+
+1    NCPi0_Np    truth_energyInside    250    1400    0    0    1
+
+0.253369   0.383944   0.562346   0.65335   0.674356   0.660178   0.620949   0.628801   0.656192   0.614876   0.545956   0.522634   0.601086   0.901991   1.29757   1.68813   1.89426   2.13387   2.07376   2.54674   2.79741   2.97804   2.92738
+
+1   NCPi0_0p     truth_energyInside    150    900    0    0    1
+
+1.03556   1.0044   1.303   1.51352   1.45154   1.02605   0.534695   0.274776   0.454917   0.86527   1.10643   1.33621   1.67019   2.139   2.85217
+
+1    NCDeltaNp_scale    truth_energyInside    0    1500    0    0     1
+
+0.73285199
+
+1    NCDelta0p_scale    truth_energyInside    0    1500    0    0    1
+
+0.94899536
+
+end
+
+
+
+
+Above is the reweighting that accounts for constrain from numuCC, below is the reweighting that does not account for constraint.
+
+1    NCPi0_Np    truth_energyInside    200    1000    0    1    1
+
+0.340159   0.458425   0.655347   0.634486   0.563637   0.406393   0.223927   0.131987   0.170699   0.263287   0.271724
+
+1   NCPi0_0p     truth_energyInside    100    900    0    1    1
+
+2.14393   1.91393   1.76786   1.85262   1.83618   1.60938   1.29299   1.02626   0.829134   0.726168   0.812421   1.14728   1.70734   2.20593   2.67348   2.07929
+
+1    NCDeltaNp_scale    truth_energyInside    0    1500    0    0     1
+
+0.6859206
+
+1    NCDelta0p_scale    truth_energyInside    0    1500    0    0    1
+
+1.2132921
+
+end
