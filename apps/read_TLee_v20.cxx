@@ -447,7 +447,7 @@ int main(int argc, char** argv)
     Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 3001 );
   }
 
-  int make_constrained_sp_plot_morechannels = 1;
+  int make_constrained_sp_plot_morechannels = 0;
 
   if (make_constrained_sp_plot_morechannels) {
 
@@ -468,7 +468,7 @@ int main(int argc, char** argv)
     Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 3001 );
   }
 
-  int make_constrained_sp_Np0p_plot = 1;
+  int make_constrained_sp_Np0p_plot = 0;
 
   if (make_constrained_sp_Np0p_plot) {
 
@@ -535,6 +535,113 @@ int main(int argc, char** argv)
     vc_support_chs.push_back(8); //Other Np
 
     Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 3003 );
+  }
+
+  //test 0p/Np with other sideband
+  int make_constrained_sp_Np0p_oneshw = 0;
+
+  if (make_constrained_sp_Np0p_oneshw) {
+
+    Lee_test->scaleF_Lee = 0;
+    Lee_test->Set_Collapse();
+
+    //single photon Np selection, no overflow bins
+    vector<int>vc_target_chs;
+    vc_target_chs.push_back(1); //1g0p
+    vector<int>vc_support_chs;
+
+    vc_support_chs.push_back(3); //NC Pi0 0p oneshw
+    vc_support_chs.push_back(4); //NC Pi0 0p moreshw
+    vc_support_chs.push_back(5); //Numu CC 0p oneshw
+    vc_support_chs.push_back(6); //Numu CC 0p moreshw
+
+    Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 3001 );
+
+  }
+
+  if (make_constrained_sp_Np0p_oneshw) {
+
+    Lee_test->scaleF_Lee = 0;
+    Lee_test->Set_Collapse();
+
+    //single photon Np selection, no overflow bins
+    vector<int>vc_target_chs;
+    vc_target_chs.push_back(1); //1g0p
+    vector<int>vc_support_chs;
+
+    vc_support_chs.push_back(3); //NC Pi0 0p oneshw
+    vc_support_chs.push_back(5); //Numu CC 0p oneshw
+
+    Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 3002 );
+
+  }
+  if (make_constrained_sp_Np0p_oneshw) {
+
+    Lee_test->scaleF_Lee = 0;
+    Lee_test->Set_Collapse();
+
+    //single photon Np selection, no overflow bins
+    vector<int>vc_target_chs;
+    vc_target_chs.push_back(1); //1g0p
+    vector<int>vc_support_chs;
+
+    //vc_support_chs.push_back(3); //NC Pi0 0p oneshw
+    vc_support_chs.push_back(4); //NC Pi0 0p moreshw
+    //vc_support_chs.push_back(5); //Numu CC 0p oneshw
+    vc_support_chs.push_back(6); //Numu CC 0p moreshw
+
+    Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 3003 );
+
+  }
+  if (make_constrained_sp_Np0p_oneshw) {
+    Lee_test->scaleF_Lee = 0;
+    Lee_test->Set_Collapse();
+
+    //single photon 0p selection, no overflow bins
+    vector<int>vc_target_chs;
+    vc_target_chs.push_back(2); //1gNp
+    vector<int>vc_support_chs;
+
+    vc_support_chs.push_back(7); //NC Pi0 Np oneshw
+    vc_support_chs.push_back(8); //NC Pi0 Np moreshw
+    vc_support_chs.push_back(9); //Numu CC Np oneshw
+    vc_support_chs.push_back(10); //Numu CC Np moreshw
+
+    Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 3004 );
+  }
+
+  if (make_constrained_sp_Np0p_oneshw) {
+    Lee_test->scaleF_Lee = 0;
+    Lee_test->Set_Collapse();
+
+    //single photon 0p selection, no overflow bins
+    vector<int>vc_target_chs;
+    vc_target_chs.push_back(2); //1gNp
+    vector<int>vc_support_chs;
+
+    vc_support_chs.push_back(7); //NC Pi0 Np oneshw
+    //vc_support_chs.push_back(8); //NC Pi0 Np moreshw
+    vc_support_chs.push_back(9); //Numu CC Np oneshw
+    //vc_support_chs.push_back(10); //Numu CC Np moreshw
+
+    Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 3005 );
+  }
+
+  if (make_constrained_sp_Np0p_oneshw) {
+    Lee_test->scaleF_Lee = 0;
+    Lee_test->Set_Collapse();
+
+    //single photon 0p selection, no overflow bins
+    vector<int>vc_target_chs;
+    vc_target_chs.push_back(2); //1gNp
+    vector<int>vc_support_chs;
+
+    //vc_support_chs.push_back(7); //NC Pi0 Np oneshw
+    vc_support_chs.push_back(8); //NC Pi0 Np moreshw
+    //vc_support_chs.push_back(9); //Numu CC Np oneshw
+    vc_support_chs.push_back(10); //Numu CC Np moreshw
+
+    Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 3006 );
   }
 
   //make a bunch of plots for validation
