@@ -538,7 +538,7 @@ int main(int argc, char** argv)
   }
 
   //test 0p/Np with other sideband
-  int make_constrained_sp_Np0p_oneshw = 0;
+  int make_constrained_sp_Np0p_oneshw = 1;
 
   if (make_constrained_sp_Np0p_oneshw) {
 
