@@ -46,37 +46,37 @@ sp_bdt_numuCC_notoneshw_0p_dirt			    shower_energy_sp	             6	   0	     
 sp_bdt_numuCC_notoneshw_0p_ext 			    shower_energy_sp	             6	   0	      600     6	   0		      0	    0 	        0		      26          3	      unity   	  	  0
 sp_bdt_numuCC_notoneshw_0p     	            shower_energy_sp	             6	   0	      600     6	   0		      0	    0 	        0		      0		      5	      unity		      0
 
-sp_bdt_nc_pi0_oneshw_2_Np           	    shower_energy_sp	             6	   0	      600     3	   1		      1	    0	        0		      17	     10	      cv_spline		  1
-sp_bdt_nc_pi0_oneshw_Np_spoverlay	        shower_energy_sp	             6	   0	      600     3	   1		      1	    0	        0		      7		      9	      cv_spline		  0
-sp_bdt_nc_pi0_oneshw_Np_ncpi0overlay	    shower_energy_sp	             6	   0	      600     3	   1		      1	    0	        0		      7		      6	      cv_spline		  0
-sp_bdt_nc_pi0_oneshw_Np_overlay_ncpi0_BG	shower_energy_sp	             6	   0	      600     3	   1		      1	    0	        0		      7		      2	      cv_spline		  0
-sp_bdt_nc_pi0_oneshw_Np_dirt			    shower_energy_sp	             6	   0	      600     3	   1		      0	    0.5	        0		      7		      4	      cv_spline		  0
-sp_bdt_nc_pi0_oneshw_Np_ext 			    shower_energy_sp	             6	   0	      600     3	   0		      0	    0 	        0		      27          3	      unity   	  	  0
-sp_bdt_nc_pi0_oneshw_Np     	            shower_energy_sp	             6	   0	      600     3	   0		      0	    0 	        0		      0		      5	      unity		      0
+sp_bdt_nc_pi0_oneshw_2_Np           	    shower_energy_sp	             6	   0	      600     7	   1		      1	    0	        0		      17	     10	      cv_spline		  1
+sp_bdt_nc_pi0_oneshw_Np_spoverlay	        shower_energy_sp	             6	   0	      600     7	   1		      1	    0	        0		      7		      9	      cv_spline		  0
+sp_bdt_nc_pi0_oneshw_Np_ncpi0overlay	    shower_energy_sp	             6	   0	      600     7	   1		      1	    0	        0		      7		      6	      cv_spline		  0
+sp_bdt_nc_pi0_oneshw_Np_overlay_ncpi0_BG	shower_energy_sp	             6	   0	      600     7	   1		      1	    0	        0		      7		      2	      cv_spline		  0
+sp_bdt_nc_pi0_oneshw_Np_dirt			    shower_energy_sp	             6	   0	      600     7	   1		      0	    0.5	        0		      7		      4	      cv_spline		  0
+sp_bdt_nc_pi0_oneshw_Np_ext 			    shower_energy_sp	             6	   0	      600     7	   0		      0	    0 	        0		      27          3	      unity   	  	  0
+sp_bdt_nc_pi0_oneshw_Np     	            shower_energy_sp	             6	   0	      600     7	   0		      0	    0 	        0		      0		      5	      unity		      0
 
-sp_bdt_nc_pi0_notoneshw_2_Np          	    shower_energy_sp	             6	   0	      600     4	   1		      1	    0	        0		      18	     10	      cv_spline		  1
-sp_bdt_nc_pi0_notoneshw_Np_spoverlay	    shower_energy_sp	             6	   0	      600     4	   1		      1	    0	        0		      8		      9	      cv_spline		  0
-sp_bdt_nc_pi0_notoneshw_Np_ncpi0overlay	    shower_energy_sp	             6	   0	      600     4	   1		      1	    0	        0		      8		      6	      cv_spline		  0
-sp_bdt_nc_pi0_notoneshw_Np_overlay_ncpi0_BG	shower_energy_sp	             6	   0	      600     4	   1		      1	    0	        0		      8		      2	      cv_spline		  0
-sp_bdt_nc_pi0_notoneshw_Np_dirt			    shower_energy_sp	             6	   0	      600     4	   1		      0	    0.5	        0		      8		      4	      cv_spline		  0
-sp_bdt_nc_pi0_notoneshw_Np_ext 			    shower_energy_sp	             6	   0	      600     4	   0		      0	    0 	        0		      28          3	      unity   	  	  0
-sp_bdt_nc_pi0_notoneshw_Np     	            shower_energy_sp	             6	   0	      600     4	   0		      0	    0 	        0		      0		      5	      unity		      0
+sp_bdt_nc_pi0_notoneshw_2_Np          	    shower_energy_sp	             6	   0	      600     8	   1		      1	    0	        0		      18	     10	      cv_spline		  1
+sp_bdt_nc_pi0_notoneshw_Np_spoverlay	    shower_energy_sp	             6	   0	      600     8	   1		      1	    0	        0		      8		      9	      cv_spline		  0
+sp_bdt_nc_pi0_notoneshw_Np_ncpi0overlay	    shower_energy_sp	             6	   0	      600     8	   1		      1	    0	        0		      8		      6	      cv_spline		  0
+sp_bdt_nc_pi0_notoneshw_Np_overlay_ncpi0_BG	shower_energy_sp	             6	   0	      600     8	   1		      1	    0	        0		      8		      2	      cv_spline		  0
+sp_bdt_nc_pi0_notoneshw_Np_dirt			    shower_energy_sp	             6	   0	      600     8	   1		      0	    0.5	        0		      8		      4	      cv_spline		  0
+sp_bdt_nc_pi0_notoneshw_Np_ext 			    shower_energy_sp	             6	   0	      600     8	   0		      0	    0 	        0		      28          3	      unity   	  	  0
+sp_bdt_nc_pi0_notoneshw_Np     	            shower_energy_sp	             6	   0	      600     8	   0		      0	    0 	        0		      0		      5	      unity		      0
 
-sp_bdt_numuCC_oneshw_2_Np          	        shower_energy_sp	             6	   0	      600     5	   1		      1	    0	        0		      19 	     10	      cv_spline		  1
-sp_bdt_numuCC_oneshw_Np_spoverlay	        shower_energy_sp	             6	   0	      600     5	   1		      1	    0	        0		      9		      9	      cv_spline		  0
-sp_bdt_numuCC_oneshw_Np_ncpi0overlay	    shower_energy_sp	             6	   0	      600     5	   1		      1	    0	        0		      9		      6	      cv_spline		  0
-sp_bdt_numuCC_oneshw_Np_overlay_ncpi0_BG	shower_energy_sp	             6	   0	      600     5	   1		      1	    0	        0		      9		      2	      cv_spline		  0
-sp_bdt_numuCC_oneshw_Np_dirt			    shower_energy_sp	             6	   0	      600     5	   1		      0	    0.5	        0		      9		      4	      cv_spline		  0
-sp_bdt_numuCC_oneshw_Np_ext 			    shower_energy_sp	             6	   0	      600     5	   0		      0	    0 	        0		      29          3	      unity   	  	  0
-sp_bdt_numuCC_oneshw_Np     	            shower_energy_sp	             6	   0	      600     5	   0		      0	    0 	        0		      0		      5	      unity		      0
+sp_bdt_numuCC_oneshw_2_Np          	        shower_energy_sp	             6	   0	      600     9	   1		      1	    0	        0		      19 	     10	      cv_spline		  1
+sp_bdt_numuCC_oneshw_Np_spoverlay	        shower_energy_sp	             6	   0	      600     9	   1		      1	    0	        0		      9		      9	      cv_spline		  0
+sp_bdt_numuCC_oneshw_Np_ncpi0overlay	    shower_energy_sp	             6	   0	      600     9	   1		      1	    0	        0		      9		      6	      cv_spline		  0
+sp_bdt_numuCC_oneshw_Np_overlay_ncpi0_BG	shower_energy_sp	             6	   0	      600     9	   1		      1	    0	        0		      9		      2	      cv_spline		  0
+sp_bdt_numuCC_oneshw_Np_dirt			    shower_energy_sp	             6	   0	      600     9	   1		      0	    0.5	        0		      9		      4	      cv_spline		  0
+sp_bdt_numuCC_oneshw_Np_ext 			    shower_energy_sp	             6	   0	      600     9	   0		      0	    0 	        0		      29          3	      unity   	  	  0
+sp_bdt_numuCC_oneshw_Np     	            shower_energy_sp	             6	   0	      600     9	   0		      0	    0 	        0		      0		      5	      unity		      0
 
-sp_bdt_numuCC_notoneshw_2_Np          	    shower_energy_sp	             6	   0	      600     6	   1		      1	    0	        0		      20	     10	      cv_spline		  1
-sp_bdt_numuCC_notoneshw_Np_spoverlay	    shower_energy_sp	             6	   0	      600     6	   1		      1	    0	        0		      10		  9	      cv_spline		  0
-sp_bdt_numuCC_notoneshw_Np_ncpi0overlay	    shower_energy_sp	             6	   0	      600     6	   1		      1	    0	        0		      10		  6	      cv_spline		  0
-sp_bdt_numuCC_notoneshw_Np_overlay_ncpi0_BG	shower_energy_sp	             6	   0	      600     6	   1		      1	    0	        0		      10		  2	      cv_spline		  0
-sp_bdt_numuCC_notoneshw_Np_dirt			    shower_energy_sp	             6	   0	      600     6	   1		      0	    0.5	        0		      10		  4	      cv_spline		  0
-sp_bdt_numuCC_notoneshw_Np_ext 			    shower_energy_sp	             6	   0	      600     6	   0		      0	    0 	        0		      30          3	      unity   	  	  0
-sp_bdt_numuCC_notoneshw_Np     	            shower_energy_sp	             6	   0	      600     6	   0		      0	    0 	        0		      0		      5	      unity		      0
+sp_bdt_numuCC_notoneshw_2_Np          	    shower_energy_sp	             6	   0	      600     10	   1		      1	    0	        0		      20	     10	      cv_spline		  1
+sp_bdt_numuCC_notoneshw_Np_spoverlay	    shower_energy_sp	             6	   0	      600     10	   1		      1	    0	        0		      10		  9	      cv_spline		  0
+sp_bdt_numuCC_notoneshw_Np_ncpi0overlay	    shower_energy_sp	             6	   0	      600     10	   1		      1	    0	        0		      10		  6	      cv_spline		  0
+sp_bdt_numuCC_notoneshw_Np_overlay_ncpi0_BG	shower_energy_sp	             6	   0	      600     10	   1		      1	    0	        0		      10		  2	      cv_spline		  0
+sp_bdt_numuCC_notoneshw_Np_dirt			    shower_energy_sp	             6	   0	      600     10	   1		      0	    0.5	        0		      10		  4	      cv_spline		  0
+sp_bdt_numuCC_notoneshw_Np_ext 			    shower_energy_sp	             6	   0	      600     10	   0		      0	    0 	        0		      30          3	      unity   	  	  0
+sp_bdt_numuCC_notoneshw_Np     	            shower_energy_sp	             6	   0	      600     10	   0		      0	    0 	        0		      0		      5	      unity		      0
 End					                End		                         -1	   -1	      -1	   -1	   -1		      -1	  -1		    -1		    -1		    -1	    end		        -1
 #current plot
 

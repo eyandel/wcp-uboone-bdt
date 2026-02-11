@@ -537,7 +537,7 @@ int main(int argc, char** argv)
     Lee_test->Exe_Goodness_of_fit( vc_target_chs, vc_support_chs, 3003 );
   }
 
-  //test 0p/Np with other sideband
+  //test 0p/Np with one shw and notoneshw sidebands
   int make_constrained_sp_Np0p_oneshw = 1;
 
   if (make_constrained_sp_Np0p_oneshw) {
