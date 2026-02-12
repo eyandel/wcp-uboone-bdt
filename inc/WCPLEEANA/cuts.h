@@ -1650,7 +1650,26 @@ double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, 
     }else{
       return 3;
     }
-    
+  }else if (var_name == "sp_paper_cats_5sig"){
+    bool flag_truth_inside = false; // in the active volume
+    if (eval.truth_vtxX > -1 && eval.truth_vtxX <= 254.3 &&  eval.truth_vtxY >-115.0 && eval.truth_vtxY<=117.0 && eval.truth_vtxZ > 0.6 && eval.truth_vtxZ <=1036.4) flag_truth_inside = true;
+    if ((eval.match_completeness_energy>0.1*eval.truth_energyInside && pfeval.truth_single_photon==1 && eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && eval.truth_vtxInside==1)){
+      return 0;
+    }else if (eval.match_completeness_energy>0.1*eval.truth_energyInside && pfeval.truth_single_photon==1 && eval.truth_isCC==0 && (pfeval.truth_showerMother==111) && eval.truth_vtxInside==1){
+      return 1;
+    }else if(eval.match_completeness_energy>0.1*eval.truth_energyInside && pfeval.truth_single_photon==1 && eval.truth_isCC==0 && pfeval.truth_showerMother!=111 && pfeval.truth_NCDelta==0 && eval.truth_vtxInside==1){
+      return 2;
+    }else if (eval.match_completeness_energy>0.1*eval.truth_energyInside && pfeval.truth_single_photon==1 && eval.truth_isCC==1 && abs(eval.truth_nuPdg)==14 && pfeval.truth_muonMomentum[3]-0.105658<0.1 && eval.truth_vtxInside==1){
+      return 3;
+    }else if(eval.match_completeness_energy>0.1*eval.truth_energyInside && pfeval.truth_single_photon==1 && (eval.truth_isCC==0 || (eval.truth_isCC==1 && abs(eval.truth_nuPdg)==14 && pfeval.truth_muonMomentum[3]-0.105658<0.1)) && eval.truth_vtxInside==0){
+      return 4;
+    }else if ((eval.match_completeness_energy<=0.1*eval.truth_energyInside) || flag_data){
+      return 5;
+    }else if (!flag_truth_inside){
+      return 6;
+    }else{
+      return 7;
+    }
   }else if (var_name == "run_period"){
     if (pfeval.run >= 13697){ 
       return 3;
