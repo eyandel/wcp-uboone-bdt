@@ -1,3 +1,13 @@
+single_photon_spoverlay             sp_paper_cats	             3	   0	      3     1	   1		      1	    0	        0		      1		      9	      cv_spline		  0
+single_photon_ncpi0overlay   	    sp_paper_cats	             3	   0	      3     1	   1		      1	    0	        0		      1		      6	      cv_spline		  0
+single_photon_overlay_ncpi0_BG      sp_paper_cats	             3	   0	      3     1	   1		      1	    0	        0		      1		      2	      cv_spline		  0
+single_photon_dirt   		        sp_paper_cats	             3	   0	      3     1	   1		      0	    0.5	        0		      1		      4	      cv_spline       0
+single_photon_ext    		        sp_paper_cats	             3	   0	      3     1	   0		      0	    0 	        0		      2	          3	      unity   	  	  0
+single_photon_bnb_none              sp_paper_cats	             3	   0	      3     1	   0		      0	    0 	        0		      0		      5	      unity		      0
+End					                End		                         -1	   -1	      -1	   -1	   -1		      -1	  -1		    -1		    -1		    -1	    end		        -1
+#Xp, categories
+#current plot
+
 single_photon_LEE_0p                        shower_energy_sp	             6	   0	      600     1	   1		      1	    0	        0		      11	      10	  cv_spline		  1
 single_photon_spoverlay_0p                  shower_energy_sp	             6	   0	      600     1	   1		      1	    0	        0		      1		      9	      cv_spline		  0
 single_photon_ncpi0overlay_0p	            shower_energy_sp	             6	   0	      600     1	   1		      1	    0	        0		      1		      6	      cv_spline		  0
@@ -78,7 +88,7 @@ sp_bdt_numuCC_notoneshw_Np_dirt			    shower_energy_sp	             6	   0	     
 sp_bdt_numuCC_notoneshw_Np_ext 			    shower_energy_sp	             6	   0	      600     10	   0		      0	    0 	        0		      30          3	      unity   	  	  0
 sp_bdt_numuCC_notoneshw_Np     	            shower_energy_sp	             6	   0	      600     10	   0		      0	    0 	        0		      0		      5	      unity		      0
 End					                End		                         -1	   -1	      -1	   -1	   -1		      -1	  -1		    -1		    -1		    -1	    end		        -1
-#current plot
+#all 0pNp, one shower, not one shower
 
 single_photon_LEE                   truth_muon_momentum                       15    0          1500     1	   0		      0	    0	        0		      4		      10      cv_spline		  1
 single_photon_spoverlay             truth_muon_momentum                       15    0          1500     1	   1		      1	    0	        0		      1		      9	      cv_spline		  0

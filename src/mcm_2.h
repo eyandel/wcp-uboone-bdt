@@ -681,7 +681,7 @@ std::pair<std::vector<int>, std::vector<int> > LEEana::CovMatrix::get_events_wei
   }
   //
 
-  T_eval->SetBranchStatus("*",0);
+  T_eval->SetBranchStatus("*",1);
   T_eval->SetBranchStatus("run",1);
   T_eval->SetBranchStatus("subrun",1);
   T_eval->SetBranchStatus("event",1);

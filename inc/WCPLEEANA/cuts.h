@@ -1633,6 +1633,24 @@ double LEEana::get_kine_var(KineInfo& kine, EvalInfo& eval, PFevalInfo& pfeval, 
     }else{
       return 0;
     }
+  }else if (var_name == "sp_paper_cats"){
+    bool flag_truth_inside = false; // in the active volume
+    if (eval.truth_vtxX > -1 && eval.truth_vtxX <= 254.3 &&  eval.truth_vtxY >-115.0 && eval.truth_vtxY<=117.0 && eval.truth_vtxZ > 0.6 && eval.truth_vtxZ <=1036.4) flag_truth_inside = true;
+    if ((eval.match_completeness_energy>0.1*eval.truth_energyInside && pfeval.truth_single_photon==1 && eval.truth_isCC==0 && pfeval.truth_NCDelta==1 && eval.truth_vtxInside==1)
+      || (eval.match_completeness_energy>0.1*eval.truth_energyInside && pfeval.truth_single_photon==1 && eval.truth_isCC==0 && (pfeval.truth_showerMother==111) && eval.truth_vtxInside==1)
+      || (eval.match_completeness_energy>0.1*eval.truth_energyInside && pfeval.truth_single_photon==1 && eval.truth_isCC==0 && pfeval.truth_showerMother!=111 && pfeval.truth_NCDelta==0 && eval.truth_vtxInside==1)
+      || (eval.match_completeness_energy>0.1*eval.truth_energyInside && pfeval.truth_single_photon==1 && eval.truth_isCC==1 && abs(eval.truth_nuPdg)==14 && pfeval.truth_muonMomentum[3]-0.105658<0.1 && eval.truth_vtxInside==1)
+      || (eval.match_completeness_energy>0.1*eval.truth_energyInside && pfeval.truth_single_photon==1 && (eval.truth_isCC==0 || (eval.truth_isCC==1 && abs(eval.truth_nuPdg)==14 && pfeval.truth_muonMomentum[3]-0.105658<0.1)) && eval.truth_vtxInside==0)
+      ){
+        return 0;
+    }else if ((eval.match_completeness_energy<=0.1*eval.truth_energyInside) || flag_data){
+      return 1;
+    }else if (!flag_truth_inside){
+      return 2;
+    }else{
+      return 3;
+    }
+    
   }else if (var_name == "run_period"){
     if (pfeval.run >= 13697){ 
       return 3;
@@ -4690,7 +4708,26 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
               && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
               && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0)) return true;
             return false;
-  }else if (ch_name == "single_photon_bnb" || ch_name == "single_photon_ext"
+    }else if (ch_name == "single_photon_dirt_sig"){
+            if (flag_singlephoton_sel && map_cuts_flag["SPOutFVSig"]) return true;
+            return false;
+    }else if (ch_name == "single_photon_dirt_BG"){
+            if (flag_singlephoton_sel && !map_cuts_flag["SPOutFVSig"]) return true;
+            return false;
+    }else if (ch_name == "single_photon_bnb_none" || ch_name == "single_photon_ext_none"
+    || ch_name == "single_photon_overlay_none" || ch_name == "single_photon_dirt_none" 
+    || ch_name == "single_photon_LEE_none"
+    || ch_name == "single_photon_bnb_none_2" || ch_name == "single_photon_ext_none_2"
+    || ch_name == "single_photon_overlay_none_2" || ch_name == "single_photon_dirt_none_2" 
+    || ch_name == "single_photon_LEE_none_2"
+    || ch_name == "single_photon_bnb_none_3" || ch_name == "single_photon_ext_none_3"
+    || ch_name == "single_photon_overlay_none_3" || ch_name == "single_photon_dirt_none_3" 
+    || ch_name == "single_photon_LEE_none_3"){
+            //if (flag_singlephoton_sel) return true;
+            return false;
+  }else if (ch_name == "single_photon_bnb" || ch_name == "single_photon_bnb_2" 
+    || ch_name == "single_photon_bnb_3" || ch_name == "single_photon_bnb_4"
+    || ch_name == "single_photon_ext"
     || ch_name == "single_photon_overlay" || ch_name == "single_photon_dirt" 
     || ch_name == "single_photon_LEE"){
             if (flag_singlephoton_sel) return true;
@@ -4865,6 +4902,12 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
               && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
               && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0)) return true;
             return false;
+  }else if (ch_name == "single_photon_spoverlay_none"){
+            //if (flag_singlephoton_sel &&
+            //  (map_cuts_flag["SPNCDeltaSig"] || map_cuts_flag["SPOutFVSig"] ||
+            //  map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+            //  map_cuts_flag["SPNumuCCSig"])) return true;
+            return false;
   }else if (ch_name == "single_photon_spoverlay_nodelta"){
             if (flag_singlephoton_sel &&
               (map_cuts_flag["SPOutFVSig"] ||
@@ -4962,6 +5005,17 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
               map_cuts_flag["SPNumuCCSig"])) return true;
             return false;
   //nc pi0 overlay
+  }else if (ch_name == "single_photon_ncpi0overlay_none" || ch_name == "single_photon_ncpi0overlay_none_2" || ch_name == "single_photon_ncpi0overlay_none_3"){
+            //if (flag_singlephoton_sel &&
+            //  !(map_cuts_flag["SPNCDeltaSig"] ||
+            //  map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+            //  map_cuts_flag["SPNumuCCSig"])
+            //  && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+            //  && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+            //  && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+            //  && (eval.match_completeness_energy>0.1*eval.truth_energyInside
+            //    && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio==1)) return true;
+            return false;
   }else if (ch_name == "single_photon_ncpi0overlay"){
             if (flag_singlephoton_sel &&
               !(map_cuts_flag["SPNCDeltaSig"] ||
@@ -4995,6 +5049,45 @@ bool LEEana::get_cut_pass(TString ch_name, TString add_cut, bool flag_data, Eval
               && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
               && !(eval.match_completeness_energy>0.1*eval.truth_energyInside
                 && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio==1)) return true;
+            return false;
+  }else if (ch_name == "single_photon_overlay_ncpi0_BG_none"){
+            //if (flag_singlephoton_sel &&
+            //  !(map_cuts_flag["SPNCDeltaSig"] ||
+            //  map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+            //  map_cuts_flag["SPNumuCCSig"])
+            //  && !(map_cuts_flag["SPOutFVSig"] && pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+            //  && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+            //  && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0) 
+            //  && !(eval.match_completeness_energy>0.1*eval.truth_energyInside
+            //    && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio==1)) return true;
+            return false;
+  }else if (ch_name == "single_photon_overlay_ncpi0_BG_sig"){
+            if (flag_singlephoton_sel
+              && (map_cuts_flag["SPOutFVSig"] && !(pfeval.truth_corr_nuvtxX<260.9 && pfeval.truth_corr_nuvtxX>-0.9
+              && pfeval.truth_corr_nuvtxY<129.0 && pfeval.truth_corr_nuvtxY>-127.1
+              && pfeval.truth_corr_nuvtxZ<1040.9 && pfeval.truth_corr_nuvtxZ>-4.0)) 
+              ) return true;
+            return false;
+  }else if (ch_name == "single_photon_overlay_ncpi0_BG_cosmic"){
+            if (flag_singlephoton_sel &&
+              !(eval.match_completeness_energy>0.1*eval.truth_energyInside)) return true;
+            return false;
+  }else if (ch_name == "single_photon_overlay_ncpi0_BG_outfv"){
+            if (flag_singlephoton_sel
+              && !(map_cuts_flag["SPOutFVSig"])
+              && (eval.match_completeness_energy>0.1*eval.truth_energyInside)
+              && !flag_truth_inside) return true;
+            return false;
+  }else if (ch_name == "single_photon_overlay_ncpi0_BG_infv"){
+            if (flag_singlephoton_sel &&
+              !(map_cuts_flag["SPNCDeltaSig"] ||
+              map_cuts_flag["SPNCPi0Sig"] || map_cuts_flag["SPNCOtherSig"] ||
+              map_cuts_flag["SPNumuCCSig"])
+              && !(map_cuts_flag["SPOutFVSig"]) 
+              && !(eval.match_completeness_energy>0.1*eval.truth_energyInside
+                && eval.truth_isCC==0 && flag_truth_inside && pfeval.truth_NprimPio==1)
+              && (eval.match_completeness_energy>0.1*eval.truth_energyInside)
+              && flag_truth_inside) return true;
             return false;
   }else if (ch_name == "single_photon_eff_ncpi0overlay"){
             if (flag_singlephoton_eff_sel &&

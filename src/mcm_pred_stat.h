@@ -703,7 +703,7 @@ void LEEana::CovMatrix::get_pred_events_info(TString input_filename, std::map<TS
   }
 
 
-  T_eval->SetBranchStatus("*",0);
+  T_eval->SetBranchStatus("*",1);
   T_eval->SetBranchStatus("run",1);
   T_eval->SetBranchStatus("subrun",1);
   T_eval->SetBranchStatus("event",1);

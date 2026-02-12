@@ -524,7 +524,7 @@ void LEEana::CovMatrix::fill_det_histograms(std::map<TString, TH1D*> map_filenam
   //
 
 
-  T_eval_cv->SetBranchStatus("*",0);
+  T_eval_cv->SetBranchStatus("*",1);
   T_eval_cv->SetBranchStatus("run",1);
   T_eval_cv->SetBranchStatus("subrun",1);
   T_eval_cv->SetBranchStatus("event",1);
@@ -733,7 +733,7 @@ void LEEana::CovMatrix::fill_det_histograms(std::map<TString, TH1D*> map_filenam
   }
   //
 
-  T_eval_det->SetBranchStatus("*",0);
+  T_eval_det->SetBranchStatus("*",1);
   T_eval_det->SetBranchStatus("run",1);
   T_eval_det->SetBranchStatus("subrun",1);
   T_eval_det->SetBranchStatus("event",1);
