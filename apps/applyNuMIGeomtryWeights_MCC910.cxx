@@ -86,9 +86,6 @@ int main( int argc, char** argv )
   wrangler.get_old_trees(CVfile);
   wrangler_pot.get_old_trees(CVfile);
 
-  // Build the pairs of pot trees
-  wrangler_pot.grow_pot_arboretum();
-
   auto h_nue_FHC_variation1=(TH1D*)weightHistosFile->Get("EnergyVarBin/ratio_run1_FHC_nue_CV_AV_TPC");
   auto h_nue_FHC_variation2=(TH1D*)weightHistosFile->Get("EnergyVarBin/ratio_run2_FHC_nue_CV_AV_TPC");
   auto h_nue_FHC_variation3=(TH1D*)weightHistosFile->Get("EnergyVarBin/ratio_run3_FHC_nue_CV_AV_TPC");
@@ -282,8 +279,11 @@ int main( int argc, char** argv )
   auto ofile = new TFile(outfile_name.c_str(),"RECREATE");
 
   //Setup the directories specified in the config file
-  wrangler.set_new_trees(ofile);
-  wrangler_pot.set_new_trees(ofile);
+  //wrangler.set_new_trees(ofile);
+  //wrangler_pot.set_new_trees(ofile);
+
+  // Build the pairs of pot trees
+  //wrangler_pot.grow_pot_arboretum();
 
   ofile->mkdir("wcpselection")->cd();
   // ofile->cd();
@@ -305,6 +305,14 @@ int main( int argc, char** argv )
   auto T_BDTvars = T_BDTvars_copy->CloneTree(0);
   auto T_pot = T_pot_copy->CloneTree(0);
   TTree *T_spacepoints = T_spacepoints_copy->CloneTree(0);
+
+  //Setup the directories specified in the config file
+  wrangler.set_new_trees(ofile);
+  wrangler_pot.set_new_trees(ofile);
+
+  // Build the pairs of pot trees
+  wrangler_pot.grow_pot_arboretum();
+
 
   // ofile->cd("wcpselection");
 

@@ -371,12 +371,18 @@ void LEEana::CovMatrix::get_pred_events_info(TString input_filename, std::map<TS
   TTree *T_pot = (TTree*)file->Get("wcpselection/T_pot");
   TTree *T_PFeval = (TTree*)file->Get("wcpselection/T_PFeval");
   TTree *T_KINEvars = (TTree*)file->Get("wcpselection/T_KINEvars");
+  TTree *T_spacepoints = (TTree*)file->Get("wcpselection/T_spacepoints");
+  TTree *T_pandora = (TTree*)file->Get("nuselection/NeutrinoSelectionFilter");
+  TTree *T_lantern = (TTree*)file->Get("lantern/EventTree");
 
   EvalInfo eval;
   POTInfo pot;
   TaggerInfo tagger;
   PFevalInfo pfeval;
   KineInfo kine;
+  SpaceInfo space;
+  PandoraInfo pandora;
+  LanternInfo lantern;
 
   kine.kine_energy_particle = new std::vector<float>;
   kine.kine_energy_info = new std::vector<int>;
@@ -647,6 +653,9 @@ void LEEana::CovMatrix::get_pred_events_info(TString input_filename, std::map<TS
     set_tree_address(T_eval, eval);
     set_tree_address(T_PFeval, pfeval);
   }
+  if(T_spacepoints) set_tree_address(T_spacepoints, space, 0);
+  if(T_pandora) set_tree_address(T_pandora, pandora);
+  if(T_lantern) set_tree_address(T_lantern, lantern);
 
   //  std::cout << flag_data << " " << input_filename << std::endl;
 
@@ -705,6 +714,10 @@ void LEEana::CovMatrix::get_pred_events_info(TString input_filename, std::map<TS
     T_BDTvars->SetBranchStatus("nc_pio_score", 1);
   }
 
+  if(tagger.saved_pi_veto_scores){
+    T_BDTvars->SetBranchStatus("all_veto_score",1);
+    T_BDTvars->SetBranchStatus("VtxAct_bdt_score",1);
+  }
 
   T_eval->SetBranchStatus("*",0);
   T_eval->SetBranchStatus("run",1);
@@ -822,6 +835,53 @@ void LEEana::CovMatrix::get_pred_events_info(TString input_filename, std::map<TS
      T_PFeval->SetBranchStatus("truth_startMomentum",1);
   }
 
+  if(T_PFeval->GetBranch("reco_larpid_pdg")){
+    T_PFeval->SetBranchStatus("reco_larpid_pdg",1);
+  }
+
+  if(T_spacepoints){
+    T_spacepoints->SetBranchStatus("Trecchargeblob_spacepoints_x",1);
+    T_spacepoints->SetBranchStatus("Trecchargeblob_spacepoints_y",1);
+    T_spacepoints->SetBranchStatus("Trecchargeblob_spacepoints_z",1);
+    T_spacepoints->SetBranchStatus("Trecchargeblob_spacepoints_q",1);
+    T_spacepoints->SetBranchStatus("Trecchargeblob_spacepoints_real_cluster_id",1);
+  }
+
+  if(T_pandora){
+    T_pandora->SetBranchStatus("run",1);
+    T_pandora->SetBranchStatus("sub",1);
+    T_pandora->SetBranchStatus("evt",1);
+
+    T_pandora->SetBranchStatus("nslice",1);
+    T_pandora->SetBranchStatus("slice_orig_pass_id",1);
+    T_pandora->SetBranchStatus("n_pfps",1);
+
+    T_pandora->SetBranchStatus("trk_llr_pid_score_v",1);
+    T_pandora->SetBranchStatus("pfp_generation_v",1);
+    T_pandora->SetBranchStatus("trk_score_v",1);
+    T_pandora->SetBranchStatus("trk_energy_proton_v",1);
+    T_pandora->SetBranchStatus("pfpdg",1);
+  }
+
+  if(T_lantern){
+    T_lantern->SetBranchStatus("run",1);
+    T_lantern->SetBranchStatus("subrun",1);
+    T_lantern->SetBranchStatus("event",1);
+
+    T_lantern->SetBranchStatus("nTracks",1);
+
+    T_lantern->SetBranchStatus("trackIsSecondary",1);
+    T_lantern->SetBranchStatus("trackPID",1);
+    T_lantern->SetBranchStatus("trackMuScore",1);
+    T_lantern->SetBranchStatus("trackPrScore",1);
+    T_lantern->SetBranchStatus("trackPiScore",1);
+    T_lantern->SetBranchStatus("trackElScore",1);
+    T_lantern->SetBranchStatus("trackPhScore",1);
+    T_lantern->SetBranchStatus("trackRecoE",1);
+    T_lantern->SetBranchStatus("trackDistToVtx",1);
+  }
+
+
   std::vector<std::tuple<int, int, double, double, std::set<std::tuple<int, double, bool> > > > vec_events;
 
   std::vector< std::tuple<TString,  int, float, float, TString, TString, TString, TString > > histo_infos = get_histograms(input_filename,0);
@@ -833,6 +893,9 @@ void LEEana::CovMatrix::get_pred_events_info(TString input_filename, std::map<TS
     T_eval->GetEntry(i);
     T_KINEvars->GetEntry(i);
     T_PFeval->GetEntry(i);
+    if(T_spacepoints) T_spacepoints->GetEntry(i);
+    if(T_pandora) T_pandora->GetEntry(i);
+    if(T_lantern) T_lantern->GetEntry(i);
 
     std::get<0>(vec_events.at(i)) = eval.run;
     std::get<1>(vec_events.at(i)) = eval.event;
@@ -859,8 +922,8 @@ void LEEana::CovMatrix::get_pred_events_info(TString input_filename, std::map<TS
       TString ch_name = std::get<5>(*it);
       TString add_cut = std::get<6>(*it);
 
-      double val = get_kine_var(kine, eval, pfeval, tagger, flag_data, var_name);
-      bool flag_pass = get_cut_pass(ch_name, add_cut, flag_data, eval, pfeval, tagger, kine);
+      double val = get_kine_var(kine, eval, pfeval, tagger, flag_data, var_name, space, pandora, lantern);
+      bool flag_pass = get_cut_pass(ch_name, add_cut, flag_data, eval, pfeval, tagger, kine, space, pandora, lantern);
 
       if (flag_pass) std::get<4>(vec_events.at(i)).insert(std::make_tuple(no, val, flag_pass));
 

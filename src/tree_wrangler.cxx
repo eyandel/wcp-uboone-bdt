@@ -182,7 +182,6 @@ void LEEana::tree_wrangler::set_new_trees(TFile* file, bool rename, TString TDir
   }
 }
 
-
 void LEEana::tree_wrangler::map_rs_to_entry(){
   arboretum_map_rs_entry.clear();
   for(auto pot_tree_it=pot_arboretum->begin(); pot_tree_it!=pot_arboretum->end(); pot_tree_it++){
@@ -197,7 +196,16 @@ void LEEana::tree_wrangler::map_rs_to_entry(){
 
 // End main four public functions //
 
-
+// Additional public function for setting the samdef //
+void LEEana::tree_wrangler::set_samdef(bool f_flag_save_samdef, TString f_samdef){
+  flag_save_samdef = f_flag_save_samdef;
+  samdef = f_samdef;
+  std::cout<<std::endl;
+  std::cout<<"Setting samdef to "<<samdef<<std::endl;
+  if(!flag_save_samdef) std::cout<<"This samdef will not be saved"<<std::endl;
+  else std::cout<<"This samdef is being saved to output trees"<<std::endl;
+  std::cout<<std::endl;
+}
 
 // Private function called by the four main functions above //
 
@@ -296,6 +304,9 @@ std::vector<TTree*>* LEEana::tree_wrangler::CopyTrees(TDirectory *source, bool b
         if (rename) {
 		newT->SetObject(key->GetName()+TDirectory_extension,key->GetName()+TDirectory_extension);
 	}
+        if(flag_save_samdef){
+          newT->Branch("samdef", "TString", &samdef);         
+        }
 	newT->Write("",TTree::kOverwrite);
         ttree_vec->push_back(newT);
     }

@@ -50,6 +50,8 @@ namespace LEEana{
     std::vector<TTree*>* old_trees;
     std::vector<pot_tree_pair*>* pot_arboretum;	
     std::vector<std::map<std::pair<int, int>, std::pair<int, double> > > arboretum_map_rs_entry; 
+
+    void set_samdef(bool f_flag_save_samdef, TString f_samdef);
 	    
   private:
     bool verbose;
@@ -65,6 +67,9 @@ namespace LEEana{
     
     std::vector<TTree*>* CopyTrees(TDirectory *source, bool blank_tree=false, bool rename=false, TString TDirectory_extension="", std::vector<std::string> to_skip={});
     std::vector<TTree*>* GetTrees(TDirectory *source, std::vector<std::string> to_skip={});
+
+    bool flag_save_samdef = false;
+    TString samdef = "";
   };
 }
 

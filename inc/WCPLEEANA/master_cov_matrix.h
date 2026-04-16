@@ -15,11 +15,13 @@
 #include <fstream>
 
 #include "WCPLEEANA/eval.h"
-// #include "WCPLEEANA/pfeval.h"
 #include "WCPLEEANA/cuts.h"
 #include "WCPLEEANA/pot.h"
 #include "WCPLEEANA/weights.h"
 #include "WCPLEEANA/pfeval.h"
+#include "WCPLEEANA/space.h"
+#include "WCPLEEANA/pandora.h"
+#include "WCPLEEANA/lantern.h"
 
 namespace LEEana{
   class CovMatrix{
