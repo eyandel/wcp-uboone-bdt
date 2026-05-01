@@ -180,3 +180,30 @@ void removeSubstring(std::string& mainString, const std::string& subString) {
         pos = mainString.find(subString); // Find the next occurrence
     }
 }
+
+int count_matches(const std::set<std::tuple<int,int,int,int>>& s,
+                  int a, int b, int c)
+{
+    auto lower = s.lower_bound({a, b, c, std::numeric_limits<int>::min()});
+    auto upper = s.upper_bound({a, b, c, std::numeric_limits<int>::max()});
+
+    return std::distance(lower, upper);
+}
+
+int count_matches(const std::set<std::tuple<int,int,int>>& s,
+                  int a, int b)
+{
+    auto lower = s.lower_bound({a, b, std::numeric_limits<int>::min()});
+    auto upper = s.upper_bound({a, b, std::numeric_limits<int>::max()});
+
+    return std::distance(lower, upper);
+}
+
+int count_matches(const std::set<std::tuple<int,int,int,int>>& s,
+                  int a, int b)
+{
+    auto lower = s.lower_bound({a, b, std::numeric_limits<int>::min(), std::numeric_limits<int>::min()});
+    auto upper = s.upper_bound({a, b, std::numeric_limits<int>::max(), std::numeric_limits<int>::max()});
+
+    return std::distance(lower, upper);
+}

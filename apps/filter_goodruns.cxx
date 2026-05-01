@@ -26,7 +26,15 @@ using namespace LEEana;
 
 int main( int argc, char** argv )
 {
-  if (argc < 3) {
+  if(argc==2 && argv[1][1]=='h'){
+    std::cout<<"TODO"<<std::endl;
+    return 0;
+  }
+  else if(argc==2 && argv[1][1]=='H'){
+    print_help_wrangler_config(true);
+    return 0;
+  }
+  else if (argc < 3) {
     std::cout << "filter_goodruns #input_file #output_file -n[flag_numi]" << std::endl;
     return -1;
   }
@@ -41,23 +49,53 @@ int main( int argc, char** argv )
   std::string config_file_name="config.txt";
   char delimiter = ',';
 
-  for (Int_t i=3;i!=argc;i++){
-    switch(argv[i][1]){
-      case 'n':
-        flag_numi = atoi(&argv[i][2]);
-        break;
-      case 't':
-        config_file_name = &argv[i][2];
-        flag_config = true;
-        break;
-      case 'd':
-        delimiter = argv[i][2];//In case you want to change what character you use to sperate your trees in the config
-        break;
+  for (Int_t i = 3; i < argc; ++i) {
+
+    // Skip non-flags
+    if (argv[i][0] != '-') continue;
+
+    char flag = argv[i][1];
+    char* value_ptr = nullptr;
+
+    // Case 1: attached value (-xVALUE)
+    if (argv[i][2] != '\0') {
+      value_ptr = &argv[i][2];
     }
+    // Case 2: separate value (-x VALUE)
+    else if (i + 1 < argc && argv[i+1][0] != '-') {
+      value_ptr = argv[i + 1];
+      ++i; // consume next argument
+    }
+
+    // Guard against missing values
+    if (!value_ptr) {
+      std::cerr << "Missing value for -" << flag << std::endl;
+      continue;
+    }
+
+    switch(flag){
+
+    case 'n':
+      flag_numi = atoi(value_ptr);
+      break;
+
+    case 't':
+      config_file_name = value_ptr;
+      flag_config = true;
+      break;
+
+    case 'd':
+      delimiter = value_ptr[0];
+      break;
+
+    }
+
   }
 
+
   tree_wrangler wrangler(flag_config, config_file_name, delimiter);
-  tree_wrangler wrangler_pot(flag_config, config_file_name, delimiter,true);
+  tree_wrangler wrangler_ex(flag_config, config_file_name, delimiter);
+  tree_wrangler wrangler_pot(flag_config, config_file_name, delimiter,1);
 
   TFile *file1 = new TFile(input_file);
 
@@ -70,6 +108,7 @@ int main( int argc, char** argv )
 
   //Load other trees from directories as specified by the config file
   wrangler.get_old_trees(file1);
+  wrangler_ex.get_old_trees(file1);
   wrangler_pot.get_old_trees(file1);
 
 
@@ -88,19 +127,20 @@ int main( int argc, char** argv )
   T_eval->SetBranchAddress("run", &run);
   T_pot->SetBranchAddress("runNo", &runNo);
 
-  std::vector<int>good_run_list_vec = wrangler.get_good_run_list();
+  std::vector<int>good_run_list_vec = get_good_run_list();
   std::set<int> good_runlist_set(good_run_list_vec.begin(), good_run_list_vec.end());
   
-  std::vector<int> low_lifetime_runs = wrangler.get_low_lifetime_runs();
+  std::vector<int> low_lifetime_runs = get_low_lifetime_runs();
   std::set<int> low_lifetime_set(low_lifetime_runs.begin(), low_lifetime_runs.end());
   
-  std::vector<int> low_neutrino_count_numi_run2RHC = wrangler.get_low_neutrino_count_numi_run2RHC();
+  std::vector<int> low_neutrino_count_numi_run2RHC = get_low_neutrino_count_numi_run2RHC();
   std::set<int> low_neutrino_count_numi_run2RHC_set(low_neutrino_count_numi_run2RHC.begin(), low_neutrino_count_numi_run2RHC.end());
 
   TFile *file2 = new TFile(out_file,"RECREATE");
 
   //Setup the directories specified in the config file
   wrangler.set_new_trees(file2);
+  wrangler_ex.set_new_trees(file2);
   wrangler_pot.set_new_trees(file2);
 
   // Build the pairs of pot trees
@@ -159,8 +199,13 @@ int main( int argc, char** argv )
     for(auto tree_it=wrangler.old_trees->begin(); tree_it!=wrangler.old_trees->end(); tree_it++){
         (*tree_it)->GetEntry(i);
     }
-
     for(auto tree_it=wrangler.new_trees->begin(); tree_it!=wrangler.new_trees->end(); tree_it++){
+        (*tree_it)->Fill();
+    }
+    for(auto tree_it=wrangler_ex.old_trees->begin(); tree_it!=wrangler_ex.old_trees->end(); tree_it++){
+        (*tree_it)->GetEntry(i);
+    }
+    for(auto tree_it=wrangler_ex.new_trees->begin(); tree_it!=wrangler_ex.new_trees->end(); tree_it++){
         (*tree_it)->Fill();
     }
 

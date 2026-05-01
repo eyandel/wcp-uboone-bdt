@@ -1,0 +1,8 @@
+nuselection SubRun
+
+exclusive
+nuselection SubRun run,subRun,pot
+
+pick
+wcpselection T_BDTvars,T_eval kine_reco_Enu,event run,subrun,event 
+end

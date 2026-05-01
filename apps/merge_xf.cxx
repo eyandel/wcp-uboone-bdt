@@ -35,37 +35,84 @@ using namespace LEEana;
 
 int main( int argc, char** argv )
 {
-  if (argc < 5) {
+  if(argc==2 && argv[1][1]=='h'){
+    std::cout<<"TODO"<<std::endl;
+    return 0;
+  }
+  else if(argc==2 && argv[1][1]=='H'){
+    print_help_wrangler_config(true);
+    return 0;
+  }
+  else if (argc < 5) {
     std::cout << "merge_xf #input_file_cv #input_file_xf #output_file #option" << std::endl;
     return -1;
   }
 
   TString input_file_cv = argv[1];
   TString input_file_xf = argv[2];
+
   TString out_file = argv[3];
+
   TString option = argv[4];
+
   bool flag_config = false;
+
   std::string config_file_name="config.txt";
+
   char delimiter = ',';
+
   bool override_pot = false;
-  for (Int_t i=5;i!=argc;i++){
-    switch(argv[i][1]){
-    case 't':
-       config_file_name = &argv[i][2];
-       flag_config = true;
-      break;
-    case 'd':
-        delimiter = argv[i][2];//In case you want to change what character you use to sperate your trees in the config
-      break;
-    case 'p':
-        override_pot = &argv[i][2];
-        if(override_pot) std::cout<<"Overriding the pot of each subrun"<<std::endl;
-      break;
+
+  for (Int_t i = 5; i < argc; ++i) {
+
+    // Skip non-flags
+    if (argv[i][0] != '-') continue;
+
+    char flag = argv[i][1];
+    char* value_ptr = nullptr;
+
+    // Case 1: attached value (-xVALUE)
+    if (argv[i][2] != '\0') {
+      value_ptr = &argv[i][2];
     }
+    // Case 2: separate value (-x VALUE)
+    else if (i + 1 < argc && argv[i+1][0] != '-') {
+      value_ptr = argv[i + 1];
+      ++i; // consume next argument
+    }
+
+    // Guard against missing values
+    if (!value_ptr) {
+      std::cerr << "Missing value for -" << flag << std::endl;
+      continue;
+    }
+
+    switch(flag){
+
+    case 't':
+      config_file_name = value_ptr;
+      flag_config = true;
+      break;
+
+    case 'd':
+      delimiter = value_ptr[0];
+      break;
+
+    case 'p':
+      override_pot = value_ptr;
+      if (override_pot) {
+        std::cout<<"Overriding the pot of each subrun"<<std::endl;
+      }
+      break;
+
+    }
+
   }
 
+
   tree_wrangler wrangler(flag_config, config_file_name, delimiter);
-  tree_wrangler wrangler_pot(flag_config, config_file_name, delimiter,true);  
+  tree_wrangler wrangler_ex(flag_config, config_file_name, delimiter,2);
+  tree_wrangler wrangler_pot(flag_config, config_file_name, delimiter,1);  
   
   // Always load WC
   TFile *file1 = new TFile(input_file_cv);
@@ -78,6 +125,7 @@ int main( int argc, char** argv )
 
   //Load other trees from directories as specified by the config file
   wrangler.get_old_trees(file1);
+  wrangler_ex.get_old_trees(file1);
   wrangler_pot.get_old_trees(file1);
 
 
@@ -168,6 +216,7 @@ int main( int argc, char** argv )
 
   //Setup the directories specified in the config file
   wrangler.set_new_trees(file3);
+  wrangler_ex.set_new_trees(file3);
   wrangler_pot.set_new_trees(file3);
 
   // Build the pairs of pot trees
@@ -591,10 +640,16 @@ int main( int argc, char** argv )
       for(auto tree_it=wrangler.old_trees->begin(); tree_it!=wrangler.old_trees->end(); tree_it++){
         (*tree_it)->GetEntry(it->first);
       }
-
       for(auto tree_it=wrangler.new_trees->begin(); tree_it!=wrangler.new_trees->end(); tree_it++){
         (*tree_it)->Fill();
-      } 
+      }
+      for(auto tree_it=wrangler_ex.old_trees->begin(); tree_it!=wrangler_ex.old_trees->end(); tree_it++){
+        (*tree_it)->GetEntry(it->first);
+      }
+      for(auto tree_it=wrangler_ex.new_trees->begin(); tree_it!=wrangler_ex.new_trees->end(); tree_it++){
+        (*tree_it)->Fill();
+      }
+ 
   }
 
   std::vector<double> vec_cv_pot;

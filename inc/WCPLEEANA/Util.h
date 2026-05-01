@@ -47,4 +47,7 @@ void V2H(const TVectorD vec, TH1D* histo);
 std::vector<std::string> splitString(const std::string& s, char delimiter);
 void removeSubstring(std::string& mainString, const std::string& subString);
 
+int count_matches(const std::set<std::tuple<int,int,int,int>>& s, int a, int b, int c);
+int count_matches(const std::set<std::tuple<int,int,int>>& s, int a, int b);
+int count_matches(const std::set<std::tuple<int,int,int,int>>& s, int a, int b);
 #endif

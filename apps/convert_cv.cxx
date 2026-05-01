@@ -30,36 +30,170 @@ using namespace LEEana;
 #include "WCPLEEANA/kine.h"
 
 
+void print_help() {
+  std::cout << R"(
+
+========================================
+ convert_cv : Help
+========================================
+
+Overview:
+---------
+convert_cv processes Wire-Cell ROOT files and produces a cleaned,
+analysis-ready output file. It applies event-level quality filtering,
+removes problematic subruns, eliminates duplicates, and ensures
+consistent POT accounting.
+
+The program:
+  - Filters events with corrupted or missing reconstruction information
+  - Removes duplicate (run, subrun, event) entries
+  - Rejects subruns with high failure rates
+  - Rescales POT based on surviving events
+  - Writes a clean output file with consistent structure
+  - Optionally copies additional trees via config file (see -H)
+
+Usage:
+------
+  convert_cv <input_file> <output_file> [options]
+
+Required arguments:
+-------------------
+  input_file     Input ROOT file (Wire-Cell format)
+  output_file    Output ROOT file
+
+Options:
+--------
+
+  -h
+      Show this help message and exit
+
+  -H
+      Show help message for configuration file and exit
+
+  -f<float>
+      Maximum allowed fraction of failed events per subrun
+      (default: 0.2)
+
+  -t<string>
+      Configuration file for tree selection
+      (default: config.txt)
+
+  -d<char>
+      Delimiter used in config file
+      (default: ',')
+
+Processing Details:
+-------------------
+
+  Event Filtering:
+    Removes events failing consistency checks (corrupted or missing data).
+    Duplicate events are also removed during processing.
+
+  Subrun Rejection:
+    Subruns are removed entirely if the fraction of failed events exceeds
+    the threshold set by -f.
+
+  POT Handling:
+    - POT is tracked per subrun
+    - Scaled by fraction of surviving events
+    - Output includes a 'pass_ratio' branch
+
+  Data vs MC:
+    Automatically detected from input file and handled accordingly
+    (branch usage, weights, truth information).
+
+Configuration File:
+-------------------
+Controls which additional trees are copied and how they are filtered.
+Run:
+  convert_cv -H
+for full details.
+
+If no config file is used:
+  Only Wire-Cell trees under 'wcpselection' are written.
+
+
+Notes:
+------
+- Options must be passed without spaces (e.g. -f0.3, not -f 0.3)
+- Event selection is applied at the subrun level to preserve POT consistency
+- Duplicate handling is automatic and not user-configurable
+
+)";
+}
+
+
 int main( int argc, char** argv )
 {
-  if (argc < 3) {
-    std::cout << "merge_det #input_file_cv #output_file " << std::endl;
+  if(argc==2 && argv[1][1]=='h'){
+    print_help();
+    return 0;
+  }
+  else if(argc==2 && argv[1][1]=='H'){
+    print_help_wrangler_config(true);
+    return 0;
+  }
+  else if (argc < 3) {
+    std::cout << "convert_cv #input_file_cv #output_file " << std::endl;
     return -1;
   }
   TString input_file_cv = argv[1];
   TString out_file = argv[2];
+
   bool flag_config = false;
   std::string config_file_name="config.txt";
+
   char delimiter = ',';
+
   float fail_percentage = 0.2;
-   for (Int_t i=3;i!=argc;i++){
-    switch(argv[i][1]){
-    case 'f'://Note switched the flag here
-      fail_percentage = atof(&argv[i][2]);
+
+  for (Int_t i = 3; i < argc; ++i) {
+
+    // Skip non-flags
+    if (argv[i][0] != '-') continue;
+
+    char flag = argv[i][1];
+    char* value_ptr = nullptr;
+
+    // Case 1: attached value (-xVALUE)
+    if (argv[i][2] != '\0') {
+      value_ptr = &argv[i][2];
+    }
+    // Case 2: separate value (-x VALUE)
+    else if (i + 1 < argc && argv[i+1][0] != '-') {
+      value_ptr = argv[i + 1];
+      ++i; // consume next argument
+    }
+
+    // Guard against missing values
+    if (!value_ptr) {
+      std::cerr << "Missing value for -" << flag << std::endl;
+      continue;
+    }
+
+    switch(flag){
+
+    case 'f': // Note switched the flag here
+      fail_percentage = atof(value_ptr);
       break;
+
     case 't':
-       config_file_name = &argv[i][2];
-       flag_config = true;
+      config_file_name = value_ptr;
+      flag_config = true;
       break;
+
     case 'd':
-        delimiter = argv[i][2];//In case you want to change what character you use to sperate your trees in the config
+      delimiter = value_ptr[0];
       break;
     }
-   }
-   bool flag_data = true;
+
+  }
+
+  bool flag_data = true;
 
   tree_wrangler wrangler(flag_config, config_file_name, delimiter);
-  tree_wrangler wrangler_pot(flag_config, config_file_name, delimiter,true);
+  tree_wrangler wrangler_ex(flag_config, config_file_name, delimiter,2);
+  tree_wrangler wrangler_pot(flag_config, config_file_name, delimiter,1);
 
   //Always load WC
   TFile *file1 = new TFile(input_file_cv);
@@ -74,6 +208,7 @@ int main( int argc, char** argv )
 
   //Load other trees from directories as specified by the config file
   wrangler.get_old_trees(file1);
+  wrangler_ex.get_old_trees(file1);
   wrangler_pot.get_old_trees(file1);
 
   EvalInfo eval_cv;
@@ -584,6 +719,7 @@ int main( int argc, char** argv )
 
   //Setup the directories specified in the config file
   wrangler.set_new_trees(file3);
+  wrangler_ex.set_new_trees(file3);
   wrangler_pot.set_new_trees(file3);
 
   // Build the pairs of pot trees
@@ -660,10 +796,16 @@ int main( int argc, char** argv )
     for(auto tree_it=wrangler.old_trees->begin(); tree_it!=wrangler.old_trees->end(); tree_it++){
         (*tree_it)->GetEntry(*it);
     }
-
     for(auto tree_it=wrangler.new_trees->begin(); tree_it!=wrangler.new_trees->end(); tree_it++){
         (*tree_it)->Fill();
     }
+    for(auto tree_it=wrangler_ex.old_trees->begin(); tree_it!=wrangler_ex.old_trees->end(); tree_it++){
+        (*tree_it)->GetEntry(*it);
+    }
+    for(auto tree_it=wrangler_ex.new_trees->begin(); tree_it!=wrangler_ex.new_trees->end(); tree_it++){
+        (*tree_it)->Fill();
+    }
+
   }
 
   std::vector<double> vec_cv_pot;

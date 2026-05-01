@@ -16,29 +16,53 @@
 
 using namespace LEEana;
 
-LEEana::tree_wrangler::tree_wrangler(bool configure, std::string config_file_name, char delimiter, bool set_flag_exclusive, bool set_verbose){
+LEEana::tree_wrangler::tree_wrangler(bool configure, std::string config_file_name, char delimiter, int set_flag_exclusive, bool set_verbose){
+
   verbose = set_verbose;
   flag_exclusive = set_flag_exclusive;
+
   if(configure){
+
     std::ifstream config_file(config_file_name);
+
     bool first_pass = true;
+
     if(config_file.is_open()){
+
       std::cout<<"LEEana::tree_wrangler::tree_wrangler: Loading directories and trees based off the configuration in "<<config_file_name<<std::endl;
+
       while(!config_file.eof()){
-        std::string line;
+
+      	std::string line;
         std::getline(config_file, line);
-        while(line.empty()) {std::getline(config_file, line);} // Skip empty lines
-        if(set_flag_exclusive && first_pass){
-          while(line!="exclusive" && line!="Exclusive"){ // Burn lines untill we get to the exclusive section when configured that way
+
+	while(line.empty()) {std::getline(config_file, line);} // Skip empty lines
+
+	if(set_flag_exclusive==1 && first_pass){
+          while(line!="exclusive" && line!="Exclusive" && line!="pot" && line!="POT"){ // Burn lines untill we get to the exclusive section when configured that way
 	    if(line == "end" || line == "End") break;
 	    std::getline(config_file, line);
 	  }
 	  first_pass = false;
 	  std::getline(config_file, line);
 	}
+
+	if(set_flag_exclusive==2 && first_pass){
+          while(line!="pick" && line!="Pick"){ // Burn lines untill we get to the tree picking selection
+            if(line == "end" || line == "End") break;
+            std::getline(config_file, line);
+          }
+          first_pass = false;
+          std::getline(config_file, line);
+        }
+
+        // Stop reading if you reach the end of the file or one of the other sections.
 	if(line == "end" || line == "End") break;
-	if(!set_flag_exclusive && (line=="exclusive" || line=="Exclusive")) break; // Stop reading when you get to the exclusive section if not running in that mode
-        std::istringstream iss(line);
+	if(set_flag_exclusive==0 && (line=="exclusive" || line=="Exclusive" || line=="pot" || line=="POT" || line=="pick" || line=="Pick")) break;
+        if(set_flag_exclusive==1 && (line=="pick" || line=="Pick")) break;
+        if(set_flag_exclusive==2 && (line=="exclusive" || line=="Exclusive" || line=="pot" || line=="POT")) break; 
+ 
+	std::istringstream iss(line);
         std::string temp_dir;
         std::string temp_all_trees_to_skip;
         std::string temp_all_pot_vars;
@@ -46,7 +70,8 @@ LEEana::tree_wrangler::tree_wrangler(bool configure, std::string config_file_nam
         std::vector<std::string> temp_pot_vars;
 	iss >> temp_dir >> temp_all_trees_to_skip; // Read the line
         temp_trees_to_skip = splitString(temp_all_trees_to_skip, delimiter); // Break up the trees
-        if(set_flag_exclusive){
+
+	if(set_flag_exclusive==1){
 	  iss >> temp_all_pot_vars; // Read the line to see if we have specified pot vars
 	  if(!iss.fail()){
             temp_pot_vars = splitString(temp_all_pot_vars, delimiter);
@@ -61,30 +86,49 @@ LEEana::tree_wrangler::tree_wrangler(bool configure, std::string config_file_nam
             }
 	  }
 	}
-        if (directories_wi_trees_to_skip_names.find(temp_dir) != directories_wi_trees_to_skip_names.end()) {std::cout<<"LEEana::tree_wrangler::tree_wrangler: WARNING: Failed to open the config file, just loading WC"<<std::endl;}
+
+        if(set_flag_exclusive==2){
+          for(int i=0; i<temp_trees_to_skip.size(); i++){
+            iss >> temp_all_pot_vars; // Read the line to see if we have specified pot vars
+            if(!iss.fail()){
+              temp_pot_vars = splitString(temp_all_pot_vars, delimiter);
+              trees_wi_pot_var_names[temp_trees_to_skip.at(i)] = temp_pot_vars;
+            }
+            else{
+              std::cout<<"WARNING, no branches were picked for "<<temp_trees_to_skip.at(i)<<" will fill all branches."<<std::endl;
+              temp_pot_vars={"all"};
+              trees_wi_pot_var_names[temp_trees_to_skip.at(i)] = temp_pot_vars;
+            }
+          }
+        }
+
+        if (directories_wi_trees_to_skip_names.find(temp_dir) != directories_wi_trees_to_skip_names.end()) {std::cout<<"LEEana::tree_wrangler::tree_wrangler: WARNING: Failed to open the config file"<<std::endl;}
         std::vector<std::string> sorted_temp_trees_to_skip = temp_trees_to_skip;
 	sort( sorted_temp_trees_to_skip.begin(), sorted_temp_trees_to_skip.end() );
         const bool hasDuplicates = std::adjacent_find(sorted_temp_trees_to_skip.begin(), sorted_temp_trees_to_skip.end()) != sorted_temp_trees_to_skip.end();
         if(hasDuplicates){
           std::cout<<"LEEana::tree_wrangler::tree_wrangler: Duplicates in trees to skip for "<<temp_dir<<". You should check the config file."<<std::endl;
-          //temp_trees_to_skip.erase( unique( temp_trees_to_skip.begin(), temp_trees_to_skip.end() ), temp_trees_to_skip.end() );
         }
         directories_wi_trees_to_skip_names[temp_dir] = temp_trees_to_skip;
-	if(set_flag_exclusive && !iss.fail()){
+
+	if(set_flag_exclusive==1 && !iss.fail()){
           directories_wi_pot_var_names[temp_dir] = temp_pot_vars;
 	  pot_var_names.push_back(temp_pot_vars);
         }
+
       }
-    }else {std::cout<<"LEEana::tree_wrangler::tree_wrangler: Failed to open the config file: " <<config_file_name<<". Just loading WC"<<std::endl;}
+
+    }else {std::cout<<"LEEana::tree_wrangler::tree_wrangler: Failed to open the config file: " <<config_file_name<<std::endl;}
+
   }//configure
+
 }
 
 LEEana::tree_wrangler::~tree_wrangler(){}
 
 
 
-// Main four public functions //
-
+// Main public functions //
 
 
 void LEEana::tree_wrangler::grow_pot_arboretum(){
@@ -113,7 +157,8 @@ void LEEana::tree_wrangler::grow_pot_arboretum(){
     }
     const char* branch_type = "";
     if(pot_pair->old_pot_tree->GetBranch(pot_var_name.c_str())){
-      branch_type = pot_pair->old_pot_tree->GetBranch(pot_var_name.c_str())->GetLeaf(pot_var_name.c_str())->GetTypeName();
+      auto leafname = pot_pair->old_pot_tree->GetBranch(pot_var_name.c_str())->GetListOfLeaves()->At(0)->GetName();
+      branch_type = pot_pair->old_pot_tree->GetBranch(pot_var_name.c_str())->GetLeaf(leafname)->GetTypeName();
       // Load either the float of the double, depending on the type of the tree 
       if( std::strcmp(branch_type,"Double_t")==0){
         pot_pair->old_pot_tree->SetBranchAddress(pot_var_name.c_str(),&pot_pair->dpot);
@@ -233,9 +278,11 @@ void LEEana::tree_wrangler::CopyDir(TDirectory *source, bool blank_tree, std::ve
      } else if (cl->InheritsFrom(TTree::Class())) {
         TTree *T = (TTree*)source->Get(key->GetName());
         std::string temp_name = T->GetName();
-        bool found_tree = 0;
+        int found_tree = 0;
         if (std::find(to_skip.begin(), to_skip.end(), temp_name) != to_skip.end()) found_tree = 1;
-        if(found_tree!=flag_exclusive) continue;
+	int temp_flag_exclusive = flag_exclusive;
+	if(temp_flag_exclusive>1) temp_flag_exclusive=1;
+        if(found_tree!=temp_flag_exclusive) continue;
 	adir->cd();
         int nentry = -1;
         if (blank_tree){nentry=0;}
@@ -266,9 +313,11 @@ void LEEana::tree_wrangler::CopyDir(TDirectory *source, TString TDirectory_exten
      if (cl->InheritsFrom(TTree::Class())) {
         TTree *T = (TTree*)source->Get(key->GetName());
         std::string temp_name = T->GetName();
-        bool found_tree = 0;
+        int found_tree = 0;
         if (std::find(to_skip.begin(), to_skip.end(), temp_name) != to_skip.end()) found_tree = 1;
-        if(found_tree!=flag_exclusive) continue;
+	int temp_flag_exclusive = flag_exclusive;
+        if(temp_flag_exclusive>1) temp_flag_exclusive=1;
+        if(found_tree!=temp_flag_exclusive) continue;
 	savdir->cd();
         int nentry = -1;
         if (blank_tree){nentry=0;}
@@ -294,15 +343,38 @@ std::vector<TTree*>* LEEana::tree_wrangler::CopyTrees(TDirectory *source, bool b
      if (cl->InheritsFrom(TTree::Class())) {
         TTree *T = (TTree*)source->Get(key->GetName());
         std::string temp_name = T->GetName();
-        bool found_tree = 0;
+        int found_tree = 0;
         if (std::find(to_skip.begin(), to_skip.end(), temp_name) != to_skip.end()) found_tree = 1;
-        if(found_tree!=flag_exclusive) continue;
+	int temp_flag_exclusive = flag_exclusive;
+        if(temp_flag_exclusive>1) temp_flag_exclusive=1;
+        if(found_tree!=temp_flag_exclusive) continue;
 	savdir->cd();
+
+        // Disable all but the trees we picked about for this setting
+        if(flag_exclusive==2){
+          T->SetBranchStatus("*", 0);
+          std::cout<<"Only enabling picked trees in "<<temp_name<<". These are:"<<std::endl;
+          std::vector<std::string> branches_to_activate = trees_wi_pot_var_names[temp_name];
+          for(int b=0; b<branches_to_activate.size(); b++){
+            std::string branch_name = branches_to_activate.at(b);
+            if( (branch_name=="all" || branch_name=="All" || branch_name=="ALL") && branches_to_activate.size()==1 ){
+              T->SetBranchStatus("*", 1);
+              std::cout<<"all: re-enabling all trees in "<<temp_name<<std::endl;
+            }
+            else { 
+              T->SetBranchStatus(branch_name.c_str(), 1); 
+              std::cout<<branch_name<<"  ";
+            }
+          }
+          std::cout<<std::endl;
+          std::cout<<std::endl;
+        }
+
         int nentry = -1;
         if (blank_tree) {nentry=0;}
         TTree *newT = T->CloneTree(nentry,"fast");
         if (rename) {
-		newT->SetObject(key->GetName()+TDirectory_extension,key->GetName()+TDirectory_extension);
+	  newT->SetObject(key->GetName()+TDirectory_extension,key->GetName()+TDirectory_extension);
 	}
         if(flag_save_samdef){
           newT->Branch("samdef", "TString", &samdef);         
@@ -328,9 +400,11 @@ std::vector<TTree*>* LEEana::tree_wrangler::GetTrees(TDirectory *source, std::ve
      if (cl->InheritsFrom(TTree::Class())) {
         TTree *T = (TTree*)source->Get(key->GetName());
         std::string temp_name = T->GetName();
-	bool found_tree = 0;
+	int found_tree = 0;
         if (std::find(to_skip.begin(), to_skip.end(), temp_name) != to_skip.end()) found_tree = 1;
-        if(found_tree!=flag_exclusive) continue;
+	int temp_flag_exclusive = flag_exclusive;
+        if(temp_flag_exclusive>1) temp_flag_exclusive=1;
+        if(found_tree!=temp_flag_exclusive) continue;
 	ttree_vec->push_back(T);
     }
   }
@@ -344,7 +418,119 @@ std::vector<TTree*>* LEEana::tree_wrangler::GetTrees(TDirectory *source, std::ve
 
 
 
-std::vector<int> LEEana::tree_wrangler::get_good_run_list(){
+// Below are functions outside wrangler that can be called at any time.  //
+
+
+int LEEana::get_T_rse(TFile* file1, TTree*& T_rse, int &run, int &subrun, int &event){
+
+  if(file1->GetDirectory("wcpselection")){
+    T_rse=(TTree*)file1->Get("wcpselection/T_eval");
+    if(T_rse){
+      if(T_rse->GetBranch("run") && T_rse->GetBranch("subrun") && T_rse->GetBranch("event")){
+        T_rse->SetBranchStatus("run",1);
+        T_rse->SetBranchStatus("subrun",1);
+        T_rse->SetBranchStatus("event",1);
+        T_rse->SetBranchAddress("run",&run);
+        T_rse->SetBranchAddress("subrun",&subrun);
+        T_rse->SetBranchAddress("event",&event);
+        std::cout<<'\n'<<"Using T_eval for the run-subrun tree"<<'\n'<<std::endl;
+        return 1;
+      }
+    }
+    T_rse=(TTree*)file1->Get("wcpselection/T_PFeval");
+    if(T_rse){
+      if(T_rse->GetBranch("run") && T_rse->GetBranch("subrun") && T_rse->GetBranch("event")){
+        T_rse->SetBranchStatus("run",1);
+        T_rse->SetBranchStatus("subrun",1);
+        T_rse->SetBranchStatus("event",1);
+        T_rse->SetBranchAddress("run",&run);
+        T_rse->SetBranchAddress("subrun",&subrun);
+        T_rse->SetBranchAddress("event",&event);
+        std::cout<<'\n'<<"Using T_PFeval for the run-subrun tree"<<'\n'<<std::endl;
+        return 1;
+      }
+    }
+    T_rse=(TTree*)file1->Get("wcpselection/T_KINEvars");
+    if(T_rse){
+      if(T_rse->GetBranch("run") && T_rse->GetBranch("subrun") && T_rse->GetBranch("event")){
+        T_rse->SetBranchStatus("run",1);
+        T_rse->SetBranchStatus("subrun",1);
+        T_rse->SetBranchStatus("event",1);
+        T_rse->SetBranchAddress("run",&run);
+        T_rse->SetBranchAddress("subrun",&subrun);
+        T_rse->SetBranchAddress("event",&event);
+        std::cout<<'\n'<<"Using T_KINEvars for the run-subrun tree"<<'\n'<<std::endl;
+        return 1;
+      }
+    }
+    T_rse=(TTree*)file1->Get("wcpselection/T_BDTvars");
+    if(T_rse){
+      if(T_rse->GetBranch("run") && T_rse->GetBranch("subrun") && T_rse->GetBranch("event")){
+        T_rse->SetBranchStatus("run",1);
+        T_rse->SetBranchStatus("subrun",1);
+        T_rse->SetBranchStatus("event",1);
+        T_rse->SetBranchAddress("run",&run);
+        T_rse->SetBranchAddress("subrun",&subrun);
+        T_rse->SetBranchAddress("event",&event);
+        std::cout<<'\n'<<"Using T_BDTvars for the run-subrun tree"<<'\n'<<std::endl;
+        return 1;
+      }
+    }
+  }
+  if(file1->GetDirectory("nuselection")){
+    T_rse=(TTree*)file1->Get("nuselection/NeutrinoSelectionFilter");
+    if(T_rse){
+      if(T_rse->GetBranch("run") && T_rse->GetBranch("sub") && T_rse->GetBranch("evt")){
+        T_rse->SetBranchStatus("run",1);
+        T_rse->SetBranchStatus("sub",1);
+        T_rse->SetBranchStatus("evt",1);
+        T_rse->SetBranchAddress("run",&run);
+        T_rse->SetBranchAddress("sub",&subrun);
+        T_rse->SetBranchAddress("evt",&event);
+        std::cout<<'\n'<<"Using NeutrinoSelectionFilter for the run-subrun tree"<<'\n'<<std::endl;
+        return 1;
+      }
+    }
+  }
+  if(file1->GetDirectory("singlephotonana")){
+    T_rse=(TTree*)file1->Get("singlephotonana/vertex_tree");
+    if(T_rse){
+      if(T_rse->GetBranch("run_number") && T_rse->GetBranch("subrun_number") && T_rse->GetBranch("event_number")){
+        T_rse->SetBranchStatus("run_number",1);
+        T_rse->SetBranchStatus("subrun_number",1);
+        T_rse->SetBranchStatus("event_number",1);
+        T_rse->SetBranchAddress("run_number",&run);
+        T_rse->SetBranchAddress("subrun_number",&subrun);
+        T_rse->SetBranchAddress("event_number",&event);
+        std::cout<<'\n'<<"Using vertex_tree for the run-subrun tree"<<'\n'<<std::endl;
+        return 1;
+      }
+    }
+  }
+  if(file1->GetDirectory("lantern")){
+    T_rse=(TTree*)file1->Get("lantern/EventTree");
+    if(T_rse){
+      if(T_rse->GetBranch("run") && T_rse->GetBranch("subrun") && T_rse->GetBranch("event")){
+        T_rse->SetBranchStatus("run",1);
+        T_rse->SetBranchStatus("subrun",1);
+        T_rse->SetBranchStatus("event",1);
+        T_rse->SetBranchAddress("run",&run);
+        T_rse->SetBranchAddress("subrun",&subrun);
+        T_rse->SetBranchAddress("event",&event);
+        std::cout<<'\n'<<"Using EventTree for the run-subrun tree"<<'\n'<<std::endl;
+        return 1;
+      }
+    }
+  }
+
+  std::cout<<'\n'<<"Could not find RS tree. Exiting."<<std::endl;
+  T_rse=nullptr;
+  return 0;
+
+};
+
+
+std::vector<int> LEEana::get_good_run_list(){
   std::vector<int> good_run_list{
 	3427, 3431, 3448, 3453, 3454, 3455, 3456, 3457, 3458, 3461, 3463, 3465, 3467, 3468, 3469, 3470, 3471, 3490, 3522, 3594, 3595, 3596, 3598, 3599, 3600,
 3602, 3603, 3606, 3607, 3608, 3609, 3610, 3612, 3613, 3615, 3617, 3619, 3620, 3621, 3622, 3625, 3626, 3627, 3629, 3630, 3631, 3632, 3633, 3634, 3635,
@@ -912,7 +1098,7 @@ std::vector<int> LEEana::tree_wrangler::get_good_run_list(){
     return good_run_list;
 }
 
-std::vector<int> LEEana::tree_wrangler::get_low_lifetime_runs(){
+std::vector<int> LEEana::get_low_lifetime_runs(){
   std::vector<int> low_lifetime_runs{5262, 5263, 5264, 5265, 5266, 5267, 5269, 5270, 5271, 5272, 5273, 5274, 5275, 5277, 5278, 5279, 5280, 5281,
 5315, 5320, 5321, 5632, 5634, 5635, 5636, 5637, 5638, 5639, 5643, 5646, 5647, 5650, 5652, 5653, 5654, 5656, 5657, 5659, 5661, 5680, 5684, 5685, 5686,
 5691, 5693, 5694, 5695, 5697, 5698, 5699, 5702, 5703, 5704, 5705, 5706, 5707, 5708, 5709, 5710, 5712, 5713, 5715, 5718, 5719, 5720, 5721, 5722, 5723,
@@ -923,7 +1109,239 @@ std::vector<int> LEEana::tree_wrangler::get_low_lifetime_runs(){
   return low_lifetime_runs;
 }
 
-std::vector<int> LEEana::tree_wrangler::get_low_neutrino_count_numi_run2RHC(){
+std::vector<int> LEEana::get_low_neutrino_count_numi_run2RHC(){
   std::vector<int> low_neutrino_count_numi_run2RHC{11858,11875,11876,11878,11879,11880,11881,11882,11884,11885,11886,11887,11888,11889,11891,11892,11893,11894,11895,11896,11897,11898,11900,11901,11904,11905,11906,11907,11909,11911,11912,11913,11914,11915,11917,11919,11920,11921,11922,11923,11924,11925,11926,11927,11928,11929,11930,11931,11933,11934,11935,11936,11937,11938,11939,11940,11943};
   return low_neutrino_count_numi_run2RHC;
 }
+
+void LEEana::print_help_wrangler_config(bool pick) {
+  std::cout << R"(
+
+Configuration File:
+-------------------
+
+The configuration file controls:
+  - Which directories and TTrees are processed
+  - Which trees are skipped
+  - Which branches (variables) are copied
+
+The file is read line-by-line and divided into sections. Each line
+generally has the format:
+
+  <directory> <tree_list> [additional_fields...]
+
+Where:
+  directory   = ROOT directory name
+  tree_list   = comma-separated list (delimiter configurable with -d)
+)";
+
+if(pick){
+  std::cout << R"(
+
+------------------------------------------------------------
+Sections:
+------------------------------------------------------------
+
+The configuration file can contain up to three sections:
+
+  (1) Default section (top of file)
+  (2) exclusive / pot section
+  (3) pick section
+
+The parser stops or switches behavior when encountering:
+
+  exclusive / Exclusive / pot / POT
+  pick / Pick
+  end / End
+
+)";
+}
+else{
+  std::cout << R"(
+
+------------------------------------------------------------
+Sections:
+------------------------------------------------------------
+
+The configuration file can contain up to two sections:
+
+  (1) Default section (top of file)
+  (2) exclusive / pot section
+
+The parser stops or switches behavior when encountering:
+
+  exclusive / Exclusive / pot / POT
+  end / End
+
+)";
+}
+
+  std::cout << R"(
+
+----------------------------------------
+1. Default section
+----------------------------------------
+
+Copies all trees in the specified directory. 
+The only ones that are skipped are the ones specified in the file.
+These trees should all have the same number of events across reconstructions.
+First entry in a line is the directory, second is the trees to skip. 
+This second entry can be  ``none'', in which case all trees are included.
+
+Format:
+  <directory> <trees_to_skip>
+
+Example:
+  nuselection SubRun
+
+Meaning:
+  - Load all trees in "nuselection"
+  - Skip the tree named "SubRun"
+
+----------------------------------------
+2. "exclusive" (or "POT") section
+----------------------------------------
+
+This is used for POT trees. These will be looped over seprate by the code.
+This accounts for the fact that POT trees can have different number of entries across reconstructions.
+Able to specify which barnches will be used to load run/subrun/event information.
+First entry in a line is the directory, second is the trees to include, third is the run,subrun,POT variables. 
+
+Format:
+  <directory> <trees> <pot_variables>
+
+Where:
+  trees          = list of tree names
+  pot_variables  = grouped in triples:
+                   (run, subrun, POT) per tree
+
+Example:
+  nuselection SubRun run,subRun,POT
+
+Meaning:
+  - Use only the specified trees
+  - Associate POT information via the listed branches
+  - Each tree can have its own (run, subrun, POT) triplet
+
+Special case:
+  If "None,None,None" is provided, POT variables are ignored for that tree.
+
+)";
+
+if(pick){
+
+  std::cout << R"(
+----------------------------------------
+3. "pick" section
+----------------------------------------
+
+Copies only the specified trees and branches in the specified directory. 
+These are otherwise reated the same as the nominal section.
+First entry in a line is the directory, second is the trees to include, 
+third, fourth, etc are the branches to include from the trees. 
+The third, fourth, etc.  entry can be  ``all'', in which case all branches are included.
+
+Format:
+  <directory> <trees> <branch_list_per_tree...>
+
+Example:
+  wcpselection T_BDTvars,T_eval kine_reco_Enu,event run,subrun,event
+
+Meaning:
+  - Only the listed trees are processed
+  - For each tree, only selected branches are copied
+
+Important:
+  - Each tree must have a corresponding branch list
+  - If no branch list is provided, ALL branches are copied (with warning)
+)";
+
+}
+
+  std::cout << R"(
+
+----------------------------------------
+General Notes:
+----------------------------------------
+
+- The delimiter for lists (trees, branches, variables) defaults to ','
+  but can be changed with the -d option.
+
+- Empty lines are ignored.
+
+- Duplicate tree names in a line will trigger a warning.
+
+- Parsing stops when "end" or "End" is encountered.
+
+)";
+
+if(pick){
+  std::cout << R"(
+
+------------------------------------------------------------
+Example Configuration:
+------------------------------------------------------------
+
+nuselection SubRun
+
+exclusive
+nuselection SubRun run,subRun,pot
+
+pick
+wcpselection T_BDTvars,T_eval kine_reco_Enu,event run,subrun,event
+end
+
+Explanation:
+
+1. Default section:
+   - In directory "nuselection", skip the "SubRun" tree, but copy all other trees and branches
+
+2. Exclusive section:
+   - For "nuselection", explicitly process "SubRun" as a POT tree
+   - Use branches (run, subRun, pot) for POT accounting
+
+3. Pick section:
+   - In "wcpselection", process only:
+       T_BDTvars and T_eval
+   - From T_BDTvars keep on the following branches: kine_reco_Enu, event
+   - From T_eval keep on the following branche: run, subrun, event
+
+------------------------------------------------------------
+
+)";
+}
+
+else{
+  std::cout << R"(
+
+------------------------------------------------------------
+Example Configuration:
+------------------------------------------------------------
+
+nuselection SubRun
+
+exclusive
+nuselection SubRun run,subRun,pot
+
+Explanation:
+
+1. Default section:
+   - In directory "nuselection", skip the "SubRun" tree, but copy all other trees and branches
+
+2. Exclusive section:
+   - For "nuselection", explicitly process "SubRun" as a POT tree
+   - Use branches (run, subRun, pot) for POT accounting
+
+------------------------------------------------------------
+
+)";
+
+}
+
+  std::cout << R"(
+========================================
+
+)";
+
+}
+

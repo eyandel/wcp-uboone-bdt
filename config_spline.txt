@@ -1,0 +1,12 @@
+nuselection SubRun 
+shrreco3d none
+proximity none
+singlephotonana run_subrun_tree,pot_tree
+lantern potTree
+/ none
+
+exclusive
+nuselection SubRun run,subRun,pot
+singlephotonana run_subrun_tree run,subrun,subrun_pot
+lantern potTree run,subrun,totGoodPOT
+end

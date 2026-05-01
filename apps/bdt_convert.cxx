@@ -41,9 +41,156 @@ using namespace LEEana;
 
 #include "WCPLEEANA/tree_wrangler.h"
 
+
+void print_help() {
+  std::cout << R"(
+
+========================================
+ bdt_convert : Help
+========================================
+
+Overview:
+---------
+bdt_convert reads a Wire-Cell ROOT file and evaluates a large suite of
+BDT-based classification scores for each event. It applies run/subrun-level
+filtering, removes problematic subruns (e.g. Lantern failures or training
+samples), enforces data-quality selections, and writes out a new ROOT file
+with updated BDT variables and consistent POT handling.
+
+The program:
+  - Computes Wire-Cell BDT scores and related tagger variables
+  - Removes subruns based on Lantern failures or training list selection
+  - Applies data-quality and run-based filtering
+  - Optionally overrides or rescales event weights
+  - Copies additional trees using the tree_wrangler infrastructure
+  - Produces a consistent output file with updated event-level information
+
+Usage:
+------
+  bdt_convert <input_file> <output_file> [options]
+
+Required arguments:
+-------------------
+  input_file     Input ROOT file
+  output_file    Output ROOT file
+
+Options:
+--------
+
+  -h
+      Show this help message and exit
+
+  -H
+      Show help message for configuration file and exit
+
+  -c<float>
+      Maximum allowed weight (weight_cv * weight_spline)
+      Events exceeding this are reset to weight = 1
+      (default: 30)
+
+  -f<float>
+      (Reserved / legacy) failure percentage threshold
+      (default: 0.15)
+
+  -l<string>
+      Path to Wire-Cell BDT training list file
+      Format: <type> <run> <subrun>
+
+  -g<string>
+      Global file type label used with training list
+
+  -b<int>
+      Filter based on BDT training usage:
+        0 = remove training subruns (default)
+        1 = keep only training subruns
+
+      NOTE: Requires -l (and optionally -g)
+
+  -s<int>
+      Skip data-quality cuts:
+        0 = apply run quality cuts (default)
+        1 = keep all runs
+
+  -n<int>
+      Beam selection:
+        0 = BNB (default)
+        1 = NuMI
+
+  -r<int>
+      Lantern failure handling:
+        0 = keep subruns where Lantern failed
+        1 = remove subruns where Lantern failed (default)
+
+  -w<int>
+      GiBUU mode:
+        0 = normal handling (default)
+        1 = override weights using truth timing information
+
+  -p<int>
+      Enable particle-level spacepoint BDTs:
+        0 = disabled (default)
+        1 = enabled
+
+  -t<string>
+      Configuration file for additional trees (default: config.txt)
+
+  -d<char>
+      Delimiter used in configuration file (default: ',')
+
+  -a<string>
+      Set SAM definition string to be stored in output trees
+
+Configuration File:
+-------------------
+run bdt_convert -H for more info
+
+Examples:
+---------
+
+  Basic usage:
+    bdt_convert input.root output.root
+
+  Apply stricter weight cut:
+    bdt_convert input.root output.root -c20
+
+  Remove training subruns:
+    bdt_convert input.root output.root -ltrain.txt -b0
+
+  Keep only training subruns:
+    bdt_convert input.root output.root -ltrain.txt -b1
+
+  Enable spacepoint BDTs:
+    bdt_convert input.root output.root -p1
+
+  Keep all runs (skip quality cuts):
+    bdt_convert input.root output.root -s1
+
+Notes:
+------
+- Event filtering is applied at the subrun level to maintain consistency.
+- Subruns may be removed due to:
+    * Lantern reconstruction failures
+    * Presence (or absence) in BDT training lists
+    * Data-quality run selections
+- BDT scores are recomputed for every event and stored in the output trees.
+- Weight handling protects against invalid or extreme values.
+- Additional trees are copied using tree_wrangler configuration.
+
+)";
+}
+
+
 int main( int argc, char** argv )
 {
-  if (argc < 3) {
+  if(argc==2 && argv[1][1]=='h'){
+    print_help;
+    return 0;
+  }
+  else if(argc==2 && argv[1][1]=='H'){
+    print_help_wrangler_config(true);
+    return 0;
+  }
+  else if (argc < 3) {
     std::cout << "bdt_convert #input_file #output_file -c[weight_cut_val] -l[traing_list] -g[global_file_type]" << std::endl;
     return -1;
   }
@@ -74,54 +221,100 @@ int main( int argc, char** argv )
   int flag_set_samdef = 0;
   TString samdef="";
 
-  for (Int_t i=3;i!=argc;i++){
-    switch(argv[i][1]){
+for (Int_t i = 3; i < argc; ++i) {
+
+    // Skip non-flags
+    if (argv[i][0] != '-') continue;
+
+    char flag = argv[i][1];
+    char* value_ptr = nullptr;
+
+    // Case 1: attached value (-xVALUE)
+    if (argv[i][2] != '\0') {
+      value_ptr = &argv[i][2];
+    }
+    // Case 2: separate value (-x VALUE)
+    else if (i + 1 < argc && argv[i+1][0] != '-') {
+      value_ptr = argv[i + 1];
+      ++i; // consume next argument
+    }
+
+    // Guard against missing values
+    if (!value_ptr && flag != 'a') {
+      std::cerr << "Missing value for -" << flag << std::endl;
+      continue;
+    }
+
+    switch(flag){
+
     case 'c':
-      weight_cut_val = atof(&argv[i][2]);
+      if (value_ptr) weight_cut_val = atof(value_ptr);
       break;
+
     case 'f':
-      fail_percentage = atof(&argv[i][2]);//Note, changed from previouse code
+      if (value_ptr) fail_percentage = atof(value_ptr);
       break;
+
     case 'l':
-      training_list = &argv[i][2];
+      if (value_ptr) training_list = value_ptr;
       break;
+
     case 'g':
-      global_file_type = &argv[i][2];
+      if (value_ptr) global_file_type = value_ptr;
       break;
+
     case 's':
-      skip_cut = atoi(&argv[i][2]);
+      if (value_ptr) skip_cut = atoi(value_ptr);
       break;
+
     case 'n':
-      flag_numi = atoi(&argv[i][2]);
+      if (value_ptr) flag_numi = atoi(value_ptr);
       break;
+
     case 't':
-       config_file_name = &argv[i][2];
-       flag_config = true;
-      break;
-    case 'd':
-        delimiter = argv[i][2];//In case you want to change what character you use to sperate your trees in the config
-      break;
-    case 'w':
-      flag_gibuu = atoi(&argv[i][2]);
-      if (flag_gibuu) {
-        std::cout<<"GiBUU sample, overiding the weights"<<std::endl; 
-        std::cout<<std::endl;
+      if (value_ptr) {
+        config_file_name = value_ptr;
+        flag_config = true;
       }
       break;
+
+    case 'd':
+      if (value_ptr) delimiter = value_ptr[0];
+      break;
+
+    case 'w':
+      if (value_ptr) {
+        flag_gibuu = atoi(value_ptr);
+        if (flag_gibuu) {
+          std::cout<<"GiBUU sample, overiding the weights"<<std::endl;
+          std::cout<<std::endl;
+        }
+      }
+      break;
+
     case 'p':
-      flag_spbdt = atoi(&argv[i][2]);
+      if (value_ptr) flag_spbdt = atoi(value_ptr);
       break;
+
     case 'r':
-      remove_lantern_fails = atoi(&argv[i][2]);
+      if (value_ptr) remove_lantern_fails = atoi(value_ptr);
       break;
+
     case 'b':
-      flag_keep_only_bdt_train = atoi(&argv[i][2]);
+      if (value_ptr) flag_keep_only_bdt_train = atoi(value_ptr);
       break;
+
     case 'a':
-      flag_set_samdef = 1; 
-      samdef = &argv[i][2];
+      if (value_ptr) {
+        flag_set_samdef = 1;
+        samdef = value_ptr;
+      } else {
+        std::cerr << "Missing value for -a" << std::endl;
+      }
       break;
+
     }
+
   }
 
   if (flag_spbdt) { 
@@ -135,7 +328,6 @@ int main( int argc, char** argv )
 
   if (remove_lantern_fails==1){
     std::cout<<"Removing subruns where Lantern container failed"<<std::endl;
-    std::cout<<"This has no effect the if Lantern tree is not loaded in the tree wrangler config"<<std::endl; 
     std::cout<<std::endl;
   } else {
     std::cout<<"Will keep subruns where Lantern container failed"<<std::endl;
@@ -176,13 +368,14 @@ int main( int argc, char** argv )
     std::cout<<std::endl;
   }
 
-  bool flag_data = true;
-  //std::cout << input_file << " " << out_file << std::endl;
 
+  bool flag_data = true;
 
   tree_wrangler wrangler(flag_config, config_file_name, delimiter);
   if(flag_set_samdef) wrangler.set_samdef(flag_set_samdef, samdef);
-  tree_wrangler wrangler_pot(flag_config, config_file_name, delimiter,true);
+  tree_wrangler wrangler_ex(flag_config, config_file_name, delimiter,2);
+  if(flag_set_samdef) wrangler_ex.set_samdef(flag_set_samdef, samdef);
+  tree_wrangler wrangler_pot(flag_config, config_file_name, delimiter,1);
 
   TFile *file1 = new TFile(input_file);
   TTree *T_BDTvars = (TTree*)file1->Get("wcpselection/T_BDTvars");
@@ -194,35 +387,33 @@ int main( int argc, char** argv )
   TTree *T_spacepoints = (TTree*)file1->Get("wcpselection/T_spacepoints");
   TTree *T_lantern = (TTree*)file1->Get("lantern/EventTree");
 
+  if (T_eval->GetBranch("weight_cv")) flag_data =false;
+
+
   //Load other trees from directories as specified by the config file
   wrangler.get_old_trees(file1);
+  wrangler_ex.get_old_trees(file1);
   wrangler_pot.get_old_trees(file1);
 
-  if (T_eval->GetBranch("weight_cv")) flag_data =false;
-  //  if (T_eval->GetBranch("file_type")) flag_use_global_file_type = false;
-  // std::cout << flag_use_global_file_type << " " << flag_check_run_subrun << std::endl;
-  // return 0;
-  
-  std::vector<int>good_run_list_vec = wrangler.get_good_run_list();
+  std::vector<int>good_run_list_vec = get_good_run_list();
   std::set<int> good_runlist_set(good_run_list_vec.begin(), good_run_list_vec.end());
 
-  std::vector<int> low_lifetime_runs = wrangler.get_low_lifetime_runs();
+  std::vector<int> low_lifetime_runs = get_low_lifetime_runs();
   std::set<int> low_lifetime_set(low_lifetime_runs.begin(), low_lifetime_runs.end());
   
-  std::vector<int> low_neutrino_count_numi_run2RHC = wrangler.get_low_neutrino_count_numi_run2RHC();
+  std::vector<int> low_neutrino_count_numi_run2RHC = get_low_neutrino_count_numi_run2RHC();
   std::set<int> low_neutrino_count_numi_run2RHC_set(low_neutrino_count_numi_run2RHC.begin(), low_neutrino_count_numi_run2RHC.end());
   
-  //  std::cout << T_eval->GetEntries() << std::endl;
   
   TFile *file2 = new TFile(out_file,"RECREATE");
 
   //Setup the directories specified in the config file
   wrangler.set_new_trees(file2);
+  wrangler_ex.set_new_trees(file2);
   wrangler_pot.set_new_trees(file2);
 
   // Build the pairs of pot trees
   wrangler_pot.grow_pot_arboretum();
-
 
   file2->mkdir("wcpselection");
   file2->cd("wcpselection");
@@ -231,11 +422,7 @@ int main( int argc, char** argv )
   TTree *t2 = new TTree("T_pot","T_pot");
   TTree *t3 = new TTree("T_PFeval", "T_PFeval");
   TTree *t5 = new TTree("T_KINEvars", "T_KINEvars");
-  TTree *new_T_spacepoints = T_spacepoints->CloneTree(0);//new TTree("T_spacepoints", "T_spacepoints");
-  //TTree *t1 = T_eval->CloneTree(-1,"");
-  //TTree *t2 = T_pot->CloneTree(-1,"");
-  //TTree *t3 = T_PFeval->CloneTree(-1,"");
-  //  TTree *t5 = T_KINEvars->CloneTree(-1,"");
+  TTree *new_T_spacepoints = T_spacepoints->CloneTree(0);
 
 
   EvalInfo eval;
@@ -3860,10 +4047,8 @@ int main( int argc, char** argv )
       }
       // removing run-subruns NOT used to train the BDTs
       else if(it1 == map_type_run_subrun.end() && flag_keep_only_bdt_train==1){
-        if (it1->second.find(std::make_pair(eval.run, eval.subrun)) != it1->second.end()) {
-          remove_set.insert(std::make_pair(eval.run, eval.subrun));
-          continue;
-        }
+        remove_set.insert(std::make_pair(eval.run, eval.subrun));
+        continue;
       }
 
       //      std::cout << flag_use_global_file_type << " " << *eval.file_type  << " " << eval.run << " " << eval.subrun << " " << remove_set.size() << std::endl;
@@ -3915,8 +4100,6 @@ int main( int argc, char** argv )
   if(flag_set_samdef){
     t1->Branch("samdef", "TSring", &samdef);
   }
-
-  //  for (int i=0;i!=100;i++){
 
   int nentries = T_BDTvars->GetEntries();
   std::cout<<"Begin looping over "<<nentries<<" events"<<std::endl;
@@ -4189,11 +4372,15 @@ int main( int argc, char** argv )
     for(auto tree_it=wrangler.old_trees->begin(); tree_it!=wrangler.old_trees->end(); tree_it++){
         (*tree_it)->GetEntry(i);
     }
-
     for(auto tree_it=wrangler.new_trees->begin(); tree_it!=wrangler.new_trees->end(); tree_it++){
         (*tree_it)->Fill();
     }
-
+    for(auto tree_it=wrangler_ex.old_trees->begin(); tree_it!=wrangler_ex.old_trees->end(); tree_it++){
+        (*tree_it)->GetEntry(i);
+    }
+    for(auto tree_it=wrangler_ex.new_trees->begin(); tree_it!=wrangler_ex.new_trees->end(); tree_it++){
+        (*tree_it)->Fill();
+    }
     //    std::cout << pfeval.reco_daughters->size() << std::endl;
     //    break;
   }

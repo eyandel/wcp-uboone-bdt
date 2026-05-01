@@ -41,37 +41,77 @@ int main( int argc, char** argv )
   bool flag_config = false;
   std::string config_file_name="config.txt";
   char delimiter = ',';
+  if(argc==2 && argv[1][1]=='h'){
+    std::cout<<"TODO"<<std::endl;
+    return 0;
+  }
+  else if(argc==2 && argv[1][1]=='H'){
+    print_help_wrangler_config(true);
+    return 0;
+  }
   if (argc < 3){
     std::cout << "applyNuMIGeometryWeights -i[#input_file] -o[#out_putfile] -w[#weight_file] -m[mode]" << std::endl;
     return -1;
   }
 
-  for (Int_t i=1;i!=argc;i++){
-    switch(argv[i][1]){
-    case 'i':
-      path_to_CV = &argv[i][2];
-      break;
-    case 'o':
-      outfile_name = &argv[i][2];
-      break;
-    case 'w':
-      path_to_weightHistos = &argv[i][2];
-      break;
-    case 'm':
-      hornMode = &argv[i][2];
-      break;
-    case 't':
-       config_file_name = &argv[i][2];
-       flag_config = true;
-      break;
-    case 'd':
-        delimiter = argv[i][2];//In case you want to change what character you use to sperate your trees in the config
-      break;
+   for (Int_t i = 1; i < argc; ++i) {
+
+    // Skip non-flags
+    if (argv[i][0] != '-') continue;
+
+    char flag = argv[i][1];
+    char* value_ptr = nullptr;
+
+    // Case 1: attached value (-xVALUE)
+    if (argv[i][2] != '\0') {
+      value_ptr = &argv[i][2];
     }
+    // Case 2: separate value (-x VALUE)
+    else if (i + 1 < argc && argv[i+1][0] != '-') {
+      value_ptr = argv[i + 1];
+      ++i; // consume next argument
+    }
+
+    // Guard against missing values
+    if (!value_ptr) {
+      std::cerr << "Missing value for -" << flag << std::endl;
+      continue;
+    }
+
+    switch(flag){
+
+    case 'i':
+      path_to_CV = value_ptr;
+      break;
+
+    case 'o':
+      outfile_name = value_ptr;
+      break;
+
+    case 'w':
+      path_to_weightHistos = value_ptr;
+      break;
+
+    case 'm':
+      hornMode = value_ptr;
+      break;
+
+    case 't':
+      config_file_name = value_ptr;
+      flag_config = true;
+      break;
+
+    case 'd':
+      delimiter = value_ptr[0];
+      break;
+
+    }
+
   }
-  
+ 
   tree_wrangler wrangler(flag_config, config_file_name, delimiter);
-  tree_wrangler wrangler_pot(flag_config, config_file_name, delimiter,true);
+  tree_wrangler wrangler_ex(flag_config, config_file_name, delimiter,2);
+  tree_wrangler wrangler_pot(flag_config, config_file_name, delimiter,1);
 
   auto CVfile = TFile::Open(path_to_CV.c_str());
   auto weightHistosFile = TFile::Open(path_to_weightHistos.c_str());
@@ -84,6 +124,7 @@ int main( int argc, char** argv )
 
   //Load other trees from directories as specified by the config file
   wrangler.get_old_trees(CVfile);
+  wrangler_ex.get_old_trees(CVfile);
   wrangler_pot.get_old_trees(CVfile);
 
   auto h_nue_FHC_variation1=(TH1D*)weightHistosFile->Get("EnergyVarBin/ratio_run1_FHC_nue_CV_AV_TPC");
@@ -278,13 +319,6 @@ int main( int argc, char** argv )
   //  auto ofile = new TFile("nucleoninexsec_FluxUnisim.root","RECREATE");
   auto ofile = new TFile(outfile_name.c_str(),"RECREATE");
 
-  //Setup the directories specified in the config file
-  //wrangler.set_new_trees(ofile);
-  //wrangler_pot.set_new_trees(ofile);
-
-  // Build the pairs of pot trees
-  //wrangler_pot.grow_pot_arboretum();
-
   ofile->mkdir("wcpselection")->cd();
   // ofile->cd();
   TTree* UBTree = nullptr;
@@ -308,6 +342,7 @@ int main( int argc, char** argv )
 
   //Setup the directories specified in the config file
   wrangler.set_new_trees(ofile);
+  wrangler_ex.set_new_trees(ofile);
   wrangler_pot.set_new_trees(ofile);
 
   // Build the pairs of pot trees
@@ -404,11 +439,15 @@ int main( int argc, char** argv )
     for(auto tree_it=wrangler.old_trees->begin(); tree_it!=wrangler.old_trees->end(); tree_it++){
       (*tree_it)->GetEntry(i);
     }
-
     for(auto tree_it=wrangler.new_trees->begin(); tree_it!=wrangler.new_trees->end(); tree_it++){
       (*tree_it)->Fill();
     }
-
+    for(auto tree_it=wrangler_ex.old_trees->begin(); tree_it!=wrangler_ex.old_trees->end(); tree_it++){
+      (*tree_it)->GetEntry(i);
+    }
+    for(auto tree_it=wrangler_ex.new_trees->begin(); tree_it!=wrangler_ex.new_trees->end(); tree_it++){
+      (*tree_it)->Fill();
+    }
 
 
     if(truth_nuPdg==12 && hornMode=="FHC"){
