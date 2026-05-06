@@ -96,6 +96,11 @@ Options:
       Path to Wire-Cell BDT training list file
       Format: <type> <run> <subrun>
 
+  -i<string>
+      Path to list of runs which will additionally be removed
+      Format: <run> <subrun1> <subrun2> ...
+      Use <run> -1 to remove all subruns in the run
+
   -g<string>
       Global file type label used with training list
 
@@ -203,6 +208,7 @@ int main( int argc, char** argv )
 
   TString training_list = "";
   string global_file_type = "";
+  TString remove_individual_run_list = "";
   int skip_cut = 0;
   int flag_numi = 0;
 
@@ -257,6 +263,10 @@ for (Int_t i = 3; i < argc; ++i) {
 
     case 'l':
       if (value_ptr) training_list = value_ptr;
+      break;
+
+    case 'i':
+      if (value_ptr) remove_individual_run_list = value_ptr;
       break;
 
     case 'g':
@@ -351,6 +361,31 @@ for (Int_t i = 3; i < argc; ++i) {
     }
     // std::cout << map_type_run_subrun.size() << std::endl;
     // return 0;
+  }
+
+  std::unordered_map<int,std::vector<int>> remove_individual_run;
+  if (remove_individual_run_list != ""){
+    ifstream infile(remove_individual_run_list);
+    if (!infile.good()) {
+      std::cout<<"Unable to open list of individual runs to remove. Exiting"<<std::endl;
+      return 1;
+    }
+    int run;
+    std::vector<int> subrun;
+    std::string lineContent;
+    while(std::getline(infile, lineContent)){
+      run=-1;
+      std::stringstream ss(lineContent);
+      int entry;
+      // Extract each subrun entry from the given line
+      while (ss >> entry) {
+        if(run<0) { run = entry; }
+        else{ 
+          subrun.push_back(entry);
+        }  
+      }
+      remove_individual_run[run] = subrun;
+    }
   }
 
   if (flag_keep_only_bdt_train) {
@@ -4026,7 +4061,24 @@ for (Int_t i = 3; i < argc; ++i) {
       remove_set.insert(std::make_pair(eval.run, eval.subrun));
       continue;
     }
-  
+
+    // Remove runs if they are in the extra list provided 
+    auto rs_it = remove_individual_run.find(eval.run);
+    if (rs_it != remove_individual_run.end()) {
+      // Removing all subruns in this run
+      if ((*rs_it).second.at(0)==-1){
+        remove_set.insert(std::make_pair(eval.run, eval.subrun));
+        continue;
+      }
+      // Check if this subrun is in the list of ones to remove in the given run 
+      auto s_it = std::find((*rs_it).second.begin(), (*rs_it).second.end(), eval.subrun);
+      if (s_it != (*rs_it).second.end()) {
+        remove_set.insert(std::make_pair(eval.run, eval.subrun));
+        continue; 
+      }
+    }
+ 
+    // Remove (or keep) BDT training runs.
     if (flag_check_run_subrun){
       if (flag_use_global_file_type){
 	(*eval.file_type) = global_file_type;
@@ -4098,7 +4150,7 @@ for (Int_t i = 3; i < argc; ++i) {
   T_spacepoints->SetBranchStatus("*",1);
 
   if(flag_set_samdef){
-    t1->Branch("samdef", "TSring", &samdef);
+    t1->Branch("samdef", "TString", &samdef);
   }
 
   int nentries = T_BDTvars->GetEntries();
@@ -4416,12 +4468,6 @@ for (Int_t i = 3; i < argc; ++i) {
       // bnb run 3 high rate
       if (pot.runNo >=15369 && pot.runNo <= 15402) continue;
     }
-    if (skip_cut == 0){
-      // low lifetime, docdb 39787
-      if (pot.runNo >= 19753 && pot.runNo <= 19850) continue;
-      // low lifetime, docdb 40093
-      if (pot.runNo >= 25447 && pot.runNo <= 25512) continue;
-    }
     t2->Fill();
   }
 
@@ -4453,12 +4499,6 @@ for (Int_t i = 3; i < argc; ++i) {
         if ((*pot_tree_it)->runNo >= 8321 && (*pot_tree_it)->runNo <=8404) continue;
         // bnb run 3 high rate
         if ((*pot_tree_it)->runNo >=15369 && (*pot_tree_it)->runNo <= 15402) continue;
-      }
-      if (skip_cut == 0){
-        // low lifetime, docdb 39787
-        if ((*pot_tree_it)->runNo >= 19753 && (*pot_tree_it)->runNo <= 19850) continue;
-        // low lifetime, docdb 40093
-        if ((*pot_tree_it)->runNo >= 25447 && (*pot_tree_it)->runNo <= 25512) continue;
       }
       (*pot_tree_it)->new_pot_tree->Fill();
 
