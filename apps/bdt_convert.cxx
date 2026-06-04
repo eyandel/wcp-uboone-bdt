@@ -4406,12 +4406,6 @@ for (Int_t i = 3; i < argc; ++i) {
       // bnb run 3 high rate
       if (eval.run >=15369 && eval.run <= 15402) continue;
     }
-    if (skip_cut == 0){
-      // low lifetime, docdb 39787
-      if (eval.run >= 19753 && eval.run <= 19850) continue;
-      // low lifetime, docdb 40093
-      if (eval.run >= 25447 && eval.run <= 25512) continue;
-    }
  
     t4->Fill();
     t1->Fill();
