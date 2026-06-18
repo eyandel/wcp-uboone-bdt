@@ -130,6 +130,11 @@ Options:
   -l<string>
       Path to Wire-Cell BDT training list file
 
+  -i<string>
+      Path to list of runs which will additionally be removed
+      Format: <run> <subrun1> <subrun2> ...
+      Use <run> -1 to remove all subruns in the run
+
   -g<string>
       Global file type label used with training list
 
@@ -184,7 +189,8 @@ Notes:
 bool keep_subrun(int run, int subrun,
                  int start_run, int start_subrun, int stop_run, int stop_subrun,
                  int remove_lantern_fails, bool haveReco, 
-                 int flag_keep_only_bdt_train, const std::string& global_file_type, const std::map<string, std::set<std::pair<int, int>>>& map_type_run_subrun,
+                 int flag_keep_only_bdt_train, const std::string& global_file_type, const std::map<string, std::set<std::pair<int, int>>>& map_type_run_subrun, 
+                 std::unordered_map<int,std::vector<int>>& remove_individual_run, 
                  int skip_cut, int flag_data, int flag_numi,
                  const std::set<int>& good_runlist_set, const std::set<int>& low_lifetime_set, const std::set<int>& low_neutrino_count_numi_run2RHC_set) {
 
@@ -218,6 +224,20 @@ bool keep_subrun(int run, int subrun,
       }
   }
 
+  // Remove runs if they are in the extra list provided 
+  auto rs_it = remove_individual_run.find(run);
+  if (rs_it != remove_individual_run.end()) {
+    // Removing all subruns in this run
+    if ((*rs_it).second.at(0)==-1){
+      return flag_keep_subrun;
+    }
+    // Check if this subrun is in the list of ones to remove in the given run 
+    auto s_it = std::find((*rs_it).second.begin(), (*rs_it).second.end(), subrun);
+    if (s_it != (*rs_it).second.end()) {
+      return flag_keep_subrun;
+    }
+  }
+
   // Remove bad run-subruns if the flag is set.
   if (flag_data == 1 && skip_cut == 0) {
       if (good_runlist_set.find(run) == good_runlist_set.end()) {
@@ -239,16 +259,6 @@ bool keep_subrun(int run, int subrun,
           return flag_keep_subrun;
       }
   }
-
-  if (skip_cut == 0) {
-      if (run >= 19753 && run <= 19850) {
-          return flag_keep_subrun;
-      }
-      if (run >= 25447 && run <= 25512) {
-          return flag_keep_subrun;
-      }
-  }
-
 
   flag_keep_subrun = true;
   return flag_keep_subrun;
@@ -300,6 +310,8 @@ int main( int argc, char** argv )
   TString training_list = "";
   string global_file_type = "";
   int flag_keep_only_bdt_train = -1;
+
+  TString remove_individual_run_list = "";
 
   int flag_set_samdef = 0;
   TString samdef="";
@@ -454,6 +466,13 @@ int main( int argc, char** argv )
       }
       break;
 
+    case 'i':
+      if (value_ptr){
+        remove_individual_run_list = value_ptr;
+        std::cout<<"Loading list of additionally runs to remove from "<<remove_individual_run_list<<"\n\n";
+      }
+      break;
+
     case 'g':
       if (value_ptr) {
         global_file_type = value_ptr;
@@ -558,6 +577,31 @@ int main( int argc, char** argv )
     }
   }
 
+  // Load list of individual runs to remove
+  std::unordered_map<int,std::vector<int>> remove_individual_run;
+  if (remove_individual_run_list != ""){
+    ifstream infile(remove_individual_run_list);
+    if (!infile.good()) {
+      std::cout<<"Unable to open list of individual runs to remove. Exiting"<<std::endl;
+      return 1;
+    }
+    int run;
+    std::vector<int> subrun;
+    std::string lineContent;
+    while(std::getline(infile, lineContent)){
+      run=-1;
+      std::stringstream ss(lineContent);
+      int entry;
+      // Extract each subrun entry from the given line
+      while (ss >> entry) {
+        if(run<0) { run = entry; }
+        else{
+          subrun.push_back(entry);
+        }
+      }
+      remove_individual_run[run] = subrun;
+    }
+  }
 
   // Check if the output file exists if overwrite is not set.
   if(flag_overwrite!=1){
@@ -671,7 +715,8 @@ int main( int argc, char** argv )
     bool temp_keep_subrun = keep_subrun(run, subrun, 
                                         start_run, start_subrun, stop_run, stop_subrun,
                                         remove_lantern_fails, haveReco, 
-                                        flag_keep_only_bdt_train, global_file_type, map_type_run_subrun,
+                                        flag_keep_only_bdt_train, global_file_type, map_type_run_subrun, 
+                                        remove_individual_run, 
                                         skip_cut, flag_data, flag_numi,
                                         good_runlist_set, low_lifetime_set, low_neutrino_count_numi_run2RHC_set);
 
@@ -813,6 +858,7 @@ int main( int argc, char** argv )
                                                          first_run, first_subrun, last_run, last_subrun, 
                                                          remove_lantern_fails, temp_haveReco, 
                                                          flag_keep_only_bdt_train, global_file_type, map_type_run_subrun,
+                                                         remove_individual_run,
                                                          skip_cut, flag_data, flag_numi,
                                                          good_runlist_set, low_lifetime_set, low_neutrino_count_numi_run2RHC_set);
 
